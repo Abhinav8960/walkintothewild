@@ -94,6 +94,32 @@ $this->params['title'] = $this->title; ?>
                                                         <i class="fa fa-exclamation-triangle" aria-hidden="true" style="font-size:20px;color:red"></i>
                                                         <p class="btn text-white px-2 py-0 mb-0" style="background-color:red; border-radius:6px !important; font-size:12px !important"><?= $flaged->userflaged->user_flag ?></p>
                                                     </div>
+
+                                                    <div class="modal fade _standard-text bd-example-modal-lg" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header justify-content-center">
+                                                                    <h1 class="modal-title w-100 text-center" id="exampleModalLabel">Alert</h1>
+                                                                    <button type="button" class="btn_close ms-auto" data-bs-dismiss="modal" aria-label="Close">
+                                                                        <i class="fa-solid fa-xmark"></i>
+                                                                    </button>
+                                                                </div>
+
+                                                                <div class="modal-body">
+                                                                    <div id='departuremodalContent'>
+                                                                        <h3 class="text-center"><?= $flaged->userflaged->description ?></h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <script>
+                                                        document.addEventListener("DOMContentLoaded", function() {
+                                                            var modal = new bootstrap.Modal(document.getElementById('flagModal'));
+                                                            modal.show();
+                                                        });
+                                                    </script>
                                             <?php }
                                             } ?>
                                         </div>

@@ -20,6 +20,7 @@ class MasterAnimalForm extends model
     public $short_description;
     public $is_filter;
     public $is_filter_sequence;
+    public $is_searchable;
     public $status;
     public $status_option = [];
     public $animal_model;
@@ -43,6 +44,7 @@ class MasterAnimalForm extends model
             $this->status = $this->animal_model->status;
             $this->is_filter = $this->animal_model->is_filter;
             $this->is_filter_sequence = $this->animal_model->is_filter_sequence;
+            $this->is_searchable = $this->animal_model->is_searchable;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -59,7 +61,8 @@ class MasterAnimalForm extends model
             'status',
             'slug',
             'is_filter',
-            'is_filter_sequence'
+            'is_filter_sequence',
+            'is_searchable',
         ];
         $scenarios['update'] = [
             'name',
@@ -67,7 +70,8 @@ class MasterAnimalForm extends model
             'status',
             'slug',
             'is_filter',
-            'is_filter_sequence'
+            'is_filter_sequence',
+            'is_searchable',
         ];
         return $scenarios;
     }
@@ -76,7 +80,7 @@ class MasterAnimalForm extends model
     {
         return [
             [['name', 'short_description', 'is_filter'], 'required'],
-            [['status', 'is_filter_sequence'], 'integer'],
+            [['status', 'is_filter_sequence', 'is_searchable'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
@@ -105,7 +109,7 @@ class MasterAnimalForm extends model
             'name' => 'Name',
             'is_filter' => 'Is Filter',
             'status' => 'Status',
-
+            'is_searchable' => 'Searchable'
         ];
     }
     /**
@@ -122,5 +126,6 @@ class MasterAnimalForm extends model
         $this->animal_model->status = $this->status;
         $this->animal_model->is_filter = $this->is_filter;
         $this->animal_model->is_filter_sequence = $this->is_filter_sequence;
+        $this->animal_model->is_searchable = $this->is_searchable;
     }
 }
