@@ -232,14 +232,16 @@ $('#search_submit_btn').click(function(){
     });
 });
 
- $('.animal_search').on('keyup', function(){
-        setTimeout(() => {
-            $.get("/site/getanimal?text="+$(this).val(), function( data ) {
-                $("#master_animal_dropdown").html( data.fordorp_item );
-                $( "select#safariparksearch-master_animal_id" ).html( data.animallist );
-            });
-        }, 500);
-    }); 
+let debounceTimer;
+$('.animal_search').on('keyup', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        $.get("/site/getanimal?text=" + $(this).val(), function(data) {
+            $("select#safariparksearch-master_animal_id").html(data.animallist);
+            $("#master_animal_dropdown").html(data.fordorp_item);
+        });
+    }, 500);
+});
 JS;
 $this->registerJs($script);
 ?>
