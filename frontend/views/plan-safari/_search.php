@@ -233,10 +233,10 @@ $('#search_submit_btn').click(function(){
 });
 
  $('.animal_search').on('keyup', function(){
-    console.log('ssj');
         setTimeout(() => {
             $.get("/site/getanimal?text="+$(this).val(), function( data ) {
-                $("#master_animal_dropdown").html( data );
+                $("#master_animal_dropdown").html( data.fordorp_item );
+                $( "select#safariparksearch-master_animal_id" ).html( data.animallist );
             });
         }, 500);
     }); 
