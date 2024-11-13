@@ -96,11 +96,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                             <p class="btn text-white px-2 py-0 mb-0" style="background-color:red; border-radius:6px !important; font-size:12px !important"><?= $flaged->userflaged->user_flag ?></p>
                                                         </div>
 
-                                                        <div class="modal fade _standard-text bd-example-modal-lg" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                        <div class="modal fade _standard-text" id="flagModal" tabindex="-1" aria-labelledby="flagModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header justify-content-center">
-                                                                        <h1 class="modal-title w-100 text-center" id="exampleModalLabel">Alert</h1>
+                                                                    <div class="modal-header justify-content-center" style="background-color: red;">
+                                                                        <h4 class="modal-title w-100 text-center" id="exampleModalLabel">Alert</h4>
                                                                         <button type="button" class="btn_close ms-auto" data-bs-dismiss="modal" aria-label="Close">
                                                                             <i class="fa-solid fa-xmark"></i>
                                                                         </button>
@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                                                                     <div class="modal-body">
                                                                         <div id='departuremodalContent'>
-                                                                            <h3 class="text-center"><?= $flaged->userflaged->description ?></h3>
+                                                                            <h6 class="text-center"><?= $flaged->userflaged->description ?></h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
