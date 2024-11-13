@@ -204,7 +204,7 @@ class DefaultController extends SafariController
                 $share_safari_intrested->user_browser = $agent->browser();
                 $share_safari_intrested->park_id = $share_safari->park_id;
                 $share_safari_intrested->share_safari_id = $share_safari->id;
-                $share_safari_intrested->user_id = $this->userinfoId;
+                $share_safari_intrested->user_id = Yii::$app->user->identity->id;
                 $share_safari_intrested->status = 0; //UNfollow
                 $share_safari_intrested->unintrested_at = time();
                 if ($share_safari_intrested->save(false)) {
