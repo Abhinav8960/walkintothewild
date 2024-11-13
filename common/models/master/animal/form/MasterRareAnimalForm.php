@@ -26,7 +26,6 @@ class MasterRareAnimalForm extends model
     public $rare_animal_model;
     public $assigned_park;
     public $animal_type;
-    public $is_searchable;
 
     public function __construct(MasterAnimal $rare_animal_model = null)
     {
@@ -46,7 +45,6 @@ class MasterRareAnimalForm extends model
             $this->name = $this->rare_animal_model->name;
             $this->short_description = $this->rare_animal_model->short_description;
             $this->status = $this->rare_animal_model->status;
-            $this->is_searchable = $this->rare_animal_model->is_searchable;
 
             $this->assigned_park = SafariParkAnimal::find()->select('safari_park_id')->where(['master_animal_id' => $this->rare_animal_model->id, 'status' => 1])->column();
         }
@@ -67,7 +65,6 @@ class MasterRareAnimalForm extends model
             'status',
             'know_as',
             'assigned_park',
-            'is_searchable',
         ];
         $scenarios['update'] = [
             'name',
@@ -77,7 +74,6 @@ class MasterRareAnimalForm extends model
             'feature_image',
             'banner',
             'assigned_park',
-            'is_searchable',
         ];
         return $scenarios;
     }
@@ -86,7 +82,7 @@ class MasterRareAnimalForm extends model
     {
         return [
             [['name', 'short_description'], 'required'],
-            [['status', 'is_searchable'], 'integer'],
+            [['status'], 'integer'],
             ['assigned_park', 'safe'],
             [['name'], 'string', 'max' => 125],
             [['name', 'know_as'], 'string', 'max' => 125],
@@ -140,7 +136,6 @@ class MasterRareAnimalForm extends model
             'short_description' => 'Short Description',
             'status' => 'Status',
             'assigned_park' => 'Assigned Park',
-            'is_searchable' => 'Searchable'
         ];
     }
     /**
@@ -155,7 +150,6 @@ class MasterRareAnimalForm extends model
         $this->rare_animal_model->name = $this->name;
         $this->rare_animal_model->short_description = $this->short_description;
         $this->rare_animal_model->status = $this->status;
-        $this->rare_animal_model->is_searchable = $this->is_searchable;
     }
 
 

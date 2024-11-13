@@ -50,14 +50,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         }
                     ],*/
                     [
-                        'label' => 'Is Searchable',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset(GeneralModel::yesnooption()[$model->is_searchable]) ? GeneralModel::yesnooption()[$model->is_searchable] : '';
-                        }
-                    ],
-                    [
                         'attribute' => 'Feature Image',
                         'format' => 'html',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],

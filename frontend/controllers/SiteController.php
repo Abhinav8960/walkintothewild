@@ -572,7 +572,7 @@ class SiteController extends FrontendBaseController
         $animallist = '';
         if ($text <> '') {
             $animals = MasterAnimal::find()
-                ->where(['is_searchable' => 1, 'status' => 1])
+                ->where(['is_searchable' => 1, 'status' => 1, 'animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])
                 ->andFilterWhere(['like', 'name', $text])
                 ->all();
             $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
