@@ -26,6 +26,7 @@ class MasterRareAnimalForm extends model
     public $rare_animal_model;
     public $assigned_park;
     public $animal_type;
+    public $is_searchable;
 
     public function __construct(MasterAnimal $rare_animal_model = null)
     {
