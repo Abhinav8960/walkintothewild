@@ -100,7 +100,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <input type="text" class="animal_search" placeholder="Type Animal Name to find">
+                        <input type="text" class="animal_search" placeholder="Search Animal">
                         <div id="master_animal_dropdown">
                             <div class="dropdown-item" data-value="">Any / All</div>
                             <?php foreach ($animalfilteroption as $value => $label) : ?>
@@ -281,7 +281,7 @@ $('.animal_search').on('keyup', function() {
             $("select#safariparksearch-master_animal_id").html(data.animallist);
             $("#master_animal_dropdown").html(data.fordorp_item);
         });
-    }, 500);
+    }, 300);
 });
 
 
