@@ -27,6 +27,7 @@ class User extends \common\models\User
         if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view','package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist'])) {
             $hold_fields = [
                 'id',
+                'mobile_no',
                 "password_hash",
                 "auth_key",
                 "facebook_url",
