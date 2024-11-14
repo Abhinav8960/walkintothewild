@@ -59,7 +59,7 @@ class SendNotificationController extends Controller
                     ];
 
                     if (!empty($log->sent_data)) {
-                        $message['data'] = json_decode($log->sent_data, true);
+                        $message['data'] = $log->sent_data;
                     }
                     try {
                         $accessToken = $firebaseMessaging->getAccessToken();
@@ -95,20 +95,25 @@ class SendNotificationController extends Controller
     // protected function sendnotification()
     // {
     //     $firebaseMessaging = new FirebaseMessaging();
-    //     $image_url = '';
     //     $message = [
-    //         'token' => '',
+    //         'token' => 'dO3bQRF-S2S4NWiznD1QQc:APA91bHtYDjv_trf_xE0P9p5hJYvvXTMHjF6WZQhEPbKDXNm49AfVbg5e_nPDNkajQvTXqHYxKf2JhhMDnGT4cGtLxfw8dB7sPSNDBOoUjkvYRep9_VYmt0',
     //         'notification' => [
     //             'title' => 'check',
     //             'body' => 'Error',
-    //             'image' =>  $image_url,
 
     //         ],
+    //         'data' =>
+    //         [
+    //             "objective" => "Share Safari",
+    //         ]
+    //         // 'data' => 'Share Safari',
 
     //     ];
     //     try {
     //         $accessToken = $firebaseMessaging->getAccessToken();
+
     //         $response = $firebaseMessaging->sendMessage($accessToken, $message);
+    //         dd($response);
     //         if (isset($response['error'])) {
     //             echo 'Firebase error: ' . json_encode($response['error']);
     //         }
