@@ -7017,3 +7017,19 @@ select.custom_sort_by_input option.selected {
   background-color: var(--background-orange) !important;
   border: 0 !important;
 }
+
+.animal_search_container .form-control {
+  padding-left: 2.375rem;
+}
+
+.animal_search_container .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
