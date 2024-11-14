@@ -18,7 +18,48 @@ class SafariOperator extends \common\models\operator\SafariOperator
         $fields = parent::fields();
         if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
             $fields[] = 'imagepath';
-            $hold_fields = ['logo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $hold_fields = [
+                'id',
+                'safari_operator_request_id',
+                'category_id',
+                'address',
+                'gst',
+                'is_highlighted',
+                'about_business',
+                'facebook_url',
+                'http',
+                'youtube_link',
+                'phone_no',
+                'email',
+                'website',
+                'is_register_company',
+                'has_a_website',
+                'has_cancellation_policy',
+                'wildlife_photographer',
+                'wildlife_influencer',
+                'is_offer_premium_budget',
+                'is_offer_standard_budget',
+                'is_offer_economical_budget',
+                'is_wildlife_trekking',
+                'is_wildlife_non_safari_drive',
+                'is_bird_watching',
+                'is_camping',
+                'starting_price',
+                'is_approved',
+                'user_id',
+                'operator_name',
+                'operator_phone_no',
+                'operator_email',
+                'delete_reason_id',
+                'delete_reason',
+                'total_view',
+                'logo',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
         } else {
             $fields[] = 'imagepath';
             $fields[] = 'parkcount';
