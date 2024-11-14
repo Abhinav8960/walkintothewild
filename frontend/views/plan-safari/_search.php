@@ -236,7 +236,12 @@ $('#search_submit_btn').click(function(){
 });
 
 let debounceTimer;
-$('.animal_search').on('keyup', function() {
+$('.animal_search').on('keyup keypress', function() {
+    var key = event.keyCode || event.which;
+    if (key === 13) { 
+        event.preventDefault();
+        return false;
+    }
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         $.get("/site/getanimal?text=" + $(this).val(), function(data) {
