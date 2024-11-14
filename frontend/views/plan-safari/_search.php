@@ -96,7 +96,10 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <input type="text" class="animal_search" placeholder="Search Animal">
+                        <div class="form-group animal_search_container">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control animal_search" placeholder="Search Animal">
+                        </div>
                         <div id="master_animal_dropdown">
                             <div class="dropdown-item" data-value="">Any / All</div>
                             <?php foreach ($animalfilteroption as $value => $label) : ?>
