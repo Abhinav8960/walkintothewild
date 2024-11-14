@@ -490,4 +490,8 @@ $this->registerJs($script);
         border-radius: 8px;
         margin: 2px;
     }
+
+    .modal-header {
+        padding: 0.5rem !important;
+    }
 </style>
