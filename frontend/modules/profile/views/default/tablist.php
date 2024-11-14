@@ -15,7 +15,7 @@ $this->title = $user->name;
     <div class="container-lg px-slider2">
         <div class="row justify-content-center px-slider2">
             <div class="col-xxl-10 banner-cover position-relative px-slider2">
-                <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/defaultcover_walkwild.jpg' ?>" alt="" class=" banner-cover">
+                <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/defaultcover_profile.jpg' ?>" alt="" class=" banner-cover">
                 <?php if (Yii::$app->user->id == $user->id) { ?>
                     <label for="coverImageUpload" class="coverbtns">
                         <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Cover Picture</span>
