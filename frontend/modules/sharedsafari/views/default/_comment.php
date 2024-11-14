@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use yii\helpers\Html;
@@ -80,7 +81,14 @@ use yii\helpers\Url;
                                         <?php }
                                                 } ?> -->
                                     </div>
-                                    <p><?= $comments->comment ?></p>
+
+                                    <?php if (Yii::$app->user->id ==  $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) || Yii::$app->user->id ==  $comments->user_id) { ?>
+                                        <p><?= $comments->comment ?></p>
+                                    <?php } else { ?>
+                                        <p><?= GeneralModel::commentconversion($comments->comment) ?></p>
+                                    <?php } ?>
+
+
                                     <?php if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested || Yii::$app->user->id ==  $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id)) { ?>
@@ -108,7 +116,12 @@ use yii\helpers\Url;
                                                         </a>
                                                         <span class="comment-date"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?></span>
                                                         <div class="comment-text">
-                                                            <p><?= $reply->comment ?></p>
+
+                                                            <?php if (Yii::$app->user->id ==  $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) || Yii::$app->user->id ==  $reply->user_id) { ?>
+                                                                <p><?= $reply->comment ?></p>
+                                                            <?php } else { ?>
+                                                                <p><?= GeneralModel::commentconversion($reply->comment) ?></p>
+                                                            <?php } ?>
                                                         </div>
 
                                                         <?php if ($reply->user && Yii::$app->user->identity) {
