@@ -58,9 +58,9 @@ class SendNotificationController extends Controller
                         ],
                     ];
 
-                    // if (!empty($log->sent_data)) {
-                    //     $message['data'] = json_decode($log->sent_data, true);
-                    // }
+                    if (!empty($log->sent_data)) {
+                        $message['data'] = json_decode($log->sent_data, true);
+                    }
                     try {
                         $accessToken = $firebaseMessaging->getAccessToken();
                         $response = $firebaseMessaging->sendMessage($accessToken, $message);
