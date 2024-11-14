@@ -1275,4 +1275,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MasterUserFlag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['user_flag' => SORT_ASC])->all(), 'id', 'user_flag');
     }
+
+    public static function commentconversion($comment)
+    {
+        $string = preg_replace('/\b\d{10}\b/', 'xxxxxxxxxxx', $comment);
+        return $string;
+    }
 }
