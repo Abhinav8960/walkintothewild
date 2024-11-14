@@ -657,4 +657,8 @@ $this->registerJs($script);
             display: block;
         }
     }
+
+    .modal-header {
+        padding: 0.5rem !important;
+    }
 </style>
