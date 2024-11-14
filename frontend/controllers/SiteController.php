@@ -575,7 +575,7 @@ class SiteController extends FrontendBaseController
                 ->where(['is_searchable' => 1, 'status' => 1, 'animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])
                 ->andFilterWhere(['like', 'name', $text])
                 ->all();
-            $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
+            // $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
             $animallist .= "<option value=''></option>";
             foreach ($animals as $animal) {
                 $fordorp_item .= "<div class='dropdown-item' data-value='$animal->id'>$animal->name </div>";
@@ -583,7 +583,7 @@ class SiteController extends FrontendBaseController
             }
         } else {
             $animalfilteroption = GeneralModel::animalfilteroption();
-            $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
+            // $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
             $animallist .= "<option value=''></option>";
             foreach ($animalfilteroption as $value => $label) {
                 $fordorp_item .= "<div class='dropdown-item' data-value='$value'>$label </div>";
@@ -596,24 +596,5 @@ class SiteController extends FrontendBaseController
     }
 
 
-    //School city depend on School State
-    public function actionCitylist($state_id)
-    {
-        $countCity = MasterCity::find()
-            ->where(['state_id' => $state_id, 'status' => 1])
-            ->count();
-
-        $Cities = MasterCity::find()
-            ->where(['state_id' => $state_id,])
-            ->all();
-
-        if ($countCity > 0) {
-            echo "<option value=''>Select City</option>";
-            foreach ($Cities as $city) {
-                echo "<option value='" . $city->id . "'>" . $city->name . "</option>";
-            }
-        } else {
-            echo "<option value=''>Select City</option>";
-        }
-    }
+    
 }
