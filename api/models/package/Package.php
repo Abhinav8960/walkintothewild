@@ -22,6 +22,8 @@ class Package extends \common\models\package\Package
             $fields[] = 'packagepark';
             $fields[] = 'pickanddrop';
             $fields[] = 'meals';
+            $fields[] = 'mealslisting';
+            $fields[] = 'packagerange';
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] =  'packagedays';
