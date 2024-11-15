@@ -249,7 +249,7 @@ class SiteController extends RestController
     {
         $term_of_use = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
         if ($term_of_use) {
-            return \Yii::$app->api->sendResponse($data = [$term_of_use], ['message' => "Success"]);
+            return \Yii::$app->api->sendResponse($data = [  'content' => $term_of_use->content ], ['message' => "Success"]);
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
@@ -258,7 +258,7 @@ class SiteController extends RestController
     {
         $privacy_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
         if ($privacy_policy) {
-            return \Yii::$app->api->sendResponse($data = [$privacy_policy], ['message' => "Success"]);
+            return \Yii::$app->api->sendResponse($data = [ 'content' => $privacy_policy->content], ['message' => "Success"]);
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
