@@ -4,15 +4,26 @@ use yii\helpers\Html;
 
 ?>
 
-<div class="contact-form" style="font-family: Arial, sans-serif; font-size: 14px; color: #333; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $creator_name ?></p>
-    <p style="margin-bottom: 20px;">There's a new reply on your shared safari. Check the latest comment to respond and finalize your shared safari plans.</p>
-    <br>
-    <p><a href="<?= $shared_safari_url && isset($shared_safari_url) ? $shared_safari_url :''?>">View Update</a></p>
-    <br>
-   
-    <br>
-    <p style="margin-top: 2% !important; font-size: 12px; color: #666;">Thank you!</p>
-    <p style="font-size: 12px; color: #666;">Best regards,</p>
-    <p style="font-size: 12px; color: #666; font-weight: bold;">Team Walk into the Wild</p>
-</div>
+<html>
+
+<body style="background-color:#ecedf1;  align-items: center; height: auto; min-height: 500px; margin: 10px; padding:10px;">
+
+<center>
+
+    <div style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  padding: 20px; text-align: center; width: 400px; background-color: white; margin:20px; margin-top:30px;">
+        <h2 style="text-align: center; font-size:25px;  font-family: Arial, sans-serif;">New Reply</h2>
+        <div style="border-radius: 15px; margin-top:20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: 0.3s; text-align: center; padding: 10px; background-color:#ecedf1;">
+            <p style="font-family: Arial, sans-serif;">  There's a new reply on your shared safari <?= $shared_safari && isset($shared_safari['share_safari_title']) ? $shared_safari['share_safari_title'] : '' ?> by <?= $username && isset($username) ? $username : '' ?> </p>
+        </div>
+        <a href="<?= $shared_safari_url && isset($shared_safari_url) ? $shared_safari_url : '' ?>"
+            style="display: inline-block; background-color: #09422d; color: white; font-weight: 500; font-size: 16px; padding: 8px 25px; border-radius: 20px; text-decoration: none; margin-top: 80px;">
+            View Reply
+        </a>
+        <footer style="margin-top: 80px; margin-bottom:0px;font-size: 12px; color: #888;">
+            <p>Walk Into the Wild</p>
+        </footer>
+    </div>
+</center>
+</body>
+
+</html>
