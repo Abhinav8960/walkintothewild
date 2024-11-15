@@ -43,22 +43,26 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <?php ActiveForm::end(); ?>
 <?php
-// $directoryPath = Yii::$app->params['datapath'];
-// $partToRemove = '-data';
-
-// // Remove the part from the directory path
-// $result = str_replace($partToRemove, '', $directoryPath);
-
-// // Remove any trailing slashes that might be left
-// $result = rtrim($result, '/');
-// $filePath = '' . $result . '/common/mail/' . $model->path . '.php';
-
 $filePath = Yii::getAlias('@common/mail/' . $model->path . '.php');
 
 if (file_exists($filePath)) {
     header('Content-Type: text/html; charset=UTF-8');
+    
+    // Read the file content
+    ob_start();
     readfile($filePath);
+    $content = ob_get_clean();
+    
+    // Create the iframe content
+    $iframeContent = <<<HTML
+$content
+HTML;
+
+    // Output the iframe with content
+    echo '<iframe srcdoc="' . htmlspecialchars($iframeContent) . '" frameborder="0" width="100%" height="500px"></iframe>';
 } else {
     http_response_code(404);
     echo 'File not found.';
-} ?>
+}
+?>
+
