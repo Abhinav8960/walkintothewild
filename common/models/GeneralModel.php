@@ -1276,9 +1276,31 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MasterUserFlag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['user_flag' => SORT_ASC])->all(), 'id', 'user_flag');
     }
 
-    public static function commentconversion($comment)
-    {
-        $string = preg_replace('/\b\d{10}\b/', 'xxxxxxxxxxx', $comment);
-        return $string;
+    // public static function commentconversion($comment)
+    // {
+    //     $string = preg_replace('/\b\d{10}\b/', 'xxxxxxxxxxx', $comment);
+    //     return $string;
+    // }
+
+    public static function commentconversion($comment) {
+        
+        $pattern = '#(\+91[-\s]?)?(\d{10})|(\d{5}[-\s]?\d{5})|(\d{1}[-\s]?(91[-\s]?))?(\d{10})|(\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?)#';
+        $masked_text = preg_replace_callback($pattern, function($matches) {
+            
+            if (isset($matches[1]) || isset($matches[4])) {
+                return "{$matches[1]}** **";
+            }
+            
+            if (isset($matches[2])) {
+                return '** **';
+            }
+            
+            if (isset($matches[6])) {
+                return '** ** ** ** ***';
+            }
+            return '** **';
+        }, $comment);
+        
+        return $masked_text;
     }
 }
