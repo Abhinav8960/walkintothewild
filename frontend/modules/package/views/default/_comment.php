@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
@@ -36,12 +37,16 @@ use yii\helpers\Url;
                                     </a>
                                     <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                 </div>
-                                <p><?= $comments->comment ?>
-                                    <?php if ($login_safarioperator) {
-                                        if (Yii::$app->user->id == $login_safarioperator->user_id) { ?>
-                                            <button class="reply_btn" data-id="<?= $comments->id ?>" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
-                                    <?php }
-                                    } ?>
+                                <?php if (Yii::$app->user->id ==  $comments->user_id || $login_safarioperator &&  Yii::$app->user->id == $login_safarioperator->user_id) { ?>
+                                    <p><?= $comments->comment ?>
+                                    <?php } else { ?>
+                                    <p><?= GeneralModel::commentconversion($comments->comment) ?></p>
+                                <?php } ?>
+                                <?php if ($login_safarioperator) {
+                                    if (Yii::$app->user->id == $login_safarioperator->user_id) { ?>
+                                        <button class="reply_btn" data-id="<?= $comments->id ?>" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                <?php }
+                                } ?>
                             </div>
                         </div>
                         <div class="comment-reply px-3">
@@ -61,7 +66,11 @@ use yii\helpers\Url;
                                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"> <span class="comment-author"><?= isset($reply->user) ? $reply->user->getName() : '' ?></span></a>
                                                     <span class="comment-date"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?></span>
                                                     <div class="comment-text">
-                                                        <p><?= $reply->comment ?></p>
+                                                        <?php if (Yii::$app->user->id ==  $reply->user_id || $login_safarioperator &&  Yii::$app->user->id == $login_safarioperator->user_id) { ?>
+                                                            <p><?= $reply->comment ?></p>
+                                                        <?php } else { ?>
+                                                            <p><?= GeneralModel::commentconversion($reply->comment) ?></p>
+                                                        <?php } ?>
                                                     </div>
 
                                                     <?php if ($reply->user) {
