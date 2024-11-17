@@ -59,6 +59,34 @@ class PreviewController extends Controller
     }
 
 
+    public function actionUpdate($id)
+    {
+        $package_model = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        if (empty($package_model)) {
+            return $this->redirect(['/package']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model = new PackageForm($package_model);
+        $model->scenario = 'update';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->package_model->popular_package = $model->popular_package;
+                if ($model->package_model->save(false)) {
+                    \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                    return $this->redirect(['index', 'id' => $package_model->id]);
+                }
+            }
+        } else {
+            $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'package_model' => $package_model,
+        ]);
+    }
 
     /**
      * Finds the Package model based on its primary key value.

@@ -129,52 +129,53 @@ $this->params['title'] = $this->title;
                     </div>
                     <div class="row">
                         <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
-                            <div class="pakageCost mb-xxl-0 mb-2">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
-                            </div>
-                            <div class="btn-delet float-end py-2">
-                                <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
-                            </div>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+                                <div class="pakageCost mb-xxl-0 mb-2">
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
+                                </div>
+                                <div class="btn-delet float-end py-2">
+                                    <a style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" href="<?= \yii\helpers\Url::toRoute(['/package/preview/update', 'id' => $package->id]) ?>"><i class="fas fa-check me-1"></i>Mark Package As Pouplar</a>
+                                    <button class="btn_userarticle" style="background:red !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-trash me-1"></i>Delete</button>
+                                </div>
 
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                    <div class="row">
-                        <div class="col-12 pt-4">
-                            <div class="text_safaripackage">
-                                <p><?= $package->package_description ?></p>
-                            </div>
+                <div class="row">
+                    <div class="col-12 pt-4">
+                        <div class="text_safaripackage">
+                            <p><?= $package->package_description ?></p>
                         </div>
                     </div>
-                    <div class="row  mt-4 itenary_tabs">
-                        <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                            <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
-                                </li>
+                </div>
+                <div class="row  mt-4 itenary_tabs">
+                    <div class="col-lg-12 col-xl-11 safartabs position-relative">
+                        <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
+                            </li>
 
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-                                </li>
-                            </ul>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+                            </li>
+                        </ul>
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <section class="safari_wrapper mb-5">
