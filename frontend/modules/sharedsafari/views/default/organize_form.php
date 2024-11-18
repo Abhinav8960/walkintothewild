@@ -161,7 +161,7 @@ $this->params['title'] = $this->title;
                             if ($model->shared_safari_model->image) { ?>
                                 <div class="col-6 mobileSetimg ">
                                     <label for="" class="Modal_label">Current Display Image</label>
-                                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image">'; ?>
+                                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100%" height="100px" style="object-fit: contain;" id="park_image">'; ?>
                                 </div>
 
                                 <div class="col-6 mb-2">
@@ -177,12 +177,12 @@ $this->params['title'] = $this->title;
                                 if ($model->shared_safari_model->park_id) { ?>
                                     <div class="col-6 mobileSetimg ">
                                         <label for="" class="Modal_label">Current Display Image</label>
-                                        <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image"></img>'; ?>
+                                        <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100%" height="100px" style="object-fit: contain;" id="park_image"></img>'; ?>
                                     </div>
                                 <?php } else { ?>
                                     <div class="col-6 mb-2 mobileSetimg ">
                                         <label for="" class="Modal_label">Current Display Image</label>
-                                        <img src="" id="park_image" alt="" width="100%" height="100px">
+                                        <img src="" id="park_image" alt="" width="100%" height="100px" style="object-fit: contain;">
                                     </div>
                                 <?php } ?>
                                 <div class="col-6 mb-2">
