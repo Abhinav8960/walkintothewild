@@ -5,6 +5,7 @@ namespace backend\modules\park\modules\safari\controllers;
 
 use common\models\GeneralModel;
 use common\models\master\animal\MasterAnimal;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\form\SafariParkAnimalForm;
 use common\models\park\form\SafariParkFloraFaunaForm;
 use common\models\park\form\SafariParkForm;
@@ -35,6 +36,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
@@ -805,5 +807,38 @@ class ProfileController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    public function actionOperatorlist($safari_park_id)
+    {
+        $safari_model = $this->findModel($safari_park_id);
+        $operator_list = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'safari_operator_park.status' => SafariOperatorPark::STATUS_ACTIVE])->joinWith(['operator']);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $operator_list,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('_operator_list', ['safari_model' => $safari_model, 'dataProvider' => $dataProvider]);
+    }
+
+    public function actionShowoperatorfront($id)
+    {
+        $safari_operator_park_model = SafariOperatorPark::find()->where(['id' => $id])->limit(1)->one();
+
+        if ($safari_operator_park_model) {
+            if ($safari_operator_park_model->show_in_front == 1) {
+                $safari_operator_park_model->show_in_front = 0;
+                $safari_operator_park_model->save();
+                \Yii::$app->getSession()->setFlash('success', 'Remove from front Successfully!!!');
+            } else {
+
+                $safari_operator_park_model->show_in_front = 1;
+                $safari_operator_park_model->save();
+                \Yii::$app->getSession()->setFlash('success', 'Add in front Successfully!!!');
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

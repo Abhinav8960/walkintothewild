@@ -21,6 +21,7 @@
                 <li><a href="/park/safari/profile/meta?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($meta_active) ? $meta_active : '' ?>">Meta</a></li>
                 <li><a href="/park/safari/profile/suggestions?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($suggestions_active) ? $suggestions_active : '' ?>">Suggestions</a></li>
                 <li><a href="/park/safari/profile/reviews?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($reviews_active) ? $reviews_active : '' ?>">Reviews</a></li>
+                <li><a href="/park/safari/profile/operatorlist?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($operator_list) ? $operator_list : '' ?>">Operator List</a></li>
             </ul>
         </div>
     </div>

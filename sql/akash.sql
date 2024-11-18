@@ -1,1 +1,1 @@
-ALTER TABLE `safari_operator_park` ADD `show_in_front` TINYINT NULL DEFAULT NULL AFTER `park_id`;
+ALTER TABLE `safari_operator_park` ADD `show_in_front` TINYINT NULL DEFAULT '0' AFTER `park_id`;
