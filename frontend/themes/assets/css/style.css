@@ -7033,3 +7033,9 @@ select.custom_sort_by_input option.selected {
   pointer-events: none;
   color: #aaa;
 }
+
+#animal_focus:focus {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid gray;  
+}
