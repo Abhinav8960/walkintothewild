@@ -26,7 +26,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             $user = $model->user;
                             if ($user) {
-                                return '<a href="' . Yii::$app->params['frontend_url'] . 'profile/user/' . $model->user->user_handle . '" class="text-primary" style="color: green !important;"><img src="' . ($user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";">' . $model->user->name . '</a>';
+                                return '<a href="' . Yii::$app->params['frontend_url'] . 'profile/user/' . $model->user->user_handle . '" class="text-primary" style="color: green !important;"><img src="' . ($user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px; width:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";">' . $model->user->name . '</a>';
                             }
                         }
                     ],
