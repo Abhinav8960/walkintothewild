@@ -40,6 +40,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'sharesafariFaqs';
             $fields[] = 'isWishlist';
             $fields[] = 'comments';
+            $fields[] = 'organizedbyimage';
 
             $hold_fields = [
                 'delete_reason_id',
