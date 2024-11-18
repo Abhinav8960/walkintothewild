@@ -813,7 +813,12 @@ class ProfileController extends Controller
     public function actionOperatorlist($safari_park_id)
     {
         $safari_model = $this->findModel($safari_park_id);
-        $operator_list = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'safari_operator_park.status' => SafariOperatorPark::STATUS_ACTIVE])->joinWith(['operator']);
+        // $operator_list = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'safari_operator_park.status' => SafariOperatorPark::STATUS_ACTIVE])->joinWith(['operator'])->andWhere(['safari_operator.category_id' => 1]);
+        $operator_list = SafariOperatorPark::find()
+            ->where(['safari_operator_park.park_id' => $safari_park_id, 'safari_operator_park.status' => SafariOperatorPark::STATUS_ACTIVE])
+            ->joinWith(['operator' => function ($query) {
+                $query->where(['safari_operator.category_id' => 1, 'safari_operator.status' => 1]);
+            }]);
         $dataProvider = new ActiveDataProvider([
             'query' => $operator_list,
             'pagination' => [
