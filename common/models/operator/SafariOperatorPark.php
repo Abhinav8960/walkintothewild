@@ -55,7 +55,7 @@ class SafariOperatorPark extends \yii\db\ActiveRecord implements \common\interfa
     public function rules()
     {
         return [
-            [['safari_operator_id', 'park_id', 'status', 'created_at', 'created_by'], 'integer'],
+            [['safari_operator_id', 'park_id', 'status', 'created_at', 'created_by','show_in_front'], 'integer'],
         ];
     }
 
