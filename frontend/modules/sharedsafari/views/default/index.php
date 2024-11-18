@@ -58,178 +58,182 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 
             </div>
         </div> -->
-        </div>
-        <div class="row my-4 justify-content-center">
-            <div class="col-xl-11 col-lg-12">
-                <div class="row">
-                    <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 ">
-                        <div class="right_button ">
-                            <?php if (Yii::$app->user->identity) { ?>
-                                <?php
-                                if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
-                                    if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
-                                ?>
+    </div>
+    <div class="row my-4 justify-content-center">
+        <div class="col-xl-11 col-lg-12">
+            <div class="row">
+                <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 ">
+                    <div class="right_button ">
+                        <?php if (Yii::$app->user->identity) { ?>
+                            <?php
+                            if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
+                                if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
+                                    if ($operator->category_id == 1) {  ?> 
+                                     
+                                        <button  class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    <?php } else { ?> 
                                         <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                         <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                         <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
-                                    <?php }
-                                } else { ?>
-                                    <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
-                                <?php } ?>
-                            <?php } else {  ?>
-                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/sharedsafari/default/index']) ?>" data-pjax="0">+ Organize a Shared Safari</a>
+                                <?php }
+                                }
+                            } else { ?>
+                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                             <?php } ?>
+                        <?php } else {  ?>
+                            <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/sharedsafari/default/index']) ?>" data-pjax="0">+ Organize a Shared Safari</a>
+                        <?php } ?>
 
-                        </div>
                     </div>
                 </div>
-                <?php
-                Pjax::begin([
-                    'id' => 'grid-data',
-                    'enablePushState' => FALSE,
-                    'enableReplaceState' => FALSE,
-                    'timeout' => FALSE,
-                ]);
-                ?>
-                <?php $form = ActiveForm::begin([
-                    'options' => [
-                        'data-pjax' => true,
-                        'id' => 'side-search-form'
-                    ],
-                    'action' => ['index'],
-                    'method' => 'get',
-                ]); ?>
-                <div class="row">
-                    <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
-                        <div id="targetDiv">
-                            <?= $this->render('filter_search', [
-                                'form' => $form,
-                                'searchModel' => $searchModel,
-                                'device' => $device,
+            </div>
+            <?php
+            Pjax::begin([
+                'id' => 'grid-data',
+                'enablePushState' => FALSE,
+                'enableReplaceState' => FALSE,
+                'timeout' => FALSE,
+            ]);
+            ?>
+            <?php $form = ActiveForm::begin([
+                'options' => [
+                    'data-pjax' => true,
+                    'id' => 'side-search-form'
+                ],
+                'action' => ['index'],
+                'method' => 'get',
+            ]); ?>
+            <div class="row">
+                <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
+                    <div id="targetDiv">
+                        <?= $this->render('filter_search', [
+                            'form' => $form,
+                            'searchModel' => $searchModel,
+                            'device' => $device,
 
-                            ]) ?>
-                        </div>
-                        <!-- <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
+                        ]) ?>
+                    </div>
+                    <!-- <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
                             <div class="google-ad-box  mb-5" style="border:none">
                                 
                             </div>
                         </div> -->
-                        
-                    </div>
-                    <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
-                        <div class="row ">
-                            <div class="col-12">
-                                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center flex-wrap w-100 mb-2">
-                                    <div class="left_text">
-                                        <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris</p>
-                                    </div>
-                                    <?= $this->render('sort_by_month', ['form' => $form, 'searchModel' => $searchModel]) ?>
-                                </div>
-                                <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
-                                    <div class="left_text">
-                                        <p class="mb-0">There are currently <strong><?= $dataProvider->totalcount ?></strong> active shared safaris</p>
-                                    </div>
-                                    <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
-                                        <div class="input_check pb-0">
-                                            <div class="filter_searchbox">
-                                                <span>Filter <i class="fa-solid fa-chevron-down"></i></span>
-                                            </div>
-                                        </div>
 
-                                    </div>
+                </div>
+                <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="topfilter d-lg-flex d-none justify-content-between align-items-center flex-wrap w-100 mb-2">
+                                <div class="left_text">
+                                    <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris</p>
                                 </div>
+                                <?= $this->render('sort_by_month', ['form' => $form, 'searchModel' => $searchModel]) ?>
                             </div>
-                            <div class="col-12 ">
-                                <div class="tag-container">
-                                    <?php if ($searchModel->park_id) {
-                                        $selected_park = $searchModel->parkoption[$searchModel->park_id];
-                                        if ($selected_park) { ?>
-                                            <div class="tag"><?= $selected_park ?> <span class="close-btn remove_dropdown_filter" data-attribute="park_id">×</span></div>
-                                    <?php }
-                                    } ?>
+                            <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
+                                <div class="left_text">
+                                    <p class="mb-0">There are currently <strong><?= $dataProvider->totalcount ?></strong> active shared safaris</p>
+                                </div>
+                                <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
+                                    <div class="input_check pb-0">
+                                        <div class="filter_searchbox">
+                                            <span>Filter <i class="fa-solid fa-chevron-down"></i></span>
+                                        </div>
+                                    </div>
 
-                                    <?php if ($searchModel->month_id) {
-                                        $selected_month = GeneralModel::monthoption()[$searchModel->month_id];
-                                        if ($selected_month) { ?>
-                                            <div class="tag"><?= $selected_month ?> <span class="close-btn remove_dropdown_filter" data-attribute="month_id">×</span></div>
-                                    <?php }
-                                    } ?>
-
-                                    <?php if ($searchModel->type) {
-                                        foreach ($searchModel->type as  $type) {
-                                            $selected_type = GeneralModel::sharedsafaritype()[$type];
-                                            if ($selected_type) {
-                                    ?>
-                                                <div class="tag"><?= $selected_type ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $type ?>" data-attribute="type">×</span></div>
-
-                                    <?php }
-                                        }
-                                    } ?>
-
-
-                                    <?php if ($searchModel->stay_category_id) {
-                                        foreach ($searchModel->stay_category_id as  $stay_category_id) {
-                                            $selected_price = GeneralModel::budgetoption()[$stay_category_id];
-                                            if ($selected_price) {
-                                    ?>
-                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $stay_category_id ?>" data-attribute="stay_category_id">×</span></div>
-
-                                    <?php }
-                                        }
-                                    } ?>
-
-                                    <?php if ($searchModel->estimated_price_filter) {
-                                        foreach ($searchModel->estimated_price_filter as  $estimated_price_filter) {
-                                            $selected_price = GeneralModel::estimatedpriceoption()[$estimated_price_filter];
-                                            if ($selected_price) {
-                                    ?>
-                                                <div class="tag">Rs. <?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $estimated_price_filter ?>" data-attribute="estimated_price_filter">×</span></div>
-
-                                    <?php }
-                                        }
-                                    } ?>
-
-                                    <?php if ($searchModel->host_type) {
-                                        foreach ($searchModel->host_type as  $host_type) {
-                                            $selected_price = GeneralModel::hostoption()[$host_type];
-                                            if ($selected_price) {
-                                    ?>
-                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $host_type ?>" data-attribute="host_type">×</span></div>
-
-                                    <?php }
-                                        }
-                                    } ?>
-
-
-                                    <?php if ($searchModel->share_safari_agenda_id) {
-                                        foreach ($searchModel->share_safari_agenda_id as  $share_safari_agenda_id) {
-                                            $selected_price = GeneralModel::agendaoption()[$share_safari_agenda_id];
-                                            if ($selected_price) {
-                                    ?>
-                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $share_safari_agenda_id ?>" data-attribute="share_safari_agenda_id">×</span></div>
-
-                                    <?php }
-                                        }
-                                    } ?>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 ">
+                            <div class="tag-container">
+                                <?php if ($searchModel->park_id) {
+                                    $selected_park = $searchModel->parkoption[$searchModel->park_id];
+                                    if ($selected_park) { ?>
+                                        <div class="tag"><?= $selected_park ?> <span class="close-btn remove_dropdown_filter" data-attribute="park_id">×</span></div>
+                                <?php }
+                                } ?>
 
-                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4">
+                                <?php if ($searchModel->month_id) {
+                                    $selected_month = GeneralModel::monthoption()[$searchModel->month_id];
+                                    if ($selected_month) { ?>
+                                        <div class="tag"><?= $selected_month ?> <span class="close-btn remove_dropdown_filter" data-attribute="month_id">×</span></div>
+                                <?php }
+                                } ?>
 
-                            <?php if ($models = $dataProvider->models) {
-                                $count = 0;
-                                $r = -1;
-                                foreach ($models as $share_safari) {
-                                    $count++;
-                            ?>
-                                    <div class="col mb-xl-2 mb-md-3 mb-4">
+                                <?php if ($searchModel->type) {
+                                    foreach ($searchModel->type as  $type) {
+                                        $selected_type = GeneralModel::sharedsafaritype()[$type];
+                                        if ($selected_type) {
+                                ?>
+                                            <div class="tag"><?= $selected_type ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $type ?>" data-attribute="type">×</span></div>
+
+                                <?php }
+                                    }
+                                } ?>
+
+
+                                <?php if ($searchModel->stay_category_id) {
+                                    foreach ($searchModel->stay_category_id as  $stay_category_id) {
+                                        $selected_price = GeneralModel::budgetoption()[$stay_category_id];
+                                        if ($selected_price) {
+                                ?>
+                                            <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $stay_category_id ?>" data-attribute="stay_category_id">×</span></div>
+
+                                <?php }
+                                    }
+                                } ?>
+
+                                <?php if ($searchModel->estimated_price_filter) {
+                                    foreach ($searchModel->estimated_price_filter as  $estimated_price_filter) {
+                                        $selected_price = GeneralModel::estimatedpriceoption()[$estimated_price_filter];
+                                        if ($selected_price) {
+                                ?>
+                                            <div class="tag">Rs. <?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $estimated_price_filter ?>" data-attribute="estimated_price_filter">×</span></div>
+
+                                <?php }
+                                    }
+                                } ?>
+
+                                <?php if ($searchModel->host_type) {
+                                    foreach ($searchModel->host_type as  $host_type) {
+                                        $selected_price = GeneralModel::hostoption()[$host_type];
+                                        if ($selected_price) {
+                                ?>
+                                            <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $host_type ?>" data-attribute="host_type">×</span></div>
+
+                                <?php }
+                                    }
+                                } ?>
+
+
+                                <?php if ($searchModel->share_safari_agenda_id) {
+                                    foreach ($searchModel->share_safari_agenda_id as  $share_safari_agenda_id) {
+                                        $selected_price = GeneralModel::agendaoption()[$share_safari_agenda_id];
+                                        if ($selected_price) {
+                                ?>
+                                            <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $share_safari_agenda_id ?>" data-attribute="share_safari_agenda_id">×</span></div>
+
+                                <?php }
+                                    }
+                                } ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4">
+
+                        <?php if ($models = $dataProvider->models) {
+                            $count = 0;
+                            $r = -1;
+                            foreach ($models as $share_safari) {
+                                $count++;
+                        ?>
+                                <div class="col mb-xl-2 mb-md-3 mb-4">
                                     <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
-                                    </div>
-                                        <?php if ($count == 5 or ($count > 5 && $count % 4 == 0)) $r = rand(0, 3);
-                                        if ($count % 4 == $r) {  //echo $count; 
-                                        ?>
-                                            <!-- <ins class="adsbygoogle"
+                                </div>
+                                <?php if ($count == 5 or ($count > 5 && $count % 4 == 0)) $r = rand(0, 3);
+                                if ($count % 4 == $r) {  //echo $count; 
+                                ?>
+                                    <!-- <ins class="adsbygoogle"
                                                 style="display:block"
                                                 data-ad-format="fluid"
                                                 data-ad-layout-key="-6d+ep+q-5u+9i"
@@ -240,49 +244,50 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <script>
                                             (adsbygoogle = window.adsbygoogle || []).push({});
                                         </script> -->
-                                    <?php  } ?>
-                                    <?php // $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
-                                    <!-- </div> -->
-                            <?php }
-                            } ?>
-                        </div>
+                                <?php  } ?>
+                                <?php // $this->render('_shared_safari_card', ['share_safari' => $share_safari]) 
+                                ?>
+                                <!-- </div> -->
+                        <?php }
+                        } ?>
                     </div>
                 </div>
-                <?php ActiveForm::end(); ?>
-                <script>
-                    var mobileSearchDivShared = document.getElementById('mobileSearchDiv');
-                    var targetDivShared = document.getElementById('targetDiv');
-                    var formSelectShared = document.querySelector('.form-select');
+            </div>
+            <?php ActiveForm::end(); ?>
+            <script>
+                var mobileSearchDivShared = document.getElementById('mobileSearchDiv');
+                var targetDivShared = document.getElementById('targetDiv');
+                var formSelectShared = document.querySelector('.form-select');
 
-                    if (mobileSearchDivShared && targetDivShared) {
-                        mobileSearchDivShared.addEventListener('click', function(event) {
-                            event.stopPropagation(); // Prevent the default behavior
-                            targetDivShared.style.display = targetDivShared.style.display === 'none' ? 'block' : 'block';
+                if (mobileSearchDivShared && targetDivShared) {
+                    mobileSearchDivShared.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Prevent the default behavior
+                        targetDivShared.style.display = targetDivShared.style.display === 'none' ? 'block' : 'block';
+                    });
+
+                    if (formSelectShared) {
+                        formSelectShared.addEventListener('click', function(event) {
+                            event.stopPropagation();
                         });
-
-                        if (formSelectShared) {
-                            formSelectShared.addEventListener('click', function(event) {
-                                event.stopPropagation();
-                            });
-                        }
                     }
-                </script>
+                }
+            </script>
 
-                <div class="modal fade _standard-text" id="update-organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header justify-content-center">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
-                                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
-                            </div>
-                            <div class="modal-body pt-0">
-                                <div id='updatesafarimodalContent'></div>
-                            </div>
+            <div class="modal fade _standard-text" id="update-organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
+                            <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+                        </div>
+                        <div class="modal-body pt-0">
+                            <div id='updatesafarimodalContent'></div>
                         </div>
                     </div>
                 </div>
-                <?php
-                $script = <<< JS
+            </div>
+            <?php
+            $script = <<< JS
         function updateorganizefunction() {
             $('.updateSafariBtn').on('click', function () {
                 $('#update-organize-modal').modal('show')
@@ -293,14 +298,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         updateorganizefunction();
              
     JS;
-                $this->registerJs($script);
-                ?>
+            $this->registerJs($script);
+            ?>
 
 
-                <?php Pjax::end(); ?>
-            </div>
-
+            <?php Pjax::end(); ?>
         </div>
+
+    </div>
 
     </div>
 
@@ -323,7 +328,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </div>
- 
+
 <div class="modal fade _standard-text" id="departure-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
