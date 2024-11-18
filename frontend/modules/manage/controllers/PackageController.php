@@ -46,6 +46,9 @@ class PackageController extends FrontendBaseController
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
 
         $searchModel = new PackageSearch();
         $dataProvider = $searchModel->managesearch($this->request->queryParams, [
@@ -65,8 +68,11 @@ class PackageController extends FrontendBaseController
      */
     public function actionCreate()
     {
-        
+
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $model = new PackageForm();
         $model->status = Package::STATUS_ACTIVE;
         $model->owned_by_id = $safari_operator->id;
@@ -137,6 +143,9 @@ class PackageController extends FrontendBaseController
     public function actionUpdate($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'update';
@@ -192,6 +201,9 @@ class PackageController extends FrontendBaseController
     public function actionPolicyInfo($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'policy_info';
@@ -220,6 +232,9 @@ class PackageController extends FrontendBaseController
     public function actionGettingThere($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'getting_there';
@@ -247,6 +262,9 @@ class PackageController extends FrontendBaseController
     public function actionInclusion($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'inclusion';
@@ -314,6 +332,9 @@ class PackageController extends FrontendBaseController
     public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_day_model = $this->findModelDay($package_model->id, $day);
         if ($package_day_model) {
@@ -352,6 +373,9 @@ class PackageController extends FrontendBaseController
     public function actionFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_model->id;
@@ -373,6 +397,9 @@ class PackageController extends FrontendBaseController
     public function actionCreateFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqForm();
         $model->package_id =  $package_model->id;
@@ -419,6 +446,9 @@ class PackageController extends FrontendBaseController
     public function actionUpdateFaq($slug, $faq_id)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
@@ -463,6 +493,9 @@ class PackageController extends FrontendBaseController
     public function actionSelectFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqSelectForm();
         $model->package_id = $package_model->id;
@@ -607,6 +640,9 @@ class PackageController extends FrontendBaseController
     public function actionGallery($slug)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageGallerySearch();
         $searchModel->package_id = $package_model->id;
@@ -623,6 +659,9 @@ class PackageController extends FrontendBaseController
     public function actionCreateGallery($slug, $id = null)
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return $this->redirect('/manage');
+        }
         $package_model = $this->findModel($slug, $safari_operator->id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
