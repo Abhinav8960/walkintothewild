@@ -102,7 +102,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="dropdown custom_dropdown">
                         <div class="form-group animal_search_container">
                             <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control animal_search" placeholder="Search Animal">
+                            <input type="text" id="animal_focus" class="form-control animal_search" placeholder="Search Animal">
                         </div>
 
 
