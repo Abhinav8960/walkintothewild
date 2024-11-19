@@ -198,6 +198,18 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                             $chat_message->message = $message;
                             $chat_message->status = 1;
                             if ($chat_message->save()) {
+                                $reply_by = $login_user->name;
+                                $reply_to = $individual_user->name;
+                                $to_mail = $individual_user->username;
+                                $chat_url = Yii::$app->urlManager->createAbsoluteUrl("/chat/message/" . $individual_user['user_handle'] . "/" . base64_encode($chat->id));
+                                $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => false];
+                                $subject = 'New Message';
+                                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REPLY_BY_ANYONE_USER;
+                                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+
+                                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                                }
                                 Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                                 return ['status' => true, 'message' => 'Message Sent'];
                             }
