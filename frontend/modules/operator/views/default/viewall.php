@@ -87,7 +87,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Parks</h6>
                                             </div>
 
-                                            <div class="row parks-scroll-container">
+                                            <div class="row">
                                                 <?php
                                                 if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $operator_park) {
