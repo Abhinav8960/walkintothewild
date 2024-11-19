@@ -134,10 +134,11 @@ class OperatorQuoteForm extends Model
                 if ($chat_message->save()) {
                     //create mail log
                     $operator = SafariOperator::find()->where(['id' => $operator->id])->limit(1)->one();
-                    $to_mail = $operator->email;
-                    $subject = 'Request Free Quote';
+                    $to_mail = isset($operator->user) ? $operator->user->username : '';
+                    $subject = 'New Quote Request';
                     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-                    $chat_url = "/chat/message/" . Yii::$app->user->identity->user_handle . "/" . base64_encode($chat->id);
+
+                    $chat_url = Yii::$app->urlManager->createAbsoluteUrl("/chat/message/" . Yii::$app->user->identity->user_handle . "/" . base64_encode($chat->id));
                     $req = ['username' => $operator->business_name, 'chat_url' => $chat_url, 'parkname' => $operator_quote->park->title, 'is_email_sending' => true];
 
                     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);

@@ -87,14 +87,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Parks</h6>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row parks-scroll-container">
                                                 <?php
                                                 if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $operator_park) {
                                                         $park_detail = $operator_park->park;
                                                         if ($park_detail) {
                                                 ?>
-                                                            <div class="col-md-4 col-lg-3 col-xxl-3 col-sm-6 gap-2  mb-4">
+                                                            <div class="col-md-3 col-lg-3 col-xxl-3 col-sm-6 gap-2  mb-4">
                                                                 <div class="parksImgireview h-100">
                                                                     <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>" data-pjax="0">
                                                                         <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
@@ -110,9 +110,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     }
                                                 } ?>
                                                 <?php
-                                                echo \yii\widgets\LinkPager::widget([
-                                                    'pagination' => $dataProvider->pagination,
-                                                ]);
+                                                // echo \yii\widgets\LinkPager::widget([
+                                                //     'pagination' => $dataProvider->pagination,
+                                                // ]);
                                                 ?>
                                             </div>
 
