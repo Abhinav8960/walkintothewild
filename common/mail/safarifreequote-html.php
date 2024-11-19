@@ -3,25 +3,26 @@
 use yii\helpers\Html;
 
 ?>
-<div class="verify-email">
-    <p>Hi <?= Html::encode($username) ?>,</p>
-    <p> You have received a new quote request for <?= Html::encode($parkname) ?>. Please check your inbox to review the details and respond promptly. </p>
-    <a style="background:#128A00;border:0; padding:8px 20px;color:#fff;text-decoration:none;" href="https://www.walkintothewild.in<?= $chat_url ?>">Check Inbox</a>
-    <p style="margin-top:2% !important;">Thank you!</p>
-    <p>Best regards,</p>
-    <p>Team Walk into the Wild</p>
-</div>
-<?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
-    <div class="card">
-        <div class="card-body">
-            <p>Sample Array :</p>
-            <p>1. username</p>
-            <p>2. parkname</p>
+<html>
 
+<body style="background-color:#ecedf1;  align-items: center; height: auto; min-height: 500px; margin: 10px; padding:10px;">
 
-            <p>Expected Key :</p>
-            <p>1. Annu Singh</p>
-            <p>2. Bandhavgarh</p>
+    <center>
+
+        <div style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  padding: 20px; text-align: center; width: 400px; background-color: white; margin:20px; margin-top:30px;">
+            <h2 style="text-align: center; font-size:25px;  font-family: Arial, sans-serif;">New Quote Request</h2>
+            <div style="border-radius: 15px; margin-top:20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: 0.3s; text-align: center; padding: 10px; background-color:#ecedf1;">
+                <p style="font-family: Arial, sans-serif;"> You have recieved a new quote request for <?= isset($parkname) ? $parkname : '' ?>.Please check your inbox to review the details and respond promptly. </p>
+            </div>
+            <a href="<?= isset($chat_url) ? $chat_url : '' ?>"
+                style="display: inline-block; background-color: #09422d; color: white; font-weight: 500; font-size: 16px; padding: 8px 25px; border-radius: 20px; text-decoration: none; margin-top: 80px;">
+                View inbox
+            </a>
+            <footer style="margin-top: 80px; margin-bottom:0px;font-size: 12px; color: #888;">
+                <p>Walk Into the Wild</p>
+            </footer>
         </div>
-    </div>
-<?php } ?>
+    </center>
+</body>
+
+</html>
