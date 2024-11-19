@@ -780,9 +780,9 @@ class DefaultController extends FrontendBaseController
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1]);
         $dataProvider = new ActiveDataProvider([
             'query' => $operator_parks,
-            'pagination' => [
-                'pageSize' => 8,
-            ],
+            // 'pagination' => [
+            //     'pageSize' => 8,
+            // ],
         ]);
 
         $model = new OperatorQuoteForm();
