@@ -27,7 +27,7 @@ use common\models\GeneralModel;
 
             <div class="col-lg-12 mb-2 mt-2">
                 <div class="textarea">
-                    <?= $form->field($model, 'details')->textarea(['class' => "form-control", 'placeholder' => "Write about your plan"])->label(false) ?>
+                    <?= $form->field($model, 'details')->textarea(['class' => "form-control", 'placeholder' => "Write your Suggestion"])->label(false) ?>
                 </div>
             </div>
 

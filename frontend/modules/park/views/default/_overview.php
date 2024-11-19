@@ -445,7 +445,7 @@ if ($model->corezones) {
         <div class="row pt-3">
             <div class="col-lg-6 col-xl-7 col-md-5">
                 <div class="legends_bx text-fo">
-                    <p class="mb-md-0 mb-2">Safari Price depends on operators and services and may exceed the average price shown
+                    <p class="mb-md-0 mb-2"><sup><i class="fa fa-asterisk" style="font-size:10px;"></i></sup> Safari Price depends on operators and services and may exceed the average price shown
                     </p>
                 </div>
             </div>

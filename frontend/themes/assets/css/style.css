@@ -7039,3 +7039,19 @@ select.custom_sort_by_input option.selected {
   box-shadow: none;
   border: 1px solid gray;  
 }
+
+.parks-scroll-container {
+  max-height: 520px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.parks-scroll-container::-webkit-scrollbar {
+  display: none; 
+}
+
+/* Hide the scrollbar on Firefox */
+.parks-scroll-container {
+  scrollbar-width: none; /* For Firefox */
+}
