@@ -327,7 +327,7 @@ class DefaultController extends FrontendBaseController
         $replymodel->parent_id = $parent_id;
         $replymodel->action_validate_url = '/sharedsafari/default/validate-reply';
 
-
+        $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
         if ($replymodel->load(Yii::$app->request->post())) {
             if ($replymodel->validate()) {
                 if ($replymodel->reply($share_safari)) {
@@ -350,6 +350,21 @@ class DefaultController extends FrontendBaseController
                             GeneralModel::sendmailfromlog($maillog_data['log_id']);
                         }
                         FrontendNotificationHelper::sharedSafariReply($share_safari);
+                    }
+
+                    if (Yii::$app->user->identity && $on_comment && $to_comment_user = $on_comment->user) {
+                        $reply_user = Yii::$app->user->identity;
+                        $reply_username = $reply_user->name;
+                        $to_mail = $to_comment_user->username;
+                        $safari_creator_name = $share_safari->organizedbyname;
+                        $subject = 'New Reply';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REPLY_BY_USER_TO_COMMENTUSER;
+                        $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                        $req = ['username' => $reply_username, 'creator_name' => $safari_creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
                     }
                     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
                     return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
