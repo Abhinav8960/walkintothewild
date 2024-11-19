@@ -48,14 +48,6 @@ $this->params['title'] = $this->title;
                                             </p>
                                         </div>
                                     <?php } ?>
-                                    <?php if ($user->x_url) { ?>
-                                        <div class="links_sociels d-flex gap-2">
-                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-x-twitter me-1"></i></a>
-                                            <p>Twitter
-                                                <span> <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><?= $user->x_url; ?></a></span>
-                                            </p>
-                                        </div>
-                                    <?php } ?>
                                     <?php if ($user->insta_url) { ?>
                                         <div class="links_sociels d-flex gap-2">
                                             <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
@@ -63,7 +55,30 @@ $this->params['title'] = $this->title;
                                                 <span><a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"> <?= $user->insta_url; ?></a></span>
                                             </p>
                                         </div>
-
+                                    <?php } ?>
+                                    <?php if ($user->youtube_url) { ?>
+                                        <div class="links_sociels d-flex gap-2">
+                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-youtube me-1"></i></a>
+                                            <p>Youtube
+                                                <span> <a href="<?= $user->youtube_url; ?>" target="_blank" class="iconSize"><?= $user->youtube_url; ?></a></span>
+                                            </p>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($user->website_url) { ?>
+                                        <div class="links_sociels d-flex gap-2">
+                                            <a href="" class="iconSize sizecontact"><i class="fa-solid fa-link me-1"></i></a>
+                                            <p>Website
+                                                <span> <a href="<?= $user->website_url; ?>" target="_blank" class="iconSize"><?= $user->website_url; ?></a></span>
+                                            </p>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($user->x_url) { ?>
+                                        <div class="links_sociels d-flex gap-2">
+                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-x-twitter me-1"></i></a>
+                                            <p>Twitter
+                                                <span> <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><?= $user->x_url; ?></a></span>
+                                            </p>
+                                        </div>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -117,7 +132,7 @@ $this->params['title'] = $this->title;
                             <?= $this->render('_instagram', ['user' => $user]) ?>
                             <?= $this->render('_organized_shared_safari', ['user' => $user]) ?>
 
-                           
+
                         </div>
                     </div>
                 </div>
