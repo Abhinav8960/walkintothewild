@@ -13,6 +13,8 @@ use common\models\UserExperience;
 use frontend\models\profile\UserForm;
 use common\models\sharesafari\ShareSafari;
 use common\Helper\FrontendNotificationHelper;
+use common\models\GeneralModel;
+use common\models\MailLog;
 use frontend\models\profile\UserExperienceForm;
 use frontend\controllers\FrontendBaseController;
 
@@ -78,6 +80,16 @@ class DefaultController extends FrontendBaseController
             $follower->status = 1;
             $follower->save(false);
 
+            $to_mail = $user->username;
+            $following_name = Yii::$app->user->identity->name;
+            $subject = 'New Follower';
+            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOWER_BY_ANY_USER;
+            $follower_url = Yii::$app->urlManager->createAbsoluteUrl(['/profile/default/follower', 'user_handle' => $user->user_handle]);
+            $req = ['following_name' => $following_name, 'follower_url' => $follower_url];
+            $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                GeneralModel::sendmailfromlog($maillog_data['log_id']);
+            }
             FrontendNotificationHelper::userNewFollower($user, Yii::$app->user->identity);
 
             Yii::$app->session->setFlash('success', "Follow Successfully!!");
