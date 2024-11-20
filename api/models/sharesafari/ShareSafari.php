@@ -65,6 +65,15 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 'host_type'
             ];
         } else {
+            $fields[] = 'types';
+            $fields[] = 'sharesafariagenda';
+            $fields[] = 'budget';
+            $fields[] = 'organizedbyname';
+            $fields[] = 'hosttype';
+            $fields[] = 'sharedimagepath';
+            $fields[] = 'intrestedUser';
+            $fields[] = 'organizedbyimage';
+
             $hold_fields = [
                 'delete_reason_id',
                 'delete_reason',

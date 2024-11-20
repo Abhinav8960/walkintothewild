@@ -17,6 +17,8 @@ use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaAccommodation;
 use api\models\meta\MetaSafariSession;
 use api\models\operator\SafariOperator;
+use api\models\package\Package;
+use api\models\package\PackageSafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\models\suggestions\SafariSuggestions;
 use api\models\UserExperience;
@@ -59,6 +61,7 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'operator';
                 $fields[] = 'lockedMonths';
                 $fields[] = 'sharedsafari';
+                $fields[] = 'package';
             }
 
             $hold_fields = [
@@ -489,5 +492,16 @@ class SafariPark extends \common\models\park\SafariPark
     public function getSharedsafari()
     {
         return $this->hasMany(ShareSafari::className(), ['park_id' => 'id'])->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")]);
+    }
+
+
+    public function getPackagepark()
+    {
+        return $this->hasMany(PackageSafariPark::className(), ['park_id' => 'id'])->andWhere(['package_safari_park.status' => 1]);
+    }
+
+    public function getPackage()
+    {
+        return $this->hasMany(Package::className(), ['id' => 'package_id'])->andwhere(['package.status' => 1])->via('packagepark');
     }
 }
