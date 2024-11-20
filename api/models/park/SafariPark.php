@@ -62,6 +62,9 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'lockedMonths';
                 $fields[] = 'sharedsafari';
                 $fields[] = 'package';
+                $fields[] = 'averagerating';
+                $fields[] = 'countreview';
+
             }
 
             $hold_fields = [
@@ -503,5 +506,17 @@ class SafariPark extends \common\models\park\SafariPark
     public function getPackage()
     {
         return $this->hasMany(Package::className(), ['id' => 'package_id'])->andwhere(['package.status' => 1])->via('packagepark');
+    }
+
+    public function getAveragerating()
+    {
+        $avg = SafariParkRating::find()->select('rating')->where(['status' => 1,'safari_park_id' => $this->id])->average('rating');
+        return round($avg,1);
+    }
+
+    public function getCountreview()
+    {
+       return SafariParkRating::find()->select('rating')->where(['status' => 1,'safari_park_id' => $this->id])->count();
+        
     }
 }
