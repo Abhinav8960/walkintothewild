@@ -35,7 +35,7 @@ class SafariParkRating extends \common\models\park\SafariParkRating
         $fields = parent::fields();
         
         $fields[] = 'user';
-        $hold_fields = ['user_id', 'safari_park_id', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['id','user_id', 'safari_park_id', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'updated_at'];
 
 
         return array_diff($fields, $hold_fields);

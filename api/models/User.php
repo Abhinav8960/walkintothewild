@@ -22,9 +22,10 @@ class User extends \common\models\User
 
         $fields[] = 'profileimage';
         $fields[] = 'coverimage';
+        $fields[] = 'usename';
 
 
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view','package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist','park/default/view'])) {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view'])) {
             $hold_fields = [
                 'id',
                 'mobile_no',
@@ -114,5 +115,13 @@ class User extends \common\models\User
     public function getOperator()
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
+    }
+
+    public function getUsename()
+    {
+        if ($this->operator && $this->operator->user_id == $this->id) {
+            return $this->operator->businessname;
+        }
+        return $this->name;
     }
 }
