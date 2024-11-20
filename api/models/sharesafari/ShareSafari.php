@@ -25,7 +25,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $fields = parent::fields();
 
-        if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+        if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view','operator/default/view'])) {
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
