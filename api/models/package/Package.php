@@ -64,7 +64,10 @@ class Package extends \common\models\package\Package
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] = 'packagename';
-            $fields[] = 'packagepark';
+            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+                $fields[] = 'packagepark';
+            }
+
             $fields[] = 'packagedaynightlabels';
             $hold_fields = [
                 'package_agenda_id',
