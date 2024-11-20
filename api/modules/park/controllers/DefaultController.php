@@ -2,6 +2,7 @@
 
 namespace api\modules\park\controllers;
 
+use api\behaviours\Apiauth;
 use api\controllers\RestController;
 use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
@@ -10,7 +11,10 @@ use api\models\operator\SafariOperatorSearch;
 use api\models\park\SafariParkRating;
 use api\models\park\SafariParkRatingSearch;
 use api\models\park\SafariParkSearch;
+use api\models\suggestions\SafariSuggestions;
+use common\models\suggestions\form\SafariSuggestionsForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -28,13 +32,29 @@ class DefaultController extends RestController
         $behaviors = parent::behaviors();
 
         return $behaviors + [
+            'apiauth' => [
+                'class' => Apiauth::className(),
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist'],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['suggestion'],
+                'rules' => [
+                    [
+                        'actions' => ['suggestion'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
                     'index' => ['GET'],
                     'view' => ['GET'],
                     'filter-parklist' => ['GET'],
-                    'reviewlist' => ['GET']
+                    'reviewlist' => ['GET'],
+                    'suggestion' => ['POST']
 
                 ],
             ],
@@ -95,5 +115,30 @@ class DefaultController extends RestController
         $searchModel->custom_sort_by = $sort_by;
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "Review");
+    }
+
+
+    public function actionSuggestion($park_id)
+    {
+        $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'id' => $park_id])->limit(1)->one();
+        if ($this->userinfo) {
+            $model = new SafariSuggestionsForm();
+            $model->status = SafariSuggestions::STATUS_ACTIVE;
+            $model->is_approved = 0;
+            $model->park_id = $park_id;
+            $model->name = $this->userinfo->name;
+            $model->email = $this->userinfo->email;
+            $model->phone = $this->userinfo->mobile_no;
+            $model->ip_address = Yii::$app->request->getRemoteIP();
+
+            $model->attributes = $this->request;
+            if ($model->validate()) {
+                $model->initializeForm();
+                if ($model->safari_suggestion_model->save(false)) {
+                    return Yii::$app->api->sendResponse($data = ['payload' => $model->safari_suggestion_model->attributes], ['message' => "Suggestion Submitted Successfully"]);
+                }
+            }
+        }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
