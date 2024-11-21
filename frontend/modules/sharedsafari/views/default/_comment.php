@@ -31,7 +31,7 @@ use yii\helpers\Url;
 
                                     <div class="profile-description">
                                         <div class="text show-more-height">
-                                            <?= $share_safari->safari_plan; ?>
+                                            <?= GeneralModel::commentconversion($share_safari->safari_plan); ?>
                                         </div>
                                         <div class="show-more">See More</div>
                                     </div>
@@ -230,7 +230,17 @@ $('.toggle-replies').click(function() {
         var isVisible = container.is(':visible');
         container.slideToggle();
         $(this).text(isVisible ? 'View replies' : 'Hide replies');
-    });        
+    });    
+JS;
+$this->registerJs($script);
+?>
+
+
+<?php
+$script = <<< JS
+$(document).ready(function(){
+     $('[data-bs-toggle="tooltip"]').tooltip();
+});
 JS;
 $this->registerJs($script);
 ?>
