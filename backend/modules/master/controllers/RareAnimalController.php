@@ -146,7 +146,7 @@ class RareAnimalController extends Controller
      * Finds the MasterRareAnimal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterRareAnimal the loaded model
+     * @return MasterAnimal the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
