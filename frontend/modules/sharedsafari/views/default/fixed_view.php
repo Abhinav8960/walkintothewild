@@ -398,7 +398,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
                                         <div class="accordion-body profile-description">
                                             <div class="text show-more-height">
-                                                <?= $share_safari->safari_plan ?>
+                                                <?= GeneralModel::commentconversion($share_safari->safari_plan) ?>
                                             </div>
                                             <div class="show-more">See More</div>
                                         </div>
@@ -662,3 +662,13 @@ $this->registerJs($script);
         padding: 0.5rem !important;
     }
 </style>
+
+
+<?php
+$script = <<< JS
+$(document).ready(function(){
+     $('[data-bs-toggle="tooltip"]').tooltip();
+});
+JS;
+$this->registerJs($script);
+?>

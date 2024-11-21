@@ -1278,16 +1278,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function commentconversion($comment)
     {
+        $exclamation = '<i class="fa-solid fa-triangle-exclamation" style="color: #FFD43B; cursor: pointer;" data-bs-toggle="tooltip" title="Phone numbers are hidden to protect privacy. Please message directly."></i>';
         if (preg_match('/\b\d{10}\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{5})\d{5}\b/', '$1xxxxx', $comment);
+            $comment = preg_replace('/\b(\d{5})\d{5}\b/', '$1xxxxx ' . $exclamation, $comment);
         } else if (preg_match('/\b(\d{5}) (\d{5})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{5}) (\d{5})\b/', '$1 xxxxx', $comment);
+            $comment = preg_replace('/\b(\d{5}) (\d{5})\b/', '$1 xxxxx ' . $exclamation, $comment);
         } else if (preg_match('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', '$1 $1 $1 $1 $1 x x x x x', $comment);
+            $comment = preg_replace('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', '$1 $1 $1 $1 $1 x x x x x ' . $exclamation, $comment);
         } else if (preg_match('/\b(\d{2}) (\d{5}) (\d{5})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{2}) (\d{5}) (\d{5})\b/', 'xx $1 xxxxx', $comment);
+            $comment = preg_replace('/\b(\d{2}) (\d{5}) (\d{5})\b/', 'xx $1 xxxxx ' . $exclamation, $comment);
         } else if (preg_match('/\b(\d{2}) (\d{10})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{2}) (\d{5})(\d{5})\b/', 'xx $1xxxxx', $comment);
+            $comment = preg_replace('/\b(\d{2}) (\d{5})(\d{5})\b/', 'xx $1xxxxx ' . $exclamation, $comment);
         }
         return $comment;
     }
