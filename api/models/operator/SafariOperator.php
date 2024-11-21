@@ -3,6 +3,7 @@
 namespace api\models\operator;
 
 use api\models\package\Package;
+use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\models\User;
 use api\models\UserFollow;
@@ -67,7 +68,9 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'sharedsafaricount';
             $fields[] = 'sharedsafari';
             $fields[] = 'packages';
-            // $fields[] = 'followerlist';
+            $fields[] = 'park';
+            $fields[] = 'averagerating';
+            $fields[] = 'reviewcount';
             $fields[] = 'followerlistcount';
             $hold_fields = [
                 'safari_operator_request_id',
@@ -111,10 +114,17 @@ class SafariOperator extends \common\models\operator\SafariOperator
         return $fields;
     }
 
+
     public function getPark()
+    {
+        return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('safaripark');
+    }
+
+    public function getSafaripark()
     {
         return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
     }
+
 
     public function getParkcount()
     {
@@ -207,5 +217,17 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
+    public function getAveragerating()
+    {
+        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
+        return $avg;
+    }
+
+    public function getReviewcount()
+    {
+        return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
     }
 }
