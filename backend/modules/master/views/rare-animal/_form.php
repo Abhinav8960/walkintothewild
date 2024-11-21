@@ -20,6 +20,10 @@ use common\models\GeneralModel;
         <?= $form->field($model, 'know_as')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
     </div>
 
+    <div class="col-md-3">
+        <?= $form->field($model, 'is_searchable')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select']) ?>
+    </div>
+
     <?php
     if ($model->rare_animal_model->feature_image) { ?>
         <div class="col-md-5">

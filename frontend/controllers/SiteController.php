@@ -572,7 +572,7 @@ class SiteController extends FrontendBaseController
         $animallist = '';
         if ($text <> '') {
             $animals = MasterAnimal::find()
-                ->where(['is_searchable' => 1, 'status' => 1, 'animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])
+                ->where(['is_searchable' => 1, 'status' => 1, 'animal_type' => [MasterAnimal::USUAL_ANIMAL_TYPE, MasterAnimal::RARE_ANIMAL_TYPE]])
                 ->andFilterWhere(['like', 'name', $text])
                 ->all();
             // $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
@@ -594,7 +594,4 @@ class SiteController extends FrontendBaseController
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return ['fordorp_item' => $fordorp_item, 'animallist' => $animallist];
     }
-
-
-    
 }
