@@ -75,5 +75,15 @@ $reviews = $ratingdataProvider->getModels();
 
         </div>
     </div>
-<?php } ?>
+<?php } else {  ?>
+    <div class="request_quote mb-4">
+        <button class="intested_btn interestBtn  d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor: default;">
 
+            Operator Rating
+
+        </button>
+        <div class="interst_wrapper pt-1 px-3 bg-white mt-2">
+            <p>Nobody has shared any review about <strong><?= $operator->business_name ?></strong></p>
+        </div>
+    </div>
+<?php } ?>
