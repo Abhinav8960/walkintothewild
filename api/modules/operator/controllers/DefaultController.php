@@ -8,6 +8,7 @@ use Yii;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
+use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
 use api\models\UserFollow;
 use common\Helper\FrontendNotificationHelper;
@@ -31,14 +32,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
+                'exclude' => ['index', 'view','reviewlist'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow','unfollow'],
+                'only' => ['follow', 'unfollow'],
                 'rules' => [
                     [
-                        'actions' => ['follow','unfollow'],
+                        'actions' => ['follow', 'unfollow'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,6 +53,7 @@ class DefaultController extends RestController
                     'view' => ['GET'],
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
+                    'reviewlist' => ['GET'],
                 ],
             ],
         ];
@@ -157,5 +159,23 @@ class DefaultController extends RestController
             }
         }
         return  Yii::$app->api->sendFailedStringResponse($operator->firstErrors, 400);
+    }
+
+    public function actionReviewlist($slug, $sort_by = null)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
+        }
+
+        $ratingsearchModel = new SafariOperatorRatingSearch();
+        $ratingsearchModel->custom_sort_by = $sort_by;
+        $ratingsearchModel->safari_operator_id = $operator->id;
+        $ratingsearchModel->is_deleted = 0;
+        $ratingsearchModel->status = 1;
+
+        // $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
+        return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "Review");
+
     }
 }

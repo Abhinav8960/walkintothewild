@@ -17,7 +17,24 @@ use Yii;
  */
 class SafariOperatorPark extends \common\models\operator\SafariOperatorPark
 {
-    
+    public function fields()
+    {
+        $fields = parent::fields();
+        // $fields[] = 'park';
+        $hold_fields = [
+            'id',
+            'safari_operator_id',
+            'park_id',
+            'status',
+            'show_in_front',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at'
+        ];
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
 
     public function getPark()
     {
