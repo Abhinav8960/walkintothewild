@@ -19,6 +19,12 @@ class SafariOperator extends \common\models\operator\SafariOperator
         $fields = parent::fields();
         if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
             $fields[] = 'imagepath';
+            $fields[] = 'parkcount';
+            $fields[] = 'packagecount';
+            $fields[] = 'sharedsafaricount';
+            $fields[] = 'averagerating';
+            $fields[] = 'reviewcount';
+            $fields[] = 'followerlistcount';
             $hold_fields = [
                 'id',
                 'safari_operator_request_id',
