@@ -2,6 +2,7 @@
 
 namespace api\models\package;
 
+use api\models\master\packageinclude\MasterPackageInclude;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
@@ -18,7 +19,7 @@ class Package extends \common\models\package\Package
 
         if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
             $fields[] = 'packagename';
-            $fields[] = 'packageincluded';
+            $fields[] = 'masterPackageWithIncluded';
             $fields[] = 'safarioperator';
             $fields[] = 'packagepark';
             $fields[] = 'pickanddrop';
@@ -62,14 +63,13 @@ class Package extends \common\models\package\Package
             $fields[] = 'pickanddrop';
             $fields[] = 'mealslisting';
             $fields[] = 'packagerange';
-            if(!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view']))
-            {
+            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
                 $fields[] = 'safarioperator';
             }
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] = 'packagename';
-            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view','operator/default/view'])) {
+            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view', 'operator/default/view'])) {
                 $fields[] = 'packagepark';
             }
 
@@ -159,6 +159,26 @@ class Package extends \common\models\package\Package
         return $name;
     }
 
+
+    public function getMasterPackageWithIncluded(){
+
+        $arr = [];
+        $i =0;
+        foreach($this->packageincluded as $key => $mgi){
+            if(isset($mgi->packageInclude)){
+                $arr[$i]['id']=$mgi->packageInclude->id; 
+                $arr[$i]['title']=$mgi->packageInclude->title; 
+                $arr[$i]['option']=$mgi->getIncludeoption(); 
+                $i++;
+            }
+        }
+        return $arr;
+
+    }
+
+
+
+
     public function getPackageincluded()
     {
         return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
@@ -171,10 +191,10 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getPackageIncludeds()
-    {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
-    }
+    // public function getPackageIncludeds()
+    // {
+    //     return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+    // }
 
     public function getPackagedays()
     {
