@@ -28,7 +28,7 @@ class StaticPageController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => [],
+                'only' => ['contact-us'],
                 'rules' => [
                     [
                         'actions' => ['contact-us'],
