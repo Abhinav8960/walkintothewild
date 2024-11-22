@@ -82,8 +82,10 @@ $reviews = $ratingdataProvider->getModels();
             Operator Rating
 
         </button>
-        <div class="interst_wrapper pt-1 px-3 bg-white mt-2">
-            <p>Nobody has shared any review about <strong><?= $operator->business_name ?></strong></p>
+        <div class="interst_wrapper px-3 bg-white">
+            <p class="text-center mb-0">Nobody has shared any review about</p>
+            <p class="text-center mb-0 mt-2"><?= $operator->business_name ?></p>
+            <p class="text-center"><a class="sent_btn rounded-2 mt-2" style="color:white;text-decoration: none;" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">Share Your Review</a></p>
         </div>
     </div>
 <?php } ?>
