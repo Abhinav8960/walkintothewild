@@ -71,7 +71,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
         <div class="col-lg-2">
             <div class="form-wrapper">
-                <label for="">Stay Category</label>
+                <label for="">Accomodation</label>
                 <?= $form->field($model, 'stay_category_id')->widget(\kartik\select2\Select2::className(), [
                     'hideSearch' => true,
                     'data' => GeneralModel::staycategoryoption(),
