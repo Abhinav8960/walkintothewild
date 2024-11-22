@@ -447,7 +447,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
                         <div class="ff">
                             <div class="faqsss">
-                                <?= $this->render('_faq', ['faqs' => $faqs]) ?>
+                                <?= $this->render('_faq', ['faqs' => $faqs, 'share_safari' => $share_safari]) ?>
                             </div>
                         </div>
                     </div>

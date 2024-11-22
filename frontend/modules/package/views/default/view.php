@@ -380,7 +380,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
-                                <?= $this->render('_faq', ['faqs' => $faqs]) ?>
+                                <?= $this->render('_faq', ['faqs' => $faqs, 'package' => $package]) ?>
                             </div>
                         </div>
                     </div>
