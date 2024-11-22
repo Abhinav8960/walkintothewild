@@ -126,6 +126,7 @@ return [
                 'operator/<slug>/<action>' => 'operator/default/<action>',
                 'about-us' => 'static-page/about-us',
                 'faqs' => 'static-page/faqs',
+                'contact-us' => 'static-page/contact-us',
             ],
 
         ],
