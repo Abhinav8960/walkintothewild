@@ -5,6 +5,7 @@ namespace api\models\package;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
+use api\models\UserWishlist;
 use Yii;
 use common\models\User;
 
@@ -29,6 +30,7 @@ class Package extends \common\models\package\Package
             $fields[] =  'packagedays';
             $fields[] = 'comments';
             $fields[] = 'faqs';
+            $fields[] = 'isWishlist';
             $hold_fields = [
                 'start_location',
                 'end_location',
@@ -72,6 +74,7 @@ class Package extends \common\models\package\Package
             }
 
             $fields[] = 'packagedaynightlabels';
+            $fields[] = 'isWishlist';
             $hold_fields = [
                 'package_agenda_id',
                 'safari_type',
@@ -357,5 +360,21 @@ class Package extends \common\models\package\Package
     public function getFaqs()
     {
         return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
+    }
+
+    public function getActiveUserWishlist()
+    {
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+    }
+
+
+
+    public function getIsWishlist()
+    {
+        $is_whislist = $this->activeUserWishlist;
+        if (!empty($is_whislist)) {
+            return true;
+        }
+        return false;
     }
 }
