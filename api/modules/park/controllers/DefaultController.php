@@ -118,14 +118,14 @@ class DefaultController extends RestController
     }
 
 
-    public function actionSuggestion($park_id)
+    public function actionSuggestion($slug)
     {
-        $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'id' => $park_id])->limit(1)->one();
+        $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($this->userinfo) {
             $model = new SafariSuggestionsForm();
             $model->status = SafariSuggestions::STATUS_ACTIVE;
             $model->is_approved = 0;
-            $model->park_id = $park_id;
+            $model->park_id = $safari_park->id;
             $model->name = $this->userinfo->name;
             $model->email = $this->userinfo->email;
             $model->phone = $this->userinfo->mobile_no;
