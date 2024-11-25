@@ -61,7 +61,7 @@ class StaticPageController extends RestController
         $faqs = Faqs::find()->where([
             'status' => 1,
         ])->orderby(['sequence' => SORT_ASC, 'question' => SORT_ASC])->all();
-        return Yii::$app->api->sendResponse($data = $faqs, ['Faqs']);
+        return Yii::$app->api->sendResponse($data = $faqs, ['message' => 'Faqs']);
     }
 
     public function actionContactUs()
