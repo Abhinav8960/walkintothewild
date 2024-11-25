@@ -9,8 +9,8 @@ use yii\base\NotSupportedException;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
-use common\models\sharesafari\ShareSafari;
-use common\models\operator\SafariOperator;
+use api\models\sharesafari\ShareSafari;
+use api\models\operator\SafariOperator;
 
 
 class User extends \common\models\User
@@ -25,7 +25,7 @@ class User extends \common\models\User
         $fields[] = 'usename';
 
 
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist','operator/default/view'])) {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view'])) {
             $hold_fields = [
                 'id',
                 'mobile_no',
@@ -73,7 +73,14 @@ class User extends \common\models\User
                 'updated_at'
             ];
         } else {
-            $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image", "user_handle",     "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            if (in_array(\Yii::$app->controller->action->uniqueId, ['site/profile'])) {
+                $fields[] = 'operatortype';
+
+                $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image", "user_handle",     "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            } else {
+
+                $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image", "user_handle",     "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            }
         }
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -123,5 +130,16 @@ class User extends \common\models\User
             return $this->operator->businessname;
         }
         return $this->name;
+    }
+
+    public function getOperatortype(){
+        $arr = [
+            'status' => 0,
+        ];
+        if(!empty($this->operator)){
+            $arr['status'] = 1;
+            $arr['title'] = $this->operator->categorytitle ?? NULL;
+        }
+        return $arr;
     }
 }
