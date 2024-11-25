@@ -135,8 +135,9 @@ class DefaultController extends RestController
             if ($model->validate()) {
                 $model->initializeForm();
                 if ($model->safari_suggestion_model->save(false)) {
-                    return Yii::$app->api->sendResponse($data = ['payload' => $model->safari_suggestion_model->attributes], ['message' => "Suggestion Submitted Successfully"]);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Suggestion Submitted Successfully"]);
                 }
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Suggestion Not Submitted"]);
             }
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);

@@ -25,6 +25,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'averagerating';
             $fields[] = 'reviewcount';
             $fields[] = 'followerlistcount';
+            $fields[] = 'categorytitle';
             $hold_fields = [
                 'id',
                 'safari_operator_request_id',
