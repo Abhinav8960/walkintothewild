@@ -262,4 +262,20 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
         return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
     }
+
+
+    public function getSharesafarifollowerlist()
+    {
+        if ($this->user &&  $this->user->userfollowers) {
+            return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
+        }
+    }
+    
+    public function getFixeddeparturefollowerlist()
+    {
+         if($this->safarioperator && $this->safarioperator->followerlist)
+         {
+            return $this->safarioperator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
+         }
+    }
 }
