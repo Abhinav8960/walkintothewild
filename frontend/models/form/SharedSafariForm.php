@@ -86,7 +86,7 @@ class SharedSafariForm extends \yii\base\Model
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
             [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000],
-            [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
+            // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
 
         ];
     }
@@ -197,7 +197,7 @@ class SharedSafariForm extends \yii\base\Model
     {
         $wordCount = str_word_count($this->$attribute);
         if ($wordCount >= 1000) {
-            $this->addError($attribute, 'Please provide content within 100 words.');
+            $this->addError($attribute, 'Please provide content within 1000 words.');
         }
     }
 

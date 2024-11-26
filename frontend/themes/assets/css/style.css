@@ -6869,7 +6869,7 @@ select.custom_sort_by_input option.selected {
 }
 
 .profile-description .show-more {
-  display: none;
+  /* display: none; */
   text-align: left;
 }
 
