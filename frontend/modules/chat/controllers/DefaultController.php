@@ -25,17 +25,17 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
      * @return string
      */
     public function actionIndex()
-    {
+    { 
         $searchModel = new ChatSearch();
         $login_user = Yii::$app->user->identity;
-
+       
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($login_user) {
             $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
 
             $active_quote_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
         } else {
-            $active_quote_chat_list = [];
+            $active_chat_list = [];
             $active_quote_chat_list = [];
         }
 
