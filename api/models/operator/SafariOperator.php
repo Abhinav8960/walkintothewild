@@ -103,6 +103,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
                 'starting_price',
                 'is_approved',
                 'user_id',
+                'operator_name',
                 'operator_phone_no',
                 'operator_email',
                 'delete_reason_id',
