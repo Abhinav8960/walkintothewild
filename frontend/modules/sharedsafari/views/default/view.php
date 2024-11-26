@@ -459,7 +459,7 @@ const textContainer = $(".profile-description .text");
     const showMoreButton = $(".profile-description .show-more");
     const lineHeight = parseInt(textContainer.css('line-height'));
 
-    const threeLinesHeight = lineHeight * 3;
+    const threeLinesHeight = lineHeight * 2;
 
     if (textContainer[0].scrollHeight > threeLinesHeight) {
         showMoreButton.show();
