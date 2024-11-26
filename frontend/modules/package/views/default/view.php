@@ -441,7 +441,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 <?php } ?>
 
-                <?php if ($package->packagegallery) {
+                <!-- <?php if ($package->packagegallery) {
                     $galleries = $package->packagegallery;
                 ?>
                     <div class="request_quote photoGallry mb-4">
@@ -460,7 +460,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                <?php } ?> -->
 
                 <div class="">
                     <?php
