@@ -61,7 +61,7 @@ class UserPostsForm extends Model
     public function rules()
     {
         return [
-            [['caption', 'type_of_post', 'file'], 'required'],
+            [['caption','file'], 'required'],
             [
                 ['file'],
                 'file',
@@ -99,7 +99,7 @@ class UserPostsForm extends Model
         $this->user_photo_model->caption = $this->caption;
         $this->user_photo_model->description = $this->description;
         $this->user_photo_model->user_id = $this->user_id;
-        $this->user_photo_model->type_of_post = $this->type_of_post;
+        // $this->user_photo_model->type_of_post = $this->type_of_post;
         // $this->user_photo_model->height = $this->height;
         // $this->user_photo_model->width = $this->width;
         $this->user_photo_model->like_count = $this->like_count;

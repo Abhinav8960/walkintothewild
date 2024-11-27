@@ -82,8 +82,9 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_photo_model->save()) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = [$model->user_photo_model->attributes], ['message' => "Post added successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
             }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
