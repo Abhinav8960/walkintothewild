@@ -13,10 +13,10 @@ class UserPosts extends \common\models\UserPosts
         if (!in_array(\Yii::$app->controller->action->uniqueId,  ['posts/default/index'])) {
             $fields[] = 'imagepath';
             $fields[] = 'comments';
-            $hold_fields = ['file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $hold_fields = ['type_of_post','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         } else {
             $fields[] = 'imagepath';
-            $hold_fields = ['file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $hold_fields = ['type_of_post','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }
 
         return array_diff($fields, $hold_fields);
