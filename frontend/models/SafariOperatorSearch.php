@@ -3,8 +3,10 @@
 namespace frontend\models;
 
 use common\models\operator\SafariOperator;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 
 /**
  * SafariOperatorSearch represents the model behind the search form of `common\models\operator\SafariOperator`.
@@ -50,15 +52,26 @@ class SafariOperatorSearch extends SafariOperator
     {
         $query = SafariOperator::find()->where(['safari_operator.status' => 1]);
 
-        // add conditions that should always apply here
 
+        $session = Yii::$app->session;
+        if (!$session->isActive) {
+            $session->open();
+        }
+        if ($session->get('lastSort') === 'random') {
+            $currentSort = 'google_rating';
+            $query->orderBy(['google_rating' => SORT_DESC]);
+        } else {
+            $currentSort = 'random';
+            $query->orderBy(new Expression('RAND()'));
+        }
+        $session->set('lastSort', $currentSort);
 
 
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['google_rating' => SORT_DESC]
+                'defaultOrder' => $query,
             ]
         ]);
 
