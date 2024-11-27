@@ -1220,7 +1220,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
             if ($log->mail_template_id) {
                 $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
-                if ($template) {
+                if ($template && Yii::$app->params['can_email_sent'] == true) {
                     $mailer =  \Yii::$app->mailer;
                     try {
                         $message = $mailer->compose($template->path, json_decode($log->params, true))
@@ -1236,7 +1236,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                         die('here is some errors');
                     }
 
-                    if ($message &&  Yii::$app->params['can_email_sent'] == true) {
+                    if ($message) {
                         $m = MailLog::find()->where(['id' => $log->id])->one();
 
                         $id = $mailer->getSentMessage()->getMessageId();
