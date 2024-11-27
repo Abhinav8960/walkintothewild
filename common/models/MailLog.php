@@ -177,7 +177,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
         if ($log->mail_template_id) {
             $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
-            if ($template) {
+            if ($template && Yii::$app->params['can_email_sent'] == true) {
                 $mailer =  \Yii::$app->mailer;
                 // $message = $mailer->compose($template->path, json_decode($log->params, true))
                 //     // ->setFrom($log->mail_from)
@@ -199,7 +199,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                     ->setSubject($log->subject)
                     ->send();
 
-                if ($message && Yii::$app->params['can_email_sent'] == true) {
+                if ($message ) {
                     $m = MailLog::find()->where(['id' => $log->id])->one();
 
                     $id = $mailer->getSentMessage()->getMessageId();
