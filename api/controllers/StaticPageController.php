@@ -24,20 +24,20 @@ class StaticPageController extends RestController
         return $behaviors +  [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['faqs', 'about-us'],
+                'exclude' => ['faqs', 'about-us','contact-us'],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['contact-us'],
-                'rules' => [
-                    [
-                        'actions' => ['contact-us'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     'only' => ['contact-us'],
+            //     'rules' => [
+            //         [
+            //             'actions' => ['contact-us'],
+            //             'allow' => true,
+            //             'roles' => ['@'],
+            //         ],
 
-                ],
-            ],
+            //     ],
+            // ],
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
