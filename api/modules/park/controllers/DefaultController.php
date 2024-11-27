@@ -13,6 +13,7 @@ use api\models\park\SafariParkRatingSearch;
 use api\models\park\SafariParkSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\models\suggestions\form\SafariSuggestionsForm;
+use frontend\models\SafariParkReviewForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -142,4 +143,59 @@ class DefaultController extends RestController
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
+
+
+    public function actionReview($slug)
+    {
+        $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$safari_park) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+        $model = new SafariParkReviewForm();
+        $model->safari_park_id = $safari_park->id;
+        $model->status = SafariParkRating::STATUS_SUSPEND;
+        // $model->action_url = '/park/default';
+        // $model->action_validate_url = '/park/default/validatereview';
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->rating_model->save(false)) {
+                $model->updateRatingintoTable($safari_park);
+                Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Thanks for Review! Your review sent for approval"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Your review not sent for approval"]);
+        } 
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+
+    // public function actionReviewupdate($park_id, $user_id, $id)
+    // {
+    //     $safari_park = SafariPark::find()->where(['id' => $park_id])->one();
+    //     $rating_model = SafariParkRating::find()->where(['user_id' => $user_id, 'safari_park_id' => $park_id, 'id' => $id])->one();
+    //     $model = new SafariParkReviewForm($rating_model);
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->rating_model->save(false)) {
+    //                     $model->updateRatingintoTable($safari_park);
+    //                     Yii::$app->session->setFlash('success', 'Thanks for Edit Review!!');
+    //                     return $this->redirect([
+    //                         '/park/' . $safari_park->slug . ''
+    //                     ]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->rating_model->loadDefaultValues();
+    //     }
+    //     if (Yii::$app->request->isAjax) {
+    //         return $this->renderAjax('_review_form', [
+    //             'model' => $model,
+    //             'park_id' => $park_id,
+    //         ]);
+    //     }
+    // }
 }
