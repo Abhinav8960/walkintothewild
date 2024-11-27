@@ -199,7 +199,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                     ->setSubject($log->subject)
                     ->send();
 
-                if ($message && Yii::$app->params['frontend_url'] == 'https://walkintothewild.in/') {
+                if ($message && Yii::$app->params['frontend_url'] == 'https://walkintothewild.in/' && Yii::$app->params['can_email_sent'] == true) {
                     $m = MailLog::find()->where(['id' => $log->id])->one();
 
                     $id = $mailer->getSentMessage()->getMessageId();
