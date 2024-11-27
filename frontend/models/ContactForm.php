@@ -74,13 +74,15 @@ class ContactForm extends Model
         }
         if ($contact->save(false)) {
             // Save Mail Log and Sent to Admin
-            $to_mail = Yii::$app->params['adminEmail'];
-            $subject = 'New Contact Form Submission | ' . $contact->name . ' - ' . date('Y-m-d H:i:s');
-            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_CONTACT_FORM_SUBMITTED;
-            $req = ['contact' => $contact->attributes];
-            $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-            if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                GeneralModel::sendmailfromlog($maillog_data['log_id']);
+            if (Yii::$app->params['frontend_url'] == "https://walkintothewild.in/") {
+                $to_mail = Yii::$app->params['adminEmail'];
+                $subject = 'New Contact Form Submission | ' . $contact->name . ' - ' . date('Y-m-d H:i:s');
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_CONTACT_FORM_SUBMITTED;
+                $req = ['contact' => $contact->attributes];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
             }
         }
     }
