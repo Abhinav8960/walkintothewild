@@ -1236,7 +1236,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                         die('here is some errors');
                     }
 
-                    if ($message) {
+                    if ($message && Yii::$app->params['frontend_url'] == 'https://walkintothewild.in/') {
                         $m = MailLog::find()->where(['id' => $log->id])->one();
 
                         $id = $mailer->getSentMessage()->getMessageId();
