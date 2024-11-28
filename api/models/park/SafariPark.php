@@ -31,7 +31,7 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
 
-        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist', 'sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'package/default/index','operator/default/view','operator/default/reviewlist'])) {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist', 'sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'package/default/index', 'operator/default/view', 'operator/default/reviewlist'])) {
             $fields[] = 'featureimagepath';
             $fields[] = 'sessions';
             $fields[] = 'months';
@@ -64,7 +64,6 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'package';
                 $fields[] = 'averagerating';
                 $fields[] = 'countreview';
-
             }
 
             $hold_fields = [
@@ -103,6 +102,10 @@ class SafariPark extends \common\models\park\SafariPark
                 'updated_at'
             ];
         } else {
+            if (in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
+
+                $fields[] = 'featureimagepath';
+            }
             $hold_fields = [
                 'id',
                 'show_in_filter',
@@ -510,13 +513,12 @@ class SafariPark extends \common\models\park\SafariPark
 
     public function getAveragerating()
     {
-        $avg = SafariParkRating::find()->select('rating')->where(['status' => 1,'safari_park_id' => $this->id])->average('rating');
-        return round($avg,1);
+        $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $this->id])->average('rating');
+        return round($avg, 1);
     }
 
     public function getCountreview()
     {
-       return SafariParkRating::find()->select('rating')->where(['status' => 1,'safari_park_id' => $this->id])->count();
-        
+        return SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $this->id])->count();
     }
 }
