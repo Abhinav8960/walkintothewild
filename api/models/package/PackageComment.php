@@ -32,6 +32,7 @@ class PackageComment extends \common\models\package\PackageComment
         $fields = parent::fields();
         $fields[] = 'user';
         $fields[] = 'replies';
+        $fields[] = 'willflag';
         $hold_fields = ['id', 'user_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -57,4 +58,12 @@ class PackageComment extends \common\models\package\PackageComment
     // {
     //     return $this->hasMany(PackageCommentReport::className(), ['package_comment_id' => 'id']);
     // }
+
+    public function getWillflag()
+    {
+        if (Yii::$app->user->identity && $this->user_id != Yii::$app->user->identity->id) {
+            return true;
+        }
+        return false;
+    }
 }
