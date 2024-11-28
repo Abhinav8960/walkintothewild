@@ -12,8 +12,10 @@ use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
 use api\models\UserFollow;
 use common\Helper\FrontendNotificationHelper;
+use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
+use frontend\models\SafariOperatorReviewForm;
 use yii\filters\AccessControl;
 
 /**
@@ -36,10 +38,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow', 'unfollow', 'quotesrequest'],
+                'only' => ['follow', 'unfollow', 'quotesrequest','review'],
                 'rules' => [
                     [
-                        'actions' => ['follow', 'unfollow', 'quotesrequest'],
+                        'actions' => ['follow', 'unfollow', 'quotesrequest','review'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,6 +57,7 @@ class DefaultController extends RestController
                     'unfollow' => ['POST'],
                     'reviewlist' => ['GET'],
                     'quotesrequest' => ['POST'],
+                    'review' => ['POST'],
                 ],
             ],
         ];
@@ -178,5 +181,52 @@ class DefaultController extends RestController
 
         // $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "Review");
+    }
+
+
+    public function actionReview($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
+        }
+
+        $model = new SafariOperatorReviewForm();
+        $model->safari_operator_id = $operator->id;
+        $model->user_id = $this->userinfoId;
+
+
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->rating_model->save(false)) {
+                $model->updateRatingintoTable($operator);
+                /**Mail to operator */
+
+                $operator_name = $operator->business_name;
+                /**Operator Mail Info */
+                $to_mail = $operator->user->username;
+
+                /**Template info */
+                $subject = 'New Review';
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_REVIEW_TO_OPERATOR;
+                /**Url Info */
+                $operator_url = Yii::$app->urlManager->createAbsoluteUrl([
+                    '/operator/default/reviewlist',
+                    'slug' => $operator->slug
+                ]);
+                $req = ['operator_name' => $operator_name, 'operator_url' => $operator_url];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
+
+                FrontendNotificationHelper::operatorNewReview($operator, $model->rating_model,  $this->userinfo);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thanks for review!!']);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'Not Submitted successfully']);
+        }
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
