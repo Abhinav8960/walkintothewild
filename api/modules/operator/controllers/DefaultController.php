@@ -32,14 +32,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view','reviewlist'],
+                'exclude' => ['index', 'view', 'reviewlist'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow', 'unfollow'],
+                'only' => ['follow', 'unfollow', 'quotesrequest'],
                 'rules' => [
                     [
-                        'actions' => ['follow', 'unfollow'],
+                        'actions' => ['follow', 'unfollow', 'quotesrequest'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,6 +54,7 @@ class DefaultController extends RestController
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
                     'reviewlist' => ['GET'],
+                    'quotesrequest' => ['POST'],
                 ],
             ],
         ];
@@ -72,26 +73,27 @@ class DefaultController extends RestController
     }
 
 
-    // public function actionQuotesrequest($slug)
-    // {
-    //     $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-    //     if (!$operator) {
-    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
-    //     }
-    //     $model = new OperatorQuoteForm();
-    //     if ($this->userinfo) {
-    //         $model->email = $this->userinfo->email;
-    //         $model->full_name = $this->userinfo->name;
-    //         $model->phone_no = $this->userinfo->mobile_no;
-    //     }
-    //     $model->attributes = $this->request;
-    //     if ($model->validate()) {
-    //         if ($operator_quote = $model->request($operator)) {
-    //             // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
-    //         }
-    //         return Yii::$app->api->sendResponse($data = [$model->attributes], ['message' => 'Quote request sent!']);
-    //     }
-    // }
+    public function actionQuotesrequest($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
+        }
+        $model = new OperatorQuoteForm();
+        if ($this->userinfo) {
+            $model->email = $this->userinfo->email;
+            $model->full_name = $this->userinfo->name;
+            $model->phone_no = $this->userinfo->mobile_no;
+        }
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            if ($operator_quote = $model->request($operator)) {
+                // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
+            }
+        }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
 
 
     public function actionFollow($slug)
@@ -176,6 +178,5 @@ class DefaultController extends RestController
 
         // $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "Review");
-
     }
 }
