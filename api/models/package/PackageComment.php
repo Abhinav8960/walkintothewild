@@ -59,6 +59,7 @@ class PackageComment extends \common\models\package\PackageComment
     //     return $this->hasMany(PackageCommentReport::className(), ['package_comment_id' => 'id']);
     // }
 
+    /**User Will flag */
     public function getWillflag()
     {
         if (Yii::$app->user->identity && $this->user_id != Yii::$app->user->identity->id) {
