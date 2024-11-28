@@ -69,7 +69,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] = 'packagename';
-            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view', 'operator/default/view'])) {
+            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
                 $fields[] = 'packagepark';
             }
 
