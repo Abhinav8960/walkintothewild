@@ -14,6 +14,7 @@ use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\PackageCommentForm;
+use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
 use yii\filters\AccessControl;
 
@@ -37,10 +38,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,6 +55,9 @@ class DefaultController extends RestController
                     'view' => ['GET'],
                     'comment' => ['POST'],
                     'reply' => ['POST'],
+                    'wishlist' => ['POST'],
+                    'unwishlist' => ['POST'],
+                    'package-quote' => ['POST'],
                 ],
             ],
         ];
@@ -82,7 +86,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
-  
+
 
 
 
@@ -181,5 +185,23 @@ class DefaultController extends RestController
             }
         }
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+    }
+
+    public function actionPackageQuote($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+
+        $packagemodel = new PackageQuoteForm();
+        $packagemodel->attributes = $this->request;
+        if ($packagemodel->validate()) {
+            if ($packagemodel->request($package->id)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
+            }
+            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
+        }
+        return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
     }
 }
