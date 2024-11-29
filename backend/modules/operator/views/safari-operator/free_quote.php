@@ -25,29 +25,33 @@ $this->params['title'] = $this->title;
                                 'columns' => [
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
-                                        'label' => 'Full Name',
-                                        'contentOptions' => ['style' => 'width: 20%;'],
+                                        'label' => 'User Name',
+                                        // 'contentOptions' => ['style' => 'width: 20%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
                                             return $model->full_name;
                                         }
                                     ],
-                                    [
-                                        'label' => 'Email',
-                                        'contentOptions' => ['style' => 'width: 20%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->email;
-                                        }
-                                    ],
-                                    [
-                                        'label' => 'Phone Number',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->phone_no;
-                                        }
-                                    ],
+                                    'park.title:raw:Park',
+                                    'safaris',
+                                    'travelers',
+                                    'staycatgory.title:raw:Stay Category',
+                                    // [
+                                    //     'label' => 'Email',
+                                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                                    //     'format' => 'raw',
+                                    //     'value' => function ($model) {
+                                    //         return $model->email;
+                                    //     }
+                                    // ],
+                                    // [
+                                    //     'label' => 'Phone Number',
+                                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                                    //     'format' => 'raw',
+                                    //     'value' => function ($model) {
+                                    //         return $model->phone_no;
+                                    //     }
+                                    // ],
 
                                     [
                                         'label' => 'Start Date',
@@ -56,8 +60,8 @@ $this->params['title'] = $this->title;
                                         'value' => function ($model) {
                                             return $model->start_date;
                                         }
-                                    ], 
-                                     [
+                                    ],
+                                    [
                                         'label' => 'End Date',
                                         'contentOptions' => ['style' => 'width: 15%;'],
                                         'format' => 'raw',
