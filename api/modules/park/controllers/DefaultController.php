@@ -88,6 +88,7 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
 
         $searchModel->id = $model->id; // for show Selected Park name in search
+        $searchModel->is_single = true; // for show Selected Park name in search
 
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     }
