@@ -48,10 +48,10 @@ class DefaultController extends SafariController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment'],
+                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,11 +60,7 @@ class DefaultController extends SafariController
                         'allow' => $this->isSafariHost(),
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['wishlist', 'unwishlist'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+
 
                 ],
             ],
@@ -369,7 +365,7 @@ class DefaultController extends SafariController
         return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
     }
 
-    public function actionFlag($slug, $park_id, $share_safari_comment_id)
+    public function actionFlag($slug, $share_safari_comment_id)
     {
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
         if (!$share_safari) {
@@ -380,7 +376,7 @@ class DefaultController extends SafariController
 
         $model = new ShareSafariCommentReportForm();
         $model->share_safari_id = $share_safari->id;
-        $model->park_id = $park_id;
+        $model->park_id = $share_safari->park_id;
         $model->share_safari_comment_id = $share_safari_comment_id;
 
         $model->attributes = $this->request;
@@ -402,5 +398,6 @@ class DefaultController extends SafariController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reported successfully!"]);
             }
         }
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
