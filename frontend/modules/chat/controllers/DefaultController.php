@@ -25,10 +25,10 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
      * @return string
      */
     public function actionIndex()
-    { 
+    {
         $searchModel = new ChatSearch();
         $login_user = Yii::$app->user->identity;
-       
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($login_user) {
             $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
@@ -108,6 +108,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
                         $chat->last_message_at = time();
                         $chat->status = 1;
+                        $chat->is_seen = 1;
 
                         if ($chat->save()) {
                             $chat_message = new ChatMessage();
@@ -144,6 +145,22 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                     'email' => $chat->recipient->operator->email,
                                     'user_handle' => $chat->recipient->user_handle,
                                 ];
+
+                                // Quote Request Price Set if Message is Second
+                                if ($chat->is_quote_accept != 1) {
+                                    // Set Price is Message is Second
+                                    if ($chat->created_by <> $login_user->id) { // Message Send by Operator
+                                        if ($chat->quote_price == '') {
+                                            $chat->quote_price = $chat_message->message;
+                                            $chat_message->message = 'Rs. ' . $chat_message->message;
+                                            $chat->save(false);
+                                        }
+                                    } else {
+                                        // Message Send by User to accpect the Quote Request
+                                        $chat->is_quote_accept = 1;
+                                        $chat->save(false);
+                                    }
+                                }
                             }
 
                             if ($chat_message->save()) {
