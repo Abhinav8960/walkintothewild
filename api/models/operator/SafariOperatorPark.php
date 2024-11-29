@@ -20,18 +20,32 @@ class SafariOperatorPark extends \common\models\operator\SafariOperatorPark
     public function fields()
     {
         $fields = parent::fields();
-        // $fields[] = 'park';
-        $hold_fields = [
-            'id',
-            'safari_operator_id',
-            'park_id',
-            'status',
-            'show_in_front',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at'
-        ];
+        if(!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/user-rating-parklist']))
+        {
+            // $fields[] = 'park';
+            $hold_fields = [
+                'id',
+                'safari_operator_id',
+                'park_id',
+                'status',
+                'show_in_front',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
+        }else{
+            $hold_fields = [
+                'id',
+                'safari_operator_id',
+                'show_in_front',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
+        }
+       
         return array_diff($fields, $hold_fields);
         return $fields;
     }

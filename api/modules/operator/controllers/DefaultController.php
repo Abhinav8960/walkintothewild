@@ -9,6 +9,7 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorPark;
+use api\models\operator\SafariOperatorRating;
 use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
 use api\models\park\SafariPark;
@@ -36,7 +37,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist', 'operatorpark'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operatorpark', 'user-rating-parklist'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,6 +62,7 @@ class DefaultController extends RestController
                     'operatorpark' => ['GET'],
                     'quotesrequest' => ['POST'],
                     'review' => ['POST'],
+                    'user-rating-parklist' => ['GET'],
                 ],
             ],
         ];
@@ -244,5 +246,26 @@ class DefaultController extends RestController
 
         $parks = $operator->park;
         return Yii::$app->api->sendResponse(['parks' => $parks]);
+    }
+
+    public function actionUserRatingParklist($slug)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        $user_park_id = SafariOperatorRating::find()
+        ->select('park_id')
+            ->where(['user_id' => $this->userinfoId, 'safari_operator_id' => $operator->id, 'status' => 1])
+            ->column();
+           
+        $operatorsafariparkData = SafariOperatorPark::find()
+            ->where(['safari_operator_id' => $operator->id, 'status' => 1])
+            ->andWhere(['not in', 'park_id', $user_park_id])
+            ->all();
+
+        return Yii::$app->api->sendResponse(['parks' => $operatorsafariparkData]);
     }
 }
