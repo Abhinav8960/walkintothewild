@@ -62,7 +62,7 @@ class PackageComment extends \common\models\package\PackageComment
     /**User Will flag */
     public function getWillflag()
     {
-        if (Yii::$app->user->identity && $this->user_id != Yii::$app->user->identity->id) {
+        if (\Yii::$app->params['active_user_id'] && $this->user_id != \Yii::$app->params['active_user_id']) {
             return true;
         }
         return false;
