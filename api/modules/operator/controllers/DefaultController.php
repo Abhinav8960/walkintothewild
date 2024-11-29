@@ -8,8 +8,10 @@ use Yii;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
+use api\models\operator\SafariOperatorPark;
 use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
+use api\models\park\SafariPark;
 use api\models\UserFollow;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
@@ -34,14 +36,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operatorpark'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow', 'unfollow', 'quotesrequest','review'],
+                'only' => ['follow', 'unfollow', 'quotesrequest', 'review'],
                 'rules' => [
                     [
-                        'actions' => ['follow', 'unfollow', 'quotesrequest','review'],
+                        'actions' => ['follow', 'unfollow', 'quotesrequest', 'review'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,6 +58,7 @@ class DefaultController extends RestController
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
                     'reviewlist' => ['GET'],
+                    'operatorpark' => ['GET'],
                     'quotesrequest' => ['POST'],
                     'review' => ['POST'],
                 ],
@@ -228,5 +231,18 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'Not Submitted successfully']);
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionOperatorpark($slug)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+
+        $parks = $operator->park;
+        return Yii::$app->api->sendResponse(['parks' => $parks]);
     }
 }
