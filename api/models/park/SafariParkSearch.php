@@ -22,6 +22,7 @@ class SafariParkSearch extends SafariPark
     public $custom_sort_by;
     public $safari_park_id;
     public $master_animal_slug;
+    public $is_single = 0;
 
 
     /**
@@ -33,7 +34,7 @@ class SafariParkSearch extends SafariPark
             [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'safari_park_id'], 'safe'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
-            [['latitude', 'longitude', 'custom_sort_by','master_animal_slug'], 'safe'],
+            [['latitude', 'longitude', 'custom_sort_by','master_animal_slug','is_single'], 'safe'],
             [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe']
         ];
     }
@@ -176,7 +177,7 @@ class SafariParkSearch extends SafariPark
 
 
         // If Rare EXOTIC ANIMAL Selected
-        if ($this->master_rare_animal_id == '' && empty($this->master_animal_slug)) {
+        if ($this->is_single!=1  && $this->master_rare_animal_id == '' && empty($this->master_animal_slug)) {
             $query->andWhere("safari_park.id IN (SELECT distinct safari_park_id from safari_parks_animal WHERE status=1)");
             // $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
             $query->andWhere(['show_in_filter' => 1]);
