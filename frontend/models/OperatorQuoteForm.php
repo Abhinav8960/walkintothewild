@@ -12,6 +12,8 @@ use common\models\chat\ChatMessage;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\Helper\FrontendNotificationHelper;
+use common\models\meta\MetaStayCategory;
+use common\models\park\SafariPark;
 
 /**
  * OperatorQuoteForm is the model behind the contact form.
@@ -52,6 +54,8 @@ class OperatorQuoteForm extends Model
             [['phone_no'], 'string', 'max' => 12],
             [['safaris', 'travelers'], 'number', 'min' => 1],
             [['ip_address'], 'string', 'max' => 45],
+            // ['stay_category_id', 'exist', 'targetClass' => MetaStayCategory::class, 'targetAttribute' => ['stay_category_id' => 'id']],
+            // ['safari_park_id', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['safari_park_id' => 'id']],
         ];
     }
 
