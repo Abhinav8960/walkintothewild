@@ -79,6 +79,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'averagerating';
             $fields[] = 'reviewcount';
             $fields[] = 'followerlistcount';
+            $fields[] = 'isFollowed';
             $hold_fields = [
                 'safari_operator_request_id',
                 'website',
@@ -237,5 +238,21 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getReviewcount()
     {
         return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
+    }
+
+    public function getActiveFollowed()
+    {
+        return $this->hasOne(UserFollow::className(), ['follow_user_id' => 'user_id'])->where(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1]);
+    }
+
+
+
+    public function getIsFollowed()
+    {
+        $is_followed = $this->activeFollowed;
+        if (!empty($is_followed)) {
+            return true;
+        }
+        return false;
     }
 }
