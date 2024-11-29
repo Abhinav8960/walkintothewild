@@ -125,6 +125,8 @@ class OperatorQuoteForm extends Model
             $chat->chat_type = 2;
             $chat->park_id = $operator_quote->safari_park_id;
             $chat->quote_id = $operator_quote->id;
+            $chat->is_quote_accept = 0;
+            $chat->is_seen = 0;
 
             if ($chat->save()) {
                 $chat_message = new ChatMessage();

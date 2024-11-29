@@ -27,8 +27,8 @@ use yii\helpers\Url;
 
     .chat-cardlist {
 
-         max-height: 73vh;
-        height: 73vh; 
+        max-height: 73vh;
+        height: 73vh;
         width: 100%;
         overflow-y: auto;
     }
@@ -214,5 +214,28 @@ use yii\helpers\Url;
 
     .character-count.warning {
         color: red !important;
+    }
+
+    .chat-message .message_body_center {
+        background-color: #a2d22b;
+        color: black;
+        max-width: 30rem;
+        display: inline-block;
+        margin-bottom: 1px;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-align: left;
+    }
+
+    .sendMassegebtn,
+    .sendMassegebtn:hover {
+        background-color: white;
+        color: black;
+        border-radius: 20px;
+        font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 </style>
