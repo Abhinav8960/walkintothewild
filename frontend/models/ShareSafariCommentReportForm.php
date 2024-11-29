@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\cms\flagreason\Flagreason;
 use common\models\sharesafari\ShareSafariCommentReport;
 use Yii;
 use yii\base\Model;
@@ -36,6 +37,7 @@ class ShareSafariCommentReportForm extends Model
     {
         return [
             [['report_reason_id', 'report_detail'], 'required'],
+            ['report_reason_id', 'exist', 'targetClass' => Flagreason::class, 'targetAttribute' => ['report_reason_id' => 'id']],
         ];
     }
 
