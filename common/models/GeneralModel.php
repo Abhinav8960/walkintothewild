@@ -359,7 +359,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function animaloption()
     {
-        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->orWhere(
+            ['is_searchable' => 1]
+        )->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function animalfilteroption()
