@@ -59,7 +59,7 @@ $shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_s
                                     foreach ($operator_list as $operator_park) { ?>
                                         <div class="slidesImg">
                                             <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator_park->operator->slug]) ?>" data-pjax="0">
-                                                <img src="<?= isset($operator_park->operator->logo) ? $operator_park->operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
+                                                <img src="<?= isset($operator_park->operator->logo) ? $operator_park->operator->imagepath : $this->params['baseurl'] . '/img/thumbnailpakage.jpg' ?>" alt="" class="w-100">
                                             </a>
                                         </div>
                                     <?php  }
