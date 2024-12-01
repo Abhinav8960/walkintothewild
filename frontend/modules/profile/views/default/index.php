@@ -88,7 +88,7 @@ $this->params['title'] = $this->title;
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="d-flex justify-content-between flex-wrap align-items-center mb-3">
-                                                <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Park Visited</h6>
+                                                <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Park Visited <?= count($user_experiences) ?></h6>
                                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                                                     <button class="parkrevieBtn photoBtn text-center mt-sm-0 mt-2 " value="<?= Url::toRoute(['/profile/default/create']) ?>">+ Add Experience</button>
                                                 <?php } ?>
