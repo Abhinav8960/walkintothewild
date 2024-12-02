@@ -311,7 +311,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
 
-                                        <div class="accordion-body profile-description package_itinerary_overview">
+                                        <!-- <div class="accordion-body profile-description package_itinerary_overview">
 
                                             <div class="text show-more-height">
                                                 <p>
@@ -326,7 +326,26 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 </div>
                                                 <div class="description-show-more show-more">See More</div>
                                             <?php } ?>
+                                        </div> -->
+
+                                        <div class="accordion-body profile-description">
+                                            <div class="package_description">
+                                                <div class="text show-more-height">
+                                                    <p><?= $package->package_description ?></p>
+                                                </div>
+                                                <div class="package-show-more show-more">See More</div>
+                                            </div>
+
+                                            <?php if ($package->package_itinerary_overview <> '') { ?>
+                                                <div class="package_itinerary_overview">
+                                                    <div class="text show-more-height">
+                                                        <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
+                                                    </div>
+                                                    <div class="itinerary-show-more show-more">See More</div>
+                                                </div>
+                                            <?php } ?>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -442,8 +461,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php } ?>
 
                 <!-- <?php if ($package->packagegallery) {
-                    $galleries = $package->packagegallery;
-                ?>
+                            $galleries = $package->packagegallery;
+                        ?>
                     <div class="request_quote photoGallry mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                             Photo Gallery <span><?= count($galleries) ?></span>
@@ -534,10 +553,49 @@ function enquiryfunction() {
 enquiryfunction();
 
 
-var textContainer = $(".package_description .text");
+    // var textContainer = $(".package_description .text");
+    // var showMoreButton = $(".package_description .package-show-more");
+    // var lineHeight = parseInt(textContainer.css('line-height'));
+
+    // var threeLinesHeight = lineHeight * 3;
+
+    // if (textContainer[0].scrollHeight > threeLinesHeight) {
+    //     showMoreButton.show();
+    // }
+
+    // showMoreButton.click(function () {
+    //     textContainer.toggleClass("show-more-height");
+    //     if (textContainer.hasClass("show-more-height")) {
+    //         $(this).text("See More");
+    //     } else {
+    //         $(this).text("See Less");
+    //     }
+    // });
+
+    // var textContainer_itineary = $(".package_itinerary_overview .text");
+    // var showMoreButton_itinerary = $(".package_itinerary_overview .description-show-more");
+    // var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height'));
+
+    // if (textContainer_itineary.length) { 
+    //     var threeLinesHeight_itenary = lineHeight_iteneary * 3;
+
+    //     if (textContainer_itineary[0].scrollHeight > threeLinesHeight_itenary) {
+    //         showMoreButton_itinerary.show();
+    //     }
+    // }
+
+    // $(".description-show-more").click(function () {
+    //     textContainer_itineary.toggleClass("show-more-height");
+    //     if (textContainer_itineary.hasClass("show-more-height")) {
+    //         $(this).text("See More");
+    //     } else {
+    //         $(this).text("See Less");
+    //     }
+    // });
+       // Handle package description
+       var textContainer = $(".package_description .text");
     var showMoreButton = $(".package_description .package-show-more");
     var lineHeight = parseInt(textContainer.css('line-height'));
-
     var threeLinesHeight = lineHeight * 3;
 
     if (textContainer[0].scrollHeight > threeLinesHeight) {
@@ -553,21 +611,19 @@ var textContainer = $(".package_description .text");
         }
     });
 
-    var textContainer_itineary = $(".package_itinerary_overview .text");
-    var showMoreButton_itinerary = $(".package_itinerary_overview .description-show-more");
-    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height'));
+    // Handle package itinerary overview
+    var textContainerItinerary = $(".package_itinerary_overview .text");
+    var showMoreButtonItinerary = $(".package_itinerary_overview .itinerary-show-more");
+    var lineHeightItinerary = parseInt(textContainerItinerary.css('line-height'));
+    var threeLinesHeightItinerary = lineHeightItinerary * 3;
 
-    if (textContainer_itineary.length) { 
-        var threeLinesHeight_itenary = lineHeight_iteneary * 3;
-
-        if (textContainer_itineary[0].scrollHeight > threeLinesHeight_itenary) {
-            showMoreButton_itinerary.show();
-        }
+    if (textContainerItinerary[0].scrollHeight > threeLinesHeightItinerary) {
+        showMoreButtonItinerary.show();
     }
 
-    $(".description-show-more").click(function () {
-        textContainer_itineary.toggleClass("show-more-height");
-        if (textContainer_itineary.hasClass("show-more-height")) {
+    showMoreButtonItinerary.click(function () {
+        textContainerItinerary.toggleClass("show-more-height");
+        if (textContainerItinerary.hasClass("show-more-height")) {
             $(this).text("See More");
         } else {
             $(this).text("See Less");
