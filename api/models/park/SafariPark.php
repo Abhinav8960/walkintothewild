@@ -103,11 +103,9 @@ class SafariPark extends \common\models\park\SafariPark
             ];
         } else {
             if (in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
-
                 $fields[] = 'featureimagepath';
             }
             $hold_fields = [
-                'id',
                 'show_in_filter',
                 'park_type_id',
                 'logo',
