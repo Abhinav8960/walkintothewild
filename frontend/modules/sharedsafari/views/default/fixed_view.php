@@ -398,7 +398,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
                                         <div class="accordion-body profile-description">
                                             <div class="text show-more-height">
-                                                <?= GeneralModel::commentconversion($share_safari->safari_plan) ?>
+                                                <?= $share_safari->safari_plan ?>
                                             </div>
                                             <div class="show-more">See More</div>
                                         </div>
