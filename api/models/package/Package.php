@@ -6,6 +6,7 @@ use api\models\master\packageinclude\MasterPackageInclude;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
+use api\models\park\SafariPark;
 use api\models\UserWishlist;
 use Yii;
 use common\models\User;
@@ -285,9 +286,14 @@ class Package extends \common\models\package\Package
     /**
      * Parks List
      */
-    public function getPackagepark()
+    public function getPackagesafaripark()
     {
         return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
+
+    public function getPackagepark()
+    {
+        return $this->hasMany(SafariPark::class, ['id' => 'park_id'])->via('packagesafaripark');
     }
 
     public function getPackagerange()
