@@ -53,25 +53,25 @@ class SafariOperatorSearch extends SafariOperator
         $query = SafariOperator::find()->where(['safari_operator.status' => 1]);
 
 
-        $session = Yii::$app->session;
-        if (!$session->isActive) {
-            $session->open();
-        }
-        if ($session->get('lastSort') === 'random') {
-            $currentSort = 'google_rating';
-            $query->orderBy(['google_rating' => SORT_DESC]);
-        } else {
-            $currentSort = 'random';
-            $query->orderBy(new Expression('RAND()'));
-        }
-        $session->set('lastSort', $currentSort);
+        // $session = Yii::$app->session;
+        // if (!$session->isActive) {
+        //     $session->open();
+        // }
+        // if ($session->get('lastSort') === 'random') {
+        //     $currentSort = 'google_rating';
+        //     $query->orderBy(['google_rating' => SORT_DESC]);
+        // } else {
+        //     $currentSort = 'random';
+        //     $query->orderBy(new Expression('RAND()'));
+        // }
+        // $session->set('lastSort', $currentSort);
 
 
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => $query,
+                'defaultOrder' => ['google_rating' => SORT_DESC]
             ]
         ]);
 
