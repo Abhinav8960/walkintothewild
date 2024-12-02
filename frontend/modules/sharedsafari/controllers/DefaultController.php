@@ -404,7 +404,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 if (Yii::$app->user->identity->operator) {
@@ -481,7 +481,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
