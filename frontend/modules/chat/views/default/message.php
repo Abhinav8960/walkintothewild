@@ -119,7 +119,11 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                                             <?php }  ?>
                                                                         </h6>
                                                                     <?php } else { ?>
-                                                                        <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                        <?php if ($active_chat->is_quote_accept == 1) { ?>
+                                                                            <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                        <?php } else { ?>
+                                                                            <img src="<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                        <?php } ?>
                                                                     <?php } ?>
                                                                 </div>
 
@@ -129,11 +133,21 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                                             <?php if (isset($user->operator)) {
                                                                                 echo $user->operator->business_name;
                                                                             } else {
-                                                                                echo $user->getName();
+                                                                                if ($active_chat->is_quote_accept == 1) {
+                                                                                    echo $user->getName();
+                                                                                } else {
+                                                                                    echo substr($user->getName(), 0, 5);
+                                                                                }
                                                                             }  ?>
                                                                         </h6>
                                                                     <?php } else { ?>
-                                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->getName() ?></h6>
+                                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?php
+                                                                                                                        if ($active_chat->is_quote_accept == 1) {
+                                                                                                                            echo $user->getName();
+                                                                                                                        } else {
+                                                                                                                            echo substr($user->getName(), 0, 5);
+                                                                                                                        }
+                                                                                                                        ?></h6>
                                                                     <?php } ?>
                                                                     <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
                                                                     <p class="mb-0 lastmassge" style="color:#4c4c4c;"><b>Last Msg:</b> <?= date('M j, Y H:i', $active_chat->last_message_at) ?></p>
@@ -169,25 +183,36 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <i class="fa-solid fa-chevron-left"></i>
                                     </div>
                                     <?php
+
+                                    $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
+                                    if (empty($chat) && $login_user) {
+                                        $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
+                                    }
                                     $chat_person_name = '';
-                                    if (isset($active_chat)) {
-                                        if ($active_chat->recipient_user_id == $individual_user->id) { ?>
-                                            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>" style="color:inherit;">
-                                                <?php if (isset($individual_user->operator)) { ?>
+                                    if (isset($chat)) {
+                                        if ($chat->recipient_user_id == $individual_user->id) { ?>
+                                            <?php if (isset($individual_user->operator)) { ?>
+                                                <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $individual_user->operator->slug]) ?>" style="color:inherit;">
                                                     <img src="<?= $individual_user->operator->logo ? $individual_user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                     <?= $chat_person_name = $individual_user->operator->business_name ?>
-                                                <?php } else { ?>
-                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
-                                                        <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                                    </a>
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
+                                                    <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                     <?= $chat_person_name = $individual_user->getName() ?>
-                                                <?php } ?>
-                                            </a>
+                                                </a>
+                                            <?php } ?>
                                         <?php } else { ?>
-                                            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>" style="color:inherit;">
-                                                <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                            </a>
-                                            <?= $chat_person_name = $individual_user->getName() ?>
+                                            <?php
+                                            if ($chat->is_quote_accept == 1) { ?>
+                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>" style="color:inherit;">
+                                                    <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                    <?= $chat_person_name = $individual_user->getName() ?>
+                                                </a>
+                                            <?php } else { ?>
+                                                <img src="<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                <?= $chat_person_name = substr($individual_user->getName(), 0, 5) ?>
+                                            <?php }  ?>
                                     <?php }
                                     } ?>
                                 </div>
@@ -199,10 +224,6 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
 
                             <?php
-                            $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
-                            if (empty($chat) && $login_user) {
-                                $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
-                            }
                             if ($chat) {
                                 if ($chat->chat_type == 1) {
                                     echo $this->render('_direct_chat_container', ['chat' => $chat, 'login_user' => $login_user, 'individual_user' => $individual_user, 'chat_id' => $chat_id, 'chat_person_name' => $chat_person_name]);

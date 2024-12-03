@@ -120,7 +120,7 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                             Reply your Quote
                                         </div>
 
-                                        <input type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></input>
+                                        <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></input>
 
                                         <div class="sendMassege">
                                             <div class="chat-sendbtn">
