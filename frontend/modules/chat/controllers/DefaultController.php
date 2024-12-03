@@ -34,9 +34,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
             $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
 
             $active_quote_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+            $unseen_quote_chat_count = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2, 'is_seen' => 0])->orderby(['last_message_at' => SORT_DESC])->andWhere('updated_by<>' . Yii::$app->user->id)->count();
         } else {
             $active_chat_list = [];
             $active_quote_chat_list = [];
+            $unseen_quote_chat_count = 0;
         }
 
         return $this->render(
@@ -47,6 +49,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                 'active_chat_list' => $active_chat_list,
                 'active_quote_chat_list' => $active_quote_chat_list,
                 'login_user' => $login_user,
+                'unseen_quote_chat_count' => $unseen_quote_chat_count,
             ]
         );
     }
@@ -62,6 +65,10 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                 return Yii::$app->getResponse()->redirect(['chat']);
             } else {
                 $chat_id = base64_decode($chat_id);
+                if ($exist_chat->chat_type == 2 && $exist_chat->updated_by <> Yii::$app->user->id) {
+                    $exist_chat->is_seen = 1;
+                    $exist_chat->save(false);
+                }
             }
         }
 
@@ -73,9 +80,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
             $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
 
             $active_quote_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+            $unseen_quote_chat_count = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2, 'is_seen' => 0])->orderby(['last_message_at' => SORT_DESC])->andWhere('updated_by<>' . Yii::$app->user->id)->count();
         } else {
             $active_chat_list = [];
             $active_quote_chat_list = [];
+            $unseen_quote_chat_count = 0;
         }
 
         return $this->render('message', [
@@ -85,7 +94,8 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
             'login_user' => $login_user,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'chat_id' => $chat_id
+            'chat_id' => $chat_id,
+            'unseen_quote_chat_count' => $unseen_quote_chat_count,
         ]);
     }
 
@@ -108,7 +118,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
                         $chat->last_message_at = time();
                         $chat->status = 1;
-                        $chat->is_seen = 1;
+                        $chat->is_seen = 0;
 
                         if ($chat->save()) {
                             $chat_message = new ChatMessage();

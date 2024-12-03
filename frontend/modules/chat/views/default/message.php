@@ -44,7 +44,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link <?php if (!empty($chat_id)) {
                                                                     echo 'active';
-                                                                } ?>  chatFonts" id="quote-request-tab" data-bs-toggle="pill" data-bs-target="#quote-request" type="button" role="tab" aria-controls="quote-request" aria-selected="false">Quote Request (<?= count($active_quote_chat_list) ?>)</button>
+                                                                } ?>  chatFonts" id="quote-request-tab" data-bs-toggle="pill" data-bs-target="#quote-request" type="button" role="tab" aria-controls="quote-request" aria-selected="false">Quote Request (<?= $unseen_quote_chat_count ?>)</button>
                                     </li>
                                 </ul>
                             </div>
@@ -106,7 +106,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                     <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
 
-                                                        <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?>">
+                                                        <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?> <?= $active_chat->is_seen == 0 && $active_chat->updated_by <> Yii::$app->user->id ? 'unseen_chat' : '' ?>">
                                                             <div class="d-flex chat-user_message">
                                                                 <div class="chat-user_name">
                                                                     <?php if ($active_chat->recipient_user_id == $user->id) { ?>

@@ -97,6 +97,12 @@ use yii\helpers\Url;
         border-radius: 5px;
     }
 
+    .unseen_chat {
+        background-color: #aff9deb8;
+        color: #fffafa;
+        border-radius: 5px;
+    }
+
     .chat-message-header {
         border-bottom: 1px solid #88888861;
         padding-bottom: 10px;
