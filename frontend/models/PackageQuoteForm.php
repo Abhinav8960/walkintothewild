@@ -97,6 +97,8 @@ class PackageQuoteForm extends Model
             $chat->chat_type = 2;
             $chat->package_id = $package_quote->package_id;
             $chat->quote_id = $package_quote->id;
+            $chat->is_seen = 0;
+            
 
             if ($chat->save(false)) {
                 $chat_message = new ChatMessage();
