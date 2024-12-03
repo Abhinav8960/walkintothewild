@@ -107,6 +107,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             } ?>
                                                         </div>
                                                     </div>
+                                                <?php } else {  ?>
+                                                    <h6 class="nameRating">Nobody has shared any review about <?= $operator->business_name ?></h6>
                                                 <?php } ?>
 
 
