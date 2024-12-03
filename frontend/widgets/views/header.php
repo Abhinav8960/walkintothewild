@@ -1,5 +1,6 @@
 <?php
 
+use common\models\chat\Chat;
 use common\models\notification\FrontendNotification;
 
 use yii\bootstrap5\Html;
@@ -78,11 +79,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						'status' => 1,
 						'is_seen' => 0
 					])->count();
+					$count = Chat::find()->where(['status' => 1])
+						->andWhere(['is_seen' => 0])
+						->andwhere('user_id =' . Yii::$app->user->identity->id . ' OR recipient_user_id=' . Yii::$app->user->identity->id)
+						->count();
 				?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative <?= $new_notification ? 'dotsnotifications' : '' ?>"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
 					<a href="/chat" class="d-lg-block d-none">
-						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
+						<div class=" pt-2 <?= $count ? 'dotsnotifications' : '' ?>" style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					</a>
 				<?php } ?>
 
