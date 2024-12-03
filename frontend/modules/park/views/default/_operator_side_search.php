@@ -91,9 +91,9 @@ use yii\bootstrap5\ActiveForm;
                         ?>
                         <div class="form-group field-safarioperatorsearch-custom_sort_by">
                             <select id="safarioperatorsearch-custom_sort_by" class="form-select mb-2 custom_sort_by_input" name="SafariOperatorSearch[custom_sort_by]">
-                                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$model->custom_sort_by]) ? $sort_option[$model->custom_sort_by] : 'Rating High' ?></option>
-                                <option value="1" class="<?= $model->custom_sort_by == 1 ? 'selected' : '' ?>">Rating High</option>
-                                <option value="2" class="<?= $model->custom_sort_by == 2 ? 'selected' : '' ?>">Rating Low</option>
+                                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$model->custom_sort_by]) ? $sort_option[$model->custom_sort_by] : 'Rating High to Low' ?></option>
+                                <option value="1" class="<?= $model->custom_sort_by == 1 ? 'selected' : '' ?>">Rating High to Low</option>
+                                <option value="2" class="<?= $model->custom_sort_by == 2 ? 'selected' : '' ?>">Rating Low to High</option>
                                 <option value="3" class="<?= $model->custom_sort_by == 3 ? 'selected' : '' ?>">Name A-Z</option>
                                 <option value="4" class="<?= $model->custom_sort_by == 4 ? 'selected' : '' ?>">Name Z-A</option>
                             </select>
