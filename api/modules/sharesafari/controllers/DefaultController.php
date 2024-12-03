@@ -411,7 +411,7 @@ class DefaultController extends SafariController
     {
         $reasons = Flagreason::find()->where(['status' => Flagreason::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all();
         if ($reasons) {
-            return Yii::$app->api->sendResponse($data = [$reasons]);
+            return Yii::$app->api->sendResponse($data = $reasons);
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not found !!!"]);
     }
