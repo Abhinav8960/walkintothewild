@@ -7,13 +7,16 @@ use Yii;
 
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
+use api\models\operator\SafariOperator;
 use api\models\package\Package;
+use api\models\package\PackageComment;
 use api\models\package\PackageSearch;
 use api\models\UserWishlist;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\PackageCommentForm;
+use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
 use yii\filters\AccessControl;
@@ -38,10 +41,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -58,6 +61,7 @@ class DefaultController extends RestController
                     'wishlist' => ['POST'],
                     'unwishlist' => ['POST'],
                     'package-quote' => ['POST'],
+                    'flag' => ['POST'],
                 ],
             ],
         ];
@@ -203,5 +207,47 @@ class DefaultController extends RestController
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
         }
         return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
+    }
+
+
+    public function actionFlag($slug, $package_comment_id)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+
+
+        $comments = PackageComment::find()->where(['id' => $package_comment_id])->limit(1)->one();
+        if ($comments->user_id == $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+        }
+
+        $model = new PackageCommentReportForm();
+        $model->package_id = $package->id;
+        $model->package_comment_id = $package_comment_id;
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->flag_model->save(false)) {
+                $comments->flaged = 1;
+                $comments->save(false);
+
+                $to_mail = Yii::$app->params['adminEmail'];
+                $subject = 'Flag Raised | Package : ' . substr($package->package_name, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userInfo) ? $this->userInfo->name : ''];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment/Reply reported successfully!"]);
+            }
+            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment/Reply not reported!"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }

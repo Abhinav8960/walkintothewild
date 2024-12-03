@@ -375,6 +375,9 @@ class DefaultController extends SafariController
         }
 
         $comments = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->limit(1)->one();
+        if ($comments->user_id == $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+        }
 
         $model = new ShareSafariCommentReportForm();
         $model->share_safari_id = $share_safari->id;
