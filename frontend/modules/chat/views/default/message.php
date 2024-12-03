@@ -213,8 +213,13 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                 <img src="<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                 <?= $chat_person_name = substr($individual_user->getName(), 0, 5) ?>
                                             <?php }  ?>
-                                    <?php }
-                                    } ?>
+                                        <?php }
+                                    } else { ?>
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>" style="color:inherit;">
+                                            <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                            <?= $chat_person_name = $individual_user->getName() ?>
+                                        </a>
+                                    <?php } ?>
                                 </div>
                                 <!-- <div class="chat-action-in-right">
                                     <i class="fa fa-search"></i>
@@ -230,6 +235,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 } else {
                                     echo $this->render('_quote_chat_container', ['chat' => $chat, 'login_user' => $login_user, 'individual_user' => $individual_user, 'chat_id' => $chat_id, 'chat_person_name' => $chat_person_name]);
                                 }
+                            } else {
+                                echo $this->render('_direct_chat_container', ['chat' => $chat, 'login_user' => $login_user, 'individual_user' => $individual_user, 'chat_id' => $chat_id, 'chat_person_name' => $chat_person_name]);
                             }
                             ?>
                         </div>

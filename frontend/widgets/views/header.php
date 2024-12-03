@@ -82,6 +82,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					$count = Chat::find()->where(['status' => 1])
 						->andWhere(['is_seen' => 0])
 						->andwhere('user_id =' . Yii::$app->user->identity->id . ' OR recipient_user_id=' . Yii::$app->user->identity->id)
+						->andWhere('updated_by<>' . Yii::$app->user->id)
 						->count();
 				?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative <?= $new_notification ? 'dotsnotifications' : '' ?>"><i class="fa-solid fa-bell"></i></div>

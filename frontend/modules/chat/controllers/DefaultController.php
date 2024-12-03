@@ -59,6 +59,8 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
      */
     public function actionMessage($user_handle, $chat_id = null)
     {
+        $individual_user = $this->individualuser($user_handle);
+        $login_user = Yii::$app->user->identity;
         if (!empty($chat_id)) {
             $exist_chat = Chat::find()->where(['id' => base64_decode($chat_id)])->andWhere(['status' => true])->one();
             if (empty($exist_chat)) {
@@ -70,10 +72,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                     $exist_chat->save(false);
                 }
             }
+        } else {
+            $individual_chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
+            $individual_chat->is_seen = 1;
+            $individual_chat->save(false);
         }
-
-        $individual_user = $this->individualuser($user_handle);
-        $login_user = Yii::$app->user->identity;
         $searchModel = new ChatSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($login_user) {
@@ -218,6 +221,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                         $chat->last_message = $message;
                         $chat->last_message_at = time();
                         $chat->status = 1;
+                        $chat->is_seen = 0;
 
                         if ($chat->save(false)) {
                             $chat_message = new ChatMessage();
