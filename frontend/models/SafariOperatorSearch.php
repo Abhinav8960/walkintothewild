@@ -86,9 +86,10 @@ class SafariOperatorSearch extends SafariOperator
 
         if ($this->custom_sort_by) {
             if ($this->custom_sort_by == 1) {
-                $dataProvider->sort = [
-                    'defaultOrder' => ['google_rating' => SORT_DESC]
-                ];
+                // $dataProvider->sort = [
+                //     'defaultOrder' => ['google_rating' => SORT_DESC]
+                // ];
+                $query->orderBy(new \yii\db\Expression("COALESCE(google_rating,rand()) DESC"));
             } else if ($this->custom_sort_by == 2) {
                 $dataProvider->sort = [
                     'defaultOrder' => ['google_rating' => SORT_ASC]
@@ -102,6 +103,8 @@ class SafariOperatorSearch extends SafariOperator
                     'defaultOrder' => ['business_name' => SORT_DESC]
                 ];
             }
+        } else {
+            $query->orderBy(new \yii\db\Expression("COALESCE(google_rating,rand()) DESC"));
         }
 
         if ($park_id) {
