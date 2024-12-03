@@ -16,6 +16,7 @@ use frontend\models\form\CreateDepartureForm;
 use frontend\models\form\SharedSafariForm;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
+use api\models\cms\flagreason\Flagreason;
 use api\models\sharesafari\ShareSafariComment;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
@@ -44,7 +45,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
+                'exclude' => ['index', 'view', 'flagreason'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -74,6 +75,7 @@ class DefaultController extends SafariController
                     'unjoin' => ['POST'],
                     'wishlist' => ['POST'],
                     'unwishlist' => ['POST'],
+                    'flagreason' => ['GET'],
 
                 ],
             ],
@@ -399,5 +401,15 @@ class DefaultController extends SafariController
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+
+    public function actionFlagreason()
+    {
+        $reasons = Flagreason::find()->where(['status' => Flagreason::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all();
+        if ($reasons) {
+            return Yii::$app->api->sendResponse($data = [$reasons]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not found !!!"]);
     }
 }
