@@ -203,8 +203,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             return [
                 1 => 'Administrator',
                 2 => 'Admin',
-                3 => 'Safari Operator',
-                4 => 'Operator',
+                // 3 => 'Safari Operator',
+                // 4 => 'Operator',  /**Operator Access used into both tables and this things is not propely handled to use operator role here */
                 5 => 'Cms Manager',
                 6 => 'Resort Manager',
                 7 => 'Report Manager',
@@ -214,8 +214,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
             return [
                 2 => 'Admin',
-                3 => 'Safari Operator',
-                4 => 'Operator',
+                // 3 => 'Safari Operator',
+                // 4 => 'Operator',
                 5 => 'Cms Manager',
                 6 => 'Resort Manager',
             ];
