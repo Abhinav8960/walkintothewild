@@ -25,6 +25,7 @@ class UserUpdateForm extends Model
     public $is_community_manager;
     public $role_id;
     public $user_flaged;
+    public $pop_up_message;
 
     // 1 => 'Administrator',
     // 2 => 'Admin',
@@ -75,6 +76,7 @@ class UserUpdateForm extends Model
             }
 
             $this->user_flaged = $this->user_model->user_flaged;
+            $this->pop_up_message = $this->user_model->pop_up_message;
         }
     }
 
@@ -116,7 +118,8 @@ class UserUpdateForm extends Model
                 'message' => 'This email address has already been taken'
             ],
             ['password', 'string', 'min' => 4],
-            ['user_flaged','integer'],
+            ['user_flaged', 'integer'],
+            [['pop_up_message'], 'string', 'max' => 512],
         ];
     }
 
@@ -191,6 +194,7 @@ class UserUpdateForm extends Model
 
         $this->user_model->name = $this->name;
         $this->user_model->user_flaged = $this->user_flaged;
+        $this->user_model->pop_up_message = $this->pop_up_message;
         $this->user_model->save(false);
     }
 }

@@ -72,6 +72,10 @@ $this->params['title'] = $this->title;
                             ],
                         ]) ?>
                     </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'pop_up_message')->textInput(['placeholder' => 'Pop Up Message to User Only']) ?>
+                    </div>
                 </div>
 
                 <div class="col-md-12 mt-2">
