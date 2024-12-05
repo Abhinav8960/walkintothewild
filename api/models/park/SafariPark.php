@@ -102,7 +102,7 @@ class SafariPark extends \common\models\park\SafariPark
                 'updated_at'
             ];
         } else {
-            if (in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
+            if (in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view','profile/default/index'])) {
                 $fields[] = 'featureimagepath';
             }
             $hold_fields = [

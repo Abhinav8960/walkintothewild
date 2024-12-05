@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
 use api\models\sharesafari\ShareSafari;
 use api\models\operator\SafariOperator;
+use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafariIntrested;
 
 class User extends \common\models\User
@@ -34,6 +35,8 @@ class User extends \common\models\User
                 $fields[] = 'joinedsharesafari';
                 $fields[] = 'organizedSafariCount';
                 $fields[] = 'joinedSafariCount';
+                $fields[] = 'parkvisted';
+                $fields[] = 'loggedinuserfollowed';
             }
             $hold_fields = [
                 'mobile_no',
@@ -211,5 +214,25 @@ class User extends \common\models\User
     public function getJoinedsharesafari()
     {
         return $this->hasMany(ShareSafari::className(), ['id' => 'share_safari_id'])->via('joinedSafari')->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE]);
+    }
+
+
+    public function getUserexperienced()
+    {
+        return $this->hasMany(UserExperience::className(), ['user_id' => 'id'])->where(['status' => UserExperience::STATUS_ACTIVE]);
+    }
+
+    public function getParkvisted()
+    {
+        return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('userexperienced');
+    }
+
+    public function getLoggedinuserfollowed()
+    {
+        $result = UserFollow::find()->where(['follow_user_id' => $this->id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 }

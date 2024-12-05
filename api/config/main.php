@@ -134,6 +134,9 @@ return [
                 'contact-us' => 'static-page/contact-us',
 
                 'user-profile' => 'profile/default/index',
+                'profile/follow' => 'profile/default/follow',
+                'profile/unfollow' => 'profile/default/unfollow',
+
             ],
 
         ],
