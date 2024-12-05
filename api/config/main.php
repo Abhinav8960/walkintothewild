@@ -40,6 +40,9 @@ return [
         'operator' => [
             'class' => 'api\modules\operator\Module',
         ],
+        'profile' => [
+            'class' => 'api\modules\profile\Module',
+        ]
 
     ],
     'components' => [
@@ -129,6 +132,8 @@ return [
                 'about-us' => 'static-page/about-us',
                 'faqs' => 'static-page/faqs',
                 'contact-us' => 'static-page/contact-us',
+
+                'user-profile' => 'profile/default/index',
             ],
 
         ],

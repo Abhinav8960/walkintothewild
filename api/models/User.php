@@ -11,7 +11,7 @@ use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
 use api\models\sharesafari\ShareSafari;
 use api\models\operator\SafariOperator;
-
+use api\models\sharesafari\ShareSafariIntrested;
 
 class User extends \common\models\User
 {
@@ -25,19 +25,24 @@ class User extends \common\models\User
         $fields[] = 'usename';
 
 
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view'])) {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index'])) {
+            if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
+                $fields[] = 'userfollowerscount';
+                $fields[] = 'userfollowingscount';
+                $fields[] = 'organizedSafari';
+                $fields[] =  'joinedSafari';
+            }
             $hold_fields = [
-                'id',
                 'mobile_no',
                 "password_hash",
                 "auth_key",
-                "facebook_url",
-                "whatsapp_url",
-                "x_url",
-                "insta_url",
-                "website_url",
-                "youtube_url",
-                "about",
+                // "facebook_url",
+                // "whatsapp_url",
+                // "x_url",
+                // "insta_url",
+                // "website_url",
+                // "youtube_url",
+                // "about",
                 "user_bio",
                 "date_of_birth",
                 "gender",
@@ -55,7 +60,7 @@ class User extends \common\models\User
                 "google_source_id",
                 "profile_image",
                 "cover_image",
-                "user_handle",
+                // "user_handle",
                 "blocked_at",
                 "account_type",
                 "password_updated_at",
@@ -132,14 +137,49 @@ class User extends \common\models\User
         return $this->name;
     }
 
-    public function getOperatortype(){
+    public function getOperatortype()
+    {
         $arr = [
             'status' => 0,
         ];
-        if(!empty($this->operator)){
+        if (!empty($this->operator)) {
             $arr['status'] = 1;
             $arr['title'] = $this->operator->categorytitle ?? NULL;
         }
         return $arr;
+    }
+
+    public function getUserfollowerscount()
+    {
+        return $this->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+    }
+
+    public function getUserfollowingscount()
+    {
+        return $this->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+    }
+
+
+    public function getOrganizedSafari()
+    {
+        if ($this->id == \Yii::$app->params['active_user_id']) {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => ShareSafari::STATUS_ACTIVE])->all();
+            return $organized_by;
+        } else {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
+            return $organized_by;
+        }
+    }
+
+    public function getJoinedSafari()
+    {
+        if ($this->id == \Yii::$app->params['active_user_id']) {
+            // $joined_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['IN', 'id', ShareSafariIntrested::find()->select(['share_safari_id'])->where(['user_id' => $this->id])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE])->column()])->all();
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->all();
+            return $joined_by;
+        } else {
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE]);
+            return $joined_by;
+        }
     }
 }
