@@ -331,12 +331,19 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getWitwaveragerating()
     {
-        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
-        return round($avg,1);
+        if (isset($this->safarioperator)) {
+            $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
+            return round($avg, 1);
+        }
+        return 0;
     }
 
     public function getWitwreviewcount()
     {
-        return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
+        if(isset($this->safarioperator))
+        {
+            return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
+        }
+        return 0;
     }
 }
