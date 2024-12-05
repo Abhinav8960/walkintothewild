@@ -102,7 +102,7 @@ class CreateDepartureForm extends \yii\base\Model
             [['share_safari_title', 'host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'cost_per_person', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => '{attribute}:Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'status', 'type'], 'integer'],
             [['start_date', 'end_date', 'park_list', 'rand_text'], 'safe'],
-            [['share_safari_title'], 'string', 'max' => 50],
+            [['share_safari_title'], 'string', 'max' => 255],
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],

@@ -73,7 +73,7 @@ class SharedSafariForm extends \yii\base\Model
             [['share_safari_title', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => '{attribute} : Required'],
             [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['share_safari_title'], 'string', 'max' => 50],
+            [['share_safari_title'], 'string', 'max' => 255],
             // [
             //     ['website_url'], 'required', 'when' => function ($model) {
             //         return $model->host_type != 4;
