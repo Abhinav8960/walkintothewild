@@ -37,10 +37,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'includeds';
             $fields[] = 'sharesafaridays';
             $fields[] = 'sharesafarigallery';
-            $fields[] = 'intrestedUser';
+            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['profile/default/index'])) {
+                $fields[] = 'intrestedUser';
+                $fields[] = 'comments';
+            }
             $fields[] = 'sharesafariFaqs';
             $fields[] = 'isWishlist';
-            $fields[] = 'comments';
             $fields[] = 'organizedbyimage';
             $fields[] = 'witwaveragerating';
             $fields[] = 'Witwreviewcount';
@@ -340,8 +342,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getWitwreviewcount()
     {
-        if(isset($this->safarioperator))
-        {
+        if (isset($this->safarioperator)) {
             return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
         }
         return 0;

@@ -30,7 +30,10 @@ class User extends \common\models\User
                 $fields[] = 'userfollowerscount';
                 $fields[] = 'userfollowingscount';
                 $fields[] = 'organizedSafari';
-                $fields[] =  'joinedSafari';
+                // $fields[] =  'joinedSafari';
+                $fields[] = 'joinedsharesafari';
+                $fields[] = 'organizedSafariCount';
+                $fields[] = 'joinedSafariCount';
             }
             $hold_fields = [
                 'mobile_no',
@@ -171,15 +174,42 @@ class User extends \common\models\User
         }
     }
 
+    public function getOrganizedSafariCount()
+    {
+        if ($this->id == \Yii::$app->params['active_user_id']) {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => ShareSafari::STATUS_ACTIVE])->count();
+            return $organized_by;
+        } else {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->count();
+            return $organized_by;
+        }
+    }
+    public function getJoinedSafariCount()
+    {
+        if ($this->id == \Yii::$app->params['active_user_id']) {
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
+            return $joined_by;
+        } else {
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
+            return $joined_by;
+        }
+    }
+
     public function getJoinedSafari()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
-            // $joined_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['IN', 'id', ShareSafariIntrested::find()->select(['share_safari_id'])->where(['user_id' => $this->id])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE])->column()])->all();
-            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->all();
-            return $joined_by;
+            // $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->all();
+            // return $joined_by;
+            return $this->hasMany(ShareSafariIntrested::className(), ['user_id' => 'id'])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE]);
         } else {
-            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE]);
-            return $joined_by;
+            // $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE]);
+            // return $joined_by;
+            return $this->hasMany(ShareSafariIntrested::className(), ['user_id' => 'id'])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE]);
         }
+    }
+
+    public function getJoinedsharesafari()
+    {
+        return $this->hasMany(ShareSafari::className(), ['id' => 'share_safari_id'])->via('joinedSafari')->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE]);
     }
 }
