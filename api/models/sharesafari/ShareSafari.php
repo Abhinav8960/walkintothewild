@@ -14,6 +14,7 @@ use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariParklist;
 use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorRating;
+use api\models\UserFollow;
 use api\models\UserWishlist;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
@@ -46,6 +47,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'organizedbyimage';
             $fields[] = 'witwaveragerating';
             $fields[] = 'Witwreviewcount';
+            $fields[] = 'isFollowed';
 
             $hold_fields = [
                 'delete_reason_id',
@@ -346,5 +348,25 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
         }
         return 0;
+    }
+
+    public function getActiveFollowed()
+    {
+        if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            if ($this->safarioperator) {
+                return UserFollow::find()->where(['follow_user_id' => $this->safarioperator->user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
+            }
+        } else if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return UserFollow::find()->where(['follow_user_id' => $this->host_user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
+        }
+    }
+
+    public function getIsFollowed()
+    {
+        $is_followed = $this->activeFollowed;
+        if (!empty($is_followed)) {
+            return true;
+        }
+        return false;
     }
 }
