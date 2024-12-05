@@ -13,6 +13,7 @@ use api\models\sharesafari\ShareSafariIncluded;
 use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariParklist;
 use api\models\operator\SafariOperator;
+use api\models\operator\SafariOperatorRating;
 use api\models\UserWishlist;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
@@ -41,6 +42,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'isWishlist';
             $fields[] = 'comments';
             $fields[] = 'organizedbyimage';
+            $fields[] = 'witwaveragerating';
+            $fields[] = 'Witwreviewcount';
 
             $hold_fields = [
                 'delete_reason_id',
@@ -324,5 +327,16 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             return true;
         }
         return false;
+    }
+
+    public function getWitwaveragerating()
+    {
+        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
+        return round($avg,1);
+    }
+
+    public function getWitwreviewcount()
+    {
+        return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
     }
 }

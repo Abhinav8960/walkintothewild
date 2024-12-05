@@ -22,8 +22,8 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'parkcount';
             $fields[] = 'packagecount';
             $fields[] = 'sharedsafaricount';
-            $fields[] = 'averagerating';
-            $fields[] = 'reviewcount';
+            $fields[] = 'witwaveragerating';
+            $fields[] = 'witwreviewcount';
             $fields[] = 'followerlistcount';
             $fields[] = 'categorytitle';
             $hold_fields = [
@@ -76,12 +76,14 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'sharedsafari';
             $fields[] = 'packages';
             $fields[] = 'park';
-            $fields[] = 'averagerating';
-            $fields[] = 'reviewcount';
+            $fields[] = 'witwaveragerating';
+            $fields[] = 'witwreviewcount';
             $fields[] = 'followerlistcount';
             $fields[] = 'isFollowed';
             $hold_fields = [
                 'safari_operator_request_id',
+                'google_rating',
+                'google_review_count',
                 'website',
                 'gst',
                 'google_business_url',
@@ -229,13 +231,13 @@ class SafariOperator extends \common\models\operator\SafariOperator
     }
 
 
-    public function getAveragerating()
+    public function getWitwaveragerating()
     {
         $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
         return $avg;
     }
 
-    public function getReviewcount()
+    public function getWitwreviewcount()
     {
         return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
     }
