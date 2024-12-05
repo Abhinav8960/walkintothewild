@@ -48,6 +48,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'witwaveragerating';
             $fields[] = 'Witwreviewcount';
             $fields[] = 'isFollowed';
+            $fields[] = 'organizedslug';
 
             $hold_fields = [
                 'delete_reason_id',
@@ -80,6 +81,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'sharedimagepath';
             $fields[] = 'intrestedUser';
             $fields[] = 'organizedbyimage';
+            $fields[] = 'organizedslug';
 
             $hold_fields = [
                 'delete_reason_id',
