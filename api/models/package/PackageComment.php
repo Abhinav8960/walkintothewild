@@ -31,6 +31,7 @@ class PackageComment extends \common\models\package\PackageComment
     {
         $fields = parent::fields();
         $fields[] = 'user';
+        $fields[] = 'dateTime';
         $fields[] = 'replies';
         $fields[] = 'willflag';
         $hold_fields = [ 'user_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
@@ -66,5 +67,10 @@ class PackageComment extends \common\models\package\PackageComment
             return true;
         }
         return false;
+    }
+
+    public function getDateTime()
+    {
+        return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
     }
 }

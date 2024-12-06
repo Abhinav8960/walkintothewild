@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-api',
+    'timezone' => 'Asia/Kolkata',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'api\controllers',
     // 'bootstrap' => ['log'],

@@ -14,6 +14,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         $fields = parent::fields();
         // $fields[] = 'park';
         // $fields[] = 'sharesafari';
+        $fields[] = 'dateTime';
         $fields[] = 'user';
         // $fields[] = 'parent';
         $fields[] = 'willflag';
@@ -63,5 +64,10 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
             return true;
         }
         return false;
+    }
+
+    public function getDateTime()
+    {
+        return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
     }
 }
