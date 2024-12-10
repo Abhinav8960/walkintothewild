@@ -5,8 +5,8 @@ use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
+// $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+// $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Update Safari Operator';
 $this->params['breadcrumbs_home_url'] = '/';

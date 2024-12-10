@@ -105,17 +105,17 @@ $this->params['title'] = $this->title;
 
                             //     ]);
                             // },
-                            // 'update' => function ($url, $model) {
+                            'update' => function ($url, $model) {
 
-                            //     return Html::a(
-                            //         '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
-                            //         ['update', 'id' => $model->id],
-                            //         [
-                            //             'class' => 'btn p-0 change-menuicon',
-                            //             'title' => 'Update',
-                            //         ]
-                            //     );
-                            // },
+                                return Html::a(
+                                    '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
+                                    ['update', 'id' => $model->id],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Update',
+                                    ]
+                                );
+                            },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
                             },
