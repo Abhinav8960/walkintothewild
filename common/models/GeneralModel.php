@@ -1291,6 +1291,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             $comment = preg_replace('/\b(\d{2}) (\d{5}) (\d{5})\b/', 'xx $1 xxxxx ' . $exclamation, $comment);
         } else if (preg_match('/\b(\d{2}) (\d{10})\b/', $comment)) {
             $comment = preg_replace('/\b(\d{2}) (\d{5})(\d{5})\b/', 'xx $1xxxxx ' . $exclamation, $comment);
+        } else if (preg_match('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
+            $comment = preg_replace('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1 $2$3x xxxx ' . $exclamation, $comment);
+        } else if (preg_match('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
+            $comment = preg_replace('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1$2$3x xxxx' . $exclamation, $comment);
         }
         return $comment;
     }
