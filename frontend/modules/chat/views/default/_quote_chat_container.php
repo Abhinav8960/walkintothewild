@@ -68,6 +68,9 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                     ?>
                         <?php
                         echo 'Quote From ', $chat_person_name, ' : <b>Rs. ', $chat->quote_price, '</b>';
+                        if ($chat->quote_more_detail == 1) {
+                            echo '<br><span class="text-danger">More details needed; this may affect the quoted price.</span>';
+                        }
                         ?>
                         <div class="chat-send-message-form">
                             <form id="chatmessageform" method="post">
@@ -89,11 +92,11 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                             </form>
 
                         </div>
-                        <span class="text-small"> <span class="text-danger">*</span> Upon accepting the quote, you'll be able to chat with the operator and your profile will become visible to them.</span>
+                        <i class="text-small"> <span class="text-danger">*</span> Upon accepting the quote, you'll be able to chat with the operator and your profile will become visible to them.</i>
                     <?php
                     } else {
                         // Price Not Set
-                        echo 'Quote Price is not yet set by Operator!';
+                        echo 'Quote Price is not yet estimated by <b>' . $chat_person_name . '</b>';
                     ?>
 
                     <?php } ?>
@@ -116,20 +119,21 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                             <div class="chat-send-message-form">
                                 <form id="chatmessageform" method="post">
                                     <div class="lead emoji-picker-container w-100 submit_on_enter">
-                                        <div class="character-count text-black">
-                                            Reply your Quote
-                                        </div>
 
-                                        <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></input>
-
-                                        <div class="sendMassege">
-                                            <div class="chat-sendbtn">
-                                                <i class="fa fa-paper-plane " id="message_sent_btn"></i>
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                            <div class=" text-black fw-bold">
+                                                Estimate quote
+                                                <span class="character-count"></span>
                                             </div>
-
+                                            <div class="position-relative ">
+                                                <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></input>
+                                                <div class="sendMassege" style="top: -22px; position: absolute; right: 0;">
+                                                    <div class="chat-sendbtn">
+                                                        <i class="fa fa-paper-plane " id="message_sent_btn"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
                                     </div>
 
                                     <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
@@ -137,15 +141,22 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                     <input type="hidden" name="Chat[chat_id]" value="<?= $chat_id ?>">
 
                                     <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-
+                                    <div class="form-check py-3">
+                                        <input class="form-check-input" type="checkbox" value="1" name="Chat[quote_more_detail]" id="quote_more_detail">
+                                        <label class="form-check-label " style="font-weight: 500;" for="quote_more_detail">
+                                            More details needed; this may affect the quoted price.
+                                        </label>
+                                    </div>
                                 </form>
-
                             </div>
-                            <span class="text-small"> <span class="text-danger">*</span> Once your quotation is accepted, you'll be able to contact and chat with the user directly.</span>
+                            <span class="text-small d-flex gap-1 fw-semibold"> <span class="text-danger">*</span> Once your quotation is accepted, you'll be able to contact and chat with the user directly.</span>
                         <?php
                         } else {
                             // Price is Set Waiting for Accpect 
-                            echo 'Quote Price : <b>Rs. ', $chat->quote_price, '</b>';
+                            echo 'Estimate Quote Price : <b>Rs. ', $chat->quote_price, '</b>';
+                            if ($chat->quote_more_detail == 1) {
+                                echo '<br><span class="text-danger">More details needed; this may affect the quoted price.</span>';
+                            }
                         ?>
 
                         <?php } ?>

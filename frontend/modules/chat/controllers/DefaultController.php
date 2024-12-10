@@ -165,6 +165,14 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                     if ($chat->created_by <> $login_user->id) { // Message Send by Operator
                                         if ($chat->quote_price == '') {
                                             $chat->quote_price = $chat_message->message;
+                                            if (isset($chat_model['quote_more_detail']) && $chat_model['quote_more_detail'] == 1) {
+                                                $chat->quote_more_detail = 1;
+                                                $chat_message_more_detail = new ChatMessage();
+                                                $chat_message_more_detail->chat_id = $chat->id;
+                                                $chat_message_more_detail->message = $message;
+                                                $chat_message_more_detail->status = 1;
+                                                $chat_message_more_detail->message = 'More details needed; this may affect the quoted price.';
+                                            }
                                             $chat_message->message = 'Rs. ' . $chat_message->message;
                                             $chat->save(false);
                                         }
@@ -177,6 +185,9 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                             }
 
                             if ($chat_message->save()) {
+                                if (isset($chat_message_more_detail)) {
+                                    $chat_message_more_detail->save(); // Save for More Details Message show to User 
+                                }
                                 if ($chat_message->created_by == $chat->recipient_user_id) {
                                     //its end operator
                                     $reply_by = $operator_info['name'];
