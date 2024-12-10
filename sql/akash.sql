@@ -5,3 +5,6 @@ INSERT INTO `meta_stay_category` (`id`, `title`, `status`, `created_at`, `create
 
 -- 4-Dec-2024
 ALTER TABLE `user` ADD `pop_up_message` VARCHAR(512) NULL AFTER `user_flaged`;
+
+-- 10-Dec-2024
+UPDATE `meta_stay_category` SET `title` = 'Not Required' WHERE `meta_stay_category`.`id` = 4;

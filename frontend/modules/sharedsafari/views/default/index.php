@@ -349,7 +349,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Is it a shared safari or a fixed departure</h1>
+                <h1 class="modal-title" style="font-size:15px;" id="exampleModalLabel">Is it a shared safari or a fixed departure</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body p-3">
