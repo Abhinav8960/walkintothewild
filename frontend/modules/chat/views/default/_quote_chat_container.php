@@ -75,7 +75,7 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                         <div class="chat-send-message-form">
                             <form id="chatmessageform" method="post">
                                 <div class="lead emoji-picker-container w-100 submit_on_enter">
-                                    <input type="hidden" name="Chat[message]" class="form-control chat-message-input submit_on_enter" id="chat-message" value="Accept" maxlength="500"></input>
+                                    <input type="hidden" name="Chat[message]" class="form-control chat-message-input submit_on_enter" id="chat-message" value="Thanks for sharing" maxlength="500"></input>
                                     <div class="sendMassege btn sendMassegebtn form-control" id="message_sent_btn">
                                         Accept
                                     </div>
