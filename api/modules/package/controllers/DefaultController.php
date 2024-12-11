@@ -37,7 +37,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
+                'exclude' => ['index', 'view','staycategory'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -62,6 +62,7 @@ class DefaultController extends RestController
                     'unwishlist' => ['POST'],
                     'package-quote' => ['POST'],
                     'flag' => ['POST'],
+                    'staycategory' => ['GET'],
                 ],
             ],
         ];
@@ -249,5 +250,10 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionStaycategory()
+    {
+        return Yii::$app->api->sendResponse($data = GeneralModel::budgetoption());
     }
 }
