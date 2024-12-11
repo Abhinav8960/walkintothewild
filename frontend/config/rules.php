@@ -74,6 +74,8 @@ return [
     '/sharedsafari/<organized_slug>/<slug>/wishlist' => '/sharedsafari/default/wishlist', //sharedsafari page url
     '/sharedsafari/<organized_slug>/<slug>/unwishlist' => '/sharedsafari/default/unwishlist', //sharedsafari page url
     '/sharedsafari/<organized_slug>/<slug>' => '/sharedsafari/default/view',
+    '/sharedsafari/<organized_slug>/<slug>/history' => '/sharedsafari/default/history',
+    '/sharedsafari/<organized_slug>/<slug>/fixed-history' => '/sharedsafari/default/fixed-history',
 
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url

@@ -76,6 +76,9 @@ $this->params['title'] = $this->title; ?>
                                                 ?>
                                             <?php } ?>
                                         </h5>
+                                        <div class="history">
+                                            <button value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
+                                        </div>
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>

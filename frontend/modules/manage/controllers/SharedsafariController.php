@@ -83,6 +83,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save()) {
+                        $model->shared_safari_departure_model->savehistory();
                         $parks = $model->park_list;
                         if ($parks) {
                             foreach ($parks as $park) {
@@ -145,6 +146,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
+                        $model->shared_safari_departure_model->savehistory();
                         $parks = $model->park_list;
                         if ($parks) {
                             ShareSafariParklist::deleteAll(['share_safari_id' => $shared_safari_departure_model->id]);
@@ -176,6 +178,7 @@ class SharedsafariController extends FrontendBaseController
                         if ($model->shared_safari_departure_model->mail_sent == 0 && $model->shared_safari_departure_model->status == 1) {
                             $model->shared_safari_departure_model->mail_sent = 1;
                             if ($model->shared_safari_departure_model->save(false)) {
+                                $model->shared_safari_departure_model->savehistory();
                                 if ($active_followers = $model->shared_safari_departure_model->fixeddeparturefollowerlist) {
                                     foreach ($active_followers as $follower) {
                                         /** Creator Info */

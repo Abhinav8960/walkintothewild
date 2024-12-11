@@ -16,6 +16,7 @@ use common\Helper\FrontendNotificationHelper;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafariFaqSearch;
+use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequestContact;
 use frontend\models\form\SharedSafariForm;
@@ -99,6 +100,7 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save()) {
+                        $model->shared_safari_model->savehistory();
                         $model->UploadFiles($model->shared_safari_model->id);
                         if ($model->shared_safari_model->user) {
                             $user = $model->shared_safari_model->user;
@@ -188,6 +190,7 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
+                        $model->shared_safari_model->savehistory();
                         $model->UploadFiles($model->shared_safari_model->id);
 
                         if ($intrested_users = $shared_safari_model->intrested) {
@@ -694,17 +697,29 @@ class DefaultController extends FrontendBaseController
     // }
 
 
-    // public function actionHistory($share_safari_id)
-    // {
-    //     $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
-    //         'id' => SORT_DESC
-    //     ])->all();
-    //     if (Yii::$app->request->isAjax) {
-    //         return $this->renderAjax('history_view', [
-    //             'history_model' => $history_model
-    //         ]);
-    //     }
-    // }
+    public function actionHistory($slug)
+    {
+        $history_model = ShareSafariHistory::find()->where(['slug' => $slug, 'status' => 1, 'type' => ShareSafari::TYPE_SAFARI])->orderBy([
+            'id' => SORT_DESC
+        ])->all();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('history_view', [
+                'history_model' => $history_model
+            ]);
+        }
+    }
+
+    public function actionFixedHistory($slug)
+    {
+        $history_model = ShareSafariHistory::find()->where(['slug' => $slug, 'status' => 1, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->orderBy([
+            'id' => SORT_DESC
+        ])->all();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('history_fixed_view', [
+                'history_model' => $history_model
+            ]);
+        }
+    }
 
 
     protected function findModel($slug)

@@ -82,6 +82,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 ?>
                                             <?php } ?>
                                         </h5>
+                                        <div class="history">
+                                            <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
+                                        </div>
                                         <div class="date_bx">
                                             <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:black;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
                                         </div>
@@ -589,6 +592,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </div>
 
+<div class="modal fade _standard-text" id="history-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php
 $script = <<< JS
@@ -610,6 +627,15 @@ function interestfucntion() {
 	});
 }
 interestfucntion();
+
+function historyfucntion() {
+	$('.history_btn').on('click', function () {
+        $('#history-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+historyfucntion();
 
 const textContainer = $(".profile-description .text");
     const showMoreButton = $(".profile-description .show-more");

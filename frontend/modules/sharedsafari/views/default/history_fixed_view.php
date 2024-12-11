@@ -19,10 +19,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $same_no_of_safaris = $previous_history_model && strcmp($previous_history_model->no_of_safari, $share_safari->no_of_safari) != 0;
                         $same_total_seat = $previous_history_model && strcmp($previous_history_model->total_seat, $share_safari->total_seat) != 0;
                         $same_share_seat = $previous_history_model && strcmp($previous_history_model->share_seat, $share_safari->share_seat) != 0;
-                        $same_estimate_min_price = $previous_history_model && strcmp($previous_history_model->estimate_price_min, $share_safari->estimate_price_min) != 0;
-                        $same_estimate_max_price = $previous_history_model && strcmp($previous_history_model->estimate_price_max, $share_safari->estimate_price_max) != 0;
+                        $same_cost_price = $previous_history_model && strcmp($previous_history_model->cost_per_person, $share_safari->cost_per_person) != 0;
                 ?>
-                        <div class="card card_history col-3 gap-2">
+                        <div class="card card_history col-xl-6 col-mb-6 gap-2">
                             <?php if ($counter != 1) { ?>
                                 <h6>Previous</h6>
                             <?php } else { ?>
@@ -35,8 +34,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <p class="mb-0 p-2 rounded" style="<?= ($same_no_of_safaris) ? 'background-color:yellow' : '' ?>">Safaris <strong><?= $share_safari->no_of_safari ?></strong></p>
                             <p class="mb-0 p-2 rounded" style="<?= ($same_total_seat) ? 'background-color:yellow' : '' ?>">Total Seat <strong><?= $share_safari->total_seat ?></strong></p>
                             <p class="mb-0 p-2 rounded" style="<?= ($same_share_seat) ? 'background-color:yellow' : '' ?>">Share Seat <strong><?= $share_safari->share_seat ?></strong></p>
-                            <p class="mb-0 p-2 rounded" style="<?= ($same_estimate_min_price) ? 'background-color:yellow' : '' ?>">Estimate Min Price <strong><?= $share_safari->estimate_price_min ?></strong></p>
-                            <p class="mb-0 p-2 rounded" style="<?= ($same_estimate_max_price) ? 'background-color:yellow' : '' ?>">Estimate Max Price <strong><?= $share_safari->estimate_price_max ?></strong></p>
+                            <p class="mb-0 p-2 rounded" style="<?= ($same_cost_price) ? 'background-color:yellow' : '' ?>">Cost Per Person <strong><?= $share_safari->cost_per_person ?></strong></p>
                         </div>
                 <?php $counter++;
                         $previous_history_model = $share_safari;

@@ -270,12 +270,24 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
         }
     }
-    
+
     public function getFixeddeparturefollowerlist()
     {
-         if($this->safarioperator && $this->safarioperator->followerlist)
-         {
+        if ($this->safarioperator && $this->safarioperator->followerlist) {
             return $this->safarioperator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
-         }
+        }
+    }
+
+
+    public function savehistory()
+    {
+      
+        $historyModel = new ShareSafariHistory();
+        $historyModel->attributes = $this->attributes;
+        $historyModel->parent_id = $this->id;
+
+        if (!$historyModel->save(false)) {
+            Yii::error('Failed to save ShareSafariHistory: ' . print_r($historyModel->errors, true), __METHOD__);
+        }
     }
 }
