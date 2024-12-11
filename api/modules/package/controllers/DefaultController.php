@@ -37,7 +37,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view','staycategory'],
+                'exclude' => ['index', 'view', 'staycategory'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -254,6 +254,9 @@ class DefaultController extends RestController
 
     public function actionStaycategory()
     {
-        return Yii::$app->api->sendResponse($data = GeneralModel::budgetoption());
+        $data = GeneralModel::budgetoption();
+        return Yii::$app->api->sendResponse(array_map(function ($value, $key) {
+            return ['id' => $key, 'name' => $value];
+        }, $data, array_keys($data)));
     }
 }
