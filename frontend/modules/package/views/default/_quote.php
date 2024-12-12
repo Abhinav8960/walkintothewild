@@ -33,7 +33,7 @@ use yii\bootstrap5\ActiveForm;
                     </div>
                     <div class="form-wrapper">
                         <label for="start-date">Start Date</label>
-                        <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control', 'disabled' => $disabled])->label(false) ?>
+                        <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control', 'onkeydown' => 'return false;', 'disabled' => $disabled, 'min' => date('Y-m-d'), 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
                     </div>
                 </div>
             </div>

@@ -141,7 +141,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getIntrested()
     {
-        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
     }
 
     public function getSharedimagepath()
@@ -281,7 +281,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function savehistory()
     {
-      
+
         $historyModel = new ShareSafariHistory();
         $historyModel->attributes = $this->attributes;
         $historyModel->parent_id = $this->id;
