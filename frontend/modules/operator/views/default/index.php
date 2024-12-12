@@ -117,7 +117,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php } ?>
                                                 <div class="card-body ">
                                                     <div class="logo_provide2">
-                                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/thumbnailpakage.jpg' ?>" alt="" class="w-100">
+                                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/operator-placeholder-80.jpg' ?>" alt="" class="w-100">
                                                         <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                                     </div>
                                                     <div class="provider_details  px-2">

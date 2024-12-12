@@ -31,7 +31,7 @@ use yii\helpers\Url;
                                 }])->where(['safari_operator_park.status' => 1, 'safari_operator_park.show_in_front' => 1])->limit(7)->all()) {
                                     foreach ($operator_list as $operator_park) { ?>
                                         <div class="slidesImg">
-                                            <img src="<?= isset($operator_park->operator->logo) ? $operator_park->operator->imagepath : $this->params['baseurl'] . '/img/thumbnailpakage.jpg' ?>" alt="" class="w-100">
+                                            <img src="<?= isset($operator_park->operator->logo) ? $operator_park->operator->imagepath : $this->params['baseurl'] . '/img/operator-placeholder-80.jpg' ?>" alt="" class="w-100">
                                         </div>
                                     <?php  }
                                     ?>
