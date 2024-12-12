@@ -235,7 +235,7 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
-            $model->notification_text = $user->name ." Leaved Shared Safari " . $park_name;
+            $model->notification_text = $user->name . " Leaved Shared Safari " . $park_name;
             if ($model->save(false)) {
                 self::eventSendtoPusher($model);
             }
@@ -350,26 +350,28 @@ class FrontendNotificationHelper
     }
 
 
-    public static function sharedSafariCommentToIntrest(ShareSafari $share_safari)
+    public static function sharedSafariCommentToIntrest(ShareSafari $share_safari, User $user)
     {
         if ($share_safari) {
 
             $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
             if ($intrested_users) {
                 foreach ($intrested_users as $intrested_user) {
-                    $model = new FrontendNotification();
-                    $model->action_id = FrontendNotification::ACTION_SHAREDSAFARI_NEW_COMMENT_TO_INTREST;
-                    $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
-                    $model->parent_id = $share_safari->id;
-                    $model->channel = 'UserNotificationChannel';
-                    $model->status = 1;
-                    $model->user_id = $intrested_user->user_id;
-                    $model->is_seen = false;
-                    $model->is_read = False;
-                    $park_name = $share_safari->park ? $share_safari->park->title : '';
-                    $model->notification_text = "New Comment on Shared Safari.";
-                    if ($model->save(false)) {
-                        self::eventSendtoPusher($model);
+                    if ($intrested_user->user_id != $user->id) {
+                        $model = new FrontendNotification();
+                        $model->action_id = FrontendNotification::ACTION_SHAREDSAFARI_NEW_COMMENT_TO_INTREST;
+                        $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
+                        $model->parent_id = $share_safari->id;
+                        $model->channel = 'UserNotificationChannel';
+                        $model->status = 1;
+                        $model->user_id = $intrested_user->user_id;
+                        $model->is_seen = false;
+                        $model->is_read = False;
+                        $park_name = $share_safari->park ? $share_safari->park->title : '';
+                        $model->notification_text = "New Comment on Shared Safari.";
+                        if ($model->save(false)) {
+                            self::eventSendtoPusher($model);
+                        }
                     }
                 }
             }
