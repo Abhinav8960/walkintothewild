@@ -83,7 +83,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <?php } ?>
                                         </h5>
                                         <div class="history">
-                                            <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
+                                            <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
                                         </div>
                                         <div class="date_bx">
                                             <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:black;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
