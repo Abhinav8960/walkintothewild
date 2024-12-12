@@ -18,7 +18,7 @@ use yii\helpers\Html;
                         You’ve received a reply from <?= Html::encode($reply_by) ?> regarding your quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details and continue planning your adventure.
 
                     <?php  } else { ?>
-                        You’ve received a reply from <?= Html::encode($reply_by) ?> regarding his quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details .
+                        You’ve received a reply from <?= Html::encode($reply_by) ?> regarding his quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details.
                     <?php  } ?>
                 </p>
             </div>
