@@ -158,7 +158,8 @@ class SharedsafariController extends FrontendBaseController
                             }
                         }
 
-                        if ($intrested_users = $shared_safari_departure_model->intrested) {
+                        $intrested_users = $shared_safari_departure_model->getIntrested()->where(['status' => 1])->all();
+                        if ($intrested_users) {
                             foreach ($intrested_users as $intrest) {
                                 $user = $intrest->user;
                                 $username = $user->name;

@@ -193,7 +193,8 @@ class DefaultController extends FrontendBaseController
                         $model->shared_safari_model->savehistory();
                         $model->UploadFiles($model->shared_safari_model->id);
 
-                        if ($intrested_users = $shared_safari_model->intrested) {
+                        $intrested_users = $shared_safari_model->getIntrested()->where(['status' => 1])->all();
+                        if ($intrested_users) {
                             foreach ($intrested_users as $intrest) {
                                 $user = $intrest->user;
                                 $username = $user->name;
@@ -295,7 +296,8 @@ class DefaultController extends FrontendBaseController
             /**
              *  To member 
              * */
-            if ($intrested_users = $share_safari->intrested) {
+            $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+            if ($intrested_users) {
                 foreach ($intrested_users as $intrest) {
                     if ($intrest->user_id != Yii::$app->user->identity->id) {
                         $user = $intrest->user;
@@ -314,7 +316,7 @@ class DefaultController extends FrontendBaseController
             }
 
 
-            FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari,Yii::$app->user->identity);
+            FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
 
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
