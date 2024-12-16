@@ -154,6 +154,7 @@ class SafariParkSearch extends SafariPark
                 $query->andFilterWhere(['safari_park_bonus_experience.master_bonus_experience_id' => $this->bonus_experience_id]);
             }]);
         }
+        $query->distinct(); //this add to distinct showing park
         // grid filtering conditions
         $query->andFilterWhere([
             'safari_park.id' => $this->id,
