@@ -23,15 +23,16 @@ class Api extends Component
         $this->setHeader($code);
 
         $response = [];
-        $response['status'] = true;
+        // $response['status'] = true;
 
-        if (is_array($data))
+        if (is_array($data)) {
             // $response['data'] = $data;
             $response = $data;
-
-
-        if ($additional_info) {
-            $response = array_merge($response, $additional_info);
+            if ($additional_info) {
+                $response = array_merge($response, $additional_info);
+            }
+        } else {
+            $response = $data;
         }
 
 
@@ -46,7 +47,6 @@ class Api extends Component
         } else {
             return $response;
         }
-
     }
 
 

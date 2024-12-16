@@ -65,7 +65,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
 
-        return Yii::$app->api->sendResponse($data = [$user]);
+        return Yii::$app->api->sendResponse($data = $user);
     }
 
     public function actionFollow($user_handle)
