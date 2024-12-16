@@ -403,4 +403,9 @@ class Package extends \common\models\package\Package
         }
         return false;
     }
+
+    public function getSearchpackagepark()
+    {
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
 }

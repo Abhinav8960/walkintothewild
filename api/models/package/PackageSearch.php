@@ -146,7 +146,7 @@ class PackageSearch extends Package
 
 
         if ($this->park_id) {
-            $query->joinwith(['packagepark' => function ($park_query) {
+            $query->joinwith(['searchpackagepark' => function ($park_query) {
                 $park_query->andFilterWhere(['park_id' => $this->park_id]);
             }]);
         }
