@@ -6,7 +6,10 @@ use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
+use api\models\operator\SafariOperatorRequestActivities;
+use api\models\operator\SafariOperatorRequestPark;
 use api\models\User;
+use api\models\UserWishlist;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\profile\PrivacyForm;
@@ -34,10 +37,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions'],
+                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions','wishlist-package','wishlist-shared-safari'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions'],
+                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions','wishlist-package','wishlist-shared-safari'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,6 +55,8 @@ class DefaultController extends RestController
                     'cover-photo' => ['POST'],
                     'privacy' => ['POST'],
                     'dropdownoptions' => ['GET'],
+                    'wishlist-package' => ['GET'],
+                    'wishlist-shared-safari' => ['GET'],
                 ],
             ],
         ];
@@ -139,61 +144,58 @@ class DefaultController extends RestController
     //     // $registration_model->action_validate_url = Url::toRoute(['/account/default/validate']);
 
     //     $registration_model->referrer_url = \Yii::$app->request->referrer;
-    //     if ($this->request->isPost) {
-    //         if ($registration_model->load($this->request->post())) {
-    //             $registration_model->logo = UploadedFile::getInstance($registration_model, 'logo');
-    //             if ($registration_model->validate()) {
-    //                 $registration_model->initializeForm();
-    //                 if ($registration_model->safarioperator_request_model->save(false)) {
-    //                     $registration_model->uploadFile();
-    //                     $parks = $registration_model->park_id;
-    //                     if ($parks) {
-    //                         foreach ($parks as $park) {
-    //                             $safarioperatorrequestpark = new SafariOperatorRequestPark();
-    //                             $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
-    //                             $safarioperatorrequestpark->park_id = $park;
-    //                             $safarioperatorrequestpark->save(false);
-    //                         }
-    //                     }
+
+    //     $registration_model->attributes = $this->request;
+    //     $registration_model->logo = UploadedFile::getInstanceByName('logo');
+
+    //     if ($registration_model->validate()) {
+    //         $registration_model->initializeForm();
+    //         if ($registration_model->safarioperator_request_model->save(false)) {
+    //             $registration_model->uploadFile();
+    //             $parks = $registration_model->park_id;
+    //             if ($parks) {
+    //                 foreach ($parks as $park) {
+    //                     $safarioperatorrequestpark = new SafariOperatorRequestPark();
+    //                     $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
+    //                     $safarioperatorrequestpark->park_id = $park;
+    //                     $safarioperatorrequestpark->save(false);
+    //                 }
+    //             }
 
 
-    //                     $activities = $registration_model->offers_other_wildlifeactivities;
-    //                     if ($activities) {
-    //                         foreach ($activities as $activity) {
-    //                             $safarioperatorrequestpark = new SafariOperatorRequestActivities();
-    //                             $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
-    //                             $safarioperatorrequestpark->wildlife_activity_id = $activity;
-    //                             $safarioperatorrequestpark->save(false);
-    //                         }
-    //                     }
+    //             $activities = $registration_model->offers_other_wildlifeactivities;
+    //             if ($activities) {
+    //                 foreach ($activities as $activity) {
+    //                     $safarioperatorrequestpark = new SafariOperatorRequestActivities();
+    //                     $safarioperatorrequestpark->safari_operator_request_id = $registration_model->safarioperator_request_model->id;
+    //                     $safarioperatorrequestpark->wildlife_activity_id = $activity;
+    //                     $safarioperatorrequestpark->save(false);
+    //                 }
+    //             }
 
-    //                     $registration_model->safarioperator_request_model->is_approved = 1;
-    //                     if ($registration_model->safarioperator_request_model->save(false)) {
-    //                         $safari_operator = $registration_model->safarioperator_request_model->safariapproved($registration_model->safarioperator_request_model);
-    //                         if ($safari_operator) {
-    //                             $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
-    //                             $user->account_type = $registration_model->account_type;
-    //                             $user->save(false);
+    //             $registration_model->safarioperator_request_model->is_approved = 1;
+    //             if ($registration_model->safarioperator_request_model->save(false)) {
+    //                 $safari_operator = $registration_model->safarioperator_request_model->safariapproved($registration_model->safarioperator_request_model);
+    //                 if ($safari_operator) {
+    //                     $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+    //                     $user->account_type = $registration_model->account_type;
+    //                     $user->save(false);
 
-    //                             /*Operator Register*/
-    //                             $to_mail = Yii::$app->params['adminEmail'];
-    //                             $subject = 'New Operator Register | ' . substr($safari_operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-    //                             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
-    //                             $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
-    //                             $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];
-    //                             $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-    //                             if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-    //                                 GeneralModel::sendmailfromlog($maillog_data['log_id']);
-    //                             }
-
-    //                             return $this->redirect(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
-    //                         }
-    //                     }
+    //                     /*Operator Register comment due to url*/
+    //                     // $to_mail = Yii::$app->params['adminEmail'];
+    //                     // $subject = 'New Operator Register | ' . substr($safari_operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+    //                     // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
+    //                     // $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
+    //                     // $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];
+    //                     // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+    //                     // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+    //                     //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+    //                     // }
+    //                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Bussiness Registered Successfully"]);
     //                 }
     //             }
     //         }
-    //     } 
-
+    //     }
     // }
 
 
@@ -230,4 +232,22 @@ class DefaultController extends RestController
     //         'model' => BlockedModel::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : NULL, 'status' => 1])->all(),
     //     ]);
     // }
+
+
+    public function actionWishlistPackage()
+    {
+        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
+        return Yii::$app->api->sendResponse($data = $wishlist_items);
+    }
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionWishlistSharedSafari()
+    {
+
+        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
+        return Yii::$app->api->sendResponse($data = $wishlist_items);
+    }
 }
