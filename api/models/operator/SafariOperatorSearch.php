@@ -92,7 +92,7 @@ class SafariOperatorSearch extends SafariOperator
         }
 
         if ($park_id) {
-            $query->joinwith(['park' => function ($query) use ($park_id) {
+            $query->joinwith(['operatorparksearch' => function ($query) use ($park_id) {
                 $query->andFilterWhere(['safari_operator_park.park_id' => $park_id]);
             }]);
         }

@@ -35,7 +35,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist','park-operator'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,7 +55,8 @@ class DefaultController extends RestController
                     'view' => ['GET'],
                     'filter-parklist' => ['GET'],
                     'reviewlist' => ['GET'],
-                    'suggestion' => ['POST']
+                    'suggestion' => ['POST'],
+                    'park-operator' => ['GET'],
 
                 ],
             ],
@@ -174,5 +175,18 @@ class DefaultController extends RestController
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Review Already submitted"]);
         }
+    }
+
+    public function actionParkOperator($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            // return $this->redirect(['/park']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $operatorsearchModel = new SafariOperatorSearch();
+        $operatorsearchModel->status = 1;
+
+        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = 0, $additionalSearchQueryParams = [$model->id]);
     }
 }

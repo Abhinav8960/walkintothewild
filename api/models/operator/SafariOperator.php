@@ -257,4 +257,9 @@ class SafariOperator extends \common\models\operator\SafariOperator
         }
         return false;
     }
+
+    public function getOperatorparksearch()
+    {
+        return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+    }
 }
