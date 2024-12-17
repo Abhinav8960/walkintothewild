@@ -43,6 +43,9 @@ return [
         ],
         'profile' => [
             'class' => 'api\modules\profile\Module',
+        ],
+        'account' => [
+            'class' => 'api\modules\account\Module'
         ]
 
     ],
@@ -130,7 +133,7 @@ return [
 
                 'operator/<slug>' => 'operator/default/view',
                 'operator/<slug>/<action>' => 'operator/default/<action>',
-                
+
                 'about-us' => 'static-page/about-us',
                 'faqs' => 'static-page/faqs',
                 'contact-us' => 'static-page/contact-us',
@@ -138,6 +141,9 @@ return [
                 'user-profile' => 'profile/default/index',
                 'profile/follow' => 'profile/default/follow',
                 'profile/unfollow' => 'profile/default/unfollow',
+
+                'account' => 'account/default/index',
+                'account/<action>' => 'account/default/<action>',
 
             ],
 
