@@ -167,4 +167,10 @@ class FsHelper
         return  $filemodel->file;
         return false;
     }
+
+
+    private function createThumbnail($path)
+    {
+        \yii\imagine\Image::frame($path, 5, '666', 0)->save('path/to/destination/image.jpg', ['jpeg_quality' => 50]);
+    }
 }

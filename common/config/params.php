@@ -15,5 +15,6 @@ return [
     'PUSHER_AUTH_KEY' => '224fb7b95b501eca5161',
     'PUSHER_SECRET_KEY' => '1270be252c3504068584',
     'PUSHER_CLUSTER' => 'ap2',
+    'host_url' => 'https://www.walkintothewild.in',
 
 ];
