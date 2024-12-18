@@ -46,7 +46,10 @@ return [
         ],
         'account' => [
             'class' => 'api\modules\account\Module'
-        ]
+        ],
+        // 'manage' => [
+        //     'class' => 'api\modules\manage\Module'
+        // ]
 
     ],
     'components' => [
@@ -144,6 +147,9 @@ return [
 
                 'account' => 'account/default/index',
                 'account/<action>' => 'account/default/<action>',
+
+                'manage' => 'manage/default/index',
+                'manage/<action>' => 'manage/default/<action>',
 
             ],
 
