@@ -126,8 +126,8 @@ class RestController extends Controller
                 //     Yii::$app->api->sendFailedResponse([], 'Access token expired');
                 // };
 
-                $this->userinfo = User::findOne(['id' => $access_token->user_id]);
-                $this->userinfoId = $this->userinfo->id;
+                \Yii::$app->params['active_user'] =   $this->userinfo = User::findOne(['id' => $access_token->user_id]);
+                \Yii::$app->params['active_user_id'] = $this->userinfoId = $this->userinfo->id;
             }
         }
     }
