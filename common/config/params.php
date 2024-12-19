@@ -16,5 +16,7 @@ return [
     'PUSHER_SECRET_KEY' => '1270be252c3504068584',
     'PUSHER_CLUSTER' => 'ap2',
     'frontend_url' => 'https://www.walkintothewild.in',
+    'endpoint' => 'https://www.walkintothewild.in',
+
 
 ];

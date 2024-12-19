@@ -159,7 +159,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $image_path = '';
         if (isset($this->package_image)) {
-            $image_path = \Yii::$app->params['frontend_url'] . '/storage/package/' . $this->id . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/storage/package/' . $this->id . '/' . $this->package_image;
         } else {
 
             if (isset($this->singlepark)) {
@@ -181,7 +181,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
-            $image_path = \Yii::$app->params['frontend_url'] . '/storage/package/' . $this->id . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/storage/package/' . $this->id . '/' . $this->package_banner_image;
         } else {
 
             if (isset($this->singlepark)) {

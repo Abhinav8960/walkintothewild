@@ -69,7 +69,7 @@ class Banner extends \yii\db\ActiveRecord implements \common\interfaces\NewStatu
     public function getImagepath()
     {
         if ($this->image != '') {
-            return \Yii::$app->params['frontend_url'] . '/storage/banner/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['endpoint'] . '/storage/banner/' . $this->id . '/' . $this->image;
         }
     }
 }
