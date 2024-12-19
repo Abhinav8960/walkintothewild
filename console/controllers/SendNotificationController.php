@@ -41,14 +41,16 @@ class SendNotificationController extends Controller
         if ($logs) {
             foreach ($logs as $log) {
                 $data = !empty($log->sent_data) ? json_decode($log->sent_data) : [];
-                $title = ucfirst($this->source);
+                $title = ucfirst($log->title);
                 $body =  $log->message;
+                $imageUrl = $log->image_url;
                 $token = $this->firebaseTokens($log->user_id);
+                // $token = ['dU1UiyiUTLG9BKu8qdQVaY:APA91bEyC9hqyG7eCK_N2FnIq9pehgyPmYckW6ZiC8_jVe_FOE-aX2W9kHe6m5dMJ1_G_LHybHsy7b5pJptp1947OOEsgwzuLzcHEk0iNVkObvuI7CV806M'];
                 $topic = NULL;
                 $condition = NULL;
                 if ($token) {
                     $title = $log->title;
-                    \Yii::$app->firebase->sendMulticastNotification($title, $body, $token, $data, $topic = NULL, $condition = NULL);
+                    \Yii::$app->firebase->sendMulticastNotification($title, $body, $imageUrl, $token, $data, $topic = NULL, $condition = NULL);
                 }
 
                 $log->is_cron_run = 1;
@@ -58,7 +60,7 @@ class SendNotificationController extends Controller
     }
 
 
-  
+
 
     private function firebaseTokens($userId)
     {

@@ -14,16 +14,16 @@ use Kreait\Firebase\Exception\MessagingException;
 /**
  * Class for common API functions
  */
-class FireBaseCloudMessaging extends Component
+class FirebaseCloudMessaging extends Component
 {
     public $factory;
     public $messaging;
-    public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
+    // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
 
     public function __construct()
     {
-        $this->factory = (new Factory)->withServiceAccount(\Yii::$app->params['firebaseconfigfilepath']);
+        $this->factory = (new Factory)->withServiceAccount(Yii::getAlias('@common/config/service.json'));
         $this->messaging = $this->factory->createMessaging();
     }
 
@@ -54,13 +54,13 @@ class FireBaseCloudMessaging extends Component
     }
 
     // public function sendMulticastNotification($message, $deviceTokens)
-    public function sendMulticastNotification($title, $body, $deviceTokens, $data = [], $topic = NULL, $condition = NULL)
+    public function sendMulticastNotification($title, $body, $imageUrl, $deviceTokens, $data = [], $topic = NULL, $condition = NULL)
     {
         $message = CloudMessage::new()
             ->withNotification(Notification::fromArray([
                 'title' => $title,
                 'body' => $body,
-                'image' => $this->imageUrl,
+                'image' => $imageUrl,
             ]));
         if (!empty($data)) {
             $message = $message->withData($data);

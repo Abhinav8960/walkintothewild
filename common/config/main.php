@@ -20,7 +20,7 @@ return [
             'class' => 'common\components\NotificationComponent',
         ],
         'firebase' => [
-            'class' => 'common\components\FireBaseCloudMessaging',
+            'class' => 'common\components\FirebaseCloudMessaging',
         ],
         'cache' => [
             'class' => \yii\caching\FileCache::class,
