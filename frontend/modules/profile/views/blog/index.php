@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                                                                 <a class="join_btn updateBtn_artical text-center px-3 py-1" href="<?= Url::toRoute(['update', 'slug' => $blog->slug]) ?>">Update</a>
                                                             <?php } ?>
 
-                                                            <figure class="image"><a href="<?= Url::toRoute(['view', 'slug' => $blog->slug, 'user_handle' => $user->user_handle]) ?>"><img src="<?= isset($blog->banner_image) ? $blog->bannerimagepath : $this->params['baseurl'] . '/img/Blog1.jpg' ?>" alt=""></a>
+                                                            <figure class="image"><a href="<?= Url::toRoute(['view', 'slug' => $blog->slug, 'user_handle' => $user->user_handle]) ?>"><img src="<?= isset($blog->banner_image) ? $blog->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt=""></a>
                                                             </figure>
                                                         </div>
                                                         <div class="lower-content">
