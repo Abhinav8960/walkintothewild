@@ -108,21 +108,21 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\Ne
     {
         parent::afterSave($insert, $changedAttributes);
         $className = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
-        \common\models\MasterMetaTableInfo::upsert($className, SELF::find()->where(['status'=>SELF::STATUS_ACTIVE])->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        \common\models\MasterMetaTableInfo::upsert($className, SELF::find()->where(['status' => SELF::STATUS_ACTIVE])->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
         return  true;
     }
 
     public function getImagepath()
     {
         if ($this->feature_image != '') {
-            return '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getBannerimagepath()
     {
         if ($this->banner != '') {
-            return '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->banner;
         }
     }
 

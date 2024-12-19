@@ -450,7 +450,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         if ($this->profile_image != '') {
-            return '/storage/user/' . $this->id . '/' . $this->profile_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/user/' . $this->id . '/' . $this->profile_image;
         }
 
         if ($this->avatar != '') {
@@ -461,7 +461,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getCoverimage()
     {
         if ($this->cover_image != '') {
-            return '/storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
         }
     }
 

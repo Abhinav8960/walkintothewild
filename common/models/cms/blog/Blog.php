@@ -153,14 +153,14 @@ class Blog extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return '/storage/blog/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/blog/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getBannerimagepath()
     {
         if ($this->banner_image != '') {
-            return '/storage/blog/' . $this->id . '/' . $this->banner_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/blog/' . $this->id . '/' . $this->banner_image;
         }
     }
 
