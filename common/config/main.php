@@ -16,6 +16,12 @@ return [
                 ],
             ],
         ],
+        'notification' => [
+            'class' => 'common\components\NotificationComponent',
+        ],
+        'firebase' => [
+            'class' => 'common\components\FireBaseCloudMessaging',
+        ],
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
