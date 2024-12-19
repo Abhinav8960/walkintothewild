@@ -1206,6 +1206,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         ];
     }
 
+    public static function userstatusoptionwithdelete()
+    {
+        return [
+            '1' => 'Published',
+            '0' => 'UnPublished',
+            '-1' => 'Delete',
+        ];
+    }
+
     public static function sendmailfromlog($mail_log_id)
     {
         $log = MailLog::find()->where(['status' => 2])->andWhere(['id' => $mail_log_id])->one();

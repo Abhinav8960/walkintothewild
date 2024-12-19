@@ -78,7 +78,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="row">
-               
+
 
                 <!-- <?php if ($model->blog_model->id) { ?>
                     <div class="col-md-3">
@@ -89,12 +89,21 @@ use yii\bootstrap5\ActiveForm;
                     </div>
                 <?php } ?> -->
 
-                <div class="col-md-3">
-                    <?= $form->field($model, 'status', [
-                        'labelOptions' => ['class' => 'Modal_label']
-                    ])->radioList(GeneralModel::userstatusoption(), ['prompt' => '--Select --'])->label('Blog Status <span class="necessary">*</span>') ?>
+                <?php if ($model->blog_model->id) { ?>
+                    <div class="col-md-3">
+                        <?= $form->field($model, 'status', [
+                            'labelOptions' => ['class' => 'Modal_label']
+                        ])->radioList(GeneralModel::userstatusoptionwithdelete(), ['prompt' => '--Select --'])->label('Blog Status <span class="necessary">*</span>') ?>
 
-                </div>
+                    </div>
+                <?php } else {  ?>
+                    <div class="col-md-3">
+                        <?= $form->field($model, 'status', [
+                            'labelOptions' => ['class' => 'Modal_label']
+                        ])->radioList(GeneralModel::userstatusoption(), ['prompt' => '--Select --'])->label('Blog Status <span class="necessary">*</span>') ?>
+
+                    </div>
+                <?php } ?>
 
             </div>
             <div class="row">
