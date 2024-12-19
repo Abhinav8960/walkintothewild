@@ -12,7 +12,7 @@ use yii\console\Controller;
 /**
  * Main Controller for YII Console
  */
-class SendNotificationController extends Controller
+class SendNotificationBackupController extends Controller
 {
 
     /**
@@ -40,15 +40,39 @@ class SendNotificationController extends Controller
         $logs = FirebaseNotificationLog::find()->where(['status' => 1, 'is_cron_run' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
         if ($logs) {
             foreach ($logs as $log) {
-                $data = !empty($log->sent_data) ? json_decode($log->sent_data) : [];
-                $title = ucfirst($this->source);
-                $body =  $log->message;
-                $token = $this->firebaseTokens($log->user_id);
-                $topic = NULL;
-                $condition = NULL;
-                if ($token) {
-                    $title = $log->title;
-                    \Yii::$app->firebase->sendMulticastNotification($title, $body, $token, $data, $topic = NULL, $condition = NULL);
+                $firebase = UserSession::find()
+                    ->where(['user_id' => $log->user_id, 'app_name' => 'Api'])
+                    ->andWhere(['not', ['firebase_token' => null]])
+                    ->andWhere(['!=', 'firebase_token', ''])
+                    ->andWhere(['is_firebase_token_active' => 1])
+                    ->limit(1)
+                    ->one();
+                if ($firebase) {
+                    $firebaseMessaging = new FirebaseMessaging();
+                    $message = [
+                        'token' => $firebase->firebase_token,
+                        'notification' => [
+                            'title' => $log->title,
+                            'body' => $log->message,
+                            'image' => $log->image_url,
+                        ],
+                    ];
+
+                    if (!empty($log->sent_data)) {
+                        $message['data'] = $log->sent_data;
+                    }
+                    try {
+                        $accessToken = $firebaseMessaging->getAccessToken();
+                        $response = $firebaseMessaging->sendMessage($accessToken, $message);
+                        if (isset($response['error'])) {;
+                            $this->tokendisabled($firebase->firebase_token);
+                            echo 'Firebase error: ' . json_encode($response['error']);
+                        }
+                        $log->is_send = 1;
+                    } catch (\Exception $e) {
+                        $this->tokendisabled($firebase->firebase_token);
+                        echo 'Notification send error: ' . $e->getMessage(), 'firebase';
+                    }
                 }
 
                 $log->is_cron_run = 1;
@@ -58,24 +82,14 @@ class SendNotificationController extends Controller
     }
 
 
-  
-
-    private function firebaseTokens($userId)
+    private function tokendisabled($token)
     {
-        $uds =  UserSession::find()
-            ->where(['user_id' => $userId, 'app_name' => 'Api'])
-            ->andWhere(['not', ['firebase_token' => null]])
-            ->andWhere(['!=', 'firebase_token', ''])
-            ->andWhere(['is_firebase_token_active' => 1])
-            ->limit(1)
-            ->all();
-        $tokens = [];
-        foreach ($uds as $ud) {
-            $tokens[] = $ud->firebase_token;
+        $user = UserSession::find()->where(['firebase_token' => $token])->limit(1)->one();
+        if ($user) {
+            $user->is_firebase_token_active = 0;
+            $user->save(false);
         }
-        $array = array_unique($tokens);
-
-        return $array;
+        return true;
     }
 
     // protected function sendnotification()
