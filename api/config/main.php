@@ -47,9 +47,9 @@ return [
         'account' => [
             'class' => 'api\modules\account\Module'
         ],
-        // 'manage' => [
-        //     'class' => 'api\modules\manage\Module'
-        // ]
+        'manage' => [
+            'class' => 'api\modules\manage\Module'
+        ]
 
     ],
     'components' => [

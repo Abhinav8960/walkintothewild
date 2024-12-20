@@ -6,6 +6,8 @@ use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
+use api\models\package\PackageSearch;
+use api\models\sharesafari\ShareSafariSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\operator\form\SafariOperatorRequestForm;
 use common\models\registration\SafariOperatorRequest;
@@ -34,10 +36,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index', 'operator-safarilist', 'operator-packagelist'],
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'operator-safarilist', 'operator-packagelist'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,8 +48,9 @@ class DefaultController extends RestController
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
-
                     'index' => ['GET'],
+                    'operator-safarilist' => ['GET'],
+                    'operator-packagelist' => ['GET'],
                 ],
             ],
         ];
@@ -162,4 +165,23 @@ class DefaultController extends RestController
     //         'safari_operator' => $safari_operator
     //     ]);
     // }
+
+
+    public function actionOperatorSafarilist()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new ShareSafariSearch();
+        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction = "managesearch");
+    }
+
+
+    public function actionOperatorPackagelist()
+    {
+        $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        }
+        $searchModel = new PackageSearch();
+        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false,$paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+    }
 }

@@ -133,15 +133,15 @@ class RestController extends Controller
     }
 
 
-    protected function dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1)
+    protected function dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction="search")
     {
         $data = [];
         $searchModel->load(\Yii::$app->request->queryParams);
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
         if (!empty($additionalSearchQueryParams)) {
-            $dataProvider = $searchModel->search(\Yii::$app->request->queryParams, implode(",", $additionalSearchQueryParams));
+            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams, implode(",", $additionalSearchQueryParams));
         } else {
-            $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams);
         }
 
         if ($paginationNeededAsPerQuery == 1) {

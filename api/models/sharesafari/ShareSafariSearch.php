@@ -189,4 +189,41 @@ class ShareSafariSearch extends ShareSafari
     {
         return GeneralModel::safariparklist();
     }
+
+    public function managesearch($params,  $safari_operator_id)
+    {
+        $query = ShareSafari::find()->where(['host_user_id' => $safari_operator_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
+
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.park_id' => $this->park_id,
+            'share_safari.host_type' => $this->host_type,
+            'share_safari.status' => $this->status,
+        ]);
+
+        $query->andFilterWhere(['like', 'share_safari.share_safari_title', $this->share_safari_title]);
+
+        return $dataProvider;
+    }
 }
