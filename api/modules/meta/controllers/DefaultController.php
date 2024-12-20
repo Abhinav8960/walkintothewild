@@ -86,7 +86,7 @@ class DefaultController extends RestController
     public function actionAll()
     {
 
-        $directory = Yii::getAlias('@app').'/web/json';
+        $directory = Yii::getAlias('@app') . '/web/json';
         $data = $this->readFolderAndFiles($directory);
 
         return Yii::$app->api->sendResponse($data);
@@ -151,6 +151,7 @@ class DefaultController extends RestController
     public function actionStayCategory()
     {
         $searchModel = new MetaStayCategorySearch();
+        $searchModel->status = 1;
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
     }
 
