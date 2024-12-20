@@ -142,6 +142,8 @@ return [
                 'contact-us' => 'static-page/contact-us',
 
                 'user-profile' => 'profile/default/index',
+                'organizedby' => 'profile/default/organizedby',
+                'joinedby' => 'profile/default/joinedby',
                 'profile/follow' => 'profile/default/follow',
                 'profile/unfollow' => 'profile/default/unfollow',
 

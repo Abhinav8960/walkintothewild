@@ -30,9 +30,8 @@ class User extends \common\models\User
             if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
                 $fields[] = 'userfollowerscount';
                 $fields[] = 'userfollowingscount';
-                $fields[] = 'organizedSafari';
-                // $fields[] =  'joinedSafari';
-                $fields[] = 'joinedsharesafari';
+                // $fields[] = 'organizedSafari';
+                // $fields[] = 'joinedsharesafari';
                 $fields[] = 'organizedSafariCount';
                 $fields[] = 'joinedSafariCount';
                 $fields[] = 'parkvisted';

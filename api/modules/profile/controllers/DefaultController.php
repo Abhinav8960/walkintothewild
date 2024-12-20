@@ -8,6 +8,8 @@ use api\behaviours\Verbcheck;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\controllers\RestController;
+use api\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
 use api\models\UserFollow;
 use common\Helper\FrontendNotificationHelper;
@@ -33,7 +35,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index'],
+                'exclude' => ['index', 'organizedby', 'joinedby'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -52,6 +54,7 @@ class DefaultController extends RestController
                     'index' => ['GET'],
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
+                    'organizedby' => ['GET'],
                 ],
             ],
         ];
@@ -66,6 +69,44 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendResponse($data = $user);
+    }
+
+    public function actionOrganizedby($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+        if ($user->id == $this->userinfoId) {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
+            return Yii::$app->api->sendResponse($data = $organized_by);
+        } else {
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
+            return Yii::$app->api->sendResponse($data = $organized_by);
+        }
+    }
+
+    public function actionJoinedby($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+        if ($user->id == $this->userinfoId) {
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
+            $safariIds = array_map(function ($item) {
+                return $item->share_safari_id;
+            }, $joined_by);
+            $shared_safari = ShareSafari::find()
+                ->where(['id' => $safariIds])
+                ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->all();
+            return Yii::$app->api->sendResponse($data = $shared_safari);
+        } else {
+            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
+            $safariIds = array_map(function ($item) {
+                return $item->share_safari_id;
+            }, $joined_by);
+            $shared_safari = ShareSafari::find()
+                ->where(['id' => $safariIds])
+                ->andWhere(['>=', 'start_date', date("Y-m-d")])
+                ->all();
+            return Yii::$app->api->sendResponse($data = $shared_safari);
+        }
     }
 
     public function actionFollow($user_handle)
