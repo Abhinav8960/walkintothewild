@@ -38,8 +38,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'includeds';
             $fields[] = 'sharesafaridays';
             $fields[] = 'sharesafarigallery';
+            $fields[] = 'intrestedUser';
             if (!in_array(\Yii::$app->controller->action->uniqueId,  ['profile/default/index'])) {
-                $fields[] = 'intrestedUser';
                 $fields[] = 'comments';
             }
             $fields[] = 'sharesafariFaqs';
@@ -49,6 +49,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'Witwreviewcount';
             $fields[] = 'isFollowed';
             $fields[] = 'organizedslug';
+            $fields[] = 'seatfullStatus';
 
             $hold_fields = [
                 'delete_reason_id',
@@ -82,6 +83,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'intrestedUser';
             $fields[] = 'organizedbyimage';
             $fields[] = 'organizedslug';
+            $fields[] = 'seatfullStatus';
 
             $hold_fields = [
                 'delete_reason_id',
@@ -367,6 +369,14 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $is_followed = $this->activeFollowed;
         if (!empty($is_followed)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getSeatfullStatus()
+    {
+        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
             return true;
         }
         return false;
