@@ -228,7 +228,7 @@ class User extends \common\models\User
 
     public function getLoggedinuserfollowed()
     {
-        $result = UserFollow::find()->where(['follow_user_id' => $this->id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
+        $result = UserFollow::find()->where(['follow_user_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
         if ($result) {
             return true;
         }
