@@ -45,7 +45,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -76,6 +76,7 @@ class DefaultController extends SafariController
                     'wishlist' => ['POST'],
                     'unwishlist' => ['POST'],
                     'flagreason' => ['GET'],
+                    'comment-view' => ['GET'],
 
                 ],
             ],
@@ -414,5 +415,16 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = $reasons);
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not found !!!"]);
+    }
+
+    public function actionCommentView($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->all();
+
+        return Yii::$app->api->sendResponse($data = ['comments' => $commentlist]);
     }
 }

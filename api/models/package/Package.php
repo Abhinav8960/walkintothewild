@@ -30,7 +30,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] =  'packagedays';
-            $fields[] = 'comments';
+            // $fields[] = 'comments';
             $fields[] = 'faqs';
             $fields[] = 'isWishlist';
             $hold_fields = [

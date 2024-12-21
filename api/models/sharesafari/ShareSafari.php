@@ -40,7 +40,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'sharesafarigallery';
             if (!in_array(\Yii::$app->controller->action->uniqueId,  ['profile/default/index'])) {
                 $fields[] = 'intrestedUser';
-                $fields[] = 'comments';
+                // $fields[] = 'comments';
             }
             $fields[] = 'sharesafariFaqs';
             $fields[] = 'isWishlist';

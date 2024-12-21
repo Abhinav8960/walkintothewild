@@ -37,7 +37,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'staycategory'],
+                'exclude' => ['index', 'view', 'staycategory','comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -63,6 +63,7 @@ class DefaultController extends RestController
                     'package-quote' => ['POST'],
                     'flag' => ['POST'],
                     'staycategory' => ['GET'],
+                    'comment-view' => ['GET'],
                 ],
             ],
         ];
@@ -258,5 +259,16 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse(array_map(function ($value, $key) {
             return ['id' => $key, 'name' => $value];
         }, $data, array_keys($data)));
+    }
+
+
+    public function actionCommentView($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        $comment_list = PackageComment::find()->where(['package_id' => $package->id, 'status' => 1])->all();
+        return  Yii::$app->api->sendResponse($data = ['comments' => $comment_list]);
     }
 }
