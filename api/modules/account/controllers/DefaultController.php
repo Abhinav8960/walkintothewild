@@ -147,7 +147,7 @@ class DefaultController extends RestController
 
         $registration_model->attributes = $this->request;
         $registration_model->logo = UploadedFile::getInstanceByName('logo');
-        
+
         if ($registration_model->budget_segment) {
             $registration_model->budget_segment = explode(',', $registration_model->budget_segment);
         }
@@ -248,7 +248,7 @@ class DefaultController extends RestController
     public function actionWishlistPackage()
     {
         $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
-        return Yii::$app->api->sendResponse($data = $wishlist_items);
+        return Yii::$app->api->sendResponse($data = ['package' => $wishlist_items]);
     }
 
     /**
@@ -259,6 +259,6 @@ class DefaultController extends RestController
     {
 
         $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
-        return Yii::$app->api->sendResponse($data = $wishlist_items);
+        return Yii::$app->api->sendResponse($data = ['sharesafari' => $wishlist_items]);
     }
 }
