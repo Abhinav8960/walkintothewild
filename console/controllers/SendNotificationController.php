@@ -40,7 +40,7 @@ class SendNotificationController extends Controller
         $logs = FirebaseNotificationLog::find()->where(['status' => 1, 'is_cron_run' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
         if ($logs) {
             foreach ($logs as $log) {
-                $data = !empty($log->sent_data) ? $log->sent_data : [];
+                $data = !empty($log->sent_data) ? json_decode($log->sent_data) : [];
                 $title = ucfirst($log->title);
                 $body =  $log->message;
                 $imageUrl = $log->image_url;
