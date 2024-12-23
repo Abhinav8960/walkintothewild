@@ -10,6 +10,7 @@ class UserPosts extends \common\models\UserPosts
     {
         $fields = parent::fields();
 
+        $fields[] = 'thumbnail';
         if (!in_array(\Yii::$app->controller->action->uniqueId,  ['posts/default/index'])) {
             $fields[] = 'imagepath';
             $fields[] = 'comments';
@@ -38,6 +39,14 @@ class UserPosts extends \common\models\UserPosts
 
 
     public function getImagepath()
+    {
+        // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
+
+        // return $this->filepath;
+        return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
+    }
+
+    public function getThumbnail()
     {
         // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
 
