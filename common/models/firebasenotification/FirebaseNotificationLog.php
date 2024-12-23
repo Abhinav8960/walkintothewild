@@ -91,7 +91,7 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             $model = new self();
             $model->title = ($title !== null) ? $title :  NULL;
             $model->message = ($message !== null) ? trim($message) : NULL;
-            $model->sent_data = ($sent_data !== null) ? json_encode($sent_data) :  NULL;
+            $model->sent_data = ($sent_data !== null) ? $sent_data :  NULL;
             $model->image_url = ($image_url !== null) ? $image_url :  NULL;
             $model->action = ($action !== null) ? $action : NULL;
             $model->user_id = $user_id;
