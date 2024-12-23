@@ -10,8 +10,8 @@ class UserPosts extends \common\models\UserPosts
     {
         $fields = parent::fields();
 
+        $fields[] = 'thumbnail';
         if (!in_array(\Yii::$app->controller->action->uniqueId,  ['posts/default/index'])) {
-            $fields[] = 'thumbnail';
             $fields[] = 'imagepath';
             $fields[] = 'comments';
             $hold_fields = ['type_of_post','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
