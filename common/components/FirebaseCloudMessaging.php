@@ -54,7 +54,7 @@ class FirebaseCloudMessaging extends Component
     }
 
     // public function sendMulticastNotification($message, $deviceTokens)
-    public function sendMulticastNotification($title, $body, $imageUrl, $deviceTokens, $data = [], $topic = NULL, $condition = NULL)
+    public function sendMulticastNotification($title, $body, $imageUrl, $deviceTokens, $data = "", $topic = NULL, $condition = NULL)
     {
         $message = CloudMessage::new()
             ->withNotification(Notification::fromArray([

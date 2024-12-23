@@ -40,12 +40,12 @@ class SendNotificationController extends Controller
         $logs = FirebaseNotificationLog::find()->where(['status' => 1, 'is_cron_run' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
         if ($logs) {
             foreach ($logs as $log) {
-                $data = !empty($log->sent_data) ? json_decode($log->sent_data) : [];
+                $data = !empty($log->sent_data) ? json_decode($log->sent_data,true) : [];
                 $title = ucfirst($log->title);
                 $body =  $log->message;
                 $imageUrl = $log->image_url;
                 $token = $this->firebaseTokens($log->user_id);
-                // $token = ['dU1UiyiUTLG9BKu8qdQVaY:APA91bEyC9hqyG7eCK_N2FnIq9pehgyPmYckW6ZiC8_jVe_FOE-aX2W9kHe6m5dMJ1_G_LHybHsy7b5pJptp1947OOEsgwzuLzcHEk0iNVkObvuI7CV806M'];
+                // $token = ['cOPElb_-RPi3lv8H-2uhT4:APA91bHCxsvMUy1lnrGeseRVlZcwWPbPTYDF9pguzJ3li-sVEZ0AVwawDYVIAz360s-A2DlsUE0AQp2SmS237QXjTz7qERCyhnEfUiqg-wuHD0hwsgesAt0'];
                 $topic = NULL;
                 $condition = NULL;
                 if ($token) {

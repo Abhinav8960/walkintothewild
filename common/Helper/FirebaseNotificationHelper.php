@@ -15,7 +15,7 @@ class FirebaseNotificationHelper extends BaseObject
         $user_ids = [$share_safari->organizedId];
         $title = 'Join Safari';
         $message = 'New member alert:' . $user->name . ' has joined your' . $share_safari->share_safari_title . ' Visit the interested member section to review and connect for your trip planning';
-        $sent_data = ['objective' => 'shared_safari', 'parameter' => ['name' => $share_safari->share_safari_title, 'slug' => $share_safari->slug]];
+        $sent_data = json_encode(['objective' => 'shared_safari', 'name' => $share_safari->share_safari_title, 'slug' => $share_safari->slug], true);
         $image_url = $share_safari->sharedimagepath;
         FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data, $image_url);
         /**Firebase Notification end */

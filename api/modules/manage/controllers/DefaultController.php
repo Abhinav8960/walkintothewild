@@ -171,7 +171,7 @@ class DefaultController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction = "managesearch");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "ShareSafarilist", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction = "managesearch");
     }
 
 
@@ -182,6 +182,6 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $searchModel = new PackageSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false,$paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "Packagelist", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false,$paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 }
