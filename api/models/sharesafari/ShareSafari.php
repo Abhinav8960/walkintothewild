@@ -381,4 +381,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
         return false;
     }
+
+    public function getOrganizedId()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->user ? $this->user->id : '';
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return isset($this->safarioperator) ? $this->safarioperator->user->id : '';
+        }
+    }
 }

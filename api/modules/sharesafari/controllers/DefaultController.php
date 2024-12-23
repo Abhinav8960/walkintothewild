@@ -230,7 +230,6 @@ class DefaultController extends SafariController
                 $share_safari_intrested->status = 0; //UNfollow
                 $share_safari_intrested->unintrested_at = time();
                 if ($share_safari_intrested->save(false)) {
-                    FirebaseNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                     FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                     return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
                 }
@@ -342,6 +341,7 @@ class DefaultController extends SafariController
         $model = new ShareSafariCommentForm();
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($share_safari)) {
+            // FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
 
