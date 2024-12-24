@@ -27,7 +27,7 @@ class FirebaseNotificationHelper extends BaseObject
         $user_ids = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => 10, 'share_safari_intrested.status' => 1])->where(['!=', 'user.id', $user->id])->select('user_id')->column();
         $title = 'New Comment';
         $message = 'A new comment has been posted in the' . $share_safari->share_safari_title . 'Join the conversation to discuss and finalize the shared safari plans.';
-        $sent_data = json_encode(['objective' => 'shared_safari', 'parameters' => $share_safari->slug], true);
+        $sent_data = json_encode(['objective' => 'shared_safari', 'name' => $share_safari->share_safari_title, 'slug' => $share_safari->slug], true);
         $image_url = $share_safari->sharedimagepath;
         FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data, $image_url);
         /**Firebase Notification end */
@@ -50,7 +50,7 @@ class FirebaseNotificationHelper extends BaseObject
         $user_ids = [$to_follow->id];
         $title = 'New Follower';
         $message = $by_follow->name . 'is now following you!';
-        $sent_data = json_encode(['objective' => 'profile', 'name' => $to_follow->name, 'user_handle' => $to_follow->user_handle], true);
+        $sent_data = json_encode(['objective' => 'profile', 'name' => $to_follow->name, 'slug' => $to_follow->user_handle], true);
         $image_url = $by_follow->profileimage;
         FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data, $image_url);
     }
