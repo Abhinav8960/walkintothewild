@@ -45,7 +45,6 @@ class SendNotificationController extends Controller
                 $body =  $log->message;
                 $imageUrl = $log->image_url;
                 $token = $this->firebaseTokens($log->user_id);
-                // $token = ['cOPElb_-RPi3lv8H-2uhT4:APA91bHCxsvMUy1lnrGeseRVlZcwWPbPTYDF9pguzJ3li-sVEZ0AVwawDYVIAz360s-A2DlsUE0AQp2SmS237QXjTz7qERCyhnEfUiqg-wuHD0hwsgesAt0'];
                 $topic = NULL;
                 $condition = NULL;
                 if ($token) {
