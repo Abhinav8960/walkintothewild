@@ -259,7 +259,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getWitwaveragerating()
     {
         $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
-        return $avg;
+        return round($avg, 1);
     }
 
     public function getWitwreviewcount()
