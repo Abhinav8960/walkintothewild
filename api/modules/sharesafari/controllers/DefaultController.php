@@ -341,7 +341,11 @@ class DefaultController extends SafariController
         $model = new ShareSafariCommentForm();
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($share_safari)) {
-            // FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
+            /**To Creator */
+            FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
+            /**To All Join */
+            FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
+
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
 
