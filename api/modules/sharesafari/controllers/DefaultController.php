@@ -427,7 +427,7 @@ class DefaultController extends SafariController
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-        $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['not', ['parent_id' => null]])->all();
+        $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
         return Yii::$app->api->sendResponse($data = ['comments' => $commentlist]);
     }
