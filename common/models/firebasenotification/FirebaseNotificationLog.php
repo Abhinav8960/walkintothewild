@@ -2,6 +2,7 @@
 
 namespace common\models\firebasenotification;
 
+use common\jobs\NotificationJob;
 use common\models\User;
 use Yii;
 use yii\db\ActiveRecord;
@@ -42,7 +43,7 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             [['status', 'created_at'], 'required'],
             [['message', 'action'], 'string'],
             [['sent_data'], 'safe'],
-            [['status', 'is_send', 'created_by', 'created_at','is_cron_run'], 'integer'],
+            [['status', 'is_send', 'created_by', 'created_at', 'is_cron_run'], 'integer'],
             [['type', 'image_url', 'action'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 250],
         ];
@@ -100,6 +101,10 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             $model->status = 1;
             $model->created_by = (int)self::getUserID();
             $model->save(false);
+
+            \Yii::$app->queue->push(new NotificationJob([
+                'model' => $model,
+            ]));
         }
         return true;
     }
@@ -142,5 +147,4 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::classname(), ['id' => 'created_by']);
     }
-    
 }
