@@ -1287,46 +1287,52 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MasterUserFlag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['user_flag' => SORT_ASC])->all(), 'id', 'user_flag');
     }
 
-    public static function commentconversion($comment)
+    // public static function commentconversion($comment)
+    // {
+    //     $exclamation = '<i class="fa-solid fa-triangle-exclamation" style="color: #FFD43B; cursor: pointer;" data-bs-toggle="tooltip" title="Phone numbers are hidden to protect privacy. Please message directly."></i>';
+    //     if (preg_match('/\b\d{10}\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{5})\d{5}\b/', '$1xxxxx ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{5}) (\d{5})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{5}) (\d{5})\b/', '$1 xxxxx ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', '$1 $1 $1 $1 $1 x x x x x ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{2}) (\d{5}) (\d{5})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{2}) (\d{5}) (\d{5})\b/', 'xx $1 xxxxx ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{2}) (\d{10})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{2}) (\d{5})(\d{5})\b/', 'xx $1xxxxx ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1 $2$3x xxxx ' . $exclamation, $comment);
+    //     } else if (preg_match('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
+    //         $comment = preg_replace('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1$2$3x xxxx' . $exclamation, $comment);
+    //     }
+    //     return $comment;
+    // }
+
+    public static function commentConversion($comment)
     {
         $exclamation = '<i class="fa-solid fa-triangle-exclamation" style="color: #FFD43B; cursor: pointer;" data-bs-toggle="tooltip" title="Phone numbers are hidden to protect privacy. Please message directly."></i>';
-        if (preg_match('/\b\d{10}\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{5})\d{5}\b/', '$1xxxxx ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{5}) (\d{5})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{5}) (\d{5})\b/', '$1 xxxxx ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/', '$1 $1 $1 $1 $1 x x x x x ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{2}) (\d{5}) (\d{5})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{2}) (\d{5}) (\d{5})\b/', 'xx $1 xxxxx ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{2}) (\d{10})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{2}) (\d{5})(\d{5})\b/', 'xx $1xxxxx ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1 $2$3x xxxx ' . $exclamation, $comment);
-        } else if (preg_match('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', $comment)) {
-            $comment = preg_replace('/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/', '$1$2$3x xxxx' . $exclamation, $comment);
+
+        $patterns = [
+            '/\b(\d{5})\d{5}\b/' => '$1xxxxx ' . $exclamation,
+            '/\b(\d{5}) (\d{5})\b/' => '$1 xxxxx ' . $exclamation,
+            '/\b(\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1}) (\d{1})\b/' =>
+            '$1 $1 $1 $1 $1 x x x x x ' . $exclamation,
+            '/\b(\d{2}) (\d{5}) (\d{5})\b/' => 'xx $1 xxxxx ' . $exclamation,
+            '/\b(\d{2}) (\d{10})\b/' => 'xx $1xxxxx ' . $exclamation,
+            '/\b(\d{3}) (\d{1})(\d{1})(\d{1}) (\d{4})\b/' => '$1 $2$3x xxxx ' . $exclamation,
+            '/\b(\d{3})(\d{1})(\d{1})(\d{1}) (\d{4})\b/' => '$1$2$3x xxxx' . $exclamation,
+            '/\b(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})[^\d]*(\d{1})\b/'
+            =>
+            '$1 $2 $3 $4 $5 x x x x x ' . $exclamation,
+        ];
+
+        foreach ($patterns as $pattern => $replacement) {
+            if (preg_match($pattern, $comment)) {
+                $comment = preg_replace($pattern, $replacement, $comment);
+                break;
+            }
         }
+
         return $comment;
     }
-
-    // public static function commentconversion($comment) {
-
-    //     $pattern = '#(\+91[-\s]?)?(\d{10})|(\d{5}[-\s]?\d{5})|(\d{1}[-\s]?(91[-\s]?))?(\d{10})|(\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?\d{1}[-\s]?)#';
-    //     $masked_text = preg_replace_callback($pattern, function($matches) {
-
-    //         if (isset($matches[1]) || isset($matches[4])) {
-    //             return "{$matches[1]}** **";
-    //         }
-
-    //         if (isset($matches[2])) {
-    //             return '** **';
-    //         }
-
-    //         if (isset($matches[6])) {
-    //             return '** ** ** ** ***';
-    //         }
-    //         return '** **';
-    //     }, $comment);
-
-    //     return $masked_text;
-    // }
 }
