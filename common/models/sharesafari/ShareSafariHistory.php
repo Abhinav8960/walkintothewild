@@ -55,7 +55,7 @@ use Yii;
  * @property int|null $status
  * @property int $total_view
  */
-class ShareSafariHistory extends \yii\db\ActiveRecord
+class ShareSafariHistory extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

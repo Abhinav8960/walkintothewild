@@ -290,4 +290,22 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             Yii::error('Failed to save ShareSafariHistory: ' . print_r($historyModel->errors, true), __METHOD__);
         }
     }
+
+    public function getSharedSafariHistory()
+    {
+        $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_SAFARI])->count();
+        if ($count >= 2) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getFixedDepartureHistory()
+    {
+        $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->count();
+        if ($count >= 2) {
+            return true;
+        }
+        return false;
+    }
 }
