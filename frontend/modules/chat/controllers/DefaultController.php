@@ -74,8 +74,10 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
             }
         } else {
             $individual_chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
-            $individual_chat->is_seen = 1;
-            $individual_chat->save(false);
+            if ($individual_chat) {
+                $individual_chat->is_seen = 1;
+                $individual_chat->save(false);
+            }
         }
         $searchModel = new ChatSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
