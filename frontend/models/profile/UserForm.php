@@ -104,7 +104,7 @@ class UserForm extends Model
             ],
 
             ['gender', 'integer'],
-            ['date_of_birth', 'safe'],
+            ['date_of_birth', 'date', 'format'=>'php:Y-m-d'],
 
 
         ];
