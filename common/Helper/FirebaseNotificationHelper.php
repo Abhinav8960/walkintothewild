@@ -120,7 +120,7 @@ class FirebaseNotificationHelper extends BaseObject
             'var1' => $user->name,
         ];
         $message = $engine->render($html, $values);
-        $sent_data = json_encode(['objective' => 'package', 'name' => $package->name, 'slug' => $package->package_slug], true);
+        $sent_data = json_encode(['objective' => 'package', 'name' => $package->package_name, 'slug' => $package->package_slug], true);
         $image_url = $package->imagepath;
         FirebaseNotificationLog::setActivity($master_notification_template_id, $title, $message, $user_ids, $sent_data, $image_url);
         /**Firebase Notification end */
