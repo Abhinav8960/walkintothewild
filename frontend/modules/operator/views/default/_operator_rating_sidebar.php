@@ -85,7 +85,55 @@ $reviews = $ratingdataProvider->getModels();
         <div class="interst_wrapper px-3 bg-white">
             <p class="text-center mb-0">Nobody has shared any review about</p>
             <p class="text-center mb-0 mt-2"><?= $operator->business_name ?></p>
-            <p class="text-center"><a class="sent_btn rounded-2 mt-2" style="color:white;text-decoration: none;" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">Share Your Review</a></p>
+            <?php if (Yii::$app->user->identity) { ?>
+                <p class="text-center"><button class="writeAReviewBtn text-capitlize sent_btn rounded-2 mt-2" style="color:white;text-decoration: none;" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">Share Your Review</button></p>
+            <?php } else { ?>
+                <p class="text-center"><a class="sent_btn rounded-2 mt-2" style="color:white;text-decoration: none;" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">Share Your Review</a></p>
+            <?php } ?>
         </div>
     </div>
 <?php } ?>
+
+<div class="modal fade _standard-text order--modal" id="review-write-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php
+$script = <<< JS
+
+
+$(document).ready(function() {
+    $(".review-button").click(function(){
+        var review_url=$(this).attr("value");
+        $('.review-button.active').removeClass('active');
+        $(this).addClass("active")
+        $.get(review_url, function( data ) {
+            $("#review-list").html(data);
+        });
+    })
+});
+    
+function writeareviewfunction() {
+	$('.writeAReviewBtn').on('click', function () {
+        $('#review-write-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+writeareviewfunction();
+              
+             
+JS;
+$this->registerJs($script);
+?>
