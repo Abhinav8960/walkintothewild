@@ -4,6 +4,8 @@ namespace common\Helper;
 
 use common\models\firebasenotification\FirebaseNotificationLog;
 use common\models\master\notification\MasterNotificationTemplate;
+use common\models\operator\SafariOperator;
+use common\models\package\Package;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use Yii;
@@ -11,6 +13,9 @@ use yii\base\BaseObject;
 
 class FirebaseNotificationHelper extends BaseObject
 {
+    /**
+     * To creator
+     *  */
     public static function sharedSafariJoin(ShareSafari $share_safari, User $user)
     {
         $engine = Yii::$app->engine;
@@ -31,6 +36,9 @@ class FirebaseNotificationHelper extends BaseObject
         /**Firebase Notification end */
     }
 
+    /**
+     * Shared safari comment (for all joinees) 
+     */
     public static function safaricommentintrested(ShareSafari $share_safari, User $user)
     {
         $engine = Yii::$app->engine;
@@ -50,6 +58,10 @@ class FirebaseNotificationHelper extends BaseObject
         /**Firebase Notification end */
     }
 
+    /**
+     * To creator
+     * Shared safari comment or reply (only to the creator)
+     * */
     public static function safaricommentorreply(ShareSafari $share_safari, User $user)
     {
         $engine = Yii::$app->engine;
@@ -70,6 +82,9 @@ class FirebaseNotificationHelper extends BaseObject
         /**Firebase Notification end */
     }
 
+    /**
+     * When someone follows someone
+     */
     public static function profilefollowing(User $to_follow, User $by_follow)
     {
         $engine = Yii::$app->engine;
@@ -87,5 +102,49 @@ class FirebaseNotificationHelper extends BaseObject
         $image_url = $by_follow->profileimage;
         FirebaseNotificationLog::setActivity($master_notification_template_id, $title, $message, $user_ids, $sent_data, $image_url);
         /**Firebase Notification end */
+    }
+
+    /**
+     * Package Intrest
+     */
+    public static function packageintrest(Package $package, User $user)
+    {
+        $engine = Yii::$app->engine;
+        $template = MasterNotificationTemplate::find()->where(['id' => 5])->limit(1)->one();
+        $master_notification_template_id = $template->id;
+        /**Firebase Notification start */
+        $user_ids = [$package->user->id];
+        $title = $template->title;
+        $html = $template->message;
+        $values = [
+            'var1' => $user->name,
+        ];
+        $message = $engine->render($html, $values);
+        $sent_data = json_encode(['objective' => 'package', 'name' => $package->name, 'slug' => $package->package_slug], true);
+        $image_url = $package->imagepath;
+        FirebaseNotificationLog::setActivity($master_notification_template_id, $title, $message, $user_ids, $sent_data, $image_url);
+        /**Firebase Notification end */
+    }
+
+    /**
+     * Quote Request
+     */
+    public static function operatorquoterequest(SafariOperator $operator, User $user)
+    {
+        $engine = Yii::$app->engine;
+        $template = MasterNotificationTemplate::find()->where(['id' => 6])->limit(1)->one();
+        $master_notification_template_id = $template->id;
+        /**Firebase Notification start */
+        $user_ids = [$operator->user->id];
+        $title = $template->title;
+        $html = $template->message;
+        $values = [
+            'var1' => $user->name,
+        ];
+        $message = $engine->render($html, $values);
+        $sent_data = json_encode(['objective' => 'operator', 'name' => $operator->business_name, 'slug' => $operator->slug], true);
+        $image_url = $operator->imagepath;
+        FirebaseNotificationLog::setActivity($master_notification_template_id, $title, $message, $user_ids, $sent_data, $image_url);
+         /**Firebase Notification end */
     }
 }

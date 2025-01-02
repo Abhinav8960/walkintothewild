@@ -14,6 +14,7 @@ use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
 use api\models\park\SafariPark;
 use api\models\UserFollow;
+use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
@@ -100,7 +101,7 @@ class DefaultController extends RestController
         $model->attributes = $this->request;
         if ($model->validate()) {
             if ($operator_quote = $model->request($operator)) {
-                // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
             }
         }

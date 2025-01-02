@@ -12,6 +12,7 @@ use api\models\package\Package;
 use api\models\package\PackageComment;
 use api\models\package\PackageSearch;
 use api\models\UserWishlist;
+use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
@@ -206,6 +207,7 @@ class DefaultController extends RestController
         $packagemodel->attributes = $this->request;
         if ($packagemodel->validate()) {
             if ($packagemodel->request($package->id)) {
+                // FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
             }
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
