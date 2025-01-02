@@ -87,6 +87,10 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
         }
+        if($this->userinfo && $this->userinfoId == $operator->user_id)
+        {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
+        }
         $model = new OperatorQuoteForm();
         if ($this->userinfo) {
             $model->email = $this->userinfo->email;

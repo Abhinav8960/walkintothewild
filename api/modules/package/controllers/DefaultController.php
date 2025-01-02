@@ -199,7 +199,9 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-
+        if ($this->userinfo && isset($package->safarioperator) && $this->userinfoId == $package->safarioperator->user_id) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
+        }
         $packagemodel = new PackageQuoteForm();
         $packagemodel->attributes = $this->request;
         if ($packagemodel->validate()) {
