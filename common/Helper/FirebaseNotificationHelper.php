@@ -135,7 +135,29 @@ class FirebaseNotificationHelper extends BaseObject
         $template = MasterNotificationTemplate::find()->where(['id' => 6])->limit(1)->one();
         $master_notification_template_id = $template->id;
         /**Firebase Notification start */
-        $user_ids = [$operator->user->id];
+        $user_ids = [$operator->user_id];
+        $title = $template->title;
+        $html = $template->message;
+        $values = [
+            'var1' => $user->name,
+        ];
+        $message = $engine->render($html, $values);
+        $sent_data = json_encode(['objective' => 'operator', 'name' => $operator->business_name, 'slug' => $operator->slug], true);
+        $image_url = $operator->imagepath;
+        FirebaseNotificationLog::setActivity($master_notification_template_id, $title, $message, $user_ids, $sent_data, $image_url);
+         /**Firebase Notification end */
+    }
+
+    /**
+     * Review to influencer or operator
+     */
+    public static function newreview(SafariOperator $operator, User $user)
+    {
+        $engine = Yii::$app->engine;
+        $template = MasterNotificationTemplate::find()->where(['id' => 7])->limit(1)->one();
+        $master_notification_template_id = $template->id;
+        /**Firebase Notification start */
+        $user_ids = [$operator->user_id];
         $title = $template->title;
         $html = $template->message;
         $values = [
