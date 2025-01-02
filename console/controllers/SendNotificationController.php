@@ -51,8 +51,9 @@ class SendNotificationController extends Controller
                     $title = $log->title;
                     \Yii::$app->firebase->sendMulticastNotification($title, $body, $imageUrl, $token, $data, $topic = NULL, $condition = NULL);
                 }
-
+                $log->is_send = 1;
                 $log->is_cron_run = 1;
+                $log->send_datetime = date('Y-m-d H:i:s');
                 $log->save(false);
             }
         }

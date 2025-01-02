@@ -18,7 +18,7 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
     {
         return [
             [['id', 'status', 'created_by', 'created_at', 'status', 'created_at'], 'integer'],
-            [['title', 'type', 'message', 'image_url'], 'string'],
+            [['message', 'image_url'], 'string'],
             [['sent_data'], 'safe'],
         ];
     }
@@ -67,14 +67,13 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
             'id' => $this->id,
             'message' => $this->message,
             'action' => $this->action,
-            'type' => $this->type,
             'status' => $this->status,
             'created_by' => $this->created_by,
         ]);
         // echo $this->created_at;
         // exit;
         // die('hi');
-        $query->andFilterWhere(['like', 'type', $this->type])
+        $query
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'action', $this->action])
             ->andFilterWhere(['like', 'created_by', $this->created_by])

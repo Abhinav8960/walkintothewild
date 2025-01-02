@@ -75,5 +75,8 @@ return [
                 ],
             ],
         ],
+        'engine' => [
+            'class' => 'lubosdz\yii2\TemplateEngine',
+        ]
     ],
 ];
