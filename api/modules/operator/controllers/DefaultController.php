@@ -101,7 +101,7 @@ class DefaultController extends RestController
         $model->attributes = $this->request;
         if ($model->validate()) {
             if ($operator_quote = $model->request($operator)) {
-                // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
+                FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
             }
         }
@@ -231,7 +231,7 @@ class DefaultController extends RestController
                 // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
-                // FirebaseNotificationHelper::newreview($operator, $this->userinfo);
+                FirebaseNotificationHelper::newreview($operator, $this->userinfo);
                 FrontendNotificationHelper::operatorNewReview($operator, $model->rating_model,  $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thanks for review!!']);
             }
