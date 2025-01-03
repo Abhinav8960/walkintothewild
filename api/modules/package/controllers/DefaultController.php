@@ -38,7 +38,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'staycategory', 'comment-view'],
+                'exclude' => ['index', 'view', 'staycategory', 'comment-view', 'package-park', 'package-days', 'package-faqs'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -65,6 +65,9 @@ class DefaultController extends RestController
                     'flag' => ['POST'],
                     'staycategory' => ['GET'],
                     'comment-view' => ['GET'],
+                    'package-park' => ['GET'],
+                    'package-days'  => ['GET'],
+                    'package-faqs' => ['GET'],
                 ],
             ],
         ];
@@ -274,5 +277,32 @@ class DefaultController extends RestController
         }
         $comment_list = PackageComment::find()->where(['package_id' => $package->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
         return  Yii::$app->api->sendResponse($data = ['comments' => $comment_list]);
+    }
+
+    public function actionPackagePark($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['parks' => $this->serializeData($package->packagepark)]);
+    }
+
+    public function actionPackageDays($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['days' => $this->serializeData($package->packagedays)]);
+    }
+
+    public function actionPackageFaqs($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($package->faqs)]);
     }
 }

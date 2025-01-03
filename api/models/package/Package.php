@@ -17,108 +17,144 @@ class Package extends \common\models\package\Package
     public function fields()
     {
         $fields = parent::fields();
+        $fields[] = 'packagename';
+        $fields[] = 'pickanddrop';
+        $fields[] = 'meals';
+        $fields[] = 'mealslisting';
+        $fields[] = 'packagerange';
+        $fields[] = 'imagepath';
+        $fields[] = 'imagebannerpath';
+        $fields[] = 'isWishlist';
+        $fields[] = 'packagedaynightlabels';
 
-        if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
-            $fields[] = 'packagename';
-            $fields[] = 'masterPackageWithIncluded';
-            $fields[] = 'safarioperator';
-            $fields[] = 'packagepark';
-            $fields[] = 'pickanddrop';
-            $fields[] = 'meals';
-            $fields[] = 'mealslisting';
-            $fields[] = 'packagerange';
-            $fields[] = 'imagepath';
-            $fields[] = 'imagebannerpath';
-            $fields[] =  'packagedays';
-            // $fields[] = 'comments';
-            $fields[] = 'faqs';
-            $fields[] = 'isWishlist';
-            $hold_fields = [
-                'start_location',
-                'end_location',
-                'start_date',
-                'end_date',
-                'package_image',
-                'package_banner_image',
-                'owned_by_id',
-                'package_name',
-                'type',
-                'gst_percentage',
-                'master_vehicle_id',
-                'breakfast_included',
-                'lunch_included',
-                'dinner_included',
-                'meal_not_included',
-                'popular_package',
-                'delete_reason_id',
-                'delete_reason',
-                'total_view',
-                'status',
-                'created_by',
-                'updated_by',
-                'created_at',
-                'created_by',
-                'updated_at',
-            ];
-        } else {
-            $fields[] = 'pickanddrop';
-            $fields[] = 'mealslisting';
-            $fields[] = 'packagerange';
-            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
-                $fields[] = 'safarioperator';
-            }
-            $fields[] = 'imagepath';
-            $fields[] = 'imagebannerpath';
-            $fields[] = 'packagename';
-            if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
-                $fields[] = 'packagepark';
-            }
+        $hold_fields = [
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'package_image',
+            'package_banner_image',
+            'owned_by_id',
+            'package_name',
+            'type',
+            'gst_percentage',
+            'master_vehicle_id',
+            'breakfast_included',
+            'lunch_included',
+            'dinner_included',
+            'meal_not_included',
+            'popular_package',
+            'delete_reason_id',
+            'delete_reason',
+            'total_view',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+        ];
+        // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
+        //     $fields[] = 'packagename';
+        //     $fields[] = 'masterPackageWithIncluded';
+        //     $fields[] = 'safarioperator';
+        //     $fields[] = 'packagepark';
+        //     $fields[] = 'pickanddrop';
+        //     $fields[] = 'meals';
+        //     $fields[] = 'mealslisting';
+        //     $fields[] = 'packagerange';
+        //     $fields[] = 'imagepath';
+        //     $fields[] = 'imagebannerpath';
+        //     $fields[] =  'packagedays';
+        //     // $fields[] = 'comments';
+        //     $fields[] = 'faqs';
+        //     $fields[] = 'isWishlist';
+        //     $hold_fields = [
+        //         'start_location',
+        //         'end_location',
+        //         'start_date',
+        //         'end_date',
+        //         'package_image',
+        //         'package_banner_image',
+        //         'owned_by_id',
+        //         'package_name',
+        //         'type',
+        //         'gst_percentage',
+        //         'master_vehicle_id',
+        //         'breakfast_included',
+        //         'lunch_included',
+        //         'dinner_included',
+        //         'meal_not_included',
+        //         'popular_package',
+        //         'delete_reason_id',
+        //         'delete_reason',
+        //         'total_view',
+        //         'status',
+        //         'created_by',
+        //         'updated_by',
+        //         'created_at',
+        //         'created_by',
+        //         'updated_at',
+        //     ];
+        // } else {
+        //     $fields[] = 'pickanddrop';
+        //     $fields[] = 'mealslisting';
+        //     $fields[] = 'packagerange';
+        //     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
+        //         $fields[] = 'safarioperator';
+        //     }
+        //     $fields[] = 'imagepath';
+        //     $fields[] = 'imagebannerpath';
+        //     $fields[] = 'packagename';
+        //     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+        //         $fields[] = 'packagepark';
+        //     }
 
-            $fields[] = 'packagedaynightlabels';
-            $fields[] = 'isWishlist';
-            $hold_fields = [
-                'package_agenda_id',
-                'safari_type',
-                'start_location',
-                'end_location',
-                'start_date',
-                'end_date',
-                'package_image',
-                'package_banner_image',
-                'stay_category_id',
-                'cost_per_person',
-                'type',
-                'gst_percentage',
-                'package_description',
-                'package_itinerary_overview',
-                'package_inclusion',
-                'package_exclusion',
-                'package_terms_condtition',
-                'privacy_policy',
-                'change_policy',
-                'what_you_must_carry',
-                'date_change_policy',
-                'refund_policy',
-                'getting_there',
-                'master_vehicle_id',
-                'breakfast_included',
-                'lunch_included',
-                'dinner_included',
-                'meal_not_included',
-                'popular_package',
-                'delete_reason_id',
-                'delete_reason',
-                'owned_by_id',
-                'package_name',
-                'total_view',
-                'status',
-                'created_by',
-                'updated_by',
-                'created_at',
-                'created_by',
-                'updated_at',
-            ];
-        }
+        //     $fields[] = 'packagedaynightlabels';
+        //     $fields[] = 'isWishlist';
+        //     $hold_fields = [
+        //         'package_agenda_id',
+        //         'safari_type',
+        //         'start_location',
+        //         'end_location',
+        //         'start_date',
+        //         'end_date',
+        //         'package_image',
+        //         'package_banner_image',
+        //         'stay_category_id',
+        //         'cost_per_person',
+        //         'type',
+        //         'gst_percentage',
+        //         'package_description',
+        //         'package_itinerary_overview',
+        //         'package_inclusion',
+        //         'package_exclusion',
+        //         'package_terms_condtition',
+        //         'privacy_policy',
+        //         'change_policy',
+        //         'what_you_must_carry',
+        //         'date_change_policy',
+        //         'refund_policy',
+        //         'getting_there',
+        //         'master_vehicle_id',
+        //         'breakfast_included',
+        //         'lunch_included',
+        //         'dinner_included',
+        //         'meal_not_included',
+        //         'popular_package',
+        //         'delete_reason_id',
+        //         'delete_reason',
+        //         'owned_by_id',
+        //         'package_name',
+        //         'total_view',
+        //         'status',
+        //         'created_by',
+        //         'updated_by',
+        //         'created_at',
+        //         'created_by',
+        //         'updated_at',
+        //     ];
+        // }
 
 
 
@@ -161,20 +197,20 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getMasterPackageWithIncluded(){
+    public function getMasterPackageWithIncluded()
+    {
 
         $arr = [];
-        $i =0;
-        foreach($this->packageincluded as $key => $mgi){
-            if(isset($mgi->packageInclude)){
-                $arr[$i]['id']=$mgi->packageInclude->id; 
-                $arr[$i]['title']=$mgi->packageInclude->title; 
-                $arr[$i]['option']=$mgi->getIncludeoption(); 
+        $i = 0;
+        foreach ($this->packageincluded as $key => $mgi) {
+            if (isset($mgi->packageInclude)) {
+                $arr[$i]['id'] = $mgi->packageInclude->id;
+                $arr[$i]['title'] = $mgi->packageInclude->title;
+                $arr[$i]['option'] = $mgi->getIncludeoption();
                 $i++;
             }
         }
         return $arr;
-
     }
 
 

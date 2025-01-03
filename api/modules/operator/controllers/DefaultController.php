@@ -38,7 +38,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist', 'operatorpark', 'user-rating-parklist'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari' ,'operator-packages'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -60,10 +60,12 @@ class DefaultController extends RestController
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
                     'reviewlist' => ['GET'],
-                    'operatorpark' => ['GET'],
+                    'operator-park' => ['GET'],
                     'quotesrequest' => ['POST'],
                     'review' => ['POST'],
                     'user-rating-parklist' => ['GET'],
+                    'operator-shared-safari' => ['GET'],
+                    'operator-packages' => ['GET'],
                 ],
             ],
         ];
@@ -88,8 +90,7 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
         }
-        if($this->userinfo && $this->userinfoId == $operator->user_id)
-        {
+        if ($this->userinfo && $this->userinfoId == $operator->user_id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
         $model = new OperatorQuoteForm();
@@ -240,18 +241,18 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
-    public function actionOperatorpark($slug)
-    {
-        $operator = SafariOperator::find()
-            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
-            ->one();
-        if (!$operator) {
-            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
-        }
+    // public function actionOperatorpark($slug)
+    // {
+    //     $operator = SafariOperator::find()
+    //         ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+    //         ->one();
+    //     if (!$operator) {
+    //         return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+    //     }
 
-        $parks = $operator->park;
-        return Yii::$app->api->sendResponse(['parks' => $parks]);
-    }
+    //     $parks = $operator->park;
+    //     return Yii::$app->api->sendResponse(['parks' => $parks]);
+    // }
 
     public function actionUserRatingParklist($slug)
     {
@@ -262,15 +263,48 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
         $user_park_id = SafariOperatorRating::find()
-        ->select('park_id')
+            ->select('park_id')
             ->where(['user_id' => $this->userinfoId, 'safari_operator_id' => $operator->id, 'status' => 1])
             ->column();
-           
+
         $operatorsafariparkData = SafariOperatorPark::find()
             ->where(['safari_operator_id' => $operator->id, 'status' => 1])
             ->andWhere(['not in', 'park_id', $user_park_id])
             ->all();
 
         return Yii::$app->api->sendResponse(['parks' => $operatorsafariparkData]);
+    }
+
+    public function actionOperatorSharedSafari($slug)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['operatorsharedsafari' => $this->serializeData($operator->sharedsafari)]);
+    }
+
+    public function actionOperatorPark($slug)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['operatorpark' => $this->serializeData($operator->park)]);
+    }
+
+    public function actionOperatorPackages($slug)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }
 }

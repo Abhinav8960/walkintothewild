@@ -26,7 +26,7 @@ class User extends \common\models\User
         $fields[] = 'usename';
 
 
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index', 'sharesafari/default/comment-view', 'package/default/comment-view'])) {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index', 'sharesafari/default/comment-view', 'package/default/comment-view','sharesafari/default/intrested-user'])) {
             if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
                 $fields[] = 'userfollowerscount';
                 $fields[] = 'userfollowingscount';

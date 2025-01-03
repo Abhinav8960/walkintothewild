@@ -35,7 +35,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator','park-shared-safari','park-package'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -57,6 +57,9 @@ class DefaultController extends RestController
                     'reviewlist' => ['GET'],
                     'suggestion' => ['POST'],
                     'park-operator' => ['GET'],
+
+                    'park-shared-safari' => ['GET'],
+                    'park-package' => ['GET'],
 
                 ],
             ],
@@ -187,5 +190,23 @@ class DefaultController extends RestController
         $operatorsearchModel->status = 1;
 
         return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "ParkOperator", $additionalSearchQueryParams = [$model->id]);
+    }
+
+    public function actionParkSharedSafari($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['parksharedsafari' => $this->serializeData($model->sharedsafari)]);
+    }
+
+    public function actionParkPackage($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['parkpackage' => $this->serializeData($model->package)]);
     }
 }

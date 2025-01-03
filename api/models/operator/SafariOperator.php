@@ -17,134 +17,167 @@ class SafariOperator extends \common\models\operator\SafariOperator
     {
 
         $fields = parent::fields();
-        if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
-            $fields[] = 'imagepath';
-            $fields[] = 'parkcount';
-            $fields[] = 'packagecount';
-            $fields[] = 'sharedsafaricount';
-            $fields[] = 'witwaveragerating';
-            $fields[] = 'witwreviewcount';
-            $fields[] = 'followerlistcount';
-            $fields[] = 'categorytitle';
-            if (in_array(\Yii::$app->controller->action->uniqueId, ['manage/default/index'])) {
-                $hold_fields = [
-                    'id',
-                    'safari_operator_request_id',
-                    'gst',
-                    'is_highlighted',
-                    'http',
-                    'has_a_website',
-                    'has_cancellation_policy',
-                    'wildlife_photographer',
-                    'wildlife_influencer',
-                    'starting_price',
-                    'is_approved',
-                    'delete_reason_id',
-                    'delete_reason',
-                    'total_view',
-                    'logo',
-                    'status',
-                    'created_by',
-                    'updated_by',
-                    'created_at',
-                    'updated_at'
-                ];
-            } else {
-                $hold_fields = [
-                    'id',
-                    'safari_operator_request_id',
-                    'category_id',
-                    'address',
-                    'gst',
-                    'is_highlighted',
-                    'about_business',
-                    'facebook_url',
-                    'http',
-                    'youtube_link',
-                    'phone_no',
-                    'email',
-                    'website',
-                    'is_register_company',
-                    'has_a_website',
-                    'has_cancellation_policy',
-                    'wildlife_photographer',
-                    'wildlife_influencer',
-                    'is_offer_premium_budget',
-                    'is_offer_standard_budget',
-                    'is_offer_economical_budget',
-                    'is_wildlife_trekking',
-                    'is_wildlife_non_safari_drive',
-                    'is_bird_watching',
-                    'is_camping',
-                    'starting_price',
-                    'is_approved',
-                    'user_id',
-                    'operator_name',
-                    'operator_phone_no',
-                    'operator_email',
-                    'delete_reason_id',
-                    'delete_reason',
-                    'total_view',
-                    'logo',
-                    'status',
-                    'created_by',
-                    'updated_by',
-                    'created_at',
-                    'updated_at'
-                ];
-            }
-        } else {
-            $fields[] = 'imagepath';
-            $fields[] = 'parkcount';
-            $fields[] = 'packagecount';
-            $fields[] = 'sharedsafaricount';
-            $fields[] = 'sharedsafari';
-            $fields[] = 'packages';
-            $fields[] = 'park';
-            $fields[] = 'witwaveragerating';
-            $fields[] = 'witwreviewcount';
-            $fields[] = 'followerlistcount';
-            $fields[] = 'isFollowed';
-            $hold_fields = [
-                'safari_operator_request_id',
-                'google_rating',
-                'google_review_count',
-                'website',
-                'gst',
-                'google_business_url',
-                'google_business_name',
-                'is_highlighted',
-                'facebook_url',
-                'http',
-                'is_register_company',
-                'has_a_website',
-                'has_cancellation_policy',
-                'wildlife_photographer',
-                'wildlife_influencer',
-                'is_offer_premium_budget',
-                'is_offer_standard_budget',
-                'is_offer_economical_budget',
-                'is_wildlife_trekking',
-                'is_wildlife_non_safari_drive',
-                'is_bird_watching',
-                'is_camping',
-                'starting_price',
-                'is_approved',
-                'user_id',
-                'operator_name',
-                'operator_phone_no',
-                'operator_email',
-                'delete_reason_id',
-                'delete_reason',
-                'total_view',
-                'logo',
-                'status',
-                'created_by',
-                'updated_by',
-                'created_at',
-                'updated_at'
-            ];
-        }
+        $fields[] = 'imagepath';
+        $fields[] = 'parkcount';
+        $fields[] = 'packagecount';
+        $fields[] = 'sharedsafaricount';
+        $fields[] = 'witwaveragerating';
+        $fields[] = 'witwreviewcount';
+        $fields[] = 'followerlistcount';
+        $fields[] = 'categorytitle';
+        $fields[] = 'isFollowed';
+
+        $hold_fields = [
+            'id',
+            'safari_operator_request_id',
+            'gst',
+            'is_highlighted',
+            'http',
+            'has_a_website',
+            'has_cancellation_policy',
+            'wildlife_photographer',
+            'wildlife_influencer',
+            'starting_price',
+            'is_approved',
+            'delete_reason_id',
+            'delete_reason',
+            'total_view',
+            'logo',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at'
+        ];
+
+        // if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
+        //     $fields[] = 'imagepath';
+        //     $fields[] = 'parkcount';
+        //     $fields[] = 'packagecount';
+        //     $fields[] = 'sharedsafaricount';
+        //     $fields[] = 'witwaveragerating';
+        //     $fields[] = 'witwreviewcount';
+        //     $fields[] = 'followerlistcount';
+        //     $fields[] = 'categorytitle';
+        //     if (in_array(\Yii::$app->controller->action->uniqueId, ['manage/default/index'])) {
+        //         $hold_fields = [
+        //             'id',
+        //             'safari_operator_request_id',
+        //             'gst',
+        //             'is_highlighted',
+        //             'http',
+        //             'has_a_website',
+        //             'has_cancellation_policy',
+        //             'wildlife_photographer',
+        //             'wildlife_influencer',
+        //             'starting_price',
+        //             'is_approved',
+        //             'delete_reason_id',
+        //             'delete_reason',
+        //             'total_view',
+        //             'logo',
+        //             'status',
+        //             'created_by',
+        //             'updated_by',
+        //             'created_at',
+        //             'updated_at'
+        //         ];
+        //     } else {
+        //         $hold_fields = [
+        //             'id',
+        //             'safari_operator_request_id',
+        //             'category_id',
+        //             'address',
+        //             'gst',
+        //             'is_highlighted',
+        //             'about_business',
+        //             'facebook_url',
+        //             'http',
+        //             'youtube_link',
+        //             'phone_no',
+        //             'email',
+        //             'website',
+        //             'is_register_company',
+        //             'has_a_website',
+        //             'has_cancellation_policy',
+        //             'wildlife_photographer',
+        //             'wildlife_influencer',
+        //             'is_offer_premium_budget',
+        //             'is_offer_standard_budget',
+        //             'is_offer_economical_budget',
+        //             'is_wildlife_trekking',
+        //             'is_wildlife_non_safari_drive',
+        //             'is_bird_watching',
+        //             'is_camping',
+        //             'starting_price',
+        //             'is_approved',
+        //             'user_id',
+        //             'operator_name',
+        //             'operator_phone_no',
+        //             'operator_email',
+        //             'delete_reason_id',
+        //             'delete_reason',
+        //             'total_view',
+        //             'logo',
+        //             'status',
+        //             'created_by',
+        //             'updated_by',
+        //             'created_at',
+        //             'updated_at'
+        //         ];
+        //     }
+        // } else {
+        //     $fields[] = 'imagepath';
+        //     $fields[] = 'parkcount';
+        //     $fields[] = 'packagecount';
+        //     $fields[] = 'sharedsafaricount';
+        //     $fields[] = 'sharedsafari';
+        //     $fields[] = 'packages';
+        //     $fields[] = 'park';
+        //     $fields[] = 'witwaveragerating';
+        //     $fields[] = 'witwreviewcount';
+        //     $fields[] = 'followerlistcount';
+        //     $fields[] = 'isFollowed';
+        //     $hold_fields = [
+        //         'safari_operator_request_id',
+        //         'google_rating',
+        //         'google_review_count',
+        //         'website',
+        //         'gst',
+        //         'google_business_url',
+        //         'google_business_name',
+        //         'is_highlighted',
+        //         'facebook_url',
+        //         'http',
+        //         'is_register_company',
+        //         'has_a_website',
+        //         'has_cancellation_policy',
+        //         'wildlife_photographer',
+        //         'wildlife_influencer',
+        //         'is_offer_premium_budget',
+        //         'is_offer_standard_budget',
+        //         'is_offer_economical_budget',
+        //         'is_wildlife_trekking',
+        //         'is_wildlife_non_safari_drive',
+        //         'is_bird_watching',
+        //         'is_camping',
+        //         'starting_price',
+        //         'is_approved',
+        //         'user_id',
+        //         'operator_name',
+        //         'operator_phone_no',
+        //         'operator_email',
+        //         'delete_reason_id',
+        //         'delete_reason',
+        //         'total_view',
+        //         'logo',
+        //         'status',
+        //         'created_by',
+        //         'updated_by',
+        //         'created_at',
+        //         'updated_at'
+        //     ];
+        // }
 
         return array_diff($fields, $hold_fields);
         return $fields;

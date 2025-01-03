@@ -45,7 +45,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs','intrested-user'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -77,6 +77,12 @@ class DefaultController extends SafariController
                     'unwishlist' => ['POST'],
                     'flagreason' => ['GET'],
                     'comment-view' => ['GET'],
+                    'intrested-user' => ['GET'],
+                    /**FD */
+                    'fixed-departure-includes' => ['GET'],
+                    'fixed-departure-days' => ['GET'],
+                    'fixed-departure-gallery' => ['GET'],
+                    'fixed-departure-faqs' => ["GET"],
 
                 ],
             ],
@@ -430,5 +436,66 @@ class DefaultController extends SafariController
         $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
         return Yii::$app->api->sendResponse($data = ['comments' => $commentlist]);
+    }
+
+    /**
+     * Fixed departure breaking has Many
+     */
+    public function actionFixedDepartureIncludes($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Includes not found']);
+        }
+        return Yii::$app->api->sendResponse($data = ['includes' => $this->serializeData($share_safari->includeds)]);
+    }
+
+    public function actionFixedDepartureDays($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Days not found']);
+        }
+        return Yii::$app->api->sendResponse($data = ['days' => $this->serializeData($share_safari->sharesafaridays)]);
+    }
+
+    public function actionFixedDepartureGallery($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Gallery not found']);
+        }
+        return Yii::$app->api->sendResponse($data = ['gallery' => $this->serializeData($share_safari->sharesafarigallery)]);
+    }
+
+    public function actionFixedDepartureFaqs($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Faqs not found']);
+        }
+        return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($share_safari->sharesafariFaqs)]);
+    }
+
+
+    public function actionIntrestedUser($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
     }
 }
