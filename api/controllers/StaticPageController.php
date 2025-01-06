@@ -7,7 +7,7 @@ use api\behaviours\Verbcheck;
 use api\models\cms\contentmanagement\ContentManagement;
 use api\models\cms\faqcategory\FaqCategory;
 use api\models\cms\faqs\Faqs;
-use frontend\models\ContactForm;
+use api\models\static\form\ContactForm;
 use Yii;
 use yii\filters\AccessControl;
 
@@ -70,7 +70,7 @@ class StaticPageController extends RestController
         $model->attributes = $this->request;
         if ($model->validate()) {
             $model->contactquery();
-            return Yii::$app->api->sendResponse($data = ['payload' => $model->attributes], ['message' => "Query Successfully submitted"]);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Query Successfully submitted"]);
         }
     }
 }
