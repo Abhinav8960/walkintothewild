@@ -64,7 +64,15 @@
                 </h2>
                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <p>For checking these things go to the inclusion tab.</p>
+                        <?php
+
+                        if ($package->accomodationIncludes == 'Included') {
+                        ?>
+                            <p>Yes: Accomodation is included.
+                            </p>
+                        <?php } else { ?>
+                            <p>No: Accomodation is not included.</p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
