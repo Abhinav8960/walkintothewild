@@ -25,7 +25,7 @@ class ContactForm extends Model
      */
     public function rules()
     {
-        return [
+        $rules = [
             [['name', 'email'], 'required'],
             ['email', 'email'],
             ['message', 'string', 'max' => 255],
@@ -33,8 +33,9 @@ class ContactForm extends Model
             ['phone', 'match', 'pattern' => "/^[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/", 'message' => ' Mobile number should have 10 digits.'],
         ];
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
-            $rule[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 0];
+            $rules[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 0];
         }
+        return $rules;
     }
 
     /**

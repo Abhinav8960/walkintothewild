@@ -351,4 +351,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
         return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
     }
+
+    public function getAccomodationIncludes()
+    {
+        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+
+        return ($accomodation_includes) ? 'Included' : 'Not Included';
+    }
 }

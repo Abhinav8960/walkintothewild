@@ -31,9 +31,9 @@
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
                                     <?php if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1)) {
-                                        echo 'Include';
+                                        echo 'Included';
                                     } else if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2)) {
-                                        echo 'Not Include';
+                                        echo 'Not Included';
                                     } else  if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3)) {
                                         echo 'Optional';
                                     } else {

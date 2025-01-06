@@ -33,7 +33,7 @@ use common\models\sharesafari\ShareSafariIncluded;
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <?php if ($share_safari->meals== 'Included') {  ?>
+                        <?php if ($share_safari->meals == 'Included') {  ?>
                             <p> Yes: Meals are included and will be provided as per the itinerary.</p>
                         <?php } else { ?>
                             <p> No: Meals are not included; it will be charged additionally.</p>
@@ -66,12 +66,19 @@ use common\models\sharesafari\ShareSafariIncluded;
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingFour">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    Are accommodation arrangements included in the  Fixed Departure?
+                        Are accommodation arrangements included in the Fixed Departure?
                     </button>
                 </h2>
                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                       <p>For checking these things go to the inclusion tab.</p>
+                        <?php
+                        $accomodation_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 1, 'selection' => 1, 'status' => 1])->limit(1)->one();
+                        if ($accomodation_includes) {
+                        ?>
+                            <p>Yes: Accomodation is included.</p>
+                        <?php } else { ?>
+                            <p>No: Accomodation is not included.</p>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
