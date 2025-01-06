@@ -170,6 +170,9 @@ class DefaultController extends RestController
     public function actionOperatorSafarilist()
     {
         $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id != 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        }
         $searchModel = new ShareSafariSearch();
         return $this->dataProviderSender($searchModel, $rootIndexName = "ShareSafarilist", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction = "managesearch");
     }
