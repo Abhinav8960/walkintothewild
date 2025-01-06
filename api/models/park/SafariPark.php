@@ -31,35 +31,46 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
         $fields[] = 'featureimagepath';
-        $fields[] = 'sessions';
-        $fields[] = 'months';
+        // $fields[] = 'sessions';
+        // $fields[] = 'months';
         $fields[] = 'city';
         $fields[] = 'state';
         $fields[] = 'country';
         $fields[] = 'location';
         $fields[] = 'bufferzones';
         $fields[] = 'corezones';
-        $fields[] = 'airport';
-        $fields[] = 'vehicles';
+        // $fields[] = 'airport';
+        // $fields[] = 'vehicles';
         $fields[] = 'airportlist';
         $fields[] = 'safariVehicleslist';
         $fields[] =  'safariSessionslist';
         $fields[] =  'lockedMonthslist';
-        $fields[] = 'railwaystation';
-        $fields[] = 'railwaystationtwo';
+        // $fields[] = 'railwaystation';
+        // $fields[] = 'railwaystationtwo';
         $fields[] = 'railwaystationlist';
-        $fields[] = 'gallery';
-        $fields[] = 'animals';
-        $fields[] = 'lockedMonths';
+        // $fields[] = 'gallery';
+        // $fields[] = 'animals';
+        // $fields[] = 'lockedMonths';
         $fields[] = 'averagerating';
         $fields[] = 'countreview';
         // $fields[] = 'safarioperatorlist';
-        $fields[] = 'rareanimals';
-        $fields[] = 'accomodations';
-        $fields[] = 'suggestions';
-        $fields[] = 'bonusexperience';
+        // $fields[] = 'rareanimals';
+        // $fields[] = 'accomodations';
+        // $fields[] = 'suggestions';
+        // $fields[] = 'bonusexperience';
 
         $hold_fields = [
+            'safri_cost_note',
+            'logo',
+            'pincode',
+            'meta_title',
+            'park_type_id',
+            'total_view',
+            'sequence',
+            'animal_type_sequence',
+            'meta_description',
+            'meta_keywords',
+            'master_location_id',
             'nearest_railway_station',
             'nearest_railway_station_distance',
             'nearest_airport',

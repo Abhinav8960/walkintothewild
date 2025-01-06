@@ -41,6 +41,30 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'Witwreviewcount';
         $fields[] = 'isFollowed';
 
+        $hold_fields = [
+            'mail_sent',
+            'delete_reason_id',
+            'delete_reason',
+            'share_safari_request_id',
+            'share_safari_agenda_id',
+            'stay_category_id',
+            'type',
+            'image',
+            'privacy_policy',
+            'change_policy',
+            'what_you_must_carry',
+            'park_id',
+            'total_view',
+            'host_user_id',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+            'host_type'
+        ];
+
 
 
         // if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
@@ -125,30 +149,6 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         //         'host_type'
         //     ];
         // }
-
-
-        $hold_fields = [
-            'delete_reason_id',
-            'delete_reason',
-            'share_safari_request_id',
-            'share_safari_agenda_id',
-            'stay_category_id',
-            'type',
-            'image',
-            'privacy_policy',
-            'change_policy',
-            'what_you_must_carry',
-            'park_id',
-            'total_view',
-            'host_user_id',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'host_type'
-        ];
 
         return array_diff($fields, $hold_fields);
         return $fields;

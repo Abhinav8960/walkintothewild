@@ -26,6 +26,8 @@ class Package extends \common\models\package\Package
         $fields[] = 'imagebannerpath';
         $fields[] = 'isWishlist';
         $fields[] = 'packagedaynightlabels';
+        $fields[] = 'safarioperator';
+
 
         $hold_fields = [
             'start_location',
