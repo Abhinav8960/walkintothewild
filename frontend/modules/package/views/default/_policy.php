@@ -3,7 +3,7 @@
         <div class="safri_tour sticky-top border-0">
             <div class="topics_listing px-0 safariChanges ">
                 <ul id="tabList">
-                    <li><a class="tab-items active_safri" data-tab="tab21" >
+                    <li><a class="tab-items active_safri" data-tab="tab21">
                             <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
                     <!-- <li><a class="tab-items " data-tab="tab22">
@@ -32,14 +32,18 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
+                            </div>
                             <?php if ($package->package_terms_condtition) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
+                                <div class="itenary_text">
+                                    <p><?= $package->package_terms_condtition ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $package->package_terms_condtition ?></p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,14 +115,18 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-5 pb-2">Date Change Policy</h6>
+                            </div>
                             <?php if ($package->date_change_policy) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-5 pb-2">Date Change Policy</h6>
+                                <div class="itenary_text">
+                                    <p><?= $package->date_change_policy ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $package->date_change_policy ?></p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,14 +138,18 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-5 pb-2">Refund Policy</h6>
+                            </div>
                             <?php if ($package->refund_policy) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-5 pb-2">Refund Policy</h6>
+                                <div class="itenary_text">
+                                    <p><?= $package->refund_policy ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $package->refund_policy ?></p>
-                            </div>
                         </div>
                     </div>
                 </div>
