@@ -32,14 +32,18 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
+                            </div>
                             <?php if ($share_safari->share_safari_terms_condtition) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
+                                <div class="itenary_text">
+                                    <p><?= $share_safari->share_safari_terms_condtition ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $share_safari->share_safari_terms_condtition ?></p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,14 +115,18 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-5 pb-2">Date Change Policy</h6>
+                            </div>
                             <?php if ($share_safari->date_change_policy) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-5 pb-2">Date Change Policy</h6>
+                                <div class="itenary_text">
+                                    <p><?= $share_safari->date_change_policy ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $share_safari->date_change_policy ?></p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,14 +138,19 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="itenary-title">
+                                <h6 class="fs-5 pb-2">Refund Policy</h6>
+                            </div>
                             <?php if ($share_safari->refund_policy) { ?>
-                                <div class="itenary-title">
-                                    <h6 class="fs-5 pb-2">Refund Policy</h6>
+                                <div class="itenary_text">
+                                    <p><?= $share_safari->refund_policy ?></p>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="itenary_text">
+                                    <p>The organizer has not provided any information.</p>
                                 </div>
                             <?php } ?>
-                            <div class="itenary_text">
-                                <p><?= $share_safari->refund_policy ?></p>
-                            </div>
+
                         </div>
                     </div>
                 </div>
