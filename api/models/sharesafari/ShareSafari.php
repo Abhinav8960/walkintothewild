@@ -40,6 +40,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'witwaveragerating';
         $fields[] = 'Witwreviewcount';
         $fields[] = 'isFollowed';
+        $fields[] = 'urls';
 
         $hold_fields = [
             'mail_sent',
@@ -426,5 +427,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->safarioperator) ? $this->safarioperator->user->id : '';
         }
+    }
+
+    public function getUrls()
+    {
+        return [
+            'intrested_users' => Yii::$app->params['api_url'] . 'sharesafari/' . $this->slug . '/intrested-user'
+        ];
     }
 }

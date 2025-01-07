@@ -31,35 +31,30 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
         $fields[] = 'featureimagepath';
-        // $fields[] = 'sessions';
-        // $fields[] = 'months';
+        $fields[] = 'sessions';
+        $fields[] = 'months';
         $fields[] = 'city';
         $fields[] = 'state';
         $fields[] = 'country';
         $fields[] = 'location';
         $fields[] = 'bufferzones';
         $fields[] = 'corezones';
-        // $fields[] = 'airport';
-        // $fields[] = 'vehicles';
+        $fields[] = 'airport';
+        $fields[] = 'vehicles';
         $fields[] = 'airportlist';
         $fields[] = 'safariVehicleslist';
         $fields[] =  'safariSessionslist';
         $fields[] =  'lockedMonthslist';
-        // $fields[] = 'railwaystation';
-        // $fields[] = 'railwaystationtwo';
+        $fields[] = 'railwaystation';
+        $fields[] = 'railwaystationtwo';
         $fields[] = 'railwaystationlist';
-        // $fields[] = 'gallery';
-        // $fields[] = 'animals';
-        // $fields[] = 'lockedMonths';
+        $fields[] = 'lockedMonths';
         $fields[] = 'averagerating';
         $fields[] = 'countreview';
-        // $fields[] = 'safarioperatorlist';
-        // $fields[] = 'rareanimals';
-        // $fields[] = 'accomodations';
-        // $fields[] = 'suggestions';
-        // $fields[] = 'bonusexperience';
+        $fields[] = 'urls';
 
         $hold_fields = [
+            'id',
             'safri_cost_note',
             'logo',
             'pincode',
@@ -585,5 +580,14 @@ class SafariPark extends \common\models\park\SafariPark
     public function getCountreview()
     {
         return SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $this->id])->count();
+    }
+
+    public function getUrls()
+    {
+        return [
+            'operators' =>  Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-operator',
+            'sharedsafari' => Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-shared-safari',
+            'package' => Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-package'
+        ];
     }
 }

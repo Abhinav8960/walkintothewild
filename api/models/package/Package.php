@@ -27,7 +27,7 @@ class Package extends \common\models\package\Package
         $fields[] = 'isWishlist';
         $fields[] = 'packagedaynightlabels';
         $fields[] = 'safarioperator';
-
+        $fields[] = 'urls';
 
         $hold_fields = [
             'start_location',
@@ -445,5 +445,12 @@ class Package extends \common\models\package\Package
     public function getSearchpackagepark()
     {
         return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
+
+    public function getUrls()
+    {
+        return [
+            'operators' =>  Yii::$app->params['api_url'] . 'operator/' . $this->safarioperator->slug,
+        ];
     }
 }
