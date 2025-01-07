@@ -43,6 +43,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'urls';
 
         $hold_fields = [
+            'id',
             'mail_sent',
             'delete_reason_id',
             'delete_reason',

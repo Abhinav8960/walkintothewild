@@ -30,6 +30,7 @@ class Package extends \common\models\package\Package
         $fields[] = 'urls';
 
         $hold_fields = [
+            'id',
             'start_location',
             'end_location',
             'start_date',
