@@ -26,6 +26,7 @@ use common\models\UserWishlist;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -49,10 +50,10 @@ class DefaultController extends SafariController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag'],
+                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -71,6 +72,7 @@ class DefaultController extends SafariController
                     'index' => ['GET'],
                     'view' => ['GET'],
                     'organize-safari' => ['POST'],
+                    'update' => ['POST'],
                     'join' => ['POST'],
                     'unjoin' => ['POST'],
                     'wishlist' => ['POST'],
@@ -123,11 +125,12 @@ class DefaultController extends SafariController
         }
 
         $model->attributes = $this->request;
-        $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
+        $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
 
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->shared_safari_model->save()) {
+                $model->shared_safari_model->savehistory();
                 $model->UploadFiles($model->shared_safari_model->id);
                 // if ($model->shared_safari_model->user) {
                 //     /**User Info Who created safari */
@@ -430,5 +433,48 @@ class DefaultController extends SafariController
         $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
         return Yii::$app->api->sendResponse($data = ['comments' => $commentlist]);
+    }
+
+    public function actionUpdate($slug)
+    {
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        if ($shared_safari_model->host_user_id != $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You cannot Update this safari!!!"]);
+        }
+        $model = new SharedSafariForm($shared_safari_model);
+        $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->attributes = $this->request;
+        $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->shared_safari_model->save(false)) {
+                $model->shared_safari_model->savehistory();
+                $model->UploadFiles($model->shared_safari_model->id);
+
+                // $intrested_users = $shared_safari_model->getIntrested()->where(['status' => 1])->all();
+                // if ($intrested_users) {
+                //     foreach ($intrested_users as $intrest) {
+                //         $user = $intrest->user;
+                //         $username = $user->name;
+                //         $to_mail = $user->username;
+                //         $creator_name = $shared_safari_model->organizedbyname;
+                //         $subject = 'Update Shared Safari | ' . substr($shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_SAFARI_CREATEDBY_USER;
+                //         $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']);
+                //         $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //     }
+                // }
+                // \Yii::$app->session->setFlash('success', 'Shared safari updated successfully');
+                FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
+        }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
