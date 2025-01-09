@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="itenary-title">
-                                <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
+                                <h6 class="fs-5 pb-2">Terms & Condtition</h6>
                             </div>
                             <?php if ($share_safari->share_safari_terms_condtition) { ?>
                                 <div class="itenary_text">

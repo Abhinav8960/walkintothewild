@@ -1,5 +1,5 @@
 <div class="itenary-title">
-    <h6 class="fs-6 fw-bold " style="padding-bottom: 0 !important;">GETTING THERE</h6>
+    <h6 class="fs-5 pb-2" style="padding-bottom: 0 !important;">GETTING THERE</h6>
 </div>
 <?php if ($share_safari->getting_there) { ?>
     <div class="itenary_text">
