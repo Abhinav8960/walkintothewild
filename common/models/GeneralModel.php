@@ -399,7 +399,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function staycategoryoption()
     {
-        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function accomodationoption()
