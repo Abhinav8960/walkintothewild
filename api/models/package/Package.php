@@ -26,7 +26,6 @@ class Package extends \common\models\package\Package
         $fields[] = 'imagebannerpath';
         $fields[] = 'isWishlist';
         $fields[] = 'packagedaynightlabels';
-        $fields[] = 'safarioperator';
         $fields[] = 'urls';
 
         $hold_fields = [
@@ -57,6 +56,37 @@ class Package extends \common\models\package\Package
             'created_by',
             'updated_at',
         ];
+
+        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
+            $fields[] = 'safarioperator';
+            $full_hold_fields = [
+                'id',
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'package_image',
+                'package_banner_image',
+                'owned_by_id',
+                'package_name',
+                'type',
+                'gst_percentage',
+                'master_vehicle_id',
+                'delete_reason_id',
+                'delete_reason',
+                'total_view',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+            ];
+            $new_fields =  array_intersect($hold_fields, $full_hold_fields);
+            return array_diff($fields, $new_fields);
+        }
+        return array_diff($fields, $hold_fields);
+        return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
         //     $fields[] = 'packagename';
         //     $fields[] = 'masterPackageWithIncluded';
@@ -161,8 +191,8 @@ class Package extends \common\models\package\Package
 
 
 
-        return array_diff($fields, $hold_fields);
-        return $fields;
+        // return array_diff($fields, $hold_fields);
+        // return $fields;
     }
 
     /**

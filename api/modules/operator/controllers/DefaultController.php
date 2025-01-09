@@ -73,6 +73,7 @@ class DefaultController extends RestController
 
     public function actionView($slug)
     {
+        $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);

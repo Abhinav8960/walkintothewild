@@ -202,6 +202,7 @@ class SiteController extends RestController
     {
 
 
+        $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
 
         $data = [];
         $data['user'] = $this->userinfo;

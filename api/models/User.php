@@ -24,17 +24,21 @@ class User extends \common\models\User
         $fields[] = 'profileimage';
         $fields[] = 'coverimage';
         $fields[] = 'usename';
-        $fields[] = 'userfollowerscount';
-        $fields[] = 'userfollowingscount';
-        $fields[] = 'organizedSafariCount';
-        $fields[] = 'joinedSafariCount';
-        // $fields[] = 'parkvisted';
         $fields[] = 'loggedinuserfollowed';
-        $fields[] = 'operatortype';
-        $fields[] = 'operatorSlug';
 
         $hold_fields = [
             'id',
+            'profile_image',
+            'cover_image',
+            'facebook_url',
+            'whatsapp_url',
+            'x_url',
+            'insta_url',
+            'website_url',
+            'youtube_url',
+            'about',
+            'user_flaged',
+            'pop_up_message',
             'mobile_no',
             "password_hash",
             "auth_key",
@@ -69,6 +73,56 @@ class User extends \common\models\User
             'created_at',
             'updated_at'
         ];
+        if (in_array(\Yii::$app->controller->layout, [\common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL])) {
+            $fields[] = 'userfollowerscount';
+            $fields[] = 'userfollowingscount';
+            $fields[] = 'organizedSafariCount';
+            $fields[] = 'joinedSafariCount';
+            $fields[] = 'parkvisted';
+            $fields[] = 'operatortype';
+            $fields[] = 'operatorSlug';
+
+            $hold_fields = [
+                'id',
+                'mobile_no',
+                "password_hash",
+                "auth_key",
+                "user_bio",
+                "date_of_birth",
+                "gender",
+                "token_key",
+                "is_adminstrator",
+                "is_admin",
+                "is_safari_operator",
+                "is_birding_operator",
+                "is_cms_manager",
+                "is_resort_manager",
+                "is_report_manager",
+                "is_community_manager",
+                "avatar",
+                "gmail",
+                "google_source_id",
+                "blocked_at",
+                "account_type",
+                "password_updated_at",
+                "gender_privacy",
+                "email_privacy",
+                "photo_privacy",
+                "contribution_privacy",
+                "can_login",
+                "verification_token",
+                "status",
+                'password_reset_token',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
+            return array_diff($fields, $hold_fields);
+            return $fields;
+        }
+        return array_diff($fields, $hold_fields);
+        return $fields;
 
         // if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index', 'sharesafari/default/comment-view', 'package/default/comment-view','sharesafari/default/intrested-user'])) {
         //     if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
@@ -136,8 +190,8 @@ class User extends \common\models\User
         //         $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image",    "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         //     }
         // }
-        return array_diff($fields, $hold_fields);
-        return $fields;
+        // return array_diff($fields, $hold_fields);
+        // return $fields;
     }
 
     public function getProfileimage()

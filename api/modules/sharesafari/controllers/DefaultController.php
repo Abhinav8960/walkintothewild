@@ -101,6 +101,7 @@ class DefaultController extends SafariController
 
     public function actionView($slug)
     {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);

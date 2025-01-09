@@ -19,23 +19,16 @@ use api\models\UserWishlist;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
-    const STATUS_FULL_SEAT = 2;
-    const TYPE_SAFARI = 1;
-    const TYPE_FIXED_DEPARTURE = 2;
-
     public function fields()
     {
         $fields = parent::fields();
         $fields[] = 'types';
-        $fields[] = 'sharesafariagenda';
-        $fields[] = 'budget';
         $fields[] = 'organizedbyname';
         $fields[] = 'organizedbyimage';
         $fields[] = 'organizedslug';
         $fields[] = 'hosttype';
         $fields[] = 'sharedimagepath';
         $fields[] = 'seatfullStatus';
-        $fields[] = 'park';
         $fields[] = 'isWishlist';
         $fields[] = 'witwaveragerating';
         $fields[] = 'Witwreviewcount';
@@ -44,6 +37,15 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
         $hold_fields = [
             'id',
+            'safari_plan',
+            'website_url',
+            'share_safari_inclusion',
+            'share_safari_exclusion',
+            'share_safari_terms_condtition',
+            'date_change_policy',
+            'refund_policy',
+            'getting_there',
+            'breakfast_included',
             'mail_sent',
             'delete_reason_id',
             'delete_reason',
@@ -66,8 +68,41 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'updated_at',
             'host_type'
         ];
+        if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
+            $fields[] = 'types';
+            $fields[] = 'sharesafariagenda';
+            $fields[] = 'budget';
+            $fields[] = 'park';
+            $fields[] = 'intrestedUser';
 
-
+            $full_hold_fields = [
+                'id',
+                'mail_sent',
+                'delete_reason_id',
+                'delete_reason',
+                'share_safari_request_id',
+                'share_safari_agenda_id',
+                'type',
+                'image',
+                'privacy_policy',
+                'change_policy',
+                'what_you_must_carry',
+                'park_id',
+                'total_view',
+                'host_user_id',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+                'host_type'
+            ];
+            $new_fields =  array_intersect($hold_fields, $full_hold_fields);
+            return array_diff($fields, $new_fields);
+        }
+        return array_diff($fields, $hold_fields);
+        return $fields;
 
         // if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
         //     $fields[] = 'types';
@@ -152,8 +187,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         //     ];
         // }
 
-        return array_diff($fields, $hold_fields);
-        return $fields;
+        // return array_diff($fields, $hold_fields);
+        // return $fields;
     }
 
 

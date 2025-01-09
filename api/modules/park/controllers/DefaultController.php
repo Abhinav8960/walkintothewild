@@ -84,9 +84,10 @@ class DefaultController extends RestController
      */
     public function actionView($slug)
     {
+       
+        $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            // return $this->redirect(['/park']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $searchModel = new SafariParkSearch();
