@@ -21,8 +21,8 @@ class SafariOperator extends \common\models\operator\SafariOperator
         $fields[] = 'parkcount';
         $fields[] = 'packagecount';
         $fields[] = 'sharedsafaricount';
-        $fields[] = 'witwaveragerating';
-        $fields[] = 'witwreviewcount';
+        // $fields[] = 'witwaveragerating';
+        // $fields[] = 'witwreviewcount';
         $fields[] = 'followerlistcount';
         $fields[] = 'categorytitle';
         $fields[] = 'isFollowed';
