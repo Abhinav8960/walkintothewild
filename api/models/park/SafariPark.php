@@ -119,9 +119,9 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'lockedMonths';
             $fields[] = 'averagerating';
             $fields[] = 'countreview';
-            $fields[] = 'operator';
-            $fields[] = 'sharedsafari';
-            $fields[] = 'package';
+            // $fields[] = 'operator';
+            // $fields[] = 'sharedsafari';
+            // $fields[] = 'package';
 
             $full_hold_fields = [
                 'id',

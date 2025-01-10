@@ -58,7 +58,7 @@ class Package extends \common\models\package\Package
         ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
-            $fields[] = 'safarioperator';
+            // $fields[] = 'safarioperator';
             $full_hold_fields = [
                 'id',
                 'start_location',
