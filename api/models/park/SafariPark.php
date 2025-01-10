@@ -509,9 +509,9 @@ class SafariPark extends \common\models\park\SafariPark
     public function getUrls()
     {
         return [
-            'operators' =>  Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-operator',
-            'sharedsafari' => Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-shared-safari',
-            'package' => Yii::$app->params['api_url'] . 'park/' . $this->slug . '/park-package'
+            'operators' =>  Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-operator',
+            'sharedsafari' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-shared-safari',
+            'package' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package'
         ];
     }
 }

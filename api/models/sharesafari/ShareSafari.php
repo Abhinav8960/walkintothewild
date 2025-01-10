@@ -468,7 +468,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getUrls()
     {
         return [
-            'intrested_users' => Yii::$app->params['api_url'] . 'sharesafari/' . $this->slug . '/intrested-user'
+            'intrested_users' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/intrested-user'
         ];
     }
 }

@@ -481,7 +481,7 @@ class Package extends \common\models\package\Package
     public function getUrls()
     {
         return [
-            'operators' =>  Yii::$app->params['api_url'] . 'operator/' . $this->safarioperator->slug,
+            'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
         ];
     }
 }
