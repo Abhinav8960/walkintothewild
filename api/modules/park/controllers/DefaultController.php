@@ -8,9 +8,12 @@ use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\behaviours\Verbcheck;
 use api\models\operator\SafariOperatorSearch;
+use api\models\package\PackageSafariPark;
+use api\models\package\PackageSearch;
 use api\models\park\SafariParkRating;
 use api\models\park\SafariParkRatingSearch;
 use api\models\park\SafariParkSearch;
+use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\SafariParkReviewForm;
@@ -35,7 +38,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator','park-shared-safari','park-package'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -84,7 +87,7 @@ class DefaultController extends RestController
      */
     public function actionView($slug)
     {
-       
+
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
@@ -199,7 +202,10 @@ class DefaultController extends RestController
         if (!$model) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['parksharedsafari' => $this->serializeData($model->sharedsafari)]);
+
+        $searchModel = new ShareSafariSearch();
+        $searchModel->park_id = $model->id;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "parksharedsafari");
     }
 
     public function actionParkPackage($slug)
@@ -208,6 +214,12 @@ class DefaultController extends RestController
         if (!$model) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['parkpackage' => $this->serializeData($model->package)]);
+
+        $safaripackages = PackageSafariPark::find()->where(['park_id' => $model->id])->all();
+        $packageIds = array_column($safaripackages, 'package_id');
+        $searchModel = new PackageSearch();
+        $searchModel->id = $packageIds;
+        return $this->dataProviderSender($searchModel, "parkpackage");
+
     }
 }
