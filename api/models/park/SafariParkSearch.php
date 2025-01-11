@@ -23,6 +23,7 @@ class SafariParkSearch extends SafariPark
     public $safari_park_id;
     public $master_animal_slug;
     public $is_single = 0;
+    public $uuid;
 
 
     /**
@@ -31,7 +32,7 @@ class SafariParkSearch extends SafariPark
     public function rules()
     {
         return [
-            [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'safari_park_id'], 'safe'],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'safari_park_id','uuid'], 'safe'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
             [['latitude', 'longitude', 'custom_sort_by','master_animal_slug','is_single'], 'safe'],
@@ -165,6 +166,14 @@ class SafariParkSearch extends SafariPark
             'safari_park.updated_by' => $this->updated_by,
             'safari_park.status' => $this->status,
         ]);
+
+        if(!empty($this->uuid))
+        {
+            $query->andFilterWhere([
+                'safari_park.id' => convert_uudecode(base64_decode($this->uuid)),
+              
+            ]);
+        }
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         if ($this->master_location_id && $this->master_location_id != 0) {

@@ -107,4 +107,11 @@ trait CommanRelationship
     {
         return __CLASS__;
     }
+
+
+    public function getUuid()
+    {
+        return base64_encode(convert_uuencode($this->id));
+    }
+  
 }

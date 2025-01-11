@@ -17,6 +17,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     {
 
         $fields = parent::fields();
+        $fields[] = 'uuid';
         $fields[] = 'imagepath';
         $fields[] = 'parkcount';
         $fields[] = 'packagecount';

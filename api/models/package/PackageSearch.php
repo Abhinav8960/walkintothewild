@@ -24,6 +24,7 @@ class PackageSearch extends Package
     public $package_name;
     public $report_days;
     public $owned_by_id;
+    public $uuid;
 
     public $report_days_option = [
         'all' => 'All',
@@ -40,7 +41,7 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'owned_by_id', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['no_of_day', 'owned_by_id', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status','uuid'], 'safe'],
             [['cost_per_person'], 'safe'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
@@ -108,7 +109,13 @@ class PackageSearch extends Package
             'package.status' => $this->status,
             'owned_by_id' => $this->owned_by_id,
         ]);
-
+        if(!empty($this->uuid))
+        {
+            $query->andFilterWhere([
+                'id' => convert_uudecode(base64_decode($this->uuid)),
+              
+            ]);
+        }
 
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);

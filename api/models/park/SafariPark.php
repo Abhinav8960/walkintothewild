@@ -31,8 +31,10 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
 
+        $fields[] = 'uuid';
         $fields[] = 'featureimagepath';
         $fields[] = 'urls';
+
         $hold_fields = [
             'id',
             'feature_image',
@@ -124,7 +126,7 @@ class SafariPark extends \common\models\park\SafariPark
             // $fields[] = 'package';
 
             $full_hold_fields = [
-                'id',
+                // 'id',
                 'safri_cost_note',
                 'park_type_id',
                 'pincode',
