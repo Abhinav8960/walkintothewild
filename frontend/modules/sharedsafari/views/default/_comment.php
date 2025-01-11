@@ -215,14 +215,14 @@ $this->registerJs($script);
 <?php
 $script = <<< JS
 
-function writeareviewfunction() {
+function writeflagfunction() {
     $('.flagBtn').on('click', function () {
         $('#modalFlag').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
 }
-writeareviewfunction();
+writeflagfunction();
 
 $('.toggle-replies').click(function() {
         var target = $(this).data('target');
