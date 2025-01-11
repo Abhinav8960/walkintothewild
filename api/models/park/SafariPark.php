@@ -126,7 +126,7 @@ class SafariPark extends \common\models\park\SafariPark
             // $fields[] = 'package';
 
             $full_hold_fields = [
-                // 'id',
+                'id',
                 'safri_cost_note',
                 'park_type_id',
                 'pincode',

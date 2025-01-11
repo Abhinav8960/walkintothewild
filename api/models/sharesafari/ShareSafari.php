@@ -79,7 +79,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             // $fields[] = 'intrestedUser';
 
             $full_hold_fields = [
-                // 'id',
+                'id',
                 'mail_sent',
                 'delete_reason_id',
                 'delete_reason',
