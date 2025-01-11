@@ -35,6 +35,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'Witwreviewcount';
         $fields[] = 'isFollowed';
         $fields[] = 'urls';
+        $fields[] = 'park';
+
 
         $hold_fields = [
             'id',
@@ -73,7 +75,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
-            $fields[] = 'park';
+            // $fields[] = 'park';
             // $fields[] = 'intrestedUser';
 
             $full_hold_fields = [
