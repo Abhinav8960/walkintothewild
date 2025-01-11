@@ -8,6 +8,7 @@ use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\behaviours\Verbcheck;
 use api\models\operator\SafariOperatorSearch;
+use api\models\package\Package;
 use api\models\package\PackageSafariPark;
 use api\models\package\PackageSearch;
 use api\models\park\SafariParkRating;
@@ -205,6 +206,7 @@ class DefaultController extends RestController
 
         $searchModel = new ShareSafariSearch();
         $searchModel->park_id = $model->id;
+        $searchModel->status = ShareSafari::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "parksharedsafari");
     }
 
@@ -215,11 +217,11 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
 
-        $safaripackages = PackageSafariPark::find()->where(['park_id' => $model->id])->all();
+        $safaripackages = PackageSafariPark::find()->where(['park_id' => $model->id, 'status' => 1])->all();
         $packageIds = array_column($safaripackages, 'package_id');
         $searchModel = new PackageSearch();
         $searchModel->id = $packageIds;
+        $searchModel->status = Package::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, "parkpackage");
-
     }
 }
