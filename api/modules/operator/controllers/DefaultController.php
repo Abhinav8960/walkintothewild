@@ -12,7 +12,11 @@ use api\models\operator\SafariOperatorPark;
 use api\models\operator\SafariOperatorRating;
 use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
+use api\models\package\Package;
+use api\models\package\PackageSearch;
 use api\models\park\SafariPark;
+use api\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafariSearch;
 use api\models\UserFollow;
 use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
@@ -38,7 +42,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari' ,'operator-packages'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari', 'operator-packages'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -284,7 +288,12 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['operatorsharedsafari' => $this->serializeData($operator->sharedsafari)]);
+        $searchModel = new ShareSafariSearch();
+        $searchModel->host_user_id = $operator->id;
+        $searchModel->type = ShareSafari::TYPE_FIXED_DEPARTURE;
+        $searchModel->status = ShareSafari::STATUS_ACTIVE;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "operatorsharedsafari");
+        // return Yii::$app->api->sendResponse($data = ['operatorsharedsafari' => $this->serializeData($operator->sharedsafari)]);
     }
 
     public function actionOperatorPark($slug)
@@ -306,6 +315,11 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
+
+        $searchModel = new PackageSearch();
+        $searchModel->owned_by_id = $operator->id;
+        $searchModel->status = Package::STATUS_ACTIVE;
+        return $this->dataProviderSender($searchModel, "operatorpackage");
+        // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }
 }
