@@ -105,9 +105,11 @@ class DefaultController extends RestController
 
     public function actionFilterParklist()
     {
+        $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
+
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
-        $searchModel->show_in_filter = 1;
+        // $searchModel->show_in_filter = 1;
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "SafariPark");
     }
 
