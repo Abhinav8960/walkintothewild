@@ -16,98 +16,15 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = parent::fields();
-        $fields[] = 'uuid';
-        $fields[] = 'imagepath';
-        $fields[] = 'parkcount';
-        $fields[] = 'packagecount';
-        $fields[] = 'sharedsafaricount';
-        // $fields[] = 'witwaveragerating';
-        // $fields[] = 'witwreviewcount';
-        $fields[] = 'followerlistcount';
-        $fields[] = 'categorytitle';
-        $fields[] = 'isFollowed';
-
-        $hold_fields = [
-            'id',
-            'category_id',
-            'google_business_name',
-            'google_business_url',
-            'instagram_url',
-            'is_register_company',
-            'operator_name',
-            'operator_phone_no',
-            'phone_no',
-            'user_id',
-            'website',
-            'youtube_link',
-            'safari_operator_request_id',
-            'gst',
-            'is_highlighted',
-            'http',
-            'has_a_website',
-            'has_cancellation_policy',
-            'wildlife_photographer',
-            'wildlife_influencer',
-            'is_offer_premium_budget',
-            'is_offer_standard_budget',
-            'is_offer_economical_budget',
-            'is_wildlife_trekking',
-            'is_wildlife_non_safari_drive',
-            'is_bird_watching',
-            'is_camping',
-            'starting_price',
-            'starting_price',
-            'is_approved',
-            'delete_reason_id',
-            'delete_reason',
-            'total_view',
-            'logo',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at'
-        ];
+        $fields = ['uuid', 'business_name', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'sharedsafari';
             $fields[] = 'packages';
             $fields[] = 'park';
-            $full_hold_fields = [
-                'id',
-                'category_id',
-                'is_register_company',
-                'operator_name',
-                'user_id',
-                'safari_operator_request_id',
-                'gst',
-                'is_highlighted',
-                'http',
-                'has_a_website',
-                'wildlife_photographer',
-                'wildlife_influencer',
-                'is_wildlife_trekking',
-                'is_wildlife_non_safari_drive',
-                'is_bird_watching',
-                'is_camping',
-                'starting_price',
-                'starting_price',
-                'delete_reason_id',
-                'delete_reason',
-                'total_view',
-                'logo',
-                'status',
-                'created_by',
-                'updated_by',
-                'created_at',
-                'updated_at'
-            ];
-            $new_fields =  array_intersect($hold_fields, $full_hold_fields);
-            return array_diff($fields, $new_fields);
         }
 
-        return array_diff($fields, $hold_fields);
+       
         return $fields;
 
         // if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {

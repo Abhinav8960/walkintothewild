@@ -24,7 +24,7 @@ use api\models\suggestions\SafariSuggestions;
 use api\models\UserExperience;
 use common\models\park\SafariParkMonth;
 
-class SafariPark extends \common\models\park\SafariPark
+class _SafariPark extends \common\models\park\SafariPark
 {
 
     public function fields()

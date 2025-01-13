@@ -30,7 +30,7 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['uuid', 'title', 'slug','featureimagepath','avg_safari_price_min', 'avg_safari_price_max', 'short_description', 'official_website', 'featureimagepath', 'city', 'state', 'country', 'pincode', 'location', 'latitude', 'longitude', 'top_operators', 'urls'];
+        $fields = ['uuid', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location',  'top_operators', 'urls'];
 
 
 
@@ -39,7 +39,12 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
-           
+            $fields[] = 'latitude';
+            $fields[] = 'longitude';
+            $fields[] = 'official_website';
+            $fields[] = 'short_description';
+            $fields[] = 'country';
+            $fields[] = 'pincode';
             $fields[] = 'about_title';
             $fields[] = 'about_description';
             $fields[] = 'module_title';
@@ -68,12 +73,12 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'railwaystationlist';
             $fields[] = 'lockedMonths';
             $fields[] = 'animals';
-            $fields[] = 'gallery';
             $fields[] = 'averagerating';
             $fields[] = 'countreview';
             $fields[] = 'google_rating';
             $fields[] = 'google_review_count';
             $fields[] = 'total_view';
+            $fields[] = 'gallery';
         }
 
 
@@ -112,55 +117,15 @@ class SafariPark extends \common\models\park\SafariPark
     public function getAirportlist()
     {
         $text = '';
-        $first = $this->airportdata;
-        $second = $this->getAirportdata('nearest_airport_two')->one();
-        $third = $this->getAirportdata('nearest_airport_three')->one();
-        $fourth = $this->getAirportdata('nearest_airport_four')->one();
-        $fifth = $this->getAirportdata('nearest_airport_five')->one();
-
-        if ($first) {
-            if ($city = $first->city) {
-                $city_name = ' (' . $city->city_name . ')';
-            } else {
-                $city_name = '';
+        $columns = ['nearest_airport', 'nearest_airport_two', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'];
+        foreach ($columns as $column) {
+            $city_name = '';
+            if ($airport = $this->getAirportdata($column)->one()) {
+                if ($city = $airport->city) {
+                    $city_name = ' (' . $city->city_name . ')';
+                }
+                $text .= $airport->name . $city_name . ', ';
             }
-            $text .= $first->name . $city_name . ', ';
-        }
-
-        if ($second) {
-            if ($city = $second->city) {
-                $city_name = ' (' . $city->city_name . ')';
-            } else {
-                $city_name = '';
-            }
-            $text .= $second->name . $city_name . ', ';
-        }
-
-        if ($third) {
-            if ($city = $third->city) {
-                $city_name = ' (' . $city->city_name . ')';
-            } else {
-                $city_name = '';
-            }
-            $text .= $third->name . $city_name . ', ';
-        }
-
-        if ($fourth) {
-            if ($city = $fourth->city) {
-                $city_name = ' (' . $city->city_name . ')';
-            } else {
-                $city_name = '';
-            }
-            $text .= $fourth->name . $city_name . ', ';
-        }
-
-        if ($fifth) {
-            if ($city = $fifth->city) {
-                $city_name = ' (' . $city->city_name . ')';
-            } else {
-                $city_name = '';
-            }
-            $text .= $fifth->name . $city_name . ', ';
         }
         return substr($text, 0, -2);
     }
@@ -185,31 +150,14 @@ class SafariPark extends \common\models\park\SafariPark
     public function getRailwaystationlist()
     {
         $text = '';
-        $first = $this->railwaystationdata;
-        $second = $this->getRailwaystationdata('nearest_railway_station_two')->one();
-        $third = $this->getRailwaystationdata('nearest_railway_station_three')->one();
-        $fourth = $this->getRailwaystationdata('nearest_railway_station_four')->one();
-        $fifth = $this->getRailwaystationdata('nearest_railway_station_five')->one();
-
-        if ($first) {
-            $text .= $first->title . ', ';
+        $columns = ['nearest_railway_station', 'nearest_railway_station_two', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five'];
+        foreach($columns as $column){
+            if ($railwaystation = $this->getRailwaystationdata($column)->one()) {
+                $text .= $railwaystation->title . ', ';
+            }
         }
 
-        if ($second) {
-            $text .= $second->title . ', ';
-        }
-
-        if ($third) {
-            $text .= $third->title . ', ';
-        }
-
-        if ($fourth) {
-            $text .= $fourth->title . ', ';
-        }
-
-        if ($fifth) {
-            $text .= $fifth->title . ', ';
-        }
+        
         return substr($text, 0, -2);
     }
 
@@ -264,7 +212,7 @@ class SafariPark extends \common\models\park\SafariPark
 
     public function getSafariSessionslist()
     {
-        $sessions = $this->hasMany(MetaSafariSession::className(), ['id' => 'session_id'])->via('safariSessions')->all();
+        $sessions = $this->getSessions()->all();
         $arr = [];
         foreach ($sessions as $session) {
             $arr[] = $session['title'];
@@ -286,7 +234,7 @@ class SafariPark extends \common\models\park\SafariPark
 
     public function getSafariVehicleslist()
     {
-        $vehicles = $this->hasMany(MasterVehicle::className(), ['id' => 'vehicle_id'])->via('safariVehicles')->all();
+        $vehicles = $this->getVehicles()->all();
         $arr = [];
         foreach ($vehicles as $vehicle) {
             $arr[] = $vehicle['vehicle_name'];
