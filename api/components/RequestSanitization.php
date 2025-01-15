@@ -14,8 +14,9 @@ class RequestSanitization extends \yii\base\Component
 
     public function init()
     {
-
-        \Yii::$app->params['active_user_id']  = NULL;
+        \Yii::$app->params['active_user_id']  = 2;
+       
+       
         $excludedArrayForAuthentication = [
            
             'social-login',  
@@ -37,7 +38,7 @@ class RequestSanitization extends \yii\base\Component
         $intersect_array_for_authentication =  array_intersect($excludedArrayForAuthentication, $request_array);
         
         if (empty($intersect_array_for_authentication)) {
-
+          
             $accessToken = NULL;
             if (isset($_GET['access_token'])) {
                 $accessToken = $_GET['access_token'];
@@ -46,18 +47,19 @@ class RequestSanitization extends \yii\base\Component
             }
 
             if (empty($accessToken)) {
-
+                
                 if (isset($_GET['access-token'])) {
                     $accessToken = $_GET['access-token'];
                 } else {
                     $accessToken = $headers->get('x-access-token');
                 }
-
+               
                 $this->user =  \common\models\User::findIdentityByAccessToken($accessToken);
                 if (empty($this->user)) {
                     return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 401);
                 }
                 \Yii::$app->params['active_user_id'] = $this->user->id;
+               
             }
 
             if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
@@ -65,7 +67,8 @@ class RequestSanitization extends \yii\base\Component
                 Yii::$app->end();
             }
         }
-
+        
+       
 
 
 
