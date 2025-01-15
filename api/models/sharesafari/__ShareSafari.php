@@ -22,7 +22,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'uuid';
+        $fields[] = 'id';
         $fields[] = 'types';
         $fields[] = 'organizedbyname';
         $fields[] = 'organizedbyimage';

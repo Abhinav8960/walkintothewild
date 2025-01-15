@@ -30,7 +30,7 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['uuid', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location',  'top_operators', 'urls'];
+        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location',  'top_operators', 'urls'];
 
 
 

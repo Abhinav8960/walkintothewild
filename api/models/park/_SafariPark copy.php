@@ -105,7 +105,7 @@ class _SafariPark extends \common\models\park\SafariPark
             $hold_fields[] = 'short_description';
             $hold_fields[] = 'official_website';
         } else {
-            $fields[] = 'uuid';
+            $fields[] = 'id';
             $fields[] = 'featureimagepath';
             $fields[] = 'city';
             $fields[] = 'state';

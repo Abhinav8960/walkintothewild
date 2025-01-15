@@ -14,7 +14,6 @@ class SafariOperatorSearch extends SafariOperator
     public $budget_segment;
     public $credibility;
     public $custom_sort_by;
-    public $uuid;
 
     /**
      * {@inheritdoc}
@@ -22,7 +21,7 @@ class SafariOperatorSearch extends SafariOperator
     public function rules()
     {
         return [
-            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','uuid'], 'integer'],
+            [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['starting_price'], 'number'],
             [['google_rating', 'custom_sort_by'], 'safe'],
             [['about_business'], 'string'],
@@ -109,13 +108,7 @@ class SafariOperatorSearch extends SafariOperator
             'updated_by' => $this->updated_by,
             'safari_operator.status' => $this->status,
         ]);
-        if(!empty($this->uuid))
-        {
-            $query->andFilterWhere([
-                'id' => convert_uudecode(base64_decode($this->uuid)),
-              
-            ]);
-        }
+       
         if ($this->google_rating) {
             $rating_query = "";
             foreach ((array)$this->google_rating as $google_rating) {

@@ -17,7 +17,7 @@ class Package extends \common\models\package\Package
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'uuid';
+        $fields[] = 'id';
         $fields[] = 'packagename';
         $fields[] = 'pickanddrop';
         $fields[] = 'meals';
