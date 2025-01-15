@@ -22,9 +22,10 @@ class User extends \common\models\User
         $fields = parent::fields();
 
         $fields[] = 'profileimage';
+        $fields[] = 'profileimage';
         $fields[] = 'coverimage';
         $fields[] = 'usename';
-        $fields[] = 'loggedinuserfollowed';
+        $fields[] = 'is_safari_operator';
 
         $hold_fields = [
             'id',
@@ -48,7 +49,6 @@ class User extends \common\models\User
             "token_key",
             "is_adminstrator",
             "is_admin",
-            "is_safari_operator",
             "is_birding_operator",
             "is_cms_manager",
             "is_resort_manager",
@@ -93,7 +93,6 @@ class User extends \common\models\User
                 "token_key",
                 "is_adminstrator",
                 "is_admin",
-                "is_safari_operator",
                 "is_birding_operator",
                 "is_cms_manager",
                 "is_resort_manager",
