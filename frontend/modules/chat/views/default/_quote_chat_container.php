@@ -124,18 +124,17 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                 <form id="chatmessageform" method="post">
                                     <div class="lead emoji-picker-container w-100 submit_on_enter">
 
-                                        <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class=" text-black fw-bold">
+                                        <div class="d-flex  justify-content-between align-items-center flex-mobile">
+                                            <div class=" text-black fw-bold text-nowrap">
                                                 Estimate quote<br>
                                                 <span class="character-count error_display text-danger"></span>
                                             </div>
-                                            <div class="position-relative">
-
-                                                <div class="d-flex justify-content-center">
-                                                    <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message-min" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></input> -
-                                                    <input type="number" max="9999999" name="Chat[quote_price_max]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message-max" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['quote_price_max']) ? Yii::$app->request->post('Chat')['quote_price_max'] : '' ?>"></input>
+                                            <div class="position-relative ">
+                                                <div class="d-flex justify-content-sm-end position-relative">
+                                                    <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter first_input no-arrows" placeholder="Rs. 00000" id="chat-message-min" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></input>
+                                                    <input type="number" max="9999999" name="Chat[quote_price_max]" class="form-control chat-message-input submit_on_enter secnd_input no-arrows" placeholder="Rs. 00000" id="chat-message-max" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['quote_price_max']) ? Yii::$app->request->post('Chat')['quote_price_max'] : '' ?>"></input>
+                                                    <span class="saprator">-</span>
                                                 </div>
-
                                                 <div class="sendMassege" style="top: -22px; position: absolute; right: 0;">
                                                     <div class="chat-sendbtn">
                                                         <i class="fa fa-paper-plane " id="message_sent_btn_price"></i>
@@ -143,10 +142,9 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <?php
-                                    $script = <<< JS
+                                        <?php
+                                        $script = <<< JS
                                         $(document).ready(function() {
                                             $('#message_sent_btn_price').click(function(){
 
@@ -197,20 +195,20 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                             });
                                         });
                                         JS;
-                                    $this->registerJs($script);
-                                    ?>
+                                        $this->registerJs($script);
+                                        ?>
 
-                                    <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
+                                        <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
 
-                                    <input type="hidden" name="Chat[chat_id]" value="<?= $chat_id ?>">
+                                        <input type="hidden" name="Chat[chat_id]" value="<?= $chat_id ?>">
 
-                                    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-                                    <div class="form-check py-3">
-                                        <input class="form-check-input" type="checkbox" value="1" name="Chat[quote_more_detail]" id="quote_more_detail">
-                                        <label class="form-check-label " style="font-weight: 500;" for="quote_more_detail">
-                                            More details needed; this may affect the quoted price.
-                                        </label>
-                                    </div>
+                                        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+                                        <div class="form-check py-3">
+                                            <input class="form-check-input" type="checkbox" value="1" name="Chat[quote_more_detail]" id="quote_more_detail">
+                                            <label class="form-check-label " style="font-weight: 500;" for="quote_more_detail">
+                                                More details needed; this may affect the quoted price.
+                                            </label>
+                                        </div>
                                 </form>
                             </div>
                             <span class="text-small d-flex gap-1 fw-semibold"> <span class="text-danger">*</span> Once your quotation is accepted, you'll be able to contact and chat with the user directly.</span>

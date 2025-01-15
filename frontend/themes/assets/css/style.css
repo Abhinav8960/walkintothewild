@@ -6266,7 +6266,7 @@ a.desc:after {
   background-color: #000000;
   color: #fff;
   position: absolute;
-  top: 31px;
+  top: 30px;
   right: 13px;
 }
 
@@ -7058,3 +7058,47 @@ select.custom_sort_by_input option.selected {
 .parks-scroll-container {
   scrollbar-width: none; /* For Firefox */
 }
+
+
+
+.form-control.chat-message-input.first_input{
+
+  border-radius: 25px 0px 0px 25px;
+  width: 35%;
+  padding: 14px 2px 14px 18px;
+
+}
+
+
+.form-control.chat-message-input.secnd_input{
+  border-radius: 0px 25px 25px 0px;
+  width: 42%;
+  padding: 14px 2px 14px 10px;
+}
+
+.no-arrows::-webkit-outer-spin-button,
+  .no-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  .no-arrows {
+    -moz-appearance: textfield;
+    border: 0 !important;
+  }
+
+  /* For Internet Explorer */
+  .no-arrows input[type=number] {
+    -ms-appearance: none;
+  }
+
+  .saprator{
+
+    position: absolute;
+    top: -3%;
+    display: block;
+    left: 54%;
+    font-size: 32px !important;
+    transform: translateX(-50%);
+  }
