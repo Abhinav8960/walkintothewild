@@ -42,8 +42,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
-            
-            // $fields[] = 'park';
+            $fields[] = 'park_title';
             // $fields[] = 'intrestedUser';
 
            
@@ -150,6 +149,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
+
+    public function getPark_title()
+    {
+        return $this->park->title ?? NULL;
+    }
+
+    
 
     public function getParklist()
     {
