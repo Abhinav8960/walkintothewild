@@ -25,6 +25,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields = ['id','share_safari_title','slug','no_of_safari','start_date','end_date','cut_off_date','estimate_price_min','estimate_price_max','cost_per_person','total_seat','share_seat','tour_duration','types','organizedbyname','organizedbyimage','organizedslug','hosttype','sharedimagepath','seatfullStatus','isWishlist','witwaveragerating','Witwreviewcount','isFollowed','interseted_user_count'];
         
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
+            $fields[] = 'sharesafaridays';
             $fields[] = 'safari_plan';
             $fields[] = 'urls';
             $fields[] = 'types';
