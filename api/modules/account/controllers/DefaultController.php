@@ -9,6 +9,10 @@ use api\models\account\form\SafaritourRegistrationForm;
 use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorRequestActivities;
 use api\models\operator\SafariOperatorRequestPark;
+use api\models\package\Package;
+use api\models\package\PackageSearch;
+use api\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafariSearch;
 use api\models\User;
 use api\models\UserWishlist;
 use common\models\GeneralModel;
@@ -16,6 +20,7 @@ use common\models\MailLog;
 use frontend\models\profile\PrivacyForm;
 use frontend\models\profile\UserForm;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 
@@ -247,8 +252,16 @@ class DefaultController extends RestController
 
     public function actionWishlistPackage()
     {
-        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
-        return Yii::$app->api->sendResponse($data = ['package' => $wishlist_items]);
+
+        $wishlist_items = UserWishlist::find()->select('item_id')->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
+        $packageIds =  array_column($wishlist_items, 'item_id');
+
+        $searchModel = new PackageSearch();
+        $searchModel->id = $packageIds;
+        $searchModel->status = Package::STATUS_ACTIVE;
+
+        return $this->dataProviderSender($searchModel, "packages");
+
     }
 
     /**
@@ -258,7 +271,28 @@ class DefaultController extends RestController
     public function actionWishlistSharedSafari()
     {
 
+        // $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
+        // return Yii::$app->api->sendResponse($data = ['sharesafari' => $wishlist_items]);
+
         $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
-        return Yii::$app->api->sendResponse($data = ['sharesafari' => $wishlist_items]);
+
+        $saafariIds =  array_column($wishlist_items, 'item_id');
+       
+        // $searchModel = new ShareSafariSearch();
+       
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()->where(['id'=> $saafariIds]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+        $data['ShareSafari']['summary']['total'] = $dataProvider->getTotalCount();
+        $data['ShareSafari']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+        $data['ShareSafari']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+        $data['ShareSafari']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        $data['ShareSafari']['data'] = $this->serializeData($dataProvider->getModels());
+        return Yii::$app->api->sendResponse($data);
+
+
+
     }
 }

@@ -18,7 +18,7 @@ class UserWishlist extends \common\models\UserWishlist
         if (in_array(\Yii::$app->controller->action->uniqueId, ['account/default/wishlist-package'])) {
             $fields[] = 'package';
         }
-        $hold_fields = ['user_id', 'item_id', 'item_type_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['user_id', 'item_type_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

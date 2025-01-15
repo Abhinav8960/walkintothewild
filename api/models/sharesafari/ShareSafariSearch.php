@@ -90,7 +90,7 @@ class ShareSafariSearch extends ShareSafari
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'share_safari.id' => $this->id,
+            'share_safari.id1' => $this->id,
             'share_safari.host_user_id' => $this->host_user_id,
             'share_safari.type' => $this->type,
             'share_safari.host_type' => $this->host_type,
