@@ -167,15 +167,20 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                     if ($chat->created_by <> $login_user->id) { // Message Send by Operator
                                         if ($chat->quote_price == '') {
                                             $chat->quote_price = $chat_message->message;
+                                            $chat_message_text = 'Rs. ' . $chat_message->message;
+                                            if (isset($chat_model['quote_price_max'])) {
+                                                $chat->quote_price_max = $chat_model['quote_price_max'];
+                                                $chat_message_text = 'Rs. ' . $chat_message->message . ' - ' . $chat->quote_price_max;
+                                            }
                                             if (isset($chat_model['quote_more_detail']) && $chat_model['quote_more_detail'] == 1) {
                                                 $chat->quote_more_detail = 1;
                                                 $chat_message_more_detail = new ChatMessage();
                                                 $chat_message_more_detail->chat_id = $chat->id;
-                                                $chat_message_more_detail->message = $message;
+                                                $chat_message_more_detail->message = $chat_message_text;
                                                 $chat_message_more_detail->status = 1;
                                                 $chat_message_more_detail->message = 'More details needed; this may affect the quoted price.';
                                             }
-                                            $chat_message->message = 'Rs. ' . $chat_message->message;
+                                            $chat_message->message = $chat_message_text;
                                             $chat->save(false);
                                         }
                                     } else {
