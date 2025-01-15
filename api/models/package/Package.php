@@ -10,13 +10,27 @@ use api\models\park\SafariPark;
 use api\models\UserWishlist;
 use Yii;
 use common\models\User;
+// $fields[] = 'pickanddrop';
+//     $fields[] = 'mealslisting';
+//     $fields[] = 'packagerange';
+//     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
+//         $fields[] = 'safarioperator';
+//     }
+//     $fields[] = 'imagepath';
+//     $fields[] = 'imagebannerpath';
+//     $fields[] = 'packagename';
+//     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+//         $fields[] = 'packagepark';
+//     }
 
+//     $fields[] = 'packagedaynightlabels';
+//     $fields[] = 'isWishlist';
 
 class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id','packagename','package_slug','no_of_day','no_of_night','no_of_night','no_of_safari','cost_per_person','total_price','package_description','imagepath','imagebannerpath','isWishlist','packagedaynightlabels','urls'];
+        $fields = ['id','packagename','package_slug','no_of_day','no_of_night','no_of_night','no_of_safari','cost_per_person','total_price','package_description','imagepath','imagebannerpath','isWishlist','packagedaynightlabels','pickanddrop','packagerange','mealslisting','urls'];
         
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -33,7 +47,6 @@ class Package extends \common\models\package\Package
             $fields[] = 'getting_there';
             $fields[] = 'pickanddrop';
             $fields[] = 'meals';
-            $fields[] = 'packagerange';
             $fields[] = 'packagepark';
             $fields[] = 'packagedays';
             $fields[] = 'faqs';
