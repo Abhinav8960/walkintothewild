@@ -27,7 +27,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
             
-            // $fields[] = 'website_url';
+            $fields[] = 'website_url';
             $fields[] = 'witwaveragerating';
             $fields[] = 'witwreviewcount';
             $fields[] = 'breakfast_included';
