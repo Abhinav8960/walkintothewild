@@ -14,6 +14,7 @@ interface NewStatusInterface
     const OPERATOR_API_LAYOUT_FULL = "operatorfull";
     const PARK_API_LAYOUT_FOR_FILTER_PARK = "filterpark";
     const PARK_API_LAYOUT_FULL = "parkfull";
+    const PARK_API_LAYOUT_WITH_TOP_OPERATORS = "parkwithTopOperators";
     const PACKAGE_API_LAYOUT_FULL = "packagefull";
     const USER_API_LAYOUT_FULL = "userfull";
 

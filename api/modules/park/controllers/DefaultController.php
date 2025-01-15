@@ -76,6 +76,7 @@ class DefaultController extends RestController
      */
     public function actionIndex()
     {
+        $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_WITH_TOP_OPERATORS;
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
 
