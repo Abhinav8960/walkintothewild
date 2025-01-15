@@ -61,7 +61,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
     <div class="row my-4 justify-content-center">
         <div class="col-xl-11 col-lg-12">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 ">
                     <div class="right_button ">
                         <?php if (Yii::$app->user->identity) { ?>
@@ -86,7 +86,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                     </div>
                 </div>
-            </div>
+            </div> -->
             <?php
             Pjax::begin([
                 'id' => 'grid-data',
@@ -105,6 +105,28 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]); ?>
             <div class="row">
                 <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
+                <div class="right_button mb-4">
+                        <?php if (Yii::$app->user->identity) { ?>
+                            <?php
+                            if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
+                                if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
+                                    if ($operator->category_id == 1) {  ?> 
+                                     
+                                        <button  class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    <?php } else { ?> 
+                                        <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                <?php }
+                                }
+                            } else { ?>
+                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                            <?php } ?>
+                        <?php } else {  ?>
+                            <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/sharedsafari/default/index']) ?>" data-pjax="0">+ Organize a Shared Safari</a>
+                        <?php } ?>
+
+                    </div>
                     <div id="targetDiv">
                         <?= $this->render('filter_search', [
                             'form' => $form,
@@ -120,7 +142,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         </div> -->
 
                 </div>
-                <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
+                <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0 pt-3">
                     <div class="row ">
                         <div class="col-12">
                             <div class="topfilter d-lg-flex d-none justify-content-between align-items-center flex-wrap w-100 mb-2">
@@ -219,7 +241,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         </div>
                     </div>
 
-                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4">
+                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4 pt-1">
 
                         <?php if ($models = $dataProvider->models) {
                             $count = 0;
