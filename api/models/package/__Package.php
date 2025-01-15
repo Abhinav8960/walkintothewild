@@ -12,33 +12,81 @@ use Yii;
 use common\models\User;
 
 
-class Package extends \common\models\package\Package
+class ___Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id','packagename','package_slug','no_of_day','no_of_night','no_of_night','no_of_safari','cost_per_person','total_price','package_description','imagepath','imagebannerpath','isWishlist','packagedaynightlabels','urls'];
-        
+        $fields = parent::fields();
+        $fields[] = 'id';
+        $fields[] = 'packagename';
+        $fields[] = 'pickanddrop';
+        $fields[] = 'meals';
+        $fields[] = 'mealslisting';
+        $fields[] = 'packagerange';
+        $fields[] = 'imagepath';
+        $fields[] = 'imagebannerpath';
+        $fields[] = 'isWishlist';
+        $fields[] = 'packagedaynightlabels';
+        $fields[] = 'urls';
+
+        $hold_fields = [
+            'id',
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'package_image',
+            'package_banner_image',
+            'owned_by_id',
+            'package_name',
+            'type',
+            'gst_percentage',
+            'master_vehicle_id',
+            'breakfast_included',
+            'lunch_included',
+            'dinner_included',
+            'meal_not_included',
+            'popular_package',
+            'delete_reason_id',
+            'delete_reason',
+            'total_view',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+        ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
-            $fields[] = 'package_itinerary_overview';
-            $fields[] = 'masterPackageWithIncluded';
-            $fields[] = 'package_inclusion';
-            $fields[] = 'package_exclusion';
-            $fields[] = 'package_terms_condtition';
-            $fields[] = 'privacy_policy';
-            $fields[] = 'change_policy';
-            $fields[] = 'what_you_must_carry';
-            $fields[] = 'date_change_policy';
-            $fields[] = 'refund_policy';
-            $fields[] = 'getting_there';
-            $fields[] = 'pickanddrop';
-            $fields[] = 'meals';
-            $fields[] = 'packagerange';
-            $fields[] = 'packagepark';
-            $fields[] = 'packagedays';
-            $fields[] = 'faqs';
-           
+            // $fields[] = 'safarioperator';
+            $full_hold_fields = [
+                'id',
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'package_image',
+                'package_banner_image',
+                'owned_by_id',
+                'package_name',
+                'type',
+                'gst_percentage',
+                'master_vehicle_id',
+                'delete_reason_id',
+                'delete_reason',
+                'total_view',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+            ];
+            $new_fields =  array_intersect($hold_fields, $full_hold_fields);
+            return array_diff($fields, $new_fields);
         }
+        return array_diff($fields, $hold_fields);
         return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
         //     $fields[] = 'packagename';
