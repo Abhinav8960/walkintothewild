@@ -271,26 +271,16 @@ class DefaultController extends RestController
     public function actionWishlistSharedSafari()
     {
 
-        // $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
-        // return Yii::$app->api->sendResponse($data = ['sharesafari' => $wishlist_items]);
-
         $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
 
         $saafariIds =  array_column($wishlist_items, 'item_id');
        
-        // $searchModel = new ShareSafariSearch();
-       
-
         $dataProvider = new ActiveDataProvider([
             'query' => ShareSafari::find()->where(['id'=> $saafariIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-        $data['ShareSafari']['summary']['total'] = $dataProvider->getTotalCount();
-        $data['ShareSafari']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-        $data['ShareSafari']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
-        $data['ShareSafari']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
-        $data['ShareSafari']['data'] = $this->serializeData($dataProvider->getModels());
-        return Yii::$app->api->sendResponse($data);
+       return $this->querySender($dataProvider, $rootIndexName = "ShareSafari");
+        
 
 
 

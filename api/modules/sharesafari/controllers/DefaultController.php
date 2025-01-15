@@ -18,6 +18,7 @@ use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
 use api\models\sharesafari\ShareSafariComment;
+use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
 // use api\models\UserWishlist;
@@ -26,6 +27,7 @@ use common\models\UserWishlist;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
+use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
 /**
@@ -437,9 +439,15 @@ class DefaultController extends SafariController
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-        $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
+        // $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
-        return Yii::$app->api->sendResponse($data = ['comments' => $commentlist]);
+        
+       
+        $dataProvider = new ActiveDataProvider([
+            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1,'parent_id' => null]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+       return $this->querySender($dataProvider, $rootIndexName = "comments");
     }
 
     /**
@@ -455,6 +463,7 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Includes not found']);
         }
         return Yii::$app->api->sendResponse($data = ['includes' => $this->serializeData($share_safari->includeds)]);
+        
     }
 
     public function actionFixedDepartureDays($slug)
@@ -491,6 +500,8 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Faqs not found']);
         }
         return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($share_safari->sharesafariFaqs)]);
+
+        
     }
 
 
@@ -500,7 +511,19 @@ class DefaultController extends SafariController
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
+
+        // return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
+
+        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id'=>$share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+
+        // return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
+
+        $ids = array_column($ShareSafariIntrested,'user_id');
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
+            // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+       return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
     }
     
     public function actionUpdate($slug)

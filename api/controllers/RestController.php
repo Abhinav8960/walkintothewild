@@ -175,6 +175,24 @@ class RestController extends Controller
         return $this->reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord);
     }
 
+
+    protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false)
+    {
+        
+        if ($dataProvider->pagination && $singleRecord == false) {
+
+            $dataProvider->pagination->pageSize = $this->pageSize;
+            $dataProvider->pagination->validatePage = false;
+
+            $data[$rootIndexName]['summary']['total'] = $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+
+        return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
+    }
+
     private function reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false)
     {
 
