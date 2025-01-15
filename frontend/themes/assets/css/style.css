@@ -6829,22 +6829,24 @@ select.custom_sort_by_input option.selected {
   text-align: left;
   position: relative;
   overflow: hidden;
-  font-weight: normal !important;
+  max-height: 46px;
+  line-height: 1.5em;
+
+}
+
+
+
+.profile-description .show-more-height {
+  overflow: hidden;
 }
 
 .profile-description .show-more {
   text-align: center;
-  display: inline-block;
+  display: none;  /* Hidden by default */
   color: var(--background-primary);
   cursor: pointer;
-  padding: 7px 0px;
+  padding: 7px 0;
   font-weight: 600;
-}
-
-.profile-description .show-more-height {
-  height: 46px;
-  /* Adjust this if your line height is different; 1.5em is typical */
-  overflow: hidden;
 }
 
 .titler_safari {

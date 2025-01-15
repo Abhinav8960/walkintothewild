@@ -593,42 +593,27 @@ enquiryfunction();
     //     }
     // });
        // Handle package description
-       var textContainer = $(".package_description .text");
-    var showMoreButton = $(".package_description .package-show-more");
-    var lineHeight = parseInt(textContainer.css('line-height'));
-    var threeLinesHeight = lineHeight * 3;
+       function handleTextContainer(containerSelector, buttonSelector) {
+        var textContainer = $(containerSelector);
+        var showMoreButton = $(buttonSelector);
+        var lineHeight = parseFloat(textContainer.css('line-height'));
+        var threeLinesHeight = lineHeight * 3;
 
-    if (textContainer[0].scrollHeight > threeLinesHeight) {
-        showMoreButton.show();
+        textContainer.css('max-height', threeLinesHeight + 'px');  
+        if (textContainer[0].scrollHeight > threeLinesHeight) {
+            showMoreButton.css('display', 'inline-block');  
+        }
+
+        showMoreButton.click(function () {
+            var isCollapsed = textContainer.css('max-height') === threeLinesHeight + 'px';
+            textContainer.css('max-height', isCollapsed ? 'none' : threeLinesHeight + 'px');
+            $(this).text(isCollapsed ? "See Less" : "See More");
+        });
     }
 
-    showMoreButton.click(function () {
-        textContainer.toggleClass("show-more-height");
-        if (textContainer.hasClass("show-more-height")) {
-            $(this).text("See More");
-        } else {
-            $(this).text("See Less");
-        }
-    });
+    handleTextContainer(".package_description .text", ".package_description .package-show-more");
 
-    // Handle package itinerary overview
-    var textContainerItinerary = $(".package_itinerary_overview .text");
-    var showMoreButtonItinerary = $(".package_itinerary_overview .itinerary-show-more");
-    var lineHeightItinerary = parseInt(textContainerItinerary.css('line-height'));
-    var threeLinesHeightItinerary = lineHeightItinerary * 3;
-
-    if (textContainerItinerary[0].scrollHeight > threeLinesHeightItinerary) {
-        showMoreButtonItinerary.show();
-    }
-
-    showMoreButtonItinerary.click(function () {
-        textContainerItinerary.toggleClass("show-more-height");
-        if (textContainerItinerary.hasClass("show-more-height")) {
-            $(this).text("See More");
-        } else {
-            $(this).text("See Less");
-        }
-    });
+    handleTextContainer(".package_itinerary_overview .text", ".package_itinerary_overview .itinerary-show-more");
 JS;
 $this->registerJs($script);
 ?>
