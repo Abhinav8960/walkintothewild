@@ -27,6 +27,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
            
             $fields[] = 'website_url';
+            $fields[] = 'sharesafariFaqs';
+            
             $fields[] = 'share_safari_inclusion';
             $fields[] = 'share_safari_exclusion';
             $fields[] = 'share_safari_terms_condtition';
