@@ -22,88 +22,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function fields()
     {
 
-        $fields = ['id','share_safari_title','slug','no_of_safari','start_date','end_date','cut_off_date','estimate_price_min','estimate_price_max','cost_per_person','total_seat','share_seat','tour_duration','types','organizedbyname','organizedbyimage','organizedslug','hosttype','sharedimagepath','seatfullStatus','isWishlist','witwaveragerating','Witwreviewcount','isFollowed','urls'];
-        $fields = parent::fields();
-        $fields[] = 'types';
-        $fields[] = 'organizedbyname';
-        $fields[] = 'organizedbyimage';
-        $fields[] = 'organizedslug';
-        $fields[] = 'hosttype';
-        $fields[] = 'sharedimagepath';
-        $fields[] = 'seatfullStatus';
-        $fields[] = 'isWishlist';
-        $fields[] = 'witwaveragerating';
-        $fields[] = 'Witwreviewcount';
-        $fields[] = 'isFollowed';
-        $fields[] = 'urls';
-        $fields[] = 'park';
-
-
-        $hold_fields = [
-            'safari_plan',
-            'website_url',
-            'share_safari_inclusion',
-            'share_safari_exclusion',
-            'share_safari_terms_condtition',
-            'date_change_policy',
-            'refund_policy',
-            'getting_there',
-            'breakfast_included',
-            'mail_sent',
-            'delete_reason_id',
-            'delete_reason',
-            'share_safari_request_id',
-            'share_safari_agenda_id',
-            'stay_category_id',
-            'type',
-            'image',
-            'privacy_policy',
-            'change_policy',
-            'what_you_must_carry',
-            'park_id',
-            'total_view',
-            'host_user_id',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'host_type'
-        ];
+        $fields = ['id','share_safari_title','slug','no_of_safari','start_date','end_date','cut_off_date','estimate_price_min','estimate_price_max','cost_per_person','total_seat','share_seat','tour_duration','types','organizedbyname','organizedbyimage','organizedslug','hosttype','sharedimagepath','seatfullStatus','isWishlist','witwaveragerating','Witwreviewcount','isFollowed','interseted_user_count'];
+        
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
+            $fields[] = 'urls';
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
             // $fields[] = 'park';
             // $fields[] = 'intrestedUser';
 
-            $full_hold_fields = [
-                'mail_sent',
-                'delete_reason_id',
-                'delete_reason',
-                'share_safari_request_id',
-                'share_safari_agenda_id',
-                'type',
-                'image',
-                'privacy_policy',
-                'change_policy',
-                'what_you_must_carry',
-                'park_id',
-                'total_view',
-                'host_user_id',
-                'status',
-                'created_by',
-                'updated_by',
-                'created_at',
-                'created_by',
-                'updated_at',
-                'host_type'
-            ];
-            $new_fields =  array_intersect($hold_fields, $full_hold_fields);
-            return array_diff($fields, $new_fields);
+           
         }
-        return array_diff($fields, $hold_fields);
         return $fields;
 
         // if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
@@ -233,6 +163,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested');
     }
+
+    public function getInterseted_user_count()
+    {
+        return $this->getIntrestedUser()->count();
+    }
+
+    
 
     public function getSharedimagepath()
     {
