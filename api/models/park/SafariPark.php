@@ -30,7 +30,7 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location',  'top_operators', 'urls'];
+        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location',  'top_operators'];
 
 
 
@@ -79,6 +79,7 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'google_review_count';
             $fields[] = 'total_view';
             $fields[] = 'gallery';
+            $fields[] = 'urls';
         }
 
 
