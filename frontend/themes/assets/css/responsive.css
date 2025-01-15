@@ -2072,6 +2072,27 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .flex-mobile{
+
+    flex-wrap: wrap !important;
+  }
+  .text-nowrap{
+    padding-bottom: 8px;
+  }
+
+.form-control.chat-message-input.first_input {
+  border-radius: 25px 0px 0px 25px;
+  width: 70%;
+  padding: 14px 2px 14px 18px;
+}
+.form-control.chat-message-input.secnd_input {
+  border-radius: 0px 25px 25px 0px;
+  width: 60%;
+  padding: 14px 2px 14px 10px;
+}
+.saprator{
+  left: 45%;
+}
  
   .JoinPadding.phone_padding{
 

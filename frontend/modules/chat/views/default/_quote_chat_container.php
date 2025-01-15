@@ -67,7 +67,11 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                     if ($chat->quote_price <> '') { // Price Set  
                     ?>
                         <?php
-                        echo 'Quote From ', $chat_person_name, ' : <b>Rs. ', $chat->quote_price, '</b>';
+                        $quote_price_max = $chat->quote_price_max;
+                        if ($quote_price_max <> '') {
+                            $quote_price_max = " - " . $quote_price_max;
+                        }
+                        echo 'Quote From ', $chat_person_name, ' : <b>Rs. ', $chat->quote_price, $quote_price_max, '</b>';
                         if ($chat->quote_more_detail == 1) {
                             echo '<br><span class="text-danger">More details needed; this may affect the quoted price.</span>';
                         }
@@ -120,40 +124,102 @@ $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby([
                                 <form id="chatmessageform" method="post">
                                     <div class="lead emoji-picker-container w-100 submit_on_enter">
 
-                                        <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class=" text-black fw-bold">
-                                                Estimate quote
-                                                <span class="character-count"></span>
+                                        <div class="d-flex  justify-content-between align-items-center flex-mobile">
+                                            <div class=" text-black fw-bold text-nowrap">
+                                                Estimate quote<br>
+                                                <span class="character-count error_display text-danger"></span>
                                             </div>
                                             <div class="position-relative ">
-                                                <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Rs. 00000" id="chat-message"  onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;"  autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></input>
+                                                <div class="d-flex justify-content-sm-end position-relative">
+                                                    <input type="number" max="9999999" name="Chat[message]" class="form-control chat-message-input submit_on_enter first_input no-arrows" placeholder="Rs. 00000" id="chat-message-min" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></input>
+                                                    <input type="number" max="9999999" name="Chat[quote_price_max]" class="form-control chat-message-input submit_on_enter secnd_input no-arrows" placeholder="Rs. 00000" id="chat-message-max" onkeypress="return this.value.length < 7 && event.charCode >= 48 && event.charCode <= 57;" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['quote_price_max']) ? Yii::$app->request->post('Chat')['quote_price_max'] : '' ?>"></input>
+                                                    <span class="saprator">-</span>
+                                                </div>
                                                 <div class="sendMassege" style="top: -22px; position: absolute; right: 0;">
                                                     <div class="chat-sendbtn">
-                                                        <i class="fa fa-paper-plane " id="message_sent_btn"></i>
+                                                        <i class="fa fa-paper-plane " id="message_sent_btn_price"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
+                                        <?php
+                                        $script = <<< JS
+                                        $(document).ready(function() {
+                                            $('#message_sent_btn_price').click(function(){
 
-                                    <input type="hidden" name="Chat[chat_id]" value="<?= $chat_id ?>">
+                                                let formValid =false;
+                                                min_price = Number($('#chat-message-min').val());
+                                                max_price = Number($('#chat-message-max').val());
 
-                                    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-                                    <div class="form-check py-3">
-                                        <input class="form-check-input" type="checkbox" value="1" name="Chat[quote_more_detail]" id="quote_more_detail">
-                                        <label class="form-check-label " style="font-weight: 500;" for="quote_more_detail">
-                                            More details needed; this may affect the quoted price.
-                                        </label>
-                                    </div>
+                                                if(min_price>0 && max_price>0){
+                                                    if(min_price>=9999999){
+                                                        $('#chat-message-min').addClass('is-invalid').removeClass('is-valid');
+                                                        $('.error_display').html('Price is Required');
+                                                    }else{
+                                                        $('#chat-message-min').removeClass('is-invalid').addClass('is-valid');
+                                                        $('.error_display').html('');
+                                                    }
+                                                    if(max_price>=9999999){
+                                                        $('#chat-message-max').addClass('is-invalid').removeClass('is-valid');
+                                                        $('.error_display').html('Price is Required');
+                                                    }else{
+                                                        $('#chat-message-max').addClass('is-valid');
+                                                        $('.error_display').html('');
+                                                    }
+
+                                                    if(min_price>max_price){
+                                                        $('#chat-message-max').addClass('is-invalid');
+                                                        $('.error_display').html('Max Price Should be greater then min price');
+                                                    }else{
+                                                        formValid=true;
+                                                    }
+                                                    if(formValid){
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/chat/default/sendmessage',
+                                                            data:$("#chatmessageform").serialize(),
+                                                            success:function(data){
+                                                                $('#chat-message-min').val('');
+                                                                $('#chat-message-max').val('');
+                                                                location.reload();
+                                                            },
+                                                            dataType:'html'
+                                                        });
+                                                    }
+                                                }else{
+                                                    $('#chat-message-min').addClass('is-invalid').removeClass('is-valid');
+                                                    $('#chat-message-max').addClass('is-invalid').removeClass('is-valid');
+                                                    $('.error_display').html('Estimate Price is Required');
+                                                }
+                                            });
+                                        });
+                                        JS;
+                                        $this->registerJs($script);
+                                        ?>
+
+                                        <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
+
+                                        <input type="hidden" name="Chat[chat_id]" value="<?= $chat_id ?>">
+
+                                        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+                                        <div class="form-check py-3">
+                                            <input class="form-check-input" type="checkbox" value="1" name="Chat[quote_more_detail]" id="quote_more_detail">
+                                            <label class="form-check-label " style="font-weight: 500;" for="quote_more_detail">
+                                                More details needed; this may affect the quoted price.
+                                            </label>
+                                        </div>
                                 </form>
                             </div>
                             <span class="text-small d-flex gap-1 fw-semibold"> <span class="text-danger">*</span> Once your quotation is accepted, you'll be able to contact and chat with the user directly.</span>
                         <?php
                         } else {
                             // Price is Set Waiting for Accpect 
-                            echo 'Estimate Quote Price : <b>Rs. ', $chat->quote_price, '</b>';
+                            $quote_price_max = $chat->quote_price_max;
+                            if ($quote_price_max <> '') {
+                                $quote_price_max = " - " . $quote_price_max;
+                            }
+                            echo 'Estimate Quote Price : <b>Rs. ', $chat->quote_price, $quote_price_max, '</b>';
                             if ($chat->quote_more_detail == 1) {
                                 echo '<br><span class="text-danger">More details needed; this may affect the quoted price.</span>';
                             }

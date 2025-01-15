@@ -5797,8 +5797,9 @@ a.desc:after {
 }
 
 .profileDetails img {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
   -webkit-box-shadow: 0px 3px 6px #00000029;
   box-shadow: 0px 3px 6px #00000029;
@@ -6265,7 +6266,7 @@ a.desc:after {
   background-color: #000000;
   color: #fff;
   position: absolute;
-  top: 31px;
+  top: 30px;
   right: 13px;
 }
 
@@ -6829,22 +6830,24 @@ select.custom_sort_by_input option.selected {
   text-align: left;
   position: relative;
   overflow: hidden;
-  font-weight: normal !important;
+  max-height: 46px;
+  line-height: 1.5em;
+
+}
+
+
+
+.profile-description .show-more-height {
+  overflow: hidden;
 }
 
 .profile-description .show-more {
   text-align: center;
-  display: inline-block;
+  display: none;  /* Hidden by default */
   color: var(--background-primary);
   cursor: pointer;
-  padding: 7px 0px;
+  padding: 7px 0;
   font-weight: 600;
-}
-
-.profile-description .show-more-height {
-  height: 46px;
-  /* Adjust this if your line height is different; 1.5em is typical */
-  overflow: hidden;
 }
 
 .titler_safari {
@@ -7055,3 +7058,47 @@ select.custom_sort_by_input option.selected {
 .parks-scroll-container {
   scrollbar-width: none; /* For Firefox */
 }
+
+
+
+.form-control.chat-message-input.first_input{
+
+  border-radius: 25px 0px 0px 25px;
+  width: 35%;
+  padding: 14px 2px 14px 18px;
+
+}
+
+
+.form-control.chat-message-input.secnd_input{
+  border-radius: 0px 25px 25px 0px;
+  width: 42%;
+  padding: 14px 2px 14px 10px;
+}
+
+.no-arrows::-webkit-outer-spin-button,
+  .no-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  .no-arrows {
+    -moz-appearance: textfield;
+    border: 0 !important;
+  }
+
+  /* For Internet Explorer */
+  .no-arrows input[type=number] {
+    -ms-appearance: none;
+  }
+
+  .saprator{
+
+    position: absolute;
+    top: -3%;
+    display: block;
+    left: 54%;
+    font-size: 32px !important;
+    transform: translateX(-50%);
+  }

@@ -315,22 +315,43 @@ function organizefunction() {
 organizefunction();
 
 
+// const textContainer = $(".profile-description .text");
+//     const showMoreButton = $(".profile-description .show-more");
+//     const lineHeight = parseInt(textContainer.css('line-height'));
+
+//     const threeLinesHeight = lineHeight * 3;
+
+//     if (textContainer[0].scrollHeight > threeLinesHeight) {
+//         showMoreButton.show();
+//     }
+
+//     showMoreButton.click(function () {
+//         textContainer.toggleClass("show-more-height");
+//         if (textContainer.hasClass("show-more-height")) {
+//             $(this).text("See More");
+//         } else {
+//             $(this).text("See Less");
+//         }
+//     });
+
 const textContainer = $(".profile-description .text");
     const showMoreButton = $(".profile-description .show-more");
-    const lineHeight = parseInt(textContainer.css('line-height'));
-
+    const lineHeight = parseFloat(textContainer.css('line-height'));
     const threeLinesHeight = lineHeight * 3;
 
-    if (textContainer[0].scrollHeight > threeLinesHeight) {
-        showMoreButton.show();
+    if (textContainer.prop('scrollHeight') > threeLinesHeight) {
+        textContainer.css({ 'max-height': threeLinesHeight + 'px', 'visibility': 'visible' });
+        showMoreButton.css('display', 'inline-block');  
+    } else {
+        textContainer.css('visibility', 'visible');  
     }
-
     showMoreButton.click(function () {
-        textContainer.toggleClass("show-more-height");
-        if (textContainer.hasClass("show-more-height")) {
-            $(this).text("See More");
-        } else {
+        if (textContainer.css('max-height') === threeLinesHeight + 'px') {
+            textContainer.css('max-height', 'none'); 
             $(this).text("See Less");
+        } else {
+            textContainer.css('max-height', threeLinesHeight + 'px');  
+            $(this).text("See More");
         }
     });
 JS;
