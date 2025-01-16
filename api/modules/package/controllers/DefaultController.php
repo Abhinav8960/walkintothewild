@@ -10,7 +10,10 @@ use api\controllers\RestController;
 use api\models\operator\SafariOperator;
 use api\models\package\Package;
 use api\models\package\PackageComment;
+use api\models\package\PackageSafariPark;
 use api\models\package\PackageSearch;
+use api\models\park\SafariPark;
+use api\models\park\SafariParkSearch;
 use api\models\UserWishlist;
 use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
@@ -286,7 +289,20 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['parks' => $this->serializeData($package->packagepark)]);
+
+       
+        $packageSafariPark = PackageSafariPark::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
+            ->one();
+        if (!$packageSafariPark) {
+            return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
+        }
+        $ids = array_column($packageSafariPark,'park_id');
+        $searchModel = new SafariParkSearch();
+        $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
+        $searchModel->id = $ids;
+        return $this->dataProviderSender($searchModel, "SafariPark");
+
     }
 
     public function actionPackageDays($slug)
