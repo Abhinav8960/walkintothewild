@@ -81,7 +81,7 @@ class ShareSafariSearch extends ShareSafari
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['pined_safari' => SORT_DESC, 'created_at' => SORT_DESC]],
 
         ]);
 
@@ -185,7 +185,7 @@ class ShareSafariSearch extends ShareSafari
         if ($this->custom_sort_by) {
             if ($this->custom_sort_by == '1') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['created_at' => SORT_DESC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'created_at' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == '2') {
                 $dataProvider->sort = [
