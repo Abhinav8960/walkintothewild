@@ -7063,12 +7063,12 @@ select.custom_sort_by_input option.selected {
 
 .highlighted-safari {
   position: absolute;
-  left: 6;
+  left: 10px;
   top: 10px;
-  background-color: #0090ff;
-  color:white;
+  background-color: #1388f4;
+  color: white;
   padding: 6px 10px;
-  border-radius: 25px 25px 25px 25px;
+  border-radius: 8px 8px 8px 8px;
 }
 
 .highlighted-safari p {
