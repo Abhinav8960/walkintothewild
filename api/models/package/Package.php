@@ -30,7 +30,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'urls'];
+        $fields = ['id', 'packagename', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'urls'];
 
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -285,7 +285,7 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getUser()
+    public function getSafarioperatorUser()
     {
         return $this->safarioperator ? $this->safarioperator->user : null;
         // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
@@ -446,8 +446,8 @@ class Package extends \common\models\package\Package
     public function getUrls()
     {
         return [
-            'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
-            'packagepark' =>  Yii::$app->params['api_url'] . '/package/' . $this->slug . '/package-park',
+            // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
+            'packagepark' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
         ];
     }
 }
