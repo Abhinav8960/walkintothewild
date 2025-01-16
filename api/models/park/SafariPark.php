@@ -32,7 +32,7 @@ class SafariPark extends \common\models\park\SafariPark
         // $hold_fields = parent::fields();
         $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location'];
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL,SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
+        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
 
         }
@@ -45,7 +45,7 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'latitude';
             $fields[] = 'longitude';
             $fields[] = 'official_website';
-            $fields[] = 'short_description';
+            // $fields[] = 'short_description';
             $fields[] = 'country';
             $fields[] = 'pincode';
             $fields[] = 'about_title';
@@ -54,11 +54,11 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'module_description';
             $fields[] = 'florafauna';
             $fields[] = 'animal_text';
-            $fields[] = 'animal_type_sequence';
-            $fields[] = 'safri_cost_note';
-            $fields[] = 'is_most_demanding';
-            $fields[] = 'is_shared_safari';
-            $fields[] = 'logo';
+            // $fields[] = 'animal_type_sequence';
+            // $fields[] = 'safri_cost_note';
+            // $fields[] = 'is_most_demanding';
+            // $fields[] = 'is_shared_safari';
+            // $fields[] = 'logo';
             $fields[] = 'long_description';
             $fields[] = 'months';
             $fields[] = 'bufferzones';
@@ -71,17 +71,17 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'sessions';
             $fields[] = 'safariSessionslist';
             $fields[] = 'lockedMonthslist';
-            $fields[] = 'railwaystation';
-            $fields[] = 'railwaystationtwo';
+            // $fields[] = 'railwaystation';
+            // $fields[] = 'railwaystationtwo';
             $fields[] = 'railwaystationlist';
             $fields[] = 'lockedMonths';
-            $fields[] = 'animals';
+            // $fields[] = 'animals';
             $fields[] = 'averagerating';
-            $fields[] = 'countreview';
+            // $fields[] = 'countreview';
             $fields[] = 'google_rating';
             $fields[] = 'google_review_count';
-            $fields[] = 'total_view';
-            $fields[] = 'gallery';
+            // $fields[] = 'total_view';
+            // $fields[] = 'gallery';
             $fields[] = 'urls';
         }
 
