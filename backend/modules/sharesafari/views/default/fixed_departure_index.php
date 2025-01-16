@@ -72,7 +72,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Number Of Safari',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->no_of_safari;
@@ -80,7 +80,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Number Of Seat',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->total_seat;
@@ -96,7 +96,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Joined',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
@@ -110,7 +110,7 @@ if (Yii::$app->user->identity) {
 
                     [
                         'label' => 'Leaved',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
@@ -127,6 +127,20 @@ if (Yii::$app->user->identity) {
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
+                        }
+                    ],
+
+                    [
+                        'header' => 'Pinned',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+
+                            return Html::a(($model->pined_safari == 1 ? 'UnPinned' : 'Pinned Safari'), ['pinsafari', 'id' => $model->id], [
+                                'style' => 'color: white !important; text-decoration:none;',
+                                'title' => 'Pinned Safar',
+                                'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success'),
+                            ]);
                         }
                     ],
                 ],

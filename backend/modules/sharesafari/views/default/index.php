@@ -36,11 +36,11 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
 
-                            return Html::a(($model->share_safari_title <>''? $model->share_safari_title : 'Untitled'), ['view', 'id' => $model->id], [
+                            return Html::a(($model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled'), ['view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]);
@@ -63,16 +63,16 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
-                        'label' => 'Number Of Safari',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'header' => 'Number Of<br> Safari',
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->no_of_safari;
                         }
                     ],
                     [
-                        'label' => 'Number Of Seat',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'header' => 'Number Of<br> Seat',
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->share_seat;
@@ -80,7 +80,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Organized By',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->user->name) ? $model->user->name : '';
@@ -89,7 +89,7 @@ if (Yii::$app->user->identity) {
 
                     [
                         'label' => 'Joined',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
@@ -103,7 +103,7 @@ if (Yii::$app->user->identity) {
 
                     [
                         'label' => 'Leaved',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
@@ -120,6 +120,20 @@ if (Yii::$app->user->identity) {
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
+                        }
+                    ],
+
+                    [
+                        'header' => 'Pinned',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+
+                            return Html::a(($model->pined_safari == 1 ? 'UnPinned' : 'Pinned Safari'), ['pinsafari', 'id' => $model->id], [
+                                'style' => 'color: white !important; text-decoration:none;',
+                                'title' => 'Pinned Safar',
+                                'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success'),
+                            ]);
                         }
                     ],
 

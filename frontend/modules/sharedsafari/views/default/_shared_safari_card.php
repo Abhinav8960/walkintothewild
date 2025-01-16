@@ -43,6 +43,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <p>Fixed Departure</p>
         </div>
     <?php } ?>
+    <?php if ($share_safari->pined_safari == 1) { ?>
+        <div class="highlighted-safari">
+            <p>Highlighted</p>
+        </div>
+    <?php } ?>
 
     <div class="shareimg">
         <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-pjax="0"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>

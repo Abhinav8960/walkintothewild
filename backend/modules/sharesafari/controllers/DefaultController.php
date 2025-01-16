@@ -425,4 +425,16 @@ class DefaultController extends Controller
             ]
         );
     }
+
+
+    public function actionPinsafari($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        if ($share_safari) {
+            $share_safari->pined_safari = !$share_safari->pined_safari;
+            $share_safari->save(false);
+        }
+
+        return $this->redirect('/sharesafari/default/index');
+    }
 }

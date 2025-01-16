@@ -81,7 +81,7 @@ class ShareSafariSearch extends ShareSafari
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['pined_safari' => SORT_DESC, 'created_at' => SORT_DESC]],
 
         ]);
 
@@ -185,15 +185,15 @@ class ShareSafariSearch extends ShareSafari
         if ($this->custom_sort_by) {
             if ($this->custom_sort_by == '1') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['created_at' => SORT_DESC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'created_at' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == '2') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'no_of_safari' => SORT_ASC]
                 ];
             } else if ($this->custom_sort_by == '3') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'no_of_safari' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == '4') {
 
@@ -201,14 +201,14 @@ class ShareSafariSearch extends ShareSafari
                 //     'defaultOrder' => ['cost_per_person' => SORT_ASC, 'estimate_price_min' => SORT_ASC]
                 // ];
 
-                $query->orderBy((new \yii\db\Expression('CASE WHEN type=1 THEN estimate_price_min WHEN type=2 THEN cost_per_person END ASC')));
+                $query->orderBy((new \yii\db\Expression('pined_safari DESC, (CASE WHEN type=1 THEN estimate_price_min WHEN type=2 THEN cost_per_person END) ASC')));
             } else if ($this->custom_sort_by == '5') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['start_date' => SORT_ASC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'start_date' => SORT_ASC]
                 ];
             } else if ($this->custom_sort_by == '6') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['start_date' => SORT_DESC]
+                    'defaultOrder' => ['pined_safari' => SORT_DESC, 'start_date' => SORT_DESC]
                 ];
             }
         }
