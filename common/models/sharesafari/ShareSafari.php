@@ -44,6 +44,9 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     const TYPE_SAFARI = 1;
     const TYPE_FIXED_DEPARTURE = 2;
 
+    const STATUS_DELETE_BY_USER = -2;
+
+
     /**
      * {@inheritdoc}
      */
