@@ -431,7 +431,11 @@ class DefaultController extends Controller
     {
         $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
         if ($share_safari) {
-            $share_safari->pined_safari = !$share_safari->pined_safari;
+            if ($share_safari->pined_safari == 1) {
+                $share_safari->pined_safari = NULL;
+            } else {
+                $share_safari->pined_safari = 1;
+            }
             $share_safari->save(false);
         }
 

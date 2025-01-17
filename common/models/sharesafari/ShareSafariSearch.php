@@ -238,7 +238,7 @@ class ShareSafariSearch extends ShareSafari
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
-            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['pined_safari' => SORT_DESC, 'updated_at' => SORT_DESC]],
 
         ]);
 
