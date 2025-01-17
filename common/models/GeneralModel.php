@@ -1128,6 +1128,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $return;
     }
 
+    public static function sharesafarioptionswithdelete()
+    {
+        $return = [
+            '1' => 'Active',
+            '0' => 'Inactive',
+            '2' => 'Seat Full',
+            '-2' => 'Delete by User'
+        ];
+        return $return;
+    }
+
     public static function getsitepagessubcategory($category_name)
     {
         $return = [];

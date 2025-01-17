@@ -962,7 +962,7 @@ class DefaultController extends FrontendBaseController
             }
         }
 
-        $shared_safari_model->status = ShareSafari::STATUS_DELETE;
+        $shared_safari_model->status = ShareSafari::STATUS_DELETE_BY_USER;
         $shared_safari_model->delete_reason = 'Deleted by User';
         if ($shared_safari_model->save(false)) {
             Yii::$app->session->setFlash('success', 'Shared Safari Deleted Successfully!');
