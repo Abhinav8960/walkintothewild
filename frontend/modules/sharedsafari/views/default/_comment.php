@@ -22,7 +22,7 @@ use yii\helpers\Url;
                         <div class="comments-persons">
                             <div class="postcomment d-flex gap-2">
                                 <div class="avatar">
-                                    <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt=""></a>
+                                    <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->organizedbyimage  ? $share_safari->organizedbyimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
                                 </div>
                                 <div class="text_com">
                                     <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>">

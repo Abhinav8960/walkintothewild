@@ -253,7 +253,7 @@ $this->params['title'] = $this->title; ?>
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                                             </div>
                                             <div class="text-form">
-                                                <p class="mb-0"><span class="font_span"><?= number_format($share_safari->estimate_price_min) ?>- <?= number_format($share_safari->estimate_price_max) ?></span> Estimate Per Person Cost</p>
+                                                <p class="mb-0"><span class="font_span"><?= number_format($share_safari->estimate_price_min) ?> - <?= number_format($share_safari->estimate_price_max) ?></span> Estimate Per Person Cost</p>
                                             </div>
                                         </div>
                                     </div>
