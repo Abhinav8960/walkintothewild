@@ -103,7 +103,7 @@ use common\models\park\SafariPark;
     <div class="col-lg-6">
         <div class="selects w-100">
             <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
-            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'id' => 'status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['_prompt' => 'Status', 'id' => 'status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
     </div>
 

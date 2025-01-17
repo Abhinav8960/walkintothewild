@@ -186,7 +186,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                                             }
                                         } else {
-                                            echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-pjax' => '0']);
+                                            $update_text = 'Update';
+                                            if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
+                                                $update_text = 'Inactive';
+                                            } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
+                                                $update_text = 'Seats Full';
+                                            }
+                                            echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>' . $update_text, ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-pjax' => '0']);
                                         }
                                     }
                                 } else {
@@ -199,7 +205,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                                         }
                                     } else {
-                                        echo '<a class="updateSafariBtn " value="' . Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) . '" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;cursor:pointer;" data-pjax="0"><i class="fas fa-edit me-1"></i>Update</a>';
+
+                                        $update_text = 'Update';
+                                        if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
+                                            $update_text = 'Inactive';
+                                        } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
+                                            $update_text = 'Seats Full';
+                                        }
+                                        echo '<a class="updateSafariBtn " value="' . Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) . '" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;cursor:pointer;" data-pjax="0"><i class="fas fa-edit me-1"></i>' . $update_text . '</a>';
                                         // echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update', ['/sharedsafari/default/update', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['class'=>"updateSafariBtn",'style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
                                     }
                                 }
@@ -209,7 +222,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 echo '<a href="#">Closed Safari</a>';
                             } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
                                 echo '<a style="background-color:gray;" href="#">Seats Full</a>';
-                            }else{
+                            } else {
                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                             }
                         }

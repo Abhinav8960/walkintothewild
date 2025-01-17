@@ -206,7 +206,7 @@ $this->params['title'] = $this->title;
                                     <?php if (isset($model->shared_safari_model->id)) { ?>
                                         <div class="selects w-100">
                                             <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
-                                            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['_prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -215,13 +215,18 @@ $this->params['title'] = $this->title;
 
                             <div class="col-lg-12 margin-remove pt-3">
                                 <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
-                                <div class="creat-safri d-flex justify-content-end">
-                                    <span class="btn cancel_btn goto_screen" data-screen="form_screen2">Back</span>
+                                <div class="creat-safri <?= isset($model->shared_safari_model->id) ? 'd-flex justify-content-between' : '' ?>">
                                     <?php if (isset($model->shared_safari_model->id)) { ?>
-                                        <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
-                                    <?php } else {  ?>
-                                        <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                                        <?= Html::a('<i class="fa fa-trash"></i> Delete', ['delete', 'slug' => $model->shared_safari_model->slug], ['class' => 'btn cancel_btn', 'data-method' => 'POST', 'data-confirm' => 'Are you Sure you want to delete this Shared Safari?']) ?>
                                     <?php } ?>
+                                    <div class="d-flex justify-content-end">
+                                        <span class="btn cancel_btn goto_screen" data-screen="form_screen2">Back</span>
+                                        <?php if (isset($model->shared_safari_model->id)) { ?>
+                                            <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                                        <?php } else {  ?>
+                                            <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

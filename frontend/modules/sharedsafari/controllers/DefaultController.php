@@ -936,6 +936,41 @@ class DefaultController extends FrontendBaseController
         }
     }
 
+
+
+    /**
+     * Delete Safari
+     */
+    public function actionDelete($slug)
+    {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])->limit(1)->one();
+        if (!$shared_safari_model) {
+            return $this->redirect(['index']);
+        }
+        if ($shared_safari_model->type == 2) { // Fixed  Safai
+            if ($safarioperator = $shared_safari_model->safarioperator) {
+                if ($safarioperator->user_id <> Yii::$app->user->identity->id) {
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            if ($shared_safari_model->host_user_id != Yii::$app->user->identity->id) {
+                return $this->redirect(['index']);
+            }
+        }
+
+        $shared_safari_model->status = ShareSafari::STATUS_DELETE;
+        $shared_safari_model->delete_reason = 'Deleted by User';
+        if ($shared_safari_model->save(false)) {
+            Yii::$app->session->setFlash('success', 'Shared Safari Deleted Successfully!');
+            return $this->redirect(Yii::$app->request->referrer ? Yii::$app->request->referrer : ['index']);
+        }
+    }
+
+
     protected function findReplyModel($id)
     {
         if (($model = ShareSafariComment::findOne(['id' => $id, 'status' => 1])) !== null) {
