@@ -206,7 +206,7 @@ $this->params['title'] = $this->title;
                                     <?php if (isset($model->shared_safari_model->id)) { ?>
                                         <div class="selects w-100">
                                             <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
-                                            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['_prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                                         </div>
                                     <?php } ?>
                                 </div>
