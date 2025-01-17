@@ -19,9 +19,9 @@ class SafariOperator extends \common\models\operator\SafariOperator
         $fields = ['id', 'business_name', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
-            $fields[] = 'sharedsafari';
-            $fields[] = 'packages';
-            $fields[] = 'park';
+            // $fields[] = 'sharedsafari';
+            // $fields[] = 'packages';
+            $fields[] = 'urls';
         }
 
        
@@ -158,6 +158,16 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
         // return array_diff($fields, $hold_fields);
         // return $fields;
+    }
+
+    public function getUrls(){
+        return [
+            'parks'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-park',
+            'sharedsafari'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-shared-safari',
+            'packages'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-packages',
+            'reviews'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/reviewlist?sort_by=highest',
+
+        ];
     }
 
 
