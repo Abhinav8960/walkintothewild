@@ -180,7 +180,7 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['index']);
         }
         $model = new SharedSafariForm($shared_safari_model);
-        $model->status = ShareSafari::STATUS_ACTIVE;
+        // $model->status = ShareSafari::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/update?slug=' . $slug . '';
         $model->action_validate_url = '/sharedsafari/default/updatevalidate?id=' . $shared_safari_model->id . '';
 

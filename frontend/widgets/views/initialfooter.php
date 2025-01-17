@@ -67,7 +67,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
       </div>
       <div class="col-lg-0 col-md-8">
         <div class="copyright float-lg-end">
-          <p>COPYRIGHT © 2024 | WALK INTO THE WILD | ALL RIGHTS RESERVED</p>
+          <p>Developed by Mediarc Technologies Pvt. Ltd. | All Rights Reserved</p>
         </div>
       </div>
 
