@@ -124,12 +124,12 @@ if (Yii::$app->user->identity) {
                     ],
 
                     [
-                        'header' => 'Pinned',
+                        'header' => 'Pin',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
 
-                            return Html::a(($model->pined_safari == 1 ? 'UnPinned' : 'Pinned Safari'), ['pinsafari', 'id' => $model->id], [
+                            return Html::a(($model->pined_safari == 1 ? 'UnPin' : 'Pin Safari'), ['pinsafari', 'id' => $model->id], [
                                 'style' => 'color: white !important; text-decoration:none;',
                                 'title' => 'Pinned Safar',
                                 'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success'),
