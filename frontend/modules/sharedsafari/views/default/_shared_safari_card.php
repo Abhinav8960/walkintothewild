@@ -205,7 +205,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 }
                             }
                         } else {
-                            echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
+                            if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
+                                echo '<a href="#">Closed Safari</a>';
+                            } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
+                                echo '<a style="background-color:gray;" href="#">Seats Full</a>';
+                            }else{
+                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
+                            }
                         }
 
                         ?>
