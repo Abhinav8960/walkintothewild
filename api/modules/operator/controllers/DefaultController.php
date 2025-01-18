@@ -15,6 +15,7 @@ use api\models\operator\SafariOperatorSearch;
 use api\models\package\Package;
 use api\models\package\PackageSearch;
 use api\models\park\SafariPark;
+use api\models\park\SafariParkSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\UserFollow;
@@ -24,6 +25,7 @@ use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorReviewForm;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -304,7 +306,17 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['operatorpark' => $this->serializeData($operator->park)]);
+        $safariOperatorPark =  SafariOperatorPark::find()->where(['status'=>SafariOperatorPark::STATUS_ACTIVE,'safari_operator_id'=>$operator->id])->all();
+
+        $ids = array_column($safariOperatorPark, 'park_id');
+
+       
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id'=> $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+       return $this->querySender($dataProvider, $rootIndexName = "SafariPark");
     }
 
     public function actionOperatorPackages($slug)
