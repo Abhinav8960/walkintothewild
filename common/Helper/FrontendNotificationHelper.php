@@ -38,9 +38,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "New Comment Recivied From $user->name | " . $package->package_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -65,9 +65,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "$comment_user->name reply on your comment | " . $package->package_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -94,9 +94,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "New Request Quote Recivied From $user->name | " . $package->package_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -121,9 +121,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "New Follower Recivied From $user->name | " . $operator->business_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -149,9 +149,9 @@ class FrontendNotificationHelper
             $model->is_read = False;
             $user_name = $user ? $user->name : $operator_quote->full_name;
             $model->notification_text = "New Quote Recivied From $user_name | " . $operator->business_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -175,9 +175,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "New Rating($rating_model->rating) Recivied From $user->name | " . $operator->business_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -206,9 +206,9 @@ class FrontendNotificationHelper
             $model->is_read = False;
             $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
             $model->notification_text = "$user->name Joined Shared Safari " . $park_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -236,9 +236,9 @@ class FrontendNotificationHelper
             $model->is_read = False;
             $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
             $model->notification_text = $user->name . " Leaved Shared Safari " . $park_name;
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -268,9 +268,9 @@ class FrontendNotificationHelper
                     $model->is_read = False;
                     $park_name = $share_safari->park ? $share_safari->park->title : '';
                     $model->notification_text = "The details of a shared safari you have joined have been updated  | " . $park_name;
-                    if ($model->save(false)) {
-                        self::eventSendtoPusher($model);
-                    }
+                    // if ($model->save(false)) {
+                    //     self::eventSendtoPusher($model);
+                    // }
                 }
             }
         }
@@ -293,9 +293,9 @@ class FrontendNotificationHelper
                     $model->is_read = False;
                     $park_name = $share_safari->park ? $share_safari->park->title : '';
                     $model->notification_text = "The details of a Fixed Departure you have joined have been updated  | " . $park_name;
-                    if ($model->save(false)) {
-                        self::eventSendtoPusher($model);
-                    }
+                    // if ($model->save(false)) {
+                    //     self::eventSendtoPusher($model);
+                    // }
                 }
             }
         }
@@ -319,9 +319,9 @@ class FrontendNotificationHelper
             $model->is_read = False;
             $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
             $model->notification_text = "New Comment on Shared Safari.";
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -343,9 +343,9 @@ class FrontendNotificationHelper
             $model->is_read = False;
             $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
             $model->notification_text = "New Reply on Shared Safari.";
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
@@ -369,9 +369,9 @@ class FrontendNotificationHelper
                         $model->is_read = False;
                         $park_name = $share_safari->park ? $share_safari->park->title : '';
                         $model->notification_text = "New Comment on Shared Safari.";
-                        if ($model->save(false)) {
-                            self::eventSendtoPusher($model);
-                        }
+                        // if ($model->save(false)) {
+                        //     self::eventSendtoPusher($model);
+                        // }
                     }
                 }
             }
@@ -397,9 +397,9 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = $follow_by_user->name . ' started following you!';
-            if ($model->save(false)) {
-                self::eventSendtoPusher($model);
-            }
+            // if ($model->save(false)) {
+            //     self::eventSendtoPusher($model);
+            // }
         }
     }
 
