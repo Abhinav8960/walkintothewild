@@ -447,7 +447,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         return [
             'intrested_users' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/intrested-user',
-            'comments' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/intrested-user'
+            'comments' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/comment-view'
         ];
     }
 }
