@@ -477,13 +477,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-xl-3 col-lg-3 mb-lg-5 pb-lg-4">
                 <div class="request_quote mb-4">
                     <button class="intested_btn  interestBtn modal_intrest" style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
-                        Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
+                        Interested - <?= $total_intersted = $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
                     <div class="interst_wrapper bg-white ">
                         <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
                         <div class="users_profile d-flex gap-2 align-items-center flex-wrap">
-                            <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->all()) {
+                            <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->limit(50)->all()) {
                                 foreach ($intrested_users as $intrested_user) {
                             ?>
                                     <?php if ($user_intersted = $intrested_user->user) { ?>
@@ -495,6 +495,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <?php } ?>
                             <?php }
                             } ?>
+
+                            <?php if ($total_intersted > 50) { ?>
+                                <br>
+                                <span class="modal_intrest" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
+                                    + <?= $total_intersted - 50 ?> interested users
+                                </span>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

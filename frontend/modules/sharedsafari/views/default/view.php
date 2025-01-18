@@ -339,13 +339,13 @@ $this->params['title'] = $this->title; ?>
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'login_safarioperator' => $login_safarioperator]) ?>
             <div class="col-lg-3  mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
-                    Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
+                    Interested - <?= $total_intersted = $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
                 <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
                     <div class="users_profile d-flex gap-2 align-items-center flex-wrap">
-                        <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->all()) {
+                        <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->limit(50)->all()) {
                             foreach ($intrested_users as $intrested_user) {
                         ?>
                                 <?php if ($user_intersted = $intrested_user->user) { ?>
@@ -357,6 +357,14 @@ $this->params['title'] = $this->title; ?>
                                 <?php } ?>
                         <?php }
                         } ?>
+
+                        <?php if ($total_intersted > 50) { ?>
+                            <br>
+                            <span class="intested_btn" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
+                                + <?= $total_intersted - 50 ?> interested users
+                            </span>
+                        <?php } ?>
+
                     </div>
                 </div>
 

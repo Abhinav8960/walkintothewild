@@ -738,10 +738,15 @@ class DefaultController extends FrontendBaseController
 
     public function actionInterestview($share_safari_id)
     {
-        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
+
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => ShareSafariIntrested::STATUS_ACTIVE]),
+            'pagination' => ['pageSize' => 50]
+        ]);
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('interest_view', [
-                'interest_model' => $interest_model
+                'interest_model' => $dataProvider->models,
+                'dataProvider' => $dataProvider
             ]);
         }
     }
