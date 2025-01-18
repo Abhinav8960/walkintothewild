@@ -27,6 +27,7 @@ use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -304,15 +305,23 @@ class DefaultController extends RestController
 
         $packageSafariPark = PackageSafariPark::find()
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
-            ->one();
+            ->all();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
         }
+
+
         $ids = array_column($packageSafariPark, 'park_id');
-        $searchModel = new SafariParkSearch();
-        $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
-        $searchModel->id = $ids;
-        return $this->dataProviderSender($searchModel, "SafariPark");
+
+       
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id'=> $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+       return $this->querySender($dataProvider, $rootIndexName = "SafariPark");
+
+
+       
     }
 
     public function actionPackageDays($slug)

@@ -369,8 +369,8 @@ class SafariPark extends \common\models\park\SafariPark
         return [
             'operators' =>  Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-operator',
             'sharedsafari' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-shared-safari',
-            'package' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package',
-            'review' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/reviewlist?sort_by=highest',
+            'packages' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package',
+            'reviews' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/reviewlist?sort_by=highest',
         ];
     }
 }

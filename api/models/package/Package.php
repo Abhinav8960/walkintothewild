@@ -30,7 +30,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_slug', 'singlepark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'urls'];
+        $fields = ['id', 'packagename', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'urls'];
 
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -50,8 +50,8 @@ class Package extends \common\models\package\Package
             $fields[] = 'mealslabel';
             
             // $fields[] = 'packagepark';
-            // $fields[] = 'packagedays';
-            // $fields[] = 'faqs';
+            $fields[] = 'packagedays';
+            $fields[] = 'faqs';
         }
         return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
@@ -314,10 +314,17 @@ class Package extends \common\models\package\Package
     /**
      * Parks List
      */
+   
+
     public function getSinglepark()
     {
         return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
     }
+
+    public function getPrimaryPark(){
+       return $this->singlepark->park->title;
+    }
+
 
     /**
      * Parks List
@@ -449,9 +456,9 @@ class Package extends \common\models\package\Package
     {
         return [
             // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
-            'packagepark' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
-            'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
-            'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
+            'packageparks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
+            // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
+            // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
             'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
         ];
     }
