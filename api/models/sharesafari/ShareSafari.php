@@ -49,6 +49,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
+            $fields[] = 'commentsCount';
+            
             // $fields[] = 'organizedId';
             // $fields[] = 'intrestedUser';
 
@@ -212,6 +214,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getComments()
     {
         return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getCommentsCount()
+    {
+        return $this-> getComments()->count();
     }
 
     /**
