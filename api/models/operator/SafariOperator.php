@@ -20,7 +20,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             // $fields[] = 'sharedsafari';
-            // $fields[] = 'packages';
+            $fields[] = 'witwreviewcount';
             $fields[] = 'urls';
         }
 

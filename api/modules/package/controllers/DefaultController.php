@@ -10,6 +10,9 @@ use api\controllers\RestController;
 use api\models\operator\SafariOperator;
 use api\models\package\Package;
 use api\models\package\PackageComment;
+use api\models\package\PackageCommentSearch;
+use api\models\package\PackageFaq;
+use api\models\package\PackageFaqSearch;
 use api\models\package\PackageSafariPark;
 use api\models\package\PackageSearch;
 use api\models\park\SafariPark;
@@ -19,6 +22,7 @@ use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
+use common\models\package\PackageDaySearch;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
@@ -279,6 +283,13 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
+
+        $searchModel = new PackageCommentSearch();
+        $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+        return $this->dataProviderSender($searchModel, "PackageComment");
+
+
         $comment_list = PackageComment::find()->where(['package_id' => $package->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
         return  Yii::$app->api->sendResponse($data = ['comments' => $comment_list]);
     }
@@ -311,7 +322,12 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['days' => $this->serializeData($package->packagedays)]);
+
+        $searchModel = new PackageDaySearch();
+        $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+        return $this->dataProviderSender($searchModel, "PackageDay");
+
     }
 
     public function actionPackageFaqs($slug)
@@ -320,6 +336,11 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($package->faqs)]);
+
+        $searchModel = new PackageFaqSearch();
+        $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+        return $this->dataProviderSender($searchModel, "PackageFaq");
+
     }
 }

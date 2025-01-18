@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\package;
+namespace api\models\package;
 
-use common\models\package\Package;
-use common\models\package\PackageComment;
+use api\models\package\Package;
+use api\models\package\PackageComment;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
