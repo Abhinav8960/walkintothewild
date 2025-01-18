@@ -59,6 +59,20 @@ use yii\helpers\Url;
                             },
                         ]
                     ],
+                    [
+                        'header' => 'Delete',
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
+                        'value' => function ($model) {
+                            return    Html::a('<i class="fa fa-trash"></i>', ['deletecomment', 'id' => $model->id], [
+                                'style' => 'color: white !important; text-decoration:none;',
+                                'title' => 'Delete Comment',
+                                'class' => 'btn btn-danger',
+                                'data-method' => 'POST',
+                                'data-confirm' => 'Are you Sure you want to delete this Comment?'
+                            ]);
+                        },
+                        'format' => 'raw'
+                    ]
                 ]
             ]); ?>
         </div>

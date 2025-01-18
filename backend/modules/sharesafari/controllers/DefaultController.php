@@ -441,4 +441,20 @@ class DefaultController extends Controller
 
         return $this->redirect('/sharesafari/default/index');
     }
+
+
+    /**
+     * Delete Comment of Safari
+     */
+    public function actionDeletecomment($id)
+    {
+        $model = ShareSafariComment::find()->where(['id' => $id])->limit(1)->one();
+        if ($model) {
+            $model->status = -1;
+            $model->is_deleted = 1;
+            $model->save(false);
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }
