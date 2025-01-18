@@ -116,7 +116,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $data = $count - $avatar_count;
                         if ($count > 3) { ?>
                             <div class="roundes_countuser">
-                                +<?= $data ?>
+                                +<?= min($data, 99) ?>
                             </div>
                         <?php }
                     } else { ?>
