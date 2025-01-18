@@ -358,14 +358,13 @@ $this->params['title'] = $this->title; ?>
                         <?php }
                         } ?>
 
-                        <?php if ($total_intersted > 50) { ?>
-                            <br>
-                            <span class="intested_btn" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
-                                + <?= $total_intersted - 50 ?> interested users
-                            </span>
-                        <?php } ?>
-
                     </div>
+                    <?php if ($total_intersted > 50) { ?>
+                        <br>
+                        <span class="intested_btn" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
+                            + <?= $total_intersted - 50 ?> interested users
+                        </span>
+                    <?php } ?>
                 </div>
 
                 <!-- <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important">

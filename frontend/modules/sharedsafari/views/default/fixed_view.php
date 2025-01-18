@@ -496,13 +496,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             <?php }
                             } ?>
 
-                            <?php if ($total_intersted > 50) { ?>
-                                <br>
-                                <span class="modal_intrest" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
-                                    + <?= $total_intersted - 50 ?> interested users
-                                </span>
-                            <?php } ?>
                         </div>
+                        <?php if ($total_intersted > 50) { ?>
+                            <br>
+                            <span class="modal_intrest" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
+                                + <?= $total_intersted - 50 ?> interested users
+                            </span>
+                        <?php } ?>
                     </div>
                 </div>
 
