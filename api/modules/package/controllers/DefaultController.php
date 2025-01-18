@@ -301,19 +301,18 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
-       
+
         $packageSafariPark = PackageSafariPark::find()
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
             ->one();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
         }
-        $ids = array_column($packageSafariPark,'park_id');
+        $ids = array_column($packageSafariPark, 'park_id');
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
         $searchModel->id = $ids;
         return $this->dataProviderSender($searchModel, "SafariPark");
-
     }
 
     public function actionPackageDays($slug)
@@ -327,7 +326,6 @@ class DefaultController extends RestController
         $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "PackageDay");
-
     }
 
     public function actionPackageFaqs($slug)
@@ -340,7 +338,51 @@ class DefaultController extends RestController
         $searchModel = new PackageFaqSearch();
         $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
-        return $this->dataProviderSender($searchModel, "PackageFaq");
 
+
+        $data = [];
+        $searchModel->load(\Yii::$app->request->queryParams);
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+
+
+
+        $dataProvider->pagination = false;
+
+        // $data['PackageFaq']['summary']['total'] = $dataProvider->getTotalCount();
+        // $data['PackageFaq']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+        // $data['PackageFaq']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+        // $data['PackageFaq']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+
+        $data['PackageFaq']['summary']['query_params'] = $this->query_params;
+
+        if($dataProvider->getTotalCount() > 0){
+
+            $data['PackageFaq']['data'] = $this->serializeData($dataProvider->getModels());
+        }else{
+            $data['PackageFaq']['data'] = $this->serializeData($this->prepareDefaultQuestionAnswer($package));
+
+        }
+
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    private function prepareDefaultQuestionAnswer($package){
+      return  $arr = [
+            [
+                'question'=>"Are meals included in the Package?",
+                'answer'=>$package->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question'=>"Does the Package include transport to and from the resort?",
+                'answer'=>$package->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question'=>"Are accommodation arrangements included in the Package?",
+                'answer'=>$package->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
     }
 }
