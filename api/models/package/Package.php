@@ -456,7 +456,7 @@ class Package extends \common\models\package\Package
     {
         return [
             // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
-            'packageparks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
+            'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
             // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
             'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
