@@ -268,7 +268,7 @@ class DefaultController extends FrontendBaseController
             /**
              * To Creator
              */
-            if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
+            /*if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                 $user = Yii::$app->user->identity;
                 $username = $user->name;
                 if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
@@ -290,13 +290,13 @@ class DefaultController extends FrontendBaseController
                 }
 
                 FrontendNotificationHelper::sharedSafariComment($share_safari);
-            }
+            }*/
 
 
             /**
              *  To member 
              * */
-            $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+            /*$intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
             if ($intrested_users) {
                 foreach ($intrested_users as $intrest) {
                     if ($intrest->user_id != Yii::$app->user->identity->id) {
@@ -313,7 +313,7 @@ class DefaultController extends FrontendBaseController
                         }
                     }
                 }
-            }
+            }*/
 
 
             FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
