@@ -1,43 +1,55 @@
 <?php
 
-use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\Pjax;
 
-
-$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => false,
+]);
+?>
+<div class="users_profile gap-3 align-items-center">
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Join At</th>
-            </tr>
-        </thead>
-        <?php if ($interest_model) {
-            $srn = 1;
-            foreach ($interest_model as $model) {
-        ?>
-                <tbody>
-                    <tr>
-                        <th scope="row"><?= $srn; ?></th>
-                        <td>
-
-                            <div class="profileavtar">
-                                <img src="<?= $model->user && $model->user->profileimage <> '' ? $model->user->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $model->user ? $model->user->name : '' ?>">
-                                <?= $model->user->name ?>
-                            </div>
-
-                        </td>
-                        <td><?= date('Y-m-d', $model->intrested_at) ?></td>
-                </tbody>
-        <?php $srn++;
-            }
-        } ?>
-    </table>
-
+    <?= \yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "\n{items}\n{pager}\n{summary}",
+        'id' => 'grid-data',
+        'summary' => "Showing <b>{begin}</b> - <b>{end}</b> of <b>{totalCount}</b> intersted users",
+        'tableOptions' => ['class' => 'table table-striped'],
+        'columns' => [
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'contentOptions' => ['style' => 'width: 5%'],
+                'header' => "S.No"
+            ],
+            [
+                'label' => 'User',
+                'contentOptions' => ['style' => 'width: 20%;'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($user = $model->user) {
+                        return Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name;
+                    }
+                    return $model->user_id;
+                }
+            ],
+            [
+                'header' => 'Join At',
+                'value' => function ($model) {
+                    return date('Y-m-d', $model->intrested_at);
+                },
+                'contentOptions' => ['style' => 'width: 10%'],
+            ]
+        ],
+    ]);
+    ?>
 
 </div>
+<?php Pjax::end(); ?>
