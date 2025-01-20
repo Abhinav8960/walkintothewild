@@ -38,7 +38,7 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK])) {
-            $fields = ['title', 'slug'];
+            $fields = ['id','title', 'slug'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
