@@ -406,11 +406,17 @@ class DefaultController extends Controller
 
     public function actionIntrested($id)
     {
-        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 1])->all();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => ShareSafariIntrested::STATUS_ACTIVE]),
+            'pagination' => ['pageSize' => 50]
+        ]);
+
         return $this->renderAjax(
             '_interested_view',
             [
-                'interest_model' => $interest_model,
+
+                'interest_model' => $dataProvider->models,
+                'dataProvider' => $dataProvider
             ]
         );
     }
@@ -440,5 +446,21 @@ class DefaultController extends Controller
         }
 
         return $this->redirect('/sharesafari/default/index');
+    }
+
+
+    /**
+     * Delete Comment of Safari
+     */
+    public function actionDeletecomment($id)
+    {
+        $model = ShareSafariComment::find()->where(['id' => $id])->limit(1)->one();
+        if ($model) {
+            $model->status = -1;
+            $model->is_deleted = 1;
+            $model->save(false);
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

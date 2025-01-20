@@ -18,7 +18,7 @@ class UserSearch extends User
         return [
             [['created_at', 'updated_at', 'status'], 'integer'],
             [['username', 'email', 'password_hash'], 'string', 'max' => 255],
-            [['name', 'role_id'], 'string', 'max' => 3],
+            [['name', 'role_id'], 'safe'],
             [['auth_key'], 'string', 'max' => 32],
             [['name'], 'string', 'max' => 30],
             [['username'], 'unique'],

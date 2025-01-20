@@ -116,7 +116,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getStatuslabel()
     {
 
-        $options = [ShareSafari::STATUS_ACTIVE => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full'];
+        $options = [ShareSafari::STATUS_ACTIVE => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full', ShareSafari::STATUS_DELETE_BY_USER => 'Delete by User'];
         return isset($options[$this->status]) ? $options[$this->status] : '';
     }
 

@@ -498,4 +498,35 @@ class User extends ActiveRecord implements IdentityInterface
             return $this->name;
         }
     }
+
+
+    public function getRolelabels()
+    {
+        $roles = [];
+        if ($this->is_adminstrator == 1) {
+            $roles[] = "Administrator";
+        }
+        if ($this->is_admin == 1) {
+            $roles[] = "Admin";
+        }
+        if ($this->is_safari_operator == 1) {
+            $roles[] = "Safari Operator";
+        }
+        if ($this->is_birding_operator == 1) {
+            $roles[] = "Birding Operator";
+        }
+        if ($this->is_cms_manager == 1) {
+            $roles[] = "CMS Manager";
+        }
+        if ($this->is_resort_manager == 1) {
+            $roles[] = "Resort Manager";
+        }
+        if ($this->is_report_manager == 1) {
+            $roles[] = "Report Manager";
+        }
+        if ($this->is_community_manager == 1) {
+            $roles[] = "Community Manager";
+        }
+        return implode(', ', $roles);
+    }
 }

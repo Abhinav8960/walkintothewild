@@ -75,7 +75,7 @@ $this->params['title'] = $this->title; ?>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
-                                            <?php if ($share_safari->sharedSafariHistory) { ?>
+                                            <?php if (false && $share_safari->sharedSafariHistory) { ?>
                                                 <span class="history">
                                                     <button value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
                                                 </span>
@@ -253,7 +253,17 @@ $this->params['title'] = $this->title; ?>
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                                             </div>
                                             <div class="text-form">
-                                                <p class="mb-0"><span class="font_span"><?= number_format($share_safari->estimate_price_min) ?>- <?= number_format($share_safari->estimate_price_max) ?></span> Estimate Per Person Cost</p>
+                                                <p class="mb-0">
+                                                    <?php if ($share_safari->estimate_price_min == 0 && $share_safari->estimate_price_max == 0) { ?>
+                                                        <span class="font_span">Free</span>
+                                                    <?php } else if ($share_safari->estimate_price_min == $share_safari->estimate_price_max) { ?>
+                                                        <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?></span>
+                                                        Estimate Per Person Cost
+                                                    <?php } else { ?>
+                                                        <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?> - <?= number_format($share_safari->estimate_price_max) ?></span>
+                                                        Estimate Per Person Cost
+                                                    <?php } ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -339,13 +349,13 @@ $this->params['title'] = $this->title; ?>
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'login_safarioperator' => $login_safarioperator]) ?>
             <div class="col-lg-3  mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
-                    Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
+                    Interested - <?= $total_intersted = $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
                 <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
                     <div class="users_profile d-flex gap-2 align-items-center flex-wrap">
-                        <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->all()) {
+                        <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->limit(50)->all()) {
                             foreach ($intrested_users as $intrested_user) {
                         ?>
                                 <?php if ($user_intersted = $intrested_user->user) { ?>
@@ -357,7 +367,14 @@ $this->params['title'] = $this->title; ?>
                                 <?php } ?>
                         <?php }
                         } ?>
+
                     </div>
+                    <?php if ($total_intersted > 50) { ?>
+                        <br>
+                        <span class="intested_btn" style="background-color: #fff; color: black; padding: 0px; " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>">
+                            + <?= $total_intersted - 50 ?> interested users
+                        </span>
+                    <?php } ?>
                 </div>
 
                 <!-- <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important">

@@ -268,7 +268,7 @@ class DefaultController extends FrontendBaseController
             /**
              * To Creator
              */
-            if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
+            /*if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                 $user = Yii::$app->user->identity;
                 $username = $user->name;
                 if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
@@ -290,13 +290,13 @@ class DefaultController extends FrontendBaseController
                 }
 
                 FrontendNotificationHelper::sharedSafariComment($share_safari);
-            }
+            }*/
 
 
             /**
              *  To member 
              * */
-            $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+            /*$intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
             if ($intrested_users) {
                 foreach ($intrested_users as $intrest) {
                     if ($intrest->user_id != Yii::$app->user->identity->id) {
@@ -313,7 +313,7 @@ class DefaultController extends FrontendBaseController
                         }
                     }
                 }
-            }
+            }*/
 
 
             FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
@@ -738,10 +738,15 @@ class DefaultController extends FrontendBaseController
 
     public function actionInterestview($share_safari_id)
     {
-        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
+
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => ShareSafariIntrested::STATUS_ACTIVE]),
+            'pagination' => ['pageSize' => 50]
+        ]);
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('interest_view', [
-                'interest_model' => $interest_model
+                'interest_model' => $dataProvider->models,
+                'dataProvider' => $dataProvider
             ]);
         }
     }
