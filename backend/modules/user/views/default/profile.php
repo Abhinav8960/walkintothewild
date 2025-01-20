@@ -28,7 +28,6 @@ $this->params['title'] = $this->title;
                     <div class="col-md-4">
                         <div class="d-flex justify-content-between">
                             <?= Html::a('<i class="fa fa-eye text-white"></i> View Complete Profile', Yii::$app->params['frontend_url'] . 'profile/user/' . $user->user_handle, ['target' => "_blank", 'class' => 'btn btn-success', 'title' => 'View User Profile', 'data-bs-toggle' => "tooltip"]) ?>
-                            <?= Html::a('<i class="fa fa-edit text-white"></i> Update User', ['/user/default/update?user_id=' . $user->id], ['class' => 'btn btn-info', 'title' => 'Update User', 'data-bs-toggle' => "tooltip"]) ?>
                         </div>
                     </div>
                     <div class="col-md-12 mt-5">
