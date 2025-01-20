@@ -198,7 +198,7 @@ class DefaultController extends RestController
         $ratingsearchModel->status = 1;
 
         // $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
-        return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "Review");
+        return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "reviews");
     }
 
 
@@ -294,7 +294,7 @@ class DefaultController extends RestController
         $searchModel->host_user_id = $operator->id;
         $searchModel->type = ShareSafari::TYPE_FIXED_DEPARTURE;
         $searchModel->status = ShareSafari::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "operatorsharedsafari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
         // return Yii::$app->api->sendResponse($data = ['operatorsharedsafari' => $this->serializeData($operator->sharedsafari)]);
     }
 
@@ -316,7 +316,7 @@ class DefaultController extends RestController
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
-       return $this->querySender($dataProvider, $rootIndexName = "SafariPark");
+       return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionOperatorPackages($slug)
@@ -331,7 +331,7 @@ class DefaultController extends RestController
         $searchModel = new PackageSearch();
         $searchModel->owned_by_id = $operator->id;
         $searchModel->status = Package::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, "operatorpackage");
+        return $this->dataProviderSender($searchModel, "packages");
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }
 }

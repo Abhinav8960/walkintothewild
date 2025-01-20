@@ -288,11 +288,10 @@ class DefaultController extends RestController
         $searchModel = new PackageCommentSearch();
         $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
-        return $this->dataProviderSender($searchModel, "PackageComment");
+        return $this->dataProviderSender($searchModel, "comments");
 
 
-        $comment_list = PackageComment::find()->where(['package_id' => $package->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
-        return  Yii::$app->api->sendResponse($data = ['comments' => $comment_list]);
+       
     }
 
     public function actionPackagePark($slug)
@@ -318,7 +317,7 @@ class DefaultController extends RestController
             'query' => SafariPark::find()->where(['id'=> $ids]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "SafariPark");
+       return $this->querySender($dataProvider, $rootIndexName = "parks");
 
 
        
