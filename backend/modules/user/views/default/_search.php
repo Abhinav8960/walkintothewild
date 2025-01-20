@@ -20,7 +20,9 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-
+    <div class="col-md-2">
+        <?= $form->field($model, 'name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'username')->textInput(['placeholder' => 'Search by Login ID'])->label(false) ?>
     </div>

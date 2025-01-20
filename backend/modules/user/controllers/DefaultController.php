@@ -2,14 +2,15 @@
 
 namespace backend\modules\user\controllers;
 
-use common\models\MailLog;
 use Yii;
+use common\models\Auth;
 use common\models\User;
 use yii\web\Controller;
+use common\models\MailLog;
+use common\models\UserFollow;
 use common\models\UserSearch;
 use common\models\UserUpdateForm;
 use common\models\UserRegistrationForm;
-use common\models\Auth;
 
 /**
  * Default controller for the `user` module
@@ -152,6 +153,30 @@ class DefaultController extends Controller
             return $this->redirect('/');
         }
         throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
+    }
+
+
+    /**
+     * View Profile of User
+     */
+    public function  actionProfile($user_id)
+    {
+        $user = $this->findModel($user_id);
+
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => UserFollow::find()->joinWith('user')->where(['follow_user_id' => $user->id])->andwhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]),
+            'pagination' => ['pageSize' => 30]
+        ]);
+
+        $following_dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => UserFollow::find()->joinWith('user')->where(['user_id' => $user->id])->andwhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]),
+            'pagination' => ['pageSize' => 30]
+        ]);
+        return $this->render('profile', [
+            'user' => $user,
+            'dataProvider' => $dataProvider,
+            'following_dataProvider' => $following_dataProvider
+        ]);
     }
 
 

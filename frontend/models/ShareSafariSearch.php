@@ -23,7 +23,7 @@ class ShareSafariSearch extends ShareSafari
     public $title;
     public $no_of_safari_min = 1;
     public $no_of_safari_max = 10;
-    public $estimate_price_min = 500;
+    public $estimate_price_min = 0;
     public $estimate_price_max = 50000;
     public $share_safari_title;
 
