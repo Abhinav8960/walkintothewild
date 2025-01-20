@@ -263,12 +263,20 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/sharedsafari/default/validate-comment';
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $cacheKey = "safari-comment-key-" . $share_safari->id . "-" . $share_safari->park->id . "-" . Yii::$app->user->id . "-" . $model->comment;
+            if (Yii::$app->cache->get($cacheKey)) {
+                Yii::$app->session->setFlash('success', 'Comment successfully submitted');
+                return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
+            }
+            if ($model->comment($share_safari)) {
+                Yii::$app->cache->set($cacheKey, true, Yii::$app->params['comment_threshold']);
 
-            /**
-             * To Creator
-             */
-            /*if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
+
+                /**
+                 * To Creator
+                 */
+                /*if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                 $user = Yii::$app->user->identity;
                 $username = $user->name;
                 if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
@@ -293,10 +301,10 @@ class DefaultController extends FrontendBaseController
             }*/
 
 
-            /**
-             *  To member 
-             * */
-            /*$intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+                /**
+                 *  To member 
+                 * */
+                /*$intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
             if ($intrested_users) {
                 foreach ($intrested_users as $intrest) {
                     if ($intrest->user_id != Yii::$app->user->identity->id) {
@@ -316,10 +324,11 @@ class DefaultController extends FrontendBaseController
             }*/
 
 
-            FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
-            Yii::$app->session->setFlash('success', 'Comment successfully submitted');
+                FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
+                Yii::$app->session->setFlash('success', 'Comment successfully submitted');
 
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
+                return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
+            }
         }
 
         if ($share_safari->type == 1) {
@@ -357,7 +366,16 @@ class DefaultController extends FrontendBaseController
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
         if ($replymodel->load(Yii::$app->request->post())) {
             if ($replymodel->validate()) {
+
+                $cacheKey = "safari-comment-reply-key-" . $share_safari->id . "-" . $share_safari->park->id . "-" . Yii::$app->user->id . "-" . $replymodel->parent_id . "-" . $replymodel->comment;
+                if (Yii::$app->cache->get($cacheKey)) {
+                    Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+                    return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                }
+
+
                 if ($replymodel->reply($share_safari)) {
+                    Yii::$app->cache->set($cacheKey, true, Yii::$app->params['comment_threshold']);
 
                     if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                         $user = Yii::$app->user->identity;

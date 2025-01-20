@@ -38,7 +38,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->name;
+                            return Html::a(Html::img($model->avatar != '' ? $model->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->name, ['profile', 'user_id' => $model->id], ['style' => 'color:black !important;']);
                         }
                     ],
                     [
@@ -46,32 +46,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $roles = [];
-                            if ($model->is_adminstrator == 1) {
-                                $roles[] = "Administrator";
-                            }
-                            if ($model->is_admin == 1) {
-                                $roles[] = "Admin";
-                            }
-                            if ($model->is_safari_operator == 1) {
-                                $roles[] = "Safari Operator";
-                            }
-                            if ($model->is_birding_operator == 1) {
-                                $roles[] = "Birding Operator";
-                            }
-                            if ($model->is_cms_manager == 1) {
-                                $roles[] = "CMS Manager";
-                            }
-                            if ($model->is_resort_manager == 1) {
-                                $roles[] = "Resort Manager";
-                            }
-                            if ($model->is_report_manager == 1) {
-                                $roles[] = "Report Manager";
-                            }
-                            if ($model->is_community_manager == 1) {
-                                $roles[] = "Community Manager";
-                            }
-                            return implode(', ', $roles);
+                            return $model->rolelabels;
                         }
                     ],
                     [

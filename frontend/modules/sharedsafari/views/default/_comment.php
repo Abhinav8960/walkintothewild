@@ -53,8 +53,7 @@ use yii\helpers\Url;
                             <div class="objec-flgs">
 
                                 <?php if ($comments->user && Yii::$app->user->identity) {
-                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                    if ($share_safari_intrested  && $share_safari_intrested->user_id != $comments->user_id) { ?>
+                                    if (Yii::$app->user->identity->id != $comments->user_id) { ?>
                                         <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
                                 <?php }
                                 }
@@ -74,7 +73,7 @@ use yii\helpers\Url;
                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
                                             <span class="comment-author"><?= isset($comments->user) ? $comments->user->getName() : '' ?></span>
                                         </a>
-                                        <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                        <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
                                         <!-- <?php if (Yii::$app->user->identity) {
                                                     if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
                                                 <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
@@ -125,8 +124,7 @@ use yii\helpers\Url;
                                                         </div>
 
                                                         <?php if ($reply->user && Yii::$app->user->identity) {
-                                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                                            if ($share_safari_intrested && $share_safari_intrested->user_id != $reply->user_id) {
+                                                            if (Yii::$app->user->identity->id != $reply->user_id) {
                                                         ?>
                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
                                                         <?php }

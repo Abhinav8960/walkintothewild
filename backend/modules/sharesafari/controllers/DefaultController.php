@@ -406,11 +406,17 @@ class DefaultController extends Controller
 
     public function actionIntrested($id)
     {
-        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 1])->all();
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => ShareSafariIntrested::STATUS_ACTIVE]),
+            'pagination' => ['pageSize' => 50]
+        ]);
+
         return $this->renderAjax(
             '_interested_view',
             [
-                'interest_model' => $interest_model,
+
+                'interest_model' => $dataProvider->models,
+                'dataProvider' => $dataProvider
             ]
         );
     }

@@ -105,7 +105,17 @@ $this->params['title'] = $this->title;
                                     <img src="<?= $this->params['baseurl'] ?>/img/rupee_3104891.png" alt="">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= $share_safari->estimate_price_min ?>- <?= $share_safari->estimate_price_max ?> Estimate Per Person Cost</p>
+                                    <p class="mb-0">
+                                        <?php if ($share_safari->estimate_price_min == 0 && $share_safari->estimate_price_max == 0) { ?>
+                                            <span class="font_span">Free</span>
+                                        <?php } else if ($share_safari->estimate_price_min == $share_safari->estimate_price_max) { ?>
+                                            <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?></span>
+                                            Estimate Per Person Cost
+                                        <?php } else { ?>
+                                            <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?> - <?= number_format($share_safari->estimate_price_max) ?></span>
+                                            Estimate Per Person Cost
+                                        <?php } ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
