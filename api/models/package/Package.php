@@ -30,7 +30,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator','commentCount', 'urls'];
+        $fields = ['id', 'packagename', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls'];
 
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -48,7 +48,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'pickanddrop';
             $fields[] = 'meals';
             $fields[] = 'mealslabel';
-            
+
             // $fields[] = 'packagepark';
             $fields[] = 'packagedays';
             $fields[] = 'faqs';
@@ -319,15 +319,16 @@ class Package extends \common\models\package\Package
     /**
      * Parks List
      */
-   
+
 
     public function getSinglepark()
     {
         return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
     }
 
-    public function getPrimaryPark(){
-       return $this->singlepark->park->title;
+    public function getPrimaryPark()
+    {
+        return $this->singlepark->park->title;
     }
 
 
@@ -431,10 +432,33 @@ class Package extends \common\models\package\Package
         return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
     }
 
-    public function getFaqs()
+    public function getPackageFaqs()
     {
         return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
     }
+
+    public function getFaqs()
+    {
+        if ($this->getPackageFaqs()->count() > 0) {
+            return $this->packageFaqs;
+        }
+        return   [
+            [
+                'question' => "Are meals included in the Package?",
+                'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question' => "Does the Package include transport to and from the resort?",
+                'answer' => $this->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question' => "Are accommodation arrangements included in the Package?",
+                'answer' => $this->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
+    }
+
 
     public function getActiveUserWishlist()
     {
