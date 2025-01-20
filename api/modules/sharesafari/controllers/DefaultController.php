@@ -97,7 +97,7 @@ class DefaultController extends SafariController
     public function actionIndex()
     {
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Share Safari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharesafari");
     }
 
 
