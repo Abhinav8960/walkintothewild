@@ -304,7 +304,7 @@ class DefaultController extends FrontendBaseController
                 /**
                  *  To member 
                  * */
-                /*$intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+                $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
             if ($intrested_users) {
                 foreach ($intrested_users as $intrest) {
                     if ($intrest->user_id != Yii::$app->user->identity->id) {
@@ -321,7 +321,7 @@ class DefaultController extends FrontendBaseController
                         }
                     }
                 }
-            }*/
+            }
 
 
                 FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari, Yii::$app->user->identity);
