@@ -34,7 +34,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'lunch_included';
             $fields[] = 'dinner_included';
             $fields[] = 'meal_not_included';
-            $fields[] = 'sharesafariFaqs';
+            $fields[] = 'faqs';
             
             // $fields[] = 'share_safari_inclusion';
             // $fields[] = 'share_safari_exclusion';
@@ -370,6 +370,27 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getSharesafariFaqs()
     {
         return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
+    }
+
+    public function getFaqs(){
+        if($this->getSharesafariFaqs()->count() > 0){
+            return $this->sharesafariFaqs;
+        }
+         return   [
+            [
+                'question' => "Are meals included in the Fixed Departure?",
+                'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question' => "Does the Fixed Departure include transport to and from the resort?",
+                'answer' => $this->getIncludeds()->where(['include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->exists() == true ? ">Yes: Transport to and from the resort is included in the Fixed Departure." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question' => "Are accommodation arrangements included in the Fixed Departure?",
+                'answer' => $this->getIncludeds()->where(['include_id' => 1, 'selection' => 1, 'status' => 1])->limit(1)->exists() == true ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
     }
 
 
