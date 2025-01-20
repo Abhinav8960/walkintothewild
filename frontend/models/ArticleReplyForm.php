@@ -29,7 +29,7 @@ class ArticleReplyForm extends Model
             [['comment', 'parent_id'], 'required'],
             ['comment', 'validateContent'],
             ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
+                if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],
