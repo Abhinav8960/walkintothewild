@@ -17,10 +17,21 @@ use yii\helpers\Url;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'label' => 'User',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($user = $model->user) {
+                                return Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name;
+                            }
+                            return $model->user_id;
+                        }
+                    ],
                     'comment',
                     [
                         'label' => 'Replies',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->replies) ? count($model->replies) : '0';
@@ -28,7 +39,7 @@ use yii\helpers\Url;
                     ],
                     [
                         'label' => 'Flags',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->reports) ? count($model->reports) : '0';
@@ -68,7 +79,8 @@ use yii\helpers\Url;
                                 'title' => 'Delete Comment',
                                 'class' => 'btn btn-danger',
                                 'data-method' => 'POST',
-                                'data-confirm' => 'Are you Sure you want to delete this Comment?'
+                                'data-confirm' => 'Are you Sure you want to delete this Comment?',
+                                'data-pjax' => "0"
                             ]);
                         },
                         'format' => 'raw'

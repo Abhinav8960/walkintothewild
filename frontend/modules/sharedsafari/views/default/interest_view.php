@@ -16,7 +16,7 @@ Pjax::begin([
     'enableReplaceState' => FALSE,
     'timeout' => false,
 ]);
-?>
+?> 
 <div class="users_profile gap-3 align-items-center">
 
     <?= \yii\grid\GridView::widget([
