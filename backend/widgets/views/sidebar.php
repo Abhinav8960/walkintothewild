@@ -1140,6 +1140,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/user",
 														"/user/default/index",
+														"/user/default/update",
+														"/user/default/profile",
 													)) ? "active" : "" ?>" href="/user/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
 					<li class="slide">
