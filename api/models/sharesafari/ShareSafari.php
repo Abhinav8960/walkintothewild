@@ -35,6 +35,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'dinner_included';
             $fields[] = 'meal_not_included';
             $fields[] = 'faqs';
+            $fields[] = 'mealslabel';
             
             // $fields[] = 'share_safari_inclusion';
             // $fields[] = 'share_safari_exclusion';
