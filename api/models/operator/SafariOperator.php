@@ -17,7 +17,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'is_approved', 'has_cancellation_policy', 'otherWildlifeActivity','socialMediaUrl','website'];
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'is_approved', 'has_cancellation_policy','budget', 'otherWildlifeActivity','socialMediaUrl','website'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             // $fields[] = 'sharedsafari';
@@ -329,15 +329,8 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getOtherWildlifeActivity()
     {
-        $html = '';
-        $activies = GeneralModel::operatoractivties($this->id);
-        foreach ($activies as $key => $role) {
-            if (isset(GeneralModel::wildlifeactivities()[$key])) {
-                $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
-            }
-        }
-
-        return $html;
+        
+        return GeneralModel::operatoractivties($this->id);
     }
 
     public function getSocialMediaUrl()
