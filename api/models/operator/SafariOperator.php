@@ -2,6 +2,7 @@
 
 namespace api\models\operator;
 
+use api\models\meta\MetaOtherWildlifeActivities;
 use api\models\package\Package;
 use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
@@ -209,6 +210,6 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getOtherWildlifeActivity()
     {
-        return $this->hasMany(SafariOperatorPark::className(), ['id' => 'wildlife_activity_id'])->via('operatorsOtherWildlifeActivity');
+        return $this->hasMany(MetaOtherWildlifeActivities::className(), ['id' => 'wildlife_activity_id'])->via('operatorsOtherWildlifeActivity');
     }
 }
