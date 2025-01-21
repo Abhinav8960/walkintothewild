@@ -31,7 +31,6 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'youtube_link';
             $fields[] = 'instagram_url';
             $fields[] = 'website';
-            $fields[] = 'witwreviewcount';
             $fields[] = 'urls';
         }
         return $fields;
