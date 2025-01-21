@@ -72,8 +72,8 @@ class ShareSafariCommentForm extends Model
     public function validateContent($attribute, $params)
     {
         $wordCount = str_word_count($this->$attribute);
-        if ($wordCount >= 100) {
-            $this->addError($attribute, 'Please provide content within 100 words.');
+        if ($wordCount >= 200) {
+            $this->addError($attribute, 'Please provide content within 200 words.');
         }
     }
 }
