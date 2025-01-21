@@ -17,7 +17,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'is_approved', 'has_cancellation_policy','budget', 'otherWildlifeActivity','socialMediaUrl','website'];
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'is_approved', 'has_cancellation_policy','budget', 'otherWildlifeActivity','facebook_url','youtube_link','instagram_url','website'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             // $fields[] = 'sharedsafari';
@@ -330,15 +330,8 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getOtherWildlifeActivity()
     {
         
-        return GeneralModel::operatoractivties($this->id);
+        return  implode(", ",GeneralModel::operatoractivties($this->id));
     }
 
-    public function getSocialMediaUrl()
-    {
-        return [
-            'facebook' => $this->facebook_url,
-            'youtube' => $this->youtube_link,
-            'instagram' => $this->instagram_url,
-        ];
-    }
+   
 }
