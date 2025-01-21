@@ -22,7 +22,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
-            // $fields[] = 'sharedsafari';
+            $fields[] = 'park';
             $fields[] = 'is_approved';
             $fields[] = 'has_cancellation_policy';
             $fields[] = 'budget';
