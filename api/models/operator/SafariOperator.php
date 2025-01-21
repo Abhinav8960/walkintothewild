@@ -212,4 +212,6 @@ class SafariOperator extends \common\models\operator\SafariOperator
     {
         return $this->hasMany(MetaOtherWildlifeActivities::className(), ['id' => 'wildlife_activity_id'])->via('operatorsOtherWildlifeActivity');
     }
+
+    
 }
