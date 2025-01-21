@@ -13,7 +13,7 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
         $fields = parent::fields();
         // $fields[] = 'id';
         $fields[] = 'title';
-        $fields[] = 'includeoption';
+        $fields[] = 'option';
 
         $hold_fields = ['id', 'selection', 'include_id', 'share_safari_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
@@ -25,7 +25,7 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
         return $this->hasOne(MasterPackageInclude::class, ['id' => 'include_id']);
     }
 
-    public function getIncludeoption()
+    public function getOption()
     {
         if ($this->selection == 1) {
             return 'Include';
