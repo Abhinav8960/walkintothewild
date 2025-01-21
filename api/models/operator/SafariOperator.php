@@ -7,6 +7,7 @@ use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\models\User;
 use api\models\UserFollow;
+use common\models\GeneralModel;
 use Yii;
 use common\traits\CommanRelationship;
 
@@ -16,7 +17,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed'];
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'is_approved', 'has_cancellation_policy', 'otherWildlifeActivity','socialMediaUrl','website'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             // $fields[] = 'sharedsafari';
@@ -24,7 +25,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'urls';
         }
 
-       
+
         return $fields;
 
         // if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
@@ -160,12 +161,13 @@ class SafariOperator extends \common\models\operator\SafariOperator
         // return $fields;
     }
 
-    public function getUrls(){
+    public function getUrls()
+    {
         return [
-            'parks'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-park',
-            'sharedsafari'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-shared-safari',
-            'packages'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-packages',
-            'reviews'=>Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/reviewlist?sort_by=highest',
+            'parks' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-park',
+            'sharedsafari' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-shared-safari',
+            'packages' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-packages',
+            'reviews' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/reviewlist?sort_by=highest',
 
         ];
     }
@@ -306,5 +308,44 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getOperatorparksearch()
     {
         return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+    }
+
+
+    public function getBudget()
+    {
+        $budget = [];
+        if ($this->is_offer_premium_budget == 1) {
+            $budget[] = "Premium";
+        }
+        if ($this->is_offer_standard_budget == 1) {
+            $budget[] = "Standard";
+        }
+        if ($this->is_offer_economical_budget == 1) {
+            $budget[] = "Economical";
+        }
+
+        return implode(', ', $budget);
+    }
+
+    public function getOtherWildlifeActivity()
+    {
+        $html = '';
+        $activies = GeneralModel::operatoractivties($this->id);
+        foreach ($activies as $key => $role) {
+            if (isset(GeneralModel::wildlifeactivities()[$key])) {
+                $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
+            }
+        }
+
+        return $html;
+    }
+
+    public function getSocialMediaUrl()
+    {
+        return [
+            'facebook' => $this->facebook_url,
+            'youtube' => $this->youtube_link,
+            'instagram' => $this->instagram_url,
+        ];
     }
 }
