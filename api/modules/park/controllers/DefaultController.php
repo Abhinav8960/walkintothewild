@@ -80,7 +80,7 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "SafariPark");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "parks");
     }
 
     /**
@@ -111,7 +111,7 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
         // $searchModel->show_in_filter = 1;
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "SafariPark");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
     }
 
     public function actionReviewlist($slug, $sort_by = null)
