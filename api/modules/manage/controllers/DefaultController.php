@@ -130,8 +130,8 @@ class DefaultController extends RestController
                     }
                 }
             }
-            return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     /**
