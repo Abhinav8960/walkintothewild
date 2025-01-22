@@ -22,11 +22,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function fields()
     {
 
-      
-        $fields = ['id','haveYouJoined','share_safari_title','slug','no_of_safari','start_date','end_date','cut_off_date','cost_per_person','total_seat','share_seat','types','organizedbyname','organizedbyimage','organizedslug','sharedimagepath','seatfullStatus','isWishlist','isFollowed','interseted_user_count','park_title'];
-        
+
+        $fields = ['id', 'haveYouJoined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'estimate_price_min', 'estimate_price_max', 'cost_per_person', 'total_seat', 'share_seat', 'types', 'organizedbyname', 'organizedbyimage', 'organizedslug', 'sharedimagepath', 'seatfullStatus', 'isWishlist', 'isFollowed', 'interseted_user_count', 'park_title'];
+
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
-            
+
             $fields[] = 'website_url';
             $fields[] = 'witwaveragerating';
             $fields[] = 'witwreviewcount';
@@ -36,7 +36,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'meal_not_included';
             $fields[] = 'faqs';
             $fields[] = 'mealslabel';
-            
+
             // $fields[] = 'share_safari_inclusion';
             // $fields[] = 'share_safari_exclusion';
             $fields[] = 'share_safari_terms_condtition';
@@ -51,11 +51,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
             $fields[] = 'commentsCount';
-            
+
             // $fields[] = 'organizedId';
             // $fields[] = 'intrestedUser';
 
-           
+
         }
         return $fields;
 
@@ -165,7 +165,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->park->title ?? NULL;
     }
 
-    
+
 
     public function getParklist()
     {
@@ -191,7 +191,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getHaveYouJoined()
     {
-        return $this->getIntrested()->where(['user_id'=>\Yii::$app->params['active_user_id']])->exists();
+        return $this->getIntrested()->where(['user_id' => \Yii::$app->params['active_user_id']])->exists();
     }
 
     public function getIntrestedUser()
@@ -204,7 +204,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->getIntrestedUser()->count();
     }
 
-    
+
 
     public function getSharedimagepath()
     {
@@ -219,7 +219,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getCommentsCount()
     {
-        return $this-> getComments()->count();
+        return $this->getComments()->count();
     }
 
     /**
@@ -373,11 +373,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
     }
 
-    public function getFaqs(){
-        if($this->getSharesafariFaqs()->count() > 0){
+    public function getFaqs()
+    {
+        if ($this->getSharesafariFaqs()->count() > 0) {
             return $this->sharesafariFaqs;
         }
-         return   [
+        return   [
             [
                 'question' => "Are meals included in the Fixed Departure?",
                 'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
