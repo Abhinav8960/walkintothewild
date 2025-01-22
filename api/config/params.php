@@ -1,5 +1,6 @@
 <?php
 return [
-    'app_name' => 'Api'
+    'app_name' => 'Api',
+    'isGoogleV3CaptchaValidateNeeded' => false
 
 ];
