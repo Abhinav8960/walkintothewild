@@ -29,7 +29,7 @@ class PackageReplyForm extends Model
             [['comment', 'parent_id'], 'required'],
             ['comment', 'validateContent'],
             ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
+                if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],
@@ -39,7 +39,16 @@ class PackageReplyForm extends Model
 
     public function reply(Package $package)
     {
-
+        // $reply = PackageComment::find()
+        //     ->where([
+        //         'package_id' => $package->id,
+        //         'user_id' => Yii::$app->user->id,
+        //         'parent_id' => $this->parent_id,
+        //         'comment' => $this->comment
+        //     ])->andWhere(['>=', 'created_at', time() - Yii::$app->params['comment_threshold']])->one();
+        // if ($reply) {
+        //     return $reply;
+        // }
         // $agent = new \Jenssegers\Agent\Agent();
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $reply = new PackageComment();

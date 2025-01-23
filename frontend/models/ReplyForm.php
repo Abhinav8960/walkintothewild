@@ -29,17 +29,29 @@ class ReplyForm extends Model
         return [
             [['comment', 'parent_id'], 'required'],
             ['comment', 'validateContent'],
-            ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
-                    $this->addError('comment', 'Invalid Characters!!!');
-                }
-            }],
+            // ['comment', function () {
+            //     // if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
+            //     if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
+            //         $this->addError('comment', 'Invalid Characters!!!');
+            //     }
+            // }],
         ];
     }
 
 
     public function reply(ShareSafari $share_safari)
     {
+        // $reply = ShareSafariComment::find()
+        //     ->where([
+        //         'share_safari_id' => $share_safari->id,
+        //         'park_id' =>  $share_safari->park->id,
+        //         'user_id' => Yii::$app->user->id,
+        //         'parent_id' => $this->parent_id,
+        //         'comment' => $this->comment
+        //     ])->andWhere(['>=', 'created_at', time() - Yii::$app->params['comment_threshold']])->one();
+        // if ($reply) {
+        //     return $reply;
+        // }
 
         // $agent = new \Jenssegers\Agent\Agent();
         // $agent->setUserAgent(Yii::$app->request->userAgent);
