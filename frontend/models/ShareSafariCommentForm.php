@@ -26,11 +26,11 @@ class ShareSafariCommentForm extends Model
         return [
             [['comment'], 'required'],
             ['comment', 'validateContent'],
-            ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
-                    $this->addError('comment', 'Invalid Characters!!!');
-                }
-            }],
+            // ['comment', function () {
+            //     if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
+            //         $this->addError('comment', 'Invalid Characters!!!');
+            //     }
+            // }],
         ];
     }
 
@@ -38,6 +38,16 @@ class ShareSafariCommentForm extends Model
     public function comment(ShareSafari $share_safari)
     {
 
+        // $comment = ShareSafariComment::find()
+        //     ->where([
+        //         'share_safari_id' => $share_safari->id,
+        //         'park_id' =>  $share_safari->park->id,
+        //         'user_id' => Yii::$app->user->id,
+        //         'comment' => $this->comment
+        //     ])->andWhere(['>=', 'created_at', time() - Yii::$app->params['comment_threshold']])->one();
+        // if ($comment) {
+        //     return $comment;
+        // }
         // $agent = new \Jenssegers\Agent\Agent();
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $comment = new ShareSafariComment();
@@ -62,8 +72,8 @@ class ShareSafariCommentForm extends Model
     public function validateContent($attribute, $params)
     {
         $wordCount = str_word_count($this->$attribute);
-        if ($wordCount >= 100) {
-            $this->addError($attribute, 'Please provide content within 100 words.');
+        if ($wordCount >= 200) {
+            $this->addError($attribute, 'Please provide content within 200 words.');
         }
     }
 }

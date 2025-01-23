@@ -73,7 +73,7 @@ use yii\helpers\Url;
                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
                                             <span class="comment-author"><?= isset($comments->user) ? $comments->user->getName() : '' ?></span>
                                         </a>
-                                        <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                        <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
                                         <!-- <?php if (Yii::$app->user->identity) {
                                                     if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
                                                 <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>

@@ -27,7 +27,7 @@ class PackageCommentForm extends Model
             [['comment'], 'required'],
             ['comment', 'validateContent'],
             ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
+                if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],
@@ -38,6 +38,15 @@ class PackageCommentForm extends Model
     public function comment(Package $package)
     {
 
+        // $comment = PackageComment::find()
+        //     ->where([
+        //         'package_id' => $package->id,
+        //         'user_id' => Yii::$app->user->id,
+        //         'comment' => $this->comment
+        //     ])->andWhere(['>=', 'created_at', time() - Yii::$app->params['comment_threshold']])->one();
+        // if ($comment) {
+        //     return $comment;
+        // }
         // $agent = new \Jenssegers\Agent\Agent();
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $comment = new PackageComment();

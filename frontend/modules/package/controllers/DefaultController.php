@@ -101,26 +101,37 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/package/default/validate-comment';
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
-            // Notification for New Comment
-            if (Yii::$app->user->identity) {
-                $user = Yii::$app->user->identity;
-                $username = $user->name;
-                $to_mail = $package->user->username;
-                $subject = 'New Comment : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $creator_name = $package->user->name;
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_COMMENT_BY_USER;
-                $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-                $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
-                FrontendNotificationHelper::packageNewComment($package, Yii::$app->user->identity);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $cacheKey = "safari-comment-key-" . $package->id  . "-" . Yii::$app->user->id . "-" . $model->comment;
+            if (Yii::$app->cache->get($cacheKey)) {
+                Yii::$app->session->setFlash('success', 'Comment successfully submitted');
+                return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']));
             }
 
-            Yii::$app->session->setFlash('success', 'Comment successfully submitted');
-            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']));
+            if ($model->comment($package)) {
+                Yii::$app->cache->set($cacheKey, true, Yii::$app->params['comment_threshold']);
+
+                // Notification for New Comment
+                if (Yii::$app->user->identity) {
+                    $user = Yii::$app->user->identity;
+                    $username = $user->name;
+                    $to_mail = $package->user->username;
+                    $subject = 'New Comment : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                    $creator_name = $package->user->name;
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_COMMENT_BY_USER;
+                    $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                    $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+                    $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                        GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                    }
+                    FrontendNotificationHelper::packageNewComment($package, Yii::$app->user->identity);
+                }
+
+                Yii::$app->session->setFlash('success', 'Comment successfully submitted');
+                return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']));
+            }
         }
 
 
@@ -165,7 +176,15 @@ class DefaultController extends FrontendBaseController
 
         if ($replymodel->load(Yii::$app->request->post())) {
             if ($replymodel->validate()) {
+                $cacheKey = "package-comment-reply-key-" . $package->id . "-" . Yii::$app->user->id . "-" . $replymodel->parent_id . "-" . $replymodel->comment;
+                if (Yii::$app->cache->get($cacheKey)) {
+                    Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+                    return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                }
+
                 if ($replymodel->reply($package)) {
+                    Yii::$app->cache->set($cacheKey, true, Yii::$app->params['comment_threshold']);
+
                     // Notification for Reply Comment
                     $reply_comment = $replymodel->commentbyParent();
                     if ($reply_comment) {
