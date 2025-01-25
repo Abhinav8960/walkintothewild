@@ -258,10 +258,10 @@ $this->params['title'] = $this->title; ?>
                                                         <span class="font_span">Free</span>
                                                     <?php } else if ($share_safari->estimate_price_min == $share_safari->estimate_price_max) { ?>
                                                         <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?></span>
-                                                        Estimate Per Person Cost
+                                                         Per Person Cost
                                                     <?php } else { ?>
                                                         <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?> - <?= number_format($share_safari->estimate_price_max) ?></span>
-                                                        Estimate Per Person Cost
+                                                         Per Person Cost
                                                     <?php } ?>
                                                 </p>
                                             </div>
