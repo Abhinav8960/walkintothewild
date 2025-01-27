@@ -51,6 +51,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
 </section>
 
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => FALSE,
+]);
+?>
 <section class="articals_wrapper py-3  margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <!-- <div class="advertisment pt-md-2 pt-5" style ="display: none" >
@@ -68,10 +76,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <?php
                             if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
                                 if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
-                                    if ($operator->category_id == 1) {  ?> 
-                                     
-                                        <button  class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
-                                    <?php } else { ?> 
+                                    if ($operator->category_id == 1) {  ?>
+
+                                        <button class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    <?php } else { ?>
                                         <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                         <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                         <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
@@ -87,14 +95,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     </div>
                 </div>
             </div> -->
-            <?php
-            Pjax::begin([
-                'id' => 'grid-data',
-                'enablePushState' => FALSE,
-                'enableReplaceState' => FALSE,
-                'timeout' => FALSE,
-            ]);
-            ?>
             <?php $form = ActiveForm::begin([
                 'options' => [
                     'data-pjax' => true,
@@ -105,22 +105,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]); ?>
             <div class="row">
                 <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
-                <div class="right_button mb-4">
+                    <div class="right_button mb-4">
                         <?php if (Yii::$app->user->identity) { ?>
                             <?php
                             if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
                                 if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
-                                    if ($operator->category_id == 1) {  ?> 
-                                     
-                                        <button  class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
-                                    <?php } else { ?> 
-                                        <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
-                                        <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
-                                        <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    if ($operator->category_id == 1) {  ?>
+
+                                        <button data-pjax="0" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    <?php } else { ?>
+                                        <button data-pjax="0" class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button data-pjax="0" style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button data-pjax="0" style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
                                 <?php }
                                 }
                             } else { ?>
-                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                <button data-pjax="0" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                             <?php } ?>
                         <?php } else {  ?>
                             <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/sharedsafari/default/index']) ?>" data-pjax="0">+ Organize a Shared Safari</a>
@@ -324,7 +324,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ?>
 
 
-            <?php Pjax::end(); ?>
         </div>
 
     </div>
@@ -333,6 +332,67 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 </section>
 
+
+<?php
+$script = <<< JS
+
+    function departurefunction() {
+        $('.departureBtn').on('click', function () {
+            $('#departure-modal').modal('show')
+            .find('#departuremodalContent')
+            .load($(this).attr('value'));
+        });
+    }
+    departurefunction();
+             
+JS;
+$this->registerJs($script);
+?>
+
+
+
+
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.organizeBtn').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#sharedsafarimodalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+
+JS;
+$this->registerJs($script);
+?>
+
+<?php
+$script = <<< JS
+function choiceorganizefunction() {
+	$('.ChoiceOrganizeSafariBtn').on('click', function () {
+        $('#choice-organize-modal').modal('show');
+	});
+}
+choiceorganizefunction();
+
+JS;
+$this->registerJs($script);
+?>
+
+<script>
+    // JavaScript to add a class to the parent element based on the child element
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const childElement = document.querySelector('.tag');
+        if (childElement) {
+            const parentElement = childElement.closest('.tag-container');
+            if (parentElement) {
+                parentElement.classList.add('mb-4');
+            }
+        }
+    });
+</script>
+<?php Pjax::end(); ?>
 
 
 
@@ -402,64 +462,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </div>
-
-
-<?php
-$script = <<< JS
-
-    function departurefunction() {
-        $('.departureBtn').on('click', function () {
-            $('#departure-modal').modal('show')
-            .find('#departuremodalContent')
-            .load($(this).attr('value'));
-        });
-    }
-    departurefunction();
-             
-JS;
-$this->registerJs($script);
-?>
-
-
-
-
-<?php
-$script = <<< JS
-function organizefunction() {
-	$('.organizeBtn').on('click', function () {
-        $('#organize-modal').modal('show')
-		.find('#sharedsafarimodalContent')
-		.load($(this).attr('value'));
-	});
-}
-organizefunction();
-
-JS;
-$this->registerJs($script);
-?>
-
-<?php
-$script = <<< JS
-function choiceorganizefunction() {
-	$('.ChoiceOrganizeSafariBtn').on('click', function () {
-        $('#choice-organize-modal').modal('show');
-	});
-}
-choiceorganizefunction();
-
-JS;
-$this->registerJs($script);
-?>
-
-<script>
-    // JavaScript to add a class to the parent element based on the child element
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const childElement = document.querySelector('.tag');
-        if (childElement) {
-            const parentElement = childElement.closest('.tag-container');
-            if (parentElement) {
-                parentElement.classList.add('mb-4');
-            }
-        }
-    });
-</script>
