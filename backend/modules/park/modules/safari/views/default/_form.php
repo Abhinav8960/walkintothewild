@@ -22,11 +22,9 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'long_description')->widget(CKEditor::className(), [
-            'options' => ['rows' => 4],
-            'preset' => 'full',
-
-        ]) ?>
+        <?= $form->field($model, 'long_description', [
+            'labelOptions' => ['class' => 'Modal_label']
+        ])->textarea(['rows' => '6']) ?>
     </div>
 
     <?php if ($model->safari_park_model->id) { ?>
@@ -204,5 +202,17 @@ use yii\bootstrap5\ActiveForm;
             width: 100% !important;
             display: block !important;
         }
+
+        .ck-editor__editable {
+            min-height: 350px;
+        }
     </style>
     <?php ActiveForm::end(); ?>
+</div>
+
+<?php
+$script = <<< JS
+editor('safariparkform-long_description');
+JS;
+$this->registerJs($script);
+?>
