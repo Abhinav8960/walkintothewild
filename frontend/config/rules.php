@@ -62,7 +62,7 @@ return [
     '/sharedsafari/default/validate' => '/sharedsafari/default/validate',
     '/sharedsafari/default/updatevalidate' => '/sharedsafari/default/updatevalidate',
     '/sharedsafari/default/update' => '/sharedsafari/default/update',
-    '/sharedsafari/default/delete' => '/sharedsafari/default/delete',
+    '/sharedsafari/default/delete/<slug>' => '/sharedsafari/default/delete',
     '/sharedsafari/default/flag' => '/sharedsafari/default/flag',
     '/sharedsafari/default/reply' => '/sharedsafari/default/reply',
     '/sharedsafari/default/validateflag' => '/sharedsafari/default/validateflag',
