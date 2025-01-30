@@ -603,7 +603,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 </div>
 
 <div class="modal fade _standard-text" id="history-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
