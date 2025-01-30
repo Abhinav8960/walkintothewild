@@ -721,24 +721,53 @@ class DefaultController extends FrontendBaseController
 
     public function actionHistory($slug)
     {
-        $history_model = ShareSafariHistory::find()->where(['slug' => $slug, 'status' => 1, 'type' => ShareSafari::TYPE_SAFARI])->orderBy([
-            'id' => SORT_DESC
-        ])->all();
+        $columns = $this->sharedsafaricolumn();
+        $query = "SELECT id as current_id, updated_at as date, ";
+        foreach ($columns as $column_data) {
+            $query .= "
+            " . $column_data['actual_column'] . " as " . $column_data['current_column'] . ", 
+            lead(" . $column_data['actual_column'] . ") over() as " . $column_data['previous_column'] . ",
+            ";
+        }
+
+        $query .= " row_number() over() as `row_number`
+                FROM `share_safari_history` WHERE `slug` = '$slug' AND `status` = 1 AND `type` = 1 ORDER BY `id` DESC;";
+
+        $history_model = Yii::$app->db->createCommand($query)
+            ->queryAll();
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
-                'history_model' => $history_model
+                'history_model' => $history_model,
+                'total_count' => count($history_model),
+                'columns' => $columns,
             ]);
         }
     }
 
+
     public function actionFixedHistory($slug)
     {
-        $history_model = ShareSafariHistory::find()->where(['slug' => $slug, 'status' => 1, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->orderBy([
-            'id' => SORT_DESC
-        ])->all();
+        $columns = $this->fixeddeparturecolumn();
+        $query = "SELECT id as current_id, updated_at as date, ";
+        foreach ($columns as $column_data) {
+            $query .= "
+            " . $column_data['actual_column'] . " as " . $column_data['current_column'] . ", 
+            lead(" . $column_data['actual_column'] . ") over() as " . $column_data['previous_column'] . ",
+            ";
+        }
+
+        $query .= " row_number() over() as `row_number`
+                    FROM `share_safari_history` WHERE `slug` = '$slug' AND `status` = 1 AND `type` = 2 AND `mail_sent` = 1 ORDER BY `id` DESC;";
+
+        $history_model = Yii::$app->db->createCommand($query)
+            ->queryAll();
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_fixed_view', [
-                'history_model' => $history_model
+                'history_model' => $history_model,
+                'total_count' => count($history_model),
+                'columns' => $columns,
             ]);
         }
     }
@@ -1001,5 +1030,101 @@ class DefaultController extends FrontendBaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function sharedsafaricolumn()
+    {
+        return [
+            [
+                'actual_column' => 'no_of_safari',
+                'previous_column' => 'previous_no_of_safari',
+                'current_column' => 'current_no_of_safari',
+                'label' => 'Safari'
+            ],
+            [
+                'actual_column' => 'share_seat',
+                'previous_column' => 'previous_share_seat',
+                'current_column' => 'current_share_seat',
+                'label' => 'Share Seat'
+            ],
+            [
+                'actual_column' => 'total_seat',
+                'previous_column' => 'previous_total_seat',
+                'current_column' => 'current_total_seat',
+                'label' => 'Total Seat'
+            ],
+            [
+                'actual_column' => 'estimate_price_min',
+                'previous_column' => 'previous_estimate_price_min',
+                'current_column' => 'current_estimate_price_min',
+                'label' => 'Estimate Price Min'
+            ],
+            [
+                'actual_column' => 'estimate_price_max',
+                'previous_column' => 'previous_estimate_price_max',
+                'current_column' => 'current_estimate_price_max',
+                'label' => 'Estimate Price Max'
+            ],
+            [
+                'actual_column' => 'start_date',
+                'previous_column' => 'previous_start_date',
+                'current_column' => 'current_start_date',
+                'label' => 'Start Date'
+            ],
+            [
+                'actual_column' => 'end_date',
+                'previous_column' => 'previous_end_date',
+                'current_column' => 'current_end_date',
+                'label' => 'End Date'
+            ],
+        ];
+    }
+
+    public function fixeddeparturecolumn()
+    {
+        return [
+            [
+                'actual_column' => 'no_of_safari',
+                'previous_column' => 'previous_no_of_safari',
+                'current_column' => 'current_no_of_safari',
+                'label' => 'Safari'
+            ],
+            [
+                'actual_column' => 'share_seat',
+                'previous_column' => 'previous_share_seat',
+                'current_column' => 'current_share_seat',
+                'label' => 'Share Seat'
+            ],
+            [
+                'actual_column' => 'total_seat',
+                'previous_column' => 'previous_total_seat',
+                'current_column' => 'current_total_seat',
+                'label' => 'Total Seat'
+            ],
+            [
+                'actual_column' => 'cost_per_person',
+                'previous_column' => 'previous_cost_per_person',
+                'current_column' => 'current_cost_per_person',
+                'label' => 'Estimate Price Min'
+            ],
+            [
+                'actual_column' => 'start_date',
+                'previous_column' => 'previous_start_date',
+                'current_column' => 'current_start_date',
+                'label' => 'Start Date'
+            ],
+            [
+                'actual_column' => 'end_date',
+                'previous_column' => 'previous_end_date',
+                'current_column' => 'current_end_date',
+                'label' => 'End Date'
+            ],
+            [
+                'actual_column' => 'cut_off_date',
+                'previous_column' => 'previous_cut_off_date',
+                'current_column' => 'current_cut_off_date',
+                'label' => 'Cut Off Date'
+            ],
+        ];
     }
 }
