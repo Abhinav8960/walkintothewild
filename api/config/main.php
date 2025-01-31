@@ -156,6 +156,8 @@ return [
                 'manage/sharedsafari/<action>/<slug>' => 'manage/sharedsafari/<action>',
                 'manage/sharedsafari/<action>/<slug>/<day>' => 'manage/sharedsafari/<action>',
 
+                /**Manage Package */
+                'manage/package/create' => 'manage/package/create',
             ],
 
         ],
