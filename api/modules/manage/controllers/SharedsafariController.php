@@ -6,19 +6,19 @@ use Yii;
 use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
+use api\models\master\faq\MasterFaq;
 use api\models\sharesafari\form\CreateDepartureForm;
-use common\models\master\faq\MasterFaq;
+use api\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafariDay;
+use api\models\sharesafari\ShareSafariFaq;
+use api\models\sharesafari\ShareSafariFaqSearch;
+use api\models\sharesafari\ShareSafariGallery;
+use api\models\sharesafari\ShareSafariGallerySearch;
+use api\models\sharesafari\ShareSafariIncluded;
+use api\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
 use common\models\sharesafari\form\ShareSafariGalleryForm;
-use common\models\sharesafari\ShareSafari;
-use common\models\sharesafari\ShareSafariDay;
-use common\models\sharesafari\ShareSafariFaq;
-use common\models\sharesafari\ShareSafariFaqSearch;
-use common\models\sharesafari\ShareSafariGallery;
-use common\models\sharesafari\ShareSafariGallerySearch;
-use common\models\sharesafari\ShareSafariIncluded;
-use common\models\sharesafari\ShareSafariParklist;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
@@ -40,10 +40,32 @@ class SharedsafariController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create-fixed-departure', 'update-fixed-departure', 'getting-there', 'policy-info', 'inclusion', 'create-faq', 'update-faq','create-gallery'],
+                'only' => [
+                    'create-fixed-departure',
+                    'update-fixed-departure',
+                    'getting-there',
+                    'policy-info',
+                    'inclusion',
+                    'create-faq',
+                    'update-faq',
+                    'create-gallery',
+                    'faqs',
+                    'gallery'
+                ],
                 'rules' => [
                     [
-                        'actions' => ['create-fixed-departure', 'update-fixed-departure', 'getting-there', 'policy-info', 'inclusion', 'create-faq', 'update-faq','create-gallery'],
+                        'actions' => [
+                            'create-fixed-departure',
+                            'update-fixed-departure',
+                            'getting-there',
+                            'policy-info',
+                            'inclusion',
+                            'create-faq',
+                            'update-faq',
+                            'create-gallery',
+                            'faqs',
+                            'gallery'
+                        ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,6 +82,8 @@ class SharedsafariController extends RestController
                     'create-faq' => ['POST'],
                     'update-faq' => ['POST'],
                     'create-gallery' => ['POST'],
+                    'faqs' => ['GET'],
+                    'gallery' => ['GET'],
                 ],
             ],
         ];
@@ -271,22 +295,13 @@ class SharedsafariController extends RestController
     }
 
 
-    public function actionFaq($slug)
+    public function actionFaqs($slug)
     {
         $safari_operator = $this->module->operatormodel();
-
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-
-        return $this->render('faq', [
-            'shared_safari_departure_model' => $shared_safari_departure_model,
-            'safari_operator' => $safari_operator,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->dataProviderSender($searchModel, $rootIndexName = "Faqs");
     }
 
     /**
@@ -334,15 +349,7 @@ class SharedsafariController extends RestController
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariGallerySearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-
-        return $this->render('gallery', [
-            'shared_safari_departure_model' => $shared_safari_departure_model,
-            'safari_operator' => $safari_operator,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->dataProviderSender($searchModel, $rootIndexName = "Gallery");
     }
 
     public function actionCreateGallery($slug, $id = null)
@@ -366,7 +373,6 @@ class SharedsafariController extends RestController
             if ($model->share_safari_gallery_model->save(false)) {
                 $model->uploadFile();
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery updated successfully"]);
-
             }
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery not updated successfully"]);
