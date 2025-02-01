@@ -158,6 +158,10 @@ return [
 
                 /**Manage Package */
                 'manage/package/create' => 'manage/package/create',
+                'manage/package/<action>/<slug>' => 'manage/package/<action>',
+                'manage/package/<action>/<slug>/<day>' => 'manage/package/<action>',
+
+
             ],
 
         ],
