@@ -446,8 +446,10 @@ class GenerateSitePagesController extends Controller
 
   protected function get_operator_tabs_site_pages()
   {
-    $timestamp24HoursAgo = time() - (24 * 60 * 60);
-    $records = SafariOperator::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
+    // $timestamp24HoursAgo = time() - (24 * 60 * 60);
+    // $records = SafariOperator::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
+    $records = SafariOperator::find()->all();
+
     $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
       $temp_insert_data = [];
@@ -459,7 +461,9 @@ class GenerateSitePagesController extends Controller
         }
 
         foreach ($tab_urls as $ind => $tab) {
-          $title = "Operator " . ucwords($ind) . ":" . $row->businessname;
+          // $title = "Operator " . ucwords($ind) . ":" . $row->businessname;
+          $title = "Operator : " . $row->businessname;
+
 
           if (!empty($row->slug) && $row->status == 1) {
             //update existing record

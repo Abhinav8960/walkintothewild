@@ -10,7 +10,7 @@ use common\models\sharesafari\ShareSafariIntrested;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Shared Safari';
+$this->title =  $operator->register_comapany_name . ' | Shared Safari';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
