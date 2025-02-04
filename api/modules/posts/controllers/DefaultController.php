@@ -11,6 +11,8 @@ use api\models\posts\UserPostSearch;
 use common\models\postscomment\form\UserPostCommentForm;
 use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsForm;
+use frontend\models\profile\UserPostsVideoForm;
+use getID3;
 use Yii;
 use yii\filters\AccessControl;
 
@@ -70,13 +72,15 @@ class DefaultController extends RestController
 
     public function actionCreate()
     {
-        $model = new UserPostsForm();
+        $model = new UserPostsVideoForm();
         $model->user_id = $this->userinfoId;
         $model->status = UserPosts::STATUS_ACTIVE;
 
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->v_size = $model->file->size;
+        $model->v_duration = $this->getVideoDuration($model->file);
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -171,5 +175,17 @@ class DefaultController extends RestController
         $searchModel = new UserPostSearch();
         $searchModel->user_id = $user_id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
+    }
+
+
+    private function getVideoDuration($tempFile)
+    {
+        $tempFilePath = $tempFile->tempName;
+        $getID3 = new getID3();
+        $fileInfo = $getID3->analyze($tempFilePath);
+        if (isset($fileInfo['playtime_seconds'])) {
+            return (int) $fileInfo['playtime_seconds'];
+        }
+        return 0;
     }
 }
