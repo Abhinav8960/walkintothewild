@@ -143,6 +143,8 @@ class SafariOperatorRequestForm extends model
                 $this->budget_segment[] = 2;
             } else if ($this->safari_operator_model->is_offer_economical_budget == true) {
                 $this->budget_segment[] = 3;
+            } else {
+                $this->budget_segment[] = 4;
             }
         }
 
