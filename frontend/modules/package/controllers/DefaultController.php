@@ -28,6 +28,7 @@ use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use common\models\package\PackageEnquiry;
+use common\models\package\PackageFaq;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -92,6 +93,7 @@ class DefaultController extends FrontendBaseController
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package->id;
+        $searchModel->status = PackageFaq::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
