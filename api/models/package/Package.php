@@ -434,7 +434,7 @@ class Package extends \common\models\package\Package
 
     public function getPackageFaqs()
     {
-        return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFaq::className(), ['package_id' => 'id']);
     }
 
     public function getFaqs()
