@@ -41,7 +41,7 @@ class PackageFaqSearch extends PackageFaq
      */
     public function search($params)
     {
-        $query = PackageFaq::find()->where(['status' => [PackageFaq::STATUS_ACTIVE]]);
+        $query = PackageFaq::find()->where(['status' => [PackageFaq::STATUS_ACTIVE, PackageFaq::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
