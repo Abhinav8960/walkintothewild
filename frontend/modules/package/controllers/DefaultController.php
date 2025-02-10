@@ -92,6 +92,7 @@ class DefaultController extends FrontendBaseController
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package->id;
+        $searchModel->status = Package::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 

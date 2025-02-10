@@ -15,6 +15,7 @@ use common\models\master\month\MasterMonth;
 use common\Helper\FrontendNotificationHelper;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\GeneralModel;
+use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
@@ -340,6 +341,7 @@ class DefaultController extends FrontendBaseController
         } else {
             $searchModel = new ShareSafariFaqSearch();
             $searchModel->share_safari_id = $share_safari->id;
+            $searchModel->status = ShareSafariFaq::STATUS_ACTIVE;
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
             $faqs = $dataProvider->getModels();
 
