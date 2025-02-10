@@ -386,7 +386,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSharesafariFaqs()
     {
-        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id'])->where(['share_safari_faq.status' => ShareSafariFaq::STATUS_ACTIVE]);
     }
 
     public function getFaqs()
