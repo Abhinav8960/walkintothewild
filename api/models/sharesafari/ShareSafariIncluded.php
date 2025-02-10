@@ -11,6 +11,7 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
     public function fields()
     {
         $fields = [
+            'id',
             'masterId',
             'title',
             'option'
