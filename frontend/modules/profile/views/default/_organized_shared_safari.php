@@ -3,21 +3,15 @@
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafari;
 
-
-
-
 if (Yii::$app->user->identity) {
     if ($user->id == Yii::$app->user->identity->id) {
-        $model = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI,'status' => ShareSafari::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->limit(2)->all();
-        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI])->count();
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->count();
     } else {
-        $model = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI,'status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderby(['id' => SORT_DESC])->limit(2)->all();
-        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
     }
 }
-
-
-
 
 ?>
 
