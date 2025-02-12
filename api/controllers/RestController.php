@@ -178,7 +178,7 @@ class RestController extends Controller
 
     protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false)
     {
-        
+        $data =[];
         if ($dataProvider->pagination && $singleRecord == false) {
 
             $dataProvider->pagination->pageSize = $this->pageSize;
