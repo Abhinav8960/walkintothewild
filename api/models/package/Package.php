@@ -2,6 +2,7 @@
 
 namespace api\models\package;
 
+use api\models\master\packagefeature\MasterPackagefeature;
 use api\models\master\packageinclude\MasterPackageInclude;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
@@ -30,7 +31,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included'];
+        $fields = ['id', 'packagename', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date',];
 
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -52,6 +53,9 @@ class Package extends \common\models\package\Package
             // $fields[] = 'packagepark';
             $fields[] = 'packagedays';
             $fields[] = 'faqs';
+            $fields[] = 'type';
+            $fields[] = 'master_vehicle_id';
+            $fields[] = 'packagefeaturesname';
         }
         return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
@@ -225,6 +229,11 @@ class Package extends \common\models\package\Package
     public function getPackagefeatures()
     {
         return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
+    }
+
+    public function getPackagefeaturesname()
+    {
+        return $this->hasMany(MasterPackagefeature::class, ['id' => 'feature_id'])->via('packagefeatures');
     }
 
 
