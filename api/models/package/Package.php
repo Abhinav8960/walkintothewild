@@ -60,6 +60,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'gst_percentage';
             $fields[] = 'package_agenda_id';
             $fields[] = 'stay_category_id';
+            $fields[] = 'status';
         }
         return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
