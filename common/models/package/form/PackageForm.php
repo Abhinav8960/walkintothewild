@@ -340,10 +340,10 @@ class PackageForm extends \yii\base\Model
         $this->package_model->type = $this->type;
         if ($this->type == 1) { // With GST
             $this->package_model->gst_percentage = $this->gst_percentage;
-            $gst_amount = (0.01 * $this->gst_percentage) * $this->cost_per_person;
-            $this->package_model->total_price = $this->cost_per_person + $gst_amount;
+            $gst_amount = (float)(0.01 * $this->gst_percentage) * (float)$this->cost_per_person;
+            $this->package_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
         } else { // Without GST
-            $this->package_model->total_price = $this->cost_per_person;
+            $this->package_model->total_price = (float)$this->cost_per_person;
         }
 
         $this->package_model->status = $this->status;
