@@ -36,7 +36,7 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'top_operators';
         }
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields = ['id', 'title', 'slug'];
         }
 
