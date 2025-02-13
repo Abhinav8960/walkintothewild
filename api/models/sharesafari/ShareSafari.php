@@ -62,6 +62,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             // $fields[] = 'organizedId';
             // $fields[] = 'intrestedUser';
             $fields[] = 'parks';
+            $fields[] = 'share_safari_agenda_id';
         }
         return $fields;
 
