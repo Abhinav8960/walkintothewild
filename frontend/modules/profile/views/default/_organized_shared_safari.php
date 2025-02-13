@@ -31,7 +31,7 @@ if (Yii::$app->user->identity) {
 
                 <?php }
                 ?>
-                <?php if (count($model) > 2) { ?>
+                <?php if ($model_count > 2) { ?>
                     <div class="col-12">
                         <div class="safari text-end">
                             <div class="viewAllreview">
