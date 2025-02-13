@@ -146,8 +146,8 @@ class PackageForm extends \yii\base\Model
             [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id'], 'required', 'on' => ['create', 'update']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price', 'master_vehicle_id'], 'integer'],
-            [['cost_per_person'], 'number'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'master_vehicle_id'], 'integer'],
+            [['cost_per_person', 'total_price'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there', 'package_agenda_id'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
@@ -340,10 +340,10 @@ class PackageForm extends \yii\base\Model
         $this->package_model->type = $this->type;
         if ($this->type == 1) { // With GST
             $this->package_model->gst_percentage = $this->gst_percentage;
-            $gst_amount = (0.01 * $this->gst_percentage) * $this->cost_per_person;
-            $this->package_model->total_price = $this->cost_per_person + $gst_amount;
+            $gst_amount = (float)(0.01 * $this->gst_percentage) * (float)$this->cost_per_person;
+            $this->package_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
         } else { // Without GST
-            $this->package_model->total_price = $this->cost_per_person;
+            $this->package_model->total_price = (float)$this->cost_per_person;
         }
 
         $this->package_model->status = $this->status;

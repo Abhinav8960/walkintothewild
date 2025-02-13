@@ -139,15 +139,17 @@ if ($model->meta_title != '') {
             </div>
         </div> -->
         <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
-            <div class="col-xxl-11 safartabs position-relative">
-                <ul class="nav nav-tabs slider_addmobile3 owl-theme owl-carousel">
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/operator', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($operator) ? $operator : '' ?>">Operators</a></li>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/sharedsafari', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safaris</a></li>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/package', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($package) ? $package : '' ?>">Packages</a></li>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($review) ? $review : '' ?>">Reviews</a></li>
-           
-
-                </ul>
+            <div class="col-xxl-11">
+                <div class="row">
+                    <div class="offset-xxl-2 offset-xl-3 offset-lg-4 col-lg-8 col-xl-9 col-xxl-10 mt-2 position-relative safartabs">
+                        <ul class="nav nav-tabs slider_addmobile3 owl-theme owl-carousel">
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/operator', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($operator) ? $operator : '' ?>">Operators</a></li>
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/sharedsafari', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safaris</a></li>
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/package', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($package) ? $package : '' ?>">Packages</a></li>
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($review) ? $review : '' ?>">Reviews</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
