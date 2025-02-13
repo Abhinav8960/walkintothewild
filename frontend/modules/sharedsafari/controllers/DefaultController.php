@@ -431,7 +431,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 if (Yii::$app->user->identity->operator) {
