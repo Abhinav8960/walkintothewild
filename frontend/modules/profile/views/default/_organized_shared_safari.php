@@ -31,13 +31,15 @@ if (Yii::$app->user->identity) {
 
                 <?php }
                 ?>
-                <div class="col-12">
-                    <div class="safari text-end">
-                        <div class="viewAllreview">
-                            <a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" data-pjax="0">View All</a>
+                <?php if (count($model) > 2) { ?>
+                    <div class="col-12">
+                        <div class="safari text-end">
+                            <div class="viewAllreview">
+                                <a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" data-pjax="0">View All</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>
