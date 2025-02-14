@@ -192,7 +192,7 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-        $share_safari = $this->sharesafari;
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if ($share_safari) {
             if ($this->userinfo) {
                 if ($this->userinfo->operator) {
