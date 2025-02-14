@@ -96,7 +96,7 @@ class PackageController extends RestController
     {
 
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $model = new PackageForm();
@@ -149,7 +149,7 @@ class PackageController extends RestController
     public function actionUpdate($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -203,7 +203,7 @@ class PackageController extends RestController
     public function actionPolicyInfo($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -229,7 +229,7 @@ class PackageController extends RestController
     public function actionGettingThere($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -255,7 +255,7 @@ class PackageController extends RestController
     public function actionInclusion($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -312,7 +312,7 @@ class PackageController extends RestController
     public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -345,7 +345,7 @@ class PackageController extends RestController
     public function actionFaqs($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -363,7 +363,7 @@ class PackageController extends RestController
     public function actionCreateFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -399,7 +399,7 @@ class PackageController extends RestController
     public function actionUpdateFaq($slug, $faq_id)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -437,7 +437,7 @@ class PackageController extends RestController
     public function actionGallery($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
@@ -450,7 +450,7 @@ class PackageController extends RestController
     public function actionCreateGallery($slug, $id = null)
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
