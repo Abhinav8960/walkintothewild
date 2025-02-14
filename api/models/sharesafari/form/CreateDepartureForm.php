@@ -21,6 +21,7 @@ class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included','mail_sent'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
+            ['cut_off_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
 
         ];
     }
