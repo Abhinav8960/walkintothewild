@@ -423,7 +423,7 @@ $this->params['title'] = $this->title; ?>
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h2 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h2>
+                <p class="modal-title fs-5" id="exampleModalLabel">Update Safari</p>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body pt-0">
