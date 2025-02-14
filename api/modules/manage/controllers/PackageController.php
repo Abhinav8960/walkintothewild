@@ -136,7 +136,7 @@ class PackageController extends RestController
                     }
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package create successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_model->package_slug], ['message' => "Package create successfully"]);
             }
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not create successfully"]);

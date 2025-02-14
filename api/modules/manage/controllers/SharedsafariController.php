@@ -122,7 +122,7 @@ class SharedsafariController extends RestController
                     }
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Fixed Departure created successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->shared_safari_departure_model->slug], ['message' => "Fixed Departure created successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Fixed Departure not created successfully"]);
         }

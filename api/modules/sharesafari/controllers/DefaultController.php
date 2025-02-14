@@ -48,7 +48,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs','intrested-user'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -104,13 +104,16 @@ class DefaultController extends SafariController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-        $searchModel = new ShareSafariSearch();
-        $searchModel->id = $share_safari->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()->where(['slug' => $slug]),
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = 0, $singleRecord = true);
+
     }
 
     public function actionOrganizeSafari()
@@ -441,13 +444,13 @@ class DefaultController extends SafariController
         }
         // $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
-        
-       
+
+
         $dataProvider = new ActiveDataProvider([
-            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1,'parent_id' => null]),
+            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1, 'parent_id' => null]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "comments");
+        return $this->querySender($dataProvider, $rootIndexName = "comments");
     }
 
     /**
@@ -463,7 +466,6 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Includes not found']);
         }
         return Yii::$app->api->sendResponse($data = ['includes' => $this->serializeData($share_safari->includeds)]);
-        
     }
 
     public function actionFixedDepartureDays($slug)
@@ -500,8 +502,6 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Faqs not found']);
         }
         return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($share_safari->sharesafariFaqs)]);
-
-        
     }
 
 
@@ -514,18 +514,18 @@ class DefaultController extends SafariController
 
         // return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
 
-        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id'=>$share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
 
         // return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
 
-        $ids = array_column($ShareSafariIntrested,'user_id');
+        $ids = array_column($ShareSafariIntrested, 'user_id');
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
             // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
+        return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
     }
-    
+
     public function actionUpdate($slug)
     {
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
