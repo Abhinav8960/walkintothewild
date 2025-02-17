@@ -17,7 +17,7 @@
     <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/faq/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>" slug="map-tab">FAQ</a>
     </li>
-    <li class="nav-item" role="presentation">
+    <!-- <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/gallery/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>" id="map-tab">Gallery</a>
-    </li>
+    </li> -->
 </ul>
