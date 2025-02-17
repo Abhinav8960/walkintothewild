@@ -175,7 +175,7 @@ $this->params['title'] = $this->title;
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Feature Your Visited Parks</h1>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Feature Your Visited Parks</h2>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body p-3">
