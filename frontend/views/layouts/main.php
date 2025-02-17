@@ -141,7 +141,7 @@ if (!empty($is_sitemap_exist->description)) {
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h2>
                     <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
                 </div>
                 <div class="modal-body pt-0">

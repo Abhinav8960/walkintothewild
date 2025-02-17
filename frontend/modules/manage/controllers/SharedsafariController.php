@@ -510,23 +510,23 @@ class SharedsafariController extends FrontendBaseController
         }
     }
 
-    public function actionGallery($slug)
-    {
-        $safari_operator = $this->module->operatormodel();
+    // public function actionGallery($slug)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
-        $searchModel = new ShareSafariGallerySearch();
-        $searchModel->share_safari_id = $shared_safari_departure_model->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    //     $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
+    //     $searchModel = new ShareSafariGallerySearch();
+    //     $searchModel->share_safari_id = $shared_safari_departure_model->id;
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        return $this->render('gallery', [
-            'shared_safari_departure_model' => $shared_safari_departure_model,
-            'safari_operator' => $safari_operator,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    //     return $this->render('gallery', [
+    //         'shared_safari_departure_model' => $shared_safari_departure_model,
+    //         'safari_operator' => $safari_operator,
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
     public function actionCreateGallery($slug, $id = null)
     {
