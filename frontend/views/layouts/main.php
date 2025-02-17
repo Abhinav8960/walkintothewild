@@ -25,62 +25,47 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\Fron
 $is_sitemap_exist = SitePages::find()->where(['url' => $page_reqeust->pathInfo])->orderBy('id DESC')->one();
 
 $default_desc = "We offer a seamless experience, connecting you with multiple safari tour operators and providing all the essential details you need to make informed decisions about your wildlife safari, all at no cost. Our shared safari feature connects you with fellow safari enthusiasts, enabling you to form a group and embark on a shared safari adventure together.";
+$default_title = "WalkIntoTheWild";
+$default_image_url = 'https://walkintothewild.in/img/default_witw_jeep.png';
+$default_keywords = $this->params['meta_keywords'] ?? '';
 
 if (!empty($is_sitemap_exist->description)) {
-    $this->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
-    $this->registerMetaTag(['name' => 'twitter:site', 'content' => 'WalkIntoTheWild']);
-
     if (!empty($is_sitemap_exist->title)) {
-        $this->registerMetaTag(['name' => 'og:title', 'content' => $is_sitemap_exist->title]);
-        $this->registerMetaTag(['name' => 'twitter:title', 'content' => $is_sitemap_exist->title]);
-    } else {
-        $this->registerMetaTag(['name' => 'og:title', 'content' => 'WalkIntoTheWild']);
-        $this->registerMetaTag(['name' => 'twitter:title', 'content' => 'WalkIntoTheWild']);
+        $default_title = $is_sitemap_exist->title;
     }
 
     if (!empty($is_sitemap_exist->description)) {
-        $this->registerMetaTag(['name' => 'og:description', 'content' => $is_sitemap_exist->description]);
-        $this->registerMetaTag(['name' => 'twitter:description', 'content' => $is_sitemap_exist->description]);
-    } else {
-        $this->registerMetaTag(['name' => 'description', 'content' => $default_desc]);
-        $this->registerMetaTag(['name' => 'twitter:description', 'content' => $default_desc]);
+        $default_desc = $is_sitemap_exist->description;
     }
 
     if (!empty($is_sitemap_exist->keywords)) {
-        $this->registerMetaTag(['name' => 'keywords', 'content' => $is_sitemap_exist->keywords]);
-    } else {
-        $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
+        $default_keywords = $is_sitemap_exist->keywords;
     }
 
     if (!empty($is_sitemap_exist->image)) {
         $imgurl = Yii::$app->params['frontend_url'] . $is_sitemap_exist->image;
-        $this->registerMetaTag(['name' => 'og:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
-        $this->registerMetaTag(['name' => 'twitter:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
-    } else {
-        $this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
-        $this->registerMetaTag(['name' => 'twitter:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
+        $default_image_url = str_replace("//storage", "/storage", $imgurl);
     }
+}
 
-    $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-    $this->registerMetaTag(['name' => 'og:site_name', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['frontend_url'] . $is_sitemap_exist->url]);
-} else {
-    $this->registerMetaTag(['name' => 'description', 'content' => $default_desc]);
-    $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 
-    $this->registerMetaTag(['name' => 'og:title', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'og:description', 'content' => $default_desc]);
-    $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
-    $this->registerMetaTag(['name' => 'og:site_name', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'og:image', 'content' => 'https://walkintothewild.in/img/default_witw_jeep.png']);
-    $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['frontend_url'] . $page_reqeust->pathInfo]);
+$this->registerMetaTag(['name' => 'description', 'content' => $default_desc]);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $default_keywords]);
 
-    $this->registerMetaTag(['name' => 'twitter:title', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'twitter:description', 'content' => $default_desc]);
-    $this->registerMetaTag(['name' => 'twitter:site', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
-    $this->registerMetaTag(['name' => 'twitter:image', 'content' => 'https://walkintothewild.in/img/default_witw_jeep.png']);
-} //end of og tags
+$this->registerMetaTag(['property' => 'og:title', 'content' => $default_title]);
+$this->registerMetaTag(['property' => 'og:description', 'content' => $default_desc]);
+$this->registerMetaTag(['property' => 'og:url', 'content' => Yii::$app->params['frontend_url'] . $page_reqeust->pathInfo]);
+$this->registerMetaTag(['property' => 'og:image', 'content' => $default_image_url]);
+$this->registerMetaTag(['property' => 'og:type', 'content' => 'website']);
+$this->registerMetaTag(['property' => 'og:site_name', 'content' => 'WalkIntoTheWild']);
+
+$this->registerMetaTag(['name' => 'twitter:title', 'content' => $default_title]);
+$this->registerMetaTag(['name' => 'twitter:description', 'content' => $default_desc]);
+$this->registerMetaTag(['name' => 'twitter:image', 'content' => $default_image_url]);
+$this->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
+$this->registerMetaTag(['name' => 'twitter:site', 'content' => 'WalkIntoTheWild']);
+
+
 
 ?>
 <?php $this->beginPage() ?>
