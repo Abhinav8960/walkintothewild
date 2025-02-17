@@ -512,7 +512,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     <div class="modal-dialog modal-dialog-centered  modal-md">
         <div class="modal-content">
             <div class="modal-body">
-                <h1 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h1>
+                <h2 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h2>
             </div>
             <div class="modal-body px-4 pt-2 pb-4">
                 <div id='modalContent'></div>
