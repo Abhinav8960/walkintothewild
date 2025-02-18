@@ -158,6 +158,26 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($package)) {
+
+                // $reply_comment = $replymodel->commentbyParent();
+                // if ($reply_comment) {
+                //     if ($this->userinfo) {
+                //         $user = $this->userinfo;
+                //         $username = $user->name;
+                //         $to_mail = $package->user->username;
+                //         $subject = 'New Reply : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $creator_name = $package->user->name;
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_REPLY_BY_USER;
+                //         $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                //         $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //         FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+                //     }
+                // }
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
