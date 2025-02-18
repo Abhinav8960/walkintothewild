@@ -182,7 +182,7 @@ $this->title = $user->name;
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Profile</h1>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Share Profile</h2>
 
             </div>
             <div class="modal-body p-3">

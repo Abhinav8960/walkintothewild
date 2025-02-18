@@ -267,7 +267,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Package</h1>
+        <h2 class="modal-title fs-5" id="exampleModalLabel">Create a New Package</h2>
         <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
       </div>
       <div class="modal-body px-2 pt-0">

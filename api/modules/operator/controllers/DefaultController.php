@@ -21,6 +21,7 @@ use api\models\sharesafari\ShareSafariSearch;
 use api\models\UserFollow;
 use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
+use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
@@ -263,6 +264,7 @@ class DefaultController extends RestController
 
     public function actionUserRatingParklist($slug)
     {
+        $this->layout = NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
         $operator = SafariOperator::find()
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
@@ -279,7 +281,14 @@ class DefaultController extends RestController
             ->andWhere(['not in', 'park_id', $user_park_id])
             ->all();
 
-        return Yii::$app->api->sendResponse(['parks' => $operatorsafariparkData]);
+        $ids = array_column($operatorsafariparkData, 'park_id');
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id' => $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => false,
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionOperatorSharedSafari($slug)
@@ -306,17 +315,17 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
-        $safariOperatorPark =  SafariOperatorPark::find()->where(['status'=>SafariOperatorPark::STATUS_ACTIVE,'safari_operator_id'=>$operator->id])->all();
+        $safariOperatorPark =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator->id])->all();
 
         $ids = array_column($safariOperatorPark, 'park_id');
 
-       
+
         $dataProvider = new ActiveDataProvider([
-            'query' => SafariPark::find()->where(['id'=> $ids]),
+            'query' => SafariPark::find()->where(['id' => $ids]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
-       return $this->querySender($dataProvider, $rootIndexName = "parks");
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionOperatorPackages($slug)

@@ -63,7 +63,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             <div class="row">
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
-                                        <img src="<?= isset($share_safari->safarioperator->imagepath) ? $share_safari->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+                                        <img src="<?= isset($share_safari->safarioperator->imagepath) ? $share_safari->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="Operator Image" class="w-100">
                                     </div>
                                 </div>
                                 <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
@@ -81,7 +81,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 <?php }
                                                 ?>
                                             <?php } ?>
-                                            <?php if ($share_safari->fixedDepartureHistory) { ?>
+                                            <?php if (false && $share_safari->fixedDepartureHistory) { ?>
                                                 <span class="history">
                                                     <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
                                                 </span>
@@ -139,7 +139,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="pakageCost text-center mb-3">
-                                <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
+                                <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="Rupees" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
 
@@ -172,7 +172,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <!-- <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="Night Mode" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
@@ -182,7 +182,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="Icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari
@@ -193,7 +193,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Seats">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="Seat" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Seats">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">Available Seats - <?php if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
@@ -207,7 +207,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="Taxi" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -222,7 +222,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="Meal" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">
@@ -235,9 +235,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <?php if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 1) { ?>
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="Camera" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } else if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 3) { ?>
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="Elephant" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } ?>
                                         </div>
                                         <div class="text-form">
@@ -250,7 +250,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="Hotel" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset(GeneralModel::budgetoption()[$share_safari->stay_category_id]) ?  GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included'  ?></p>
@@ -282,13 +282,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <!-- <div class="col-lg-2 mt-lg-0 mt-3">
                             <div class="pakageCost text-lg-center d-sm-block  d-lg-block d-md-none">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="Rupees" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                         </div> -->
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
                                 <div class="pakageCost mb-2 mb-md-2 mb-xxl-0">
-                                    <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
+                                    <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="Rupees" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
                                 </div>
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
@@ -489,7 +489,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <?php if ($user_intersted = $intrested_user->user) { ?>
                                         <div class="profileavtar">
                                             <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
-                                                <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
+                                                <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="Intrested User" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
                                             </a>
                                         </div>
                                     <?php } ?>
@@ -560,7 +560,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Interest</h1>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">Interest</h2>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body">
@@ -574,7 +574,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     <div class="modal-dialog modal-dialog-centered  modal-md">
         <div class="modal-content">
             <div class="modal-body">
-                <h1 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h1>
+                <h2 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h2>
             </div>
             <div class="modal-body px-2 pt-0">
                 <div id='modalContent'></div>
@@ -591,7 +591,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <br>
                     <p>Please report inappropriate members and/or content to help our Trust & Safety team keep our Community safe for everyone.</p>
                 </h6>
-                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt=""></button>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="Flag"></button>
             </div>
 
             <div class="modal-body modal_form">
@@ -603,10 +603,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 </div>
 
 <div class="modal fade _standard-text" id="history-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
+                <h2 class="modal-title fs-5" id="exampleModalLabel">History</h2>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body">

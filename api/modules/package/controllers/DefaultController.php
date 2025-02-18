@@ -96,7 +96,7 @@ class DefaultController extends RestController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -158,6 +158,26 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($package)) {
+
+                // $reply_comment = $replymodel->commentbyParent();
+                // if ($reply_comment) {
+                //     if ($this->userinfo) {
+                //         $user = $this->userinfo;
+                //         $username = $user->name;
+                //         $to_mail = $package->user->username;
+                //         $subject = 'New Reply : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $creator_name = $package->user->name;
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_REPLY_BY_USER;
+                //         $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                //         $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //         FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+                //     }
+                // }
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
@@ -289,9 +309,6 @@ class DefaultController extends RestController
         $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "comments");
-
-
-       
     }
 
     public function actionPackagePark($slug)
@@ -312,15 +329,12 @@ class DefaultController extends RestController
 
         $ids = array_column($packageSafariPark, 'park_id');
 
-       
+
         $dataProvider = new ActiveDataProvider([
-            'query' => SafariPark::find()->where(['id'=> $ids]),
+            'query' => SafariPark::find()->where(['id' => $ids]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "parks");
-
-
-       
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionPackageDays($slug)
@@ -365,30 +379,30 @@ class DefaultController extends RestController
 
         $data['PackageFaq']['summary']['query_params'] = $this->query_params;
 
-        if($dataProvider->getTotalCount() > 0){
+        if ($dataProvider->getTotalCount() > 0) {
 
             $data['PackageFaq']['data'] = $this->serializeData($dataProvider->getModels());
-        }else{
+        } else {
             $data['PackageFaq']['data'] = $this->serializeData($this->prepareDefaultQuestionAnswer($package));
-
         }
 
         return Yii::$app->api->sendResponse($data);
     }
 
-    private function prepareDefaultQuestionAnswer($package){
-      return  $arr = [
+    private function prepareDefaultQuestionAnswer($package)
+    {
+        return  $arr = [
             [
-                'question'=>"Are meals included in the Package?",
-                'answer'=>$package->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+                'question' => "Are meals included in the Package?",
+                'answer' => $package->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
             ],
             [
-                'question'=>"Does the Package include transport to and from the resort?",
-                'answer'=>$package->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+                'question' => "Does the Package include transport to and from the resort?",
+                'answer' => $package->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
             ],
             [
-                'question'=>"Are accommodation arrangements included in the Package?",
-                'answer'=>$package->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+                'question' => "Are accommodation arrangements included in the Package?",
+                'answer' => $package->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
             ],
 
         ];

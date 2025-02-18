@@ -22,7 +22,7 @@ use yii\helpers\Url;
                         <div class="comments-persons">
                             <div class="postcomment d-flex gap-2">
                                 <div class="avatar">
-                                    <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->organizedbyimage  ? $share_safari->organizedbyimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
+                                    <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->organizedbyimage  ? $share_safari->organizedbyimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="User Image" class="rounded-circle"></a>
                                 </div>
                                 <div class="text_com">
                                     <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>">
@@ -54,7 +54,7 @@ use yii\helpers\Url;
 
                                 <?php if ($comments->user && Yii::$app->user->identity) {
                                     if (Yii::$app->user->identity->id != $comments->user_id) { ?>
-                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="Flag" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
                                 <?php }
                                 }
                                 ?>
@@ -64,7 +64,7 @@ use yii\helpers\Url;
                                 <div class="avatar">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
                                         <!--                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">-->
-                                        <img src="<?= $comments->user->profileimage ?>" alt="" class="rounded-circle" title="<?= $comments->user ? $comments->user->getName() : '' ?>">
+                                        <img src="<?= $comments->user->profileimage ?>" alt="Profile Image" class="rounded-circle" title="<?= $comments->user ? $comments->user->getName() : '' ?>">
                                     </a>
                                 </div>
                                 <div class="text_com">
@@ -106,7 +106,7 @@ use yii\helpers\Url;
                                                 <div class="d-flex gap-2">
                                                     <div class="avatar">
                                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
-                                                            <img src="<?= $reply->user && $reply->user->profileImage <> '' ? $reply->user->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                            <img src="<?= $reply->user && $reply->user->profileImage <> '' ? $reply->user->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="Reply User Image">
                                                         </a>
                                                     </div>
                                                     <div class="font-color">
@@ -126,7 +126,7 @@ use yii\helpers\Url;
                                                         <?php if ($reply->user && Yii::$app->user->identity) {
                                                             if (Yii::$app->user->identity->id != $reply->user_id) {
                                                         ?>
-                                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
+                                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="Reply Flag" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
                                                         <?php }
                                                         }
                                                         ?>

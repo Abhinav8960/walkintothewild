@@ -19,7 +19,15 @@ use Yii;
  */
 class PackageFeature extends \common\models\package\PackageFeature
 {
-   
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields[] = 'featurename';
+        $hold_fields = ['id', 'package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
+
     public function getFeaturename()
     {
         return $this->hasOne(MasterPackagefeature::class, ['id' => 'feature_id']);

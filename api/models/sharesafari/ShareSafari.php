@@ -27,11 +27,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $fields[] = 'cost_per_person';
-
-        }else{
+        } else {
             $fields[] = 'estimate_price_min';
             $fields[] = 'estimate_price_max';
-
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
@@ -46,8 +44,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'faqs';
             $fields[] = 'mealslabel';
 
-            // $fields[] = 'share_safari_inclusion';
-            // $fields[] = 'share_safari_exclusion';
+            $fields[] = 'share_safari_inclusion';
+            $fields[] = 'share_safari_exclusion';
             $fields[] = 'share_safari_terms_condtition';
             $fields[] = 'date_change_policy';
             $fields[] = 'refund_policy';
@@ -63,8 +61,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
             // $fields[] = 'organizedId';
             // $fields[] = 'intrestedUser';
-
-
+            $fields[] = 'parks';
+            $fields[] = 'share_safari_agenda_id';
+            $fields[] = 'status';
         }
         return $fields;
 
@@ -164,21 +163,31 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return isset($options[$this->status]) ? $options[$this->status] : '';
     }
 
-    public function getPark()
+    public function getParks()
     {
-        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->hasMany(SafariPark::className(), ['id' => 'park_id']);
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return $this->getFixedDeparturePark();
+        }
     }
 
     public function getPark_title()
     {
-        return $this->park->title ?? NULL;
+        foreach ($this->parks as $park) {
+            return $park->title ?? NULL;
+        }
+    }
+
+    public function getShareSafariParklist()
+    {
+        return $this->hasMany(ShareSafariParklist::className(), ['share_safari_id' => 'id']);
     }
 
 
-
-    public function getParklist()
+    public function getFixedDeparturePark()
     {
-        return $this->hasMany(ShareSafariParklist::className(), ['id' => 'share_safari_id']);
+        return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('shareSafariParklist');
     }
 
 
@@ -379,7 +388,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSharesafariFaqs()
     {
-        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id'])->where(['share_safari_faq.status' => ShareSafariFaq::STATUS_ACTIVE]);
     }
 
     public function getFaqs()

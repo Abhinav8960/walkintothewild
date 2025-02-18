@@ -12,7 +12,7 @@ class ShareSafariParklist extends \common\models\sharesafari\ShareSafariParklist
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'user';
+        // $fields[] = 'user';
         // $fields[] = 'sharesafari';
         $fields[] = 'park';
         $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];

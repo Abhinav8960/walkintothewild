@@ -58,7 +58,6 @@ class User extends \common\models\User
             "gmail",
             "google_source_id",
             "blocked_at",
-            "account_type",
             "password_updated_at",           
             "photo_privacy",
             "contribution_privacy",
@@ -100,7 +99,6 @@ class User extends \common\models\User
                 "gmail",
                 "google_source_id",
                 "blocked_at",
-                "account_type",
                 "password_updated_at",
                
                 "photo_privacy",

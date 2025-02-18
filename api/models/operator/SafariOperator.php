@@ -33,6 +33,10 @@ class SafariOperator extends \common\models\operator\SafariOperator
             $fields[] = 'website';
             $fields[] = 'urls';
         }
+
+        if (isset($this->google_rating)) {
+            $this->google_rating = round($this->google_rating, 1);
+        }
         return $fields;
     }
 
@@ -211,6 +215,4 @@ class SafariOperator extends \common\models\operator\SafariOperator
     {
         return $this->hasMany(MetaOtherWildlifeActivities::className(), ['id' => 'wildlife_activity_id'])->via('operatorsOtherWildlifeActivity');
     }
-
-    
 }
