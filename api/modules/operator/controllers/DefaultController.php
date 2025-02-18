@@ -15,15 +15,18 @@ use api\models\operator\SafariOperatorSearch;
 use api\models\package\Package;
 use api\models\package\PackageSearch;
 use api\models\park\SafariPark;
+use api\models\park\SafariParkSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\UserFollow;
 use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
+use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorReviewForm;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -196,7 +199,7 @@ class DefaultController extends RestController
         $ratingsearchModel->status = 1;
 
         // $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
-        return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "Review");
+        return $this->dataProviderSender($ratingsearchModel, $rootIndexName = "reviews");
     }
 
 
@@ -261,6 +264,7 @@ class DefaultController extends RestController
 
     public function actionUserRatingParklist($slug)
     {
+        $this->layout = NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
         $operator = SafariOperator::find()
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
             ->one();
@@ -277,7 +281,14 @@ class DefaultController extends RestController
             ->andWhere(['not in', 'park_id', $user_park_id])
             ->all();
 
-        return Yii::$app->api->sendResponse(['parks' => $operatorsafariparkData]);
+        $ids = array_column($operatorsafariparkData, 'park_id');
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id' => $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => false,
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionOperatorSharedSafari($slug)
@@ -292,7 +303,7 @@ class DefaultController extends RestController
         $searchModel->host_user_id = $operator->id;
         $searchModel->type = ShareSafari::TYPE_FIXED_DEPARTURE;
         $searchModel->status = ShareSafari::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "operatorsharedsafari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
         // return Yii::$app->api->sendResponse($data = ['operatorsharedsafari' => $this->serializeData($operator->sharedsafari)]);
     }
 
@@ -304,7 +315,17 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['operatorpark' => $this->serializeData($operator->park)]);
+        $safariOperatorPark =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator->id])->all();
+
+        $ids = array_column($safariOperatorPark, 'park_id');
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id' => $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionOperatorPackages($slug)
@@ -319,7 +340,7 @@ class DefaultController extends RestController
         $searchModel = new PackageSearch();
         $searchModel->owned_by_id = $operator->id;
         $searchModel->status = Package::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, "operatorpackage");
+        return $this->dataProviderSender($searchModel, "packages");
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }
 }

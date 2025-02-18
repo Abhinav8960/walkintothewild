@@ -152,6 +152,15 @@ return [
 
                 'manage' => 'manage/default/index',
                 'manage/<action>' => 'manage/default/<action>',
+                'manage/sharedsafari/create-fixed-departure' => 'manage/sharedsafari/create-fixed-departure',
+                'manage/sharedsafari/<action>/<slug>' => 'manage/sharedsafari/<action>',
+                'manage/sharedsafari/<action>/<slug>/<day>' => 'manage/sharedsafari/<action>',
+
+                /**Manage Package */
+                'manage/package/create' => 'manage/package/create',
+                'manage/package/<action>/<slug>' => 'manage/package/<action>',
+                'manage/package/<action>/<slug>/<day>' => 'manage/package/<action>',
+
 
             ],
 

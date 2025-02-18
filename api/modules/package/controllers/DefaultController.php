@@ -10,6 +10,9 @@ use api\controllers\RestController;
 use api\models\operator\SafariOperator;
 use api\models\package\Package;
 use api\models\package\PackageComment;
+use api\models\package\PackageCommentSearch;
+use api\models\package\PackageFaq;
+use api\models\package\PackageFaqSearch;
 use api\models\package\PackageSafariPark;
 use api\models\package\PackageSearch;
 use api\models\park\SafariPark;
@@ -19,10 +22,12 @@ use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
+use common\models\package\PackageDaySearch;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -84,14 +89,14 @@ class DefaultController extends RestController
         $searchModel->custom_sort_by = 5;
         $condition = "owned_by_id IN (SELECT id from safari_operator WHERE status=1)";
 
-        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "Packages", $condition);
+        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "packages", $condition);
     }
 
 
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -153,6 +158,26 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($package)) {
+
+                // $reply_comment = $replymodel->commentbyParent();
+                // if ($reply_comment) {
+                //     if ($this->userinfo) {
+                //         $user = $this->userinfo;
+                //         $username = $user->name;
+                //         $to_mail = $package->user->username;
+                //         $subject = 'New Reply : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $creator_name = $package->user->name;
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_REPLY_BY_USER;
+                //         $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                //         $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //         FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+                //     }
+                // }
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
@@ -279,8 +304,11 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        $comment_list = PackageComment::find()->where(['package_id' => $package->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
-        return  Yii::$app->api->sendResponse($data = ['comments' => $comment_list]);
+
+        $searchModel = new PackageCommentSearch();
+        $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+        return $this->dataProviderSender($searchModel, "comments");
     }
 
     public function actionPackagePark($slug)
@@ -290,19 +318,23 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
-       
+
         $packageSafariPark = PackageSafariPark::find()
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
-            ->one();
+            ->all();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
         }
-        $ids = array_column($packageSafariPark,'park_id');
-        $searchModel = new SafariParkSearch();
-        $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
-        $searchModel->id = $ids;
-        return $this->dataProviderSender($searchModel, "SafariPark");
 
+
+        $ids = array_column($packageSafariPark, 'park_id');
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id' => $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 
     public function actionPackageDays($slug)
@@ -311,7 +343,11 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['days' => $this->serializeData($package->packagedays)]);
+
+        $searchModel = new PackageDaySearch();
+        $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+        return $this->dataProviderSender($searchModel, "PackageDay");
     }
 
     public function actionPackageFaqs($slug)
@@ -320,6 +356,55 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($package->faqs)]);
+
+        $searchModel = new PackageFaqSearch();
+        $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
+        $searchModel->package_id = $package->id;
+
+
+        $data = [];
+        $searchModel->load(\Yii::$app->request->queryParams);
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+
+
+
+        $dataProvider->pagination = false;
+
+        // $data['PackageFaq']['summary']['total'] = $dataProvider->getTotalCount();
+        // $data['PackageFaq']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+        // $data['PackageFaq']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+        // $data['PackageFaq']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+
+        $data['PackageFaq']['summary']['query_params'] = $this->query_params;
+
+        if ($dataProvider->getTotalCount() > 0) {
+
+            $data['PackageFaq']['data'] = $this->serializeData($dataProvider->getModels());
+        } else {
+            $data['PackageFaq']['data'] = $this->serializeData($this->prepareDefaultQuestionAnswer($package));
+        }
+
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    private function prepareDefaultQuestionAnswer($package)
+    {
+        return  $arr = [
+            [
+                'question' => "Are meals included in the Package?",
+                'answer' => $package->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question' => "Does the Package include transport to and from the resort?",
+                'answer' => $package->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question' => "Are accommodation arrangements included in the Package?",
+                'answer' => $package->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
     }
 }

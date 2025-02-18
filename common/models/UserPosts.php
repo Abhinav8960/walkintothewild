@@ -59,6 +59,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             [['caption', 'description', 'location', 'filepath', 'etag'], 'string'],
             // [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
+            [['v_size', 'v_duration'], 'integer'],
+
         ];
     }
 

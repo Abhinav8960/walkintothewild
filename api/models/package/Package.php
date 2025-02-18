@@ -2,6 +2,7 @@
 
 namespace api\models\package;
 
+use api\models\master\packagefeature\MasterPackagefeature;
 use api\models\master\packageinclude\MasterPackageInclude;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
@@ -30,7 +31,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'urls'];
+        $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date',];
 
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
@@ -47,9 +48,19 @@ class Package extends \common\models\package\Package
             $fields[] = 'getting_there';
             $fields[] = 'pickanddrop';
             $fields[] = 'meals';
-            // $fields[] = 'packagepark';
+            $fields[] = 'mealslabel';
+
+            $fields[] = 'packagepark';
             $fields[] = 'packagedays';
             $fields[] = 'faqs';
+            $fields[] = 'type';
+            $fields[] = 'master_vehicle_id';
+            $fields[] = 'packagefeaturesname';
+            $fields[] = 'safari_type';
+            $fields[] = 'gst_percentage';
+            $fields[] = 'package_agenda_id';
+            $fields[] = 'stay_category_id';
+            $fields[] = 'status';
         }
         return $fields;
         // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
@@ -225,6 +236,11 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
+    public function getPackagefeaturesname()
+    {
+        return $this->hasMany(MasterPackagefeature::class, ['id' => 'feature_id'])->via('packagefeatures');
+    }
+
 
     // public function getPackageIncludeds()
     // {
@@ -284,6 +300,11 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
     }
 
+    public function getCommentCount()
+    {
+        return $this->getComments()->count();
+    }
+
 
     public function getSafarioperatorUser()
     {
@@ -312,10 +333,18 @@ class Package extends \common\models\package\Package
     /**
      * Parks List
      */
+
+
     public function getSinglepark()
     {
         return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
     }
+
+    public function getPrimaryPark()
+    {
+        return $this->singlepark->park->title;
+    }
+
 
     /**
      * Parks List
@@ -417,10 +446,33 @@ class Package extends \common\models\package\Package
         return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
     }
 
-    public function getFaqs()
+    public function getPackageFaqs()
     {
         return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
     }
+
+    public function getFaqs()
+    {
+        if ($this->getPackageFaqs()->count() > 0) {
+            return $this->packageFaqs;
+        }
+        return   [
+            [
+                'question' => "Are meals included in the Package?",
+                'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question' => "Does the Package include transport to and from the resort?",
+                'answer' => $this->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question' => "Are accommodation arrangements included in the Package?",
+                'answer' => $this->accomodationIncludes == 'Included' ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
+    }
+
 
     public function getActiveUserWishlist()
     {
@@ -447,7 +499,10 @@ class Package extends \common\models\package\Package
     {
         return [
             // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
-            'packagepark' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
+            // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
+            // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
+            // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
+            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
         ];
     }
 }

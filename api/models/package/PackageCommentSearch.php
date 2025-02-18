@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\package;
+namespace api\models\package;
 
-use common\models\package\Package;
-use common\models\package\PackageComment;
+use api\models\package\Package;
+use api\models\package\PackageComment;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -44,7 +44,7 @@ class PackageCommentSearch extends PackageComment
      */
     public function search($params, $pagination = true)
     {
-        $query = PackageComment::find()->where(['flaged' => 1])->andWhere(['is_deleted' => 0]);
+        $query = PackageComment::find()->where(['parent_id' => null, 'is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10]);
 
         // add conditions that should always apply here
 

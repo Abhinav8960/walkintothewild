@@ -46,6 +46,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "google/apiclient": "^2.18",
         "lubosdz/yii2-template-engine": "^1.1",
+        "codemonauts/yii2-cloudwatch-logs": "^1.0",
         "james-heinrich/getid3": "*"
     },
     "require-dev": {

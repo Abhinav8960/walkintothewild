@@ -13,10 +13,10 @@ use common\models\MailLog;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafariParklist;
 use frontend\models\form\CreateDepartureForm;
-use frontend\models\form\SharedSafariForm;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
+use api\models\sharesafari\form\SharedSafariForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
@@ -48,7 +48,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs','intrested-user'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -97,20 +97,22 @@ class DefaultController extends SafariController
     public function actionIndex()
     {
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Share Safari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
     }
 
 
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-        $searchModel = new ShareSafariSearch();
-        $searchModel->id = $share_safari->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => ShareSafari::find()->where(['slug' => $slug]),
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = 0, $singleRecord = true);
     }
 
     public function actionOrganizeSafari()
@@ -189,7 +191,7 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-        $share_safari = $this->sharesafari;
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if ($share_safari) {
             if ($this->userinfo) {
                 if ($this->userinfo->operator) {
@@ -212,6 +214,25 @@ class DefaultController extends SafariController
                 $share_safari_intrested->status = 1;
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save(false)) {
+                    /* Login User Info */
+                    // $user = $this->userinfo;
+                    // $username = $user->name;
+                    // /*Creator Info*/
+                    // if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                    //     $to_mail = $share_safari->user->username;
+                    // } else {
+                    //     $to_mail = $share_safari->safarioperator->user->username;
+                    // }
+                    // $creator_name = $share_safari->organizedbyname;
+                    // $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                    // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
+                    // $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                    // $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                    // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                    // }
+
                     FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                     FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
@@ -373,9 +394,45 @@ class DefaultController extends SafariController
         $replymodel->parent_id = $parent_id;
 
         $replymodel->attributes = $this->request;
+        $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($share_safari)) {
+                /* To Creator*/
+                // if ($this->userinfo && $share_safari->host_user_id != $this->userinfoId) {
+                //     $user = $this->userinfo;
+                //     $username = $user->name;
+                //     if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                //         $to_mail = $share_safari->user->username;
+                //     } else {
+                //         $to_mail = $share_safari->safarioperator->user->username;
+                //     }
+                //     $creator_name = $share_safari->organizedbyname;
+                //     $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_COMMENT_REPLY_SAFARI;
+                //     $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                //     $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //     }
+                //     FrontendNotificationHelper::sharedSafariReply($share_safari);
+                // }
+                // /* Comment Owner*/
+                // if ($this->userinfo && $on_comment && $to_comment_user = $on_comment->user) {
+                //     $reply_user = $this->userinfo;
+                //     $reply_username = $reply_user->name;
+                //     $to_mail = $to_comment_user->username;
+                //     $safari_creator_name = $share_safari->organizedbyname;
+                //     $subject = 'New Reply';
+                //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REPLY_BY_USER_TO_COMMENTUSER;
+                //     $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                //     $req = ['username' => $reply_username, 'creator_name' => $safari_creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //     }
+                // }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
@@ -411,7 +468,7 @@ class DefaultController extends SafariController
                 // $to_mail = Yii::$app->params['adminEmail'];
                 // $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                 // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-                // $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                // $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
                 // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
@@ -441,13 +498,13 @@ class DefaultController extends SafariController
         }
         // $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
-        
-       
+
+
         $dataProvider = new ActiveDataProvider([
-            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1,'parent_id' => null]),
+            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1, 'parent_id' => null]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "comments");
+        return $this->querySender($dataProvider, $rootIndexName = "comments");
     }
 
     /**
@@ -463,7 +520,6 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Includes not found']);
         }
         return Yii::$app->api->sendResponse($data = ['includes' => $this->serializeData($share_safari->includeds)]);
-        
     }
 
     public function actionFixedDepartureDays($slug)
@@ -500,8 +556,6 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => 'Faqs not found']);
         }
         return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($share_safari->sharesafariFaqs)]);
-
-        
     }
 
 
@@ -514,18 +568,18 @@ class DefaultController extends SafariController
 
         // return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
 
-        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id'=>$share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
 
         // return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
 
-        $ids = array_column($ShareSafariIntrested,'user_id');
+        $ids = array_column($ShareSafariIntrested, 'user_id');
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
             // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
+        return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
     }
-    
+
     public function actionUpdate($slug)
     {
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
@@ -542,8 +596,8 @@ class DefaultController extends SafariController
             if ($model->shared_safari_model->save(false)) {
                 $model->shared_safari_model->savehistory();
                 $model->UploadFiles($model->shared_safari_model->id);
-
-                // $intrested_users = $shared_safari_model->getIntrested()->where(['status' => 1])->all();
+                /* All Joined User*/
+                // $intrested_users = $shared_safari_model->getIntrested()->where(['share_safari_intrested.status' => 1])->all();
                 // if ($intrested_users) {
                 //     foreach ($intrested_users as $intrest) {
                 //         $user = $intrest->user;

@@ -26,7 +26,7 @@ use api\models\master\state\MasterStateSearch;
 use api\models\master\suggetioncategory\MasterSuggestionCategorySearch;
 use api\models\master\vehicle\MasterVehicleSearch;
 use api\models\meta\MetaAccommodationSearch;
-
+use common\models\GeneralModel;
 
 /**
  * Site controller
@@ -62,6 +62,8 @@ class DefaultController extends RestController
                     'state' => ['GET'],
                     'suggestion-category' => ['GET'],
                     'vehicle' => ['GET'],
+                    'privacy-options' => ['GET'],
+                    
                 ],
             ],
         ];
@@ -194,5 +196,11 @@ class DefaultController extends RestController
         $searchModel->status =  MasterVehicleSearch::STATUS_ACTIVE;
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "MasterVehicle");
+    }
+
+    public function actionPrivacyOptions(){
+        $options = GeneralModel::privacyoptions();
+
+       return $this->dataSender($options, 'privacyOptions');
     }
 }

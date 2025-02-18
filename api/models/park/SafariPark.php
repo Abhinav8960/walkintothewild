@@ -34,11 +34,10 @@ class SafariPark extends \common\models\park\SafariPark
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
-
         }
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK])) {
-            $fields = ['title', 'slug'];
+        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL])) {
+            $fields = ['id', 'title', 'slug'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
@@ -155,13 +154,13 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $text = '';
         $columns = ['nearest_railway_station', 'nearest_railway_station_two', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five'];
-        foreach($columns as $column){
+        foreach ($columns as $column) {
             if ($railwaystation = $this->getRailwaystationdata($column)->one()) {
                 $text .= $railwaystation->title . ', ';
             }
         }
 
-        
+
         return substr($text, 0, -2);
     }
 
@@ -369,8 +368,8 @@ class SafariPark extends \common\models\park\SafariPark
         return [
             'operators' =>  Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-operator',
             'sharedsafari' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-shared-safari',
-            'package' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package',
-            'review' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/reviewlist?sort_by=highest',
+            'packages' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package',
+            'reviews' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/reviewlist?sort_by=highest',
         ];
     }
 }

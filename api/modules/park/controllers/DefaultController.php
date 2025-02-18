@@ -80,7 +80,7 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "SafariPark");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "parks");
     }
 
     /**
@@ -111,7 +111,7 @@ class DefaultController extends RestController
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
         // $searchModel->show_in_filter = 1;
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "SafariPark");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "parks");
     }
 
     public function actionReviewlist($slug, $sort_by = null)
@@ -128,7 +128,7 @@ class DefaultController extends RestController
         $searchModel->status = 1;
         $searchModel->custom_sort_by = $sort_by;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Review");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "reviews");
     }
 
 
@@ -198,7 +198,7 @@ class DefaultController extends RestController
         $operatorsearchModel->status = 1;
       
 
-        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "ParkOperator", $additionalSearchQueryParams = [$parl_id=$model->id]);
+        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$parl_id=$model->id]);
     }
 
     public function actionParkSharedSafari($slug)
@@ -211,7 +211,7 @@ class DefaultController extends RestController
         $searchModel = new ShareSafariSearch();
         $searchModel->park_id = $model->id;
         $searchModel->status = ShareSafari::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "parksharedsafari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
     }
 
     public function actionParkPackage($slug)
@@ -226,6 +226,6 @@ class DefaultController extends RestController
         $searchModel = new PackageSearch();
         $searchModel->id = $packageIds;
         $searchModel->status = Package::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, "parkpackage");
+        return $this->dataProviderSender($searchModel, "packages");
     }
 }

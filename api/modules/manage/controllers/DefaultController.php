@@ -131,6 +131,7 @@ class DefaultController extends RestController
                 }
             }
         }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     /**
@@ -171,21 +172,19 @@ class DefaultController extends RestController
     public function actionOperatorSafarilist()
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
-        }
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "ShareSafarilist", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
 
     public function actionOperatorPackagelist()
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
+        if ($safari_operator->category_id == 1) {
+            $searchModel = new PackageSearch();
+            return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+        } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $searchModel = new PackageSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Packagelist", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 }

@@ -22,11 +22,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function fields()
     {
 
-      
-        $fields = ['id','haveYouJoined','share_safari_title','slug','no_of_safari','start_date','end_date','cut_off_date','cost_per_person','total_seat','share_seat','types','organizedbyname','organizedbyimage','organizedslug','sharedimagepath','seatfullStatus','isWishlist','isFollowed','interseted_user_count','park_title'];
-        
+
+        $fields = ['id', 'haveYouJoined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organizedbyname', 'organizedbyimage', 'organizedslug', 'sharedimagepath', 'seatfullStatus', 'isWishlist', 'isFollowed', 'interseted_user_count', 'park_title'];
+
+        if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            $fields[] = 'cost_per_person';
+        } else {
+            $fields[] = 'estimate_price_min';
+            $fields[] = 'estimate_price_max';
+        }
+
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
-            
+
             $fields[] = 'website_url';
             $fields[] = 'witwaveragerating';
             $fields[] = 'witwreviewcount';
@@ -34,10 +41,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'lunch_included';
             $fields[] = 'dinner_included';
             $fields[] = 'meal_not_included';
-            $fields[] = 'sharesafariFaqs';
-            
-            // $fields[] = 'share_safari_inclusion';
-            // $fields[] = 'share_safari_exclusion';
+            $fields[] = 'faqs';
+            $fields[] = 'mealslabel';
+
+            $fields[] = 'share_safari_inclusion';
+            $fields[] = 'share_safari_exclusion';
             $fields[] = 'share_safari_terms_condtition';
             $fields[] = 'date_change_policy';
             $fields[] = 'refund_policy';
@@ -49,10 +57,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
+            $fields[] = 'commentsCount';
+
             // $fields[] = 'organizedId';
             // $fields[] = 'intrestedUser';
-
-           
+            $fields[] = 'parks';
+            $fields[] = 'share_safari_agenda_id';
+            $fields[] = 'status';
         }
         return $fields;
 
@@ -152,21 +163,31 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return isset($options[$this->status]) ? $options[$this->status] : '';
     }
 
-    public function getPark()
+    public function getParks()
     {
-        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->hasMany(SafariPark::className(), ['id' => 'park_id']);
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return $this->getFixedDeparturePark();
+        }
     }
 
     public function getPark_title()
     {
-        return $this->park->title ?? NULL;
+        foreach ($this->parks as $park) {
+            return $park->title ?? NULL;
+        }
     }
 
-    
-
-    public function getParklist()
+    public function getShareSafariParklist()
     {
-        return $this->hasMany(ShareSafariParklist::className(), ['id' => 'share_safari_id']);
+        return $this->hasMany(ShareSafariParklist::className(), ['share_safari_id' => 'id']);
+    }
+
+
+    public function getFixedDeparturePark()
+    {
+        return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('shareSafariParklist');
     }
 
 
@@ -188,7 +209,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getHaveYouJoined()
     {
-        return $this->getIntrested()->where(['user_id'=>\Yii::$app->params['active_user_id']])->exists();
+        return $this->getIntrested()->where(['user_id' => \Yii::$app->params['active_user_id']])->exists();
     }
 
     public function getIntrestedUser()
@@ -201,7 +222,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->getIntrestedUser()->count();
     }
 
-    
+
 
     public function getSharedimagepath()
     {
@@ -212,6 +233,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getComments()
     {
         return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getCommentsCount()
+    {
+        return $this->getComments()->count();
     }
 
     /**
@@ -362,7 +388,29 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSharesafariFaqs()
     {
-        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id'])->where(['share_safari_faq.status' => ShareSafariFaq::STATUS_ACTIVE]);
+    }
+
+    public function getFaqs()
+    {
+        if ($this->getSharesafariFaqs()->count() > 0) {
+            return $this->sharesafariFaqs;
+        }
+        return   [
+            [
+                'question' => "Are meals included in the Fixed Departure?",
+                'answer' => $this->meals == 'Included' ? "Yes: Meals are included and will be provided as per the itinerary." : "No: Meals are not included; it will be charged additionally.",
+            ],
+            [
+                'question' => "Does the Fixed Departure include transport to and from the resort?",
+                'answer' => $this->getIncludeds()->where(['include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->exists() == true ? ">Yes: Transport to and from the resort is included in the Fixed Departure." : "No: Transport is not included; you will need to arrange your own.",
+            ],
+            [
+                'question' => "Are accommodation arrangements included in the Fixed Departure?",
+                'answer' => $this->getIncludeds()->where(['include_id' => 1, 'selection' => 1, 'status' => 1])->limit(1)->exists() == true ? "Yes: Accomodation is included." : "No: Accomodation is not included.",
+            ],
+
+        ];
     }
 
 
@@ -439,7 +487,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getUrls()
     {
         return [
-            'intrested_users' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/intrested-user'
+            'intrested_users' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/intrested-user',
+            'comments' => Yii::$app->params['api_url'] . '/sharesafari/' . $this->slug . '/comment-view'
         ];
     }
 }

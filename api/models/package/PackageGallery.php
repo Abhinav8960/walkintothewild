@@ -21,10 +21,19 @@ use Yii;
 class PackageGallery extends \common\models\package\PackageGallery
 {
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
+        $hold_fields = ['image','sequence','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
+
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/package_gallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['frontend_url_for_api'] .'/storage/package_gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

@@ -256,11 +256,11 @@ class DefaultController extends RestController
         $wishlist_items = UserWishlist::find()->select('item_id')->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
         $packageIds =  array_column($wishlist_items, 'item_id');
 
-        $searchModel = new PackageSearch();
-        $searchModel->id = $packageIds;
-        $searchModel->status = Package::STATUS_ACTIVE;
-
-        return $this->dataProviderSender($searchModel, "packages");
+        $dataProvider = new ActiveDataProvider([
+            'query' => Package::find()->where(['id'=> $packageIds]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+       return $this->querySender($dataProvider, $rootIndexName = "packages");
 
     }
 
@@ -279,7 +279,7 @@ class DefaultController extends RestController
             'query' => ShareSafari::find()->where(['id'=> $saafariIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "ShareSafari");
+       return $this->querySender($dataProvider, $rootIndexName = "sharedsafari");
         
 
 

@@ -637,24 +637,24 @@ class PackageController extends FrontendBaseController
 
 
 
-    public function actionGallery($slug)
-    {
-        $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id != 1) {
-            return $this->redirect('/manage');
-        }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $searchModel = new PackageGallerySearch();
-        $searchModel->package_id = $package_model->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    // public function actionGallery($slug)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     if ($safari_operator->category_id != 1) {
+    //         return $this->redirect('/manage');
+    //     }
+    //     $package_model = $this->findModel($slug, $safari_operator->id);
+    //     $searchModel = new PackageGallerySearch();
+    //     $searchModel->package_id = $package_model->id;
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        return $this->render('gallery', [
-            'package_model' => $package_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    //     return $this->render('gallery', [
+    //         'package_model' => $package_model,
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
     public function actionCreateGallery($slug, $id = null)
     {

@@ -11,7 +11,7 @@ class ShareSafariGallery extends \common\models\sharesafari\ShareSafariGallery
     {
         $fields = parent::fields();
         $fields[] = 'imagepath';
-        $hold_fields = ['sequence','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['image','sequence','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
