@@ -17,7 +17,7 @@ INSERT INTO `master_notification_template` (`id`, `title`, `message`, `status`, 
 (4, 'New Follower', '{{var1}} is now following you!', 1, 1735796519, 30, 1735796519, 30),
 (5, 'Package Intrest', '{{var1}} has shown interest in your package.', 1, 1735806508, 30, 1735806508, 30),
 (6, 'Quote Request', 'You have a new quote request!', 1, 1735806532, 30, 1735806532, 30),
-(7, 'New Review', 'You\'ve received a new review!', 1, 1735806556, 30, 1735806556, 30);
+(7, 'New Review', "You\'ve received a new review!", 1, 1735806556, 30, 1735806556, 30);
 
 
 ALTER TABLE `master_notification_template`
@@ -25,9 +25,10 @@ ALTER TABLE `master_notification_template`
 
 ALTER TABLE `master_notification_template`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-COMMIT;
 
 
 
 ALTER TABLE `firebase_notification_log` ADD `master_notification_template_id` INT NOT NULL AFTER `id`;
 ALTER TABLE `firebase_notification_log` ADD `send_datetime` DATETIME NULL AFTER `status`;
+
+ALTER TABLE `user_posts` ADD `v_size` INT NULL DEFAULT NULL AFTER `description`, ADD `v_duration` INT NULL DEFAULT NULL AFTER `v_size`;
