@@ -190,6 +190,7 @@ class DefaultController extends RestController
 
     public function actionReviewlist($slug, $sort_by = null)
     {
+        $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($operator)) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);

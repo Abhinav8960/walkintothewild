@@ -17,16 +17,11 @@ class SafariOperatorRating extends \common\models\operator\SafariOperatorRating
         {
             $fields[] = 'user';
             $fields[] = 'park';
-            $hold_fields = ['id', 'safari_operator_id', 'park_id', 'parent_id', 'user_id', 'flaged', 'is_deleted', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $hold_fields = ['safari_operator_id', 'park_id', 'parent_id', 'user_id', 'flaged', 'is_deleted', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }else{
             $hold_fields = ['id', 'safari_operator_id','parent_id', 'user_id', 'flaged', 'is_deleted', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         }
-        $fields = parent::fields();
-
-     
-
-
         return array_diff($fields, $hold_fields);
     }
     public function getUser()
