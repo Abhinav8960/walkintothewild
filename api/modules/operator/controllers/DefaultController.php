@@ -25,6 +25,7 @@ use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
+use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -49,10 +50,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow', 'unfollow', 'quotesrequest', 'review'],
+                'only' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['follow', 'unfollow', 'quotesrequest', 'review'],
+                        'actions' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,6 +74,8 @@ class DefaultController extends RestController
                     'user-rating-parklist' => ['GET'],
                     'operator-shared-safari' => ['GET'],
                     'operator-packages' => ['GET'],
+                    'reviewupdate' => ['POST'],
+                    'flag' => ['POST']
                 ],
             ],
         ];
@@ -342,5 +345,64 @@ class DefaultController extends RestController
         $searchModel->status = Package::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, "packages");
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
+    }
+
+    public function actionReviewupdate($slug, $id)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        $rating_model = SafariOperatorRating::find()->where(['user_id' => $this->userinfoId, 'safari_operator_id' => $operator->id, 'id' => $id])->one();
+        $model = new SafariOperatorReviewForm($rating_model);
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->rating_model->save(false)) {
+                $model->updateRatingintoTable($operator);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thanks for edit review!!']);
+            }
+        }
+    }
+
+
+    public function actionFlag($slug, $id)
+    {
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        $rating = SafariOperatorRating::find()->where(['id' => $id])->limit(1)->one();
+
+        $model = new SafariOperatorRatingReportForm();
+        $model->safari_operator_id = $operator->id;
+        $model->park_id = $rating->park_id;
+        $model->safari_operator_rating_id = $id;
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->flag_model->save(false)) {
+                $rating->flaged = 1;
+                $rating->save(false);
+                /* Mail to admin*/
+                // $to_mail = Yii::$app->params['adminEmail'];
+                // $subject = 'Flag Raised in Operator Review : ' . substr($operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                // $req = ['comment' => $rating->review, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Review reported successfully!']);
+            }
+        }
     }
 }
