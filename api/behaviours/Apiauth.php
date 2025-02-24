@@ -131,6 +131,5 @@ class Apiauth extends AuthMethod
     public function handleFailure($response)
     {
         return \Yii::$app->api->sendFailedStringResponse(['Access token not found']);
-        //throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
     }
 }
