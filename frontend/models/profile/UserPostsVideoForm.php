@@ -29,6 +29,8 @@ class UserPostsVideoForm extends Model
     public $action_validate_url;
     public $status;
 
+    public $video_thumbnail;
+
     public function __construct(UserPosts $user_photo_model = null)
     {
         $this->user_photo_model = Yii::createObject([
@@ -43,6 +45,7 @@ class UserPostsVideoForm extends Model
             $this->like_count = $this->user_photo_model->like_count;
             $this->v_size = $this->user_photo_model->v_size;
             $this->v_duration = $this->user_photo_model->v_duration;
+            $this->video_thumbnail = $this->user_photo_model->video_thumbnail;
 
             $this->status = $this->user_photo_model->status;
         }
@@ -59,6 +62,12 @@ class UserPostsVideoForm extends Model
                 ['file'],
                 'file',
                 'extensions' => ['mp4', 'avi', 'mkv', 'webm'],
+            ],
+            [
+                ['video_thumbnail'],
+                'file',
+                'extensions' => ['jpeg', 'jpg', 'png'],
+                // 'maxSize' => 10 * 1024,
             ],
             [['user_id', 'like_count', 'status'], 'integer'],
             [['user_id', 'like_count', 'status'], 'integer'],
@@ -86,6 +95,7 @@ class UserPostsVideoForm extends Model
         $this->user_photo_model->like_count = $this->like_count;
         $this->user_photo_model->v_size = $this->v_size;
         $this->user_photo_model->v_duration = $this->v_duration;
+        $this->user_photo_model->video_thumbnail = $this->video_thumbnail;
         $this->user_photo_model->status = $this->status;
     }
 
@@ -108,6 +118,26 @@ class UserPostsVideoForm extends Model
                     $this->user_photo_model->file = $fileName;
                     $this->user_photo_model->filepath = $filePath;
                     $this->user_photo_model->etag = $etag;
+
+                    $this->user_photo_model->save(false);
+                }
+            }
+        }
+
+        if ($this->video_thumbnail) {
+            $storagePath = 'watchpost';
+            $userPath = $storagePath . '/' . $this->user_photo_model->user_id . '/thumbnail';
+
+            $fileName = $this->user_photo_model->user_id . '_thumbnail_' . time() . '.' . $this->video_thumbnail->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                // try {
+                if ($video_thumbnail_etag =  FsHelper::saveUploadedFile($this->video_thumbnail, $filePath, $fileName, true)) {
+                    $this->user_photo_model->video_thumbnail = $fileName;
+                    $this->user_photo_model->video_thumbnail_path = $filePath;
+                    $this->user_photo_model->video_thumbnail_etag = $video_thumbnail_etag;
 
                     $this->user_photo_model->save(false);
                 }

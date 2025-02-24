@@ -22,41 +22,40 @@ class DefaultController extends RestController
     /**
      * @inheritdoc
      */
-    // public function behaviors()
-    // {
+    public function behaviors()
+    {
 
-    //   return  $behaviors = parent::behaviors();
+        $behaviors = parent::behaviors();
 
-    //     // return $behaviors += [
-    //     //     'apiauth' => [
-    //     //         'class' => Apiauth::className(),
-    //     //         'exclude' => ['index', 'view'],
-    //     //     ],
-    //     //     'access' => [
-    //     //         'class' => AccessControl::className(),
-    //     //         'only' => ['create', 'comment', 'reply', 'like'],
-    //     //         'rules' => [
-    //     //             [
-    //     //                 'actions' => ['create', 'comment', 'reply', 'like'],
-    //     //                 'allow' => true,
-    //     //                 'roles' => ['@'],
-    //     //             ],
-
-    //     //         ],
-    //     //     ],
-    //     //     'verbs' => [
-    //     //         'class' => Verbcheck::className(),
-    //     //         'actions' => [
-    //     //             'index' => ['GET'],
-    //     //             'view' => ['GET'],
-    //     //             'user-posts' => ['GET'],
-    //     //             'create' => ['POST'],
-    //     //             'comment' => ['POST'],
-    //     //             'reply' => ['POST'],
-    //     //         ],
-    //     //     ],
-    //     // ];
-    // }
+        return $behaviors += [
+            'apiauth' => [
+                'class' => Apiauth::className(),
+                'exclude' => ['index', 'view'],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'comment', 'reply', 'like'],
+                'rules' => [
+                    [
+                        'actions' => ['create', 'comment', 'reply', 'like'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => Verbcheck::className(),
+                'actions' => [
+                    'index' => ['GET'],
+                    'view' => ['GET'],
+                    'user-posts' => ['GET'],
+                    'create' => ['POST'],
+                    'comment' => ['POST'],
+                    'reply' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * 
@@ -79,6 +78,7 @@ class DefaultController extends RestController
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
         $model->v_size = $model->file->size;
         $model->v_duration = $this->getVideoDuration($model->file);
 

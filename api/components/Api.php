@@ -129,7 +129,7 @@ class Api extends Component
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Travel Creators <https://stagingv2-manage.travelcreators.com/>");
+        header('X-Powered-By: ' . "WalkIntoTheWild <http://staging-manage.walkintothewild.in/>");
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
