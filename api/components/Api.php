@@ -77,7 +77,7 @@ class Api extends Component
         //     $response = array_merge($response, $msg);
         // }
         // return $response = json_encode($response);
-        echo json_encode($response);
+        return $response;
         exit;
     }
 
