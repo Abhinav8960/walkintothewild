@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                     ]); ?>
                     <div class="col-md-6 typeaccount">
                         <?php
-                        $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer', 3 => 'Safari Operator'];
+                        $account_type = [1 => 'Traveller', 2 => 'Wildlife Influencer', 3 => 'Safari Operator'];
                         ?>
                         <?= $form->field($model, 'account_type')->radioList($account_type) ?>
                     </div>
