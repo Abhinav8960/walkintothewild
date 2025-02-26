@@ -6,10 +6,13 @@ use yii\bootstrap5\ActiveForm;
 
 ?>
 
-<div class="get_free_title">
+<!-- <div class="get_free_title">
+    <h4>Get a FREE quote</h4>
+</div> -->
+<div class="getquote_box">
+    <div class="get_free_title2 text-center pb-3">
     <h4>Get a FREE quote</h4>
 </div>
-<div class="getquote_box">
     <?php
     // $form = ActiveForm::begin([
     //     'id' => 'quoteform',
@@ -30,10 +33,9 @@ use yii\bootstrap5\ActiveForm;
 
     ]); ?>
     <div class="row gx-2">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="form-wrapper">
                 <label for="">Safari Park</label>
-
                 <?= $form->field($model, 'safari_park_id')->widget(\kartik\select2\Select2::className(), [
                     'hideSearch' => true,
                     'data' => GeneralModel::operatorsafariparkoption($operator->id),
@@ -42,9 +44,9 @@ use yii\bootstrap5\ActiveForm;
                 ])->label(false) ?>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="form-wrapper d-flex gap-3">
-                <div class="input-group2 mb-3">
+                <div class="input-group2 ">
                     <label for="safaris">Safaris</label>
                     <div class="number-input position-relative">
                         <?= $form->field($model, 'safaris')->textInput(['class' => 'form-control', 'id' => "safaris", 'value' => 0, 'disabled' => $disabled])->label(false) ?>
@@ -69,7 +71,7 @@ use yii\bootstrap5\ActiveForm;
 
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="form-wrapper">
                 <label for="">Accommodation</label>
                 <?= $form->field($model, 'stay_category_id')->widget(\kartik\select2\Select2::className(), [
@@ -95,33 +97,33 @@ use yii\bootstrap5\ActiveForm;
 
         <?php if (empty(Yii::$app->user->identity)) { ?>
             <div class="col-lg-6">
-                <div class="form-wrapper mb-3">
+                <div class="form-wrapper ">
                     <label for="">Full Name</label>
                     <?= $form->field($model, 'full_name')->textInput(['class' => 'form-control', 'placeholder' => 'Your name', 'disabled' => $disabled])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="form-wrapper mb-3">
+                <div class="form-wrapper ">
                     <label for="">Email Address</label>
                     <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'xyz@abc.com', 'disabled' => $disabled])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="form-wrapper mb-3">
+                <div class="form-wrapper ">
                     <label for="">Phone Number</label>
                     <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '0000000000', 'disabled' => $disabled])->label(false) ?>
                 </div>
             </div>
         <?php } ?>
         <?php if (!empty(Yii::$app->user->identity)) {
-            $class = "col-lg-6 order-2 pt-lg-0  content-center";
+            $class = "col-lg-12 pt-lg-0  content-center";
         } else {
-            $class = "col-lg-6 margi_top pt-lg-0 pb-3";
+            $class = "col-lg-12 margi_top pt-lg-0 pb-3";
         } ?>
         <div class="<?= $class ?>">
-            <?= Html::submitButton('Send Request', ['class' => 'sent_btn w-auto float-end', 'disabled' => $disabled]) ?>
+            <?= Html::submitButton('Send Request', ['class' => 'sent_btn w-100 mb-3 mt-2 ', 'disabled' => $disabled]) ?>
         </div>
-        <div class="col-6 order-1">
+        <div class="col-12 ">
             <div class="text_get">
                 <p class=""><span>*</span>Your request will be sent directly to the operator, but you can
                     also contact them directly if you prefer.</p>

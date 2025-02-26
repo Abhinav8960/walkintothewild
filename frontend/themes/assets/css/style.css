@@ -2744,6 +2744,16 @@ figure {
   color: var(--background-primary);
 }
 
+.get_free_title2 h4{
+
+  font-size: var(--fs-20);
+  text-align: center;
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  color: var(--background-primary);
+}
+
 .searchSafari_parks {
   background-color: #f5f5f5;
   border-radius: 10px;
