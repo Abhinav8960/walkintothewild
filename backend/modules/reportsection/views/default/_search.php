@@ -23,6 +23,10 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
+        <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Search by Share Safari Title'])->label('Title') ?>
+    </div>
+
+    <div class="col-md-3">
         <?= $form->field($model, 'park_id')->dropDownList(
             GeneralModel::safariparkoption(),
             ['prompt' => 'Select Safari Park']

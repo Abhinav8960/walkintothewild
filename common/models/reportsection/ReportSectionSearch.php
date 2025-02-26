@@ -12,6 +12,7 @@ class ReportSectionSearch extends Model
     public $start_date;
     public $end_date;
     public $park_id;
+    public $share_safari_title;
     /**
      * {@inheritdoc}
      */
@@ -20,6 +21,7 @@ class ReportSectionSearch extends Model
         return [
             [['id', 'park_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [['share_safari_title'], 'string'],
         ];
     }
 
@@ -78,6 +80,12 @@ class ReportSectionSearch extends Model
                 $query->joinwith(['park' => function ($query) {
                     $query->andWhere(['safari_park.id' => $this->park_id]);
                 }]);
+            }]);
+        }
+
+        if ($this->share_safari_title) {
+            $query->joinwith(['sharesafari' => function ($query) {
+                $query->andWhere(['like', 'share_safari.share_safari_title', $this->share_safari_title]);
             }]);
         }
 
