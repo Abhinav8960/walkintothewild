@@ -74,6 +74,9 @@ return [
         'contact' => [
             'class' => 'backend\modules\contact\Module',
         ],
+        'reportsection' => [
+            'class' => 'backend\modules\reportsection\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [

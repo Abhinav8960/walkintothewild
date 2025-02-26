@@ -1138,6 +1138,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
+														"/reportsection",
+														"/reportsection/default/index",
+													)) ? "active" : "" ?>" href="/reportsection/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Report Section</span></a>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
 														"/user",
 														"/user/default/index",
 														"/user/default/update",
