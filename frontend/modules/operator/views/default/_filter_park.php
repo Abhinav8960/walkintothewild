@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
 
 $script = <<< JS
                
-    $('form').on('change', function(){
+    $("#Searchform").on('change', function(){
         $("#Searchform").attr("data-pjax", "true");    
         $(this).closest('form').submit();
        

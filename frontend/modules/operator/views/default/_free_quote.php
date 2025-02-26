@@ -30,7 +30,7 @@ use yii\bootstrap5\ActiveForm;
 
     ]); ?>
     <div class="row gx-2">
-        <div class="col-lg-3">
+        <div class="col-lg-6">
             <div class="form-wrapper">
                 <label for="">Safari Park</label>
 
@@ -42,7 +42,7 @@ use yii\bootstrap5\ActiveForm;
                 ])->label(false) ?>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-6">
             <div class="form-wrapper d-flex gap-3">
                 <div class="input-group2 mb-3">
                     <label for="safaris">Safaris</label>
@@ -69,7 +69,7 @@ use yii\bootstrap5\ActiveForm;
 
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <div class="form-wrapper">
                 <label for="">Accommodation</label>
                 <?= $form->field($model, 'stay_category_id')->widget(\kartik\select2\Select2::className(), [
@@ -80,13 +80,13 @@ use yii\bootstrap5\ActiveForm;
                 ])->label(false) ?>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <div class="form-wrapper">
                 <label for="start-date">Start Date</label>
                 <?= $form->field($model, 'start_date')->input('date', ['class' => 'form-control', 'disabled' => $disabled])->label(false) ?>
             </div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-6">
             <div class="form-wrapper">
                 <label for="end-date">End Date</label>
                 <?= $form->field($model, 'end_date')->input('date', ['class' => 'form-control', 'disabled' => $disabled])->label(false) ?>
@@ -94,19 +94,19 @@ use yii\bootstrap5\ActiveForm;
         </div>
 
         <?php if (empty(Yii::$app->user->identity)) { ?>
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="form-wrapper mb-3">
                     <label for="">Full Name</label>
                     <?= $form->field($model, 'full_name')->textInput(['class' => 'form-control', 'placeholder' => 'Your name', 'disabled' => $disabled])->label(false) ?>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="form-wrapper mb-3">
                     <label for="">Email Address</label>
                     <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'xyz@abc.com', 'disabled' => $disabled])->label(false) ?>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="form-wrapper mb-3">
                     <label for="">Phone Number</label>
                     <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '0000000000', 'disabled' => $disabled])->label(false) ?>
@@ -114,14 +114,14 @@ use yii\bootstrap5\ActiveForm;
             </div>
         <?php } ?>
         <?php if (!empty(Yii::$app->user->identity)) {
-            $class = "col-lg-3 order-2 pt-lg-0  content-center";
+            $class = "col-lg-6 order-2 pt-lg-0  content-center";
         } else {
-            $class = "col-lg-3 margi_top pt-lg-0 pb-3";
+            $class = "col-lg-6 margi_top pt-lg-0 pb-3";
         } ?>
         <div class="<?= $class ?>">
             <?= Html::submitButton('Send Request', ['class' => 'sent_btn w-auto float-end', 'disabled' => $disabled]) ?>
         </div>
-        <div class="col-9 order-1">
+        <div class="col-6 order-1">
             <div class="text_get">
                 <p class=""><span>*</span>Your request will be sent directly to the operator, but you can
                     also contact them directly if you prefer.</p>
