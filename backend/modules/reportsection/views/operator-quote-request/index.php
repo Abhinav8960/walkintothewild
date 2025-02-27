@@ -8,7 +8,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Joined Report';
+$this->title = 'Operator Quote Report';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -19,6 +19,7 @@ $this->params['title'] = $this->title;
 
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
         <div id="w1-button" class="mb-3"></div>
         <div class="table-responsive">
             <?= GridView::widget([
@@ -32,42 +33,57 @@ $this->params['title'] = $this->title;
                         'label' => 'User Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->user) ? $model->user->name : '';
+                            return $model->full_name;
                         }
                     ],
 
                     [
-                        'label' => 'User Name',
+                        'label' => 'User Email',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->user) ? $model->user->email : '';
+                            return $model->email;
                         }
                     ],
 
                     [
-                        'label' => 'Share Safari Title',
+                        'label' => 'Operator Business Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->sharesafari) ? $model->sharesafari->share_safari_title : '';
+                            return isset($model->operator) ? $model->operator->business_name : '';
                         }
                     ],
 
                     [
-                        'label' => 'Park Title',
+                        'label' => 'Park',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->sharesafari->park) ? $model->sharesafari->park->title : '';
+                            return isset($model->park) ? $model->park->title : '';
                         }
                     ],
 
                     [
-                        'label' => 'Joined At',
+                        'label' => 'Travellers',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', $model->intrested_at);
+                            return  $model->travelers;
                         }
                     ],
 
+                    [
+                        'label' => 'Start Date',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->start_date;
+                        }
+                    ],
+
+                    [
+                        'label' => 'End Date',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->end_date;
+                        }
+                    ],
 
                 ],
             ]); ?>
