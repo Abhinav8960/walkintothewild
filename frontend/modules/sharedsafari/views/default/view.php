@@ -197,6 +197,16 @@ $this->params['title'] = $this->title; ?>
                         <div class="col-lg-4 pt-lg-0 pt-4">
                             <div class="row px-sm-2 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
+                                    <div class="safridetails_form d-flex gap-3 ">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="Night Mode" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="Icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
@@ -247,7 +257,7 @@ $this->params['title'] = $this->title; ?>
                                     </div>
                                 </div>
                                 <?php if ($share_safari->type == 1) { ?>
-                                    <div class="col-12 ">
+                                    <div class="col-12 col-sm-6  mb-3 ">
                                         <div class="safridetails_form d-flex gap-3 align-items-center">
                                             <div class="iconImg">
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="Rupee" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
@@ -258,10 +268,10 @@ $this->params['title'] = $this->title; ?>
                                                         <span class="font_span">Free</span>
                                                     <?php } else if ($share_safari->estimate_price_min == $share_safari->estimate_price_max) { ?>
                                                         <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?></span>
-                                                        Per Person Cost
+
                                                     <?php } else { ?>
                                                         <span class="font_span"><?= number_format($share_safari->estimate_price_min) ?> - <?= number_format($share_safari->estimate_price_max) ?></span>
-                                                        Per Person Cost
+
                                                     <?php } ?>
                                                 </p>
                                             </div>

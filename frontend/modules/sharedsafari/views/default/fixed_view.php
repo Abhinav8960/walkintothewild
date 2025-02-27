@@ -169,7 +169,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-4">
                             <div class="row ps-1">
-                                <!-- <div class="col-12 col-sm-6  mb-3">
+                                <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="Night Mode" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
@@ -178,7 +178,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
