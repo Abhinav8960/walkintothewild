@@ -13,6 +13,7 @@ use yii\data\ActiveDataProvider;
 class PackageQuoteSearch extends PackageQuote
 {
     public $report_days;
+    public $name;
 
 
 
@@ -32,7 +33,7 @@ class PackageQuoteSearch extends PackageQuote
     {
         return [
             [['package_id', 'travelers', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'user_agent', 'os', 'browser', 'device_type'], 'string', 'max' => 255],
+            [['start_date', 'user_agent', 'os', 'browser', 'device_type','name'], 'string', 'max' => 255],
             [['ip_address'], 'string', 'max' => 45],
             [['report_days'], 'safe']
         ];
@@ -56,7 +57,7 @@ class PackageQuoteSearch extends PackageQuote
      */
     public function search($params)
     {
-        $query = PackageQuote::find()->where(['status' => [PackageQuote::STATUS_ACTIVE, PackageQuote::STATUS_SUSPEND]]);
+        $query = PackageQuote::find()->where(['package_quote.status' => [PackageQuote::STATUS_ACTIVE, PackageQuote::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -75,20 +76,27 @@ class PackageQuoteSearch extends PackageQuote
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'package_id' => $this->package_id,
-            'start_date' => $this->start_date,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'package_quote.id' => $this->id,
+            'package_quote.package_id' => $this->package_id,
+            'package_quote.start_date' => $this->start_date,
+            'package_quote.created_at' => $this->created_at,
+            'package_quote.created_by' => $this->created_by,
+            'package_quote.updated_at' => $this->updated_at,
+            'package_quote.updated_by' => $this->updated_by,
+            'package_quote.status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'travelers', $this->travelers]);
+        $query->andFilterWhere(['like', 'package_quote.travelers', $this->travelers]);
 
         if ($this->report_days) {
             // 
             $query->andWhere($this->rawdatequery);
+        }
+
+
+        if ($this->name) {
+            $query->joinwith(['package' => function ($query) {
+                $query->andWhere(['like', 'package.package_name', $this->name]);
+            }]);
         }
 
         return $dataProvider;
