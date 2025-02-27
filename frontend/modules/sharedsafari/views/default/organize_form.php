@@ -115,7 +115,7 @@ $this->params['title'] = $this->title;
                             </div>
 
                             <div class="col-md-12 mb-2">
-                                <label for="" class="Modal_label">Estimate Price Per Person (INR) <span class="necessary">*</span></label>
+                                <label for="" class="Modal_label">Price Per Person (INR) <span class="necessary">*</span></label>
                                 <div class="d-flex gap-3 align-items-center">
                                     <?= $form->field($model, 'estimate_price_min')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
                                     <span>-</span>
