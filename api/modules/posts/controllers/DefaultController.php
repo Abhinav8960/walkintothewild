@@ -22,40 +22,40 @@ class DefaultController extends RestController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    // public function behaviors()
+    // {
 
-        $behaviors = parent::behaviors();
+    //     $behaviors = parent::behaviors();
 
-        return $behaviors += [
-            'apiauth' => [
-                'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'like'],
-                'rules' => [
-                    [
-                        'actions' => ['create', 'comment', 'reply', 'like'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => Verbcheck::className(),
-                'actions' => [
-                    'index' => ['GET'],
-                    'view' => ['GET'],
-                    'user-posts' => ['GET'],
-                    'create' => ['POST'],
-                    'comment' => ['POST'],
-                    'reply' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    //     return $behaviors += [
+    //         'apiauth' => [
+    //             'class' => Apiauth::className(),
+    //             'exclude' => ['index', 'view'],
+    //         ],
+    //         'access' => [
+    //             'class' => AccessControl::className(),
+    //             'only' => ['create', 'comment', 'reply', 'like'],
+    //             'rules' => [
+    //                 [
+    //                     'actions' => ['create', 'comment', 'reply', 'like'],
+    //                     'allow' => true,
+    //                     'roles' => ['@'],
+    //                 ],
+    //             ],
+    //         ],
+    //         'verbs' => [
+    //             'class' => Verbcheck::className(),
+    //             'actions' => [
+    //                 'index' => ['GET'],
+    //                 'view' => ['GET'],
+    //                 'user-posts' => ['GET'],
+    //                 'create' => ['POST'],
+    //                 'comment' => ['POST'],
+    //                 'reply' => ['POST'],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     /**
      * 
