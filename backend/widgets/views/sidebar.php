@@ -1153,7 +1153,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/default/index")) ? "active" : "" ?>" href="/reportsection/default/index">Joined Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/operator-quote-request/index")) ? "active" : "" ?>" href="/reportsection/operator-quote-request/index">Operator Quote Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/package-quote-request/index")) ? "active" : "" ?>" href="/reportsection/package-quote-request/index">Package Quote Report</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/index")) ? "active" : "" ?>" href="/reportsection/comment-report/index">Comment Reply Report</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/index")) ? "active" : "" ?>" href="/reportsection/comment-report/index">Comment Report</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/reply")) ? "active" : "" ?>" href="/reportsection/comment-report/reply">Reply Report</a></li>
+
 						</ul>
 					</li>
 				<?php endif; ?>

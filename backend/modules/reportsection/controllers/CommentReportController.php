@@ -28,6 +28,17 @@ class CommentReportController extends Controller
         ]);
     }
 
+    public function actionReply()
+    {
+        $searchModel = new ShareSafariCommentSearch();
+        $dataProvider = $searchModel->listingsearch($this->request->queryParams);
+        $dataProvider->query->andWhere(['not', ['parent_id' => null]]);
+        return $this->render('replylist', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
     public function actionReplyview($id)
     {
         $review = ShareSafariComment::find()->where(['parent_id' => $id]);
