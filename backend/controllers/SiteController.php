@@ -19,6 +19,9 @@ use common\models\sharesafari\ShareSafari;
 //use common\models\trierror\BackendErrorLog;
 //use common\models\trierror\form\BackendErrorLogForm;
 use common\models\trierror\form\ErrorLogForm;
+use common\models\urlshortner\UrlShortner;
+use Google\Auth\CredentialSource\UrlSource;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -36,7 +39,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'redirect'],
+                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url'],
                         'allow' => true,
                     ],
                     [
@@ -399,4 +402,16 @@ class SiteController extends Controller
         );
     }
     */
+
+    public function actionRedirectUrl($short_id)
+    {
+        $url = UrlShortner::findOne(['short_id' => $short_id]);
+
+        if ($url) {
+            $url->incrementClick();
+            return $this->redirect($url->shortner_url, $url->code ?? '302');
+        }
+
+        throw new NotFoundHttpException('Short URL not found.');
+    }
 }

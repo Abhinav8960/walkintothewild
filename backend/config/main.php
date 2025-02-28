@@ -77,6 +77,10 @@ return [
         'reportsection' => [
             'class' => 'backend\modules\reportsection\Module',
         ],
+        'urlshortner' =>
+        [
+            'class' => 'backend\modules\urlshortner\Module'
+        ]
     ],
     'components' => [
         'reCaptcha3' => [
