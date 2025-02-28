@@ -1140,29 +1140,32 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/reportsection/default/index",
 											"/reportsection/operator-quote-request/index",
 											"/reportsection/package-quote-request/index",
+											"/reportsection/comment-report/index",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/reportsection/default/index",
 														"/reportsection/operator-quote-request/index",
 														"/reportsection/package-quote-request/index",
+														"/reportsection/comment-report/index",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Report Section</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Report Section</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/default/index")) ? "active" : "" ?>" href="/reportsection/default/index">Joined Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/operator-quote-request/index")) ? "active" : "" ?>" href="/reportsection/operator-quote-request/index">Operator Quote Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/package-quote-request/index")) ? "active" : "" ?>" href="/reportsection/package-quote-request/index">Package Quote Report</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/index")) ? "active" : "" ?>" href="/reportsection/comment-report/index">Comment Reply Report</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<!-- <?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/urlshortner",
 														"/urlshortner/default/index",
 													)) ? "active" : "" ?>" href="/urlshortner/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Url Shortner</span></a>
 					</li>
-				<?php endif; ?>
+				<?php endif; ?> -->
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
