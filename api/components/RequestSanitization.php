@@ -27,7 +27,7 @@ class RequestSanitization extends \yii\base\Component
             'cms',
             'park',
             'filter-parklist',
-            'posts',
+            // 'posts',
             'plan',
             
         ];
