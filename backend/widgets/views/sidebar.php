@@ -1135,7 +1135,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/reportsection/default/index",
 											"/reportsection/operator-quote-request/index",
