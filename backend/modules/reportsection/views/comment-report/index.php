@@ -13,9 +13,6 @@ $this->params['title'] = $this->title;
 
 
 ?>
-<div class="commentCount mb-4">
-    <h6> Comments</h6>
-</div>
 <div class="card">
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>

@@ -10,9 +10,6 @@ $this->title = 'Reply Report';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
-<div class="commentCount mb-4">
-    <h6> Reply</h6>
-</div>
 <div class="card">
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
