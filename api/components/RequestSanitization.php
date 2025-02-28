@@ -37,7 +37,7 @@ class RequestSanitization extends \yii\base\Component
 
         $intersect_array_for_authentication =  array_intersect($excludedArrayForAuthentication, $request_array);
 
-        if (empty($intersect_array_for_authentication)) {
+        if (empty($intersect_array_for_authentication) && \Yii::$app->request->isPost) {
 
             $accessToken = NULL;
             if (isset($_GET['access_token'])) {
