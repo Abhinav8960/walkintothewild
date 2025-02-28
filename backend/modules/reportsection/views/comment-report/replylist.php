@@ -6,6 +6,9 @@ use yii\bootstrap5\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
+$this->title = 'Reply Report';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 <div class="commentCount mb-4">
     <h6> Reply</h6>
