@@ -29,7 +29,6 @@ class UrlShortnerLog extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             \yii\behaviors\TimestampBehavior::className(),
-            \yii\behaviors\BlameableBehavior::className(),
         ];
     }
 
@@ -50,7 +49,7 @@ class UrlShortnerLog extends \yii\db\ActiveRecord implements \common\interfaces\
             [['user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['id', 'url_shortner_id'], 'required'],
-            [['id', 'url_shortner_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['id', 'url_shortner_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address'], 'string', 'max' => 255],
         ];
     }
@@ -71,9 +70,7 @@ class UrlShortnerLog extends \yii\db\ActiveRecord implements \common\interfaces\
             'user_browser_version' => 'User Browser Version',
             'user_ip_address' => 'User Ip Address',
             'created_at' => 'Created At',
-            'created_by' => 'Created By',
             'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
     }
