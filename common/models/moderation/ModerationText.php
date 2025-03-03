@@ -63,5 +63,4 @@ class ModerationText extends \yii\db\ActiveRecord
             'link' => 'Link',
         ];
     }
-
 }

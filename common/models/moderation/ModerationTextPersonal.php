@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "moderation_text_personal".
  *
  * @property int $id
- * @property int $moderation_id
+ * @property int $moderation_text_id
  * @property string $type
  * @property string|null $category
  * @property string|null $match
@@ -36,8 +36,8 @@ class ModerationTextPersonal extends \yii\db\ActiveRecord
         return [
             [['category', 'match', 'start', 'end'], 'default', 'value' => null],
             [['sequnce'], 'default', 'value' => 1],
-            [['moderation_id', 'type'], 'required'],
-            [['moderation_id', 'sequnce'], 'integer'],
+            [['moderation_text_id', 'type'], 'required'],
+            [['moderation_text_id', 'sequnce'], 'integer'],
             [['type', 'category', 'match', 'start', 'end'], 'string', 'max' => 255],
         ];
     }
@@ -49,7 +49,7 @@ class ModerationTextPersonal extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'moderation_id' => 'Moderation ID',
+            'moderation_text_id' => 'Moderation ID',
             'type' => 'Type',
             'category' => 'Category',
             'match' => 'Match',

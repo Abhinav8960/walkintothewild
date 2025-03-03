@@ -176,12 +176,12 @@ class ModerationForm extends Model
         return false;
     }
 
-    private function updateTextPersonelFeedback($moderation_id, $feedbacks)
+    private function updateTextPersonelFeedback($moderation_text_id, $feedbacks)
     {
         if (count($feedbacks) > 0) {
             foreach ($feedbacks as $feedback) {
                 $model = new ModerationTextPersonal();
-                $model->moderation_id = $moderation_id;
+                $model->moderation_text_id = $moderation_text_id;
                 $model->type = $feedback['type'] ?? SELF::DEFAULT_VALUE;
                 $model->match = $feedback['match'] ?? SELF::DEFAULT_VALUE;
                 $model->start = $feedback['start'] ?? 0;
@@ -193,12 +193,12 @@ class ModerationForm extends Model
         return false;
     }
 
-    private function updateLinkFeedback($moderation_id, $feedbacks)
+    private function updateLinkFeedback($moderation_text_id, $feedbacks)
     {
         if (count($feedbacks) > 0) {
             foreach ($feedbacks as $feedback) {
                 $model = new ModerationTextPersonal();
-                $model->moderation_id = $moderation_id;
+                $model->moderation_text_id = $moderation_text_id;
                 $model->type = $feedback['type'] ?? SELF::DEFAULT_VALUE;
                 $model->category = $feedback['category'] ?? SELF::DEFAULT_VALUE;
                 $model->match = $feedback['match'] ?? SELF::DEFAULT_VALUE;
