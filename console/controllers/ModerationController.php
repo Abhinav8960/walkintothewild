@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-
+use common\models\moderation\form\ModerationForm;
 use yii\console\Controller;
 
 /**
@@ -30,17 +30,58 @@ class ModerationController extends Controller
     {
         echo "<pre>";
         $reponse = \Yii::$app->moderation->videoFeedback($url);
-        \Yii::info("VideoFeedBack: " .json_encode($reponse));
+        \Yii::info("VideoFeedBack: " . json_encode($reponse));
         print_r($reponse);
         die();
     }
 
-    public function actionText($text = "Seven five six nine six zero one 8 one 8 , chala jata hu kisi ki dhun me tadapde din ke tarane liye")
+    public function actionText($text = "Seven five six nine six zero one 8 one 8 , chala jata hu kisi ki dhun me tadapde din ke tarane liye, http://localhost/phpmyadmin/index.php?route=/table/create&server=1&db=wildwalks")
     {
         echo "<pre>";
         $reponse = \Yii::$app->moderation->textFeedback($text);
-        \Yii::info("TextFeedBack: " .json_encode($reponse));
+        \Yii::info("TextFeedBack: " . json_encode($reponse));
         print_r($reponse);
         die();
+    }
+
+    public function actionStoreVideoFeedback($feedback = NULL)
+    {
+        if ($feedback == NULL) {
+
+            $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/video.json");
+        }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_VIDEO);
+    }
+    public function actionStoreImageFeedback($feedback = NULL)
+    {
+        if ($feedback == NULL) {
+
+            $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
+        }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
+    }
+    public function actionStoreTextFeedback($feedback = NULL)
+    {
+        if ($feedback == NULL) {
+
+            $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/text.json");
+        }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_TEXT);
+    }
+
+    private function actionStore($feedback, $moderation_type)
+    {
+        $fb = json_decode($feedback, true);
+        $model = new ModerationForm();
+        $model->request_id = $fb['request']['id'];
+        $model->request_timestamp = (string) $fb['request']['timestamp'];
+        $model->moderation_type = $moderation_type;
+        $model->feedback = $fb;
+        $model->status = 1;
+        if ($model->save()) {
+            echo "Feedback Stored Successfully";
+        } else {
+            exit("Error: " . json_encode($model->errors));
+        }
     }
 }

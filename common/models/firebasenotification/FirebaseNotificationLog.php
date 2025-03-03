@@ -2,6 +2,7 @@
 
 namespace common\models\firebasenotification;
 
+use common\jobs\NotificationJob;
 use common\models\User;
 use Yii;
 use yii\db\ActiveRecord;
@@ -102,6 +103,10 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             $model->status = 1;
             $model->created_by = (int)self::getUserID();
             $model->save(false);
+
+            \Yii::$app->queue->push(new NotificationJob([
+                'model' => $model,
+            ]));
         }
         return true;
     }

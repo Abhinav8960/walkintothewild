@@ -89,6 +89,7 @@ class Moderation extends Component
     {
         $params = array(
             'text' => $text,
+            // 'lang' => 'en,fr,it,pt,es,ru,tr',
             'lang' => 'en',
             'models' => 'general,self-harm',
             // 'mode' => 'ml',
