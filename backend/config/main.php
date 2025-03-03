@@ -131,6 +131,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/re/<short_id>' => 'site/redirect-url',
                 '/aws-mailer-notification' => '/aws-mailer-notification/index'
             ],
         ],

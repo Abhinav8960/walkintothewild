@@ -65,6 +65,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         }
                     ],
 
+                    [
+                        'label' => 'Status',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->newstatuslabel;
+                        }
+                    ],
+
                 ],
             ]); ?>
         </div>

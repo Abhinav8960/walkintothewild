@@ -2,6 +2,7 @@
 
 namespace common\models\urlshortner;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -14,8 +15,10 @@ use Yii;
  * @property string|null $alias
  * @property int|null $created_at
  */
-class UrlShortner extends \yii\db\ActiveRecord
+class UrlShortner extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    use CommanRelationship;
+
 
     public function behaviors()
     {
@@ -44,7 +47,7 @@ class UrlShortner extends \yii\db\ActiveRecord
             [['code', 'created_at'], 'integer'],
             [['short_id', 'alias'], 'string', 'max' => 10],
             [['short_id'], 'unique'],
-            [['click_count'], 'integer'],
+            [['click_count', 'one_time_valid'], 'integer'],
         ];
     }
 
@@ -59,6 +62,7 @@ class UrlShortner extends \yii\db\ActiveRecord
             'short_id' => 'Short ID',
             'code' => 'Code',
             'alias' => 'Alias',
+            'one_time_valid' => 'One Time Valid',
             'created_at' => 'Created At',
         ];
     }
@@ -66,5 +70,24 @@ class UrlShortner extends \yii\db\ActiveRecord
     public function incrementClick()
     {
         $this->updateCounters(['click_count' => 1]);
+    }
+
+
+    public function urlshortnerlog()
+    {
+        $agent = new \Jenssegers\Agent\Agent();
+        $agent->setUserAgent(Yii::$app->request->userAgent);
+
+        $url_shortner_log = new UrlShortnerLog();
+        $url_shortner_log->url_shortner_id = $this->id;
+        $url_shortner_log->user_device  = $agent->device();
+        $url_shortner_log->user_agent =  Yii::$app->request->userAgent;
+        $url_shortner_log->user_platform = $agent->platform();
+        $url_shortner_log->user_platform_version = $agent->version($url_shortner_log->user_platform);
+        $url_shortner_log->user_browser = $agent->browser();
+        $url_shortner_log->user_browser_version = $agent->version($url_shortner_log->user_browser);
+        $url_shortner_log->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        $url_shortner_log->status = UrlShortnerLog::STATUS_ACTIVE;
+        $url_shortner_log->save(false);
     }
 }

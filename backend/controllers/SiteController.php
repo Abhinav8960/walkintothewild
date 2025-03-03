@@ -405,10 +405,16 @@ class SiteController extends Controller
 
     public function actionRedirectUrl($short_id)
     {
-        $url = UrlShortner::findOne(['short_id' => $short_id]);
+        $url = UrlShortner::findOne(['short_id' => $short_id, 'status' => 1]);
 
         if ($url) {
-            $url->incrementClick();
+            if ($url->one_time_valid == 1) {
+                $url->incrementClick();
+                $url->urlshortnerlog();
+                $url->status = UrlShortner::STATUS_DELETE;
+                $url->save(false);
+                return $this->redirect($url->shortner_url, $url->code ?? '302');
+            }
             return $this->redirect($url->shortner_url, $url->code ?? '302');
         }
 

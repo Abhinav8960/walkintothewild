@@ -31,7 +31,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new UrlShortnerForm();
-        $model->status = 1;
+        $model->status = UrlShortner::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {

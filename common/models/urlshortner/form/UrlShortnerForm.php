@@ -14,6 +14,7 @@ class UrlShortnerForm extends model
     public $short_id;
     public $code;
     public $alias;
+    public $one_time_valid;
     public $status;
     public $status_option;
 
@@ -34,6 +35,7 @@ class UrlShortnerForm extends model
             $this->short_id = $this->url_shortner_model->short_id;
             $this->code = $this->url_shortner_model->code;
             $this->alias = $this->url_shortner_model->alias;
+            $this->one_time_valid = $this->url_shortner_model->one_time_valid;
             $this->status = $this->url_shortner_model->status;
         }
 
@@ -50,7 +52,7 @@ class UrlShortnerForm extends model
             [['code'], 'default', 'value' => 302],
             [['shortner_url'], 'required'],
             [['shortner_url'], 'string'],
-            [['code'], 'integer'],
+            [['code', 'one_time_valid'], 'integer'],
             [['short_id', 'alias'], 'string', 'max' => 10],
             [['short_id'], 'unique'],
         ];
@@ -67,6 +69,7 @@ class UrlShortnerForm extends model
             'short_id' => 'Short ID',
             'code' => 'Code',
             'alias' => 'Alias',
+            'one_time_valid' => 'One Time Valid',
             'created_at' => 'Created At',
         ];
     }
@@ -82,6 +85,7 @@ class UrlShortnerForm extends model
         $this->url_shortner_model->short_id = $this->generateUniqueShortId();
         $this->url_shortner_model->code = $this->code;
         $this->url_shortner_model->alias = $this->alias;
+        $this->url_shortner_model->one_time_valid = $this->one_time_valid;
         $this->url_shortner_model->status = $this->status;
     }
 
@@ -89,7 +93,7 @@ class UrlShortnerForm extends model
     private function generateUniqueShortId()
     {
         do {
-            $shortId = Yii::$app->security->generateRandomString(6);
+            $shortId = Yii::$app->security->generateRandomString(7);
         } while ($this->url_shortner_model::find()->where(['short_id' => $shortId])->exists());
 
         return $shortId;

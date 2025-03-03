@@ -33,6 +33,15 @@ use yii\bootstrap5\ActiveForm;
                 ]) ?>
             </div>
 
+            <div class="col-md-6">
+                <?= $form->field($model, 'one_time_valid')->dropDownList([
+                    1 => 'Yes',
+                    0 => 'No'
+                ], [
+                    'prompt' => 'Select One-Time Expiry'
+                ]) ?>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
