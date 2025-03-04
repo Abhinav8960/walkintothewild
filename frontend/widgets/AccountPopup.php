@@ -16,7 +16,7 @@ class AccountPopup extends Widget
     public function __construct()
     {
         if (!Yii::$app->user->isGuest && \Yii::$app->user->identity->account_type == 1 && Yii::$app->requestedRoute != 'account/default/registration-operator') {
-            $this->display = true;
+            $this->display = false;
         }
     }
     /**
