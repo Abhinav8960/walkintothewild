@@ -1085,6 +1085,12 @@ class DefaultController extends FrontendBaseController
                 'current_column' => 'current_safari_plan',
                 'label' => 'Safari Plan'
             ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+                'label' => 'Safari Title'
+            ],
 
         ];
     }
@@ -1181,6 +1187,12 @@ class DefaultController extends FrontendBaseController
                 'previous_column' => 'previous_getting_there',
                 'current_column' => 'current_getting_there',
                 'label' => 'Getting There'
+            ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+                'label' => 'Safari Title'
             ],
         ];
     }
