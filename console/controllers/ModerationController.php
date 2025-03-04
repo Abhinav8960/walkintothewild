@@ -18,7 +18,7 @@ class ModerationController extends Controller
      */
     public function actionImage($url = "https://images.unsplash.com/photo-1599470609787-113eac30917d?q=80&w=1990&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
     {
-        $this->actionStoreVideoFeedback(\Yii::$app->moderation->imageFeedback($url));
+        $this->actionStoreImageFeedback(\Yii::$app->moderation->imageFeedback($url));
 
         // echo "<pre>";
         // $reponse = \Yii::$app->moderation->imageFeedback($url);

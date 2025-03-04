@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use common\models\moderation\form\ModerationForm;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -59,8 +60,9 @@ class Moderation extends Component
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
-
-        return $output = json_decode($response, true);
+        $output = json_decode($response, true);
+        $this->actionStoreImageFeedback($output);
+        return $output;
     }
 
     public function videoFeedback($url)
@@ -80,8 +82,9 @@ class Moderation extends Component
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         $response = curl_exec($ch);
         curl_close($ch);
-
-       return $output = json_decode($response, true);
+        $output = json_decode($response, true);
+        $this->actionStoreVideoFeedback($output);
+        return $output;
     }
 
 
@@ -106,7 +109,50 @@ class Moderation extends Component
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         $response = curl_exec($ch);
         curl_close($ch);
+        $output = json_decode($response, true);
+        $this->actionStoreTextFeedback($output);
+        return $output;
+    }
 
-        return $output = json_decode($response, true);
+
+    public function actionStoreVideoFeedback($feedback)
+    {
+        // if ($feedback == NULL) {
+
+        //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/video.json");
+        // }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_VIDEO);
+    }
+    public function actionStoreImageFeedback($feedback)
+    {
+        // if ($feedback == NULL) {
+
+        //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
+        // }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
+    }
+    public function actionStoreTextFeedback($feedback)
+    {
+        // if ($feedback == NULL) {
+
+        //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/text.json");
+        // }
+        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_TEXT);
+    }
+
+    private function actionStore($feedback, $moderation_type)
+    {
+        $fb = json_decode($feedback, true);
+        $model = new ModerationForm();
+        $model->request_id = $fb['request']['id'];
+        $model->request_timestamp = (string) $fb['request']['timestamp'];
+        $model->moderation_type = $moderation_type;
+        $model->feedback = $fb;
+        $model->status = 1;
+        if ($model->save()) {
+            echo "Feedback Stored Successfully";
+        } else {
+            exit("Error: " . json_encode($model->errors));
+        }
     }
 }
