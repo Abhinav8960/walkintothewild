@@ -59,6 +59,7 @@ class UrlShortner extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             'id' => 'ID',
             'shortner_url' => 'Shortner Url',
+            'referrer_url' => 'Referrer Url',
             'short_id' => 'Short ID',
             'code' => 'Code',
             'alias' => 'Alias',
@@ -81,6 +82,7 @@ class UrlShortner extends \yii\db\ActiveRecord implements \common\interfaces\New
         $url_shortner_log = new UrlShortnerLog();
         $url_shortner_log->url_shortner_id = $this->id;
         $url_shortner_log->user_device  = $agent->device();
+        $url_shortner_log->referrer_url = Yii::$app->request->referrer;
         $url_shortner_log->user_agent =  Yii::$app->request->userAgent;
         $url_shortner_log->user_platform = $agent->platform();
         $url_shortner_log->user_platform_version = $agent->version($url_shortner_log->user_platform);
