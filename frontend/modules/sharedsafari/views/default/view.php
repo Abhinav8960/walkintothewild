@@ -448,7 +448,7 @@ $this->params['title'] = $this->title; ?>
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title fs-5" id="exampleModalLabel">History</h2>
-                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body">
                 <div id='modalContent'></div>
