@@ -81,7 +81,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 <?php }
                                                 ?>
                                             <?php } ?>
-                                            <?php if (false && $share_safari->fixedDepartureHistory) { ?>
+                                            <?php if ($share_safari->fixedDepartureHistory) { ?>
                                                 <span class="history">
                                                     <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
                                                 </span>
