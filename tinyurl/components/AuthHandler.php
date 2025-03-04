@@ -1,0 +1,147 @@
+<?php
+
+namespace tinyurl\components;
+
+use common\models\Auth;
+use common\models\User;
+use Yii;
+use yii\authclient\ClientInterface;
+use yii\helpers\ArrayHelper;
+
+/**
+ * AuthHandler handles successful authentication via Yii auth component
+ */
+class AuthHandler
+{
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    public function __construct(ClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
+    public function handle()
+    {
+        $attributes = $this->client->getUserAttributes();
+
+        $email = ArrayHelper::getValue($attributes, 'email');
+        $id = ArrayHelper::getValue($attributes, 'id');
+        $nickname = ArrayHelper::getValue($attributes, 'login');
+
+
+        /* @var Auth $auth */
+        $auth = Auth::find()->where([
+            'source' => $this->client->getId(),
+            'source_id' => $id,
+        ])->one();
+
+
+
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // login
+
+                /* @var User $user */
+                $this->loginUser($auth->user);
+            }
+            else { // signup
+
+                if ($email !== null && User::find()->where(['username' => $email])->orWhere(['email' => $email])->exists()) {
+
+                    $user_found = User::find()->where(['username' => $email])->orWhere(['email' => $email])->one();
+                    // Yii::$app->getSession()->setFlash('error', [
+                    //     Yii::t('app', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $this->client->getTitle()]),
+                    // ]);
+                    $auth = new Auth([
+                        'user_id' => $user_found->id,
+                        'source' => $this->client->getId(),
+                        'source_id' => (string)$id,
+                    ]);
+                    $auth->save();
+                    $this->updateUserInfo($auth->user);
+                    $this->loginUser($auth->user);
+                } else {
+
+
+                    Yii::$app->session->setFlash('error', 'You are not registered with us');
+                    return Yii::$app->getResponse()->redirect(['site/login']);
+                }
+            }
+        } else { // user already logged in
+
+            if (!$auth) { // add auth provider
+                $auth = new Auth([
+                    'user_id' => Yii::$app->user->id,
+                    'source' => $this->client->getId(),
+                    'source_id' => (string)$attributes['id'],
+                ]);
+                if ($auth->save()) {
+                    /** @var User $user */
+                    $user = $auth->user;
+                    $this->updateUserInfo($user);
+                    Yii::$app->getSession()->setFlash('success', [
+                        Yii::t('app', 'Linked {client} account.', [
+                            'client' => $this->client->getTitle()
+                        ]),
+                    ]);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', [
+                        Yii::t('app', 'Unable to link {client} account: {errors}', [
+                            'client' => $this->client->getTitle(),
+                            'errors' => json_encode($auth->getErrors()),
+                        ]),
+                    ]);
+                }
+            } else { // there's existing auth
+                Yii::$app->getSession()->setFlash('error', [
+                    Yii::t(
+                        'app',
+                        'Unable to link {client} account. There is another user using it.',
+                        ['client' => $this->client->getTitle()]
+                    ),
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param User $user
+     */
+    private function updateUserInfo(User $user)
+    {
+        $attributes = $this->client->getUserAttributes();
+        $picture = $attributes['picture'];
+        $gmail = true;
+        if ($user->avatar != $picture) {
+            $user->avatar = $picture;
+            $user->save(false);
+        }
+        if ($user->gmail == false && $gmail) {
+            $user->gmail = $gmail;
+            $user->save(false);
+        }
+    }
+
+    private function loginUser($user)
+    {
+        $session = Yii::$app->session;
+        if ($session->get('user_session_id')) {
+            $session_id =  $session->get('user_session_id');
+        } else {
+            $session_id = $session->set('user_session_id', session_create_id('user-session'));
+        }
+
+        $this->updateUserInfo($user);
+        Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+        $session->set('user_session_id', $session_id);
+
+        $googleToken = Yii::$app->session->get('yii\\authclient\\clients\\Google_google_token');
+        if ($googleToken instanceof \yii\authclient\OAuthToken) {
+            $googleToken->setParam('expires_in', Yii::$app->params['user.rememberMeDuration']);
+            $client = Yii::$app->authClientCollection->getClient('google');
+            Yii::$app->session->set('yii\\authclient\\clients\\Google_google_token', $client);
+        }
+    }
+}
