@@ -4,23 +4,27 @@ use common\models\GeneralModel;
 use common\models\package\Package;
 
 $query = Package::find()
-    ->select("count(id) as total_data")
-    ->where(['!=', 'status', Package::STATUS_DELETE])
-    ->andFilterWhere(['status' => $model->status])
-    ->andFilterWhere(['like', 'package_name', $model->package_name]);
+    ->select("count(package.id) as total_data")
+    ->where(['!=', 'package.status', Package::STATUS_DELETE])
+    ->joinWith('safarioperator')
+    ->andWhere(['safari_operator.status' => 1])
+    ->andFilterWhere(['package.status' => $model->status])
+    ->andFilterWhere(['like', 'package.package_name', $model->package_name]);
 if (!empty($model->package_start_date) && !empty($model->package_end_date)) {
-    $query->andFilterWhere(['between', 'created_at', $model->package_start_date, $model->package_end_date]);
+    $query->andFilterWhere(['between', 'package.created_at', $model->package_start_date, $model->package_end_date]);
 }
 $total_package = $query->asArray()->one();
 
 
 $query1 = Package::find()
     ->select("COUNT(DISTINCT owned_by_id) as total_data")
-    ->where(['!=', 'status', Package::STATUS_DELETE])
-    ->andFilterWhere(['status' => $model->status])
-    ->andFilterWhere(['like', 'package_name', $model->package_name]);
+    ->where(['!=', 'package.status', Package::STATUS_DELETE])
+    ->joinWith('safarioperator')
+    ->andWhere(['safari_operator.status' => 1])
+    ->andFilterWhere(['package.status' => $model->status])
+    ->andFilterWhere(['like', 'package.package_name', $model->package_name]);
 if (!empty($model->package_start_date) && !empty($model->package_end_date)) {
-    $query1->andFilterWhere(['between', 'created_at', $model->package_start_date, $model->package_end_date]);
+    $query1->andFilterWhere(['between', 'package.created_at', $model->package_start_date, $model->package_end_date]);
 }
 $total_unique_host = $query1->asArray()->one();
 

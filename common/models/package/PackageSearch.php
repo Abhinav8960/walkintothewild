@@ -297,7 +297,7 @@ class PackageSearch extends Package
 
     public function reportsearch($params)
     {
-        $query =  Package::find()->where(['!=', 'status', Package::STATUS_DELETE]);
+        $query =  Package::find()->where(['package.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -323,6 +323,14 @@ class PackageSearch extends Package
         ]);
 
         $query->andFilterWhere(['like', 'package.package_name', $this->package_name]);
+
+        if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
+            if ($this->estimated_price_filter_max >= 50000) {
+                $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+            }
+        }
 
         if ($this->park_id) {
             $query->joinwith(['packagepark' => function ($park_query) {

@@ -20,6 +20,7 @@ class PackageReportController extends Controller
     {
         $searchModel = new PackageSearch();
         $dataProvider = $searchModel->reportsearch($this->request->queryParams);
+        $dataProvider->query->andWhere("owned_by_id IN (SELECT id from safari_operator WHERE status=1)");
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
