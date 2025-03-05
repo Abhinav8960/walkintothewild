@@ -54,8 +54,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-xxl-9 col-lg-12">
-                <div class="row pt-5">
+            <div class="col-xxl-8 col-xl-10 col-lg-12">
+                <div class="row pt-2">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">

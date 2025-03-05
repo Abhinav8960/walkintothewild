@@ -56,8 +56,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-xxl-9 col-lg-12">
-                <div class="row pt-5 justify-content-center">
+            <div class="col-xxl-8 col-xl-10 col-lg-12">
+                <div class="row pt-2 justify-content-center">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
@@ -71,7 +71,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="row gx-xxl-5 ">
                                                 <?php if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $modell) { ?>
-                                                        <div class="col-md-6 col-lg-4 mb-4 padding_righ">
+                                                        <div class="col-md-6 mb-4 padding_righ">
                                                             <?= $this->render('@frontend/modules/package/views/default/_package_card', ['model' => $modell]) ?>
                                                         </div>
                                                 <?php }
