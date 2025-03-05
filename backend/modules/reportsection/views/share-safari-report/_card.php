@@ -54,10 +54,7 @@ $joined = $query2->asArray()->one();
 <div class="row ">
     <div class="col-md-12 d-flex">
         <div class="col-md-2">
-            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
-                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
-                    <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
-                </div>
+            <div class="card mb-3 " style="min-height: 120px;  border: 2px solid green; border-radius: 8px;">
                 <div class="card-body position-relative">
                     <h5 class=" text-opacity-80 mb-3 fs-16px">Total Safari</h5>
                     <div class="  text-opacity-80 text-end colorammount">Count: <?= GeneralModel::numberformat($total_safari['total_data']) ?></div>
@@ -66,10 +63,7 @@ $joined = $query2->asArray()->one();
         </div>
 
         <div class="col-md-2">
-            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
-                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
-                    <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
-                </div>
+            <div class="card mb-3 " style="min-height: 120px; border: 2px solid green; border-radius: 8px;">
                 <div class="card-body position-relative">
                     <h5 class=" text-opacity-80 mb-3 fs-16px">Total Unique Host</h5>
                     <div class="  text-opacity-80 text-end colorammount">Count: <?= GeneralModel::numberformat($total_unique_host['total_data']) ?></div>
@@ -78,10 +72,7 @@ $joined = $query2->asArray()->one();
         </div>
 
         <div class="col-md-2">
-            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
-                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
-                    <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
-                </div>
+            <div class="card mb-3 " style="min-height: 120px; border: 2px solid green; border-radius: 8px;">
                 <div class="card-body position-relative">
                     <h5 class=" text-opacity-80 mb-3 fs-16px">Total Unique joined</h5>
                     <div class="  text-opacity-80 text-end colorammount">Count: <?= GeneralModel::numberformat($joined['total_unique_joined']) ?></div>
@@ -90,10 +81,7 @@ $joined = $query2->asArray()->one();
         </div>
 
         <div class="col-md-2">
-            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
-                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
-                    <img src="<?= $this->params['baseurl'] ?>/img/icon/order.svg" alt="" class="ms-auto d-block mb-n3" style="max-height: 50px">
-                </div>
+            <div class="card mb-3 " style="min-height: 120px; border: 2px solid green; border-radius: 8px;">
                 <div class="card-body position-relative">
                     <h5 class=" text-opacity-80 mb-3 fs-16px">Total joined</h5>
                     <div class="  text-opacity-80 text-end colorammount">Count: <?= GeneralModel::numberformat($joined['total_joined']) ?></div>
