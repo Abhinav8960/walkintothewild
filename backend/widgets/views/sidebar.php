@@ -1155,6 +1155,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/package-quote-request/index")) ? "active" : "" ?>" href="/reportsection/package-quote-request/index">Package Quote Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/index")) ? "active" : "" ?>" href="/reportsection/comment-report/index">Comment Report</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/comment-report/reply")) ? "active" : "" ?>" href="/reportsection/comment-report/reply">Reply Report</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/reportsection/share-safari-report/index")) ? "active" : "" ?>" href="/reportsection/share-safari-report/index">Share Safari Report</a></li>
 
 						</ul>
 					</li>
