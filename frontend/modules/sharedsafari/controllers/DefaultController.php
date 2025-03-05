@@ -735,12 +735,22 @@ class DefaultController extends FrontendBaseController
         $query .= " row_number() over() as `row_number`
                 FROM `share_safari_history` WHERE `slug` = '$slug' AND `status` = 1 AND `type` = 1 ORDER BY `id` DESC;";
 
-        $history_model = Yii::$app->db->createCommand($query)
-            ->queryAll();
+        $history_model = Yii::$app->db->createCommand($query)->queryAll();
+        $filtered_history = array_filter($history_model, function ($row) use ($columns) {
+            foreach ($columns as $column_data) {
+                $currentValue = $row[$column_data['current_column']];
+                $previousValue = $row[$column_data['previous_column']];
+
+                if ($currentValue !== $previousValue) {
+                    return true;
+                }
+            }
+            return false;
+        });
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
-                'history_model' => $history_model,
+                'history_model' => $filtered_history,
                 'total_count' => count($history_model),
                 'columns' => $columns,
             ]);
@@ -765,9 +775,21 @@ class DefaultController extends FrontendBaseController
         $history_model = Yii::$app->db->createCommand($query)
             ->queryAll();
 
+        $filtered_history = array_filter($history_model, function ($row) use ($columns) {
+            foreach ($columns as $column_data) {
+                $currentValue = $row[$column_data['current_column']];
+                $previousValue = $row[$column_data['previous_column']];
+
+                if ($currentValue !== $previousValue) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_fixed_view', [
-                'history_model' => $history_model,
+                'history_model' => $filtered_history,
                 'total_count' => count($history_model),
                 'columns' => $columns,
             ]);
