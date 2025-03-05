@@ -1101,12 +1101,12 @@ class DefaultController extends FrontendBaseController
                 'current_column' => 'current_end_date',
                 'label' => 'End Date'
             ],
-            [
-                'actual_column' => 'safari_plan',
-                'previous_column' => 'previous_safari_plan',
-                'current_column' => 'current_safari_plan',
-                'label' => 'Safari Plan'
-            ],
+            // [
+            //     'actual_column' => 'safari_plan',
+            //     'previous_column' => 'previous_safari_plan',
+            //     'current_column' => 'current_safari_plan',
+            //     'label' => 'Safari Plan'
+            // ],
             [
                 'actual_column' => 'share_safari_title',
                 'previous_column' => 'previous_share_safari_title',
@@ -1162,12 +1162,12 @@ class DefaultController extends FrontendBaseController
                 'current_column' => 'current_cut_off_date',
                 'label' => 'Cut Off Date'
             ],
-            [
-                'actual_column' => 'safari_plan',
-                'previous_column' => 'previous_safari_plan',
-                'current_column' => 'current_safari_plan',
-                'label' => 'Safari Plan'
-            ],
+            // [
+            //     'actual_column' => 'safari_plan',
+            //     'previous_column' => 'previous_safari_plan',
+            //     'current_column' => 'current_safari_plan',
+            //     'label' => 'Safari Plan'
+            // ],
             [
                 'actual_column' => 'share_safari_terms_condtition',
                 'previous_column' => 'previous_share_safari_terms_condtition',
