@@ -138,7 +138,7 @@ if ($model->meta_title != '') {
 
             </div>
         </div> -->
-        <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
+        <div class="row pt-2 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
             <div class="col-xxl-11">
                 <div class="row">
                     <div class="offset-xxl-2 offset-xl-3 offset-lg-4 col-lg-8 col-xl-9 col-xxl-10 mt-2 position-relative safartabs">
