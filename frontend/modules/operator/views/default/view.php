@@ -98,7 +98,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-lg-4">
+                            <div class="col-xxl-4 col-lg-4 ps-md-4">
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
 
                                     <div class="mb-4" id="memberview">

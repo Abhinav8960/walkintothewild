@@ -70,11 +70,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php } ?>
                                             </div>
 
-                                            <div class="row gx-md-5 ">
+                                            <div class="row gx-md-3 ">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 col-sm-6 col-lg-6 col-xxl-5 mb-4 ">
+                                                        <div class="col-md-6 col-sm-6 col-lg-6 col-xxl-6 mb-4 ">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                                 <?php }
@@ -87,7 +87,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-lg-4">
+                            <div class="col-xxl-4 col-lg-4 ps-md-4">
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
 
                                     <div class="mb-4" id="memberview">

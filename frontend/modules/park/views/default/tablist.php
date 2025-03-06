@@ -62,7 +62,7 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div> -->
-        <div class="row mb-4  justify-content-center mt-4 padding_added">
+        <div class="row mb-2  justify-content-center mt-4 padding_added">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">
