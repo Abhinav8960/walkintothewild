@@ -33,6 +33,9 @@ $this->params['title'] = $this->title;
                         'label' => 'User Name',
                         'format' => 'raw',
                         'value' => function ($model) {
+                            if ($user = $model->user) {
+                                return Html::a($user->name, ['/user/default/profile', 'user_id' => $user->id], ['style' => 'color:black !important;']);
+                            }
                             return $model->full_name;
                         }
                     ],

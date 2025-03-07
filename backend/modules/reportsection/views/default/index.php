@@ -27,12 +27,14 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\SerialColumn',
                     ],
-
                     [
                         'label' => 'User Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->user) ? $model->user->name : '';
+                            if ($user = $model->user) {
+                                return Html::a($user->name, ['/user/default/profile', 'user_id' => $user->id], ['style' => 'color:black !important;']);
+                            }
+                            return '';
                         }
                     ],
 
