@@ -28,7 +28,7 @@ class UserPostsVideoForm extends Model
     public $action_url;
     public $action_validate_url;
     public $status;
-
+    public $location;
     public $video_thumbnail;
 
     public function __construct(UserPosts $user_photo_model = null)
@@ -46,6 +46,7 @@ class UserPostsVideoForm extends Model
             $this->v_size = $this->user_photo_model->v_size;
             $this->v_duration = $this->user_photo_model->v_duration;
             $this->video_thumbnail = $this->user_photo_model->video_thumbnail;
+            $this->location = $this->user_photo_model->location;
 
             $this->status = $this->user_photo_model->status;
         }
@@ -71,7 +72,7 @@ class UserPostsVideoForm extends Model
             ],
             [['user_id', 'like_count', 'status'], 'integer'],
             [['user_id', 'like_count', 'status'], 'integer'],
-            [['caption', 'description'], 'string'],
+            [['caption', 'description', 'location'], 'string'],
             [['v_size', 'v_duration'], 'integer']
         ];
     }
@@ -96,6 +97,7 @@ class UserPostsVideoForm extends Model
         $this->user_photo_model->v_size = $this->v_size;
         $this->user_photo_model->v_duration = $this->v_duration;
         $this->user_photo_model->video_thumbnail = $this->video_thumbnail;
+        $this->user_photo_model->location = $this->location;
         $this->user_photo_model->status = $this->status;
     }
 

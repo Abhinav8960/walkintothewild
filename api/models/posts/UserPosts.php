@@ -2,6 +2,7 @@
 
 namespace api\models\posts;
 
+use api\models\User;
 use Yii;
 
 class UserPosts extends \common\models\UserPosts
@@ -14,10 +15,11 @@ class UserPosts extends \common\models\UserPosts
         if (!in_array(\Yii::$app->controller->action->uniqueId,  ['posts/default/index'])) {
             $fields[] = 'imagepath';
             $fields[] = 'comments';
-            $hold_fields = ['type_of_post','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $hold_fields = ['type_of_post', 'file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         } else {
             $fields[] = 'imagepath';
-            $hold_fields = ['type_of_post','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $fields[] = 'user';
+            $hold_fields = ['type_of_post', 'file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }
 
         return array_diff($fields, $hold_fields);
@@ -54,5 +56,10 @@ class UserPosts extends \common\models\UserPosts
         // return $this->filepath;
         // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
         return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }
