@@ -913,7 +913,7 @@ class DefaultController extends FrontendBaseController
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
-                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+                return $this->redirect(['/operator/default/follower',  'slug' => $slug]);
             }
         }
 
@@ -954,7 +954,7 @@ class DefaultController extends FrontendBaseController
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
-                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+                return $this->redirect(['/operator/default/following',  'slug' => $slug]);
             }
         }
 
