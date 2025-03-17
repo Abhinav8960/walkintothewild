@@ -15,8 +15,11 @@ use yii\base\Component;
 class Moderation extends Component
 {
     public $fileUrl;
-    private $sightEngineUserId = "101632135";
-    private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu";
+    // private $sightEngineUserId = "101632135"; // Anurag
+    // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
+
+    private $sightEngineUserId = "1054537867"; // Kamal
+    private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
     private $models = [

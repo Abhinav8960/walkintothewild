@@ -8,6 +8,10 @@ use yii\base\Model;
 
 class ModerationForm extends Model
 {
+    const MODERATION_TYPE_IMAGE = 'image';
+    const MODERATION_TYPE_VIDEO = 'video';
+    const MODERATION_TYPE_TEXT = 'text';
+    const DEFAULT_VALUE = 0.00;
 
     public $moderation_model;
     public $video_url;
