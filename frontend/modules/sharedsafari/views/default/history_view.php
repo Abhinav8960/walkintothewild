@@ -15,13 +15,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 if ($share_safari['row_number'] != $total_count) { ?>
                     <li class="timeline-item mb-5">
                         <p class="text-muted mb-2 fw-bold"><?= date('Y-m-d', $share_safari['date']) ?></p>
+
                         <?php
                         foreach ($columns as $column_data) {
                             $value_changed =  strcmp($share_safari[$column_data['previous_column']], $share_safari[$column_data['current_column']]) != 0;
 
                         ?>
                             <?php if ($value_changed) { ?>
-                                <p class="text-muted"><?= $column_data['label'] ?> : from <u><?= $share_safari[$column_data['previous_column']] ?></u> to <u><?= $share_safari[$column_data['current_column']] ?></u></p>
+                                <div class="d-flex gap-2">
+                                    <p class="text-muted"><?= $column_data['label'] ?> : from <u><?= $share_safari[$column_data['previous_column']] ?></u> to <u><?= $share_safari[$column_data['current_column']] ?></u></p>
+                                </div>
                             <?php } ?>
                         <?php }
                         ?>

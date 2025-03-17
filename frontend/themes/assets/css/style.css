@@ -2651,7 +2651,7 @@ figure {
 
 .getquote_box {
   background: #a2d22b;
-  padding: 20px;
+  padding: 20px 30px;
   border-radius: 10px;
 }
 
@@ -2738,6 +2738,16 @@ figure {
   background: #a2d22b;
   border-radius: 10px 10px 0px 0px;
   padding: 15px 20px;
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  color: var(--background-primary);
+}
+
+.get_free_title2 h4{
+
+  font-size: var(--fs-20);
+  text-align: center;
   display: inline-block;
   text-align: center;
   margin: auto;
@@ -4099,7 +4109,7 @@ figure {
   color: #000;
   padding: 4px 7px;
   border-radius: 6px;
-  z-index: 100;
+  z-index: 96;
   font-size: 14px;
   font-weight: 400;
 }
@@ -6783,7 +6793,7 @@ select.custom_sort_by_input option.selected {
   text-align: left;
   position: relative;
   overflow: hidden;
-  max-height: 46px;
+  /* max-height: 46px; */
   line-height: 1.5em;
 
 }

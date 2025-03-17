@@ -462,7 +462,7 @@ class GenerateSitePagesController extends Controller
 
         foreach ($tab_urls as $ind => $tab) {
           // $title = "Operator " . ucwords($ind) . ":" . $row->businessname;
-          $title = "Operator : " . $row->businessname;
+          $title = $row->businessname;
 
 
           if (!empty($row->slug) && $row->status == 1) {

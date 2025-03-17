@@ -81,7 +81,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 <?php }
                                                 ?>
                                             <?php } ?>
-                                            <?php if (false && $share_safari->fixedDepartureHistory) { ?>
+                                            <?php if ($share_safari->fixedDepartureHistory) { ?>
                                                 <span class="history">
                                                     <button value="<?= Url::toRoute(['/sharedsafari/default/fixed-history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
                                                 </span>
@@ -169,7 +169,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-4">
                             <div class="row ps-1">
-                                <!-- <div class="col-12 col-sm-6  mb-3">
+                                <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="Night Mode" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
@@ -178,7 +178,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -607,7 +607,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title fs-5" id="exampleModalLabel">History</h2>
-                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body">
                 <div id='modalContent'></div>

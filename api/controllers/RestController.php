@@ -74,6 +74,10 @@ class RestController extends Controller
         $this->query_params = $_REQUEST;
         unset($this->query_params['q']);
         unset($this->query_params['r']);
+
+        // if(count($this->query_params) <= 0 ){
+        //     $this->query_params = NULL;
+        // }
         // $this->storeRequest();
         // $this->isAuthorizeRequest();
         if ($this->request && !is_array($this->request)) {
@@ -157,10 +161,10 @@ class RestController extends Controller
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
-            $data[$rootIndexName]['summary']['total'] = $dataProvider->getTotalCount();
-            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data[$rootIndexName]['summary']['pageSize'] = $dataProvider->pagination->pageSize;
-            $data[$rootIndexName]['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+            $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] = (int) $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
         return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
@@ -184,10 +188,10 @@ class RestController extends Controller
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
-            $data[$rootIndexName]['summary']['total'] = $dataProvider->getTotalCount();
-            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data[$rootIndexName]['summary']['pageSize'] = $dataProvider->pagination->pageSize;
-            $data[$rootIndexName]['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+            $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] =  (int) $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
         return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
@@ -247,10 +251,10 @@ class RestController extends Controller
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
-            $data[$rootIndexName]['summary']['total'] = $dataProvider->getTotalCount();
-            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data[$rootIndexName]['summary']['pageSize'] = $dataProvider->pagination->pageSize;
-            $data[$rootIndexName]['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+            $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] =  (int) $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
         return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);

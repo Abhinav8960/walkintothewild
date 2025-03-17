@@ -13,7 +13,7 @@ use DateTime;
 class OperatorQuoteSearch extends OperatorQuote
 {
     public $report_days;
-
+    public $operator_business_name;
 
 
     public $report_days_option = [
@@ -33,7 +33,7 @@ class OperatorQuoteSearch extends OperatorQuote
     {
         return [
             [['safari_park_id', 'operator_id', 'safaris', 'travelers', 'stay_category_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['full_name', 'email', 'start_date', 'end_date', 'user_agent'], 'string', 'max' => 255],
+            [['full_name', 'email', 'start_date', 'end_date', 'user_agent', 'operator_business_name'], 'string', 'max' => 255],
             [['report_days'], 'safe'],
             [['phone_no'], 'string', 'max' => 12],
             [['ip_address'], 'string', 'max' => 45],
@@ -58,7 +58,7 @@ class OperatorQuoteSearch extends OperatorQuote
      */
     public function search($params)
     {
-        $query = OperatorQuote::find()->where(['status' => [OperatorQuote::STATUS_ACTIVE,OperatorQuote::STATUS_SUSPEND]]);
+        $query = OperatorQuote::find()->where(['operator_quote.status' => [OperatorQuote::STATUS_ACTIVE, OperatorQuote::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -77,29 +77,35 @@ class OperatorQuoteSearch extends OperatorQuote
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'safari_park_id' => $this->safari_park_id,
-            'phone_no' => $this->phone_no,
-            'operator_id' => $this->operator_id,
-            'email' => $this->email,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'safaris' => $this->safaris,
-            'travelers' => $this->travelers,
-            'stay_category_id' => $this->stay_category_id,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'operator_quote.id' => $this->id,
+            'operator_quote.safari_park_id' => $this->safari_park_id,
+            'operator_quote.phone_no' => $this->phone_no,
+            'operator_quote.operator_id' => $this->operator_id,
+            'operator_quote.email' => $this->email,
+            'operator_quote.start_date' => $this->start_date,
+            'operator_quote.end_date' => $this->end_date,
+            'operator_quote.safaris' => $this->safaris,
+            'operator_quote.travelers' => $this->travelers,
+            'operator_quote.stay_category_id' => $this->stay_category_id,
+            'operator_quote.created_at' => $this->created_at,
+            'operator_quote.created_by' => $this->created_by,
+            'operator_quote.updated_at' => $this->updated_at,
+            'operator_quote.updated_by' => $this->updated_by,
+            'operator_quote.status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'full_name', $this->full_name]);
+        $query->andFilterWhere(['like', 'operator_quote.full_name', $this->full_name]);
 
 
         if ($this->report_days) {
 
             // 
             $query->andWhere($this->rawdatequery);
+        }
+
+        if ($this->operator_business_name) {
+            $query->joinwith(['operator' => function ($query) {
+                $query->andWhere(['like', 'safari_operator.business_name', $this->operator_business_name]);
+            }]);
         }
         return $dataProvider;
     }

@@ -74,6 +74,13 @@ return [
         'contact' => [
             'class' => 'backend\modules\contact\Module',
         ],
+        'reportsection' => [
+            'class' => 'backend\modules\reportsection\Module',
+        ],
+        'urlshortner' =>
+        [
+            'class' => 'backend\modules\urlshortner\Module'
+        ]
     ],
     'components' => [
         'reCaptcha3' => [
@@ -124,6 +131,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/re/<short_id>' => 'site/redirect-url',
                 '/aws-mailer-notification' => '/aws-mailer-notification/index'
             ],
         ],

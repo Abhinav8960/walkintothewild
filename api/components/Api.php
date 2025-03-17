@@ -77,9 +77,7 @@ class Api extends Component
         //     $response = array_merge($response, $msg);
         // }
         // return $response = json_encode($response);
-        return $response;
-
-
+        echo json_encode($response);
         exit;
     }
 
@@ -129,7 +127,7 @@ class Api extends Component
 
         header($status_header);
         header('Content-type: ' . $content_type);
-        header('X-Powered-By: ' . "Travel Creators <https://stagingv2-manage.travelcreators.com/>");
+        header('X-Powered-By: ' . "WalkIntoTheWild <http://staging-manage.walkintothewild.in/>");
         header('Access-Control-Allow-Origin:*');
         header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

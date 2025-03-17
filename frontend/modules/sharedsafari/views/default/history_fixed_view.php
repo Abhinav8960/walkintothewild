@@ -21,7 +21,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                         ?>
                             <?php if ($value_changed) { ?>
-                                <p class="text-muted"><?= $column_data['label'] ?> : from <u><?= $share_safari[$column_data['previous_column']] ?></u> to <u><?= $share_safari[$column_data['current_column']] ?></u></p>
+                                <div class="d-flex gap-2">
+                                    <p class="text-muted"><?= $column_data['label'] ?> : from <u><?= $share_safari[$column_data['previous_column']] ?></u> to <u><?= $share_safari[$column_data['current_column']] ?></u></p>
+                                </div>
                             <?php } ?>
                         <?php }
                         ?>

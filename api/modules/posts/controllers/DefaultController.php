@@ -6,6 +6,7 @@ use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\posts\UserPostCommentLike;
+use api\models\posts\UserPostLike;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
 use common\models\postscomment\form\UserPostCommentForm;
@@ -27,21 +28,20 @@ class DefaultController extends RestController
 
         $behaviors = parent::behaviors();
 
-        return $behaviors + [
+        return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
                 'exclude' => ['index', 'view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create'],
+                'only' => ['create', 'comment', 'reply', 'like'],
                 'rules' => [
                     [
                         'actions' => ['create', 'comment', 'reply', 'like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-
                 ],
             ],
             'verbs' => [
@@ -79,6 +79,7 @@ class DefaultController extends RestController
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
         $model->v_size = $model->file->size;
         $model->v_duration = $this->getVideoDuration($model->file);
 
@@ -157,6 +158,25 @@ class DefaultController extends RestController
             $like->user_id = $this->userinfoId;
             $like->user_post_comment_id = $user_post_comment_id;
             $like->status = UserPostCommentLike::STATUS_ACTIVE;
+            if ($like->save(false)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Liked Comment or Reply"]);
+            }
+        } else {
+            $like->delete();
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Remove Liked Successfully"]);
+        }
+    }
+
+
+    public function actionUserPostLike($user_post_id)
+    {
+
+        $like = UserPostLike::find()->where(['user_id' => $this->userinfoId, 'user_post_id' => $user_post_id, 'status' => UserPostCommentLike::STATUS_ACTIVE])->one();
+        if (!$like) {
+            $like = new UserPostLike();
+            $like->user_id = $this->userinfoId;
+            $like->user_post_id = $user_post_id;
+            $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Liked Comment or Reply"]);
             }

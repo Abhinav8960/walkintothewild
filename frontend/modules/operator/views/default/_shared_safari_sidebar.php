@@ -12,7 +12,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
     <div class="request_quote ">
         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
             Organized Safari <span><?= $shared_safari_count ?></span></button>
-        <div class="interst_wrapper py-4 px-xxl-5 bg-white">
+        <div class="interst_wrapper py-4 px-xxl-3 bg-white">
 
             <div class="row justify-content-center">
                 <?php

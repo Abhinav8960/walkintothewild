@@ -14,6 +14,9 @@ class ShareSafariCommentSearch extends ShareSafariComment
 {
     public $share_safari_id;
     public $flaged;
+    public $share_safari_title;
+    public $start_date;
+    public $end_date;
 
     /**
      * {@inheritdoc}
@@ -22,6 +25,8 @@ class ShareSafariCommentSearch extends ShareSafariComment
     {
         return [
             [['share_safari_id', 'flaged', 'is_deleted'], 'integer'],
+            [['share_safari_title'],'string'],
+            [['start_date','end_date'],'safe'],
         ];
     }
 
@@ -85,7 +90,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 50 : $pagination],
             'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
 
         ]);
@@ -103,6 +108,18 @@ class ShareSafariCommentSearch extends ShareSafariComment
             'id' => $this->id,
             'share_safari_id' => $this->share_safari_id,
         ]);
+
+        if ($this->share_safari_title) {
+            $query->joinwith(['sharesafari' => function ($title_query) {
+                $title_query->andWhere(['like', 'share_safari_title', $this->share_safari_title]);
+            }]);
+        }
+
+        if ($this->start_date && $this->end_date) {
+            $startTimestamp = strtotime($this->start_date . ' 00:00:00');
+            $endTimestamp = strtotime($this->end_date . ' 23:59:59');
+            $query->andWhere(['between', 'share_safari_comment.created_at', $startTimestamp, $endTimestamp]);
+        }
 
         return $dataProvider;
     }

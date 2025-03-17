@@ -120,6 +120,8 @@ $this->registerMetaTag(['name' => 'twitter:site', 'content' => 'WalkIntoTheWild'
     <?= \common\widgets\NotifyAlert::widget() ?>
 
     <?= \frontend\widgets\Footer::widget() ?>
+    <?= \frontend\widgets\AccountPopup::widget() ?>
+
 
 
     <div class="modal fade _standard-text" id="update-organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

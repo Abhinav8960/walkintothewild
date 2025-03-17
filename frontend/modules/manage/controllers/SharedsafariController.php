@@ -294,6 +294,7 @@ class SharedsafariController extends FrontendBaseController
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
                         if ($model->shared_safari_departure_model->save(false)) {
+                            $model->shared_safari_departure_model->savehistory();
                             foreach ($model->share_safari_included as $optionId => $selection) {
                                 $sharesafariIncluded = ShareSafariIncluded::findOne(['include_id' => $optionId, 'share_safari_id' => $shared_safari_departure_model->id]);
                                 if (!$sharesafariIncluded) {
@@ -361,6 +362,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
+                        $model->shared_safari_departure_model->savehistory();
                         \Yii::$app->session->setFlash('success', 'Getting there updated successfully');
                         return $this->redirect(['getting-there', 'slug' => $slug]);
                     }
@@ -391,6 +393,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
+                        $model->shared_safari_departure_model->savehistory();
                         \Yii::$app->session->setFlash('success', 'Policy info updated successfully');
                         return $this->redirect(['policy-info', 'slug' => $slug]);
                     }

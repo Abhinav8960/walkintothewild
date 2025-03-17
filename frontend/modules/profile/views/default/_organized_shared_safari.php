@@ -19,7 +19,7 @@ if (Yii::$app->user->identity) {
     <div class="request_quote mt-4">
         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor:default;">
             Organized Shared Safari <span><?= $model_count ?></span></button>
-        <div class="interst_wrapper py-4 px-xxl-5 bg-white">
+        <div class="interst_wrapper py-3 px-xxl-3 bg-white">
             <div class="row justify-content-center">
                 <?php
                 foreach ($model as $share_safari) {

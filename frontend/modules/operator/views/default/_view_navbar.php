@@ -8,8 +8,9 @@ $review_count = SafariOperatorRating::find()->where(['safari_operator_id' => $op
 $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->count();
 
 ?>
-<div class="row  mt-4 pt-4 itenary_tabs justify-content-center" id="safari_tour_container">
-    <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative">
+<div class="row  mt-2 pt-2 itenary_tabs justify-content-center" id="safari_tour_container">
+    <!-- <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative"> -->
+    <div class="col-xxl-8 col-xl-10 col-lg-12 safartabs position-relative">
         <ul class="nav nav-tabs slider_orprator gap-2" role="tablist">
             <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" data-pjax="0">
                     Shared Safaris</i>
