@@ -71,7 +71,7 @@ use Yii;
  * @property float $self_harm_fake
  * @property float $self_harm_animated
  */
-class ModerationImage extends \yii\db\ActiveRecord
+class ModerationImage extends \common\models\moderation\ActiveRecord
 {
 
 

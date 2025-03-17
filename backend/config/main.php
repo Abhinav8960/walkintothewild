@@ -80,6 +80,10 @@ return [
         'urlshortner' =>
         [
             'class' => 'backend\modules\urlshortner\Module'
+        ],
+        'moderation' =>
+        [
+            'class' => 'backend\modules\moderation\Module'
         ]
     ],
     'components' => [

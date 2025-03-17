@@ -18,7 +18,7 @@ use Yii;
  * @property int $personal
  * @property int $link
  */
-class ModerationText extends \yii\db\ActiveRecord
+class ModerationText extends \common\models\moderation\ActiveRecord
 {
 
 

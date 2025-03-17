@@ -4,15 +4,8 @@ namespace common\models\moderation;
 
 use Yii;
 
-/**
- * This is the model class for table "moderation".
- *
- * @property int $id
- * @property string $request_id
- * @property int $request_timestamp
- * @property string $moderation_type
- */
-class Moderation extends \yii\db\ActiveRecord
+
+class Moderation extends \common\models\moderation\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -28,8 +21,11 @@ class Moderation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['request_id', 'request_timestamp', 'moderation_type'], 'required'],
-            [['request_id', 'moderation_type','request_timestamp'], 'string', 'max' => 255],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['type'], 'required'],
+            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['text'], 'string'],
+            [['video_url', 'image_url'], 'string', 'max' => 512],
         ];
     }
 
@@ -40,10 +36,14 @@ class Moderation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'request_id' => 'Request ID',
-            'request_timestamp' => 'Request Timestamp',
-            'moderation_type' => 'Moderation Type',
+            'type' => 'Type',
+            'video_url' => 'Video Url',
+            'image_url' => 'Image Url',
+            'text' => 'Text',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         ];
     }
-
 }

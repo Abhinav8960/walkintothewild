@@ -30,13 +30,16 @@ return [
             'targets' => [
                 [
                     'class' => \yii\log\FileTarget::class,
-                    'levels' => ['info','error', 'warning'],
+                    'levels' => ['info', 'error', 'warning'],
                 ],
             ],
         ],
         'queue' => [
             'class' => \yii\queue\db\Queue::class,
-            'as log' => \yii\queue\LogBehavior::class,
+            'db' => 'db',
+            'tableName' => '{{%queue}}',
+            'channel' => 'default',
+            'mutex' => \yii\mutex\MysqlMutex::class,
         ],
 
 

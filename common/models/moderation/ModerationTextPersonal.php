@@ -16,7 +16,7 @@ use Yii;
  * @property string|null $end
  * @property int $sequnce
  */
-class ModerationTextPersonal extends \yii\db\ActiveRecord
+class ModerationTextPersonal extends \common\models\moderation\ActiveRecord
 {
 
 

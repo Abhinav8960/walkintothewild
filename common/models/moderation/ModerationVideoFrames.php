@@ -73,7 +73,7 @@ use Yii;
  * @property float $self_harm_fake
  * @property float $self_harm_animated
  */
-class ModerationVideoFrames extends \yii\db\ActiveRecord
+class ModerationVideoFrames extends \common\models\moderation\ActiveRecord
 {
 
 
