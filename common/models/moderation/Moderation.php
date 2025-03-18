@@ -46,4 +46,9 @@ class Moderation extends \common\models\moderation\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function getModerationtext()
+    {
+        return $this->hasOne(ModerationText::className(), ['moderation_id' => 'id']);
+    }
 }

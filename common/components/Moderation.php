@@ -28,6 +28,7 @@ class Moderation extends Component
 
     private $sightEngineUserId = "1054537867"; // Kamal
     private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
+    
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
 
@@ -100,7 +101,7 @@ class Moderation extends Component
     }
 
 
-    public function textFeedback($text)
+    public function textFeedback($text, $moderationId)
     {
         $params = array(
             'text' => $text,
@@ -122,7 +123,7 @@ class Moderation extends Component
         $response = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($response, true);
-        $this->actionStoreTextFeedback($output);
+        $this->actionStoreTextFeedback($output, $moderationId);
         return $output;
     }
 
@@ -143,18 +144,19 @@ class Moderation extends Component
         // }
         $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
     }
-    public function actionStoreTextFeedback($feedback)
+    public function actionStoreTextFeedback($feedback, $moderationId)
     {
         // if ($feedback == NULL) {
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/text.json");
         // }
-        $this->actionStoreText($feedback, ModerationForm::MODERATION_TYPE_TEXT);
+        $this->actionStoreText($feedback, ModerationForm::MODERATION_TYPE_TEXT, $moderationId);
     }
 
-    private function actionStoreText($feedback, $moderation_type)
+    private function actionStoreText($feedback, $moderation_type, $moderationId)
     {
         $model = new ModerationText();
+        $model->moderation_id = $moderationId;
         $model->request_id = $feedback['request']['id'] ?? NULL;
         $model->request_timestamp = $feedback['request']['timestamp'] ?? NULL;
         $model->sexual = $feedback['moderation_classes']['sexual'] ?? 0;
@@ -163,6 +165,17 @@ class Moderation extends Component
         $model->violent = $feedback['moderation_classes']['violent'] ?? 0;
         $model->toxic = $feedback['moderation_classes']['toxic'] ?? 0;
         $model->self_harm = $feedback['moderation_classes']['self-harm'] ?? 0;
+
+        if (!empty($feedback['personal']['matches'])) {
+            $model->personal = 1;
+        } else {
+            $model->personal = 0;
+        }
+        if (!empty($feedback['link']['matches'])) {
+            $model->link = 1;
+        } else {
+            $model->link = 0;
+        }
 
         $model->moderation_type = $moderation_type;
         if ($model->save(false)) {
@@ -192,7 +205,7 @@ class Moderation extends Component
             }
 
             echo "Text Feedback Stored Successfully";
-            die;
+            // die;
         } else {
             exit("Error: " . json_encode($model->errors));
         }

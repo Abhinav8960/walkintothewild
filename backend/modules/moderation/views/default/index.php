@@ -1,6 +1,5 @@
 <?php
 
-
 /* @var $this yii\web\View */
 /* @var $model common\models\corporate\Corporate */
 
@@ -13,4 +12,5 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+
 ?>
