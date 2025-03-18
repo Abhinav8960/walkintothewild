@@ -63,15 +63,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'label' => 'Description',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->type == 1 && $model->moderationtext) {
+                            if ($model->type == 1 && $model->moderationText) {
                                 $badges = [];
 
-                                $sexual = $model->moderationtext->sexual * 100;
-                                $discriminatory = $model->moderationtext->discriminatory * 100;
-                                $insulting = $model->moderationtext->insulting * 100;
-                                $violent = $model->moderationtext->violent * 100;
-                                $toxic = $model->moderationtext->toxic * 100;
-                                $selfHarm = $model->moderationtext->self_harm * 100;
+                                $sexual = $model->moderationText->sexual * 100;
+                                $discriminatory = $model->moderationText->discriminatory * 100;
+                                $insulting = $model->moderationText->insulting * 100;
+                                $violent = $model->moderationText->violent * 100;
+                                $toxic = $model->moderationText->toxic * 100;
+                                $selfHarm = $model->moderationText->self_harm * 100;
 
                                 $createBadge = function ($label, $value) {
                                     $class = '';
