@@ -21,13 +21,27 @@ use yii\bootstrap5\ActiveForm;
                         2 => 'Video',
                         3 => 'Image'
                     ],
-                    ['prompt' => 'Select Option']
+                    ['prompt' => 'Select Option', 'id' => 'type-selector']
                 ); ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 field-text">
                 <?= $form->field($model, 'text')->textInput([
                     'maxlength' => true,
                     'placeholder' => 'Enter Text',
+                ]) ?>
+            </div>
+
+            <div class="col-md-6 field-video">
+                <?= $form->field($model, 'video_url')->textInput([
+                    'maxlength' => true,
+                    'placeholder' => 'Enter Video Url',
+                ]) ?>
+            </div>
+
+            <div class="col-md-6 field-image">
+                <?= $form->field($model, 'image_url')->textInput([
+                    'maxlength' => true,
+                    'placeholder' => 'Enter Image Url',
                 ]) ?>
             </div>
 
@@ -42,3 +56,28 @@ use yii\bootstrap5\ActiveForm;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$show_hide_script = <<< JS
+    function toggleFields() {
+        var type = $("#type-selector").val();
+        $('.field-text, .field-video, .field-image').hide();
+        
+        if (type == 1) {
+            $('.field-text').show();
+        } else if (type == 2) {
+            $('.field-video').show();
+        } else if (type == 3) {
+            $('.field-image').show();
+        }
+    }
+
+    $(document).ready(function() {
+        toggleFields();
+        $("#type-selector").change(function() {
+            toggleFields();
+        });
+    });
+JS;
+$this->registerJs($show_hide_script);
+?>
