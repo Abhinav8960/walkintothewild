@@ -4,6 +4,7 @@ namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
 use common\models\moderation\ModerationText;
+use common\models\moderation\ModerationTextPersonal;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -161,6 +162,31 @@ class Moderation extends Component
         // $model->feedback = $feedback;
         // $model->status = 1;
         if ($model->save(false)) {
+            if (!empty($feedback['personal']['matches'])) {
+                foreach ($feedback['personal']['matches'] as $match) {
+                    $modelTextPersonal = new ModerationTextPersonal();
+                    $modelTextPersonal->moderation_text_id = $model->id;
+                    $modelTextPersonal->type = $match['type'];
+                    $modelTextPersonal->match = $match['match'];
+                    $modelTextPersonal->start = $match['start'];
+                    $modelTextPersonal->end = $match['end'];
+                    $modelTextPersonal->save(false);
+                }
+            }
+
+            if (!empty($feedback['link']['matches'])) {
+                foreach ($feedback['link']['matches'] as $match) {
+                    $modelTextPersonal = new ModerationTextPersonal();
+                    $modelTextPersonal->moderation_text_id = $model->id;
+                    $modelTextPersonal->type = $match['type'];
+                    $modelTextPersonal->category = $match['category'];
+                    $modelTextPersonal->match = $match['match'];
+                    $modelTextPersonal->start = $match['start'];
+                    $modelTextPersonal->end = $match['end'];
+                    $modelTextPersonal->save(false);
+                }
+            }
+
             echo "Feedback Stored Successfully";
             die;
         } else {
