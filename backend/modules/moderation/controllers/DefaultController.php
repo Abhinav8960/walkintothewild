@@ -3,7 +3,6 @@
 namespace backend\modules\moderation\controllers;
 
 use common\models\moderation\form\ModerationForm;
-use common\models\moderation\Moderation;
 use Yii;
 use yii\web\Controller;
 
@@ -19,18 +18,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $query = Moderation::find();
-
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index');
     }
 
 
@@ -42,15 +30,13 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->moderation_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         if ($model->moderation_model->type == 1) {
                             Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 2) {
                             Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 3) {
                             Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         }
                         return $this->redirect(['index']);
                     }
