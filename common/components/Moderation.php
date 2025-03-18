@@ -140,7 +140,7 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
         // }
-        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
+        $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
     }
     public function actionStoreTextFeedback($feedback)
     {
@@ -222,5 +222,10 @@ class Moderation extends Component
         } else {
             exit("Error: Failed to store data");
         }
+    }
+
+    private function actionStoreImage($feedback, $moderation_type)
+    {
+        die('actionStoreImage');
     }
 }
