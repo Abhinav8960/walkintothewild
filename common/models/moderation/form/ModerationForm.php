@@ -43,6 +43,15 @@ class ModerationForm extends Model
             [['type'], 'integer'],
             [['text'], 'string'],
             [['video_url', 'image_url'], 'string', 'max' => 512],
+            ['video_url', 'required', 'when' => function($model) {
+                return $model->type == 2;
+            }],
+            ['text', 'required', 'when' => function($model) {
+                return $model->type == 1;
+            }],
+            ['image_url', 'required', 'when' => function($model) {
+                return $model->country == 3;
+            }]
         ];
     }
 
