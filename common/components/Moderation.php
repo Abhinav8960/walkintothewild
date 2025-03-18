@@ -76,7 +76,7 @@ class Moderation extends Component
         return $output;
     }
 
-    public function videoFeedback($url)
+    public function videoFeedback($url, $id)
     {
         $params = array(
             'media' => new CURLFile($url),
@@ -94,7 +94,7 @@ class Moderation extends Component
         $response = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($response, true);
-        $this->actionStoreVideoFeedback($output);
+        $this->actionStoreVideoFeedback($output, $id);
         return $output;
     }
 
@@ -126,13 +126,13 @@ class Moderation extends Component
     }
 
 
-    public function actionStoreVideoFeedback($feedback)
+    public function actionStoreVideoFeedback($feedback, $id)
     {
         // if ($feedback == NULL) {
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/video.json");
         // }
-        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_VIDEO);
+        $this->actionVideoStore($feedback, $id);
     }
     public function actionStoreImageFeedback($feedback)
     {
@@ -200,7 +200,9 @@ class Moderation extends Component
 
     private function actionVideoStore($feedback, $id)
     {
-        $fb = json_decode($feedback, true);
+
+        // $fb = json_decode($feedback, true);
+        $fb = $feedback;
         $nudity_model = new Nudity();
         $offensive_model = new Offensive();
         $gore_model = new Gore();
