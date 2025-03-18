@@ -31,6 +31,7 @@ class Moderation extends Component
     
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
+
     private $models = [
         'nudity-2.1',
         'weapon',
@@ -216,22 +217,16 @@ class Moderation extends Component
 
         // $fb = json_decode($feedback, true);
         $fb = $feedback;
-        $nudity_model = new Nudity();
-        $offensive_model = new Offensive();
-        $gore_model = new Gore();
-        $weapon_model = new Weapon();
-        $self_harm_model = new Selfharm();
-        $violence_model = new Violence();
 
-        $nudity_saved = $nudity_model->nuditystore($fb, $id);
-        $offensive_saved = $offensive_model->offensivestore($fb, $id);
-        $gore_saved = $gore_model->gorestore($fb, $id);
-        $weapon_saved = $weapon_model->weaponstore($fb, $id);
-        $self_harm_saved = $self_harm_model->selfharmstore($fb, $id);
-        $violence_saved = $violence_model->voilencestore($fb, $id);
+        $nudity_saved = Nudity::nuditystore($fb, $id);
+        $offensive_saved = Offensive::offensivestore($fb, $id);
+        $gore_saved = Gore::gorestore($fb, $id);
+        $weapon_saved = Weapon::weaponstore($fb, $id);
+        $self_harm_saved = Selfharm::selfharmstore($fb, $id);
+        $violence_saved = Violence::voilencestore($fb, $id);
 
         if ($nudity_saved && $offensive_saved && $gore_saved && $weapon_saved &&  $self_harm_saved && $violence_saved) {
-            echo "Stored Successfully";
+            return true;
         } else {
             exit("Error: Failed to store data");
         }

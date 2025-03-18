@@ -66,7 +66,7 @@ class Offensive extends ActiveRecord
     }
 
 
-    public function offensivestore($fb, $id)
+    public static function offensivestore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;

@@ -87,7 +87,7 @@ class Gore extends \yii\db\ActiveRecord
         ];
     }
 
-    public function gorestore($fb, $id)
+    public static function gorestore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;

@@ -161,7 +161,7 @@ class Nudity extends ActiveRecord
     //     }
     // }
 
-    public function nuditystore($fb, $id)
+    public static function nuditystore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
