@@ -67,7 +67,7 @@ class Violence extends \yii\db\ActiveRecord
         ];
     }
 
-    public function voilencestore($fb, $id)
+    public static function voilencestore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;

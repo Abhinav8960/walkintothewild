@@ -67,7 +67,7 @@ class Selfharm extends \yii\db\ActiveRecord
         ];
     }
 
-    public function selfharmstore($fb, $id)
+    public static function selfharmstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;

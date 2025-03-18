@@ -81,7 +81,7 @@ class Weapon extends \yii\db\ActiveRecord
         ];
     }
 
-    public function weaponstore($fb, $id)
+    public static function weaponstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
