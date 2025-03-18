@@ -3,6 +3,7 @@
 namespace backend\modules\moderation\controllers;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\Moderation;
 use Yii;
 use yii\web\Controller;
 
@@ -18,7 +19,18 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Moderation::find();
+
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 
