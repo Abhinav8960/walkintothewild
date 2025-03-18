@@ -148,28 +148,25 @@ class Moderation extends Component
     private function actionStoreText($feedback, $moderation_type)
     {
         $model = new ModerationText();
-        $model->request_id = $feedback['request']['id'];
-        $model->request_timestamp = $feedback['request']['timestamp'];
-
-        $model->sexual = $feedback['moderation_classes']['sexual'];
-        $model->discriminatory = $feedback['moderation_classes']['discriminatory'];
-        $model->insulting = $feedback['moderation_classes']['insulting'];
-        $model->violent = $feedback['moderation_classes']['violent'];
-        $model->toxic = $feedback['moderation_classes']['toxic'];
-        $model->self_harm = $feedback['moderation_classes']['self-harm'];
+        $model->request_id = $feedback['request']['id'] ?? NULL;
+        $model->request_timestamp = $feedback['request']['timestamp'] ?? NULL;
+        $model->sexual = $feedback['moderation_classes']['sexual'] ?? 0;
+        $model->discriminatory = $feedback['moderation_classes']['discriminatory'] ?? 0;
+        $model->insulting = $feedback['moderation_classes']['insulting'] ?? 0;
+        $model->violent = $feedback['moderation_classes']['violent'] ?? 0;
+        $model->toxic = $feedback['moderation_classes']['toxic'] ?? 0;
+        $model->self_harm = $feedback['moderation_classes']['self-harm'] ?? 0;
 
         $model->moderation_type = $moderation_type;
-        // $model->feedback = $feedback;
-        // $model->status = 1;
         if ($model->save(false)) {
             if (!empty($feedback['personal']['matches'])) {
                 foreach ($feedback['personal']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
                     $modelTextPersonal->moderation_text_id = $model->id;
-                    $modelTextPersonal->type = $match['type'];
-                    $modelTextPersonal->match = $match['match'];
-                    $modelTextPersonal->start = $match['start'];
-                    $modelTextPersonal->end = $match['end'];
+                    $modelTextPersonal->type = $match['type'] ?? NULL;
+                    $modelTextPersonal->match = $match['match'] ?? NULL;
+                    $modelTextPersonal->start = $match['start'] ?? NULL;
+                    $modelTextPersonal->end = $match['end'] ?? NULL;
                     $modelTextPersonal->save(false);
                 }
             }
@@ -178,16 +175,16 @@ class Moderation extends Component
                 foreach ($feedback['link']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
                     $modelTextPersonal->moderation_text_id = $model->id;
-                    $modelTextPersonal->type = $match['type'];
-                    $modelTextPersonal->category = $match['category'];
-                    $modelTextPersonal->match = $match['match'];
-                    $modelTextPersonal->start = $match['start'];
-                    $modelTextPersonal->end = $match['end'];
+                    $modelTextPersonal->type = $match['type'] ?? NULL;
+                    $modelTextPersonal->category = $match['category'] ?? NULL;
+                    $modelTextPersonal->match = $match['match'] ?? NULL;
+                    $modelTextPersonal->start = $match['start'] ?? NULL;
+                    $modelTextPersonal->end = $match['end'] ?? NULL;
                     $modelTextPersonal->save(false);
                 }
             }
 
-            echo "Feedback Stored Successfully";
+            echo "Text Feedback Stored Successfully";
             die;
         } else {
             exit("Error: " . json_encode($model->errors));
