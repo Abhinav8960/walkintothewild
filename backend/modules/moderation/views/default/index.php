@@ -59,12 +59,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
 
                     [
-                        'attribute' => 'description',
-                        'label' => 'Description',
+                        'attribute' => 'moderation_details',
+                        'label' => 'Moderation Details',
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->type == 1 && $model->moderationText) {
-                                $badges = [];
+                                $textDetail = [];
+
+                                $textData = [];
 
                                 $sexual = $model->moderationText->sexual * 100;
                                 $discriminatory = $model->moderationText->discriminatory * 100;
@@ -75,44 +77,41 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                                 $createBadge = function ($label, $value) {
                                     $class = '';
-                                    $style = 'font-size: 12px;';
-
                                     if ($value > 40) {
                                         $class .= 'fw-bold text-danger';
-                                    } 
-
-                                    return Html::tag('span', "$label $value %", ['class' => $class]);
+                                    }
+                                    return Html::tag('span', "$label $value%", ['class' => $class]);
                                 };
 
-                                $badges[] = $createBadge('Sexual', $sexual);
-                                $badges[] = $createBadge('Discriminatory', $discriminatory);
-                                $badges[] = $createBadge('Insulting', $insulting);
-                                $badges[] = $createBadge('Violent', $violent);
-                                $badges[] = $createBadge('Toxic', $toxic);
-                                $badges[] = $createBadge('Self Harm', $selfHarm);
+                                $textData[] = $createBadge('Sexual', $sexual);
+                                $textData[] = $createBadge('Discriminatory', $discriminatory);
+                                $textData[] = $createBadge('Insulting', $insulting);
+                                $textData[] = $createBadge('Violent', $violent);
+                                $textData[] = $createBadge('Toxic', $toxic);
+                                $textData[] = $createBadge('Self Harm', $selfHarm);
 
-                                return implode(' , ', $badges);
+                                $textDetail[] = implode(' , ', $textData);
+
+                                if (!empty($model->moderationText->moderationTextPersonal)) {
+                                    $textPersonalData = [];
+
+                                    foreach ($model->moderationText->moderationTextPersonal as $personal) {
+                                        $textPersonalData[] = "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
+                                            " | <strong>Category:</strong> " . ($personal->category ?? 'N/A') .
+                                            " | <strong>Match:</strong> " . ($personal->match ?? 'N/A') .
+                                            " | <strong>Start:</strong> " . ($personal->start ?? 'N/A') .
+                                            " | <strong>End:</strong> " . ($personal->end ?? 'N/A');
+                                    }
+
+                                    $textDetail[] = "<br><br>" . implode("<br>", $textPersonalData);
+                                }
+
+                                return implode("<br>", $textDetail);
                             }
                             return null;
                         },
                     ],
 
-
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'template' => '{view}',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-                    //             return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['view', 'id' => $model->id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'View',
-
-                    //             ]);
-                    //         },
-                    //     ]
-                    // ],
                 ],
             ]); ?>
         </div>

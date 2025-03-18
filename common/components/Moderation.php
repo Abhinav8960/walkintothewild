@@ -201,7 +201,7 @@ class Moderation extends Component
             if (!empty($feedback['link']['matches'])) {
                 foreach ($feedback['link']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
-                    $modelTextPersonal->moderation_text_id = $model->id;
+                    $modelTextPersonal->moderation_text_id = $modelTextPersonal->id;
                     $modelTextPersonal->type = $match['type'] ?? NULL;
                     $modelTextPersonal->category = $match['category'] ?? NULL;
                     $modelTextPersonal->match = $match['match'] ?? NULL;
