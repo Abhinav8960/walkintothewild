@@ -3,6 +3,8 @@
 namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\ModerationText;
+use common\models\moderation\ModerationTextPersonal;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -140,20 +142,50 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/text.json");
         // }
-        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_TEXT);
+        $this->actionStoreText($feedback, ModerationForm::MODERATION_TYPE_TEXT);
     }
 
-    private function actionStore($feedback, $moderation_type)
+    private function actionStoreText($feedback, $moderation_type)
     {
-        $fb = json_decode($feedback, true);
-        $model = new ModerationForm();
-        $model->request_id = $fb['request']['id'];
-        $model->request_timestamp = (string) $fb['request']['timestamp'];
+        $model = new ModerationText();
+        $model->request_id = $feedback['request']['id'] ?? NULL;
+        $model->request_timestamp = $feedback['request']['timestamp'] ?? NULL;
+        $model->sexual = $feedback['moderation_classes']['sexual'] ?? 0;
+        $model->discriminatory = $feedback['moderation_classes']['discriminatory'] ?? 0;
+        $model->insulting = $feedback['moderation_classes']['insulting'] ?? 0;
+        $model->violent = $feedback['moderation_classes']['violent'] ?? 0;
+        $model->toxic = $feedback['moderation_classes']['toxic'] ?? 0;
+        $model->self_harm = $feedback['moderation_classes']['self-harm'] ?? 0;
+
         $model->moderation_type = $moderation_type;
-        $model->feedback = $fb;
-        $model->status = 1;
-        if ($model->save()) {
-            echo "Feedback Stored Successfully";
+        if ($model->save(false)) {
+            if (!empty($feedback['personal']['matches'])) {
+                foreach ($feedback['personal']['matches'] as $match) {
+                    $modelTextPersonal = new ModerationTextPersonal();
+                    $modelTextPersonal->moderation_text_id = $model->id;
+                    $modelTextPersonal->type = $match['type'] ?? NULL;
+                    $modelTextPersonal->match = $match['match'] ?? NULL;
+                    $modelTextPersonal->start = $match['start'] ?? NULL;
+                    $modelTextPersonal->end = $match['end'] ?? NULL;
+                    $modelTextPersonal->save(false);
+                }
+            }
+
+            if (!empty($feedback['link']['matches'])) {
+                foreach ($feedback['link']['matches'] as $match) {
+                    $modelTextPersonal = new ModerationTextPersonal();
+                    $modelTextPersonal->moderation_text_id = $model->id;
+                    $modelTextPersonal->type = $match['type'] ?? NULL;
+                    $modelTextPersonal->category = $match['category'] ?? NULL;
+                    $modelTextPersonal->match = $match['match'] ?? NULL;
+                    $modelTextPersonal->start = $match['start'] ?? NULL;
+                    $modelTextPersonal->end = $match['end'] ?? NULL;
+                    $modelTextPersonal->save(false);
+                }
+            }
+
+            echo "Text Feedback Stored Successfully";
+            die;
         } else {
             exit("Error: " . json_encode($model->errors));
         }
