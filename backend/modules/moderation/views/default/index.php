@@ -57,6 +57,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         },
                     ],
 
+
                     [
                         'attribute' => 'description',
                         'label' => 'Description',
@@ -64,18 +65,38 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'value' => function ($model) {
                             if ($model->type == 1 && $model->moderationtext) {
                                 $badges = [];
-                                $badges[] = Html::tag('span', 'Sexual ' . ($model->moderationtext->sexual * 100) . ' %', ['class' => 'badge rounded-pill text-bg-primary', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Discriminatory ' . ($model->moderationtext->discriminatory * 100) . ' %', ['class' => 'badge rounded-pill text-bg-danger', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Insulting ' . ($model->moderationtext->insulting * 100) . ' %', ['class' => 'badge rounded-pill text-bg-warning', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Violent ' . ($model->moderationtext->violent * 100) . ' %', ['class' => 'badge rounded-pill text-bg-secondary', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Toxic ' . ($model->moderationtext->toxic * 100) . ' %', ['class' => 'badge rounded-pill text-bg-info', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Self Harm ' . ($model->moderationtext->self_harm * 100) . ' %', ['class' => 'badge rounded-pill text-bg-success', 'style' => 'font-size: 12px;']);
 
-                                return implode(' ', $badges);
+                                $sexual = $model->moderationtext->sexual * 100;
+                                $discriminatory = $model->moderationtext->discriminatory * 100;
+                                $insulting = $model->moderationtext->insulting * 100;
+                                $violent = $model->moderationtext->violent * 100;
+                                $toxic = $model->moderationtext->toxic * 100;
+                                $selfHarm = $model->moderationtext->self_harm * 100;
+
+                                $createBadge = function ($label, $value) {
+                                    $class = '';
+                                    $style = 'font-size: 12px;';
+
+                                    if ($value > 40) {
+                                        $class .= 'fw-bold text-danger';
+                                    } 
+
+                                    return Html::tag('span', "$label $value %", ['class' => $class]);
+                                };
+
+                                $badges[] = $createBadge('Sexual', $sexual);
+                                $badges[] = $createBadge('Discriminatory', $discriminatory);
+                                $badges[] = $createBadge('Insulting', $insulting);
+                                $badges[] = $createBadge('Violent', $violent);
+                                $badges[] = $createBadge('Toxic', $toxic);
+                                $badges[] = $createBadge('Self Harm', $selfHarm);
+
+                                return implode(' , ', $badges);
                             }
                             return null;
                         },
                     ],
+
 
                     // [
                     //     'class' => 'yii\grid\ActionColumn',
