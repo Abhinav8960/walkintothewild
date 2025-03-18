@@ -3,8 +3,14 @@
 namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\Gore;
 use common\models\moderation\ModerationText;
 use common\models\moderation\ModerationTextPersonal;
+use common\models\moderation\Nudity;
+use common\models\moderation\Offensive;
+use common\models\moderation\Selfharm;
+use common\models\moderation\Violence;
+use common\models\moderation\Weapon;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -188,6 +194,31 @@ class Moderation extends Component
             die;
         } else {
             exit("Error: " . json_encode($model->errors));
+        }
+    }
+
+
+    private function actionVideoStore($feedback, $id)
+    {
+        $fb = json_decode($feedback, true);
+        $nudity_model = new Nudity();
+        $offensive_model = new Offensive();
+        $gore_model = new Gore();
+        $weapon_model = new Weapon();
+        $self_harm_model = new Selfharm();
+        $violence_model = new Violence();
+
+        $nudity_saved = $nudity_model->nuditystore($fb, $id);
+        $offensive_saved = $offensive_model->offensivestore($fb, $id);
+        $gore_saved = $gore_model->gorestore($fb, $id);
+        $weapon_saved = $weapon_model->weaponstore($fb, $id);
+        $self_harm_saved = $self_harm_model->selfharmstore($fb, $id);
+        $violence_saved = $violence_model->voilencestore($fb, $id);
+
+        if ($nudity_saved && $offensive_saved && $gore_saved && $weapon_saved &&  $self_harm_saved && $violence_saved) {
+            echo "Stored Successfully";
+        } else {
+            exit("Error: Failed to store data");
         }
     }
 }
