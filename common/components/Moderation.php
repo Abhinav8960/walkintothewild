@@ -2,13 +2,20 @@
 
 namespace common\components;
 
+use common\models\moderation\Alcohol;
+use common\models\moderation\Colors;
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\Gambling;
 use common\models\moderation\Gore;
+use common\models\moderation\Medical;
 use common\models\moderation\ModerationText;
 use common\models\moderation\ModerationTextPersonal;
+use common\models\moderation\Money;
 use common\models\moderation\Nudity;
 use common\models\moderation\Offensive;
+use common\models\moderation\RecreationalDrug;
 use common\models\moderation\Selfharm;
+use common\models\moderation\Smoking;
 use common\models\moderation\Violence;
 use common\models\moderation\Weapon;
 use CURLFile;
@@ -28,7 +35,7 @@ class Moderation extends Component
 
     private $sightEngineUserId = "1054537867"; // Kamal
     private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
-    
+
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
 
@@ -215,18 +222,27 @@ class Moderation extends Component
     private function actionVideoStore($feedback, $id)
     {
 
-        // $fb = json_decode($feedback, true);
-        $fb = $feedback;
-
+        $fb = json_decode($feedback, true);
+        // $fb = $feedback;
         $nudity_saved = Nudity::nuditystore($fb, $id);
         $offensive_saved = Offensive::offensivestore($fb, $id);
         $gore_saved = Gore::gorestore($fb, $id);
         $weapon_saved = Weapon::weaponstore($fb, $id);
         $self_harm_saved = Selfharm::selfharmstore($fb, $id);
         $violence_saved = Violence::voilencestore($fb, $id);
+        $recreational_saved = RecreationalDrug::recreationaldrugstore($fb, $id);
+        $medical_saved = Medical::medicalstore($fb, $id);
+        $alcohol_saved = Alcohol::alcoholstore($fb, $id);
+        $gambling_saved = Gambling::gamblingstore($fb, $id);
+        $smoking_saved = Smoking::smokingstore($fb, $id);
+        $money_saved = Money::moneystore($fb, $id);
+        $color_saved = Colors::colorstore($fb, $id);
 
-        if ($nudity_saved && $offensive_saved && $gore_saved && $weapon_saved &&  $self_harm_saved && $violence_saved) {
-            return true;
+        if (
+            $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
+            && $color_saved
+        ) {
+            echo "Stored Successfully";
         } else {
             exit("Error: Failed to store data");
         }
