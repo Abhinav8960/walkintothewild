@@ -3,6 +3,7 @@
 namespace backend\modules\moderation\controllers;
 
 use common\models\moderation\form\ModerationForm;
+use Yii;
 use yii\web\Controller;
 
 /**
@@ -28,8 +29,15 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->moderation_model->save(false)) {
+                    if ($model->moderation_model->save()) {
                         \Yii::$app->session->setFlash('success', 'Extracted Successfully');
+                        if ($model->moderation_model->type == 1) {
+                            Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
+                        } elseif ($model->moderation_model->type == 2) {
+                            Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
+                        } elseif ($model->moderation_model->type == 3) {
+                            Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
+                        }
                         return $this->redirect(['index']);
                     }
                 }
