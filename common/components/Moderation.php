@@ -3,6 +3,7 @@
 namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\ModerationText;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -140,20 +141,28 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/text.json");
         // }
-        $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_TEXT);
+        $this->actionStoreText($feedback, ModerationForm::MODERATION_TYPE_TEXT);
     }
 
-    private function actionStore($feedback, $moderation_type)
+    private function actionStoreText($feedback, $moderation_type)
     {
-        $fb = json_decode($feedback, true);
-        $model = new ModerationForm();
-        $model->request_id = $fb['request']['id'];
-        $model->request_timestamp = (string) $fb['request']['timestamp'];
+        $model = new ModerationText();
+        $model->request_id = $feedback['request']['id'];
+        $model->request_timestamp = $feedback['request']['timestamp'];
+
+        $model->sexual = $feedback['moderation_classes']['sexual'];
+        $model->discriminatory = $feedback['moderation_classes']['discriminatory'];
+        $model->insulting = $feedback['moderation_classes']['insulting'];
+        $model->violent = $feedback['moderation_classes']['violent'];
+        $model->toxic = $feedback['moderation_classes']['toxic'];
+        $model->self_harm = $feedback['moderation_classes']['self-harm'];
+
         $model->moderation_type = $moderation_type;
-        $model->feedback = $fb;
-        $model->status = 1;
-        if ($model->save()) {
+        // $model->feedback = $feedback;
+        // $model->status = 1;
+        if ($model->save(false)) {
             echo "Feedback Stored Successfully";
+            die;
         } else {
             exit("Error: " . json_encode($model->errors));
         }

@@ -9,6 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $moderation_id
+ * @property string|null $request_id
+ * @property string|null $request_timestamp
+ * @property string|null $moderation_type
  * @property float $sexual
  * @property float $discriminatory
  * @property float $insulting
@@ -20,8 +23,6 @@ use Yii;
  */
 class ModerationText extends \common\models\moderation\ActiveRecord
 {
-
-
     /**
      * {@inheritdoc}
      */
@@ -36,12 +37,10 @@ class ModerationText extends \common\models\moderation\ActiveRecord
     public function rules()
     {
         return [
-            [['self_harm'], 'default', 'value' => 0.000],
-            [['link'], 'default', 'value' => 0],
             [['moderation_id'], 'required'],
+            [['request_id', 'request_timestamp', 'moderation_type'], 'string', 'max' => 255],
             [['sexual', 'discriminatory', 'insulting', 'violent', 'toxic', 'self_harm'], 'number'],
             [['personal', 'link'], 'integer'],
-            [['moderation_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,6 +52,9 @@ class ModerationText extends \common\models\moderation\ActiveRecord
         return [
             'id' => 'ID',
             'moderation_id' => 'Moderation ID',
+            'request_id' => 'Request ID',
+            'request_timestamp' => 'Request Timestamp',
+            'moderation_type' => 'Moderation Type',
             'sexual' => 'Sexual',
             'discriminatory' => 'Discriminatory',
             'insulting' => 'Insulting',

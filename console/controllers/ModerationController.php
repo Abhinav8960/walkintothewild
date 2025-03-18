@@ -74,19 +74,19 @@ class ModerationController extends Controller
         $this->actionStore($feedback, ModerationForm::MODERATION_TYPE_TEXT);
     }
 
-    private function actionStore($feedback, $moderation_type)
-    {
-        $fb = json_decode($feedback, true);
-        $model = new ModerationForm();
-        $model->request_id = $fb['request']['id'];
-        $model->request_timestamp = (string) $fb['request']['timestamp'];
-        $model->moderation_type = $moderation_type;
-        $model->feedback = $fb;
-        $model->status = 1;
-        if ($model->save()) {
-            echo "Feedback Stored Successfully";
-        } else {
-            exit("Error: " . json_encode($model->errors));
-        }
-    }
+    // private function actionStore($feedback, $moderation_type)
+    // {
+    //     $fb = json_decode($feedback, true);
+    //     $model = new ModerationForm();
+    //     $model->request_id = $fb['request']['id'];
+    //     $model->request_timestamp = (string) $fb['request']['timestamp'];
+    //     $model->moderation_type = $moderation_type;
+    //     $model->feedback = $fb;
+    //     $model->status = 1;
+    //     if ($model->save()) {
+    //         echo "Feedback Stored Successfully";
+    //     } else {
+    //         exit("Error: " . json_encode($model->errors));
+    //     }
+    // }
 }
