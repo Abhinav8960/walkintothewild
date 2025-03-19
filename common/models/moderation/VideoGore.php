@@ -28,6 +28,7 @@ use Yii;
  */
 class VideoGore extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'real'];
 
 
     /**
@@ -38,13 +39,6 @@ class VideoGore extends ActiveRecord
         return 'video_gore';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_moderation');
-    }
 
     /**
      * {@inheritdoc}

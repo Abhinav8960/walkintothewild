@@ -16,6 +16,7 @@ use Yii;
  */
 class VideoImageQualityDetection extends ActiveRecord
 {
+    public static $accessible_attributes = ['score'];
 
 
     /**

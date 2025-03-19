@@ -20,6 +20,7 @@ use Yii;
  */
 class VideoColorsAccent extends ActiveRecord
 {
+    public static $accessible_attributes = ['r', 'g', 'b', 'hex'];
 
 
     /**

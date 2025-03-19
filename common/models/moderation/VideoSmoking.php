@@ -19,6 +19,7 @@ use Yii;
 class VideoSmoking extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob', 'regular_tobacco', 'ambiguous_tobacco'];
 
     /**
      * {@inheritdoc}

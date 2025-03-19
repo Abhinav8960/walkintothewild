@@ -17,6 +17,7 @@ use Yii;
  */
 class VideoType extends ActiveRecord
 {
+    public static $accessible_attributes = ['illustration', 'photo','ai_generated','deepfake'];
 
 
     /**
