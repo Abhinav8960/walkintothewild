@@ -16,6 +16,7 @@ use common\models\moderation\Offensive;
 use common\models\moderation\RecreationalDrug;
 use common\models\moderation\Selfharm;
 use common\models\moderation\Smoking;
+use common\models\moderation\VideoAudio;
 use common\models\moderation\VideoDestruction;
 use common\models\moderation\VideoImageQualityDetection;
 use common\models\moderation\VideoMilitary;
@@ -42,6 +43,8 @@ class Moderation extends Component
 
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
+    
+
 
     private $models = [
         'nudity-2.1',
@@ -67,7 +70,8 @@ class Moderation extends Component
         'money',
         'gambling',
         'destruction',
-        'military'
+        'military',
+        'audio-profanity'
     ];
 
 
@@ -168,35 +172,34 @@ class Moderation extends Component
 
     private function actionStoreText($feedback, $moderation_type, $moderationId)
     {
-        $modelText = new ModerationText();
-        $modelText->moderation_id = $moderationId;
-        $modelText->request_id = $feedback['request']['id'] ?? NULL;
-        $modelText->request_timestamp = $feedback['request']['timestamp'] ?? NULL;
-        $modelText->sexual = $feedback['moderation_classes']['sexual'] ?? 0;
-        $modelText->discriminatory = $feedback['moderation_classes']['discriminatory'] ?? 0;
-        $modelText->insulting = $feedback['moderation_classes']['insulting'] ?? 0;
-        $modelText->violent = $feedback['moderation_classes']['violent'] ?? 0;
-        $modelText->toxic = $feedback['moderation_classes']['toxic'] ?? 0;
-        $modelText->self_harm = $feedback['moderation_classes']['self-harm'] ?? 0;
+        $model = new ModerationText();
+        $model->moderation_id = $moderationId;
+        $model->request_id = $feedback['request']['id'] ?? NULL;
+        $model->request_timestamp = $feedback['request']['timestamp'] ?? NULL;
+        $model->sexual = $feedback['moderation_classes']['sexual'] ?? 0;
+        $model->discriminatory = $feedback['moderation_classes']['discriminatory'] ?? 0;
+        $model->insulting = $feedback['moderation_classes']['insulting'] ?? 0;
+        $model->violent = $feedback['moderation_classes']['violent'] ?? 0;
+        $model->toxic = $feedback['moderation_classes']['toxic'] ?? 0;
+        $model->self_harm = $feedback['moderation_classes']['self-harm'] ?? 0;
 
         if (!empty($feedback['personal']['matches'])) {
-            $modelText->personal = 1;
+            $model->personal = 1;
         } else {
-            $modelText->personal = 0;
+            $model->personal = 0;
         }
         if (!empty($feedback['link']['matches'])) {
-            $modelText->link = 1;
+            $model->link = 1;
         } else {
-            $modelText->link = 0;
+            $model->link = 0;
         }
 
-        $modelText->moderation_type = $moderation_type;
-        if ($modelText->save(false)) {
+        $model->moderation_type = $moderation_type;
+        if ($model->save(false)) {
             if (!empty($feedback['personal']['matches'])) {
                 foreach ($feedback['personal']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
-                    $modelTextPersonal->moderation_text_id = $modelText->id;
-                    $modelTextPersonal->is_personal = 1;
+                    $modelTextPersonal->moderation_text_id = $model->id;
                     $modelTextPersonal->type = $match['type'] ?? NULL;
                     $modelTextPersonal->match = $match['match'] ?? NULL;
                     $modelTextPersonal->start = $match['start'] ?? NULL;
@@ -208,8 +211,7 @@ class Moderation extends Component
             if (!empty($feedback['link']['matches'])) {
                 foreach ($feedback['link']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
-                    $modelTextPersonal->moderation_text_id = $modelText->id;
-                    $modelTextPersonal->is_link = 1;
+                    $modelTextPersonal->moderation_text_id = $modelTextPersonal->id;
                     $modelTextPersonal->type = $match['type'] ?? NULL;
                     $modelTextPersonal->category = $match['category'] ?? NULL;
                     $modelTextPersonal->match = $match['match'] ?? NULL;
@@ -222,7 +224,7 @@ class Moderation extends Component
             echo "Text Feedback Stored Successfully";
             // die;
         } else {
-            exit("Error: " . json_encode($modelText->errors));
+            exit("Error: " . json_encode($model->errors));
         }
     }
 
@@ -249,10 +251,11 @@ class Moderation extends Component
         $image_quality_saved = VideoImageQualityDetection::imagequalitystore($fb, $id);
         $destruction_saved = VideoDestruction::destructionstore($fb, $id);
         $military_saved = VideoMilitary::militarystore($fb, $id);
+        // $audio_saved = VideoAudio::audiostore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved
+            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved 
         ) {
             echo "Stored Successfully";
         } else {

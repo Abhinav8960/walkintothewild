@@ -61,6 +61,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
             ['class' => 'common\models\moderation\Money', 'title' => 'Money'],
             ['class' => 'common\models\moderation\VideoDestruction', 'title' => 'Destruction'],
             ['class' => 'common\models\moderation\VideoMilitary', 'title' => 'Military'],
+            // ['class' => 'common\models\moderation\VideoAudioProfanity', 'title' => 'Audio Profanity'],
         ];
         $str = "";
         if ($this->type == 2) {
