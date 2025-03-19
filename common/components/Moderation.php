@@ -193,6 +193,7 @@ class Moderation extends Component
                 foreach ($feedback['personal']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
                     $modelTextPersonal->moderation_text_id = $modelText->id;
+                    $modelTextPersonal->is_personal = 1;
                     $modelTextPersonal->type = $match['type'] ?? NULL;
                     $modelTextPersonal->match = $match['match'] ?? NULL;
                     $modelTextPersonal->start = $match['start'] ?? NULL;
@@ -205,6 +206,7 @@ class Moderation extends Component
                 foreach ($feedback['link']['matches'] as $match) {
                     $modelTextPersonal = new ModerationTextPersonal();
                     $modelTextPersonal->moderation_text_id = $modelText->id;
+                    $modelTextPersonal->is_link = 1;
                     $modelTextPersonal->type = $match['type'] ?? NULL;
                     $modelTextPersonal->category = $match['category'] ?? NULL;
                     $modelTextPersonal->match = $match['match'] ?? NULL;
