@@ -61,73 +61,19 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         },
                     ],
 
-
                     [
                         'attribute' => 'moderation_details',
                         'label' => 'Moderation Details',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->type == 1 && $model->moderationText) {
-                                $textDetail = [];
 
-                                $textData = [];
-
-                                $sexual = $model->moderationText->sexual * 100;
-                                $discriminatory = $model->moderationText->discriminatory * 100;
-                                $insulting = $model->moderationText->insulting * 100;
-                                $violent = $model->moderationText->violent * 100;
-                                $toxic = $model->moderationText->toxic * 100;
-                                $selfHarm = $model->moderationText->self_harm * 100;
-
-                                $createBadge = function ($label, $value) {
-                                    $class = '';
-                                    if ($value > 40) {
-                                        $class .= 'fw-bold text-danger';
-                                    }
-                                    return Html::tag('span', "$label $value%", ['class' => $class]);
-                                };
-
-                                $textData[] = $createBadge('Sexual', $sexual);
-                                $textData[] = $createBadge('Discriminatory', $discriminatory);
-                                $textData[] = $createBadge('Insulting', $insulting);
-                                $textData[] = $createBadge('Violent', $violent);
-                                $textData[] = $createBadge('Toxic', $toxic);
-                                $textData[] = $createBadge('Self Harm', $selfHarm);
-
-                                $textDetail[] = implode(' , ', $textData);
-
-                                if (!empty($model->moderationText->moderationTextPersonal)) {
-                                    $textPersonalData = [];
-
-                                    foreach ($model->moderationText->moderationTextPersonal as $personal) {
-                                        $info = '';
-
-                                        if ($personal->is_personal == 1) {
-                                            $info .= '<strong>PERSONAL</strong> | ';
-                                        }
-
-                                        if ($personal->is_link == 1) {
-                                            $info .= '<strong>LINK</strong> | ';
-                                        }
-
-                                        $info .= "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
-                                            " | <strong>Category:</strong> " . ($personal->category ?? 'N/A') .
-                                            " | <strong>Match:</strong> " . ($personal->match ?? 'N/A') .
-                                            " | <strong>Start:</strong> " . ($personal->start ?? 'N/A') .
-                                            " | <strong>End:</strong> " . ($personal->end ?? 'N/A');
-
-                                        $textPersonalData[] = $info;
-                                    }
-
-                                    $textDetail[] = "<br>" . implode("<br>", $textPersonalData);
-                                }
-
-                                return implode("<br>", $textDetail);
+                            if ($model->type == 1) {
+                                return $model->moderationTextDetails;
                             }
+
                             if ($model->type == 2) {
                                 return $model->tags;
                             }
-                            // return null;
                         },
                     ],
 
