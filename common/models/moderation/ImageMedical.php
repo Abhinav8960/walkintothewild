@@ -63,4 +63,23 @@ class ImageMedical extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function medicalStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['medical']) || !is_array($feedback['medical'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['medical']['prob'] ?? 0;
+        $model->pills = $feedback['medical']['classes']['pills'] ?? 0;
+        $model->paraphernalia = $feedback['medical']['classes']['paraphernalia'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

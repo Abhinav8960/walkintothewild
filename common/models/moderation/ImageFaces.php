@@ -89,4 +89,41 @@ class ImageFaces extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function facesStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['faces']) || !is_array($feedback['faces'])) {
+            return false;
+        }
+
+        foreach ($feedback['faces'] as $face) {
+            $model = new self();
+            $model->moderation_id = $moderationId;
+            $model->media_id = $feedback['media']['id'] ?? null;
+
+            $model->x1 = $face['x1'] ?? null;
+            $model->y1 = $face['y1'] ?? null;
+            $model->x2 = $face['x2'] ?? null;
+            $model->y2 = $face['y2'] ?? null;
+
+            $model->feature_left_eye_x = $face['features']['left_eye']['x'] ?? null;
+            $model->feature_left_eye_y = $face['features']['left_eye']['y'] ?? null;
+            $model->feature_right_eye_x = $face['features']['right_eye']['x'] ?? null;
+            $model->feature_right_eye_y = $face['features']['right_eye']['y'] ?? null;
+            $model->feature_nose_tip_x = $face['features']['nose_tip']['x'] ?? null;
+            $model->feature_nose_tip_y = $face['features']['nose_tip']['y'] ?? null;
+            $model->feature_left_mouth_corner_x = $face['features']['left_mouth_corner']['x'] ?? null;
+            $model->feature_left_mouth_corner_y = $face['features']['left_mouth_corner']['y'] ?? null;
+            $model->feature_right_mouth_corner_x = $face['features']['right_mouth_corner']['x'] ?? null;
+            $model->feature_right_mouth_corner_y = $face['features']['right_mouth_corner']['y'] ?? null;
+
+            $model->minor = $face['attributes']['minor'] ?? null;
+            $model->sunglasses = $face['attributes']['sunglasses'] ?? null;
+
+            if (!$model->save()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

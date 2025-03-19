@@ -59,4 +59,21 @@ class ImageMedia extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function mediaStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['media']) || !is_array($feedback['media'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->uri = $feedback['media']['uri'] ?? null; 
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -66,38 +66,56 @@ class ImageColors extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function colorstore($feedback, $id)
+    public static function colorStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
-        //     return false;
-        // }
-        foreach ($feedback['data']['frames'] as $image) {
-            $model = new self();
-            $model->moderation_id = $id;
-            $model->media_id = $image['media']['id'] ?? null;
-            $model->dominant_r = $image['colors']['dominant']['r'] ?? null;
-            $model->dominant_g = $image['colors']['dominant']['g'] ?? null;
-            $model->dominant_b = $image['colors']['dominant']['b'] ?? null;
-            $model->dominant_hex = $image['colors']['dominant']['hex'] ?? null;
+        if (!isset($feedback['colors']) || !is_array($feedback['colors'])) {
+            return false;
+        }
 
-            if (!$model->save()) {
-                return false;
+        if (!isset($feedback['colors']['dominant']) || !is_array($feedback['colors']['dominant'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->dominant_r = $feedback['colors']['dominant']['r'] ?? null;
+        $model->dominant_g = $feedback['colors']['dominant']['g'] ?? null;
+        $model->dominant_b = $feedback['colors']['dominant']['b'] ?? null;
+        $model->dominant_hex = $feedback['colors']['dominant']['hex'] ?? null;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        if (isset($feedback['colors']['accent']) && is_array($feedback['colors']['accent'])) {
+            foreach ($feedback['colors']['accent'] as $accent) {
+                $accent_model = new ImageColorsAccent();
+                $accent_model->moderation_id = $moderationId;
+                $accent_model->color_id = $model->id;
+                $accent_model->r = $accent['r'] ?? null;
+                $accent_model->g = $accent['g'] ?? null;
+                $accent_model->b = $accent['b'] ?? null;
+                $accent_model->hex = $accent['hex'] ?? null;
+
+                if (!$accent_model->save()) {
+                    return false;
+                }
             }
+        }
 
-            if (isset($image['colors']['other']) && is_array($image['colors']['other'])) {
-                foreach ($image['colors']['other'] as $other) {
-                    $other_model = new VideoColorsOther();
-                    $other_model->moderation_id = $id;
-                    $other_model->color_id = $model->id;
-                    $model->media_id = $image['media']['id'] ?? null;
-                    $other_model->r = $other['r'] ?? null;
-                    $other_model->g = $other['g'] ?? null;
-                    $other_model->b = $other['b'] ?? null;
-                    $other_model->hex = $other['hex'] ?? null;
+        if (isset($feedback['colors']['other']) && is_array($feedback['colors']['other'])) {
+            foreach ($feedback['colors']['other'] as $other) {
+                $other_model = new ImageColorsOther();
+                $other_model->moderation_id = $moderationId;
+                $other_model->color_id = $model->id;
+                $other_model->r = $other['r'] ?? null;
+                $other_model->g = $other['g'] ?? null;
+                $other_model->b = $other['b'] ?? null;
+                $other_model->hex = $other['hex'] ?? null;
 
-                    if (!$other_model->save()) {
-                        return false;
-                    }
+                if (!$other_model->save()) {
+                    return false;
                 }
             }
         }

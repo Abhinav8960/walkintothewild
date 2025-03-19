@@ -59,4 +59,21 @@ class ImageGambling extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function gamblingStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['gambling']) || !is_array($feedback['gambling'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['gambling']['prob'] ?? 0; 
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

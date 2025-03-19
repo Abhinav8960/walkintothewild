@@ -79,4 +79,32 @@ class ImageDestruction extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function destructionStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['destruction']) || !is_array($feedback['destruction'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['destruction']['prob'] ?? 0;
+        $model->building_major_damage = $feedback['destruction']['classes']['building_major_damage'] ?? 0;
+        $model->building_minor_damage = $feedback['destruction']['classes']['building_minor_damage'] ?? 0;
+        $model->building_on_fire = $feedback['destruction']['classes']['building_on_fire'] ?? 0;
+        $model->building_burned = $feedback['destruction']['classes']['building_burned'] ?? 0;
+        $model->vehicle_major_damage = $feedback['destruction']['classes']['vehicle_major_damage'] ?? 0;
+        $model->vehicle_minor_damage = $feedback['destruction']['classes']['vehicle_minor_damage'] ?? 0;
+        $model->vehicle_on_fire = $feedback['destruction']['classes']['vehicle_on_fire'] ?? 0;
+        $model->vehicle_burned = $feedback['destruction']['classes']['vehicle_burned'] ?? 0;
+        $model->wildfire = $feedback['destruction']['classes']['wildfire'] ?? 0;
+        $model->unsafe_fire = $feedback['destruction']['classes']['unsafe_fire'] ?? 0;
+        $model->violent_protest = $feedback['destruction']['classes']['violent_protest'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -85,4 +85,36 @@ class ImageGore extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function goreStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['gore']) || !is_array($feedback['gore'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null; 
+        $model->prob = $feedback['gore']['prob'] ?? 0;
+
+        $model->very_bloody = $feedback['gore']['classes']['very_bloody'] ?? 0;
+        $model->slightly_bloody = $feedback['gore']['classes']['slightly_bloody'] ?? 0;
+        $model->body_organ = $feedback['gore']['classes']['body_organ'] ?? 0;
+        $model->serious_injury = $feedback['gore']['classes']['serious_injury'] ?? 0;
+        $model->superficial_injury = $feedback['gore']['classes']['superficial_injury'] ?? 0;
+        $model->corpse = $feedback['gore']['classes']['corpse'] ?? 0;
+        $model->skull = $feedback['gore']['classes']['skull'] ?? 0;
+        $model->unconscious = $feedback['gore']['classes']['unconscious'] ?? 0;
+        $model->body_waste = $feedback['gore']['classes']['body_waste'] ?? 0;
+        $model->other = $feedback['gore']['classes']['other'] ?? 0;
+
+        $model->animated = $feedback['gore']['type']['animated'] ?? 0;
+        $model->fake = $feedback['gore']['type']['fake'] ?? 0;
+        $model->real = $feedback['gore']['type']['real'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

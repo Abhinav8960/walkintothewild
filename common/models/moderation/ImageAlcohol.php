@@ -59,23 +59,19 @@ class ImageAlcohol extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function alcoholstore($feedback, $moderationId)
+    public static function alcoholStore($feedback, $moderationId)
     {
-        print_r($feedback['data']['frames']);
-        die;
+        if (!isset($feedback['alcohol']) || !is_array($feedback['alcohol'])) {
+            return false;
+        }
 
-        // if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
-        //     return false;
-        // }
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['alcohol']['prob'] ?? 0;
 
-        foreach ($feedback['data']['frames'] as $image) {
-            $model = new self();
-            $model->moderation_id = $moderationId;
-            $model->media_id = $image['media']['id'] ?? null;
-            $model->prob = $image['alcohol']['prob'] ?? 0;
-            if (!$model->save()) {
-                return false;
-            }
+        if (!$model->save()) {
+            return false;
         }
 
         return true;
