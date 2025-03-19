@@ -19,14 +19,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	<nav class="navbar navbar-expand-lg ">
 		<div class="container-fluid">
 			<a href="/">
-				<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180px" class="logo">
+				<img src="<?= $this->params['baseurl'] ?>/img/WLogoLightgreen.svg" alt="logo" width="66px" class="logo pt-1">
 			</a>
 			<div class="d-flex align-items-center">
 				<div class="offcanvas offcanvas-end header_canvas" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 					<div class="offcanvas-header ps-1">
 						<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
 							<a href="/park">
-								<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" class="logo ps-2">
+								<img src="<?= $this->params['baseurl'] ?>/img/WLogoLightgreen.svg" alt="" class="logo ps-2">
 							</a>
 						</h5>
 						<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" fill="#fff" class="bi bi-x-lg" viewBox="0 0 16 16" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
