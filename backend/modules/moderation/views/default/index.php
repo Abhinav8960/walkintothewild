@@ -100,14 +100,26 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     $textPersonalData = [];
 
                                     foreach ($model->moderationText->moderationTextPersonal as $personal) {
-                                        $textPersonalData[] = "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
+                                        $info = '';
+
+                                        if ($personal->is_personal == 1) {
+                                            $info .= '<strong>PERSONAL</strong> | ';
+                                        }
+
+                                        if ($personal->is_link == 1) {
+                                            $info .= '<strong>LINK</strong> | ';
+                                        }
+
+                                        $info .= "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
                                             " | <strong>Category:</strong> " . ($personal->category ?? 'N/A') .
                                             " | <strong>Match:</strong> " . ($personal->match ?? 'N/A') .
                                             " | <strong>Start:</strong> " . ($personal->start ?? 'N/A') .
                                             " | <strong>End:</strong> " . ($personal->end ?? 'N/A');
+
+                                        $textPersonalData[] = $info;
                                     }
 
-                                    $textDetail[] = "<br><br>" . implode("<br>", $textPersonalData);
+                                    $textDetail[] = "<br>" . implode("<br>", $textPersonalData);
                                 }
 
                                 return implode("<br>", $textDetail);
