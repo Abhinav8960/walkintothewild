@@ -16,6 +16,7 @@ use Yii;
  */
 class Money extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob'];
 
 
     /**

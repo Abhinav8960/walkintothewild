@@ -33,10 +33,13 @@ class Moderation extends Component
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    private $sightEngineUserId = "1054537867"; // Kamal
-    private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
+    // private $sightEngineUserId = "1054537867"; // Kamal
+    // private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
 
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
+
+    private $sightEngineUserId = "689569113"; // Akash
+    private $sightEnginesecretId = "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX"; // Akash
 
 
     private $models = [
@@ -222,8 +225,8 @@ class Moderation extends Component
     private function actionVideoStore($feedback, $id)
     {
 
-        $fb = json_decode($feedback, true);
-        // $fb = $feedback;
+        // $fb = json_decode($feedback, true);
+        $fb = $feedback;
         $nudity_saved = Nudity::nuditystore($fb, $id);
         $offensive_saved = Offensive::offensivestore($fb, $id);
         $gore_saved = Gore::gorestore($fb, $id);

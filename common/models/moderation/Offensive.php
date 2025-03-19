@@ -22,6 +22,8 @@ use Yii;
 class Offensive extends ActiveRecord
 {
 
+    public static $accessible_attributes = [ 'nazi', 'asian_swastika', 'confederate', 'supremacist', 'terrorist', 'middle_finger'];
+
 
     /**
      * {@inheritdoc}
