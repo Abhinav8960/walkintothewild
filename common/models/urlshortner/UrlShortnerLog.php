@@ -51,6 +51,7 @@ class UrlShortnerLog extends \yii\db\ActiveRecord implements \common\interfaces\
             [['id', 'url_shortner_id'], 'required'],
             [['id', 'url_shortner_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address'], 'string', 'max' => 255],
+            [['referrer_url'], 'string'],
         ];
     }
 

@@ -2856,6 +2856,14 @@ figure {
 .history_btn i {
   color: #fff;
 }
+.history_btn.bg-sethistory{
+
+  background:transparent !important;
+  padding: 0 !important;
+}
+.history_btn.bg-sethistory i{
+  font-size: 20px !important;
+}
 
 .ratings p {
   font-size: var(--fs-13);

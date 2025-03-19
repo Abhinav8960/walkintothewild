@@ -497,4 +497,12 @@ phpunit.phar
 /backend/web/robots.txt
 /csv
 
+/tinyurl/web/index.php
+/tinyurl/web/index-test.php
+/tinyurl/runtime
+/tinyurl/web/assets
+/tinyurl/web/storage
+/tinyurl/web/robots.txt
+/csv
+
 # End of https://www.toptal.com/developers/gitignore/api/yii2,linux,visualstudiocode,composer,compressedarchive,compression,images,docz,node,database,ssh
