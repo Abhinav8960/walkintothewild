@@ -63,4 +63,23 @@ class ImageTobacco extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function tobaccoStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['tobacco']) || !is_array($feedback['tobacco'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['tobacco']['prob'] ?? 0;
+        $model->regular_tobacco = $feedback['tobacco']['classes']['regular_tobacco'] ?? 0;
+        $model->ambiguous_tobacco = $feedback['tobacco']['classes']['ambiguous_tobacco'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

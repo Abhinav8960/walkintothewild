@@ -60,10 +60,6 @@ class Moderation extends Component
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    // private $sightEngineUserId = "1054537867"; // Kamal
-    // private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
-
-    // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
 
     private $models = [
@@ -287,41 +283,36 @@ class Moderation extends Component
     private function actionStoreImage($feedback, $moderation_type, $moderationId)
     {
         // die('actionStoreImage');
+        //  image_colors_accent,    image_destruction,  image_faces,    image_media,    image_military, image_recreational_drug,    
+        //  image_request,  image_self_harm,    image_tobacco,  image_type, image_violence,   
 
         $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
         $color_saved = ImageColors::colorStore($feedback, $moderationId);
-        // $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
-        // $face_saved = ImageFaces::facesStore($feedback, $moderationId);
-        // $gambling_saved = ImageGambling::gamblingStore($feedback, $moderationId);
-        // $gore_saved = ImageGore::goreStore($feedback, $moderationId);
-        // $media_saved = ImageMedia::mediaStore($feedback, $moderationId);
-        // $medical_saved = ImageMedical::medicalStore($feedback, $moderationId);
-        // $military_saved = ImageMilitary::militaryStore($feedback, $moderationId);
-        // $money_saved = ImageMoney::moneyStore($feedback, $moderationId);
-        // $nudity_saved = ImageNudity::nudityStore($feedback, $moderationId);
-        // $offensive_saved = ImageOffensive::offensiveStore($feedback, $moderationId);
-        // $quality_saved = ImageQuality::qualityStore($feedback, $moderationId);
-        // $recreational_saved = ImageRecreationalDrug::recreationalDrugStore($feedback, $moderationId);
-        // $request_saved = ImageRequest::requestStore($feedback, $moderationId);
-        // $scam_saved = ImageScam::scamStore($feedback, $moderationId);
-        // $self_harm_saved = ImageSelfHarm::selfHarmStore($feedback, $moderationId);
-        // $tobacco_saved = ImageTobacco::tobaccoStore($feedback, $moderationId);
-        // $type_saved = ImageType::typeStore($feedback, $moderationId);
-        // $violence_saved = ImageViolence::voilenceStore($feedback, $moderationId);
-        // $weapon_saved = ImageWeapon::weaponStore($feedback, $moderationId);
-
-        // if (
-        //     $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
-        //     && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $recreational_saved && $medical_saved
-        //     && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved && $military_saved
-        // ) {
-        //     echo "Image Data Stored Successfully";
-        // } else {
-        //     exit("Error: Failed to store data");
-        // }
+        $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
+        $face_saved = ImageFaces::facesStore($feedback, $moderationId);
+        $gambling_saved = ImageGambling::gamblingStore($feedback, $moderationId);
+        $gore_saved = ImageGore::goreStore($feedback, $moderationId);
+        $media_saved = ImageMedia::mediaStore($feedback, $moderationId);
+        $medical_saved = ImageMedical::medicalStore($feedback, $moderationId);
+        $military_saved = ImageMilitary::militaryStore($feedback, $moderationId);
+        $money_saved = ImageMoney::moneyStore($feedback, $moderationId);
+        $nudity_saved = ImageNudity::nudityStore($feedback, $moderationId);
+        $offensive_saved = ImageOffensive::offensiveStore($feedback, $moderationId);
+        $quality_saved = ImageQuality::qualityStore($feedback, $moderationId);
+        $recreational_saved = ImageRecreationalDrug::recreationalDrugStore($feedback, $moderationId);
+        $request_saved = ImageRequest::requestStore($feedback, $moderationId);
+        $scam_saved = ImageScam::scamStore($feedback, $moderationId);
+        $self_harm_saved = ImageSelfHarm::selfHarmStore($feedback, $moderationId);
+        $tobacco_saved = ImageTobacco::tobaccoStore($feedback, $moderationId);
+        $type_saved = ImageType::typeStore($feedback, $moderationId);
+        $violence_saved = ImageViolence::voilenceStore($feedback, $moderationId);
+        $weapon_saved = ImageWeapon::weaponStore($feedback, $moderationId);
 
         if (
-            $alcohol_saved && $color_saved
+            $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
+            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $recreational_saved && $medical_saved
+            && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved
+            && $military_saved && $media_saved
         ) {
             echo "Image Data Stored Successfully";
         } else {

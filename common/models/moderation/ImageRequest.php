@@ -61,4 +61,23 @@ class ImageRequest extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function requestStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['request']) || !is_array($feedback['request'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->request_id = $feedback['request']['id'] ?? null;
+        $model->timestamp = $feedback['request']['timestamp'] ?? null;
+        $model->operations = $feedback['request']['operations'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

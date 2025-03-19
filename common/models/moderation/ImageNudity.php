@@ -125,4 +125,61 @@ class ImageNudity extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function nudityStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['nudity']) || !is_array($feedback['nudity'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+
+        $model->sexual_activity = $feedback['nudity']['sexual_activity'] ?? 0;
+        $model->sexual_display = $feedback['nudity']['sexual_display'] ?? 0;
+        $model->erotica = $feedback['nudity']['erotica'] ?? 0;
+        $model->very_suggestive = $feedback['nudity']['very_suggestive'] ?? 0;
+        $model->suggestive = $feedback['nudity']['suggestive'] ?? 0;
+        $model->mildly_suggestive = $feedback['nudity']['mildly_suggestive'] ?? 0;
+
+        $suggestiveClasses = $feedback['nudity']['suggestive_classes'] ?? [];
+        $model->bikini = $suggestiveClasses['bikini'] ?? 0;
+        $model->cleavage = $suggestiveClasses['cleavage'] ?? 0;
+        $model->lingerie = $suggestiveClasses['lingerie'] ?? 0;
+        $model->male_chest = $suggestiveClasses['male_chest'] ?? 0;
+        $model->male_underwear = $suggestiveClasses['male_underwear'] ?? 0;
+        $model->miniskirt = $suggestiveClasses['miniskirt'] ?? 0;
+        $model->minishort = $suggestiveClasses['minishort'] ?? 0;
+        $model->nudity_art = $suggestiveClasses['nudity_art'] ?? 0;
+        $model->schematic = $suggestiveClasses['schematic'] ?? 0;
+        $model->sextoy = $suggestiveClasses['sextoy'] ?? 0;
+        $model->suggestive_focus = $suggestiveClasses['suggestive_focus'] ?? 0;
+        $model->suggestive_pose = $suggestiveClasses['suggestive_pose'] ?? 0;
+        $model->swimwear_male = $suggestiveClasses['swimwear_male'] ?? 0;
+        $model->swimwear_one_piece = $suggestiveClasses['swimwear_one_piece'] ?? 0;
+        $model->visibly_undressed = $suggestiveClasses['visibly_undressed'] ?? 0;
+        $model->other = $suggestiveClasses['other'] ?? 0;
+
+        $cleavageCategories = $suggestiveClasses['cleavage_categories'] ?? [];
+        $model->cleavage_very_revealing = $cleavageCategories['very_revealing'] ?? 0;
+        $model->cleavage_revealing = $cleavageCategories['revealing'] ?? 0;
+        $model->cleavage_none = $cleavageCategories['none'] ?? 0;
+
+        $maleChestCategories = $suggestiveClasses['male_chest_categories'] ?? [];
+        $model->male_chest_very_revealing = $maleChestCategories['very_revealing'] ?? 0;
+        $model->male_chest_revealing = $maleChestCategories['revealing'] ?? 0;
+        $model->male_chest_slightly_revealing = $maleChestCategories['slightly_revealing'] ?? 0;
+        $model->male_chest_none = $maleChestCategories['none'] ?? 0;
+
+        $context = $feedback['nudity']['context'] ?? [];
+        $model->sea_lake_pool = $context['sea_lake_pool'] ?? 0;
+        $model->outdoor_other = $context['outdoor_other'] ?? 0;
+        $model->indoor_other = $context['indoor_other'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

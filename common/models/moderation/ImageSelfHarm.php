@@ -65,4 +65,24 @@ class ImageSelfHarm extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function selfHarmStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['self-harm']) || !is_array($feedback['self-harm'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['self-harm']['prob'] ?? 0;;
+        $model->real = $feedback['self-harm']['type']['real'] ?? 0;;
+        $model->fake = $feedback['self-harm']['type']['fake'] ?? 0;;
+        $model->animated = $feedback['self-harm']['type']['animated'] ?? 0;;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

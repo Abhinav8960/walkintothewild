@@ -59,4 +59,21 @@ class ImageMoney extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function moneyStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['money']) || !is_array($feedback['money'])) { 
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['money']['prob'] ?? 0; 
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

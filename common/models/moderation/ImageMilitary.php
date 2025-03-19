@@ -65,4 +65,25 @@ class ImageMilitary extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function militaryStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['military']) || !is_array($feedback['military'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['military']['prob'] ?? 0; 
+
+        $model->military_equipment = $feedback['military']['classes']['military_equipment'] ?? 0;
+        $model->military_personnel = $feedback['military']['classes']['military_personnel'] ?? 0;
+        $model->military_profile_photo = $feedback['military']['classes']['military_profile_photo'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

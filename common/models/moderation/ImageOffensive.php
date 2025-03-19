@@ -69,4 +69,26 @@ class ImageOffensive extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function offensiveStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['offensive']) || !is_array($feedback['offensive'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->nazi = $feedback['offensive']['nazi'] ?? 0;
+        $model->asian_swastika = $feedback['offensive']['asian_swastika'] ?? 0;
+        $model->confederate = $feedback['offensive']['confederate'] ?? 0;
+        $model->supremacist = $feedback['offensive']['supremacist'] ?? 0;
+        $model->terrorist = $feedback['offensive']['terrorist'] ?? 0;
+        $model->middle_finger = $feedback['offensive']['middle_finger'] ?? 0;
+        
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

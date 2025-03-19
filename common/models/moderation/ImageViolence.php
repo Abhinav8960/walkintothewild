@@ -65,4 +65,24 @@ class ImageViolence extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function voilenceStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['violence']) || !is_array($feedback['violence'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $frame['violence']['prob'] ?? 0;;
+        $model->physical_violence = $feedback['violence']['classes']['physical_violence'] ?? 0;;
+        $model->firearm_threat = $feedback['violence']['classes']['firearm_threat'] ?? 0;;
+        $model->combat_sport = $feedback['violence']['classes']['combat_sport'] ?? 0;;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

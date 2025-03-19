@@ -59,4 +59,22 @@ class ImageScam extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function scamStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['scam']) || !is_array($feedback['scam'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['scam']['prob'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

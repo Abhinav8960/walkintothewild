@@ -69,4 +69,26 @@ class ImageRecreationalDrug extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function recreationalDrugStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['$recreational_drug']) || !is_array($feedback['$recreational_drug'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->prob = $feedback['recreational_drug']['prob'] ?? 0;
+        $model->cannabis = $feedback['recreational_drug']['classes']['cannabis'] ?? 0;
+        $model->cannabis_logo_only = $feedback['recreational_drug']['classes']['cannabis_logo_only'] ?? 0;
+        $model->cannabis_plant = $feedback['recreational_drug']['classes']['cannabis_plant'] ?? 0;
+        $model->cannabis_drug = $feedback['recreational_drug']['classes']['cannabis_drug'] ?? 0;
+        $model->recreational_drugs_not_cannabis = $feedback['recreational_drug']['classes']['recreational_drugs_not_cannabis'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }

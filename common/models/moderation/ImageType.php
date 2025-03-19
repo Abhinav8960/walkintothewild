@@ -63,4 +63,23 @@ class ImageType extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function typeStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['type']) || !is_array($feedback['type'])) {
+            return false;
+        }
+
+            $model = new self();
+            $model->moderation_id = $moderationId;
+            $model->media_id = $feedback['media']['id'] ?? null;
+            $model->photo = $feedback['type']['photo'] ?? 0;
+            $model->illustration = $feedback['type']['illustration'] ?? 0;
+            $model->ai_generated = $feedback['type']['ai_generated'] ?? 0;
+            // $model->deepfake = $feedback['type']['deepfake'] ?? 0;
+            if (!$model->save()) {
+                return false;
+            }
+
+        return true;
+    }
 }

@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int $moderation_id
  * @property string|null $media_id
- * @property float|null $prob
+ * @property float|null $score
  */
 class ImageQuality extends \yii\db\ActiveRecord
 {
@@ -38,10 +38,10 @@ class ImageQuality extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['media_id', 'prob'], 'default', 'value' => null],
+            [['media_id', 'score'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id'], 'integer'],
-            [['prob'], 'number'],
+            [['score'], 'number'],
             [['media_id'], 'string', 'max' => 512],
         ];
     }
@@ -55,8 +55,25 @@ class ImageQuality extends \yii\db\ActiveRecord
             'id' => 'ID',
             'moderation_id' => 'Moderation ID',
             'media_id' => 'Media ID',
-            'prob' => 'Prob',
+            'score' => 'Score',
         ];
     }
 
+    public static function qualityStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['quality']) || !is_array($feedback['quality'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->score = $feedback['quality']['score'] ?? 0;
+
+        if (!$model->save()) {
+            return false;
+        }
+
+        return true;
+    }
 }
