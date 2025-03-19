@@ -65,8 +65,6 @@ class Moderation extends Component
 
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
-    private $sightEngineUserId = "635987644"; // Kamal New
-    private $sightEnginesecretId = "XLnfEEohEagNUo6hUCGqfXL8ncmuQ5Lw"; // Kamal New
 
     private $models = [
         'nudity-2.1',
