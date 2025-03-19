@@ -47,7 +47,9 @@
         "google/apiclient": "^2.18",
         "lubosdz/yii2-template-engine": "^1.1",
         "codemonauts/yii2-cloudwatch-logs": "^1.0",
-        "james-heinrich/getid3": "*"
+        "james-heinrich/getid3": "*",
+        "php-ffmpeg/php-ffmpeg": "^1.3"
+        
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
