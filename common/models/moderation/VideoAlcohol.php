@@ -16,6 +16,7 @@ use Yii;
  */
 class VideoAlcohol extends ActiveRecord
 {
+    public static $accessible_attributes = ['prob'];
 
 
     /**

@@ -21,6 +21,7 @@ use Yii;
  */
 class VideoRecreationalDrug extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob', 'cannabis', 'cannabis_logo_only', 'cannabis_plant', 'cannabis_drug', 'recreational_drugs_not_cannabis'];
 
     /**
      * {@inheritdoc}

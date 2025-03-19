@@ -20,6 +20,7 @@ use common\models\moderation\VideoOffensive;
 use common\models\moderation\VideoRecreationalDrug;
 use common\models\moderation\VideoSelfharm;
 use common\models\moderation\VideoSmoking;
+use common\models\moderation\VideoText;
 use common\models\moderation\VideoType;
 use common\models\moderation\VideoViolence;
 use common\models\moderation\VideoWeapon;
@@ -70,7 +71,7 @@ class Moderation extends Component
         'gambling',
         'destruction',
         'military',
-        // 'audio-profanity'
+        // 'audio-profanity','
     ];
 
 
@@ -251,10 +252,11 @@ class Moderation extends Component
         $destruction_saved = VideoDestruction::destructionstore($fb, $id);
         $military_saved = VideoMilitary::militarystore($fb, $id);
         // $audio_saved = VideoAudio::audiostore($fb, $id);
+        $text_saved = VideoText::textstore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved 
+            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved
         ) {
             echo "Stored Successfully";
         } else {

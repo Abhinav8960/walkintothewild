@@ -18,6 +18,7 @@ use Yii;
  */
 class VideoViolence extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob', 'physical_violence', 'firearm_threat', 'combat_sport'];
 
 
     /**

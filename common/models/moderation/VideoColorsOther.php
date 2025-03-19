@@ -21,6 +21,7 @@ use Yii;
 class VideoColorsOther extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['r', 'g', 'b', 'hex'];
 
     /**
      * {@inheritdoc}

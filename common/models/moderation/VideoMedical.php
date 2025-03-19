@@ -19,6 +19,7 @@ use Yii;
 class VideoMedical extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob', 'pills', 'paraphernalia'];
 
     /**
      * {@inheritdoc}

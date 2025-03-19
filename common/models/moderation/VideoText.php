@@ -6,25 +6,27 @@ use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "gambling".
+ * This is the model class for table "video_text".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
- * @property float|null $prob
+ * @property float|null $has_artificial
+ * @property float|null $has_natural
+ * @property float|null $ignored_text
  */
-class VideoGambling extends ActiveRecord
+class VideoText extends ActiveRecord
 {
+    public static $accessible_attributes = ['has_artificial', 'has_natural', 'ignored_text'];
 
-    public static $accessible_attributes = ['prob'];
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'video_gambling';
+        return 'video_text';
     }
 
     /**
@@ -33,10 +35,10 @@ class VideoGambling extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'has_artificial', 'has_natural', 'ignored_text'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
-            [['moderation_id', 'info_position'], 'integer'],
-            [['prob'], 'number'],
+            [['moderation_id', 'info_position', 'ignored_text'], 'integer'],
+            [['has_artificial', 'has_natural'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -51,11 +53,13 @@ class VideoGambling extends ActiveRecord
             'moderation_id' => 'Moderation ID',
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
-            'prob' => 'Prob',
+            'has_artificial' => 'Has Artificial',
+            'has_natural' => 'Has Natural',
+            'ignored_text' => 'Ignored Text',
         ];
     }
 
-    public static function gamblingstore($fb, $id)
+    public static function textstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -66,7 +70,9 @@ class VideoGambling extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['gambling']['prob'] ?? 0;
+            $model->has_artificial = $frame['text']['has_artificial'] ?? 0;
+            $model->has_natural = $frame['text']['has_natural'] ?? 0;
+            $model->ignored_text = $frame['text']['ignored_text'] ?? 0;
             if (!$model->save()) {
                 return false;
             }
