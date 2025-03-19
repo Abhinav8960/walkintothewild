@@ -3,7 +3,7 @@
 namespace common\models\moderation;
 
 use Yii;
-
+use yii\helpers\Html;
 
 class Moderation extends \common\models\moderation\ActiveRecord
 {
@@ -84,12 +84,60 @@ class Moderation extends \common\models\moderation\ActiveRecord
                         $percentage_val = $value * 100;
                         $label = ucfirst(str_replace('_', ' ', $attribute));
                         $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
-                        . $label ." :" . "" . $percentage_val .  "<span>&#37;</span></span>";
+                            . $label . " :" . "" . $percentage_val .  "<span>&#37;</span></span>";
                     }
                 }
                 $str .= $sub_str;
             }
         }
         return $str;
+    }
+
+    public function getModerationTextDetails()
+    {
+        $textDetail = [];
+
+        $createBadge = function ($label, $value) {
+            $class = $value > 40 ? 'badge text-bg-danger' : 'badge text-bg-primary';
+            return Html::tag('span', "$label $value%", ['class' => $class, 'style' => 'padding: 5px 10px; margin: 2px;']);
+        };
+
+        $textData = [
+            $createBadge('Sexual', ($this->moderationText->sexual ?? null) * 100),
+            $createBadge('Discriminatory', ($this->moderationText->discriminatory ?? null) * 100),
+            $createBadge('Insulting', ($this->moderationText->insulting ?? null) * 100),
+            $createBadge('Violent', ($this->moderationText->violent ?? null) * 100),
+            $createBadge('Toxic', ($this->moderationText->toxic ?? null) * 100),
+            $createBadge('Self Harm', ($this->moderationText->self_harm ?? null) * 100)
+        ];
+
+        $textDetail[] = implode(' ', $textData);
+
+        if (!empty($this->moderationText->moderationTextPersonal)) {
+            $textPersonalData = [];
+
+            foreach ($this->moderationText->moderationTextPersonal as $personal) {
+                $info = '';
+
+                if ($personal->is_personal == 1) {
+                    $info .= '<strong>PERSONAL</strong> | ';
+                }
+                if ($personal->is_link == 1) {
+                    $info .= '<strong>LINK</strong> | ';
+                }
+
+                $info .= "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
+                    " | <strong>Category:</strong> " . ($personal->category ?? 'N/A') .
+                    " | <strong>Match:</strong> " . ($personal->match ?? 'N/A') .
+                    " | <strong>Start:</strong> " . ($personal->start ?? 'N/A') .
+                    " | <strong>End:</strong> " . ($personal->end ?? 'N/A');
+
+                $textPersonalData[] = $info;
+            }
+
+            $textDetail[] = "<br>" . implode("<br>", $textPersonalData);
+        }
+
+        return implode("<br>", $textDetail);
     }
 }
