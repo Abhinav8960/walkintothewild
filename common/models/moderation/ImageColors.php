@@ -68,9 +68,9 @@ class ImageColors extends \yii\db\ActiveRecord
 
     public static function colorstore($feedback, $id)
     {
-        if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
-            return false;
-        }
+        // if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
+        //     return false;
+        // }
         foreach ($feedback['data']['frames'] as $image) {
             $model = new self();
             $model->moderation_id = $id;

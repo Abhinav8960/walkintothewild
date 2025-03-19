@@ -64,9 +64,9 @@ class ImageAlcohol extends \yii\db\ActiveRecord
         print_r($feedback['data']['frames']);
         die;
 
-        if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
-            return false;
-        }
+        // if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
+        //     return false;
+        // }
 
         foreach ($feedback['data']['frames'] as $image) {
             $model = new self();
