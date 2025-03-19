@@ -1,0 +1,83 @@
+<?php
+
+namespace common\models\moderation;
+
+use Yii;
+
+/**
+ * This is the model class for table "image_alcohol".
+ *
+ * @property int $id
+ * @property int $moderation_id
+ * @property string|null $media_id
+ * @property float|null $prob
+ */
+class ImageAlcohol extends \yii\db\ActiveRecord
+{
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'image_alcohol';
+    }
+
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_moderation');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['media_id', 'prob'], 'default', 'value' => null],
+            [['moderation_id'], 'required'],
+            [['moderation_id'], 'integer'],
+            [['prob'], 'number'],
+            [['media_id'], 'string', 'max' => 512],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'moderation_id' => 'Moderation ID',
+            'media_id' => 'Media ID',
+            'prob' => 'Prob',
+        ];
+    }
+
+    public static function alcoholstore($feedback, $moderationId)
+    {
+        print_r($feedback['data']['frames']);
+        die;
+
+        if (!isset($feedback['data']['frames']) || !is_array($feedback['data']['frames'])) {
+            return false;
+        }
+
+        foreach ($feedback['data']['frames'] as $image) {
+            $model = new self();
+            $model->moderation_id = $moderationId;
+            $model->media_id = $image['media']['id'] ?? null;
+            $model->prob = $image['alcohol']['prob'] ?? 0;
+            if (!$model->save()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
