@@ -41,6 +41,7 @@ class Moderation extends Component
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
 
+
     private $models = [
         'nudity-2.1',
         'weapon',
@@ -244,7 +245,7 @@ class Moderation extends Component
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $$type_saved && $image_quality_saved
+            && $color_saved && $type_saved && $image_quality_saved
         ) {
             echo "Stored Successfully";
         } else {
