@@ -283,6 +283,8 @@ class Moderation extends Component
     private function actionStoreImage($feedback, $moderation_type, $moderationId)
     {
         // die('actionStoreImage');
+        
+        //  data is not saving in below table
         //  image_colors_accent,    image_destruction,  image_faces,    image_media,    image_military, image_recreational_drug,    
         //  image_request,  image_self_harm,    image_tobacco,  image_type, image_violence,   
 
