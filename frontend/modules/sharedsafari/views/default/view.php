@@ -77,7 +77,7 @@ $this->params['title'] = $this->title; ?>
                                             <?php } ?>
                                             <?php if ($share_safari->sharedSafariHistory) { ?>
                                                 <span class="history">
-                                                    <button value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #FFD43B;"></i></button>
+                                                    <button value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn bg-sethistory" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #000;"></i></button>
                                                 </span>
                                             <?php } ?>
                                         </h5>
