@@ -185,7 +185,7 @@ composer.lock
 # Compression format(s) used by some DOS and Windows install programs. MS-DOS includes expand.exe to decompress its install files. The compressed files are created with a matching compress.exe command. The compression algorithm is LZSS.
 *.??_
 
-
+.vscode
 ### Database ###
 *.accdb
 *.db

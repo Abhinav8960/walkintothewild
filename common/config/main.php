@@ -22,6 +22,9 @@ return [
         'firebase' => [
             'class' => 'common\components\FirebaseCloudMessaging',
         ],
+        'moderation' => [
+            'class' => 'common\components\Moderation',
+        ],
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
