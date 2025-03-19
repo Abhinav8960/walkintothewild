@@ -47,7 +47,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
         ];
     }
 
-    public function getModerationtext()
+    public function getModerationText()
     {
         return $this->hasOne(ModerationText::className(), ['moderation_id' => 'id']);
     }

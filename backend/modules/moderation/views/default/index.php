@@ -61,21 +61,56 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         },
                     ],
 
+
                     [
-                        'attribute' => 'description',
-                        'label' => 'Description',
+                        'attribute' => 'moderation_details',
+                        'label' => 'Moderation Details',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->type == 1 && $model->moderationtext) {
-                                $badges = [];
-                                $badges[] = Html::tag('span', 'Sexual ' . ($model->moderationtext->sexual * 100) . ' %', ['class' => 'badge rounded-pill text-bg-primary', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Discriminatory ' . ($model->moderationtext->discriminatory * 100) . ' %', ['class' => 'badge rounded-pill text-bg-danger', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Insulting ' . ($model->moderationtext->insulting * 100) . ' %', ['class' => 'badge rounded-pill text-bg-warning', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Violent ' . ($model->moderationtext->violent * 100) . ' %', ['class' => 'badge rounded-pill text-bg-secondary', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Toxic ' . ($model->moderationtext->toxic * 100) . ' %', ['class' => 'badge rounded-pill text-bg-info', 'style' => 'font-size: 12px;']);
-                                $badges[] = Html::tag('span', 'Self Harm ' . ($model->moderationtext->self_harm * 100) . ' %', ['class' => 'badge rounded-pill text-bg-success', 'style' => 'font-size: 12px;']);
+                            if ($model->type == 1 && $model->moderationText) {
+                                $textDetail = [];
 
-                                return implode(' ', $badges);
+                                $textData = [];
+
+                                $sexual = $model->moderationText->sexual * 100;
+                                $discriminatory = $model->moderationText->discriminatory * 100;
+                                $insulting = $model->moderationText->insulting * 100;
+                                $violent = $model->moderationText->violent * 100;
+                                $toxic = $model->moderationText->toxic * 100;
+                                $selfHarm = $model->moderationText->self_harm * 100;
+
+                                $createBadge = function ($label, $value) {
+                                    $class = '';
+                                    if ($value > 40) {
+                                        $class .= 'fw-bold text-danger';
+                                    }
+                                    return Html::tag('span', "$label $value%", ['class' => $class]);
+                                };
+
+                                $textData[] = $createBadge('Sexual', $sexual);
+                                $textData[] = $createBadge('Discriminatory', $discriminatory);
+                                $textData[] = $createBadge('Insulting', $insulting);
+                                $textData[] = $createBadge('Violent', $violent);
+                                $textData[] = $createBadge('Toxic', $toxic);
+                                $textData[] = $createBadge('Self Harm', $selfHarm);
+
+                                $textDetail[] = implode(' , ', $textData);
+
+                                if (!empty($model->moderationText->moderationTextPersonal)) {
+                                    $textPersonalData = [];
+
+                                    foreach ($model->moderationText->moderationTextPersonal as $personal) {
+                                        $textPersonalData[] = "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
+                                            " | <strong>Category:</strong> " . ($personal->category ?? 'N/A') .
+                                            " | <strong>Match:</strong> " . ($personal->match ?? 'N/A') .
+                                            " | <strong>Start:</strong> " . ($personal->start ?? 'N/A') .
+                                            " | <strong>End:</strong> " . ($personal->end ?? 'N/A');
+                                    }
+
+                                    $textDetail[] = "<br><br>" . implode("<br>", $textPersonalData);
+                                }
+
+                                return implode("<br>", $textDetail);
                             }
                             if ($model->type == 2) {
                                 return $model->tags;
@@ -84,21 +119,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         },
                     ],
 
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'template' => '{view}',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-                    //             return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['view', 'id' => $model->id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'View',
-
-                    //             ]);
-                    //         },
-                    //     ]
-                    // ],
                 ],
             ]); ?>
         </div>

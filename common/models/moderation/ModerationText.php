@@ -65,4 +65,9 @@ class ModerationText extends \common\models\moderation\ActiveRecord
             'link' => 'Link',
         ];
     }
+
+    public function getModerationTextPersonal()
+    {
+        return $this->hasMany(ModerationTextPersonal::className(), ['moderation_text_id' => 'id']);
+    }
 }
