@@ -18,7 +18,7 @@ use Yii;
  * @property float|null $b
  * @property string|null $hex
  */
-class ColorsOther extends ActiveRecord
+class VideoColorsOther extends ActiveRecord
 {
 
 
@@ -27,7 +27,7 @@ class ColorsOther extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'colors_other';
+        return 'video_colors_other';
     }
 
     /**

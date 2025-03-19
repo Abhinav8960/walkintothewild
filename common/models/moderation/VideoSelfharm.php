@@ -2,21 +2,22 @@
 
 namespace common\models\moderation;
 
-use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "money".
+ * This is the model class for table "selfharm".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
  * @property float|null $prob
+ * @property float|null $real
+ * @property float|null $fake
+ * @property float|null $animated
  */
-class Money extends ActiveRecord
+class VideoSelfharm extends ActiveRecord
 {
-    public static $accessible_attributes = [ 'prob'];
 
 
     /**
@@ -24,9 +25,8 @@ class Money extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'money';
+        return 'video_selfharm';
     }
-
 
     /**
      * {@inheritdoc}
@@ -34,10 +34,10 @@ class Money extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'prob', 'real', 'fake', 'animated'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob'], 'number'],
+            [['prob', 'real', 'fake', 'animated'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -53,10 +53,13 @@ class Money extends ActiveRecord
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
             'prob' => 'Prob',
+            'real' => 'Real',
+            'fake' => 'Fake',
+            'animated' => 'Animated',
         ];
     }
 
-    public static function moneystore($fb, $id)
+    public static function selfharmstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -67,7 +70,11 @@ class Money extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['money']['prob'] ?? 0;
+            $model->prob = $frame['self-harm']['prob'] ?? 0;;
+            $model->real = $frame['self-harm']['type']['real'] ?? 0;;
+            $model->fake = $frame['self-harm']['type']['fake'] ?? 0;;
+            $model->animated = $frame['self-harm']['type']['animated'] ?? 0;;
+
             if (!$model->save()) {
                 return false;
             }
@@ -75,5 +82,4 @@ class Money extends ActiveRecord
 
         return true;
     }
-
 }

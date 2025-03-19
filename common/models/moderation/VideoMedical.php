@@ -2,21 +2,21 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "selfharm".
+ * This is the model class for table "medical".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
  * @property float|null $prob
- * @property float|null $real
- * @property float|null $fake
- * @property float|null $animated
+ * @property float|null $pills
+ * @property float|null $paraphernalia
  */
-class Selfharm extends \yii\db\ActiveRecord
+class VideoMedical extends ActiveRecord
 {
 
 
@@ -25,15 +25,7 @@ class Selfharm extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'selfharm';
-    }
-
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_moderation');
+        return 'video_medical';
     }
 
     /**
@@ -42,10 +34,10 @@ class Selfharm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob', 'real', 'fake', 'animated'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'prob', 'pills', 'paraphernalia'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob', 'real', 'fake', 'animated'], 'number'],
+            [['prob', 'pills', 'paraphernalia'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -61,13 +53,12 @@ class Selfharm extends \yii\db\ActiveRecord
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
             'prob' => 'Prob',
-            'real' => 'Real',
-            'fake' => 'Fake',
-            'animated' => 'Animated',
+            'pills' => 'Pills',
+            'paraphernalia' => 'Paraphernalia',
         ];
     }
 
-    public static function selfharmstore($fb, $id)
+    public static function medicalstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -78,11 +69,9 @@ class Selfharm extends \yii\db\ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['self-harm']['prob'] ?? 0;;
-            $model->real = $frame['self-harm']['type']['real'] ?? 0;;
-            $model->fake = $frame['self-harm']['type']['fake'] ?? 0;;
-            $model->animated = $frame['self-harm']['type']['animated'] ?? 0;;
-
+            $model->prob = $frame['medical']['prob'] ?? 0;
+            $model->pills = $frame['medical']['classes']['pills'] ?? null;
+            $model->paraphernalia = $frame['medical']['classes']['paraphernalia'] ?? 0;
             if (!$model->save()) {
                 return false;
             }

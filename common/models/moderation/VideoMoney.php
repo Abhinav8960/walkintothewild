@@ -6,18 +6,17 @@ use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "medical".
+ * This is the model class for table "money".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
  * @property float|null $prob
- * @property float|null $pills
- * @property float|null $paraphernalia
  */
-class Medical extends ActiveRecord
+class VideoMoney extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob'];
 
 
     /**
@@ -25,8 +24,9 @@ class Medical extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'medical';
+        return 'video_money';
     }
+
 
     /**
      * {@inheritdoc}
@@ -34,10 +34,10 @@ class Medical extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob', 'pills', 'paraphernalia'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'prob'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob', 'pills', 'paraphernalia'], 'number'],
+            [['prob'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -53,12 +53,10 @@ class Medical extends ActiveRecord
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
             'prob' => 'Prob',
-            'pills' => 'Pills',
-            'paraphernalia' => 'Paraphernalia',
         ];
     }
 
-    public static function medicalstore($fb, $id)
+    public static function moneystore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -69,9 +67,7 @@ class Medical extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['medical']['prob'] ?? 0;
-            $model->pills = $frame['medical']['classes']['pills'] ?? null;
-            $model->paraphernalia = $frame['medical']['classes']['paraphernalia'] ?? 0;
+            $model->prob = $frame['money']['prob'] ?? 0;
             if (!$model->save()) {
                 return false;
             }
@@ -79,4 +75,5 @@ class Medical extends ActiveRecord
 
         return true;
     }
+
 }

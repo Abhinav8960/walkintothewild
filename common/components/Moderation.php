@@ -2,27 +2,27 @@
 
 namespace common\components;
 
-use common\models\moderation\Alcohol;
-use common\models\moderation\Colors;
 use common\models\moderation\form\ModerationForm;
-use common\models\moderation\Gambling;
-use common\models\moderation\Gore;
-use common\models\moderation\Medical;
 use common\models\moderation\ModerationText;
 use common\models\moderation\ModerationTextPersonal;
-use common\models\moderation\Money;
-use common\models\moderation\Nudity;
-use common\models\moderation\Offensive;
-use common\models\moderation\RecreationalDrug;
-use common\models\moderation\Selfharm;
-use common\models\moderation\Smoking;
+use common\models\moderation\VideoAlcohol;
 use common\models\moderation\VideoAudio;
+use common\models\moderation\VideoColors;
 use common\models\moderation\VideoDestruction;
+use common\models\moderation\VideoGambling;
+use common\models\moderation\VideoGore;
 use common\models\moderation\VideoImageQualityDetection;
+use common\models\moderation\VideoMedical;
 use common\models\moderation\VideoMilitary;
+use common\models\moderation\VideoMoney;
+use common\models\moderation\VideoNudity;
+use common\models\moderation\VideoOffensive;
+use common\models\moderation\VideoRecreationalDrug;
+use common\models\moderation\VideoSelfharm;
+use common\models\moderation\VideoSmoking;
 use common\models\moderation\VideoType;
-use common\models\moderation\Violence;
-use common\models\moderation\Weapon;
+use common\models\moderation\VideoViolence;
+use common\models\moderation\VideoWeapon;
 use CURLFile;
 use DateTimeImmutable;
 use Yii;
@@ -35,15 +35,14 @@ use yii\base\Component;
 class Moderation extends Component
 {
     public $fileUrl;
-    // private $sightEngineUserId = "101632135"; // Anurag
-    // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
+    private $sightEngineUserId = "101632135"; // Anurag
+    private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
     // private $sightEngineUserId = "1054537867"; // Kamal
     // private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
 
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
 
-    
 
 
     private $models = [
@@ -71,7 +70,7 @@ class Moderation extends Component
         'gambling',
         'destruction',
         'military',
-        'audio-profanity'
+        // 'audio-profanity'
     ];
 
 
@@ -234,19 +233,19 @@ class Moderation extends Component
 
         // $fb = json_decode($feedback, true);
         $fb = $feedback;
-        $nudity_saved = Nudity::nuditystore($fb, $id);
-        $offensive_saved = Offensive::offensivestore($fb, $id);
-        $gore_saved = Gore::gorestore($fb, $id);
-        $weapon_saved = Weapon::weaponstore($fb, $id);
-        $self_harm_saved = Selfharm::selfharmstore($fb, $id);
-        $violence_saved = Violence::voilencestore($fb, $id);
-        $recreational_saved = RecreationalDrug::recreationaldrugstore($fb, $id);
-        $medical_saved = Medical::medicalstore($fb, $id);
-        $alcohol_saved = Alcohol::alcoholstore($fb, $id);
-        $gambling_saved = Gambling::gamblingstore($fb, $id);
-        $smoking_saved = Smoking::smokingstore($fb, $id);
-        $money_saved = Money::moneystore($fb, $id);
-        $color_saved = Colors::colorstore($fb, $id);
+        $nudity_saved = VideoNudity::nuditystore($fb, $id);
+        $offensive_saved = VideoOffensive::offensivestore($fb, $id);
+        $gore_saved = VideoGore::gorestore($fb, $id);
+        $weapon_saved = VideoWeapon::weaponstore($fb, $id);
+        $self_harm_saved = VideoSelfharm::selfharmstore($fb, $id);
+        $violence_saved = VideoViolence::voilencestore($fb, $id);
+        $recreational_saved = VideoRecreationalDrug::recreationaldrugstore($fb, $id);
+        $medical_saved = VideoMedical::medicalstore($fb, $id);
+        $alcohol_saved = VideoAlcohol::alcoholstore($fb, $id);
+        $gambling_saved = VideoGambling::gamblingstore($fb, $id);
+        $smoking_saved = VideoSmoking::smokingstore($fb, $id);
+        $money_saved = VideoMoney::moneystore($fb, $id);
+        $color_saved = VideoColors::colorstore($fb, $id);
         $type_saved = VideoType::typestore($fb, $id);
         $image_quality_saved = VideoImageQualityDetection::imagequalitystore($fb, $id);
         $destruction_saved = VideoDestruction::destructionstore($fb, $id);

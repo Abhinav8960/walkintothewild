@@ -16,7 +16,7 @@ use Yii;
  * @property float|null $dominant_b
  * @property string|null $dominant_hex
  */
-class Colors extends ActiveRecord
+class VideoColors extends ActiveRecord
 {
 
 
@@ -25,7 +25,7 @@ class Colors extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'colors';
+        return 'video_colors';
     }
 
     /**
@@ -81,7 +81,7 @@ class Colors extends ActiveRecord
 
             if (isset($frame['colors']['accent']) && is_array($frame['colors']['accent'])) {
                 foreach ($frame['colors']['accent'] as $accent) {
-                    $accent_model = new ColorsAccent();
+                    $accent_model = new VideoColorsAccent();
                     $accent_model->moderation_id = $id;
                     $accent_model->color_id = $model->id;
                     $accent_model->info_id = $frame['info']['id'] ?? null;
@@ -99,7 +99,7 @@ class Colors extends ActiveRecord
 
             if (isset($frame['colors']['other']) && is_array($frame['colors']['other'])) {
                 foreach ($frame['colors']['other'] as $other) {
-                    $other_model = new ColorsOther();
+                    $other_model = new VideoColorsOther();
                     $other_model->moderation_id = $id;
                     $other_model->color_id = $model->id;
                     $other_model->info_id = $frame['info']['id'] ?? null;

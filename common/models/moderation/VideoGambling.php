@@ -6,7 +6,7 @@ use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "alcohol".
+ * This is the model class for table "gambling".
  *
  * @property int $id
  * @property int $moderation_id
@@ -14,7 +14,7 @@ use Yii;
  * @property int|null $info_position
  * @property float|null $prob
  */
-class Alcohol extends ActiveRecord
+class VideoGambling extends ActiveRecord
 {
 
 
@@ -23,9 +23,8 @@ class Alcohol extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'alcohol';
+        return 'video_gambling';
     }
-
 
     /**
      * {@inheritdoc}
@@ -55,7 +54,7 @@ class Alcohol extends ActiveRecord
         ];
     }
 
-    public static function alcoholstore($fb, $id)
+    public static function gamblingstore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -66,7 +65,7 @@ class Alcohol extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['alcohol']['prob'] ?? 0;
+            $model->prob = $frame['gambling']['prob'] ?? 0;
             if (!$model->save()) {
                 return false;
             }

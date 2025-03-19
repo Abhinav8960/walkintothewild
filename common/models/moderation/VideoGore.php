@@ -26,7 +26,7 @@ use Yii;
  * @property float|null $fake
  * @property float|null $real
  */
-class Gore extends \yii\db\ActiveRecord
+class VideoGore extends ActiveRecord
 {
 
 
@@ -35,7 +35,7 @@ class Gore extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'gore';
+        return 'video_gore';
     }
 
     /**

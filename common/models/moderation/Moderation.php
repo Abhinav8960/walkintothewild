@@ -56,9 +56,9 @@ class Moderation extends \common\models\moderation\ActiveRecord
     public function getTags()
     {
         $moderation_models = [
-            ['class' => 'common\models\moderation\Nudity', 'title' => 'Nudity'],
-            ['class' => 'common\models\moderation\Offensive', 'title' => 'Offensive'],
-            ['class' => 'common\models\moderation\Money', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\VideoNudity', 'title' => 'Nudity'],
+            ['class' => 'common\models\moderation\VideoOffensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\VideoMoney', 'title' => 'Money'],
             ['class' => 'common\models\moderation\VideoDestruction', 'title' => 'Destruction'],
             ['class' => 'common\models\moderation\VideoMilitary', 'title' => 'Military'],
             // ['class' => 'common\models\moderation\VideoAudioProfanity', 'title' => 'Audio Profanity'],

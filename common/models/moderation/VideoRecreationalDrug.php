@@ -19,7 +19,7 @@ use Yii;
  * @property float|null $cannabis_drug
  * @property float|null $recreational_drugs_not_cannabis
  */
-class RecreationalDrug extends ActiveRecord
+class VideoRecreationalDrug extends ActiveRecord
 {
 
     /**
@@ -27,7 +27,7 @@ class RecreationalDrug extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'recreational_drug';
+        return 'video_recreational_drug';
     }
 
 

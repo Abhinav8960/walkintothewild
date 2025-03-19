@@ -23,7 +23,7 @@ use Yii;
  * @property float|null $worn_not_in_hand
  * @property float|null $not_worn
  */
-class Weapon extends \yii\db\ActiveRecord
+class VideoWeapon extends ActiveRecord
 {
 
 
@@ -32,15 +32,7 @@ class Weapon extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'weapon';
-    }
-
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_moderation');
+        return 'video_weapon';
     }
 
     /**

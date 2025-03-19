@@ -19,7 +19,7 @@ use Yii;
  * @property float|null $terrorist
  * @property float|null $middle_finger
  */
-class Offensive extends ActiveRecord
+class VideoOffensive extends ActiveRecord
 {
 
     public static $accessible_attributes = [ 'nazi', 'asian_swastika', 'confederate', 'supremacist', 'terrorist', 'middle_finger'];
@@ -30,7 +30,7 @@ class Offensive extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'offensive';
+        return 'video_offensive';
     }
 
 
