@@ -55,8 +55,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section  margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-xxl-9 col-lg-12">
-                <div class="row pt-5 pb-4">
+            <div class="col-xxl-8 col-xl-10 col-lg-12">
+                <div class="row pt-2 pb-4">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12">
                         <div class="row">
                             <div class=" col-xxl-8 col-lg-8 mb-4">
@@ -70,11 +70,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php } ?>
                                             </div>
 
-                                            <div class="row gx-md-5 ">
+                                            <div class="row gx-md-3 ">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 col-sm-6 col-lg-6 col-xxl-5 mb-4 ">
+                                                        <div class="col-md-6 col-sm-6 col-lg-6 col-xxl-6 mb-4 ">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                                 <?php }
@@ -87,7 +87,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-lg-4">
+                            <div class="col-xxl-4 col-lg-4 ps-md-4">
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
 
                                     <div class="mb-4" id="memberview">

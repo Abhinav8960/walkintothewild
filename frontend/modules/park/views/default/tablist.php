@@ -62,7 +62,7 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div> -->
-        <div class="row mb-4  justify-content-center mt-4 padding_added">
+        <div class="row mb-2  justify-content-center mt-4 padding_added">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">
@@ -138,7 +138,7 @@ if ($model->meta_title != '') {
 
             </div>
         </div> -->
-        <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
+        <div class="row pt-2 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
             <div class="col-xxl-11">
                 <div class="row">
                     <div class="offset-xxl-2 offset-xl-3 offset-lg-4 col-lg-8 col-xl-9 col-xxl-10 mt-2 position-relative safartabs">

@@ -19,6 +19,7 @@ $this->params['title'] = $this->title;
 
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_card', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
         <div class="table-responsive">
             <?= GridView::widget([
@@ -32,7 +33,10 @@ $this->params['title'] = $this->title;
                         'label' => 'User Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->user) ? $model->user->name : '';
+                            // return isset($model->user) ? $model->user->name : '';
+                            if ($user = $model->user) {
+                                return Html::a($user->name, ['/user/default/profile', 'user_id' => $user->id], ['style' => 'color:black !important;']);
+                            }
                         }
                     ],
 

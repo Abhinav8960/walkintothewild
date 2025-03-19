@@ -52,8 +52,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section  margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-xxl-9 col-lg-12">
-                <div class="row pt-5">
+            <div class="col-xxl-8 col-xl-10 col-lg-12">
+                <div class="row pt-2">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
@@ -201,7 +201,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xxl-4 col-lg-4">
+                                <div class="col-xxl-4 col-lg-4 ps-md-4">
                                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
                                         
                                             <div class="mb-4" id="memberview">

@@ -50,8 +50,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-9 col-lg-12">
-                <div class="row pt-5 pb-4">
+            <div class="col-xxl-8 col-xl-10 col-lg-12">
+                <div class="row pt-2 pb-4">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="row">
                             <div class="col-xxl-8 col-lg-8">
@@ -69,7 +69,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         $park_detail = $operator_park->park;
                                                         if ($park_detail) {
                                                 ?>
-                                                            <div class="col-md-3 col-lg-3 col-xxl-3 col-sm-6 gap-2  mb-4">
+                                                            <div class="col-md-4 col-lg-4 col-xxl-4 col-sm-6 gap-2  mb-4">
                                                                 <div class="parksImgireview h-100">
                                                                     <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>" data-pjax="0">
                                                                         <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">

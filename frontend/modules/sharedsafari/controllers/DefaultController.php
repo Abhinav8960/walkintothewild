@@ -735,12 +735,22 @@ class DefaultController extends FrontendBaseController
         $query .= " row_number() over() as `row_number`
                 FROM `share_safari_history` WHERE `slug` = '$slug' AND `status` = 1 AND `type` = 1 ORDER BY `id` DESC;";
 
-        $history_model = Yii::$app->db->createCommand($query)
-            ->queryAll();
+        $history_model = Yii::$app->db->createCommand($query)->queryAll();
+        $filtered_history = array_filter($history_model, function ($row) use ($columns) {
+            foreach ($columns as $column_data) {
+                $currentValue = $row[$column_data['current_column']];
+                $previousValue = $row[$column_data['previous_column']];
+
+                if ($currentValue !== $previousValue) {
+                    return true;
+                }
+            }
+            return false;
+        });
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
-                'history_model' => $history_model,
+                'history_model' => $filtered_history,
                 'total_count' => count($history_model),
                 'columns' => $columns,
             ]);
@@ -765,9 +775,21 @@ class DefaultController extends FrontendBaseController
         $history_model = Yii::$app->db->createCommand($query)
             ->queryAll();
 
+        $filtered_history = array_filter($history_model, function ($row) use ($columns) {
+            foreach ($columns as $column_data) {
+                $currentValue = $row[$column_data['current_column']];
+                $previousValue = $row[$column_data['previous_column']];
+
+                if ($currentValue !== $previousValue) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_fixed_view', [
-                'history_model' => $history_model,
+                'history_model' => $filtered_history,
                 'total_count' => count($history_model),
                 'columns' => $columns,
             ]);
@@ -1079,6 +1101,19 @@ class DefaultController extends FrontendBaseController
                 'current_column' => 'current_end_date',
                 'label' => 'End Date'
             ],
+            // [
+            //     'actual_column' => 'safari_plan',
+            //     'previous_column' => 'previous_safari_plan',
+            //     'current_column' => 'current_safari_plan',
+            //     'label' => 'Safari Plan'
+            // ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+                'label' => 'Safari Title'
+            ],
+
         ];
     }
 
@@ -1126,6 +1161,60 @@ class DefaultController extends FrontendBaseController
                 'previous_column' => 'previous_cut_off_date',
                 'current_column' => 'current_cut_off_date',
                 'label' => 'Cut Off Date'
+            ],
+            // [
+            //     'actual_column' => 'safari_plan',
+            //     'previous_column' => 'previous_safari_plan',
+            //     'current_column' => 'current_safari_plan',
+            //     'label' => 'Safari Plan'
+            // ],
+            [
+                'actual_column' => 'share_safari_terms_condtition',
+                'previous_column' => 'previous_share_safari_terms_condtition',
+                'current_column' => 'current_share_safari_terms_condtition',
+                'label' => 'T & C'
+            ],
+            [
+                'actual_column' => 'privacy_policy',
+                'previous_column' => 'previous_privacy_policy',
+                'current_column' => 'current_privacy_policy',
+                'label' => 'Privacy Policy'
+            ],
+            [
+                'actual_column' => 'change_policy',
+                'previous_column' => 'previous_change_policy',
+                'current_column' => 'current_change_policy',
+                'label' => 'Change Policy'
+            ],
+            [
+                'actual_column' => 'what_you_must_carry',
+                'previous_column' => 'previous_what_you_must_carry',
+                'current_column' => 'current_what_you_must_carry',
+                'label' => 'Must Carry'
+            ],
+            [
+                'actual_column' => 'date_change_policy',
+                'previous_column' => 'previous_date_change_policy',
+                'current_column' => 'current_date_change_policy',
+                'label' => 'Date Change Policy'
+            ],
+            [
+                'actual_column' => 'refund_policy',
+                'previous_column' => 'previous_refund_policy',
+                'current_column' => 'current_refund_policy',
+                'label' => 'Refund Policy'
+            ],
+            [
+                'actual_column' => 'getting_there',
+                'previous_column' => 'previous_getting_there',
+                'current_column' => 'current_getting_there',
+                'label' => 'Getting There'
+            ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+                'label' => 'Safari Title'
             ],
         ];
     }

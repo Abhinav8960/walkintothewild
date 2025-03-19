@@ -29,6 +29,8 @@ class PackageSearch extends Package
     public $custom_sort_by;
     public $package_name;
     public $report_days;
+    public $package_start_date;
+    public $package_end_date;
 
 
     public $report_days_option = [
@@ -52,7 +54,7 @@ class PackageSearch extends Package
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe']
         ];
     }
 
@@ -291,5 +293,51 @@ class PackageSearch extends Package
         }
 
         return $query;
+    }
+
+    public function reportsearch($params)
+    {
+        $query =  Package::find()->where(['package.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package.status' => $this->status,
+            'package.start_date' => $this->package_start_date,
+            'package.end_date' => $this->package_end_date,
+        ]);
+
+        $query->andFilterWhere(['like', 'package.package_name', $this->package_name]);
+
+        if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
+            if ($this->estimated_price_filter_max >= 50000) {
+                $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+            }
+        }
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
+        return $dataProvider;
     }
 }
