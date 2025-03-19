@@ -51,5 +51,42 @@ class Moderation extends \common\models\moderation\ActiveRecord
     {
         return $this->hasOne(ModerationText::className(), ['moderation_id' => 'id']);
     }
-    
+
+
+    public function getTags()
+    {
+        $moderation_models = [
+            ['class' => 'common\models\moderation\Nudity', 'title' => 'Nudity'],
+            ['class' => 'common\models\moderation\Offensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\Money', 'title' => 'Money'],
+        ];
+        $str = "";
+        if ($this->type == 2) {
+            foreach ($moderation_models as $moderation_models_data) {
+                $class_name = $moderation_models_data['class'];
+                $attributes = $class_name::$accessible_attributes;
+                $selectExpressions = [];
+                foreach ($attributes as $attribute) {
+                    $selectExpressions[] = new \yii\db\Expression("MAX({$attribute}) AS {$attribute}");
+                }
+                $maxValues = $class_name::find()
+                    ->select($selectExpressions)
+                    ->where(['moderation_id' => $this->id])
+                    ->asArray()
+                    ->one();
+                $sub_str = "";
+                if (!empty($maxValues)) {
+                    $sub_str .= "<h3>" . $moderation_models_data['title'] . "</h3>";
+                    foreach ($maxValues as $attribute => $value) {
+                        $percentage_val = $value * 100;
+                        $label = ucfirst(str_replace('_', ' ', $attribute));
+                        $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
+                        . $label ." :" . "" . $percentage_val .  "<span>&#37;</span></span>";
+                    }
+                }
+                $str .= $sub_str;
+            }
+        }
+        return $str;
+    }
 }

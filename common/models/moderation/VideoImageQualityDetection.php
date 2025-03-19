@@ -6,17 +6,16 @@ use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "money".
+ * This is the model class for table "video_image_quality_detection".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
- * @property float|null $prob
+ * @property float|null $score
  */
-class Money extends ActiveRecord
+class VideoImageQualityDetection extends ActiveRecord
 {
-    public static $accessible_attributes = [ 'prob'];
 
 
     /**
@@ -24,9 +23,8 @@ class Money extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'money';
+        return 'video_image_quality_detection';
     }
-
 
     /**
      * {@inheritdoc}
@@ -34,10 +32,10 @@ class Money extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'score'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob'], 'number'],
+            [['score'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -52,11 +50,11 @@ class Money extends ActiveRecord
             'moderation_id' => 'Moderation ID',
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
-            'prob' => 'Prob',
+            'score' => 'Score',
         ];
     }
 
-    public static function moneystore($fb, $id)
+    public static function imagequalitystore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -67,7 +65,7 @@ class Money extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['money']['prob'] ?? 0;
+            $model->score = $frame['quality']['score'] ?? 0;
             if (!$model->save()) {
                 return false;
             }

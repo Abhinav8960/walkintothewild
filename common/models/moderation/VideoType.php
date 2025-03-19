@@ -6,17 +6,17 @@ use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "money".
+ * This is the model class for table "video_type".
  *
  * @property int $id
  * @property int $moderation_id
  * @property string|null $info_id
  * @property int|null $info_position
- * @property float|null $prob
+ * @property float|null $illustration
+ * @property float|null $photo
  */
-class Money extends ActiveRecord
+class VideoType extends ActiveRecord
 {
-    public static $accessible_attributes = [ 'prob'];
 
 
     /**
@@ -24,9 +24,8 @@ class Money extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'money';
+        return 'video_type';
     }
-
 
     /**
      * {@inheritdoc}
@@ -34,10 +33,10 @@ class Money extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'illustration', 'photo','ai_generated','deepfake'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob'], 'number'],
+            [['illustration', 'photo','deepfake','ai_generated'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -52,11 +51,14 @@ class Money extends ActiveRecord
             'moderation_id' => 'Moderation ID',
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
-            'prob' => 'Prob',
+            'ai_generated' => 'Ai Generated',
+            'illustration' => 'Illustration',
+            'deepfake' => 'Deepfake',
+            'photo' => 'Photo',
         ];
     }
 
-    public static function moneystore($fb, $id)
+    public static function typestore($fb, $id)
     {
         if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
             return false;
@@ -67,7 +69,10 @@ class Money extends ActiveRecord
             $model->moderation_id = $id;
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
-            $model->prob = $frame['money']['prob'] ?? 0;
+            $model->illustration = $frame['type']['illustration'] ?? 0;
+            $model->photo = $frame['type']['photo'] ?? 0;
+            $model->ai_generated = $frame['type']['ai_generated'] ?? 0;
+            $model->deepfake = $frame['type']['deepfake'] ?? 0;
             if (!$model->save()) {
                 return false;
             }
@@ -75,5 +80,4 @@ class Money extends ActiveRecord
 
         return true;
     }
-
 }

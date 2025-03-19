@@ -45,11 +45,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'attribute' => 'content',
                         'label' => 'Content',
+                        'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->type == 1) {
                                 return  $model->text;
                             } elseif ($model->type == 2) {
-                                return  $model->video_url;
+                                // return  $model->video_url;
+                                return "<video width='320' height='240' controls>
+                                        <source src='" . $model->video_url . "' type='video/mp4'>
+                                        </video>";
                             } elseif ($model->type == 3) {
                                 return  $model->image_url;;
                             }
@@ -108,7 +112,10 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                                 return implode("<br>", $textDetail);
                             }
-                            return null;
+                            if ($model->type == 2) {
+                                return $model->tags;
+                            }
+                            // return null;
                         },
                     ],
 

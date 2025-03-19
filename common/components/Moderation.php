@@ -16,6 +16,8 @@ use common\models\moderation\Offensive;
 use common\models\moderation\RecreationalDrug;
 use common\models\moderation\Selfharm;
 use common\models\moderation\Smoking;
+use common\models\moderation\VideoImageQualityDetection;
+use common\models\moderation\VideoType;
 use common\models\moderation\Violence;
 use common\models\moderation\Weapon;
 use CURLFile;
@@ -33,10 +35,11 @@ class Moderation extends Component
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    private $sightEngineUserId = "1054537867"; // Kamal
-    private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
+    // private $sightEngineUserId = "1054537867"; // Kamal
+    // private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
 
     // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
+
 
 
     private $models = [
@@ -222,8 +225,8 @@ class Moderation extends Component
     private function actionVideoStore($feedback, $id)
     {
 
-        $fb = json_decode($feedback, true);
-        // $fb = $feedback;
+        // $fb = json_decode($feedback, true);
+        $fb = $feedback;
         $nudity_saved = Nudity::nuditystore($fb, $id);
         $offensive_saved = Offensive::offensivestore($fb, $id);
         $gore_saved = Gore::gorestore($fb, $id);
@@ -237,10 +240,12 @@ class Moderation extends Component
         $smoking_saved = Smoking::smokingstore($fb, $id);
         $money_saved = Money::moneystore($fb, $id);
         $color_saved = Colors::colorstore($fb, $id);
+        $type_saved = VideoType::typestore($fb, $id);
+        $image_quality_saved = VideoImageQualityDetection::imagequalitystore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved
+            && $color_saved && $type_saved && $image_quality_saved
         ) {
             echo "Stored Successfully";
         } else {
