@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -15,7 +16,7 @@ use Yii;
  * @property float|null $military_personnel
  * @property float|null $military_profile_photo
  */
-class ImageMilitary extends \yii\db\ActiveRecord
+class ImageMilitary extends ActiveRecord
 {
 
 
@@ -28,7 +29,7 @@ class ImageMilitary extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -67,9 +68,9 @@ class ImageMilitary extends \yii\db\ActiveRecord
 
     public static function militaryStore($feedback, $moderationId)
     {
-        if (!isset($feedback['military']) || !is_array($feedback['military'])) {
-            return false;
-        }
+        // if (!isset($feedback['military']) || !is_array($feedback['military'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

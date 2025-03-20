@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -17,7 +18,7 @@ use Yii;
  * @property float|null $terrorist
  * @property float|null $middle_finger
  */
-class ImageOffensive extends \yii\db\ActiveRecord
+class ImageOffensive extends ActiveRecord
 {
 
 
@@ -30,7 +31,7 @@ class ImageOffensive extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -71,9 +72,9 @@ class ImageOffensive extends \yii\db\ActiveRecord
 
     public static function offensiveStore($feedback, $moderationId)
     {
-        if (!isset($feedback['offensive']) || !is_array($feedback['offensive'])) {
-            return false;
-        }
+        // if (!isset($feedback['offensive']) || !is_array($feedback['offensive'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -14,7 +15,7 @@ use Yii;
  * @property float|null $pills
  * @property float|null $paraphernalia
  */
-class ImageMedical extends \yii\db\ActiveRecord
+class ImageMedical extends ActiveRecord
 {
 
 
@@ -27,7 +28,7 @@ class ImageMedical extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -65,9 +66,9 @@ class ImageMedical extends \yii\db\ActiveRecord
 
     public static function medicalStore($feedback, $moderationId)
     {
-        if (!isset($feedback['medical']) || !is_array($feedback['medical'])) {
-            return false;
-        }
+        // if (!isset($feedback['medical']) || !is_array($feedback['medical'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

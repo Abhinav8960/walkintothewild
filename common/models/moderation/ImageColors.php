@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -15,7 +16,7 @@ use Yii;
  * @property float|null $dominant_b
  * @property string|null $dominant_hex
  */
-class ImageColors extends \yii\db\ActiveRecord
+class ImageColors extends ActiveRecord
 {
 
 
@@ -28,7 +29,7 @@ class ImageColors extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -68,13 +69,13 @@ class ImageColors extends \yii\db\ActiveRecord
 
     public static function colorStore($feedback, $moderationId)
     {
-        if (!isset($feedback['colors']) || !is_array($feedback['colors'])) {
-            return false;
-        }
+        // if (!isset($feedback['colors']) || !is_array($feedback['colors'])) {
+        //     return false;
+        // }
 
-        if (!isset($feedback['colors']['dominant']) || !is_array($feedback['colors']['dominant'])) {
-            return false;
-        }
+        // if (!isset($feedback['colors']['dominant']) || !is_array($feedback['colors']['dominant'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;
@@ -88,23 +89,23 @@ class ImageColors extends \yii\db\ActiveRecord
             return false;
         }
 
-        if (isset($feedback['colors']['accent']) && is_array($feedback['colors']['accent'])) {
-            foreach ($feedback['colors']['accent'] as $accent) {
-                $accent_model = new ImageColorsAccent();
-                $accent_model->moderation_id = $moderationId;
-                $accent_model->color_id = $model->id;
-                $accent_model->r = $accent['r'] ?? null;
-                $accent_model->g = $accent['g'] ?? null;
-                $accent_model->b = $accent['b'] ?? null;
-                $accent_model->hex = $accent['hex'] ?? null;
+        // if (isset($feedback['colors']['accent']) && is_array($feedback['colors']['accent'])) {
+        //     foreach ($feedback['colors']['accent'] as $accent) {
+        //         $accent_model = new ImageColorsAccent();
+        //         $accent_model->moderation_id = $moderationId;
+        //         $accent_model->color_id = $model->id;
+        //         $accent_model->r = $accent['r'] ?? null;
+        //         $accent_model->g = $accent['g'] ?? null;
+        //         $accent_model->b = $accent['b'] ?? null;
+        //         $accent_model->hex = $accent['hex'] ?? null;
 
-                if (!$accent_model->save()) {
-                    return false;
-                }
-            }
-        }
+        //         if (!$accent_model->save()) {
+        //             return false;
+        //         }
+        //     }
+        // }
 
-        if (isset($feedback['colors']['other']) && is_array($feedback['colors']['other'])) {
+        // if (isset($feedback['colors']['other']) && is_array($feedback['colors']['other'])) {
             foreach ($feedback['colors']['other'] as $other) {
                 $other_model = new ImageColorsOther();
                 $other_model->moderation_id = $moderationId;
@@ -118,7 +119,7 @@ class ImageColors extends \yii\db\ActiveRecord
                     return false;
                 }
             }
-        }
+        // }
 
         return true;
     }

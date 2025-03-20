@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -17,7 +18,7 @@ use Yii;
  * @property float|null $cannabis_drug
  * @property float|null $recreational_drugs_not_cannabis
  */
-class ImageRecreationalDrug extends \yii\db\ActiveRecord
+class ImageRecreationalDrug extends ActiveRecord
 {
 
 
@@ -30,7 +31,7 @@ class ImageRecreationalDrug extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -71,9 +72,9 @@ class ImageRecreationalDrug extends \yii\db\ActiveRecord
 
     public static function recreationalDrugStore($feedback, $moderationId)
     {
-        if (!isset($feedback['$recreational_drug']) || !is_array($feedback['$recreational_drug'])) {
-            return false;
-        }
+        // if (!isset($feedback['$recreational_drug']) || !is_array($feedback['$recreational_drug'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

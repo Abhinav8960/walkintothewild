@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -14,7 +15,7 @@ use Yii;
  * @property float|null $regular_tobacco
  * @property float|null $ambiguous_tobacco
  */
-class ImageTobacco extends \yii\db\ActiveRecord
+class ImageTobacco extends ActiveRecord
 {
 
 
@@ -27,7 +28,7 @@ class ImageTobacco extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -65,9 +66,9 @@ class ImageTobacco extends \yii\db\ActiveRecord
 
     public static function tobaccoStore($feedback, $moderationId)
     {
-        if (!isset($feedback['tobacco']) || !is_array($feedback['tobacco'])) {
-            return false;
-        }
+        // if (!isset($feedback['tobacco']) || !is_array($feedback['tobacco'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

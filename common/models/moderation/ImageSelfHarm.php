@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -15,7 +16,7 @@ use Yii;
  * @property float|null $fake
  * @property float|null $animated
  */
-class ImageSelfHarm extends \yii\db\ActiveRecord
+class ImageSelfHarm extends ActiveRecord
 {
 
 
@@ -28,7 +29,7 @@ class ImageSelfHarm extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -67,9 +68,9 @@ class ImageSelfHarm extends \yii\db\ActiveRecord
 
     public static function selfHarmStore($feedback, $moderationId)
     {
-        if (!isset($feedback['self-harm']) || !is_array($feedback['self-harm'])) {
-            return false;
-        }
+        // if (!isset($feedback['self-harm']) || !is_array($feedback['self-harm'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -22,7 +23,7 @@ use Yii;
  * @property float|null $unsafe_fire
  * @property float|null $violent_protest
  */
-class ImageDestruction extends \yii\db\ActiveRecord
+class ImageDestruction extends ActiveRecord
 {
 
 
@@ -35,7 +36,7 @@ class ImageDestruction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -81,9 +82,9 @@ class ImageDestruction extends \yii\db\ActiveRecord
 
     public static function destructionStore($feedback, $moderationId)
     {
-        if (!isset($feedback['destruction']) || !is_array($feedback['destruction'])) {
-            return false;
-        }
+        // if (!isset($feedback['destruction']) || !is_array($feedback['destruction'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

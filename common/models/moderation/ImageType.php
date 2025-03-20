@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -14,7 +15,7 @@ use Yii;
  * @property float|null $illustration
  * @property float|null $ai_generated
  */
-class ImageType extends \yii\db\ActiveRecord
+class ImageType extends ActiveRecord
 {
 
 
@@ -27,7 +28,7 @@ class ImageType extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -65,9 +66,9 @@ class ImageType extends \yii\db\ActiveRecord
 
     public static function typeStore($feedback, $moderationId)
     {
-        if (!isset($feedback['type']) || !is_array($feedback['type'])) {
-            return false;
-        }
+        // if (!isset($feedback['type']) || !is_array($feedback['type'])) {
+        //     return false;
+        // }
 
             $model = new self();
             $model->moderation_id = $moderationId;

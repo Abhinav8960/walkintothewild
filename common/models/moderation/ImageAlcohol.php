@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -12,9 +13,8 @@ use Yii;
  * @property string|null $media_id
  * @property float|null $prob
  */
-class ImageAlcohol extends \yii\db\ActiveRecord
+class ImageAlcohol extends ActiveRecord
 {
-
 
     /**
      * {@inheritdoc}
@@ -24,9 +24,7 @@ class ImageAlcohol extends \yii\db\ActiveRecord
         return 'image_alcohol';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
+  
     public static function getDb()
     {
         return Yii::$app->get('db_moderation');
@@ -61,9 +59,9 @@ class ImageAlcohol extends \yii\db\ActiveRecord
 
     public static function alcoholStore($feedback, $moderationId)
     {
-        if (!isset($feedback['alcohol']) || !is_array($feedback['alcohol'])) {
-            return false;
-        }
+        // if (!isset($feedback['alcohol']) || !is_array($feedback['alcohol'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

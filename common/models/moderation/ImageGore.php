@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -25,7 +26,7 @@ use Yii;
  * @property float|null $fake
  * @property float|null $real
  */
-class ImageGore extends \yii\db\ActiveRecord
+class ImageGore extends ActiveRecord
 {
 
 
@@ -38,7 +39,7 @@ class ImageGore extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -87,9 +88,9 @@ class ImageGore extends \yii\db\ActiveRecord
 
     public static function goreStore($feedback, $moderationId)
     {
-        if (!isset($feedback['gore']) || !is_array($feedback['gore'])) {
-            return false;
-        }
+        // if (!isset($feedback['gore']) || !is_array($feedback['gore'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

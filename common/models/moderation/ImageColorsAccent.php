@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -16,7 +17,7 @@ use Yii;
  * @property float|null $b
  * @property string|null $hex
  */
-class ImageColorsAccent extends \yii\db\ActiveRecord
+class ImageColorsAccent extends ActiveRecord
 {
 
 
@@ -29,7 +30,7 @@ class ImageColorsAccent extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {

@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -13,9 +14,8 @@ use Yii;
  * @property float|null $timestamp
  * @property float|null $operations
  */
-class ImageRequest extends \yii\db\ActiveRecord
+class ImageRequest extends ActiveRecord
 {
-
 
     /**
      * {@inheritdoc}
@@ -25,9 +25,6 @@ class ImageRequest extends \yii\db\ActiveRecord
         return 'image_request';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
     public static function getDb()
     {
         return Yii::$app->get('db_moderation');
@@ -63,9 +60,12 @@ class ImageRequest extends \yii\db\ActiveRecord
 
     public static function requestStore($feedback, $moderationId)
     {
-        if (!isset($feedback['request']) || !is_array($feedback['request'])) {
-            return false;
-        }
+        // if (!isset($feedback['request']) || !is_array($feedback['request'])) {
+        //     return false;
+        // }
+
+        // print_r($feedback['request']['id']);
+        // die('requestStore');
 
         $model = new self();
         $model->moderation_id = $moderationId;

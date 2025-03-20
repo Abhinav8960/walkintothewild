@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -27,7 +28,7 @@ use Yii;
  * @property float|null $minor
  * @property float|null $sunglasses
  */
-class ImageFaces extends \yii\db\ActiveRecord
+class ImageFaces extends ActiveRecord
 {
 
 
@@ -40,7 +41,7 @@ class ImageFaces extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -91,9 +92,9 @@ class ImageFaces extends \yii\db\ActiveRecord
 
     public static function facesStore($feedback, $moderationId)
     {
-        if (!isset($feedback['faces']) || !is_array($feedback['faces'])) {
-            return false;
-        }
+        // if (!isset($feedback['faces']) || !is_array($feedback['faces'])) {
+        //     return false;
+        // }
 
         foreach ($feedback['faces'] as $face) {
             $model = new self();

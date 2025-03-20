@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -12,7 +13,7 @@ use Yii;
  * @property string|null $media_id
  * @property float|null $prob
  */
-class ImageGambling extends \yii\db\ActiveRecord
+class ImageGambling extends ActiveRecord
 {
 
 
@@ -25,7 +26,7 @@ class ImageGambling extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -61,9 +62,9 @@ class ImageGambling extends \yii\db\ActiveRecord
 
     public static function gamblingStore($feedback, $moderationId)
     {
-        if (!isset($feedback['gambling']) || !is_array($feedback['gambling'])) {
-            return false;
-        }
+        // if (!isset($feedback['gambling']) || !is_array($feedback['gambling'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

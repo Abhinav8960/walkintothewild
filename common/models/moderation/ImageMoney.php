@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -12,7 +13,7 @@ use Yii;
  * @property string|null $media_id
  * @property float|null $prob
  */
-class ImageMoney extends \yii\db\ActiveRecord
+class ImageMoney extends ActiveRecord
 {
 
 
@@ -25,7 +26,7 @@ class ImageMoney extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -61,9 +62,9 @@ class ImageMoney extends \yii\db\ActiveRecord
 
     public static function moneyStore($feedback, $moderationId)
     {
-        if (!isset($feedback['money']) || !is_array($feedback['money'])) { 
-            return false;
-        }
+        // if (!isset($feedback['money']) || !is_array($feedback['money'])) { 
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;

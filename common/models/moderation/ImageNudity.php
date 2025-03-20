@@ -2,6 +2,7 @@
 
 namespace common\models\moderation;
 
+use common\models\moderation\ActiveRecord;
 use Yii;
 
 /**
@@ -45,7 +46,7 @@ use Yii;
  * @property float|null $male_chest_slightly_revealing
  * @property float|null $male_chest_none
  */
-class ImageNudity extends \yii\db\ActiveRecord
+class ImageNudity extends ActiveRecord
 {
 
 
@@ -58,7 +59,7 @@ class ImageNudity extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
      */
     public static function getDb()
     {
@@ -127,9 +128,9 @@ class ImageNudity extends \yii\db\ActiveRecord
 
     public static function nudityStore($feedback, $moderationId)
     {
-        if (!isset($feedback['nudity']) || !is_array($feedback['nudity'])) {
-            return false;
-        }
+        // if (!isset($feedback['nudity']) || !is_array($feedback['nudity'])) {
+        //     return false;
+        // }
 
         $model = new self();
         $model->moderation_id = $moderationId;
