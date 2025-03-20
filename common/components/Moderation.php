@@ -4,7 +4,9 @@ namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
 use common\models\moderation\ImageAlcohol;
+use common\models\moderation\ImageBrightness;
 use common\models\moderation\ImageColors;
+use common\models\moderation\ImageContrast;
 use common\models\moderation\ImageDestruction;
 use common\models\moderation\ImageFaces;
 use common\models\moderation\ImageGambling;
@@ -20,6 +22,7 @@ use common\models\moderation\ImageRecreationalDrug;
 use common\models\moderation\ImageRequest;
 use common\models\moderation\ImageScam;
 use common\models\moderation\ImageSelfHarm;
+use common\models\moderation\ImageSharpness;
 use common\models\moderation\ImageTobacco;
 use common\models\moderation\ImageType;
 use common\models\moderation\ImageViolence;
@@ -306,16 +309,20 @@ class Moderation extends Component
         $type_saved = ImageType::typeStore($feedback, $moderationId);
         $violence_saved = ImageViolence::voilenceStore($feedback, $moderationId);
         $weapon_saved = ImageWeapon::weaponStore($feedback, $moderationId);
+        $brightness_saved = ImageBrightness::brightnessStore($feedback, $moderationId);
+        $sharpness_saved = ImageSharpness::sharpnessStore($feedback, $moderationId);
+        $contrast_saved = ImageContrast::contrastStore($feedback, $moderationId);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
-            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $medical_saved
-            && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved
-            && $military_saved && $media_saved
+            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $medical_saved && $alcohol_saved
+            && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved && $military_saved
+            && $media_saved && $contrast_saved && $sharpness_saved && $brightness_saved
         ) {
             echo "Image Data Stored Successfully";
         } else {
             exit("Error: Failed to store data");
         }
     }
+
 }

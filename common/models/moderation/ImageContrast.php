@@ -1,0 +1,81 @@
+<?php
+
+namespace common\models\moderation;
+
+use common\models\moderation\ActiveRecord;
+use Yii;
+
+/**
+ * This is the model class for table "image_contrast".
+ *
+ * @property int $id
+ * @property int $moderation_id
+ * @property string|null $media_id
+ * @property float|null $contrast
+ */
+class ImageContrast extends ActiveRecord
+{
+
+    public static $accessible_attributes = ['contrast'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'image_contrast';
+    }
+
+    /**
+     * @return Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_moderation');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['media_id', 'contrast'], 'default', 'value' => null],
+            [['moderation_id'], 'required'],
+            [['moderation_id'], 'integer'],
+            [['contrast'], 'number'],
+            [['media_id'], 'string', 'max' => 512],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'moderation_id' => 'Moderation ID',
+            'media_id' => 'Media ID',
+            'contrast' => 'Contrast',
+        ];
+    }
+
+    public static function contrastStore($feedback, $moderationId)
+    {
+        if (!isset($feedback['contrast'])) {
+            return false;
+        }
+
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->contrast = $feedback['contrast'] ?? 0;
+
+        if (!$model->save(false)) {
+            return false;
+        }
+
+        return true;
+    }
+}
