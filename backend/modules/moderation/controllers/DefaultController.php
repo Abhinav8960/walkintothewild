@@ -56,7 +56,7 @@ class DefaultController extends Controller
                             $this->getVideoFormat(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             $this->getVideoStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             $this->getVideoAudioStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                            Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
+                            Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 3) {
                             Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
