@@ -49,6 +49,7 @@ class DefaultController extends Controller
                         $model->uploadFile();
                         if ($model->moderation_model->type == 1) {
                             Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
+                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 2) {
                             $video_meta_data_model = new VideoMetadata();
                             $video_meta_data_model->size = $model->video->size;
@@ -58,10 +59,11 @@ class DefaultController extends Controller
                             $video_meta_data_model->average_frame_rate = $this->getVideoAvgFramerate('https://d281t0xjcq032r.cloudfront.net/' . $model->moderation_model->video_url);
                             $video_meta_data_model->save(false);
                             Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
+                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 3) {
                             Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
+                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         }
-                        \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
