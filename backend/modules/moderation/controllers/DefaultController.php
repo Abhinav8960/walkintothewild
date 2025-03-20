@@ -200,6 +200,7 @@ class DefaultController extends Controller
             if ($image_info) {
                 $image_meta_data_model->width = $image_info[0];
                 $image_meta_data_model->height = $image_info[1];
+                $image_meta_data_model->orientation = $image_info[1] > $image_info[0] ? 'portrait' : 'landscape';
             }
 
             $image_meta_data_model->extension = pathinfo($model->image->name, PATHINFO_EXTENSION);
@@ -209,12 +210,6 @@ class DefaultController extends Controller
                 $image_meta_data_model->resolution = ($exif['XResolution'] ?? 0) . ' x ' . ($exif['YResolution'] ?? 0);
             } else {
                 $image_meta_data_model->resolution = 'unknown';
-            }
-
-            if ($exif && isset($exif['Orientation'])) {
-                $image_meta_data_model->orientation = $exif['Orientation'];
-            } else {
-                $image_meta_data_model->orientation = 'unknown';
             }
 
             $image_meta_data_model->uploaded_at = date('Y-m-d H:i:s');
