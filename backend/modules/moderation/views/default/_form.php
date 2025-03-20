@@ -36,10 +36,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-6 field-image">
-                <?= $form->field($model, 'image_url')->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Image Url',
-                ]) ?>
+            <?= $form->field($model, 'image')->fileInput()->label('Image') ?>
             </div>
 
             <div class="row">

@@ -60,6 +60,9 @@ class Moderation extends Component
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
+    private $sightEngineUserId = "1054537867"; // Kamal
+    private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
+
     private $models = [
         'nudity-2.1',
         'weapon',
@@ -280,6 +283,9 @@ class Moderation extends Component
 
     private function actionStoreImage($feedback, $moderation_type, $moderationId)
     {
+        print_r($feedback);
+        die;
+
         $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
         $color_saved = ImageColors::colorStore($feedback, $moderationId);
         $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
