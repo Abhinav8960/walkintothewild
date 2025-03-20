@@ -52,7 +52,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             } elseif ($model->type == 2) {
                                 // return  $model->video_url;
                                 return "<video width='320' height='240' controls>
-                                        <source src='" . $model->video_url . "' type='video/mp4'>
+                                        <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
                                         </video>";
                             } elseif ($model->type == 3) {
                                 // return  $model->image_url;

@@ -18,7 +18,7 @@ use Yii;
  */
 class VideoSelfharm extends ActiveRecord
 {
-    public static $accessible_attributes = ['prob', 'real', 'fake', 'animated'];
+    public static $accessible_attributes = ['prob', 'fake', 'animated'];
 
 
     /**

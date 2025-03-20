@@ -28,7 +28,7 @@ use Yii;
  */
 class VideoGore extends ActiveRecord
 {
-    public static $accessible_attributes = [ 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'real'];
+    public static $accessible_attributes = [ 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake'];
 
 
     /**
