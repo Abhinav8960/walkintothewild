@@ -21,7 +21,7 @@ class SafariController extends RestController
     {
         parent::init();
         $this->slug = \Yii::$app->request->get('slug');
-        $this->sharesafari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $this->slug])->limit(1)->one();
+        $this->sharesafari = ShareSafari::find()->where(['slug' => $this->slug])->limit(1)->one();
 
 
         if (!empty($this->slug) && empty($this->sharesafari)) {
