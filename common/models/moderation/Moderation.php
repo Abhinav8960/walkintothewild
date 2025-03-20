@@ -155,7 +155,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
                 $textPersonalData[] = $info;
             }
 
-            $textDetail[] = "<br>" . implode("<br>", $textPersonalData);
+            $textDetail[] = "<br>" . implode("<br><br>", $textPersonalData);
         }
 
         return implode("<br>", $textDetail);

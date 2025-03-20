@@ -23,6 +23,8 @@ use Yii;
  */
 class ModerationText extends \common\models\moderation\ActiveRecord
 {
+    public static $accessible_attributes = ['sexual', 'discriminatory', 'insulting', 'violent', 'toxic', 'self_harm'];
+
     /**
      * {@inheritdoc}
      */

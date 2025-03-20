@@ -9,6 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property int $moderation_text_id
+ * @property int $is_personal
+ * @property int $is_link
  * @property string $type
  * @property string|null $category
  * @property string|null $match
@@ -19,6 +21,7 @@ use Yii;
 class ModerationTextPersonal extends \common\models\moderation\ActiveRecord
 {
 
+    public static $accessible_attributes = ['type', 'category', 'match', 'start', 'end', 'is_personal', 'is_link'];
 
     /**
      * {@inheritdoc}
@@ -37,7 +40,7 @@ class ModerationTextPersonal extends \common\models\moderation\ActiveRecord
             [['category', 'match', 'start', 'end'], 'default', 'value' => null],
             [['sequnce'], 'default', 'value' => 1],
             [['moderation_text_id', 'type'], 'required'],
-            [['moderation_text_id', 'sequnce'], 'integer'],
+            [['moderation_text_id', 'sequnce', 'is_personal', 'is_link'], 'integer'],
             [['type', 'category', 'match', 'start', 'end'], 'string', 'max' => 255],
         ];
     }
@@ -50,6 +53,8 @@ class ModerationTextPersonal extends \common\models\moderation\ActiveRecord
         return [
             'id' => 'ID',
             'moderation_text_id' => 'Moderation ID',
+            'is_personal' => 'Is Personal',
+            'is_link' => 'Is Link',
             'type' => 'Type',
             'category' => 'Category',
             'match' => 'Match',
@@ -58,5 +63,4 @@ class ModerationTextPersonal extends \common\models\moderation\ActiveRecord
             'sequnce' => 'Sequnce',
         ];
     }
-
 }
