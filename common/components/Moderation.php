@@ -306,13 +306,12 @@ class Moderation extends Component
         $type_saved = ImageType::typeStore($feedback, $moderationId);
         $violence_saved = ImageViolence::voilenceStore($feedback, $moderationId);
         $weapon_saved = ImageWeapon::weaponStore($feedback, $moderationId);
-        $faced_saved = VideoFace::facestore($feedback, $moderationId);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
             && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $medical_saved
             && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved
-            && $military_saved && $media_saved && $faced_saved
+            && $military_saved && $media_saved
         ) {
             echo "Image Data Stored Successfully";
         } else {
