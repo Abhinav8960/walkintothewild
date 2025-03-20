@@ -15,6 +15,7 @@ use Yii;
  */
 class VideoScam extends ActiveRecord
 {
+    public static $accessible_attributes = [ 'prob'];
 
 
     /**
