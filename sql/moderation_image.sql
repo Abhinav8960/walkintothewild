@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2025 at 04:30 PM
+-- Generation Time: Mar 20, 2025 at 05:11 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.20
 
@@ -126,28 +126,41 @@ CREATE TABLE `image_destruction` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `image_faces`
+-- Table structure for table `image_face`
 --
 
-DROP TABLE IF EXISTS `image_faces`;
-CREATE TABLE `image_faces` (
+DROP TABLE IF EXISTS `image_face`;
+CREATE TABLE `image_face` (
   `id` int NOT NULL,
+  `moderation_id` int NOT NULL,
+  `media_id` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `image_face_info`
+--
+
+DROP TABLE IF EXISTS `image_face_info`;
+CREATE TABLE `image_face_info` (
+  `id` int NOT NULL,
+  `video_face_id` int NOT NULL,
   `moderation_id` int DEFAULT NULL,
-  `media_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `x1` float DEFAULT NULL,
   `y1` float DEFAULT NULL,
   `x2` float DEFAULT NULL,
   `y2` float DEFAULT NULL,
-  `feature_left_eye_x` float DEFAULT NULL,
-  `feature_left_eye_y` float DEFAULT NULL,
-  `feature_right_eye_x` float DEFAULT NULL,
-  `feature_right_eye_y` float DEFAULT NULL,
-  `feature_nose_tip_x` float DEFAULT NULL,
-  `feature_nose_tip_y` float DEFAULT NULL,
-  `feature_left_mouth_corner_x` float DEFAULT NULL,
-  `feature_left_mouth_corner_y` float DEFAULT NULL,
-  `feature_right_mouth_corner_x` float DEFAULT NULL,
-  `feature_right_mouth_corner_y` float DEFAULT NULL,
+  `left_eye_x` float DEFAULT NULL,
+  `left_eye_y` float DEFAULT NULL,
+  `right_eye_x` float DEFAULT NULL,
+  `right_eye_y` float DEFAULT NULL,
+  `nose_tip_x` float DEFAULT NULL,
+  `nose_tip_y` float DEFAULT NULL,
+  `left_mouth_corner_x` float DEFAULT NULL,
+  `left_mouth_corner_y` float DEFAULT NULL,
+  `right_mouth_corner_x` float DEFAULT NULL,
+  `right_mouth_corner_y` float DEFAULT NULL,
   `minor` float DEFAULT NULL,
   `sunglasses` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -547,9 +560,15 @@ ALTER TABLE `image_destruction`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `image_faces`
+-- Indexes for table `image_face`
 --
-ALTER TABLE `image_faces`
+ALTER TABLE `image_face`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `image_face_info`
+--
+ALTER TABLE `image_face_info`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -707,9 +726,15 @@ ALTER TABLE `image_destruction`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `image_faces`
+-- AUTO_INCREMENT for table `image_face`
 --
-ALTER TABLE `image_faces`
+ALTER TABLE `image_face`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `image_face_info`
+--
+ALTER TABLE `image_face_info`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --

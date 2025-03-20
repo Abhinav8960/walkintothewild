@@ -167,7 +167,9 @@ class Moderation extends \common\models\moderation\ActiveRecord
 
         $moderation_models = [
             ['class' => 'common\models\moderation\ImageAlcohol', 'title' => 'Alcohol'],
+            ['class' => 'common\models\moderation\ImageBrightness', 'title' => 'Brightness'],
             // ['class' => 'common\models\moderation\ImageColors', 'title' => 'Color'],
+            ['class' => 'common\models\moderation\ImageContrast', 'title' => 'Contrast'],
             // ['class' => 'common\models\moderation\ImageColorOther', 'title' => 'Color Others'],
             ['class' => 'common\models\moderation\ImageDestruction', 'title' => 'Destruction'],
             // ['class' => 'common\models\moderation\ImageFaces', 'title' => 'Faces'],
@@ -185,6 +187,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
             // ['class' => 'common\models\moderation\ImageeRequest', 'title' => 'Image Request'],
             ['class' => 'common\models\moderation\ImageScam', 'title' => 'Scam'],
             ['class' => 'common\models\moderation\ImageSelfHarm', 'title' => 'Self Harm'],
+            ['class' => 'common\models\moderation\ImageSharpness', 'title' => 'Sharpness'],
             ['class' => 'common\models\moderation\ImageTobacco', 'title' => 'Tobacco'],
             ['class' => 'common\models\moderation\ImageType', 'title' => 'Type'],
             ['class' => 'common\models\moderation\ImageViolence', 'title' => 'Violence'],
@@ -199,7 +202,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
                 foreach ($attributes as $attribute) {
                     $selectExpressions[] = new \yii\db\Expression("MAX(`{$attribute}`) AS `{$attribute}`");
                 }
-                
+
                 $maxValues = $class_name::find()
                     ->select($selectExpressions)
                     ->where(['moderation_id' => $this->id])

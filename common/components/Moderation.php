@@ -8,6 +8,7 @@ use common\models\moderation\ImageBrightness;
 use common\models\moderation\ImageColors;
 use common\models\moderation\ImageContrast;
 use common\models\moderation\ImageDestruction;
+use common\models\moderation\ImageFace;
 use common\models\moderation\ImageFaces;
 use common\models\moderation\ImageGambling;
 use common\models\moderation\ImageGore;
@@ -64,7 +65,6 @@ class Moderation extends Component
     public $fileUrl;
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
-
 
     private $models = [
         'nudity-2.1',
@@ -291,7 +291,7 @@ class Moderation extends Component
         $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
         $color_saved = ImageColors::colorStore($feedback, $moderationId);
         $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
-        $face_saved = ImageFaces::facesStore($feedback, $moderationId);
+        $face_saved = ImageFace::faceStore($feedback, $moderationId);
         $gambling_saved = ImageGambling::gamblingStore($feedback, $moderationId);
         $gore_saved = ImageGore::goreStore($feedback, $moderationId);
         $media_saved = ImageMedia::mediaStore($feedback, $moderationId);
@@ -324,5 +324,4 @@ class Moderation extends Component
             exit("Error: Failed to store data");
         }
     }
-
 }
