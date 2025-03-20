@@ -55,8 +55,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                         <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
                                         </video>";
                             } elseif ($model->type == 3) {
-                                // return  $model->image_url;
-                                return  "<img src='" . \Yii::$app->params['cloud_front_url'] .  $model->image_url . "' alt='' height='240px' width='320px'>";
+                                // return  "<img src='" . \Yii::$app->params['cloud_front_url'] .  $model->image_url . "' alt='' height='240px' width='320px'>";
+                                return Html::img(\Yii::$app->params['cloud_front_url'] . $model->image_url, ['alt' => 'Uploaded Image', 'height' => '240px', 'width' => '320px']);
                             }
                             return 'Unknown';
                         },
