@@ -54,9 +54,9 @@ class DefaultController extends Controller
                             $video_meta_data_model = new VideoMetadata();
                             $video_meta_data_model->size = $model->video->size;
                             $video_meta_data_model->moderation_id = $model->moderation_model->id;
-                            $video_meta_data_model->duration = $this->getVideoDuration('https://d281t0xjcq032r.cloudfront.net/' . $model->moderation_model->video_url);
-                            $video_meta_data_model->r_frame_rate = $this->getVideoFramerate('https://d281t0xjcq032r.cloudfront.net/' . $model->moderation_model->video_url);
-                            $video_meta_data_model->average_frame_rate = $this->getVideoAvgFramerate('https://d281t0xjcq032r.cloudfront.net/' . $model->moderation_model->video_url);
+                            $video_meta_data_model->duration = $this->getVideoDuration(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url);
+                            $video_meta_data_model->r_frame_rate = $this->getVideoFramerate(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url);
+                            $video_meta_data_model->average_frame_rate = $this->getVideoAvgFramerate(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url);
                             $video_meta_data_model->save(false);
                             Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
