@@ -19,7 +19,7 @@ use Yii;
 class VideoAudioProfanity extends ActiveRecord
 {
 
-    public static $accessible_attributes = ['type', 'match', 'start_ms', 'end_ms'];
+    public static $accessible_attributes = ['type', 'start_ms', 'end_ms'];
 
 
     /**
@@ -59,5 +59,4 @@ class VideoAudioProfanity extends ActiveRecord
             'end_ms' => 'End Ms',
         ];
     }
-
 }
