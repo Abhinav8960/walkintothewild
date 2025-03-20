@@ -48,9 +48,6 @@ class DefaultController extends Controller
                 $model->video = UploadedFile::getInstance($model, 'video');
                 $model->image = UploadedFile::getInstance($model, 'image');
 
-                $imagePath = $model->image->tempName;
-                $image_info = getimagesize($imagePath);
-
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->moderation_model->save()) {
