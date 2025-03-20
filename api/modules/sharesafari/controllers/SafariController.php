@@ -21,7 +21,10 @@ class SafariController extends RestController
     {
         parent::init();
         $this->slug = \Yii::$app->request->get('slug');
-        $this->sharesafari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $this->slug])->limit(1)->one();
+        if(!in_array(\Yii::$app->controller->action->uniqueId,  ['sharesafari/default/view']))
+        {
+            $this->sharesafari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $this->slug])->limit(1)->one();
+        }
 
         if (!empty($this->slug) && empty($this->sharesafari)) {
            return Yii::$app->api->sendFailedStringResponse(['Safari not found']);
