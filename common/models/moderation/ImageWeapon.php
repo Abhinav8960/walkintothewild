@@ -82,9 +82,9 @@ class ImageWeapon extends ActiveRecord
 
     public static function weaponStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['weapon']) || !is_array($feedback['weapon'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['weapon']) || !is_array($feedback['weapon'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

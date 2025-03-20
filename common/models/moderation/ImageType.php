@@ -66,9 +66,9 @@ class ImageType extends ActiveRecord
 
     public static function typeStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['type']) || !is_array($feedback['type'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['type']) || !is_array($feedback['type'])) {
+            return false;
+        }
 
             $model = new self();
             $model->moderation_id = $moderationId;

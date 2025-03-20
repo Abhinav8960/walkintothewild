@@ -60,9 +60,9 @@ class ImageRequest extends ActiveRecord
 
     public static function requestStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['request']) || !is_array($feedback['request'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['request']) || !is_array($feedback['request'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

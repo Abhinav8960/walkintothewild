@@ -62,9 +62,9 @@ class ImageGambling extends ActiveRecord
 
     public static function gamblingStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['gambling']) || !is_array($feedback['gambling'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['gambling']) || !is_array($feedback['gambling'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

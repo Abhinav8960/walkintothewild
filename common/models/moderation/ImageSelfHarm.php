@@ -68,9 +68,9 @@ class ImageSelfHarm extends ActiveRecord
 
     public static function selfHarmStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['self-harm']) || !is_array($feedback['self-harm'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['self-harm']) || !is_array($feedback['self-harm'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

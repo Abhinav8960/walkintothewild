@@ -59,9 +59,9 @@ class ImageAlcohol extends ActiveRecord
 
     public static function alcoholStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['alcohol']) || !is_array($feedback['alcohol'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['alcohol']) || !is_array($feedback['alcohol'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

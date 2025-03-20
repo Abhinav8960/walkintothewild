@@ -68,9 +68,9 @@ class ImageViolence extends ActiveRecord
 
     public static function voilenceStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['violence']) || !is_array($feedback['violence'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['violence']) || !is_array($feedback['violence'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

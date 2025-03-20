@@ -68,9 +68,9 @@ class ImageMilitary extends ActiveRecord
 
     public static function militaryStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['military']) || !is_array($feedback['military'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['military']) || !is_array($feedback['military'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

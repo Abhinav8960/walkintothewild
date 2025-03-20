@@ -62,9 +62,9 @@ class ImageQuality extends ActiveRecord
 
     public static function qualityStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['quality']) || !is_array($feedback['quality'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['quality']) || !is_array($feedback['quality'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

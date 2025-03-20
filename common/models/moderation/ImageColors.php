@@ -69,13 +69,13 @@ class ImageColors extends ActiveRecord
 
     public static function colorStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['colors']) || !is_array($feedback['colors'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['colors']) || !is_array($feedback['colors'])) {
+            return false;
+        }
 
-        // if (!isset($feedback['colors']['dominant']) || !is_array($feedback['colors']['dominant'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['colors']['dominant']) || !is_array($feedback['colors']['dominant'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;
@@ -89,23 +89,7 @@ class ImageColors extends ActiveRecord
             return false;
         }
 
-        // if (isset($feedback['colors']['accent']) && is_array($feedback['colors']['accent'])) {
-        //     foreach ($feedback['colors']['accent'] as $accent) {
-        //         $accent_model = new ImageColorsAccent();
-        //         $accent_model->moderation_id = $moderationId;
-        //         $accent_model->color_id = $model->id;
-        //         $accent_model->r = $accent['r'] ?? null;
-        //         $accent_model->g = $accent['g'] ?? null;
-        //         $accent_model->b = $accent['b'] ?? null;
-        //         $accent_model->hex = $accent['hex'] ?? null;
-
-        //         if (!$accent_model->save()) {
-        //             return false;
-        //         }
-        //     }
-        // }
-
-        // if (isset($feedback['colors']['other']) && is_array($feedback['colors']['other'])) {
+        if (isset($feedback['colors']['other']) && is_array($feedback['colors']['other'])) {
             foreach ($feedback['colors']['other'] as $other) {
                 $other_model = new ImageColorsOther();
                 $other_model->moderation_id = $moderationId;
@@ -119,7 +103,7 @@ class ImageColors extends ActiveRecord
                     return false;
                 }
             }
-        // }
+        }
 
         return true;
     }

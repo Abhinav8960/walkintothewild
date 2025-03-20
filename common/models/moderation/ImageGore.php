@@ -88,9 +88,9 @@ class ImageGore extends ActiveRecord
 
     public static function goreStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['gore']) || !is_array($feedback['gore'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['gore']) || !is_array($feedback['gore'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

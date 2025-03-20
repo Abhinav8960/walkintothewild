@@ -66,9 +66,9 @@ class ImageMedical extends ActiveRecord
 
     public static function medicalStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['medical']) || !is_array($feedback['medical'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['medical']) || !is_array($feedback['medical'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

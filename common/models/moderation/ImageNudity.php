@@ -128,9 +128,9 @@ class ImageNudity extends ActiveRecord
 
     public static function nudityStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['nudity']) || !is_array($feedback['nudity'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['nudity']) || !is_array($feedback['nudity'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;
