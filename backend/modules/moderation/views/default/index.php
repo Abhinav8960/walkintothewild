@@ -74,6 +74,10 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             if ($model->type == 2) {
                                 return $model->tags;
                             }
+
+                            if ($model->type == 3) {
+                                return $model->imageDetails;
+                            }
                         },
                     ],
 

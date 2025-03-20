@@ -158,4 +158,11 @@ class Moderation extends \common\models\moderation\ActiveRecord
 
         return implode("<br>", $textDetail);
     }
+
+    public function getImageDetails()
+    {
+        return "getImageDetails";
+
+        
+    }
 }
