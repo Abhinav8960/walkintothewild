@@ -71,7 +71,7 @@ class ImageScam extends ActiveRecord
         $model->media_id = $feedback['media']['id'] ?? null;
         $model->prob = $feedback['scam']['prob'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

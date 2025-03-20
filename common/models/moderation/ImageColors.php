@@ -85,7 +85,7 @@ class ImageColors extends ActiveRecord
         $model->dominant_b = $feedback['colors']['dominant']['b'] ?? null;
         $model->dominant_hex = $feedback['colors']['dominant']['hex'] ?? null;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 
@@ -115,7 +115,7 @@ class ImageColors extends ActiveRecord
                 $other_model->b = $other['b'] ?? null;
                 $other_model->hex = $other['hex'] ?? null;
 
-                if (!$other_model->save()) {
+                if (!$other_model->save(false)) {
                     return false;
                 }
             }

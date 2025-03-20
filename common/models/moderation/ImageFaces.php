@@ -120,7 +120,7 @@ class ImageFaces extends ActiveRecord
             $model->minor = $face['attributes']['minor'] ?? null;
             $model->sunglasses = $face['attributes']['sunglasses'] ?? null;
 
-            if (!$model->save()) {
+            if (!$model->save(false)) {
                 return false;
             }
         }

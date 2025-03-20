@@ -86,7 +86,7 @@ class ImageRecreationalDrug extends ActiveRecord
         $model->cannabis_drug = $feedback['recreational_drug']['classes']['cannabis_drug'] ?? 0;
         $model->recreational_drugs_not_cannabis = $feedback['recreational_drug']['classes']['recreational_drugs_not_cannabis'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

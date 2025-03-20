@@ -112,7 +112,7 @@ class ImageGore extends ActiveRecord
         $model->fake = $feedback['gore']['type']['fake'] ?? 0;
         $model->real = $feedback['gore']['type']['real'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

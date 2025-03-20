@@ -102,7 +102,7 @@ class ImageDestruction extends ActiveRecord
         $model->unsafe_fire = $feedback['destruction']['classes']['unsafe_fire'] ?? 0;
         $model->violent_protest = $feedback['destruction']['classes']['violent_protest'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

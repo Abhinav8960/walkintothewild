@@ -80,7 +80,7 @@ class ImageSelfHarm extends ActiveRecord
         $model->fake = $feedback['self-harm']['type']['fake'] ?? 0;;
         $model->animated = $feedback['self-harm']['type']['animated'] ?? 0;;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

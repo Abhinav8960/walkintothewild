@@ -80,7 +80,7 @@ class ImageViolence extends ActiveRecord
         $model->firearm_threat = $feedback['violence']['classes']['firearm_threat'] ?? 0;;
         $model->combat_sport = $feedback['violence']['classes']['combat_sport'] ?? 0;;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

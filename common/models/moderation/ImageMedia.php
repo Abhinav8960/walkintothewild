@@ -71,7 +71,7 @@ class ImageMedia extends ActiveRecord
         $model->media_id = $feedback['media']['id'] ?? null;
         $model->uri = $feedback['media']['uri'] ?? null; 
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

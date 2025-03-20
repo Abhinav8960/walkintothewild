@@ -77,7 +77,7 @@ class ImageType extends ActiveRecord
             $model->illustration = $feedback['type']['illustration'] ?? 0;
             $model->ai_generated = $feedback['type']['ai_generated'] ?? 0;
             // $model->deepfake = $feedback['type']['deepfake'] ?? 0;
-            if (!$model->save()) {
+            if (!$model->save(false)) {
                 return false;
             }
 

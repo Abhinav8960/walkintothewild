@@ -77,7 +77,7 @@ class ImageMedical extends ActiveRecord
         $model->pills = $feedback['medical']['classes']['pills'] ?? 0;
         $model->paraphernalia = $feedback['medical']['classes']['paraphernalia'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

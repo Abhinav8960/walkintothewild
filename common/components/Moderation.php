@@ -61,8 +61,6 @@ class Moderation extends Component
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
 
-
-
     private $models = [
         'nudity-2.1',
         'weapon',
@@ -286,10 +284,6 @@ class Moderation extends Component
         // echo "<pre>";
         // print_r($feedback);
         // die;
-
-        //  data is not saving in below table
-        //  image_colors_accent,    image_destruction,  image_faces,    image_media,    image_military, image_recreational_drug,    
-        //  image_request,  image_self_harm,    image_tobacco,  image_type, image_violence,   
 
         $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
         $color_saved = ImageColors::colorStore($feedback, $moderationId);

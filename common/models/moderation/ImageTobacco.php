@@ -77,7 +77,7 @@ class ImageTobacco extends ActiveRecord
         $model->regular_tobacco = $feedback['tobacco']['classes']['regular_tobacco'] ?? 0;
         $model->ambiguous_tobacco = $feedback['tobacco']['classes']['ambiguous_tobacco'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

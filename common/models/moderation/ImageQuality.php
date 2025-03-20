@@ -71,7 +71,7 @@ class ImageQuality extends ActiveRecord
         $model->media_id = $feedback['media']['id'] ?? null;
         $model->score = $feedback['quality']['score'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

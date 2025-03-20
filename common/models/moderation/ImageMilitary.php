@@ -81,7 +81,7 @@ class ImageMilitary extends ActiveRecord
         $model->military_personnel = $feedback['military']['classes']['military_personnel'] ?? 0;
         $model->military_profile_photo = $feedback['military']['classes']['military_profile_photo'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

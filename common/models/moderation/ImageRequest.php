@@ -64,9 +64,6 @@ class ImageRequest extends ActiveRecord
         //     return false;
         // }
 
-        // print_r($feedback['request']['id']);
-        // die('requestStore');
-
         $model = new self();
         $model->moderation_id = $moderationId;
         $model->media_id = $feedback['media']['id'] ?? null;
@@ -74,10 +71,26 @@ class ImageRequest extends ActiveRecord
         $model->timestamp = $feedback['request']['timestamp'] ?? null;
         $model->operations = $feedback['request']['operations'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 
         return true;
     }
 }
+
+// try {
+//     $model = new self();
+//     $model->moderation_id = $moderationId;
+//     $model->media_id = $feedback['media']['id'] ?? null;
+//     $model->request_id = $feedback['request']['id'] ?? null;
+//     $model->timestamp = $feedback['request']['timestamp'] ?? null;
+//     $model->operations = $feedback['request']['operations'] ?? 0;
+
+
+//     $model->save(false);
+//     return true;
+// } catch (\Exception $e) {
+//     print_r($e->getMessage());
+//     die(' kkk ');
+// }

@@ -177,7 +177,7 @@ class ImageNudity extends ActiveRecord
         $model->outdoor_other = $context['outdoor_other'] ?? 0;
         $model->indoor_other = $context['indoor_other'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 

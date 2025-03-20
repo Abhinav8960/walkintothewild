@@ -101,7 +101,7 @@ class ImageWeapon extends ActiveRecord
         $model->worn_not_in_hand = $feedback['weapon']['firearm_action']['worn_not_in_hand'] ?? 0;
         $model->not_worn = $feedback['weapon']['firearm_action']['not_worn'] ?? 0;
 
-        if (!$model->save()) {
+        if (!$model->save(false)) {
             return false;
         }
 
