@@ -3,6 +3,7 @@
 namespace backend\modules\moderation\controllers;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\ImageMetadata;
 use common\models\moderation\Moderation;
 use common\models\moderation\VideoAudioMetaData;
 use common\models\moderation\VideoFormat;
@@ -45,6 +46,11 @@ class DefaultController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->video = UploadedFile::getInstance($model, 'video');
+                $model->image = UploadedFile::getInstance($model, 'image');
+
+                $imagePath = $model->image->tempName;
+                $image_info = getimagesize($imagePath);
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->moderation_model->save()) {
@@ -59,9 +65,12 @@ class DefaultController extends Controller
                             Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 3) {
-                            Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
+                            $this->getImageMetadata($model);
+
+                            Yii::$app->moderation->imageFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->image_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         }
+
                         return $this->redirect(['index']);
                     }
                 }
@@ -179,5 +188,39 @@ class DefaultController extends Controller
             }
         }
         return null;
+    }
+
+    public function getImageMetadata($model)
+    {
+        $image_meta_data_model = new ImageMetadata();
+        $image_meta_data_model->moderation_id = $model->moderation_model->id;
+        $image_meta_data_model->size = round($model->image->size / 1024, 2); // Convert size to KB
+
+        $imagePath = $model->image->tempName;
+        $image_info = getimagesize($imagePath);
+
+        if ($image_info) {
+            $image_meta_data_model->width = $image_info[0];
+            $image_meta_data_model->height = $image_info[1];
+        }
+
+        $image_meta_data_model->extension = pathinfo($model->image->name, PATHINFO_EXTENSION);
+
+        $exif = @exif_read_data($imagePath);
+        if ($exif && isset($exif['XResolution']) && isset($exif['YResolution'])) {
+            $image_meta_data_model->resolution = ($exif['XResolution'] ?? 0) . ' x ' . ($exif['YResolution'] ?? 0);
+        } else {
+            $image_meta_data_model->resolution = 'unknown';
+        }
+
+        if ($exif && isset($exif['Orientation'])) {
+            $image_meta_data_model->orientation = $exif['Orientation'];
+        } else {
+            $image_meta_data_model->orientation = 'unknown';
+        }
+
+        $image_meta_data_model->uploaded_at = date('Y-m-d H:i:s');
+
+        $image_meta_data_model->save(false);
     }
 }

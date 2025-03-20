@@ -27,6 +27,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
             [['text'], 'string'],
             [['video_url', 'image_url', 'etag'], 'string', 'max' => 512],
             [['video'], 'string', 'max' => 512],
+            [['image'], 'string', 'max' => 512],
         ];
     }
 
@@ -40,6 +41,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
             'type' => 'Type',
             'video_url' => 'Video Url',
             'image_url' => 'Image Url',
+            'image' => 'Image',
             'text' => 'Text',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

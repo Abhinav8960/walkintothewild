@@ -20,6 +20,7 @@ class ModerationForm extends Model
     public $text;
     public $type;
     public $video;
+    public $image;
 
 
     public function __construct(Moderation $moderation_model = null)
@@ -50,11 +51,7 @@ class ModerationForm extends Model
             }, 'whenClient' => "function (attribute, value) {
                return $('#" . $this->formName() . "-type').val() == 1;
             }"],
-            ['image_url', 'required', 'when' => function ($model) {
-                return $model->type == 3;
-            }, 'whenClient' => "function (attribute, value) {
-                return $('#" . $this->formName() . "-type').val() == 3;
-            }"],
+            
             /**Video Validation */
             [
                 ['video'],
@@ -65,6 +62,16 @@ class ModerationForm extends Model
                 return $model->type == 2;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#" . $this->formName() . "-type').val() == 2;
+            }"],
+            [
+                ['image'],
+                'file',
+                'extensions' => ['jpg', 'jpeg', 'png'],
+            ],
+            ['image', 'required', 'when' => function ($model) {
+                return $model->type == 3;
+            }, 'whenClient' => "function (attribute, value) {
+                return $('#" . $this->formName() . "-type').val() == 3;
             }"],
         ];
     }
@@ -78,6 +85,7 @@ class ModerationForm extends Model
             'type' => 'Type',
             'video_url' => 'Video Url',
             'image_url' => 'Image Url',
+            'image' => 'Image',
             'text' => 'Text',
         ];
     }
@@ -113,5 +121,24 @@ class ModerationForm extends Model
                 }
             }
         }
+
+        if ($this->image) {
+           
+            $storagePath = 'moderation';
+            $moderationPath = $storagePath . '/' . $this->moderation_model->id . '/media';
+
+            $fileName = $this->moderation_model->id . '_image_' . time() . '.' . $this->image->extension;
+            $filePath = $moderationPath . '/' . $fileName;
+
+            if ($fileName) {
+                if ($etag =  FsHelper::saveUploadedFile($this->image, $filePath, $fileName, true)) {
+                    $this->moderation_model->image = $fileName;
+                    $this->moderation_model->image_url = $filePath;
+                    $this->moderation_model->etag = $etag;
+                    $this->moderation_model->save(false);
+                }
+            }
+        }
+        
     }
 }
