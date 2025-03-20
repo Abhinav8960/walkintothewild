@@ -246,7 +246,7 @@ class DefaultController extends SafariController
 
     public function actionUnjoin($slug)
     {
-        $share_safari = $this->sharesafari;
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
             if ($share_safari_intrested) {
@@ -276,7 +276,7 @@ class DefaultController extends SafariController
     public function actionWishlist($slug)
     {
 
-        $share_safari = $this->sharesafari;
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
             if (!$wishlist) {
@@ -297,7 +297,7 @@ class DefaultController extends SafariController
 
     public function actionUnwishlist($slug)
     {
-        $share_safari = $this->sharesafari;
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
             if ($wishlist) {
