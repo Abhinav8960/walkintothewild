@@ -2,6 +2,7 @@
 
 namespace common\models\moderation\form;
 
+use common\Helper\FsHelper;
 use common\models\moderation\Moderation;
 use Yii;
 use yii\base\Model;
@@ -18,6 +19,7 @@ class ModerationForm extends Model
     public $image_url;
     public $text;
     public $type;
+    public $video;
 
 
     public function __construct(Moderation $moderation_model = null)
@@ -43,12 +45,6 @@ class ModerationForm extends Model
             [['type'], 'integer'],
             [['text'], 'string'],
             [['video_url', 'image_url'], 'string', 'max' => 512],
-           
-            ['video_url', 'required', 'when' => function ($model) {
-                return $model->type == 2;
-            }, 'whenClient' => "function (attribute, value) {
-                return $('#" . $this->formName() . "-type').val() == 2;
-            }"],
             ['text', 'required', 'when' => function ($model) {
                 return $model->type == 1;
             }, 'whenClient' => "function (attribute, value) {
@@ -58,6 +54,17 @@ class ModerationForm extends Model
                 return $model->type == 3;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#" . $this->formName() . "-type').val() == 3;
+            }"],
+            /**Video Validation */
+            [
+                ['video'],
+                'file',
+                'extensions' => ['mp4', 'avi', 'mkv', 'webm'],
+            ],
+            ['video', 'required', 'when' => function ($model) {
+                return $model->type == 2;
+            }, 'whenClient' => "function (attribute, value) {
+                return $('#" . $this->formName() . "-type').val() == 2;
             }"],
         ];
     }
@@ -86,5 +93,25 @@ class ModerationForm extends Model
         $this->moderation_model->image_url = $this->image_url;
         $this->moderation_model->text = $this->text;
         $this->moderation_model->type = $this->type;
+    }
+
+    public function uploadFile()
+    {
+        if ($this->video) {
+            $storagePath = 'moderation';
+            $moderationPath = $storagePath . '/' . $this->moderation_model->id . '/media';
+
+            $fileName = $this->moderation_model->id . '_video_' . time() . '.' . $this->video->extension;
+            $filePath = $moderationPath . '/' . $fileName;
+
+            if ($fileName) {
+                if ($etag =  FsHelper::saveUploadedFile($this->video, $filePath, $fileName, true)) {
+                    $this->moderation_model->video = $fileName;
+                    $this->moderation_model->video_url = $filePath;
+                    $this->moderation_model->etag = $etag;
+                    $this->moderation_model->save(false);
+                }
+            }
+        }
     }
 }

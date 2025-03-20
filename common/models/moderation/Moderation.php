@@ -25,7 +25,8 @@ class Moderation extends \common\models\moderation\ActiveRecord
             [['type'], 'required'],
             [['type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['text'], 'string'],
-            [['video_url', 'image_url'], 'string', 'max' => 512],
+            [['video_url', 'image_url', 'etag'], 'string', 'max' => 512],
+            [['video'], 'string', 'max' => 512],
         ];
     }
 

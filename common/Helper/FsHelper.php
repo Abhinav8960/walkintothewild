@@ -5,6 +5,7 @@ namespace common\Helper;
 // use common\models\Image;
 
 use common\models\UserPosts;
+use Moderation;
 use yii\web\UploadedFile;
 
 class FsHelper
@@ -163,6 +164,17 @@ class FsHelper
 
         // $filemodel->filepath = $fullpath . '/' . $filename;
         // $filemodel->save(false);
+        $etag =  FsHelper::saveUploadedFile($file,  $filename, true);
+        return  $filemodel->file;
+        return false;
+    }
+
+    public static function ModerationFile($file, $fullpath, $name, $caption = NULL,  $owner_id = NULL,)
+    {
+        $filename = $name;
+        $filemodel = new Moderation();
+        $extension = $file->extension;
+        $filemodel->video = !empty($name) ? $name : $filename;
         $etag =  FsHelper::saveUploadedFile($file,  $filename, true);
         return  $filemodel->file;
         return false;

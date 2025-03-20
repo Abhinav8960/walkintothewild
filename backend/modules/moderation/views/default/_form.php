@@ -32,10 +32,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-6 field-video">
-                <?= $form->field($model, 'video_url')->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Video Url',
-                ]) ?>
+                <?= $form->field($model, 'video')->fileInput()->label('Video') ?>
             </div>
 
             <div class="col-md-6 field-image">
