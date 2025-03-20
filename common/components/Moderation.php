@@ -64,8 +64,6 @@ class Moderation extends Component
     // private $sightEngineUserId = "101632135"; // Anurag
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    private $sightEngineUserId = "635987644"; // Kamal New
-    private $sightEnginesecretId = "XLnfEEohEagNUo6hUCGqfXL8ncmuQ5Lw"; // Kamal New
 
     private $models = [
         'nudity-2.1',
