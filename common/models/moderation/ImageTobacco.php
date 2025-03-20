@@ -66,9 +66,9 @@ class ImageTobacco extends ActiveRecord
 
     public static function tobaccoStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['tobacco']) || !is_array($feedback['tobacco'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['tobacco']) || !is_array($feedback['tobacco'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

@@ -72,9 +72,9 @@ class ImageOffensive extends ActiveRecord
 
     public static function offensiveStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['offensive']) || !is_array($feedback['offensive'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['offensive']) || !is_array($feedback['offensive'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

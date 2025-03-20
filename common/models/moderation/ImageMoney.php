@@ -62,9 +62,9 @@ class ImageMoney extends ActiveRecord
 
     public static function moneyStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['money']) || !is_array($feedback['money'])) { 
-        //     return false;
-        // }
+        if (!isset($feedback['money']) || !is_array($feedback['money'])) { 
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

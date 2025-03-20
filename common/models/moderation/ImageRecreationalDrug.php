@@ -72,9 +72,9 @@ class ImageRecreationalDrug extends ActiveRecord
 
     public static function recreationalDrugStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['$recreational_drug']) || !is_array($feedback['$recreational_drug'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['$recreational_drug']) || !is_array($feedback['$recreational_drug'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

@@ -92,9 +92,9 @@ class ImageFaces extends ActiveRecord
 
     public static function facesStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['faces']) || !is_array($feedback['faces'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['faces']) || !is_array($feedback['faces'])) {
+            return false;
+        }
 
         foreach ($feedback['faces'] as $face) {
             $model = new self();

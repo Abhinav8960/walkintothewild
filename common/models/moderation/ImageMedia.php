@@ -62,9 +62,9 @@ class ImageMedia extends ActiveRecord
 
     public static function mediaStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['media']) || !is_array($feedback['media'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['media']) || !is_array($feedback['media'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

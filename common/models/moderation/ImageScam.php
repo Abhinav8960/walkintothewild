@@ -62,9 +62,9 @@ class ImageScam extends ActiveRecord
 
     public static function scamStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['scam']) || !is_array($feedback['scam'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['scam']) || !is_array($feedback['scam'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;

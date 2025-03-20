@@ -82,9 +82,9 @@ class ImageDestruction extends ActiveRecord
 
     public static function destructionStore($feedback, $moderationId)
     {
-        // if (!isset($feedback['destruction']) || !is_array($feedback['destruction'])) {
-        //     return false;
-        // }
+        if (!isset($feedback['destruction']) || !is_array($feedback['destruction'])) {
+            return false;
+        }
 
         $model = new self();
         $model->moderation_id = $moderationId;
