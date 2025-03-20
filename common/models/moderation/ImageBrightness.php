@@ -63,12 +63,6 @@ class ImageBrightness extends ActiveRecord
 
     public static function brightnessStore($feedback, $moderationId)
     {
-        // echo "<pre>";
-        // print_r([$feedback['brightness'], $feedback]);
-        // print_r($feedback);
-
-        // die;
-
         if (!isset($feedback['brightness'])) {
             return false;
         }
