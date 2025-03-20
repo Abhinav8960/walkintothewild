@@ -269,10 +269,11 @@ class Moderation extends Component
         $military_saved = VideoMilitary::militarystore($fb, $id);
         // $audio_saved = VideoAudio::audiostore($fb, $id);
         $text_saved = VideoText::textstore($fb, $id);
+        $face_saved = VideoFace::facestore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved
+            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved
         ) {
             echo "Stored Successfully";
         } else {
