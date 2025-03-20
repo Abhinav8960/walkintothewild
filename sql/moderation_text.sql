@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2025 at 05:12 PM
+-- Generation Time: Mar 20, 2025 at 06:00 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.20
 
@@ -53,6 +53,7 @@ CREATE TABLE `moderation_text` (
 DROP TABLE IF EXISTS `moderation_text_personal`;
 CREATE TABLE `moderation_text_personal` (
   `id` int NOT NULL,
+  `moderation_id` int DEFAULT NULL,
   `moderation_text_id` int NOT NULL,
   `is_personal` int NOT NULL DEFAULT '0',
   `is_link` int NOT NULL DEFAULT '0',
