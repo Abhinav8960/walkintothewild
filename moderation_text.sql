@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 18, 2025 at 05:30 PM
+-- Generation Time: Mar 20, 2025 at 10:58 AM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.20
 
@@ -24,10 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `moderation`
+--
+
+CREATE TABLE `moderation` (
+  `id` int NOT NULL,
+  `type` int NOT NULL,
+  `video_url` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `image_url` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `created_at` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `moderation_text`
 --
 
-DROP TABLE IF EXISTS `moderation_text`;
 CREATE TABLE `moderation_text` (
   `id` int NOT NULL,
   `moderation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -44,9 +61,34 @@ CREATE TABLE `moderation_text` (
   `link` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `moderation_text_personal`
+--
+
+CREATE TABLE `moderation_text_personal` (
+  `id` int NOT NULL,
+  `moderation_text_id` int NOT NULL,
+  `is_personal` int NOT NULL DEFAULT '0',
+  `is_link` int NOT NULL DEFAULT '0',
+  `type` varchar(255) NOT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `match` varchar(255) DEFAULT NULL,
+  `start` varchar(255) DEFAULT NULL,
+  `end` varchar(255) DEFAULT NULL,
+  `sequnce` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `moderation`
+--
+ALTER TABLE `moderation`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `moderation_text`
@@ -55,13 +97,31 @@ ALTER TABLE `moderation_text`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `moderation_text_personal`
+--
+ALTER TABLE `moderation_text_personal`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `moderation`
+--
+ALTER TABLE `moderation`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `moderation_text`
 --
 ALTER TABLE `moderation_text`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `moderation_text_personal`
+--
+ALTER TABLE `moderation_text_personal`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
