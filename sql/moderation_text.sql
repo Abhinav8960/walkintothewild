@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2025 at 10:58 AM
+-- Generation Time: Mar 20, 2025 at 05:12 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.20
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `moderation_text`
 --
 
+DROP TABLE IF EXISTS `moderation_text`;
 CREATE TABLE `moderation_text` (
   `id` int NOT NULL,
   `moderation_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -49,6 +50,7 @@ CREATE TABLE `moderation_text` (
 -- Table structure for table `moderation_text_personal`
 --
 
+DROP TABLE IF EXISTS `moderation_text_personal`;
 CREATE TABLE `moderation_text_personal` (
   `id` int NOT NULL,
   `moderation_text_id` int NOT NULL,
@@ -65,6 +67,7 @@ CREATE TABLE `moderation_text_personal` (
 --
 -- Indexes for dumped tables
 --
+
 --
 -- Indexes for table `moderation_text`
 --
@@ -80,7 +83,6 @@ ALTER TABLE `moderation_text_personal`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
 
 --
 -- AUTO_INCREMENT for table `moderation_text`
