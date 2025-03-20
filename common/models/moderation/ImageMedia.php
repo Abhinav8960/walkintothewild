@@ -16,6 +16,7 @@ use Yii;
 class ImageMedia extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['media_id', 'uri'];
 
     /**
      * {@inheritdoc}

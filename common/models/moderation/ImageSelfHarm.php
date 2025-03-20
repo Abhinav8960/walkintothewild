@@ -19,6 +19,7 @@ use Yii;
 class ImageSelfHarm extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob', 'real', 'fake', 'animated'];
 
     /**
      * {@inheritdoc}

@@ -18,6 +18,8 @@ use Yii;
 class ImageType extends ActiveRecord
 {
 
+    // public static $accessible_attributes = ['illustration', 'photo', 'ai_generated', 'deepfake'];
+    public static $accessible_attributes = ['illustration', 'photo', 'ai_generated'];
 
     /**
      * {@inheritdoc}
@@ -70,16 +72,16 @@ class ImageType extends ActiveRecord
             return false;
         }
 
-            $model = new self();
-            $model->moderation_id = $moderationId;
-            $model->media_id = $feedback['media']['id'] ?? null;
-            $model->photo = $feedback['type']['photo'] ?? 0;
-            $model->illustration = $feedback['type']['illustration'] ?? 0;
-            $model->ai_generated = $feedback['type']['ai_generated'] ?? 0;
-            // $model->deepfake = $feedback['type']['deepfake'] ?? 0;
-            if (!$model->save(false)) {
-                return false;
-            }
+        $model = new self();
+        $model->moderation_id = $moderationId;
+        $model->media_id = $feedback['media']['id'] ?? null;
+        $model->photo = $feedback['type']['photo'] ?? 0;
+        $model->illustration = $feedback['type']['illustration'] ?? 0;
+        $model->ai_generated = $feedback['type']['ai_generated'] ?? 0;
+        // $model->deepfake = $feedback['type']['deepfake'] ?? 0;
+        if (!$model->save(false)) {
+            return false;
+        }
 
         return true;
     }

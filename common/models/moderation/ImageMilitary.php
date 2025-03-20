@@ -19,6 +19,7 @@ use Yii;
 class ImageMilitary extends ActiveRecord
 {
 
+    public static $accessible_attributes = [ 'prob', 'military_equipment', 'military_personnel', 'military_profile_photo'];
 
     /**
      * {@inheritdoc}

@@ -16,6 +16,7 @@ use Yii;
 class ImageMoney extends ActiveRecord
 {
 
+    public static $accessible_attributes = [ 'prob'];
 
     /**
      * {@inheritdoc}

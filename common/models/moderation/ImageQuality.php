@@ -16,6 +16,7 @@ use Yii;
 class ImageQuality extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['score'];
 
     /**
      * {@inheritdoc}

@@ -21,6 +21,7 @@ use Yii;
 class ImageOffensive extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['nazi', 'asian_swastika', 'confederate', 'supremacist', 'terrorist', 'middle_finger'];
 
     /**
      * {@inheritdoc}
@@ -85,7 +86,7 @@ class ImageOffensive extends ActiveRecord
         $model->supremacist = $feedback['offensive']['supremacist'] ?? 0;
         $model->terrorist = $feedback['offensive']['terrorist'] ?? 0;
         $model->middle_finger = $feedback['offensive']['middle_finger'] ?? 0;
-        
+
         if (!$model->save(false)) {
             return false;
         }
