@@ -26,6 +26,7 @@ use Yii;
 class ImageDestruction extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob', 'building_major_damage', 'building_minor_damage', 'building_on_fire', 'building_burned', 'vehicle_major_damage', 'vehicle_minor_damage', 'vehicle_on_fire', 'vehicle_burned', 'wildfire', 'unsafe_fire', 'violent_protest'];
 
     /**
      * {@inheritdoc}

@@ -158,4 +158,64 @@ class Moderation extends \common\models\moderation\ActiveRecord
 
         return implode("<br>", $textDetail);
     }
+
+    public function getImageDetails()
+    {
+        // return "getImageDetails";
+
+        $moderation_models = [
+            ['class' => 'common\models\moderation\ImageAlcohol', 'title' => 'Alcohol'],
+            // ['class' => 'common\models\moderation\ImageColors', 'title' => 'Color'],
+            // ['class' => 'common\models\moderation\ImageColorOther', 'title' => 'Color Others'],
+            ['class' => 'common\models\moderation\ImageDestruction', 'title' => 'Destruction'],
+            // ['class' => 'common\models\moderation\ImageFaces', 'title' => 'Faces'],
+            ['class' => 'common\models\moderation\ImageGambling', 'title' => 'Gambling'],
+            // ['class' => 'common\models\moderation\ImageGore', 'title' => 'Gore'],
+            // ['class' => 'common\models\moderation\ImageMedia', 'title' => 'Media'],
+            ['class' => 'common\models\moderation\ImageMoney', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\ImageMedical', 'title' => 'Medical'],
+            ['class' => 'common\models\moderation\ImageMilitary', 'title' => 'Military'],
+            ['class' => 'common\models\moderation\ImageMoney', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\ImageNudity', 'title' => 'Nudity'],
+            ['class' => 'common\models\moderation\ImageOffensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\ImageQuality', 'title' => 'Image Quality'],
+            // ['class' => 'common\models\moderation\ImageRecreationalDrug', 'title' => 'Drug'],
+            // ['class' => 'common\models\moderation\ImageeRequest', 'title' => 'Image Request'],
+            ['class' => 'common\models\moderation\ImageScam', 'title' => 'Scam'],
+            ['class' => 'common\models\moderation\ImageSelfHarm', 'title' => 'Self Harm'],
+            ['class' => 'common\models\moderation\ImageTobacco', 'title' => 'Tobacco'],
+            ['class' => 'common\models\moderation\ImageType', 'title' => 'Type'],
+            ['class' => 'common\models\moderation\ImageViolence', 'title' => 'Violence'],
+            ['class' => 'common\models\moderation\ImageWeapon', 'title' => 'Weapon'],
+        ];
+        $str = "";
+        if ($this->type == 3) {
+            foreach ($moderation_models as $imgModeration) {
+                $class_name = $imgModeration['class'];
+                $attributes = $class_name::$accessible_attributes;
+                $selectExpressions = [];
+                foreach ($attributes as $attribute) {
+                    $selectExpressions[] = new \yii\db\Expression("MAX(`{$attribute}`) AS `{$attribute}`");
+                }
+                
+                $maxValues = $class_name::find()
+                    ->select($selectExpressions)
+                    ->where(['moderation_id' => $this->id])
+                    ->asArray()
+                    ->one();
+                $sub_str = "";
+                if (!empty($maxValues)) {
+                    $sub_str .= "<h3>" . $imgModeration['title'] . "</h3>";
+                    foreach ($maxValues as $attribute => $value) {
+                        $percentage_val = $value * 100;
+                        $label = ucfirst(str_replace('_', ' ', $attribute));
+                        $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
+                            . $label . " :" . "" . $percentage_val .  "<span>&#37;</span></span>";
+                    }
+                }
+                $str .= $sub_str;
+            }
+        }
+        return $str;
+    }
 }

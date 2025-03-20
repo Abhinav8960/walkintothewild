@@ -19,6 +19,7 @@ use Yii;
 class ImageViolence extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob', 'physical_violence', 'firearm_threat', 'combat_sport'];
 
     /**
      * {@inheritdoc}

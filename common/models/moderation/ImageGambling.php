@@ -16,6 +16,7 @@ use Yii;
 class ImageGambling extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob'];
 
     /**
      * {@inheritdoc}

@@ -31,6 +31,7 @@ use Yii;
 class ImageFaces extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['x1', 'y1', 'x2', 'y2', 'feature_left_eye_x', 'feature_left_eye_y', 'feature_right_eye_x', 'feature_right_eye_y', 'feature_nose_tip_x', 'feature_nose_tip_y', 'feature_left_mouth_corner_x', 'feature_left_mouth_corner_y', 'feature_right_mouth_corner_x', 'feature_right_mouth_corner_y', 'minor', 'sunglasses'];
 
     /**
      * {@inheritdoc}

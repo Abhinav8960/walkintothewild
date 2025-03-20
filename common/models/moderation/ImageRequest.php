@@ -17,6 +17,8 @@ use Yii;
 class ImageRequest extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['request_id', 'timestamp', 'operations'];
+
     /**
      * {@inheritdoc}
      */

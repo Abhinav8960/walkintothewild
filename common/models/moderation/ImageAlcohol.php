@@ -16,6 +16,8 @@ use Yii;
 class ImageAlcohol extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob'];
+
     /**
      * {@inheritdoc}
      */

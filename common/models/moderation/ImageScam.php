@@ -16,6 +16,7 @@ use Yii;
 class ImageScam extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['prob'];
 
     /**
      * {@inheritdoc}

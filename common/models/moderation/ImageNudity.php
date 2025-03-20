@@ -49,6 +49,7 @@ use Yii;
 class ImageNudity extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['sexual_activity', 'sexual_display', 'erotica', 'very_suggestive', 'suggestive', 'mildly_suggestive', 'bikini', 'cleavage', 'lingerie', 'male_chest', 'male_underwear', 'miniskirt', 'other', 'minishort', 'nudity_art', 'schematic', 'sextoy', 'suggestive_focus', 'suggestive_pose', 'swimwear_male', 'swimwear_one_piece', 'visibly_undressed', 'none', 'sea_lake_pool', 'outdoor_other', 'indoor_other', 'cleavage_very_revealing', 'cleavage_revealing', 'cleavage_none', 'male_chest_very_revealing', 'male_chest_revealing', 'male_chest_slightly_revealing', 'male_chest_none'];
 
     /**
      * {@inheritdoc}

@@ -20,6 +20,7 @@ use Yii;
 class ImageColorsOther extends ActiveRecord
 {
 
+    public static $accessible_attributes = ['r', 'g', 'b', 'hex'];
 
     /**
      * {@inheritdoc}

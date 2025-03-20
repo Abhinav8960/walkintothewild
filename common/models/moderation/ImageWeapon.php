@@ -26,6 +26,7 @@ use Yii;
 class ImageWeapon extends ActiveRecord
 {
 
+    public static $accessible_attributes = [  'firearm', 'firearm_gesture', 'firearm_toy', 'knife', 'animated', 'aiming_threat', 'aiming_camera', 'aiming_safe', 'in_hand_not_aiming', 'worn_not_in_hand', 'not_worn'];
 
     /**
      * {@inheritdoc}
