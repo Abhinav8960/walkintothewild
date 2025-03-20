@@ -247,29 +247,30 @@ class DefaultController extends SafariController
     public function actionUnjoin($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        if ($share_safari) {
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-            if ($share_safari_intrested) {
-                $agent = new \Jenssegers\Agent\Agent();
-                $agent->setUserAgent(Yii::$app->request->userAgent);
-                $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
-                $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
-                $share_safari_intrested->user_device  = $agent->device();
-                $share_safari_intrested->user_platform = $agent->platform();
-                $share_safari_intrested->user_browser = $agent->browser();
-                $share_safari_intrested->park_id = $share_safari->park_id;
-                $share_safari_intrested->share_safari_id = $share_safari->id;
-                $share_safari_intrested->user_id = $this->userinfoId;
-                $share_safari_intrested->status = 0; //UNfollow
-                $share_safari_intrested->unintrested_at = time();
-                if ($share_safari_intrested->save(false)) {
-                    FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
-                    return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
-                }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
-            }
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
-        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+
+        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+        if ($share_safari_intrested) {
+            $agent = new \Jenssegers\Agent\Agent();
+            $agent->setUserAgent(Yii::$app->request->userAgent);
+            $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
+            $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
+            $share_safari_intrested->user_device  = $agent->device();
+            $share_safari_intrested->user_platform = $agent->platform();
+            $share_safari_intrested->user_browser = $agent->browser();
+            $share_safari_intrested->park_id = $share_safari->park_id;
+            $share_safari_intrested->share_safari_id = $share_safari->id;
+            $share_safari_intrested->user_id = $this->userinfoId;
+            $share_safari_intrested->status = 0; //UNfollow
+            $share_safari_intrested->unintrested_at = time();
+            if ($share_safari_intrested->save(false)) {
+                FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
+                return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
+        }
     }
 
 
@@ -277,38 +278,39 @@ class DefaultController extends SafariController
     {
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        if ($share_safari) {
-            $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
-            if (!$wishlist) {
-                $wishlist = new UserWishlist();
-            }
-            $wishlist->user_id = $this->userinfoId;
-            $wishlist->item_id = $share_safari->id;
-            $wishlist->item_type_id = UserWishlist::SHARED_SAFARI;
-            $wishlist->item_type = 'share-safari';
-            $wishlist->status = 1;
-            if ($wishlist->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You added share safari to wishlist!"]);
-            }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added share safari to wishlist!"]);
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
-        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
+        if (!$wishlist) {
+            $wishlist = new UserWishlist();
+        }
+        $wishlist->user_id = $this->userinfoId;
+        $wishlist->item_id = $share_safari->id;
+        $wishlist->item_type_id = UserWishlist::SHARED_SAFARI;
+        $wishlist->item_type = 'share-safari';
+        $wishlist->status = 1;
+        if ($wishlist->save(false)) {
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You added share safari to wishlist!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added share safari to wishlist!"]);
     }
 
     public function actionUnwishlist($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        if ($share_safari) {
-            $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
-            if ($wishlist) {
-                $wishlist->status = 0;
-                if ($wishlist->save(false)) {
-                    return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You removed share safari from wishlist!"]);
-                }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not removed share safari from wishlist!"]);
-            }
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
-        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+
+        $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
+        if ($wishlist) {
+            $wishlist->status = 0;
+            if ($wishlist->save(false)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You removed share safari from wishlist!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not removed share safari from wishlist!"]);
+        }
     }
 
 
