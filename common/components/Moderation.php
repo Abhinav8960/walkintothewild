@@ -3,6 +3,27 @@
 namespace common\components;
 
 use common\models\moderation\form\ModerationForm;
+use common\models\moderation\ImageAlcohol;
+use common\models\moderation\ImageColors;
+use common\models\moderation\ImageDestruction;
+use common\models\moderation\ImageFaces;
+use common\models\moderation\ImageGambling;
+use common\models\moderation\ImageGore;
+use common\models\moderation\ImageMedia;
+use common\models\moderation\ImageMedical;
+use common\models\moderation\ImageMilitary;
+use common\models\moderation\ImageMoney;
+use common\models\moderation\ImageNudity;
+use common\models\moderation\ImageOffensive;
+use common\models\moderation\ImageQuality;
+use common\models\moderation\ImageRecreationalDrug;
+use common\models\moderation\ImageRequest;
+use common\models\moderation\ImageScam;
+use common\models\moderation\ImageSelfHarm;
+use common\models\moderation\ImageTobacco;
+use common\models\moderation\ImageType;
+use common\models\moderation\ImageViolence;
+use common\models\moderation\ImageWeapon;
 use common\models\moderation\ModerationText;
 use common\models\moderation\ModerationTextPersonal;
 use common\models\moderation\VideoAlcohol;
@@ -36,14 +57,8 @@ use yii\base\Component;
 class Moderation extends Component
 {
     public $fileUrl;
-    private $sightEngineUserId = "101632135"; // Anurag
-    private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
-
-    // private $sightEngineUserId = "1054537867"; // Kamal
-    // private $sightEnginesecretId = "HpudaFDnhw8Ki3Ja7yxSPMHXFceWvbP3"; // Kamal
-
-    // public $imageUrl = "https://manage.spidernet.in/images/spiderlogo.png";
-
+    // private $sightEngineUserId = "101632135"; // Anurag
+    // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
 
     private $models = [
@@ -76,7 +91,7 @@ class Moderation extends Component
 
 
 
-    public function imageFeedback($url)
+    public function imageFeedback($url, $moderationId)
     {
         $params = array(
             'url' =>  $url,
@@ -91,7 +106,7 @@ class Moderation extends Component
         $response = curl_exec($ch);
         curl_close($ch);
         $output = json_decode($response, true);
-        $this->actionStoreImageFeedback($output);
+        $this->actionStoreImageFeedback($output, $moderationId);
         return $output;
     }
 
@@ -153,13 +168,13 @@ class Moderation extends Component
         // }
         $this->actionVideoStore($feedback, $id);
     }
-    public function actionStoreImageFeedback($feedback)
+    public function actionStoreImageFeedback($feedback, $moderationId)
     {
         // if ($feedback == NULL) {
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
         // }
-        $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE);
+        $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE, $moderationId);
     }
     public function actionStoreTextFeedback($feedback, $moderationId)
     {
@@ -264,8 +279,43 @@ class Moderation extends Component
         }
     }
 
-    private function actionStoreImage($feedback, $moderation_type)
+    private function actionStoreImage($feedback, $moderation_type, $moderationId)
     {
-        die('actionStoreImage');
+        // echo "<pre>";
+        // print_r($feedback);
+        // die;
+
+        $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
+        $color_saved = ImageColors::colorStore($feedback, $moderationId);
+        $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
+        $face_saved = ImageFaces::facesStore($feedback, $moderationId);
+        $gambling_saved = ImageGambling::gamblingStore($feedback, $moderationId);
+        $gore_saved = ImageGore::goreStore($feedback, $moderationId);
+        $media_saved = ImageMedia::mediaStore($feedback, $moderationId);
+        $medical_saved = ImageMedical::medicalStore($feedback, $moderationId);
+        $military_saved = ImageMilitary::militaryStore($feedback, $moderationId);
+        $money_saved = ImageMoney::moneyStore($feedback, $moderationId);
+        $nudity_saved = ImageNudity::nudityStore($feedback, $moderationId);
+        $offensive_saved = ImageOffensive::offensiveStore($feedback, $moderationId);
+        $quality_saved = ImageQuality::qualityStore($feedback, $moderationId);
+        $recreational_saved = ImageRecreationalDrug::recreationalDrugStore($feedback, $moderationId);
+        $request_saved = ImageRequest::requestStore($feedback, $moderationId);
+        $scam_saved = ImageScam::scamStore($feedback, $moderationId);
+        $self_harm_saved = ImageSelfHarm::selfHarmStore($feedback, $moderationId);
+        $tobacco_saved = ImageTobacco::tobaccoStore($feedback, $moderationId);
+        $type_saved = ImageType::typeStore($feedback, $moderationId);
+        $violence_saved = ImageViolence::voilenceStore($feedback, $moderationId);
+        $weapon_saved = ImageWeapon::weaponStore($feedback, $moderationId);
+
+        if (
+            $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
+            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $recreational_saved && $medical_saved
+            && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved
+            && $military_saved && $media_saved
+        ) {
+            echo "Image Data Stored Successfully";
+        } else {
+            exit("Error: Failed to store data");
+        }
     }
 }
