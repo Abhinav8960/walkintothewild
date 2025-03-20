@@ -283,9 +283,6 @@ class Moderation extends Component
 
     private function actionStoreImage($feedback, $moderation_type, $moderationId)
     {
-        print_r($feedback);
-        die;
-
         $alcohol_saved = ImageAlcohol::alcoholStore($feedback, $moderationId);
         $color_saved = ImageColors::colorStore($feedback, $moderationId);
         $destruction_saved = ImageDestruction::destructionStore($feedback, $moderationId);
@@ -299,7 +296,7 @@ class Moderation extends Component
         $nudity_saved = ImageNudity::nudityStore($feedback, $moderationId);
         $offensive_saved = ImageOffensive::offensiveStore($feedback, $moderationId);
         $quality_saved = ImageQuality::qualityStore($feedback, $moderationId);
-        $recreational_saved = ImageRecreationalDrug::recreationalDrugStore($feedback, $moderationId);
+        // $recreational_saved = ImageRecreationalDrug::recreationalDrugStore($feedback, $moderationId);
         $request_saved = ImageRequest::requestStore($feedback, $moderationId);
         $scam_saved = ImageScam::scamStore($feedback, $moderationId);
         $self_harm_saved = ImageSelfHarm::selfHarmStore($feedback, $moderationId);
@@ -310,7 +307,7 @@ class Moderation extends Component
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $face_saved && $scam_saved
-            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $recreational_saved && $medical_saved
+            && $tobacco_saved && $request_saved && $quality_saved && $violence_saved && $medical_saved
             && $alcohol_saved && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved
             && $military_saved && $media_saved
         ) {

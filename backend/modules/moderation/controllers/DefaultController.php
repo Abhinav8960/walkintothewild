@@ -65,37 +65,9 @@ class DefaultController extends Controller
                             Yii::$app->moderation->videoFeedback($model->moderation_model->video_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 3) {
-                            $image_meta_data_model = new ImageMetadata();
-                            $image_meta_data_model->moderation_id = $model->moderation_model->id;
-                            $image_meta_data_model->size = round($model->image->size / 1024, 2);     // Size in kb
+                            $this->getImageMetadata($model);
 
-                            $imagePath = $model->image->tempName;
-                            $image_info = getimagesize($imagePath);
-
-                            if ($image_info) {
-                                $image_meta_data_model->width = $image_info[0];
-                                $image_meta_data_model->height = $image_info[1];
-                            }
-
-                            $image_meta_data_model->extension = pathinfo($model->image->name, PATHINFO_EXTENSION);
-
-                            $exif = @exif_read_data($imagePath);
-                            if ($exif && isset($exif['XResolution']) && isset($exif['YResolution'])) {
-                                $image_meta_data_model->resolution = ($exif['XResolution'] ?? 0) . 'x' . ($exif['YResolution'] ?? 0);
-                            } else {
-                                $image_meta_data_model->resolution = 'unknown';
-                            }
-
-                            if ($exif && isset($exif['Orientation'])) {
-                                $image_meta_data_model->orientation = $exif['Orientation'];
-                            } else {
-                                $image_meta_data_model->orientation = 'unknown';
-                            }
-                            $image_meta_data_model->uploaded_at = date('Y-m-d H:i:s');
-
-                            $image_meta_data_model->save(false);
-
-                            Yii::$app->moderation->imageFeedback($model->moderation_model->image_url, $model->moderation_model->id);
+                            Yii::$app->moderation->imageFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->image_url, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         }
 
@@ -216,5 +188,39 @@ class DefaultController extends Controller
             }
         }
         return null;
+    }
+
+    public function getImageMetadata($model)
+    {
+        $image_meta_data_model = new ImageMetadata();
+        $image_meta_data_model->moderation_id = $model->moderation_model->id;
+        $image_meta_data_model->size = round($model->image->size / 1024, 2); // Convert size to KB
+
+        $imagePath = $model->image->tempName;
+        $image_info = getimagesize($imagePath);
+
+        if ($image_info) {
+            $image_meta_data_model->width = $image_info[0];
+            $image_meta_data_model->height = $image_info[1];
+        }
+
+        $image_meta_data_model->extension = pathinfo($model->image->name, PATHINFO_EXTENSION);
+
+        $exif = @exif_read_data($imagePath);
+        if ($exif && isset($exif['XResolution']) && isset($exif['YResolution'])) {
+            $image_meta_data_model->resolution = ($exif['XResolution'] ?? 0) . ' x ' . ($exif['YResolution'] ?? 0);
+        } else {
+            $image_meta_data_model->resolution = 'unknown';
+        }
+
+        if ($exif && isset($exif['Orientation'])) {
+            $image_meta_data_model->orientation = $exif['Orientation'];
+        } else {
+            $image_meta_data_model->orientation = 'unknown';
+        }
+
+        $image_meta_data_model->uploaded_at = date('Y-m-d H:i:s');
+
+        $image_meta_data_model->save(false);
     }
 }
