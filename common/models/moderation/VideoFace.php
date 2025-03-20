@@ -2,7 +2,6 @@
 
 namespace common\models\moderation;
 
-use app\models\VideoFaceInfo;
 use common\models\moderation\ActiveRecord;
 use Yii;
 

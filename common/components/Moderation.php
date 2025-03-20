@@ -43,6 +43,7 @@ use common\models\moderation\VideoMoney;
 use common\models\moderation\VideoNudity;
 use common\models\moderation\VideoOffensive;
 use common\models\moderation\VideoRecreationalDrug;
+use common\models\moderation\VideoScam;
 use common\models\moderation\VideoSelfharm;
 use common\models\moderation\VideoSmoking;
 use common\models\moderation\VideoText;
@@ -272,10 +273,12 @@ class Moderation extends Component
         $military_saved = VideoMilitary::militarystore($fb, $id);
         // $audio_saved = VideoAudio::audiostore($fb, $id);
         $text_saved = VideoText::textstore($fb, $id);
+        $face_saved = VideoFace::facestore($fb, $id);
+        $scam_saved = VideoScam::scamstore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved
+            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved && $scam_saved
         ) {
             echo "Stored Successfully";
         } else {
@@ -322,16 +325,4 @@ class Moderation extends Component
         }
     }
 
-    // private function actionStoreImage($feedback, $moderation_type, $moderationId)
-    // {
-    //     $brightness_saved = ImageBrightness::brightnessStore($feedback, $moderationId);
-    //     $sharpness_saved = ImageSharpness::sharpnessStore($feedback, $moderationId);
-    //     $contrast_saved = ImageContrast::contrastStore($feedback, $moderationId);
-
-    //     if ($contrast_saved && $sharpness_saved && $brightness_saved) {
-    //         echo "Image Data Stored Successfully";
-    //     } else {
-    //         exit("Error: Failed to store data");
-    //     }
-    // }
 }

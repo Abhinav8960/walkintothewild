@@ -80,6 +80,8 @@ class Moderation extends \common\models\moderation\ActiveRecord
             ['class' => 'common\models\moderation\VideoType', 'title' => 'Type'],
             ['class' => 'common\models\moderation\VideoViolence', 'title' => 'Violence'],
             ['class' => 'common\models\moderation\VideoWeapon', 'title' => 'Weapon'],
+            ['class' => 'common\models\moderation\VideoScam', 'title' => 'Scam'],
+
         ];
         $str = "";
         if ($this->type == 2) {
