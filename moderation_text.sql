@@ -24,24 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `moderation`
---
-
-CREATE TABLE `moderation` (
-  `id` int NOT NULL,
-  `type` int NOT NULL,
-  `video_url` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `image_url` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `created_at` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `moderation_text`
 --
 
@@ -83,13 +65,6 @@ CREATE TABLE `moderation_text_personal` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `moderation`
---
-ALTER TABLE `moderation`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Indexes for table `moderation_text`
 --
@@ -106,11 +81,6 @@ ALTER TABLE `moderation_text_personal`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `moderation`
---
-ALTER TABLE `moderation`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `moderation_text`
