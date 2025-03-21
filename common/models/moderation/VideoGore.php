@@ -28,7 +28,7 @@ use Yii;
  */
 class VideoGore extends ActiveRecord
 {
-    public static $accessible_attributes = [ 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake'];
+    public static $accessible_attributes = [ 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake','gore_real'];
 
 
     /**
@@ -46,10 +46,10 @@ class VideoGore extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'real'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'gore_real'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'real'], 'number'],
+            [['prob', 'very_bloody', 'slightly_bloody', 'body_organ', 'serious_injury', 'superficial_injury', 'corpse', 'skull', 'unconscious', 'body_waste', 'other', 'animated', 'fake', 'gore_real'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -77,7 +77,7 @@ class VideoGore extends ActiveRecord
             'other' => 'Other',
             'animated' => 'Animated',
             'fake' => 'Fake',
-            'real' => 'Real',
+            'gore_real' => 'Real',
         ];
     }
 
@@ -105,7 +105,7 @@ class VideoGore extends ActiveRecord
             $model->other = $frame['prob']['classes']['other'] ?? 0;
             $model->animated = $frame['prob']['type']['animated'] ?? 0;
             $model->fake = $frame['prob']['type']['fake'] ?? 0;
-            $model->real = $frame['prob']['type']['real'] ?? 0;
+            $model->gore_real = $frame['prob']['type']['real'] ?? 0;
             if (!$model->save()) {
                 return false;
             }

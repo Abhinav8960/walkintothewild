@@ -18,7 +18,7 @@ use Yii;
  */
 class VideoSelfharm extends ActiveRecord
 {
-    public static $accessible_attributes = ['prob', 'fake', 'animated'];
+    public static $accessible_attributes = ['prob', 'fake', 'animated', 'self_harm_real'];
 
 
     /**
@@ -35,10 +35,10 @@ class VideoSelfharm extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position', 'prob', 'real', 'fake', 'animated'], 'default', 'value' => null],
+            [['info_id', 'info_position', 'prob', 'self_harm_real', 'fake', 'animated'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
             [['moderation_id', 'info_position'], 'integer'],
-            [['prob', 'real', 'fake', 'animated'], 'number'],
+            [['prob', 'self_harm_real', 'fake', 'animated'], 'number'],
             [['info_id'], 'string', 'max' => 512],
         ];
     }
@@ -54,7 +54,7 @@ class VideoSelfharm extends ActiveRecord
             'info_id' => 'Info ID',
             'info_position' => 'Info Position',
             'prob' => 'Prob',
-            'real' => 'Real',
+            'self_harm_real' => 'Real',
             'fake' => 'Fake',
             'animated' => 'Animated',
         ];
@@ -72,7 +72,7 @@ class VideoSelfharm extends ActiveRecord
             $model->info_id = $frame['info']['id'] ?? null;
             $model->info_position = $frame['info']['position'] ?? null;
             $model->prob = $frame['self-harm']['prob'] ?? 0;;
-            $model->real = $frame['self-harm']['type']['real'] ?? 0;;
+            $model->self_harm_real = $frame['self-harm']['type']['real'] ?? 0;;
             $model->fake = $frame['self-harm']['type']['fake'] ?? 0;;
             $model->animated = $frame['self-harm']['type']['animated'] ?? 0;;
 

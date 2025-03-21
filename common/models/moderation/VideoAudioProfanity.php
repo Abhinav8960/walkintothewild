@@ -36,11 +36,11 @@ class VideoAudioProfanity extends ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'match', 'start_ms', 'end_ms'], 'default', 'value' => null],
+            [['type', 'profanity_match', 'start_ms', 'end_ms'], 'default', 'value' => null],
             [['moderation_id', 'video_audio_id'], 'required'],
             [['moderation_id', 'video_audio_id'], 'integer'],
             [['start_ms', 'end_ms'], 'number'],
-            [['type', 'match'], 'string', 'max' => 512],
+            [['type', 'profanity_match'], 'string', 'max' => 512],
         ];
     }
 
@@ -54,7 +54,7 @@ class VideoAudioProfanity extends ActiveRecord
             'moderation_id' => 'Moderation ID',
             'video_audio_id' => 'Video Audio ID',
             'type' => 'Type',
-            'match' => 'Match',
+            'profanity_match' => 'Match',
             'start_ms' => 'Start Ms',
             'end_ms' => 'End Ms',
         ];

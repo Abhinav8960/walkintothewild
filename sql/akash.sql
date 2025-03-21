@@ -1,3 +1,11 @@
+-- 21 March
+ALTER TABLE `video_gore` CHANGE `real` `gore_real` FLOAT NULL DEFAULT NULL;
+ALTER TABLE `video_selfharm` CHANGE `real` `self_harm_real` FLOAT NULL DEFAULT NULL;
+ALTER TABLE `video_audio_profanity` CHANGE `match` `profanity_match` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+
+
+
+--Previous
 ALTER TABLE `firebase_notification_log` ADD `master_notification_template_id` INT NOT NULL AFTER `id`;
 ALTER TABLE `firebase_notification_log` ADD `send_datetime` DATETIME NULL AFTER `status`;
 

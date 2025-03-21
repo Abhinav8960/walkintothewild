@@ -72,7 +72,7 @@ class VideoAudio extends ActiveRecord
                     $profanity_model->moderation_id = $id;
                     $profanity_model->color_id = $model->id;
                     $profanity_model->type = $profanity['type'] ?? null;
-                    $profanity_model->match = $profanity['match'] ?? null;
+                    $profanity_model->profanity_match = $profanity['match'] ?? null;
                     $profanity_model->start_ms = $profanity['start_ms'] ?? 0;
                     $profanity_model->end_ms = $profanity['end_ms'] ?? 0;
                     if (!$profanity_model->save()) {
