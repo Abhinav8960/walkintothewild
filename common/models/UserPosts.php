@@ -22,6 +22,9 @@ use Yii;
 class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    
+    const IMAGE_TYPE = 1;
+    const VIDEO_TYPE = 2;
     /**
      * {@inheritdoc}
      */
