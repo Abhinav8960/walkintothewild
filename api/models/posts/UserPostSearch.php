@@ -62,6 +62,7 @@ class UserPostSearch extends UserPosts
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type_of_post' => $this->type_of_post,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

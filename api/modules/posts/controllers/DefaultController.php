@@ -32,7 +32,7 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
+                'exclude' => ['index', 'view','posts-images'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -234,5 +234,13 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionPostsImages()
+    {
+        $searchModel = new UserPostSearch();
+        $searchModel->status = UserPostSearch::STATUS_ACTIVE;
+        $searchModel->type_of_post = UserPosts::IMAGE_TYPE;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPostsImages");
     }
 }

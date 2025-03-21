@@ -121,6 +121,7 @@ return [
 
 
                 'posts' => 'posts/default/index',
+                'posts-images' => 'posts/default/posts-images',
                 'posts/<action>' => 'posts/default/<action>',
 
 

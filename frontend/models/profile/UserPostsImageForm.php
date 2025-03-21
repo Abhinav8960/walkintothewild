@@ -33,6 +33,7 @@ class UserPostsImageForm extends Model
 
             $this->caption = $this->user_image_model->caption;
             $this->user_id = $this->user_image_model->user_id;
+            $this->type_of_post = $this->user_image_model->type_of_post;
             $this->like_count = $this->user_image_model->like_count;
 
             $this->status = $this->user_image_model->status;
@@ -51,8 +52,7 @@ class UserPostsImageForm extends Model
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
             ],
-            [['user_id', 'like_count', 'status'], 'integer'],
-            [['user_id', 'like_count', 'status'], 'integer'],
+            [['user_id', 'like_count', 'status','type_of_post'], 'integer'],
             [['caption'], 'string'],
         ];
     }
@@ -73,6 +73,7 @@ class UserPostsImageForm extends Model
         $this->user_image_model->caption = $this->caption;
         $this->user_image_model->user_id = $this->user_id;
         $this->user_image_model->like_count = $this->like_count;
+        $this->user_image_model->type_of_post = $this->type_of_post;
         $this->user_image_model->status = $this->status;
     }
 
