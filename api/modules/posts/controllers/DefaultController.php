@@ -12,6 +12,7 @@ use api\models\posts\UserPostSearch;
 use common\models\postscomment\form\UserPostCommentForm;
 use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsForm;
+use frontend\models\profile\UserPostsImageForm;
 use frontend\models\profile\UserPostsVideoForm;
 use getID3;
 use Yii;
@@ -35,10 +36,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'like'],
+                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'like'],
+                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +54,7 @@ class DefaultController extends RestController
                     'create' => ['POST'],
                     'comment' => ['POST'],
                     'reply' => ['POST'],
+                    'post-image-upload' => ['POST']
                 ],
             ],
         ];
@@ -123,7 +125,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
 
-        return Yii::$app->api->sendFailedStringResponse($userpost->firstErrors, 400);
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment Not Submitted!"]);
     }
 
 
@@ -145,7 +147,7 @@ class DefaultController extends RestController
             }
         }
 
-        return Yii::$app->api->sendFailedStringResponse($userpost->firstErrors, 400);
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply Not Submitted!"]);
     }
 
 
@@ -207,5 +209,30 @@ class DefaultController extends RestController
             return (int) $fileInfo['playtime_seconds'];
         }
         return 0;
+    }
+
+
+    public function actionPostImageUpload()
+    {
+        $model = new UserPostsImageForm();
+        $model->user_id = $this->userinfoId;
+        $model->status = UserPosts::STATUS_ACTIVE;
+
+        $model->load(\Yii::$app->request->post());
+        $model->setAttributes(\Yii::$app->request->post());
+
+        $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->type_of_post = UserPosts::IMAGE_TYPE;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->user_image_model->save()) {
+                $model->uploadFile();
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
