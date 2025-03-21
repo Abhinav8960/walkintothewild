@@ -140,10 +140,10 @@ class Moderation extends \common\models\moderation\ActiveRecord
                 $info = '';
 
                 if ($personal->is_personal == 1) {
-                    $info .= '<strong>PERSONAL</strong> | ';
+                    $info .= '<h3>Personal</h3> ';
                 }
                 if ($personal->is_link == 1) {
-                    $info .= '<strong>LINK</strong> | ';
+                    $info .= '<h3>Link</h3> ';
                 }
 
                 $info .= "<strong>Type:</strong> " . ($personal->type ?? 'N/A') .
@@ -155,7 +155,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
                 $textPersonalData[] = $info;
             }
 
-            $textDetail[] = "<br>" . implode("<br>", $textPersonalData);
+            $textDetail[] = "<br>" . implode("<br><br>", $textPersonalData);
         }
 
         return implode("<br>", $textDetail);
