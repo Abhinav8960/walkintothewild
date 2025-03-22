@@ -108,8 +108,9 @@ Pjax::begin([
                     <div class="right_button mb-4">
                         <?php if (Yii::$app->user->identity) { ?>
                             <?php
-                            if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
-                                if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
+                            $operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one();
+                            if ($operator) {
+                                if (Yii::$app->user->identity->is_safari_operator == 1 && $operator && $operator->status == SafariOperator::STATUS_ACTIVE) {
                                     if ($operator->category_id == 1) {  ?>
 
                                         <button data-pjax="0" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>

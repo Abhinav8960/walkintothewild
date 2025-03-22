@@ -76,6 +76,12 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
+        $operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one();
+
+        if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
+            \Yii::$app->session->setFlash('success', 'Operator is deactivate can not create Shared safari!');
+            return $this->redirect(['index']);
+        }
         $model = new SharedSafariForm();
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
