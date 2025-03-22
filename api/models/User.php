@@ -341,6 +341,6 @@ class User extends \common\models\User
         if ($this->operator) {
             return $this->operator->status;
         }
-        return false;
+        return 0;
     }
 }
