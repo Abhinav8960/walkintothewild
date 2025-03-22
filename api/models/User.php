@@ -58,7 +58,7 @@ class User extends \common\models\User
             "gmail",
             "google_source_id",
             "blocked_at",
-            "password_updated_at",           
+            "password_updated_at",
             "photo_privacy",
             "contribution_privacy",
             "can_login",
@@ -78,6 +78,7 @@ class User extends \common\models\User
             $fields[] = 'parkvisted';
             $fields[] = 'operatortype';
             $fields[] = 'operatorSlug';
+            $fields[] = 'operatorStatus';
 
             $hold_fields = [
                 'id',
@@ -100,7 +101,7 @@ class User extends \common\models\User
                 "google_source_id",
                 "blocked_at",
                 "password_updated_at",
-               
+
                 "photo_privacy",
                 "contribution_privacy",
                 "can_login",
@@ -240,7 +241,7 @@ class User extends \common\models\User
             'status' => 0,
         ];
         if (!empty($this->operator)) {
-            $arr['status'] = 1;
+            $arr['status'] = $this->operator->status;
             $arr['title'] = $this->operator->categorytitle ?? NULL;
         }
         return $arr;
@@ -333,5 +334,13 @@ class User extends \common\models\User
             return $this->operator->slug;
         }
         return '';
+    }
+
+    public function getOperatorStatus()
+    {
+        if ($this->operator) {
+            return $this->operator->status;
+        }
+        return false;
     }
 }
