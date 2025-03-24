@@ -117,6 +117,11 @@ class DefaultController extends SafariController
 
     public function actionOrganizeSafari()
     {
+        $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
+
+        if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+        }
         $model = new SharedSafariForm();
         $model->host_user_id = $this->userinfoId;
         $model->status = ShareSafari::STATUS_ACTIVE;
