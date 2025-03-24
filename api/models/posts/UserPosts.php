@@ -20,7 +20,9 @@ class UserPosts extends \common\models\UserPosts
             $fields[] = 'imagepath';
             $fields[] = 'user';
             $fields[] = 'comments';
-            $hold_fields = ['file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $fields[] = 'isLiked';
+            $fields[] = 'likesCount';
+            $hold_fields = ['like_count', 'file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }
 
         return array_diff($fields, $hold_fields);
@@ -62,5 +64,26 @@ class UserPosts extends \common\models\UserPosts
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+
+    public function getIsLiked()
+    {
+        $is_liked = UserPostLike::find()->where(['user_post_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'user_post_like.status' => 1])->limit(1)->one();
+        if ($is_liked) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function getLike()
+    {
+        return $this->hasMany(UserPostLike::class, ['user_post_id' => 'id']);
+    }
+
+    public function getLikesCount()
+    {
+        return $this->getLike()->count();
     }
 }
