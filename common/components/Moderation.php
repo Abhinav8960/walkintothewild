@@ -66,7 +66,7 @@ class Moderation extends Component
     private $sightEngineUserId = "101632135"; // Anurag
     private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    public $keys = ["101632135"=> "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"];
+    public $sights = ["101632135" => "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"];
 
     private $models = [
         'nudity-2.1',
@@ -100,70 +100,88 @@ class Moderation extends Component
 
     public function imageFeedback($url, $moderationId)
     {
-        $params = array(
-            'url' =>  $url,
-            'models' => implode(',', $this->models),
-            'api_user' => $this->sightEngineUserId,
-            'api_secret' => $this->sightEnginesecretId,
-        );
+        foreach ($this->sights as $key =>  $sight) {
+            try {
+                $params = array(
+                    'url' =>  $url,
+                    'models' => implode(',', $this->models),
+                    'api_user' => $key,
+                    'api_secret' => $sight,
+                );
 
-        // this example uses cURL
-        $ch = curl_init('https://api.sightengine.com/1.0/check.json?' . http_build_query($params));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $output = json_decode($response, true);
-        $this->actionStoreImageFeedback($output, $moderationId);
-        return $output;
+                // this example uses cURL
+                $ch = curl_init('https://api.sightengine.com/1.0/check.json?' . http_build_query($params));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $output = json_decode($response, true);
+                $this->actionStoreImageFeedback($output, $moderationId);
+                return $output;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
     }
 
     public function videoFeedback($url, $id)
     {
-        $params = array(
-            'media' => new CURLFile($url),
-            // specify the models you want to apply
-            'models' => implode(',', $this->models),
-            'api_user' => $this->sightEngineUserId,
-            'api_secret' => $this->sightEnginesecretId,
-        );
+        foreach ($this->sights as $key =>  $sight) {
+            try {
+                $params = array(
+                    'media' => new CURLFile($url),
+                    // specify the models you want to apply
+                    'models' => implode(',', $this->models),
+                    'api_user' => $key,
+                    'api_secret' => $sight,
+                );
 
-        // this example uses cURL
-        $ch = curl_init('https://api.sightengine.com/1.0/video/check-sync.json');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $output = json_decode($response, true);
-        $this->actionStoreVideoFeedback($output, $id);
-        return $output;
+                // this example uses cURL
+                $ch = curl_init('https://api.sightengine.com/1.0/video/check-sync.json');
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $output = json_decode($response, true);
+                $this->actionStoreVideoFeedback($output, $id);
+                return $output;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
     }
 
 
     public function textFeedback($text, $moderationId)
     {
-        $params = array(
-            'text' => $text,
-            // 'lang' => 'en,fr,it,pt,es,ru,tr',
-            'lang' => 'en',
-            'models' => 'general,self-harm',
-            // 'mode' => 'ml',
-            // 'mode' => 'rules',
-            'mode' => 'rules,ml',
-            'api_user' => $this->sightEngineUserId,
-            'api_secret' => $this->sightEnginesecretId,
-        );
+        foreach ($this->sights as $key =>  $sight) {
+            try {
+                $params = array(
+                    'text' => $text,
+                    // 'lang' => 'en,fr,it,pt,es,ru,tr',
+                    'lang' => 'en',
+                    'models' => 'general,self-harm',
+                    // 'mode' => 'ml',
+                    // 'mode' => 'rules',
+                    'mode' => 'rules,ml',
+                    'api_user' => $key,
+                    'api_secret' => $sight,
+                );
 
-        // this example uses cURL
-        $ch = curl_init('https://api.sightengine.com/1.0/text/check.json');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $output = json_decode($response, true);
-        $this->actionStoreTextFeedback($output, $moderationId);
-        return $output;
+                // this example uses cURL
+                $ch = curl_init('https://api.sightengine.com/1.0/text/check.json');
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $output = json_decode($response, true);
+                $this->actionStoreTextFeedback($output, $moderationId);
+                return $output;
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
     }
 
 
