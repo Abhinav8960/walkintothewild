@@ -68,6 +68,7 @@ class DefaultController extends RestController
     {
         $searchModel = new UserPostSearch();
         $searchModel->status = UserPostSearch::STATUS_ACTIVE;
+        $searchModel->type_of_post = UserPosts::VIDEO_TYPE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
     }
 
@@ -84,6 +85,7 @@ class DefaultController extends RestController
         $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
         $model->v_size = $model->file->size;
         $model->v_duration = $this->getVideoDuration($model->file);
+        $model->type_of_post = UserPosts::VIDEO_TYPE;
 
         if ($model->validate()) {
             $model->initializeForm();

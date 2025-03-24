@@ -30,6 +30,8 @@ class UserPostsVideoForm extends Model
     public $status;
     public $location;
     public $video_thumbnail;
+    public $type_of_post;
+
 
     public function __construct(UserPosts $user_photo_model = null)
     {
@@ -47,6 +49,7 @@ class UserPostsVideoForm extends Model
             $this->v_duration = $this->user_photo_model->v_duration;
             $this->video_thumbnail = $this->user_photo_model->video_thumbnail;
             $this->location = $this->user_photo_model->location;
+            $this->type_of_post = $this->user_photo_model->type_of_post;
 
             $this->status = $this->user_photo_model->status;
         }
@@ -70,8 +73,7 @@ class UserPostsVideoForm extends Model
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'maxSize' => 10 * 1024,
             ],
-            [['user_id', 'like_count', 'status'], 'integer'],
-            [['user_id', 'like_count', 'status'], 'integer'],
+            [['user_id', 'like_count', 'status','type_of_post'], 'integer'],
             [['caption', 'description', 'location'], 'string'],
             [['v_size', 'v_duration'], 'integer']
         ];
@@ -98,6 +100,7 @@ class UserPostsVideoForm extends Model
         $this->user_photo_model->v_duration = $this->v_duration;
         $this->user_photo_model->video_thumbnail = $this->video_thumbnail;
         $this->user_photo_model->location = $this->location;
+        $this->user_photo_model->type_of_post = $this->type_of_post;
         $this->user_photo_model->status = $this->status;
     }
 
