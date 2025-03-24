@@ -17,7 +17,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-6">
                 <?= $form->field($model, 'type')->dropDownList(
                     [
-                        1 => 'Text',
+                        // 1 => 'Text',
                         2 => 'Video',
                         3 => 'Image'
                     ],
@@ -25,10 +25,10 @@ use yii\bootstrap5\ActiveForm;
                 ); ?>
             </div>
             <div class="col-md-6 field-text">
-                <?= $form->field($model, 'text')->textInput([
+                <!-- <?= $form->field($model, 'text')->textInput([
                     'maxlength' => true,
                     'placeholder' => 'Enter Text',
-                ]) ?>
+                ]) ?> -->
             </div>
 
             <div class="col-md-6 field-video">
