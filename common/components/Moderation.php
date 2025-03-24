@@ -63,10 +63,14 @@ use yii\base\Component;
 class Moderation extends Component
 {
     public $fileUrl;
-    private $sightEngineUserId = "101632135"; // Anurag
-    private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
+    // private $sightEngineUserId = "101632135"; // Anurag
+    // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
-    public $sights = ["101632135" => "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"];
+    public $sights = [
+        "689569113" => "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX",
+        "460273805" => "AHEYH7qsx2qwTTrwcqtqVFhnkT2e7zPn",
+        // "101632135" => "FRrzHTpHk7GBvY86HokP7MV884SbrRHu",
+    ];
 
     private $models = [
         'nudity-2.1',
