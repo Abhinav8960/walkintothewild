@@ -68,6 +68,7 @@ class DefaultController extends RestController
     {
         $searchModel = new UserPostSearch();
         $searchModel->status = UserPostSearch::STATUS_ACTIVE;
+        $searchModel->type_of_post = UserPosts::VIDEO_TYPE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
     }
 
