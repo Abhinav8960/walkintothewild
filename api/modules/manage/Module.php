@@ -32,7 +32,7 @@ class Module extends \yii\base\Module
      */
     public function operatormodel()
     {
-        if ($operator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user'] ? \Yii::$app->params['active_user_id'] : null])->limit(1)->one()) {
+        if ($operator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user'] ? \Yii::$app->params['active_user_id'] : null])->andWhere(['status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
             return $operator;
         }
         throw new ForbiddenHttpException('You are not Allowed to access this Page');
