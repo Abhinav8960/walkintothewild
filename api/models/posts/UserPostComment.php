@@ -14,7 +14,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         $fields[] = 'user';
         $fields[] = 'replies';
         $fields[] = 'isLiked';
-        $hold_fields = ['id','user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
