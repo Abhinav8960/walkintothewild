@@ -45,7 +45,6 @@ $this->params['title'] = $this->title;
                         <?= implode('<br>', $attributes); ?>
                     <?php } ?>
 
-                    ?>
                 </div>
             </div>
             <div class="col-md-8">
