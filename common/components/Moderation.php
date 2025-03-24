@@ -66,6 +66,8 @@ class Moderation extends Component
     private $sightEngineUserId = "101632135"; // Anurag
     private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
+    public $keys = ["101632135"=> "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"];
+
     private $models = [
         'nudity-2.1',
         'weapon',
