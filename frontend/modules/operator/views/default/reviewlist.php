@@ -4,6 +4,7 @@ use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 
 use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorRating;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -89,8 +90,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
                                                 <div class="whiteReview mt-2 ">
-                                                    <?php if (Yii::$app->user->identity) { ?>
+                                                    <?php
+                                                    $same_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+                                                    if (Yii::$app->user->identity && $same_operator->id != $operator->id) { ?>
                                                         <button class="parkrevieBtn  writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                                                    <?php } else if ($same_operator->id == $operator->id) { ?>
                                                     <?php } else { ?>
                                                         <a class="parkrevieBtn " href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist" data-pjax="0">Please Login to Review</a>
                                                     <?php } ?>
@@ -203,25 +207,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 </div>
                                 <div class="col-xxl-4 col-lg-4 ps-md-4">
                                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
-                                        
-                                            <div class="mb-4" id="memberview">
-                                                <?= $this->render('_free_quote', [
-                                                    'model' => $model,
-                                                    'operator' => $operator,
-                                                    'disabled' => false,
-                                                ]) ?>
-                                            </div>
+
+                                        <div class="mb-4" id="memberview">
+                                            <?= $this->render('_free_quote', [
+                                                'model' => $model,
+                                                'operator' => $operator,
+                                                'disabled' => false,
+                                            ]) ?>
+                                        </div>
                                     <?php } else {  ?>
-                                            <div class="mb-4 position-relative galssset " id="memberview">
-                                                <svg class="form-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                                                    <path fill="#02690e" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
-                                                </svg>
-                                                <?= $this->render('_free_quote', [
-                                                    'model' => $model,
-                                                    'operator' => $operator,
-                                                    'disabled' => true,
-                                                ]) ?>
-                                            </div>
+                                        <div class="mb-4 position-relative galssset " id="memberview">
+                                            <svg class="form-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                <path fill="#02690e" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
+                                            </svg>
+                                            <?= $this->render('_free_quote', [
+                                                'model' => $model,
+                                                'operator' => $operator,
+                                                'disabled' => true,
+                                            ]) ?>
+                                        </div>
                                     <?php }   ?>
                                     <?= $this->render('_shared_safari_sidebar', ['operator' => $operator]) ?>
                                 </div>
