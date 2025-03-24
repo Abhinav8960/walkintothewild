@@ -183,7 +183,7 @@ class DefaultController extends RestController
             $like->user_post_id = $user_post_id;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Liked Comment or Reply"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post Liked Successfully"]);
             }
         } else {
             $like->delete();
