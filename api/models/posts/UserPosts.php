@@ -14,8 +14,11 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'thumbnail';
         if (!in_array(\Yii::$app->controller->action->uniqueId,  ['posts/default/index'])) {
             $fields[] = 'imagepath';
+            $fields[] = 'user';
             $fields[] = 'comments';
-            $hold_fields = ['file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $fields[] = 'isLiked';
+            $fields[] = 'likesCount';
+            $hold_fields = ['like_count','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         } else {
             $fields[] = 'imagepath';
             $fields[] = 'user';
