@@ -67,8 +67,8 @@ class Moderation extends Component
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
     public $sights = [
-        "689569113" => "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX",
-        // "460273805" => "AHEYH7qsx2qwTTrwcqtqVFhnkT2e7zPn",
+        // "689569113" => "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX",
+        "460273805" => "AHEYH7qsx2qwTTrwcqtqVFhnkT2e7zPn",
         // "101632135" => "FRrzHTpHk7GBvY86HokP7MV884SbrRHu",
     ];
 
