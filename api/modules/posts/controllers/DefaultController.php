@@ -36,10 +36,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload'],
+                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload','user-post-like'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload'],
+                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload','user-post-like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,7 +54,8 @@ class DefaultController extends RestController
                     'create' => ['POST'],
                     'comment' => ['POST'],
                     'reply' => ['POST'],
-                    'post-image-upload' => ['POST']
+                    'post-image-upload' => ['POST'],
+                    'user-post-like' => ['POST']
                 ],
             ],
         ];
