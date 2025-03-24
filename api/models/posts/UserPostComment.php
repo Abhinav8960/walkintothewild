@@ -13,7 +13,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         $fields = parent::fields();
         $fields[] = 'user';
         $fields[] = 'replies';
-        $hold_fields = ['id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['id','user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

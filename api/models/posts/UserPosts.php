@@ -19,6 +19,7 @@ class UserPosts extends \common\models\UserPosts
         } else {
             $fields[] = 'imagepath';
             $fields[] = 'user';
+            $fields[] = 'comments';
             $hold_fields = ['file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }
 
@@ -36,7 +37,7 @@ class UserPosts extends \common\models\UserPosts
 
     public function getComments()
     {
-        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id']);
+        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['parent_id' => null]);
     }
 
 
