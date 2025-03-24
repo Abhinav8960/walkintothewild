@@ -11,6 +11,7 @@ use common\models\moderation\VideoMetadata;
 use FFMpeg\FFProbe;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -218,5 +219,23 @@ class DefaultController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+    
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Moderation::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

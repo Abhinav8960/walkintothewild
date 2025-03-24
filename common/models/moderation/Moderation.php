@@ -223,4 +223,14 @@ class Moderation extends \common\models\moderation\ActiveRecord
         }
         return $str;
     }
+
+    public function getVideoMetadata()
+    {
+        return $this->hasOne(VideoMetadata::class, ['moderation_id' => 'id']);
+    }
+
+    public function getImageMetadata()
+    {
+        return $this->hasOne(ImageMetadata::class, ['moderation_id' => 'id']);
+    }
 }
