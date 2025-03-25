@@ -78,6 +78,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
 
                     [
+                        'label' => 'Duration Flag',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->type == 2) {
+                                return $model->duration_flag == 1 ? 'Yes' : 'No';
+                            }
+                        },
+                    ],
+
+                    [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],

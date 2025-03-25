@@ -21,6 +21,7 @@ class ModerationForm extends Model
     public $type;
     public $video;
     public $image;
+    public $duration_flag;
 
 
     public function __construct(Moderation $moderation_model = null)
@@ -36,6 +37,7 @@ class ModerationForm extends Model
             $this->image_url = $this->moderation_model->image_url;
             $this->text = $this->moderation_model->text;
             $this->type = $this->moderation_model->type;
+            $this->duration_flag = $this->moderation_model->duration_flag;
         }
     }
 
@@ -43,7 +45,7 @@ class ModerationForm extends Model
     {
         return [
             [['type'], 'required'],
-            [['type'], 'integer'],
+            [['type','duration_flag'], 'integer'],
             [['text'], 'string'],
             [['video_url', 'image_url'], 'string', 'max' => 512],
             ['text', 'required', 'when' => function ($model) {
@@ -102,7 +104,7 @@ class ModerationForm extends Model
         $this->moderation_model->video_url = $this->video_url;
         $this->moderation_model->image_url = $this->image_url;
         $this->moderation_model->text = $this->text;
-        $this->moderation_model->type = $this->type;
+        $this->moderation_model->type = $this->type;        
     }
 
     public function uploadFile()

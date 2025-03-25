@@ -31,10 +31,8 @@ class VideoAudio extends ActiveRecord
     public function rules()
     {
         return [
-            [['info_id', 'info_position'], 'default', 'value' => null],
             [['moderation_id'], 'required'],
-            [['moderation_id', 'info_position'], 'integer'],
-            [['info_id'], 'string', 'max' => 512],
+            [['moderation_id'], 'integer'],
         ];
     }
 
@@ -46,43 +44,38 @@ class VideoAudio extends ActiveRecord
         return [
             'id' => 'ID',
             'moderation_id' => 'Moderation ID',
-            'info_id' => 'Info ID',
-            'info_position' => 'Info Position',
         ];
     }
 
     public static function audiostore($fb, $id)
     {
-        if (!isset($fb['data']['frames']) || !is_array($fb['data']['frames'])) {
+        if (!isset($fb['data']) || !is_array($fb['data'])) {
             return false;
         }
 
-        foreach ($fb['data']['frames'] as $frame) {
-            $model = new self();
-            $model->moderation_id = $id;
-            $model->info_id = $frame['info']['id'] ?? null;
-            $model->info_position = $frame['info']['position'] ?? null;
-            if (!$model->save()) {
-                return false;
-            }
 
-            if (isset($frame['audio']['profanity']) && is_array($frame['audio']['profanity'])) {
-                foreach ($frame['audio']['profanity'] as $profanity) {
-                    $profanity_model = new VideoAudioProfanity();
-                    $profanity_model->moderation_id = $id;
-                    $profanity_model->color_id = $model->id;
-                    $profanity_model->type = $profanity['type'] ?? null;
-                    $profanity_model->profanity_match = $profanity['match'] ?? null;
-                    $profanity_model->start_ms = $profanity['start_ms'] ?? 0;
-                    $profanity_model->end_ms = $profanity['end_ms'] ?? 0;
-                    if (!$profanity_model->save()) {
-                        return false;
-                    }
+        $model = new self();
+        $model->moderation_id = $id;
+        if (!$model->save()) {
+            return false;
+        }
+
+        if (isset($fb['data']['audio']['profanity']) && is_array($fb['data']['audio']['profanity'])) {
+            foreach ($fb['data']['audio']['profanity'] as $profanity) {
+                $profanity_model = new VideoAudioProfanity();
+                $profanity_model->moderation_id = $id;
+                $profanity_model->video_audio_id = $model->id;
+                $profanity_model->type = $profanity['type'] ?? null;
+                $profanity_model->profanity_match = $profanity['match'] ?? null;
+                $profanity_model->start_ms = $profanity['start_ms'] ?? 0;
+                $profanity_model->end_ms = $profanity['end_ms'] ?? 0;
+                if (!$profanity_model->save()) {
+                    return false;
                 }
             }
         }
 
+
         return true;
     }
-
 }

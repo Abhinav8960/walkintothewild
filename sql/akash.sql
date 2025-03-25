@@ -1,3 +1,9 @@
+-- 25 March
+ALTER TABLE `moderation` ADD `duration_flag` BOOLEAN NULL DEFAULT NULL AFTER `text`;
+ALTER TABLE `video_audio`
+  DROP `info_id`,
+  DROP `info_position`;
+
 -- 21 March
 ALTER TABLE `video_gore` CHANGE `real` `gore_real` FLOAT NULL DEFAULT NULL;
 ALTER TABLE `video_selfharm` CHANGE `real` `self_harm_real` FLOAT NULL DEFAULT NULL;

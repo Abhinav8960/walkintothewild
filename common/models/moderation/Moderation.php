@@ -23,7 +23,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
         return [
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['type'], 'required'],
-            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by','duration_flag'], 'integer'],
             [['text'], 'string'],
             [['video_url', 'image_url', 'etag'], 'string', 'max' => 512],
             [['video'], 'string', 'max' => 512],
