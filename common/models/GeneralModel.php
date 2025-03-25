@@ -1367,9 +1367,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '$1 $2 $3 $4 $5 x x x x x ' . $exclamation,
         ];
 
+        libxml_use_internal_errors(true);
         $dom = new DOMDocument();
-        $dom->loadHTML(mb_convert_encoding($comment, 'HTML-ENTITIES', 'UTF-8'));
-    
+        $dom->loadHTML(mb_convert_encoding($comment, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+
         $xpath = new DOMXPath($dom);
         foreach ($xpath->query('//text()') as $node) {
             $text = $node->nodeValue;
