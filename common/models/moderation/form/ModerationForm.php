@@ -57,6 +57,7 @@ class ModerationForm extends Model
                 ['video'],
                 'file',
                 'extensions' => ['mp4', 'avi', 'mkv', 'webm'],
+                'maxSize' => 18 * 1024 * 1024
             ],
             ['video', 'required', 'when' => function ($model) {
                 return $model->type == 2;
@@ -67,6 +68,7 @@ class ModerationForm extends Model
                 ['image'],
                 'file',
                 'extensions' => ['jpg', 'jpeg', 'png'],
+                'maxSize' => 18 * 1024 * 1024
             ],
             ['image', 'required', 'when' => function ($model) {
                 return $model->type == 3;
