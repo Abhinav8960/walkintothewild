@@ -104,9 +104,9 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             $model->created_by = (int)self::getUserID();
             $model->save(false);
 
-            \Yii::$app->queue->push(new NotificationJob([
-                'model' => $model,
-            ]));
+            // \Yii::$app->queue->push(new NotificationJob([
+            //     'model' => $model,
+            // ]));
         }
         return true;
     }
