@@ -280,8 +280,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
                     foreach ($maxValues as $attribute => $value) {
                         $percentage_val = $value * 100;
                         if ($percentage_val >= 40) {
-                            $sub_str .= "<h3>" . $moderation_models_data['title'] . "</h3>";
-
+                            $sub_str .= "<h6>" . $moderation_models_data['title'] . "</h6>";
                             $label = ucfirst(str_replace('_', ' ', $attribute));
                             $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
                                 . $label . " :" . "" . $percentage_val .  "<span>&#37;</span></span>";
@@ -346,7 +345,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
                     foreach ($maxValues as $attribute => $value) {
                         $percentage_val = $value * 100;
                         if ($percentage_val >= 40) {
-                            $sub_str .= "<h3>" . $imgModeration['title'] . "</h3>";
+                            $sub_str .= "<h6>" . $imgModeration['title'] . "</h6>";
 
                             $label = ucfirst(str_replace('_', ' ', $attribute));
                             $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
