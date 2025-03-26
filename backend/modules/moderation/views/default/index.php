@@ -76,6 +76,19 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return null;
                         },
                     ],
+                    [
+                        'label' => 'Moderation Details',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->type == 2) {
+                                return $model->indexVideotags;
+                            }
+                            if ($model->type == 3) {
+                                return $model->indexImageDetails;
+                            }
+                            return null;
+                        },
+                    ],
 
                     [
                         'label' => 'Duration Flag',

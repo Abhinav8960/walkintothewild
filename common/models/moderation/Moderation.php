@@ -23,7 +23,7 @@ class Moderation extends \common\models\moderation\ActiveRecord
         return [
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['type'], 'required'],
-            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by','duration_flag'], 'integer'],
+            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by', 'duration_flag'], 'integer'],
             [['text'], 'string'],
             [['video_url', 'image_url', 'etag'], 'string', 'max' => 512],
             [['video'], 'string', 'max' => 512],
@@ -232,5 +232,131 @@ class Moderation extends \common\models\moderation\ActiveRecord
     public function getImageMetadata()
     {
         return $this->hasOne(ImageMetadata::class, ['moderation_id' => 'id']);
+    }
+
+    public function getIndexVideotags()
+    {
+        $moderation_models = [
+            ['class' => 'common\models\moderation\VideoNudity', 'title' => 'Nudity'],
+            ['class' => 'common\models\moderation\VideoOffensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\VideoMoney', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\VideoDestruction', 'title' => 'Destruction'],
+            ['class' => 'common\models\moderation\VideoMilitary', 'title' => 'Military'],
+            ['class' => 'common\models\moderation\VideoAudioProfanity', 'title' => 'Audio Profanity'],
+            ['class' => 'common\models\moderation\VideoMedical', 'title' => 'Medical'],
+            ['class' => 'common\models\moderation\VideoAlcohol', 'title' => 'Alcohol'],
+            // ['class' => 'common\models\moderation\VideoColors', 'title' => 'Color'],
+            // ['class' => 'common\models\moderation\VideoColorsAccent', 'title' => 'Colors Accent'],
+            // ['class' => 'common\models\moderation\VideoColorOther', 'title' => 'Color Others'],
+            ['class' => 'common\models\moderation\VideoGambling', 'title' => 'Gambling'],
+            ['class' => 'common\models\moderation\VideoGore', 'title' => 'Gore'],
+            ['class' => 'common\models\moderation\VideoImageQualityDetection', 'title' => 'Image Quality'],
+            ['class' => 'common\models\moderation\VideoOffensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\VideoRecreationalDrug', 'title' => 'Drug'],
+            ['class' => 'common\models\moderation\VideoSelfharm', 'title' => 'Self Harm'],
+            ['class' => 'common\models\moderation\VideoSmoking', 'title' => 'Smoking'],
+            ['class' => 'common\models\moderation\VideoType', 'title' => 'Type'],
+            ['class' => 'common\models\moderation\VideoViolence', 'title' => 'Violence'],
+            ['class' => 'common\models\moderation\VideoWeapon', 'title' => 'Weapon'],
+            ['class' => 'common\models\moderation\VideoScam', 'title' => 'Scam'],
+
+        ];
+        $str = "";
+        if ($this->type == 2) {
+            foreach ($moderation_models as $moderation_models_data) {
+                $class_name = $moderation_models_data['class'];
+                $attributes = $class_name::$accessible_attributes;
+                $selectExpressions = [];
+                foreach ($attributes as $attribute) {
+                    $selectExpressions[] = new \yii\db\Expression("MAX({$attribute}) AS {$attribute}");
+                }
+                $maxValues = $class_name::find()
+                    ->select($selectExpressions)
+                    ->where(['moderation_id' => $this->id])
+                    ->asArray()
+                    ->one();
+                $sub_str = "";
+                if (!empty($maxValues)) {
+                    foreach ($maxValues as $attribute => $value) {
+                        $percentage_val = $value * 100;
+                        if ($percentage_val >= 40) {
+                            $sub_str .= "<h3>" . $moderation_models_data['title'] . "</h3>";
+
+                            $label = ucfirst(str_replace('_', ' ', $attribute));
+                            $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
+                                . $label . " :" . "" . $percentage_val .  "<span>&#37;</span></span>";
+                        }
+                    }
+                }
+                $str .= $sub_str;
+            }
+        }
+        return $str;
+    }
+
+    public function getIndexImageDetails()
+    {
+        // return "getImageDetails";
+
+        $moderation_models = [
+            ['class' => 'common\models\moderation\ImageAlcohol', 'title' => 'Alcohol'],
+            ['class' => 'common\models\moderation\ImageBrightness', 'title' => 'Brightness'],
+            // ['class' => 'common\models\moderation\ImageColors', 'title' => 'Color'],
+            ['class' => 'common\models\moderation\ImageContrast', 'title' => 'Contrast'],
+            // ['class' => 'common\models\moderation\ImageColorOther', 'title' => 'Color Others'],
+            ['class' => 'common\models\moderation\ImageDestruction', 'title' => 'Destruction'],
+            // ['class' => 'common\models\moderation\ImageFaces', 'title' => 'Faces'],
+            ['class' => 'common\models\moderation\ImageGambling', 'title' => 'Gambling'],
+            // ['class' => 'common\models\moderation\ImageGore', 'title' => 'Gore'],
+            // ['class' => 'common\models\moderation\ImageMedia', 'title' => 'Media'],
+            ['class' => 'common\models\moderation\ImageMoney', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\ImageMedical', 'title' => 'Medical'],
+            ['class' => 'common\models\moderation\ImageMilitary', 'title' => 'Military'],
+            ['class' => 'common\models\moderation\ImageMoney', 'title' => 'Money'],
+            ['class' => 'common\models\moderation\ImageNudity', 'title' => 'Nudity'],
+            ['class' => 'common\models\moderation\ImageOffensive', 'title' => 'Offensive'],
+            ['class' => 'common\models\moderation\ImageQuality', 'title' => 'Image Quality'],
+            // ['class' => 'common\models\moderation\ImageRecreationalDrug', 'title' => 'Drug'],
+            // ['class' => 'common\models\moderation\ImageeRequest', 'title' => 'Image Request'],
+            ['class' => 'common\models\moderation\ImageScam', 'title' => 'Scam'],
+            ['class' => 'common\models\moderation\ImageSelfHarm', 'title' => 'Self Harm'],
+            ['class' => 'common\models\moderation\ImageSharpness', 'title' => 'Sharpness'],
+            ['class' => 'common\models\moderation\ImageTobacco', 'title' => 'Tobacco'],
+            ['class' => 'common\models\moderation\ImageType', 'title' => 'Type'],
+            ['class' => 'common\models\moderation\ImageViolence', 'title' => 'Violence'],
+            ['class' => 'common\models\moderation\ImageWeapon', 'title' => 'Weapon'],
+        ];
+        $str = "";
+        if ($this->type == 3) {
+            foreach ($moderation_models as $imgModeration) {
+                $class_name = $imgModeration['class'];
+                $attributes = $class_name::$accessible_attributes;
+                $selectExpressions = [];
+                foreach ($attributes as $attribute) {
+                    $selectExpressions[] = new \yii\db\Expression("MAX(`{$attribute}`) AS `{$attribute}`");
+                }
+
+                $maxValues = $class_name::find()
+                    ->select($selectExpressions)
+                    ->where(['moderation_id' => $this->id])
+                    ->asArray()
+                    ->one();
+                $sub_str = "";
+                if (!empty($maxValues)) {
+                    foreach ($maxValues as $attribute => $value) {
+                        $percentage_val = $value * 100;
+                        if ($percentage_val >= 40) {
+                            $sub_str .= "<h3>" . $imgModeration['title'] . "</h3>";
+
+                            $label = ucfirst(str_replace('_', ' ', $attribute));
+                            $sub_str .= "<span class='badge' style='background-color: " . ($percentage_val >= 40 ? "#dc3545" : "#007bff") . "; color: white; padding: 5px 10px; margin: 2px; border-radius: 5px;'>"
+                                . $label . " :" . "" . $percentage_val .  "<span>&#37;</span></span>";
+                        }
+                    }
+                }
+                $str .= $sub_str;
+            }
+        }
+        return $str;
     }
 }
