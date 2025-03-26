@@ -16,7 +16,7 @@ $reviews = $ratingdataProvider->getModels();
     <div class="request_quote mb-4">
         <button class="intested_btn interestBtn  d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor: default;">
 
-            Operator Rating <span><?= $operator->google_rating ?>/5 (<?= $operator->google_review_count ?>)</span>
+            Operator Review <span><?= $operator->google_rating ?>/5 (<?= $operator->google_review_count ?>)</span>
 
         </button>
         <div class="interst_wrapper pt-1 px-3 bg-white">
@@ -79,7 +79,7 @@ $reviews = $ratingdataProvider->getModels();
     <div class="request_quote mb-4">
         <button class="intested_btn interestBtn  d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor: default;">
 
-            Operator Rating
+            Operator Review
 
         </button>
         <div class="interst_wrapper px-3 bg-white">
