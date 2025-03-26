@@ -94,7 +94,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     $same_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
                                                     if (Yii::$app->user->identity && $same_operator->id != $operator->id) { ?>
                                                         <button class="parkrevieBtn  writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
-                                                    <?php } else if ($same_operator->id == $operator->id) { ?>
+                                                    <?php } else if (Yii::$app->user->identity && $same_operator->id == $operator->id) { ?>
                                                     <?php } else { ?>
                                                         <a class="parkrevieBtn " href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist" data-pjax="0">Please Login to Review</a>
                                                     <?php } ?>
