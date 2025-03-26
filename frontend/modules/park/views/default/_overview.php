@@ -109,7 +109,7 @@ if ($model->corezones) {
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
+                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Session">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -242,7 +242,7 @@ if ($model->corezones) {
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
+                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Session">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
