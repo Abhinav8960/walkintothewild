@@ -101,6 +101,33 @@ class Moderation extends Component
         'audio-profanity',
     ];
 
+    private $img_models = [
+        'nudity-2.1',
+        'weapon',
+        'alcohol',
+        'recreational_drug',
+        'medical',
+        'properties',
+        'type',
+        'quality',
+        'offensive-2.0',
+        'faces',
+        'scam',
+        'text-content',
+        'face-attributes',
+        'gore-2.0',
+        'text',
+        'qr-content',
+        'tobacco',
+        'genai',
+        'violence',
+        'self-harm',
+        'money',
+        'gambling',
+        'destruction',
+        'military',
+    ];
+
 
 
     public function imageFeedback($url, $moderationId)
@@ -109,7 +136,7 @@ class Moderation extends Component
             try {
                 $params = array(
                     'url' =>  $url,
-                    'models' => implode(',', $this->models),
+                    'models' => implode(',', $this->img_models),
                     'api_user' => $key,
                     'api_secret' => $sight,
                 );
