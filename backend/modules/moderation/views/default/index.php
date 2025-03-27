@@ -66,7 +66,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return 'Unknown';
                         },
                     ],
-                    
+
                     [
                         'label' => 'Meta Data',
                         'format' => 'raw',
@@ -114,6 +114,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             if ($model->type == 2) {
                                 return $model->duration_flag == 1 ? 'Yes' : 'No';
                             }
+                        },
+                    ],
+
+                    [
+                        'label' => 'Api Failed Flag',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'value' => function ($model) {
+                            return $model->is_api_failed == 1 ? 'Yes' : 'No';
                         },
                     ],
 

@@ -14,7 +14,7 @@ class ModerationSearch extends Moderation
     public function rules()
     {
         return [
-            [['type', 'created_at', 'updated_at', 'created_by', 'updated_by', 'duration_flag'], 'integer'],
+            [['is_api_failed','type', 'created_at', 'updated_at', 'created_by', 'updated_by', 'duration_flag'], 'integer'],
         ];
     }
 
@@ -46,6 +46,7 @@ class ModerationSearch extends Moderation
         // Grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'is_api_failed' => $this->is_api_failed,
             'type' => $this->type,
         ]);
 

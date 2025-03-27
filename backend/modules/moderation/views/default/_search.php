@@ -27,6 +27,18 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'is_api_failed')->dropDownList(
+            [
+                '1' => 'Yes',
+                '0' => 'No',
+            ],
+            [
+                'prompt' => 'Is Api Failed',
+            ]
+        ) ?>
+    </div>
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>

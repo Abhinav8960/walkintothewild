@@ -28,6 +28,7 @@ use common\models\moderation\ImageTobacco;
 use common\models\moderation\ImageType;
 use common\models\moderation\ImageViolence;
 use common\models\moderation\ImageWeapon;
+use common\models\moderation\Moderation as ModerationModeration;
 use common\models\moderation\ModerationText;
 use common\models\moderation\ModerationTextPersonal;
 use common\models\moderation\VideoAlcohol;
@@ -147,7 +148,7 @@ class Moderation extends Component
                 $response = curl_exec($ch);
                 curl_close($ch);
                 $output = json_decode($response, true);
-                $this->actionStoreImageFeedback($output, $moderationId);
+                return $this->actionStoreImageFeedback($output, $moderationId);
                 return $output;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -175,7 +176,7 @@ class Moderation extends Component
                 $response = curl_exec($ch);
                 curl_close($ch);
                 $output = json_decode($response, true);
-                $this->actionStoreVideoFeedback($output, $id);
+                return $this->actionStoreVideoFeedback($output, $id);
                 return $output;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -223,7 +224,7 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/video.json");
         // }
-        $this->actionVideoStore($feedback, $id);
+        return $this->actionVideoStore($feedback, $id);
     }
     public function actionStoreImageFeedback($feedback, $moderationId)
     {
@@ -231,7 +232,7 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
         // }
-        $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE, $moderationId);
+        return $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE, $moderationId);
     }
     public function actionStoreTextFeedback($feedback, $moderationId)
     {
@@ -333,9 +334,9 @@ class Moderation extends Component
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
             && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved && $scam_saved && $audio_saved
         ) {
-            echo "Stored Successfully";
+            return true;
         } else {
-            exit("Error: Failed to store data");
+            return false;
         }
     }
 
@@ -372,9 +373,9 @@ class Moderation extends Component
             && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved && $military_saved
             && $media_saved && $contrast_saved && $sharpness_saved && $brightness_saved
         ) {
-            echo "Image Data Stored Successfully";
+            return true;
         } else {
-            exit("Error: Failed to store data");
+            return false;
         }
     }
 }
