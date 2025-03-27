@@ -47,17 +47,19 @@ $this->params['title'] = $this->title;
 
                 </div>
             </div>
-            <div class="col-md-8">
-                <h1>Artifical Information</h1>
-                <?php
-                if ($model->type == 2) { ?>
-                    <?= $model->tags ?>
-                <?php }
-                if ($model->type == 3) { ?>
-                    <?= $model->imageDetails; ?>
-                <?php }
-                ?>
-            </div>
+            <?php if ($model->is_api_failed != 1) { ?>
+                <div class="col-md-8">
+                    <h1>Artifical Information</h1>
+                    <?php
+                    if ($model->type == 2) { ?>
+                        <?= $model->tags ?>
+                    <?php }
+                    if ($model->type == 3) { ?>
+                        <?= $model->imageDetails; ?>
+                    <?php }
+                    ?>
+                </div>
+            <?php } ?>
 
         </div>
 
