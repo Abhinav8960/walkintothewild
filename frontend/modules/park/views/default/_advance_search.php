@@ -35,9 +35,15 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <?php foreach ($parkoption as $value => $label) : ?>
-                            <div class="dropdown-item park_dropdown_item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
+                        <div class="form-group park_search_container">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" id="park_focus" class="form-control park_search" placeholder="Search Park">
+                        </div>
+                        <div id="park_dropdown">
+                            <?php foreach ($parkoption as $value => $label) : ?>
+                                <div class="dropdown-item park_dropdown_item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                     <?php
                     //  $form->field($model, 'safari_park_id')->dropDownList(
@@ -258,10 +264,16 @@ $(document).ready(function(){
     });
 });
 
-$('.park_dropdown_item').click(function(){
+// $('.park_dropdown_item').click(function(){
+//     var value = $(this).data('value');
+//     setTimeout(function () {
+//         window.location.href = `/park/`+value+``;
+//     }, 200);
+// });
+$(document).on('click', '.park_dropdown_item', function() {
     var value = $(this).data('value');
     setTimeout(function () {
-        window.location.href = `/park/`+value+``;
+        window.location.href = `/park/` + value;
     }, 200);
 });
 
@@ -290,6 +302,21 @@ $('.animal_search').on('keyup keypress', function() {
         $.get("/site/getanimal?text=" + $(this).val(), function(data) {
             $("select#safariparksearch-master_animal_id").html(data.animallist);
             $("#master_animal_dropdown").html(data.fordorp_item);
+        });
+    }, 300);
+});
+
+let parkdebounceTimer;
+$('.park_search').on('keyup keypress', function() {
+    var key = event.keyCode || event.which;
+    if (key === 13) { 
+        event.preventDefault();
+        return false;
+    }
+    clearTimeout(parkdebounceTimer);
+    parkdebounceTimer = setTimeout(() => {
+        $.get("/site/getpark?text=" + $(this).val(), function(data) {
+            $("#park_dropdown").html(data.fordorp_item);
         });
     }, 300);
 });
