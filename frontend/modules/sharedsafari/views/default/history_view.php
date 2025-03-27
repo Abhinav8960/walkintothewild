@@ -14,7 +14,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             foreach ($history_model as $share_safari) {
                 if ($share_safari['row_number'] != $total_count) { ?>
                     <li class="timeline-item mb-5">
-                        <p class="text-muted mb-2 fw-bold"><?= date('Y-m-d', $share_safari['date']) ?></p>
+                        <p class="text-muted mb-2 fw-bold"><?= date('d/m/Y', $share_safari['date']) ?></p>
 
                         <?php
                         foreach ($columns as $column_data) {
@@ -32,7 +32,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </li>
                 <?php } else { ?>
                     <li class="timeline-item mb-5">
-                        <p class="text-muted mb-2 fw-bold"><?= date('Y-m-d', $share_safari['date']) ?></p>
+                        <p class="text-muted mb-2 fw-bold"><?= date('d/m/Y', $share_safari['date']) ?></p>
                         <p class="text-muted">Created Share Safari</p>
                     </li>
                 <?php } ?>

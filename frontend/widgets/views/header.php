@@ -19,7 +19,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	<nav class="navbar navbar-expand-lg ">
 		<div class="container-fluid">
 			<a href="/">
-				<img src="<?= $this->params['baseurl'] ?>/img/WLogoLightgreen.svg" alt="logo" width="66px" class="logo pt-1">
+				<img src="<?= $this->params['baseurl'] ?>/img/WLogoLightgreen.svg" alt="logo" width="50px" class="logo pt-1">
 			</a>
 			<div class="d-flex align-items-center">
 				<div class="offcanvas offcanvas-end header_canvas" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">

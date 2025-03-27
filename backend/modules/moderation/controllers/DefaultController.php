@@ -11,6 +11,7 @@ use common\models\moderation\VideoMetadata;
 use FFMpeg\FFProbe;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -56,11 +57,18 @@ class DefaultController extends Controller
                             Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 2) {
-                            $this->getVideoFormat(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
+                            $format = $this->getVideoFormat(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             $this->getVideoStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             $this->getVideoAudioStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                            Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Video Extracted Successfully');
+                            if ($format->duration <= 30) {
+                                Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
+                                \Yii::$app->session->setFlash('success', 'Video Extracted Successfully');
+                            } else {
+                                $model->moderation_model->duration_flag = 1;
+                                $model->moderation_model->save(false);
+                                \Yii::$app->session->setFlash('success', 'Video Duration Exceed');
+
+                            }
                         } elseif ($model->moderation_model->type == 3) {
                             $this->getImageMetadata($model);
 
@@ -99,7 +107,7 @@ class DefaultController extends Controller
             $video_format->probe_score = $video_duration->get('probe_score');
             $video_format->tags = $video_duration->get('tags');
             $video_format->save(false);
-            return true;
+            return $video_format;
         }
 
         return null;
@@ -218,5 +226,23 @@ class DefaultController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Moderation::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

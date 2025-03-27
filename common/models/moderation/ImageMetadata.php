@@ -67,4 +67,18 @@ class ImageMetadata extends ActiveRecord
             'uploaded_at' => 'Uploaded At',
         ];
     }
+
+    public function getMetaAttributes()
+    {
+        return [
+
+            'Size' => $this->size,
+            'Height' => $this->height,
+            'Width' => $this->width,
+            'Extension' => $this->extension,
+            'Resolution' => $this->resolution,
+            'Orientation' => $this->orientation,
+            // 'Uploaded At' => $this->uploaded_at,
+        ];
+    }
 }

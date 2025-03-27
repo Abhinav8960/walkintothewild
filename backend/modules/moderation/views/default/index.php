@@ -32,9 +32,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'text-align: center;'],
                         'headerOptions' => ['style' => 'text-align: center;'],
                         'value' => function ($model) {
-                            if ($model->type == 1) {
-                                return 'Text';
-                            } elseif ($model->type == 2) {
+                            if ($model->type == 2) {
                                 return 'Video';
                             } elseif ($model->type == 3) {
                                 return 'Image';
@@ -47,10 +45,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'label' => 'Content',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->type == 1) {
-                                return  $model->text;
-                            } elseif ($model->type == 2) {
-                                // return  $model->video_url;
+                            if ($model->type == 2) {
                                 return "<video width='320' height='240' controls>
                                         <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
                                         </video>";
@@ -61,25 +56,66 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return 'Unknown';
                         },
                     ],
-
                     [
-                        'attribute' => 'moderation_details',
+                        'label' => 'Meta Data',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->type == 2 && $model->videoMetadata) {
+                                $attributes = [];
+                                foreach ($model->videoMetadata->metaAttributes as $key => $value) {
+                                    $attributes[] = "<strong>" . $key . ":</strong> " . $value;
+                                }
+                                return implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $attributes);
+                            } else if ($model->type == 3 && $model->imageMetadata) {
+                                $attributes = [];
+                                foreach ($model->imageMetadata->metaAttributes as $key => $value) {
+                                    $attributes[] = "<strong>" . $key . ":</strong> " . $value;
+                                }
+                                return implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $attributes);
+                            }
+                            return null;
+                        },
+                    ],
+                    [
                         'label' => 'Moderation Details',
                         'format' => 'raw',
                         'value' => function ($model) {
-
-                            if ($model->type == 1) {
-                                return $model->moderationTextDetails;
-                            }
-
                             if ($model->type == 2) {
-                                return $model->tags;
+                                return $model->indexVideotags;
                             }
-
                             if ($model->type == 3) {
-                                return $model->imageDetails;
+                                return $model->indexImageDetails;
+                            }
+                            return null;
+                        },
+                    ],
+
+                    [
+                        'label' => 'Duration Flag',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->type == 2) {
+                                return $model->duration_flag == 1 ? 'Yes' : 'No';
                             }
                         },
+                    ],
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '{view}&nbsp',
+
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['/moderation/default/view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+
+                                ]);
+                            },
+                        ]
                     ],
 
                 ],

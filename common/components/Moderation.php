@@ -67,9 +67,10 @@ class Moderation extends Component
     // private $sightEnginesecretId = "FRrzHTpHk7GBvY86HokP7MV884SbrRHu"; // Anurag
 
     public $sights = [
-        "689569113" => "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX",
+        // "689569113" => "YbuJVoxpbSbq88oXokhQ3hsfKhCVsGGX",
         // "460273805" => "AHEYH7qsx2qwTTrwcqtqVFhnkT2e7zPn",
         // "101632135" => "FRrzHTpHk7GBvY86HokP7MV884SbrRHu",
+        "1385388220" => "MmZSXfoMig4Su2woS4pJRF7gcHj4DGht",
     ];
 
     private $models = [
@@ -97,7 +98,34 @@ class Moderation extends Component
         'gambling',
         'destruction',
         'military',
-        // 'audio-profanity','
+        'audio-profanity',
+    ];
+
+    private $img_models = [
+        'nudity-2.1',
+        'weapon',
+        'alcohol',
+        'recreational_drug',
+        'medical',
+        'properties',
+        'type',
+        'quality',
+        'offensive-2.0',
+        'faces',
+        'scam',
+        'text-content',
+        'face-attributes',
+        'gore-2.0',
+        'text',
+        'qr-content',
+        'tobacco',
+        'genai',
+        'violence',
+        'self-harm',
+        'money',
+        'gambling',
+        'destruction',
+        'military',
     ];
 
 
@@ -108,7 +136,7 @@ class Moderation extends Component
             try {
                 $params = array(
                     'url' =>  $url,
-                    'models' => implode(',', $this->models),
+                    'models' => implode(',', $this->img_models),
                     'api_user' => $key,
                     'api_secret' => $sight,
                 );
@@ -296,14 +324,14 @@ class Moderation extends Component
         $image_quality_saved = VideoImageQualityDetection::imagequalitystore($fb, $id);
         $destruction_saved = VideoDestruction::destructionstore($fb, $id);
         $military_saved = VideoMilitary::militarystore($fb, $id);
-        // $audio_saved = VideoAudio::audiostore($fb, $id);
+        $audio_saved = VideoAudio::audiostore($fb, $id);
         $text_saved = VideoText::textstore($fb, $id);
         $face_saved = VideoFace::facestore($fb, $id);
         $scam_saved = VideoScam::scamstore($fb, $id);
 
         if (
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
-            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved && $scam_saved
+            && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved && $scam_saved && $audio_saved
         ) {
             echo "Stored Successfully";
         } else {
