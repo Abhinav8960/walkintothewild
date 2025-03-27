@@ -32,7 +32,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy'],
+                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -44,7 +44,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login'],
+                        'actions' => ['login', 'social-login', 'error'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -75,9 +75,7 @@ class SiteController extends RestController
     public function actions()
     {
         return [
-            // 'error' => [
-            //     'class' => 'yii\web\ErrorAction',
-            // ],
+
             'file' => [
                 'class' => \diecoding\flysystem\actions\FileAction::class,
                 // 'component' => 'fs',
@@ -89,8 +87,15 @@ class SiteController extends RestController
     public function actionError()
     {
         $exception = \Yii::$app->errorHandler->exception;
+
         if ($exception !== null) {
-            return $this->render('error', ['exception' => $exception]);
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            Yii::$app->response->statusCode = $exception->statusCode ?? 500;
+            $data = [
+                'status' => $exception->statusCode ?? 500,
+                'message' => $exception->getMessage(),
+            ];
+            return Yii::$app->api->sendFailedResponse($data, NULL, $exception->statusCode ?? 500);
         }
     }
 
@@ -200,8 +205,6 @@ class SiteController extends RestController
 
     public function actionProfile()
     {
-
-
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
 
         $data = [];
@@ -250,7 +253,7 @@ class SiteController extends RestController
     {
         $term_of_use = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
         if ($term_of_use) {
-            return \Yii::$app->api->sendResponse($data = [  'content' => $term_of_use->content ], ['message' => "Success"]);
+            return \Yii::$app->api->sendResponse($data = ['content' => $term_of_use->content], ['message' => "Success"]);
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
@@ -259,7 +262,7 @@ class SiteController extends RestController
     {
         $privacy_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
         if ($privacy_policy) {
-            return \Yii::$app->api->sendResponse($data = [ 'content' => $privacy_policy->content], ['message' => "Success"]);
+            return \Yii::$app->api->sendResponse($data = ['content' => $privacy_policy->content], ['message' => "Success"]);
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }

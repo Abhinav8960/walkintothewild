@@ -53,6 +53,10 @@ return [
 
     ],
     'components' => [
+        'errorHandler' => [
+            'errorAction' => 'site/error',
+            'class' => 'api\components\CustomErrorHandler',
+        ],
         'api' => [
             'class' => 'api\components\Api',
         ],
@@ -84,18 +88,17 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
-                ],
+                ]
             ],
         ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
+
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'site/error' => 'site/error',
                 'site/file' => 'site/file',
                 'master-meta-info' => 'site/master-meta-info',
                 'social-login' => 'site/social-login',
@@ -104,11 +107,9 @@ return [
                 'termofuse' => 'site/termofuse',
                 'privacypolicy' => 'site/privacypolicy',
                 'update-token' => 'site/update-token',
-
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',
                 'master/<action>/<slug>' => 'master/default/<action>',
-
                 'park' => 'park/default/index',
                 'filter-parklist' => 'park/default/filter-parklist',
                 'park/<slug>' => 'park/default/view',
@@ -118,8 +119,6 @@ return [
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/flagreason' => 'sharesafari/default/flagreason',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
-
-
                 'posts' => 'posts/default/index',
                 'posts-images' => 'posts/default/posts-images',
                 'posts/<action>' => 'posts/default/<action>',

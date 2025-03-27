@@ -52,6 +52,7 @@ class Api extends Component
 
     public function sendFailedResponse($errors = [], $additional_info = NULL, $error_code = 400)
     {
+
         $this->setHeader($error_code);
         $msg = [];
         // $response = array('status' => false, 'error_code' => $error_code, 'errors' => $errors);
@@ -60,8 +61,8 @@ class Api extends Component
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);
         }
-        // return $response = json_encode($response);
-        return $response;
+        return $response = json_encode($response);
+        // return $this->send($response);
 
 
         exit;
@@ -200,5 +201,13 @@ class Api extends Component
         } else {
             return  Yii::$app->api->sendFailedStringResponse(["Invalid Access token"]);
         }
+    }
+
+
+    public function send($data)
+    {
+        $response = new \yii\web\Response();
+        $response->data = $data;
+        $response->send();
     }
 }
