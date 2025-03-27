@@ -5,6 +5,7 @@ namespace backend\modules\moderation\controllers;
 use common\models\moderation\form\ModerationForm;
 use common\models\moderation\ImageMetadata;
 use common\models\moderation\Moderation;
+use common\models\moderation\ModerationSearch;
 use common\models\moderation\VideoAudioMetaData;
 use common\models\moderation\VideoFormat;
 use common\models\moderation\VideoMetadata;
@@ -26,16 +27,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $query = Moderation::find();
-
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
+        $searchModel = new ModerationSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
