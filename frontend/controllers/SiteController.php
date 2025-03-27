@@ -28,6 +28,7 @@ use common\models\trierror\form\ErrorLogForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use common\models\notification\FrontendNotification;
+use common\models\park\SafariPark;
 use common\models\trierror\form\FrontendErrorLogForm;
 
 /**
@@ -593,5 +594,34 @@ class SiteController extends FrontendBaseController
 
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return ['fordorp_item' => $fordorp_item, 'animallist' => $animallist];
+    }
+
+
+    public function actionGetpark($text = '')
+    {
+        $fordorp_item = '';
+        // $parklist = '';
+        if ($text <> '') {
+            $parks = SafariPark::find()
+                ->where(['status' => SafariPark::STATUS_ACTIVE, 'show_in_filter' => 1])
+                ->andFilterWhere(['like', 'title', $text])
+                ->all();
+
+            // $parklist .= "<option value=''></option>";
+            foreach ($parks as $park) {
+                $fordorp_item .= "<div class='dropdown-item park_dropdown_item' data-value='$park->slug'>$park->title </div>";
+                // $parklist .= "<option value='" . $park->slug . "'>" . $park->title . "</option>";
+            }
+        } else {
+            $parkoptions = GeneralModel::safariparklist('slug');
+            // $parklist .= "<option value=''></option>";
+            foreach ($parkoptions as $value => $label) {
+                $fordorp_item .= "<div class='dropdown-item park_dropdown_item'  data-value='$value'>$label </div>";
+                // $parklist .= "<option value='" . $value . "'>" . $label . "</option>";
+            }
+        }
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return ['fordorp_item' => $fordorp_item];
     }
 }
