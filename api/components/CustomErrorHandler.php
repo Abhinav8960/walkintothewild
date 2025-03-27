@@ -25,8 +25,11 @@ class CustomErrorHandler extends ErrorHandler
 
         // $response->data = $this->convertExceptionToString($exception);
 
-        $response->data = $this->convertExceptionToArray($exception);
         $result = \Yii::$app->runAction($this->errorAction);
+        // $response->data = $this->convertExceptionToArray($exception);
+        // $response->data = json_decode($result);
+        $response->data = $result;
+        
 
         $response->send();
 

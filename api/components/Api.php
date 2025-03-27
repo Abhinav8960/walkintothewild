@@ -42,11 +42,10 @@ class Api extends Component
         if (isset($_GET['callback'])) {
             /* this is required for angularjs1.0 client factory API calls to work */
             $response = $_GET['callback'] . "(" . $response . ")";
-
-            return $response;
-        } else {
-            return $response;
-        }
+            
+        } 
+       
+        return $response;
     }
 
 
@@ -84,37 +83,37 @@ class Api extends Component
 
 
 
-    public function sendSuccessResponse($data = false, $additional_info = false)
-    {
+    // public function sendSuccessResponse($data = false, $additional_info = false)
+    // {
 
-        $this->setHeader(200);
+    //     $this->setHeader(200);
 
-        $response = [];
-        $response['status'] = true;
+    //     $response = [];
+    //     $response['status'] = true;
 
-        if (is_array($data))
-            // $response['data'] = $data;
-            $response = $data;
-
-
-        if ($additional_info) {
-            $response = array_merge($response, $additional_info);
-        }
-
-        // $response = Json::encode($response, JSON_PRETTY_PRINT);
+    //     if (is_array($data))
+    //         // $response['data'] = $data;
+    //         $response = $data;
 
 
-        if (isset($_GET['callback'])) {
-            /* this is required for angularjs1.0 client factory API calls to work */
-            $response = $_GET['callback'] . "(" . $response . ")";
+    //     if ($additional_info) {
+    //         $response = array_merge($response, $additional_info);
+    //     }
 
-            return $response;
-        } else {
-            return $response;
-        }
+    //     // $response = Json::encode($response, JSON_PRETTY_PRINT);
 
-        exit;
-    }
+
+    //     if (isset($_GET['callback'])) {
+    //         /* this is required for angularjs1.0 client factory API calls to work */
+    //         $response = $_GET['callback'] . "(" . $response . ")";
+
+    //         return $response;
+    //     } else {
+    //         return $response;
+    //     }
+
+    //     exit;
+    // }
 
     protected function setHeader($status)
     {
@@ -152,15 +151,7 @@ class Api extends Component
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
 
-    public function createAuthorizationCode($user_id)
-    {
 
-        $code = md5(uniqid()) . '_' . $user_id . '_' . time();
-
-
-
-        return ($code);
-    }
 
     public function createAccesstoken($user, $params = NULL)
     {
@@ -190,24 +181,7 @@ class Api extends Component
         return ($model);
     }
 
-    public function refreshAccesstoken($token)
-    {
-        $access_token = UserSession::findOne(['token' => $token]);
-        if ($access_token) {
-
-            $access_token->delete();
-            $new_access_token = $this->createAccesstoken($access_token->user);
-            return ($new_access_token);
-        } else {
-            return  Yii::$app->api->sendFailedStringResponse(["Invalid Access token"]);
-        }
-    }
 
 
-    public function send($data)
-    {
-        $response = new \yii\web\Response();
-        $response->data = $data;
-        $response->send();
-    }
+    
 }

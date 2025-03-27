@@ -267,6 +267,7 @@ class RestController extends Controller
     {
         parent::afterAction($action, $result);
 
+
         //start code to each request trace by sonu shokeen
         $request = Yii::$app->request;
         $user = $this->userinfo;
@@ -311,7 +312,7 @@ class RestController extends Controller
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
             $model->device =  NULL;
-            $model->response =  json_encode($response);
+            $model->response =  is_array($result) ? json_encode($result) : $result;
             $model->system =  NULL;
             $model->platform =  NULL;
             $model->browser =  NULL;
@@ -363,6 +364,4 @@ class RestController extends Controller
     {
         return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
     }
-
-   
 }

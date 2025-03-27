@@ -92,10 +92,16 @@ class SiteController extends RestController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             Yii::$app->response->statusCode = $exception->statusCode ?? 500;
             $data = [
-                'status' => $exception->statusCode ?? 500,
+                // 'status' => $exception->statusCode ?? 500,
+                "name"  => ($exception instanceof \Exception || $exception instanceof \ErrorException) ? $exception->getName() : 'Exception',
                 'message' => $exception->getMessage(),
+                "code"  => $exception->getCode(),
+                "type"  =>get_class($exception),
+                "file"  => $exception->getFile(),
+                "line"  => $exception->getLine(),
+                // "stack-trace"  => $exception->getTrace(),
             ];
-            return Yii::$app->api->sendFailedResponse($data, NULL, $exception->statusCode ?? 500);
+            return Yii::$app->api->sendResponse($data, NULL, $exception->statusCode ?? 500);
         }
     }
 
