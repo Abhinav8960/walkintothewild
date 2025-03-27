@@ -25,12 +25,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width:5px; text-align:center;']
+                    ],
                     [
                         'attribute' => 'Type',
                         'label' => 'Type',
-                        'contentOptions' => ['style' => 'text-align: center;'],
-                        'headerOptions' => ['style' => 'text-align: center;'],
+                        'contentOptions' => ['style' => 'width:10px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:10px; text-align:center;'],
                         'value' => function ($model) {
                             if ($model->type == 2) {
                                 return 'Video';
@@ -44,34 +47,44 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'attribute' => 'content',
                         'label' => 'Content',
                         'format' => 'raw',
+                        'contentOptions' => ['style' => 'width:30px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:30px; text-align:center;'],
                         'value' => function ($model) {
                             if ($model->type == 2) {
-                                return "<video width='320' height='240' controls>
-                                        <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
-                                        </video>";
+                                return "<div style='text-align: center;'>
+                                            <video width='320' height='240' controls>
+                                                <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
+                                            </video>
+                                        </div>";
                             } elseif ($model->type == 3) {
-                                // return  "<img src='" . \Yii::$app->params['cloud_front_url'] .  $model->image_url . "' alt='' height='240px' width='320px'>";
-                                return Html::img(\Yii::$app->params['cloud_front_url'] . $model->image_url, ['alt' => 'Uploaded Image', 'height' => '240px', 'width' => '320px']);
+                                return Html::tag('div', Html::img(Yii::$app->params['cloud_front_url'] . $model->image_url, [
+                                    'alt' => 'Uploaded Image',
+                                    'height' => '240px',
+                                    'width' => '320px'
+                                ]), ['style' => 'text-align: center;']);
                             }
                             return 'Unknown';
                         },
                     ],
+                    
                     [
                         'label' => 'Meta Data',
                         'format' => 'raw',
+                        'contentOptions' => ['style' => 'width:80px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:80px; text-align:center;'],
                         'value' => function ($model) {
                             if ($model->type == 2 && $model->videoMetadata) {
                                 $attributes = [];
                                 foreach ($model->videoMetadata->metaAttributes as $key => $value) {
                                     $attributes[] = "<strong>" . $key . ":</strong> " . $value;
                                 }
-                                return implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $attributes);
+                                return implode('<br>', $attributes);
                             } else if ($model->type == 3 && $model->imageMetadata) {
                                 $attributes = [];
                                 foreach ($model->imageMetadata->metaAttributes as $key => $value) {
                                     $attributes[] = "<strong>" . $key . ":</strong> " . $value;
                                 }
-                                return implode('&nbsp;&nbsp;|&nbsp;&nbsp;', $attributes);
+                                return implode('<br>', $attributes);
                             }
                             return null;
                         },
@@ -79,6 +92,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'label' => 'Moderation Details',
                         'format' => 'raw',
+                        'contentOptions' => ['style' => 'width:80px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:80px; text-align:center;'],
                         'value' => function ($model) {
                             if ($model->type == 2) {
                                 return $model->indexVideotags;
@@ -93,6 +108,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'label' => 'Duration Flag',
                         'format' => 'raw',
+                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
                         'value' => function ($model) {
                             if ($model->type == 2) {
                                 return $model->duration_flag == 1 ? 'Yes' : 'No';
@@ -103,7 +120,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
                         'template' => '{view}&nbsp',
 
                         'buttons' => [
