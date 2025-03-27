@@ -7,6 +7,7 @@ use yii\rest\Controller;
 use common\models\UserSession;
 use api\models\User;
 use common\models\RenderedContent;
+use common\models\trierror\ApiRequestLog;
 use common\models\trierror\FrontendRequestLog;
 
 class RestController extends Controller
@@ -307,14 +308,14 @@ class RestController extends Controller
 
         $request_url = $request->pathInfo;
         if (strpos($request_url, 'storage') === false) {
-            $model = new FrontendRequestLog();
+            $model = new ApiRequestLog();
             $model->isApi = 1;
             $model->user_id = $userid;
             $model->slug = $slug;
             $model->route = $route;
             $model->request_url = $request->pathInfo;
             $model->request_full_url = $request->absoluteUrl;
-            $model->refer_url = $refer_url;
+            // $model->refer_url = $refer_url;
             $model->request_type = $request->method;
             $model->request_parameter = json_encode($request->queryParams);
             $model->user_ip = $request->getRemoteIP();
