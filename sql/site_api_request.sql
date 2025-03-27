@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 26, 2025 at 06:39 PM
+-- Generation Time: Mar 27, 2025 at 04:00 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
--- PHP Version: 8.1.31
+-- PHP Version: 8.1.2-1ubuntu2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `witw_staging`
+-- Database: `wildwalks`
 --
 
 -- --------------------------------------------------------
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `site_api_request`
 --
 
+DROP TABLE IF EXISTS `site_api_request`;
 CREATE TABLE `site_api_request` (
   `id` int NOT NULL,
   `user_id` int NOT NULL DEFAULT '0',
@@ -43,8 +44,7 @@ CREATE TABLE `site_api_request` (
   `response_error` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `is_server_error` tinyint DEFAULT NULL,
   `is_client_error` tinyint DEFAULT NULL,
-  `isAjax` tinyint DEFAULT NULL,
-  `isApi` tinyint DEFAULT '0',
+  `response` text COLLATE utf8mb4_general_ci,
   `device` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `system` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `platform` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -54,6 +54,11 @@ CREATE TABLE `site_api_request` (
   `is_reqeust_trace` tinyint NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `site_api_request`
+--
+
 
 --
 -- Indexes for dumped tables
@@ -73,7 +78,7 @@ ALTER TABLE `site_api_request`
 -- AUTO_INCREMENT for table `site_api_request`
 --
 ALTER TABLE `site_api_request`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
