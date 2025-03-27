@@ -2,11 +2,13 @@
 
 namespace common\models\moderation;
 
+use common\traits\CommanRelationship;
 use Yii;
 use yii\helpers\Html;
 
-class Moderation extends \common\models\moderation\ActiveRecord
+class Moderation extends \common\models\moderation\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
