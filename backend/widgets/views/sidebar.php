@@ -1101,6 +1101,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Backend Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/front")) ? "active" : "" ?>" href="/portalsetting/log/front">Frontend Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/trierror/api-request-log/index">Api Request Log</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
