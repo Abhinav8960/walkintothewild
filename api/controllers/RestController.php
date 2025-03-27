@@ -138,7 +138,7 @@ class RestController extends Controller
     }
 
 
-    protected function dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1,$searchfunction="search")
+    protected function dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search")
     {
         $data = [];
         $searchModel->load(\Yii::$app->request->queryParams);
@@ -183,7 +183,7 @@ class RestController extends Controller
 
     protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false)
     {
-        $data =[];
+        $data = [];
         if ($dataProvider->pagination && $singleRecord == false) {
 
             $dataProvider->pagination->pageSize = $this->pageSize;
@@ -282,19 +282,6 @@ class RestController extends Controller
             $route = $route_map[0];
         }
 
-        // $system_type = '';
-        // if ($agent->isMobile()) {
-        //     $system_type = 'Mobile';
-        // } else if ($agent->isTablet()) {
-        //     $system_type = 'Tablet';
-        // } else if ($agent->isDesktop()) {
-        //     $system_type = 'Desktop';
-        // }
-
-        // $isAjax = 0;
-        // if ($request->isAjax) {
-        //     $isAjax = 1;
-        // }
 
         $userid = 0;
         if (isset($user->id) && !empty($user->id)) {
@@ -309,7 +296,6 @@ class RestController extends Controller
         $request_url = $request->pathInfo;
         if (strpos($request_url, 'storage') === false) {
             $model = new ApiRequestLog();
-            $model->isApi = 1;
             $model->user_id = $userid;
             $model->slug = $slug;
             $model->route = $route;
@@ -324,8 +310,8 @@ class RestController extends Controller
             $model->is_server_error = $response->isServerError;
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
-            $model->isAjax = NULL;
             $model->device =  NULL;
+            $model->response =  json_encode($response);
             $model->system =  NULL;
             $model->platform =  NULL;
             $model->browser =  NULL;
@@ -377,4 +363,6 @@ class RestController extends Controller
     {
         return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
     }
+
+   
 }
