@@ -7017,6 +7017,29 @@ select.custom_sort_by_input option.selected {
   border: 1px solid gray;
 }
 
+
+.park_search_container .form-control {
+  padding-left: 2.375rem;
+}
+
+.park_search_container .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+#park_focus:focus {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid gray;
+}
+
 .parks-scroll-container {
   max-height: 520px;
   overflow-y: auto;
