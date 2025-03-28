@@ -57,19 +57,30 @@ class DefaultController extends Controller
                             $this->getVideoStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             $this->getVideoAudioStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
                             if ($format->duration <= 30) {
-                                Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                                \Yii::$app->session->setFlash('success', 'Video Extracted Successfully');
+                                $saved = Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
+                                if (!$saved) {
+                                    $model->moderation_model->is_api_failed = 1;
+                                    $model->moderation_model->save(false);
+                                    \Yii::$app->session->setFlash('success', 'Video Not Extracted Successfully');
+                                } else {
+                                    \Yii::$app->session->setFlash('success', 'Video Extracted Successfully');
+                                }
                             } else {
                                 $model->moderation_model->duration_flag = 1;
                                 $model->moderation_model->save(false);
                                 \Yii::$app->session->setFlash('success', 'Video Duration Exceed');
-
                             }
                         } elseif ($model->moderation_model->type == 3) {
                             $this->getImageMetadata($model);
 
-                            Yii::$app->moderation->imageFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->image_url, $model->moderation_model->id);
-                            \Yii::$app->session->setFlash('success', 'Extracted Successfully');
+                            $saved =  Yii::$app->moderation->imageFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->image_url, $model->moderation_model->id);
+                            if (!$saved) {
+                                $model->moderation_model->is_api_failed = 1;
+                                $model->moderation_model->save(false);
+                                \Yii::$app->session->setFlash('success', 'Not Extracted Successfully');
+                            } else {
+                                \Yii::$app->session->setFlash('success', 'Extracted Successfully');
+                            }
                         }
 
                         return $this->redirect(['index']);
