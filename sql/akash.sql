@@ -4,6 +4,9 @@ ALTER TABLE `user_posts` ADD `master_animal_id` INT NULL AFTER `description`, AD
 
 
 
+ALTER TABLE `moderation` CHANGE `model` `collection` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `model_id` `collection_id` INT NULL DEFAULT NULL;
+
+
 ALTER TABLE `moderation` ADD `is_api_failed` INT NULL DEFAULT '0' AFTER `duration_flag`;
 -- 26 march
 ALTER TABLE `moderation`  ADD `model` VARCHAR(255) NULL DEFAULT NULL  AFTER `updated_by`,  ADD `model_id` INT NULL DEFAULT NULL  AFTER `model`;

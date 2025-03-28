@@ -129,37 +129,32 @@ class Moderation extends Component
         'military',
     ];
 
-    public function prepareModeration($content, $type, $ownermodel, $model_id)
-    {
 
+    public function prepareModeration($content, $type, $model, $model_id)
+    {
         $model = new ModerationModeration();
-        $model->collection = $ownermodel;
-        $model->collection_id = $model_id;
+        $model->type = $type;
+        $model->model = $model;
+        $model->model_id = $model_id;
         if ($type == ModerationForm::MODERATION_TYPE_IMAGE) {
-            $model->type = ModerationModeration::MODERATION_TYPE_IMAGE;
-            $model->image_url = $content;
-        } elseif ($type == ModerationForm::MODERATION_TYPE_VIDEO) {
-            $model->type = ModerationModeration::MODERATION_TYPE_VIDEO;
             $model->video_url = $content;
+        } elseif ($type == ModerationForm::MODERATION_TYPE_VIDEO) {
+            $model->image_url = $content;
         } elseif ($type == ModerationForm::MODERATION_TYPE_TEXT) {
-            $model->type = ModerationModeration::MODERATION_TYPE_TEXT;
             $model->text = $content;
         }
-        // print_r($model);
-        // die();
         $model->save(false);
         // if (!$model->save(false)) {
         //     echo "Error: " . json_encode($model->errors);
         //     die;
         // }
-        if ($model->type == ModerationModeration::MODERATION_TYPE_IMAGE) {
-            $this->imageFeedback($model->image_url, $model->id);
-        } elseif ($model->type == ModerationModeration::MODERATION_TYPE_VIDEO) {
-            $this->videoFeedback($model->video_url, $model->id);
-        } elseif ($model->type == ModerationModeration::MODERATION_TYPE_TEXT) {
-            $this->textFeedback($model->text, $model->id);
+        if ($type == ModerationForm::MODERATION_TYPE_IMAGE) {
+            $this->imageFeedback($this->fileUrl, $model->id);
+        } elseif ($type == ModerationForm::MODERATION_TYPE_VIDEO) {
+            $this->videoFeedback($this->fileUrl, $model->id);
+        } elseif ($type == ModerationForm::MODERATION_TYPE_TEXT) {
+            $this->textFeedback($this->fileUrl, $model->id);
         }
-        return true;
     }
 
     public function imageFeedback($url, $moderationId)
@@ -179,7 +174,7 @@ class Moderation extends Component
                 $response = curl_exec($ch);
                 curl_close($ch);
                 $output = json_decode($response, true);
-                return $this->actionStoreImageFeedback($output, $moderationId);
+                $this->actionStoreImageFeedback($output, $moderationId);
                 return $output;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -207,7 +202,7 @@ class Moderation extends Component
                 $response = curl_exec($ch);
                 curl_close($ch);
                 $output = json_decode($response, true);
-                return $this->actionStoreVideoFeedback($output, $id);
+                $this->actionStoreVideoFeedback($output, $id);
                 return $output;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -255,7 +250,7 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/video.json");
         // }
-        return $this->actionVideoStore($feedback, $id);
+        $this->actionVideoStore($feedback, $id);
     }
     public function actionStoreImageFeedback($feedback, $moderationId)
     {
@@ -263,7 +258,7 @@ class Moderation extends Component
 
         //     $feedback = file_get_contents("/home/ak/project/walkintothewild/console/runtime/logs/image.json");
         // }
-        return $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE, $moderationId);
+        $this->actionStoreImage($feedback, ModerationForm::MODERATION_TYPE_IMAGE, $moderationId);
     }
     public function actionStoreTextFeedback($feedback, $moderationId)
     {
@@ -365,9 +360,9 @@ class Moderation extends Component
             $nudity_saved && $offensive_saved && $gore_saved && $weapon_saved && $self_harm_saved && $violence_saved && $recreational_saved && $medical_saved && $alcohol_saved && $gambling_saved && $smoking_saved && $money_saved
             && $color_saved && $type_saved && $image_quality_saved && $destruction_saved && $military_saved && $text_saved && $face_saved && $scam_saved && $audio_saved
         ) {
-            return true;
+            echo "Stored Successfully";
         } else {
-            return false;
+            exit("Error: Failed to store data");
         }
     }
 
@@ -404,9 +399,9 @@ class Moderation extends Component
             && $gambling_saved && $money_saved && $color_saved && $type_saved && $destruction_saved && $military_saved
             && $media_saved && $contrast_saved && $sharpness_saved && $brightness_saved
         ) {
-            return true;
+            echo "Image Data Stored Successfully";
         } else {
-            return false;
+            exit("Error: Failed to store data");
         }
     }
 }
