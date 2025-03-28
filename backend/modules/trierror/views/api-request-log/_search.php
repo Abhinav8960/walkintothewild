@@ -22,20 +22,14 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2 select_width">
-        <?= $form->field($model, 'user_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => [
-                'placeholder' => 'Select User',
-                'multiple' => false
-            ],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label(false) ?>
+    <div class="col-md-2">
+        <?= $form->field($model, 'user_id')->dropDownList(
+            yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
+            [
+                'prompt' => 'Select User',
+            ]
+        ) ?>
     </div>
-
     <!-- <div class="col-md-2">
         <?= $form->field($model, 'request_group')->dropDownList(
             $request_group_type,
@@ -46,15 +40,6 @@ use yii\widgets\ActiveForm;
     </div> -->
 
     <div class="col-md-2">
-        <?= $form->field($model, 'isApi')->dropDownList(
-            ['1' => 'Api Request'],
-            [
-                'prompt' => 'Select For Api Request Check',
-            ]
-        ) ?>
-    </div>
-
-    <div class="col-md-2">
         <?= $form->field($model, 'request_code')->dropDownList(
             $request_codes_list,
             [
@@ -62,7 +47,7 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
         <?= $form->field($model, 'is_count')->dropDownList(
             ['' => "Select All", '1' => 'Count Done', '0' => 'Count Pending'],
             [
@@ -77,7 +62,7 @@ use yii\widgets\ActiveForm;
                 'prompt' => 'Select Trace Status',
             ]
         ) ?>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>
