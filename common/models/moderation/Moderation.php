@@ -9,6 +9,9 @@ use yii\helpers\Html;
 class Moderation extends \common\models\moderation\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const MODERATION_TYPE_TEXT =1;
+    const MODERATION_TYPE_VIDEO =2;
+    const MODERATION_TYPE_IMAGE =3;
     /**
      * {@inheritdoc}
      */
@@ -23,7 +26,7 @@ class Moderation extends \common\models\moderation\ActiveRecord implements \comm
     public function rules()
     {
         return [
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['created_at', 'updated_at', 'created_by', 'updated_by','collection','collection_id'], 'default', 'value' => null],
             [['type'], 'required'],
             [['type', 'created_at', 'updated_at', 'created_by', 'updated_by', 'duration_flag','is_api_failed'], 'integer'],
             [['text'], 'string'],
