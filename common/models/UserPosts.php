@@ -36,12 +36,12 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function behaviors()
     {
         return [
-            [
-                'class' => \common\behaviors\ModerationBehavior::class,
-                'attributes' => ['filepath'],
-                'type' => 'type_of_post',
-                'type_options' => [SELF::IMAGE_TYPE => 'image', SELF::VIDEO_TYPE => 'video'],
-            ],
+            // [
+            //     'class' => \common\behaviors\ModerationBehavior::class,
+            //     'attributes' => ['filepath'],
+            //     'type' => 'type_of_post',
+            //     'type_options' => [SELF::IMAGE_TYPE => 'image', SELF::VIDEO_TYPE => 'video'],
+            // ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
