@@ -61,13 +61,13 @@ $this->params['title'] = $this->title;
                     //         return ucwords($model->request_group);
                     //     }
                     // ],
-                    [
-                        'label' => 'Slug',
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->slug;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Slug',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->slug;
+                    //     }
+                    // ],
                     [
                         'label' => 'URL',
                         'format' => 'raw',

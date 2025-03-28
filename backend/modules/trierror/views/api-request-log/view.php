@@ -79,33 +79,55 @@ $this->params['title'] = $this->title;
                     'request_parameter',
                     'request_data',
                     'request_code',
-                    // [
-                    //     'label' => 'Refer URL',
-                    //     'format' => 'raw',
-                    //     'contentOptions' => ['style' => 'color:#000;'],
-                    //     'value' => function ($model) {
-
-                    //         $temp = "<a target='_blank' href='" . $model->refer_url . "'>" . mb_strimwidth($model->refer_url, 0, 100, ' ...') . "</a>";
-                    //         return $temp;
-                    //     }
-                    // ],
                     [
-                        'label' => 'Refer History',
+                        'label' => 'Response',
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            return \common\models\GeneralModel::getreferhistory($model->route);;
+
+                            $temp = is_array($model->response) ? json_encode($model->response) : $model->response;
+                            return $temp;
+                        }
+                    ],
+                    // [
+                    //     'label' => 'Refer History',
+                    //     'format' => 'raw',
+                    //     'contentOptions' => ['style' => 'color:#000;'],
+                    //     'value' => function ($model) {
+                    //         return \common\models\GeneralModel::getreferhistory($model->route);;
+                    //     }
+                    // ],
+                    [
+                        'label' => 'Is Server Error ',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
+                        'value' => function ($model) {
+                            if ($model->is_server_error == 1)
+                                return 'Yes';
+                            else {
+                                return 'No';
+                            }
+                        }
+                    ],
+                    // 'is_client_error',
+                    [
+                        'label' => 'Is Client Error ',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
+                        'value' => function ($model) {
+                            if ($model->is_client_error == 1)
+                                return 'Yes';
+                            else {
+                                return 'No';
+                            }
                         }
                     ],
                     'response_error',
-                    'is_server_error',
-                    'is_client_error',
-                    'isAjax',
-                    'device',
-                    'system',
-                    'platform',
-                    'browser',
-                    'browser_version',
+                    // 'device',
+                    // 'system',
+                    // 'platform',
+                    // 'browser',
+                    // 'browser_version',
                     // 'is_count',
                     [
                         'label' => 'created_at',

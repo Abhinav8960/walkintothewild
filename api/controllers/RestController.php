@@ -271,11 +271,20 @@ class RestController extends Controller
         //start code to each request trace by sonu shokeen
         $request = Yii::$app->request;
         $user = $this->userinfo;
-        // $agent = new \Jenssegers\Agent\Agent();
-        // $agent->setUserAgent(Yii::$app->request->userAgent);
-        $refer_url = Yii::$app->request->referrer;
+        $agent = new \Jenssegers\Agent\Agent();
+        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $refer_url = Yii::$app->request->referrer;
         $response = Yii::$app->response;
 
+
+        $system_type = '';
+        if ($agent->isMobile()) {
+            $system_type = 'Mobile';
+        } else if ($agent->isTablet()) {
+            $system_type = 'Tablet';
+        } else if ($agent->isDesktop()) {
+            $system_type = 'Desktop';
+        }
 
         $route = "";
         $route_map = $request->resolve();
@@ -289,7 +298,7 @@ class RestController extends Controller
             $userid = $user->id;
         }
 
-        $slug = '';
+        $slug = 'N/A';
         if (array_key_exists('slug', $request->queryParams)) {
             $slug = $request->queryParams['slug'];
         }
@@ -302,7 +311,6 @@ class RestController extends Controller
             $model->route = $route;
             $model->request_url = $request->pathInfo;
             $model->request_full_url = $request->absoluteUrl;
-            // $model->refer_url = $refer_url;
             $model->request_type = $request->method;
             $model->request_parameter = json_encode($request->queryParams);
             $model->user_ip = $request->getRemoteIP();
@@ -311,12 +319,12 @@ class RestController extends Controller
             $model->is_server_error = $response->isServerError;
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
-            $model->device =  NULL;
+            $model->device = $agent->device();
             $model->response =  is_array($result) ? json_encode($result) : $result;
-            $model->system =  NULL;
-            $model->platform =  NULL;
-            $model->browser =  NULL;
-            $model->browser_version =  NULL;
+            $model->system = $system_type;
+            $model->platform = $agent->platform();
+            $model->browser = $agent->browser();
+            $model->browser_version = $agent->version($agent->browser());
             $model->save(false);
         }
         //end code to each request trace by sonu shokeen

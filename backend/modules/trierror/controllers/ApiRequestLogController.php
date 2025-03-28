@@ -85,7 +85,7 @@ class ApiRequestLogController extends Controller
 
     public function actionUserView($id)
     {
-        $model = ApiRequestLog::find()->where(['user_id' => $id])->andWhere(['request_code' => 302])->orderBy('created_at DESC')->asArray()->all();
+        $model = ApiRequestLog::find()->where(['user_id' => $id])->andWhere(['request_code' => 302])->groupBy('route')->orderBy('created_at DESC')->asArray()->all();
         return $this->render('user-view', [
             'model' => $model,
         ]);
