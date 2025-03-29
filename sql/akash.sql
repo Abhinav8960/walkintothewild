@@ -1,5 +1,6 @@
 ALTER TABLE `user_posts` ADD `master_animal_id` INT NULL AFTER `description`, ADD `safari_session_id` INT NULL AFTER `master_animal_id`, ADD `post_datetime` INT NULL AFTER `safari_session_id`, ADD `zone_id` INT NULL AFTER `post_datetime`;
-
+ALTER TABLE `user_posts` DROP `location`;
+ALTER TABLE `user_posts` ADD `location` INT NULL AFTER `longitude`;
 -- 28 March
 
 
