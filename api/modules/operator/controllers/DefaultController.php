@@ -124,68 +124,68 @@ class DefaultController extends RestController
     public function actionFollow($slug)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if ($operator) {
-            if ($this->userinfo) {
-                if ($this->userinfoId == $operator->user_id) {
-                    return Yii::$app->api->sendResponse($data = [], ['message' => "You can't follow yourself!"]);
-                }
+        if (!$operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'Operator not Found']);
+        }
+        if ($this->userinfo) {
+            if ($this->userinfoId == $operator->user_id) {
+                return Yii::$app->api->sendResponse($data = [], ['message' => "You can't follow yourself!"]);
+            }
 
-                $follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $operator->user_id])->one();
-                if (!$follower) {
-                    $follower = new UserFollow();
-                }
+            $follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $operator->user_id])->one();
+            if (!$follower) {
+                $follower = new UserFollow();
+            }
 
-                $follower->user_id = $this->userinfoId;
-                $follower->follow_user_id = $operator->user_id;
-                $follower->status = 1;
+            $follower->user_id = $this->userinfoId;
+            $follower->follow_user_id = $operator->user_id;
+            $follower->status = 1;
 
-                if ($follower->save(false)) {
+            if ($follower->save(false)) {
 
-                    // $to_mail = $operator->email;
-                    // $subject = 'Follow Request';
-                    // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
-                    // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'Follow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                    // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                    // FrontendNotificationHelper::operatorNewFollower($operator, $this->userinfo);
-                    Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You are start following']);
-                } else {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'You can not follow this operator currently!']);
-                }
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // FrontendNotificationHelper::operatorNewFollower($operator, $this->userinfo);
+                Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You are start following']);
+            } else {
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'You can not follow this operator currently!']);
             }
         }
-        return  Yii::$app->api->sendFailedStringResponse($operator->firstErrors, 400);
     }
 
     public function actionUnfollow($slug)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if ($operator) {
-            if ($this->userinfo) {
-                $my_follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $operator->user_id])->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'Operator not Found']);
+        }
+        if ($this->userinfo) {
+            $my_follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $operator->user_id])->one();
 
-                $my_follower->user_id = $this->userinfoId;
-                $my_follower->follow_user_id = $operator->user_id;
-                $my_follower->status = 0;
+            $my_follower->user_id = $this->userinfoId;
+            $my_follower->follow_user_id = $operator->user_id;
+            $my_follower->status = 0;
 
-                if ($my_follower->save(false)) {
+            if ($my_follower->save(false)) {
 
-                    // $to_mail = $operator->email;
-                    // $subject = 'UnFollow Request';
-                    // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
-                    // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'UnFollow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                    // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                    Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You unfollowed']);
-                } else {
-                    Yii::$app->session->setFlash('success', 'You can not unfollow this operator currently!');
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'You cannot unfollowed']);
-                }
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You unfollowed']);
+            } else {
+                Yii::$app->session->setFlash('success', 'You can not unfollow this operator currently!');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => 'You cannot unfollowed']);
             }
         }
-        return  Yii::$app->api->sendFailedStringResponse($operator->firstErrors, 400);
     }
 
     public function actionReviewlist($slug, $sort_by = null)
