@@ -197,55 +197,56 @@ class DefaultController extends SafariController
     public function actionJoin($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
-        if ($share_safari) {
-            if ($this->userinfo) {
-                if ($this->userinfo->operator) {
-                    return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
-                }
-                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-                if (!$share_safari_intrested) {
-                    $share_safari_intrested = new ShareSafariIntrested();
-                }
-                $agent = new \Jenssegers\Agent\Agent();
-                $agent->setUserAgent(Yii::$app->request->userAgent);
-                $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
-                $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
-                $share_safari_intrested->user_device  = $agent->device();
-                $share_safari_intrested->user_platform = $agent->platform();
-                $share_safari_intrested->user_browser = $agent->browser();
-                $share_safari_intrested->park_id = $share_safari->park_id;
-                $share_safari_intrested->share_safari_id = $share_safari->id;
-                $share_safari_intrested->user_id = $this->userinfoId;
-                $share_safari_intrested->status = 1;
-                $share_safari_intrested->intrested_at = time();
-                if ($share_safari_intrested->save(false)) {
-                    /* Login User Info */
-                    // $user = $this->userinfo;
-                    // $username = $user->name;
-                    // /*Creator Info*/
-                    // if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
-                    //     $to_mail = $share_safari->user->username;
-                    // } else {
-                    //     $to_mail = $share_safari->safarioperator->user->username;
-                    // }
-                    // $creator_name = $share_safari->organizedbyname;
-                    // $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                    // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
-                    // $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-                    // $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
-                    // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                    // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                    // }
-
-                    FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
-                    FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
-                }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Joined!"]);
-            }
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
-        return  Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+
+        if ($this->userinfo) {
+            if ($this->userinfo->operator) {
+                return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
+            }
+            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+            if (!$share_safari_intrested) {
+                $share_safari_intrested = new ShareSafariIntrested();
+            }
+            $agent = new \Jenssegers\Agent\Agent();
+            $agent->setUserAgent(Yii::$app->request->userAgent);
+            $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
+            $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
+            $share_safari_intrested->user_device  = $agent->device();
+            $share_safari_intrested->user_platform = $agent->platform();
+            $share_safari_intrested->user_browser = $agent->browser();
+            $share_safari_intrested->park_id = $share_safari->park_id;
+            $share_safari_intrested->share_safari_id = $share_safari->id;
+            $share_safari_intrested->user_id = $this->userinfoId;
+            $share_safari_intrested->status = 1;
+            $share_safari_intrested->intrested_at = time();
+            if ($share_safari_intrested->save(false)) {
+                /* Login User Info */
+                // $user = $this->userinfo;
+                // $username = $user->name;
+                // /*Creator Info*/
+                // if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                //     $to_mail = $share_safari->user->username;
+                // } else {
+                //     $to_mail = $share_safari->safarioperator->user->username;
+                // }
+                // $creator_name = $share_safari->organizedbyname;
+                // $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
+                // $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                // $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
+
+                FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
+                FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Joined!"]);
+        }
     }
 
 
