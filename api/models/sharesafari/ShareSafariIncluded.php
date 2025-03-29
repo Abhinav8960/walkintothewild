@@ -26,9 +26,9 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
     public function getOption()
     {
         if ($this->selection == 1) {
-            return 'Include';
+            return 'Included';
         } elseif ($this->selection == 2) {
-            return 'Not Include';
+            return 'Not Included';
         } else {
             return 'Optional';
         }
