@@ -36,10 +36,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'post-image-upload', 'user-post-like'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'post-image-upload', 'user-post-like'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,7 +54,6 @@ class DefaultController extends RestController
                     'create' => ['POST'],
                     'comment' => ['POST'],
                     'reply' => ['POST'],
-                    'post-image-upload' => ['POST'],
                     'user-post-like' => ['POST'],
                     'comment-like' => ['POST']
                 ],
@@ -70,30 +69,35 @@ class DefaultController extends RestController
     {
         $searchModel = new UserPostSearch();
         $searchModel->status = UserPostSearch::STATUS_ACTIVE;
-        $searchModel->type_of_post = UserPosts::VIDEO_TYPE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
+        $searchModel->type_of_post = UserPosts::IMAGE_TYPE;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPostsImages");
     }
-
 
     public function actionCreate()
     {
-        $model = new UserPostsVideoForm();
+        $model = new UserPostsImageForm();
         $model->user_id = $this->userinfoId;
         $model->status = UserPosts::STATUS_ACTIVE;
 
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
+
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
-        $model->type_of_post = UserPosts::VIDEO_TYPE;
+        $model->type_of_post = UserPosts::IMAGE_TYPE;
 
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->user_photo_model->save()) {
+            if ($model->user_image_model->save()) {
                 $model->uploadFile();
-                $model->user_photo_model->v_size = $model->file->size;
-                $model->user_photo_model->v_duration = $this->getVideoDuration($model->file);
-                if ($model->user_photo_model->save()) {
+
+                if ($model->file) {
+                    list($width, $height) = getimagesize($model->file->tempName);
+                    $model->user_image_model->height = $height;
+                    $model->user_image_model->width = $width;
+                    $model->user_image_model->v_size = $model->file->size;
+                }
+
+                if ($model->user_image_model->save()) {
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
                 }
             }
@@ -102,6 +106,7 @@ class DefaultController extends RestController
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
+
     /**
      * 
      * @return string
@@ -198,69 +203,14 @@ class DefaultController extends RestController
         }
     }
 
-    /**
-     * 
-     * @return string
-     */
-    public function actionUserPosts($user_id)
-    {
-        $searchModel = new UserPostSearch();
-        $searchModel->user_id = $user_id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
-    }
-
-
-    private function getVideoDuration($tempFile)
-    {
-        $tempFilePath = $tempFile->tempName;
-        $getID3 = new getID3();
-        $fileInfo = $getID3->analyze($tempFilePath);
-        if (isset($fileInfo['playtime_seconds'])) {
-            return (int) $fileInfo['playtime_seconds'];
-        }
-        return 0;
-    }
-
-
-    public function actionPostImageUpload()
-    {
-        $model = new UserPostsImageForm();
-        $model->user_id = $this->userinfoId;
-        $model->status = UserPosts::STATUS_ACTIVE;
-
-        $model->load(\Yii::$app->request->post());
-        $model->setAttributes(\Yii::$app->request->post());
-
-        $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        $model->type_of_post = UserPosts::IMAGE_TYPE;
-
-        if ($model->validate()) {
-            $model->initializeForm();
-            if ($model->user_image_model->save()) {
-                $model->uploadFile();
-
-                if ($model->file) {
-                    list($width, $height) = getimagesize($model->file->tempName);
-                    $model->user_image_model->height = $height;
-                    $model->user_image_model->width = $width;
-                    $model->user_image_model->v_size = $model->file->size;
-                }
-
-                if ($model->user_image_model->save()) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
-                }
-            }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
-        }
-
-        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-    }
-
-    public function actionPostsImages()
-    {
-        $searchModel = new UserPostSearch();
-        $searchModel->status = UserPostSearch::STATUS_ACTIVE;
-        $searchModel->type_of_post = UserPosts::IMAGE_TYPE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPostsImages");
-    }
+    // /**
+    //  * 
+    //  * @return string
+    //  */
+    // public function actionUserPosts($user_id)
+    // {
+    //     $searchModel = new UserPostSearch();
+    //     $searchModel->user_id = $user_id;
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
+    // }
 }
