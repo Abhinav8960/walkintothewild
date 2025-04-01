@@ -239,11 +239,13 @@ class DefaultController extends RestController
             if ($model->user_image_model->save()) {
                 $model->uploadFile();
 
-                list($width, $height) = getimagesize($model->file->tempName);
-                $model->user_image_model->height = $height;
-                $model->user_image_model->width = $width;
-                $model->user_image_model->v_size = $model->file->size;
-                
+                if ($model->file) {
+                    list($width, $height) = getimagesize($model->file->tempName);
+                    $model->user_image_model->height = $height;
+                    $model->user_image_model->width = $width;
+                    $model->user_image_model->v_size = $model->file->size;
+                }
+
                 if ($model->user_image_model->save()) {
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
                 }
