@@ -1,14 +1,14 @@
 <?php
 
-namespace api\modules\carpet\controllers;
+namespace api\modules\feeds\controllers;
 
 use api\behaviours\Apiauth;
 use Yii;
 
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
-use common\models\carpet\Carpet;
-use common\models\carpet\CarpetSearch;
+use common\models\feeds\Feeds;
+use common\models\feeds\FeedsSearch;
 use yii\filters\AccessControl;
 
 /**
@@ -55,10 +55,10 @@ class DefaultController extends RestController
     public function actionIndex()
     {
        
-        $searchModel = new CarpetSearch();
-        $searchModel->status = Carpet::STATUS_ACTIVE;
+        $searchModel = new FeedsSearch();
+        $searchModel->status = Feeds::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "carpet");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "feeds");
     }
 
 

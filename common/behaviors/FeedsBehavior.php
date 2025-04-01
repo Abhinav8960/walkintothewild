@@ -2,13 +2,12 @@
 // filepath: /home/ak/project/walkintothewild/common/behaviors/ModerationBehavior.php
 namespace common\behaviors;
 
-use common\models\carpet\Carpet;
-use common\models\sharesafari\ShareSafari;
+use common\models\feeds\Feeds;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 
-class CarpetBehavior extends Behavior
+class FeedsBehavior extends Behavior
 {
     public $objective;
     public $collection;
@@ -16,23 +15,23 @@ class CarpetBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_AFTER_INSERT => 'foldCarpet',
-            ActiveRecord::EVENT_AFTER_UPDATE => 'foldCarpet',
+            ActiveRecord::EVENT_AFTER_INSERT => 'feeds',
+            ActiveRecord::EVENT_AFTER_UPDATE => 'feeds',
         ];
     }
 
-    public function foldCarpet($event)
+    public function feeds($event)
     {
-        $model = Carpet::find()->where(['collection'=>$this->collection,'collection_id'=>$this->owner->id])->one();
+        $model = Feeds::find()->where(['collection'=>$this->collection,'collection_id'=>$this->owner->id])->one();
         if(empty($model)){
 
-            $model = new Carpet();
+            $model = new Feeds();
         }
         $model->objective = $this->objective;
         $model->collection = $this->collection;
         $model->collection_id = $this->owner->id;
         if($this->owner->status == NULL){
-            $model->status = Carpet :: STATUS_ACTIVE;
+            $model->status = Feeds :: STATUS_ACTIVE;
         }else{
             $model->status = $this->owner->status;
         }

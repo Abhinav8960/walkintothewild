@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\carpet;
+namespace common\models\feeds;
 
-
+use common\models\feeds\Feeds;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CarpetSearch represents the model behind the search form of `common\models\carpet`.
+ * FeedsSearch represents the model behind the search form of `common\models\feeds`.
  */
-class CarpetSearch extends Carpet
+class FeedsSearch extends Feeds
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class CarpetSearch extends Carpet
      */
     public function search($params)
     {
-        $query = Carpet::find()->where(['carpet.status' => [Carpet::STATUS_ACTIVE, Carpet::STATUS_SUSPEND]]);
+        $query = Feeds::find()->where(['feeds.status' => [Feeds::STATUS_ACTIVE, Feeds::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

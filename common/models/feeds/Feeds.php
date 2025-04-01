@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\carpet;
+namespace common\models\feeds;
 
 use Yii;
 
 /**
- * This is the model class for table "carpet".
+ * This is the model class for table "feeds".
  *
  * @property int $id
  * @property string $objective
@@ -17,7 +17,7 @@ use Yii;
  * @property int $updated_at
  * @property int $status
  */
-class Carpet extends \yii\db\ActiveRecord
+class Feeds extends \yii\db\ActiveRecord
 {
     const MODEL_SHARESFARI = 1;
     const MODEL_PACKAGE = 2;
@@ -32,7 +32,7 @@ class Carpet extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'carpet';
+        return 'feeds';
     }
 
     /**

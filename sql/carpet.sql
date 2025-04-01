@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carpet`
+-- Table structure for table `feeds`
 --
 
-CREATE TABLE `carpet` (
+CREATE TABLE `feeds` (
   `id` int NOT NULL,
   `objective` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `collection` int NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE `carpet` (
 --
 
 --
--- Indexes for table `carpet`
+-- Indexes for table `feeds`
 --
-ALTER TABLE `carpet`
+ALTER TABLE `feeds`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -54,9 +54,9 @@ ALTER TABLE `carpet`
 --
 
 --
--- AUTO_INCREMENT for table `carpet`
+-- AUTO_INCREMENT for table `feeds`
 --
-ALTER TABLE `carpet`
+ALTER TABLE `feeds`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 

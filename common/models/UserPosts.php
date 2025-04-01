@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\carpet\Carpet;
+use common\models\feeds\Feeds;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -44,9 +44,9 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             //     'type_options' => [SELF::IMAGE_TYPE => 'image', SELF::VIDEO_TYPE => 'video'],
             // ],
             [
-                'class' => \common\behaviors\CarpetBehavior::class,
+                'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'Posts',
-                'collection' => Carpet::MODEL_POSTS,
+                'collection' => Feeds::MODEL_POSTS,
             ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),

@@ -2,7 +2,7 @@
 
 namespace common\models\package;
 
-use common\models\carpet\Carpet;
+use common\models\feeds\Feeds;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
@@ -49,9 +49,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return [
             [
-                'class' => \common\behaviors\CarpetBehavior::class,
+                'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'Package',
-                'collection' => Carpet::MODEL_PACKAGE,
+                'collection' => Feeds::MODEL_PACKAGE,
             ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),

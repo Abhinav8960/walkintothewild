@@ -50,8 +50,8 @@ return [
         'manage' => [
             'class' => 'api\modules\manage\Module'
         ],
-        'carpet' => [
-            'class' => 'api\modules\carpet\Module',
+        'feeds' => [
+            'class' => 'api\modules\feeds\Module',
         ],
 
     ],
@@ -164,8 +164,8 @@ return [
                 'manage/package/<action>/<slug>' => 'manage/package/<action>',
                 'manage/package/<action>/<slug>/<day>' => 'manage/package/<action>',
 
-                /** carpet */
-                'carpet' => 'carpet/default/index',
+                /** feeds */
+                'feeds' => 'feeds/default/index',
                 
 
 

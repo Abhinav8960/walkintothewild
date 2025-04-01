@@ -2,7 +2,7 @@
 
 namespace common\models\sharesafari;
 
-use common\models\carpet\Carpet;
+use common\models\feeds\Feeds;
 use common\models\operator\SafariOperator;
 use Yii;
 use common\models\User;
@@ -61,9 +61,9 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     {
         return [
             [
-                'class' => \common\behaviors\CarpetBehavior::class,
+                'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'ShareSafari',
-                'collection' => Carpet::MODEL_SHARESFARI,
+                'collection' => Feeds::MODEL_SHARESFARI,
             ],
 
             \yii\behaviors\TimestampBehavior::className(),

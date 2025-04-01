@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\carpet;
+namespace api\modules\feeds;
 
 use Yii;
 
@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'api\modules\carpet\controllers';
+    public $controllerNamespace = 'api\modules\feeds\controllers';
 
     /**
      * {@inheritdoc}
