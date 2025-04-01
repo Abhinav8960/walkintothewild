@@ -45,19 +45,33 @@ class UserPostsImageForm extends Model
     public function rules()
     {
         return [
-            [['caption', 'file'], 'required'],
+            // [['caption','file'], 'required'],
             [
                 ['file'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
             ],
-            [['user_id', 'like_count', 'status','type_of_post'], 'integer'],
+            [['user_id', 'like_count', 'status', 'type_of_post'], 'integer'],
             [['caption'], 'string'],
             [
                 ['file'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 18 * 1024 * 1024,
+            ],
+            [
+                ['caption'],
+                'required',
+                'when' => function ($model) {
+                    return empty($model->file);
+                },
+            ],
+            [
+                ['file'],
+                'required',
+                'when' => function ($model) {
+                    return empty($model->caption);
+                },
             ],
         ];
     }
@@ -105,6 +119,5 @@ class UserPostsImageForm extends Model
                 }
             }
         }
-
     }
 }
