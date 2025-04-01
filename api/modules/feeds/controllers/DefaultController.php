@@ -7,8 +7,8 @@ use Yii;
 
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
-use common\models\feeds\Feeds;
-use common\models\feeds\FeedsSearch;
+use api\models\feeds\Feeds;
+use api\models\feeds\FeedsSearch;
 use yii\filters\AccessControl;
 
 /**
