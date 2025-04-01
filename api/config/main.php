@@ -147,6 +147,7 @@ return [
                 'user-profile' => 'profile/default/index',
                 'organizedby' => 'profile/default/organizedby',
                 'joinedby' => 'profile/default/joinedby',
+                'useractivity' => 'profile/default/useractivity',
                 'profile/follow' => 'profile/default/follow',
                 'profile/unfollow' => 'profile/default/unfollow',
 

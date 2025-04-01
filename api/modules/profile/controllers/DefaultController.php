@@ -8,6 +8,8 @@ use api\behaviours\Verbcheck;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\controllers\RestController;
+use api\models\feeds\Feeds;
+use api\models\feeds\FeedsSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
@@ -36,7 +38,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'organizedby', 'joinedby'],
+                'exclude' => ['index', 'organizedby', 'joinedby','useractivity'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -56,6 +58,7 @@ class DefaultController extends RestController
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
                     'organizedby' => ['GET'],
+                    'useractivity' => ['GET']
                 ],
             ],
         ];
@@ -169,5 +172,16 @@ class DefaultController extends RestController
         }
 
         throw new ForbiddenHttpException('User Not Found / User Account may be Blocked');
+    }
+
+    public function actionUseractivity($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+        if ($user) {
+            $searchModel = new FeedsSearch();
+            $searchModel->created_by = $user->id;
+            $searchModel->status = Feeds::STATUS_ACTIVE;
+            return $this->dataProviderSender($searchModel, $rootIndexName = "User Activity");
+        }
     }
 }
