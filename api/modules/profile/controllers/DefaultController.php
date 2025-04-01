@@ -79,6 +79,9 @@ class DefaultController extends RestController
     public function actionOrganizedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if ($user->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
         if ($user->id == $this->userinfoId) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
             return Yii::$app->api->sendResponse($data = ['sharesafari' => $organized_by]);
@@ -91,6 +94,9 @@ class DefaultController extends RestController
     public function actionJoinedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if ($user->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
         if ($user->id == $this->userinfoId) {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
             $safariIds = array_map(function ($item) {
@@ -117,6 +123,9 @@ class DefaultController extends RestController
     public function actionFollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if ($user->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
         if ($this->userinfo) {
             if ($this->userinfoId == $user->id) {
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can't follow yourself!"]);
@@ -150,6 +159,9 @@ class DefaultController extends RestController
     public function actionUnfollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if ($user->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
         if ($this->userinfo) {
             $my_follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $user->id])->limit(1)->one();
             if ($my_follower) {
@@ -177,6 +189,9 @@ class DefaultController extends RestController
     public function actionUseractivity($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if ($user->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
         if ($user) {
             $searchModel = new FeedsSearch();
             $searchModel->created_by = $user->id;
