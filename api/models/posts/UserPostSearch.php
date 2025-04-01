@@ -16,7 +16,21 @@ class UserPostSearch extends UserPosts
     public function rules()
     {
         return [
-            [['type_of_post', 'user_id', 'height', 'width', 'like_count', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [[
+                'type_of_post',
+                'user_id',
+                'height',
+                'width',
+                'like_count',
+                'status',
+                'created_at',
+                'created_by',
+                'updated_at',
+                'updated_by',
+                'location',
+                'master_animal_id',
+                'safari_session_id'
+            ], 'integer'],
             [['caption', 'description'], 'string'],
             [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
@@ -63,12 +77,16 @@ class UserPostSearch extends UserPosts
         $query->andFilterWhere([
             'id' => $this->id,
             'type_of_post' => $this->type_of_post,
+            'location' => $this->location,
+            'master_animal_id' => $this->master_animal_id,
+            'safari_session_id' => $this->safari_session_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
+        
 
         return $dataProvider;
     }

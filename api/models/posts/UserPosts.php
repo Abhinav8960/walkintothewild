@@ -18,14 +18,16 @@ class UserPosts extends \common\models\UserPosts
             $fields[] = 'comments';
             $fields[] = 'isLiked';
             $fields[] = 'likesCount';
-            $hold_fields = ['like_count','file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $fields[] = 'commentsCount';
+            $hold_fields = ['like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         } else {
             $fields[] = 'imagepath';
             $fields[] = 'user';
             $fields[] = 'comments';
             $fields[] = 'isLiked';
             $fields[] = 'likesCount';
-            $hold_fields = ['like_count', 'file', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+            $fields[] = 'commentsCount';
+            $hold_fields = ['like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         }
 
         return array_diff($fields, $hold_fields);
@@ -88,5 +90,10 @@ class UserPosts extends \common\models\UserPosts
     public function getLikesCount()
     {
         return $this->getLike()->count();
+    }
+
+    public function getCommentsCount()
+    {
+        return $this->getComments()->where(['user_post_comment.status' => 1])->count();
     }
 }
