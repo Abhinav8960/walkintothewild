@@ -27,13 +27,11 @@ class UserPostSearch extends UserPosts
                 'created_by',
                 'updated_at',
                 'updated_by',
-                'location',
-                'master_animal_id',
-                'safari_session_id'
             ], 'integer'],
             [['caption', 'description'], 'string'],
             [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
+            [['safari_session_id', 'location','master_animal_id'],'safe']
         ];
     }
 
