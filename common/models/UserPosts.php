@@ -74,7 +74,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             [['caption', 'description', 'location', 'filepath', 'etag'], 'string'],
             // [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
-            [['v_size', 'v_duration'], 'integer'],
+            [['v_size', 'v_duration','master_animal_id', 'safari_session_id','zone_id',], 'integer'],
+            [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
 
         ];
     }
