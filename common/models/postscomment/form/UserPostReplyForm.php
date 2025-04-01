@@ -15,8 +15,6 @@ class UserPostReplyForm extends Model
 {
     public $message;
     public $parent_id;
-    public $action_url;
-    public $action_validate_url;
 
 
     /**

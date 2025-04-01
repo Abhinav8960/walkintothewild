@@ -16,20 +16,7 @@ class UserPostSearch extends UserPosts
     public function rules()
     {
         return [
-            [[
-                'type_of_post',
-                'user_id',
-                'height',
-                'width',
-                'like_count',
-                'status',
-                'created_at',
-                'created_by',
-                'updated_at',
-                'updated_by',
-            ], 'integer'],
-            [['caption', 'description'], 'string'],
-            [['latitude', 'longitude'], 'number'],
+            [['caption'], 'string'],
             [['file'], 'string', 'max' => 512],
             [['safari_session_id', 'location','master_animal_id'],'safe']
         ];
@@ -74,14 +61,6 @@ class UserPostSearch extends UserPosts
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'type_of_post' => $this->type_of_post,
-            'location' => $this->location,
-            'master_animal_id' => $this->master_animal_id,
-            'safari_session_id' => $this->safari_session_id,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
         

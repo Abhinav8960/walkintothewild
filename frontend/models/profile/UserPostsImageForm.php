@@ -13,11 +13,9 @@ use common\models\UserPosts;
 class UserPostsImageForm extends Model
 {
 
-    public $type_of_post;
     public $file;
     public $caption;
     public $user_id;
-    public $like_count;
 
     public $user_image_model;
     public $status;
@@ -32,8 +30,6 @@ class UserPostsImageForm extends Model
 
             $this->caption = $this->user_image_model->caption;
             $this->user_id = $this->user_image_model->user_id;
-            $this->type_of_post = $this->user_image_model->type_of_post;
-            $this->like_count = $this->user_image_model->like_count;
 
             $this->status = $this->user_image_model->status;
         }
@@ -45,13 +41,12 @@ class UserPostsImageForm extends Model
     public function rules()
     {
         return [
-            // [['caption','file'], 'required'],
             [
                 ['file'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
             ],
-            [['user_id', 'like_count', 'status', 'type_of_post'], 'integer'],
+            [['user_id', 'status'], 'integer'],
             [['caption'], 'string'],
             [
                 ['file'],
@@ -91,8 +86,6 @@ class UserPostsImageForm extends Model
 
         $this->user_image_model->caption = $this->caption;
         $this->user_image_model->user_id = $this->user_id;
-        $this->user_image_model->like_count = $this->like_count;
-        $this->user_image_model->type_of_post = $this->type_of_post;
         $this->user_image_model->status = $this->status;
     }
 
@@ -102,7 +95,7 @@ class UserPostsImageForm extends Model
     {
 
         if ($this->file) {
-            $storagePath = 'watchpost';
+            $storagePath = 'post';
             $userPath = $storagePath . '/' . $this->user_image_model->user_id . '/media';
 
             $fileName = $this->user_image_model->user_id . '_media_' . time() . '.' . $this->file->extension;

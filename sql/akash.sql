@@ -1,6 +1,21 @@
-ALTER TABLE `user_posts` ADD `master_animal_id` INT NULL AFTER `description`, ADD `safari_session_id` INT NULL AFTER `master_animal_id`, ADD `post_datetime` INT NULL AFTER `safari_session_id`, ADD `zone_id` INT NULL AFTER `post_datetime`;
-ALTER TABLE `user_posts` DROP `location`;
-ALTER TABLE `user_posts` ADD `location` INT NULL AFTER `longitude`;
+ALTER TABLE `user_posts`
+  DROP `type_of_post`,
+  DROP `video_thumbnail`,
+  DROP `video_thumbnail_path`,
+  DROP `video_thumbnail_etag`,
+  DROP `like_count`,
+  DROP `latitude`,
+  DROP `longitude`,
+  DROP `location`,
+  DROP `description`,
+  DROP `master_animal_id`,
+  DROP `safari_session_id`,
+  DROP `post_datetime`,
+  DROP `zone_id`,
+  DROP `v_size`,
+  DROP `v_duration`;
+
+  ALTER TABLE `user_posts` ADD `size` INT NULL AFTER `etag`;
 -- 28 March
 
 

@@ -11,9 +11,7 @@ use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
 use common\models\postscomment\form\UserPostCommentForm;
 use common\models\postscomment\form\UserPostReplyForm;
-use frontend\models\profile\UserPostsForm;
 use frontend\models\profile\UserPostsImageForm;
-use frontend\models\profile\UserPostsVideoForm;
 use getID3;
 use Yii;
 use yii\filters\AccessControl;
@@ -69,8 +67,7 @@ class DefaultController extends RestController
     {
         $searchModel = new UserPostSearch();
         $searchModel->status = UserPostSearch::STATUS_ACTIVE;
-        $searchModel->type_of_post = UserPosts::IMAGE_TYPE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPostsImages");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
     }
 
     public function actionCreate()
@@ -83,7 +80,6 @@ class DefaultController extends RestController
         $model->setAttributes(\Yii::$app->request->post());
 
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        $model->type_of_post = UserPosts::IMAGE_TYPE;
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -94,7 +90,7 @@ class DefaultController extends RestController
                     list($width, $height) = getimagesize($model->file->tempName);
                     $model->user_image_model->height = $height;
                     $model->user_image_model->width = $width;
-                    $model->user_image_model->v_size = $model->file->size;
+                    $model->user_image_model->size = $model->file->size;
                 }
 
                 if ($model->user_image_model->save()) {
@@ -181,18 +177,18 @@ class DefaultController extends RestController
     }
 
 
-    public function actionUserPostLike($user_post_id)
+    public function actionUserPostLike($id)
     {
-        $userpost = UserPosts::find()->where(['id' => $user_post_id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
         }
 
-        $like = UserPostLike::find()->where(['user_id' => $this->userinfoId, 'user_post_id' => $user_post_id, 'status' => UserPostCommentLike::STATUS_ACTIVE])->one();
+        $like = UserPostLike::find()->where(['user_id' => $this->userinfoId, 'user_post_id' => $id, 'status' => UserPostLike::STATUS_ACTIVE])->one();
         if (!$like) {
             $like = new UserPostLike();
             $like->user_id = $this->userinfoId;
-            $like->user_post_id = $user_post_id;
+            $like->user_post_id = $id;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post Liked Successfully"]);
@@ -203,14 +199,5 @@ class DefaultController extends RestController
         }
     }
 
-    // /**
-    //  * 
-    //  * @return string
-    //  */
-    // public function actionUserPosts($user_id)
-    // {
-    //     $searchModel = new UserPostSearch();
-    //     $searchModel->user_id = $user_id;
-    //     return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts");
-    // }
+  
 }

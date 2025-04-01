@@ -23,9 +23,6 @@ use Yii;
 class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
-
-    const IMAGE_TYPE = 1;
-    const VIDEO_TYPE = 2;
     /**
      * {@inheritdoc}
      */
@@ -70,12 +67,9 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function rules()
     {
         return [
-            [['type_of_post', 'user_id', 'height', 'width', 'like_count', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['caption', 'description', 'location', 'filepath', 'etag'], 'string'],
-            // [['latitude', 'longitude'], 'number'],
+            [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['caption', 'filepath', 'etag'], 'string'],
             [['file'], 'string', 'max' => 512],
-            [['v_size', 'v_duration','master_animal_id', 'safari_session_id','zone_id',], 'integer'],
-            [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
 
         ];
     }
@@ -88,7 +82,6 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'type_of_post' => 'Type Of Post',
             'file' => 'File',
             'caption' => 'Caption',
             'status' => 'Status',
