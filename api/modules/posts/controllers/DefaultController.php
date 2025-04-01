@@ -36,10 +36,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload', 'user-post-like'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'post-image-upload', 'user-post-like'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload', 'user-post-like'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'post-image-upload', 'user-post-like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +55,8 @@ class DefaultController extends RestController
                     'comment' => ['POST'],
                     'reply' => ['POST'],
                     'post-image-upload' => ['POST'],
-                    'user-post-like' => ['POST']
+                    'user-post-like' => ['POST'],
+                    'comment-like' => ['POST']
                 ],
             ],
         ];
@@ -156,7 +157,7 @@ class DefaultController extends RestController
     }
 
 
-    public function actionLike($user_post_comment_id)
+    public function actionCommentLike($user_post_comment_id)
     {
 
         $like = UserPostCommentLike::find()->where(['user_id' => $this->userinfoId, 'user_post_comment_id' => $user_post_comment_id, 'status' => UserPostCommentLike::STATUS_ACTIVE])->one();
@@ -177,6 +178,10 @@ class DefaultController extends RestController
 
     public function actionUserPostLike($user_post_id)
     {
+        $userpost = UserPosts::find()->where(['id' => $user_post_id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$userpost) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
 
         $like = UserPostLike::find()->where(['user_id' => $this->userinfoId, 'user_post_id' => $user_post_id, 'status' => UserPostCommentLike::STATUS_ACTIVE])->one();
         if (!$like) {
