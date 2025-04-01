@@ -12,7 +12,6 @@ use common\models\UserPosts;
  */
 class UserPostsImageForm extends Model
 {
-    public $id;
 
     public $type_of_post;
     public $file;
@@ -54,6 +53,12 @@ class UserPostsImageForm extends Model
             ],
             [['user_id', 'like_count', 'status','type_of_post'], 'integer'],
             [['caption'], 'string'],
+            [
+                ['file'],
+                'file',
+                'extensions' => ['jpeg', 'jpg', 'png'],
+                'maxSize' => 18 * 1024 * 1024,
+            ],
         ];
     }
 
@@ -91,7 +96,6 @@ class UserPostsImageForm extends Model
 
             $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
-                // try {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
                     $this->user_image_model->file = $fileName;
                     $this->user_image_model->filepath = $filePath;
