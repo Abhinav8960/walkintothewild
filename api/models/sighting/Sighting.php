@@ -14,11 +14,11 @@ class Sighting extends \common\models\sighting\Sighting
 
         $fields[] = 'thumbnail';
         $fields[] = 'filepath';
-        $fields[] = 'user';
-        // $fields[] = 'comments';
-        // $fields[] = 'isLiked';
-        // $fields[] = 'likesCount';
-        // $fields[] = 'commentsCount';
+        // $fields[] = 'user';
+        $fields[] = 'comments';
+        $fields[] = 'isLiked';
+        $fields[] = 'likesCount';
+        $fields[] = 'commentsCount';
         $hold_fields = ['like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
@@ -27,10 +27,10 @@ class Sighting extends \common\models\sighting\Sighting
 
 
 
-    // public function getComments()
-    // {
-    //     return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['parent_id' => null]);
-    // }
+    public function getComments()
+    {
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['parent_id' => null]);
+    }
 
 
     public function getFilepath()
@@ -53,28 +53,28 @@ class Sighting extends \common\models\sighting\Sighting
     }
 
 
-    // public function getIsLiked()
-    // {
-    //     $is_liked = UserPostLike::find()->where(['user_post_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'user_post_like.status' => 1])->limit(1)->one();
-    //     if ($is_liked) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public function getIsLiked()
+    {
+        $is_liked = SightingLike::find()->where(['sighting_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'sighting_like.status' => 1])->limit(1)->one();
+        if ($is_liked) {
+            return true;
+        }
+        return false;
+    }
 
 
-    // public function getLike()
-    // {
-    //     return $this->hasMany(UserPostLike::class, ['user_post_id' => 'id']);
-    // }
+    public function getLike()
+    {
+        return $this->hasMany(SightingLike::class, ['sighting_id' => 'id']);
+    }
 
-    // public function getLikesCount()
-    // {
-    //     return $this->getLike()->count();
-    // }
+    public function getLikesCount()
+    {
+        return $this->getLike()->count();
+    }
 
-    // public function getCommentsCount()
-    // {
-    //     return $this->getComments()->where(['user_post_comment.status' => 1])->count();
-    // }
+    public function getCommentsCount()
+    {
+        return $this->getComments()->where(['sighting_comment.status' => 1])->count();
+    }
 }
