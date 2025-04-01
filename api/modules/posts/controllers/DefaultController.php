@@ -32,14 +32,14 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view','posts-images'],
+                'exclude' => ['index', 'view', 'posts-images'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload','user-post-like'],
+                'only' => ['create', 'comment', 'reply', 'like', 'post-image-upload', 'user-post-like'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload','user-post-like'],
+                        'actions' => ['create', 'comment', 'reply', 'like', 'post-image-upload', 'user-post-like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -84,15 +84,17 @@ class DefaultController extends RestController
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
         $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
-        $model->v_size = $model->file->size;
-        $model->v_duration = $this->getVideoDuration($model->file);
         $model->type_of_post = UserPosts::VIDEO_TYPE;
 
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_photo_model->save()) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
+                $model->user_photo_model->v_size = $model->file->size;
+                $model->user_photo_model->v_duration = $this->getVideoDuration($model->file);
+                if ($model->user_photo_model->save()) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
+                }
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
         }
