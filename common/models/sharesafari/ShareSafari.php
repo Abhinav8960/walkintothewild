@@ -2,6 +2,7 @@
 
 namespace common\models\sharesafari;
 
+use common\models\carpet\Carpet;
 use common\models\operator\SafariOperator;
 use Yii;
 use common\models\User;
@@ -59,6 +60,12 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function behaviors()
     {
         return [
+            [
+                'class' => \common\behaviors\CarpetBehavior::class,
+                'objective' => 'ShareSafari',
+                'collection' => Carpet::MODEL_SHARESFARI,
+            ],
+
             \yii\behaviors\TimestampBehavior::className(),
             \yii\behaviors\BlameableBehavior::className(),
             [

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\carpet\Carpet;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -36,6 +37,11 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function behaviors()
     {
         return [
+            [
+                'class' => \common\behaviors\CarpetBehavior::class,
+                'objective' => 'Posts',
+                'collection' => Carpet::MODEL_POSTS,
+            ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',

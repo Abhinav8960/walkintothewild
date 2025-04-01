@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\carpet\Carpet;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
@@ -47,6 +48,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function behaviors()
     {
         return [
+            [
+                'class' => \common\behaviors\CarpetBehavior::class,
+                'objective' => 'Package',
+                'collection' => Carpet::MODEL_PACKAGE,
+            ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
