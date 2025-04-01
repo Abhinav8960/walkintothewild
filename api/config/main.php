@@ -53,6 +53,9 @@ return [
         'feeds' => [
             'class' => 'api\modules\feeds\Module',
         ],
+        'sighting' => [
+            'class' => 'api\modules\sighting\Module',
+        ],
 
     ],
     'components' => [
@@ -125,6 +128,9 @@ return [
                 'posts' => 'posts/default/index',
                 'posts-images' => 'posts/default/posts-images',
                 'posts/<action>' => 'posts/default/<action>',
+
+                'sighting' => 'sighting/default/index',
+                'sighting/<action>' => 'sighting/default/<action>',
 
 
 
