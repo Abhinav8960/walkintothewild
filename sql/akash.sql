@@ -1,3 +1,12 @@
+ALTER TABLE `user_posts` ADD `master_animal_id` INT NULL AFTER `description`, ADD `safari_session_id` INT NULL AFTER `master_animal_id`, ADD `post_datetime` INT NULL AFTER `safari_session_id`, ADD `zone_id` INT NULL AFTER `post_datetime`;
+ALTER TABLE `user_posts` DROP `location`;
+ALTER TABLE `user_posts` ADD `location` INT NULL AFTER `longitude`;
+-- 28 March
+
+
+
+ALTER TABLE `moderation` CHANGE `model` `collection` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `model_id` `collection_id` INT NULL DEFAULT NULL;
+
 
 ALTER TABLE `moderation` ADD `is_api_failed` INT NULL DEFAULT '0' AFTER `duration_flag`;
 -- 26 march

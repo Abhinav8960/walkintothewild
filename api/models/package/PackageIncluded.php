@@ -49,9 +49,9 @@ class PackageIncluded  extends \common\models\package\PackageIncluded
     public function getIncludeoption()
     {
         if ($this->selection == 1) {
-            return 'Include';
+            return 'Included';
         } elseif ($this->selection == 2) {
-            return 'Not Include';
+            return 'Not Included';
         } else {
             return 'Optional';
         }
