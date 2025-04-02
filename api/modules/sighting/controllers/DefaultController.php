@@ -12,6 +12,7 @@ use api\models\sighting\SightingSearch;
 use common\models\sighting\form\SightingCommentForm;
 use common\models\sighting\form\SightingForm;
 use common\models\sighting\form\SightingReplyForm;
+use common\models\sighting\form\SightingReportForm;
 use getID3;
 use Yii;
 use yii\filters\AccessControl;
@@ -34,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like','sighting-report'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like','sighting-report'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,7 +53,8 @@ class DefaultController extends RestController
                     'comment' => ['POST'],
                     'reply' => ['POST'],
                     'sighting-like' => ['POST'],
-                    'comment-like' => ['POST']
+                    'comment-like' => ['POST'],
+                    'sighting-report' => ['POST']
                 ],
             ],
         ];
@@ -201,5 +203,30 @@ class DefaultController extends RestController
             return (int) $fileInfo['playtime_seconds'];
         }
         return 0;
+    }
+
+    public function actionSightingReport($id)
+    {
+        $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $model = new SightingReportForm();
+        $model->user_id = $this->userinfoId;
+        $model->status = Sighting::STATUS_ACTIVE;
+        $model->sighting_id = $sighting->id;
+        $model->load(\Yii::$app->request->post());
+        $model->setAttributes(\Yii::$app->request->post());
+        if ($model->validate()) {
+            $model->initializeForm();
+           
+                if ($model->sighting_model->save()) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "SightingReport Submitted"]);
+                }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
