@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\sighting;
+namespace common\models;
 
 use common\traits\CommanRelationship;
 use Yii;
@@ -11,23 +11,24 @@ use Yii;
  * @property int $id
  * @property string|null $message
  * @property int $user_id
- * @property int $sighting_id
+ * @property int $post_id
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class SightingReport extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class PostReport extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
-
+ 
     use CommanRelationship;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'sighting_report';
+        return 'post_report';
     }
     public function behaviors()
     {
@@ -57,8 +58,8 @@ class SightingReport extends \yii\db\ActiveRecord implements \common\interfaces\
             [['message', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['message'], 'string'],
-            [['user_id', 'sighting_id'], 'required'],
-            [['user_id', 'sighting_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['user_id', 'post_id'], 'required'],
+            [['user_id', 'post_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
         ];
     }
 
@@ -71,7 +72,7 @@ class SightingReport extends \yii\db\ActiveRecord implements \common\interfaces\
             'id' => 'ID',
             'message' => 'Message',
             'user_id' => 'User ID',
-            'sighting_id' => 'Sighting ID',
+            'post_id' => 'Post ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

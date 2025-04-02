@@ -9,6 +9,7 @@ use api\models\posts\UserPostCommentLike;
 use api\models\posts\UserPostLike;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
+use common\models\PostReportForm;
 use common\models\postscomment\form\UserPostCommentForm;
 use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsImageForm;
@@ -34,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like','user-post-report'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like','user-post-report'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,7 +54,8 @@ class DefaultController extends RestController
                     'comment' => ['POST'],
                     'reply' => ['POST'],
                     'user-post-like' => ['POST'],
-                    'comment-like' => ['POST']
+                    'comment-like' => ['POST'],
+                    'user-post-report'=>['POST']
                 ],
             ],
         ];
@@ -199,5 +201,28 @@ class DefaultController extends RestController
         }
     }
 
-  
+    public function actionUserPostReport($id)
+    {
+        $post = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$post) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $model = new PostReportForm();
+        $model->user_id = $this->userinfoId;
+        $model->status = UserPosts::STATUS_ACTIVE;
+        $model->post_id = $post->id;
+        $model->load(\Yii::$app->request->post());
+        $model->setAttributes(\Yii::$app->request->post());
+        if ($model->validate()) {
+            $model->initializeForm();
+
+            if ($model->post_model->save()) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "PostReport Submitted"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
 }
