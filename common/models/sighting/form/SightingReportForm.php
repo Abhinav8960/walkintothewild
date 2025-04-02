@@ -38,7 +38,7 @@ class SightingReportForm extends Model
     public function rules()
     {
         return [
-            [['message'], 'required'],
+            [['message','user_id','sighting_id'], 'required'],
             [['user_id', 'status','sighting_id'], 'integer'],
             [['message'], 'string'],
         ];
