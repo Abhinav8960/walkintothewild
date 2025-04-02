@@ -12,11 +12,11 @@ class UserPosts extends \common\models\UserPosts
         $fields = parent::fields();
 
         $fields[] = 'imagepath';
-        $fields[] = 'user';
         $fields[] = 'comments';
         $fields[] = 'isLiked';
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
+        $fields[] = 'postuserdetail';
         $hold_fields = ['file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
@@ -51,6 +51,15 @@ class UserPosts extends \common\models\UserPosts
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getPostuserdetail()
+    {
+        return [
+            'name' => $this->user ? $this->user->name : '',
+            'subtitle' => $this->user ? $this->user->user_handle : '',
+            'image' => $this->user ? $this->user->profileimage : '',
+        ];
     }
 
 
