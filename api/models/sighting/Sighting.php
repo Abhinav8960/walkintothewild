@@ -2,6 +2,7 @@
 
 namespace api\models\sighting;
 
+use api\models\park\SafariPark;
 use api\models\User;
 use Yii;
 
@@ -13,13 +14,14 @@ class Sighting extends \common\models\sighting\Sighting
         $fields = parent::fields();
 
         // $fields[] = 'thumbnail';
+        $fields[] = 'locationname';
         $fields[] = 'fullfilepath';
         $fields[] = 'comments';
         $fields[] = 'isLiked';
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'sightinguserdetail';
-        $hold_fields = ['filepath','like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
         return array_diff($fields, $hold_fields);
@@ -84,5 +86,18 @@ class Sighting extends \common\models\sighting\Sighting
     public function getCommentsCount()
     {
         return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+
+    public function getSafaripark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'location']);
+    }
+
+    public function getLocationname()
+    {
+        if ($this->safaripark) {
+            return $this->safaripark->title;
+        }
+        return '';
     }
 }
