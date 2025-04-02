@@ -85,6 +85,6 @@ class UserPosts extends \common\models\UserPosts
 
     public function getCommentsCount()
     {
-        return $this->getComments()->where(['user_post_comment.status' => 1])->count();
+        return $this->getComments()->andWhere(['user_post_comment.status' => 1])->count();
     }
 }

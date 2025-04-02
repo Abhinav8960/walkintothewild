@@ -83,6 +83,6 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getCommentsCount()
     {
-        return $this->getComments()->where(['sighting_comment.status' => 1])->count();
+        return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
     }
 }
