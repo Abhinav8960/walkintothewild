@@ -30,17 +30,16 @@ class Feeds extends \common\models\feeds\Feeds
 
     public function GetFeed()
     {
-        return $this->hasOne($this->getObjectiveClass(), ['id' => 'collection_id']);
+        if ($this->collection == Self::MODEL_SHARESFARI) {
+            return $this->hasOne(\api\models\sharesafari\ShareSafari::className(), ['id' => 'collection_id']);
+        } elseif ($this->collection == Self::MODEL_PACKAGE) {
+            return $this->hasOne(\api\models\package\Package::className(), ['id' => 'collection_id']);
+        } elseif ($this->collection == Self::MODEL_POSTS) {
+            return $this->hasOne(\api\models\posts\UserPosts::className(), ['id' => 'collection_id']);
+        } elseif ($this->collection == Self::MODEL_SIGHTING) {
+            return $this->hasOne(\api\models\sighting\Sighting::className(), ['id' => 'collection_id']);
+        }
+        return [];
     }
 
-    public function getObjectiveClass()
-    {
-        if ($this->collection == Self::MODEL_SHARESFARI) {
-            return \api\models\sharesafari\ShareSafari::className();
-        } elseif ($this->collection == Self::MODEL_PACKAGE) {
-            return \api\models\package\Package::className();
-        } elseif ($this->collection == Self::MODEL_POSTS) {
-            return \api\models\posts\UserPosts::className();
-        }
-    }
 }
