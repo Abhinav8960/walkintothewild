@@ -11,13 +11,13 @@ class UserPosts extends \common\models\UserPosts
     {
         $fields = parent::fields();
 
-        $fields[] = 'imagepath';
+        $fields[] = 'fullimagepath';
         $fields[] = 'comments';
         $fields[] = 'isLiked';
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'postuserdetail';
-        $hold_fields = ['file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['filepath','file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
     }
@@ -30,7 +30,7 @@ class UserPosts extends \common\models\UserPosts
     }
 
 
-    public function getImagepath()
+    public function getFullimagepath()
     {
         // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
 

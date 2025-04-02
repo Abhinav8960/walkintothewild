@@ -12,14 +12,14 @@ class Sighting extends \common\models\sighting\Sighting
     {
         $fields = parent::fields();
 
-        $fields[] = 'thumbnail';
-        $fields[] = 'filepath';
+        // $fields[] = 'thumbnail';
+        $fields[] = 'fullfilepath';
         $fields[] = 'comments';
         $fields[] = 'isLiked';
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'sightinguserdetail';
-        $hold_fields = ['like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['filepath','like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
         return array_diff($fields, $hold_fields);
@@ -33,19 +33,19 @@ class Sighting extends \common\models\sighting\Sighting
     }
 
 
-    public function getFilepath()
+    public function getFullfilepath()
     {
         return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
     }
 
-    public function getThumbnail()
-    {
-        // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
+    // public function getThumbnail()
+    // {
+    //     // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
 
-        // return $this->filepath;
-        // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
-        return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
-    }
+    //     // return $this->filepath;
+    //     // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
+    //     return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
+    // }
 
     public function getUser()
     {
