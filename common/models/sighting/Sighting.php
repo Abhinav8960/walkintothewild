@@ -2,6 +2,7 @@
 
 namespace common\models\sighting;
 
+use common\models\feeds\Feeds;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -20,6 +21,11 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function behaviors()
     {
         return [
+            [
+                'class' => \common\behaviors\FeedsBehavior::class,
+                'objective' => 'Sighting',
+                'collection' => Feeds::MODEL_SIGHTING,
+            ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',

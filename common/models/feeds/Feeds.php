@@ -22,6 +22,7 @@ class Feeds extends \yii\db\ActiveRecord
     const MODEL_SHARESFARI = 1;
     const MODEL_PACKAGE = 2;
     const MODEL_POSTS= 3;
+    const MODEL_SIGHTING = 4;
 
     const STATUS_ACTIVE = 1;
     const STATUS_SUSPEND = 0;

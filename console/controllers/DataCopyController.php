@@ -89,4 +89,12 @@ class DataCopyController extends Controller
         }
         return true;
     }
+
+    public function actionDelete()
+    {
+        $models = Feeds::find()->where(['collection' => "3"])->all();
+        foreach($models as $model){
+        $model->delete();
+        }
+    }
 }
