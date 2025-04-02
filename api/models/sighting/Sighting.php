@@ -14,11 +14,11 @@ class Sighting extends \common\models\sighting\Sighting
 
         $fields[] = 'thumbnail';
         $fields[] = 'filepath';
-        // $fields[] = 'user';
         $fields[] = 'comments';
         $fields[] = 'isLiked';
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
+        $fields[] = 'sightinguserdetail';
         $hold_fields = ['like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
@@ -52,6 +52,14 @@ class Sighting extends \common\models\sighting\Sighting
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function getSightinguserdetail()
+    {
+        return [
+            'name' => $this->user ? $this->user->safarioperatorname : '',
+            'subtitle' => $this->user ? $this->user->user_handle : '',
+            'image' => $this->user ? $this->user->profileimage : '',
+        ];
+    }
 
     public function getIsLiked()
     {

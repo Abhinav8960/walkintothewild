@@ -191,6 +191,10 @@ class User extends \common\models\User
 
     public function getProfileimage()
     {
+        if ($this->operator && $this->operator->user_id == $this->id) {
+            return $this->operator->imagepath;
+        }
+        
         if ($this->profile_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/user/' . $this->id . '/' . $this->profile_image;
         }
@@ -342,5 +346,14 @@ class User extends \common\models\User
             return $this->operator->status;
         }
         return 0;
+    }
+
+    public function getSafarioperatorname()
+    {
+        if ($this->is_safari_operator == 1) {
+            return $this->operator ? $this->operator->businessname : $this->name;
+        } else {
+            return $this->name;
+        }
     }
 }
