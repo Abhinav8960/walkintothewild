@@ -222,7 +222,7 @@ class DefaultController extends RestController
             $model->initializeForm();
            
                 if ($model->sighting_model->save()) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "SightingReport Submitted"]);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting Report Submitted"]);
                 }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
         }

@@ -205,7 +205,7 @@ class DefaultController extends RestController
     {
         $post = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$post) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
         }
 
         $model = new PostReportForm();
@@ -218,7 +218,7 @@ class DefaultController extends RestController
             $model->initializeForm();
 
             if ($model->post_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "PostReport Submitted"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post Report Submitted"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
         }
