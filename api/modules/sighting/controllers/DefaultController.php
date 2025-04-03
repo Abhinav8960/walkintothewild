@@ -163,11 +163,11 @@ class DefaultController extends RestController
             $like->sighting_comment_id = $sighting_comment_id;
             $like->status = SightingCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Liked Comment or Reply"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike'=> true], ['message' => "Liked Comment or Reply"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike'=> false], ['message' => "Remove Liked Successfully"]);
         }
     }
 
@@ -185,12 +185,12 @@ class DefaultController extends RestController
             $like->user_id = $this->userinfoId;
             $like->sighting_id = $id;
             $like->status = SightingLike::STATUS_ACTIVE;
-            if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting Liked Successfully"]);
+            if ($like->save(false)) {  
+                return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike' => true], ['message' => "Sighting Liked Successfully"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike' => false], ['message' => "Remove Liked Successfully"]);
         }
     }
 
