@@ -64,7 +64,7 @@ class SightingForm extends Model
     public function rules()
     {
         return [
-            [['file', 'master_animal_id', 'safari_session_id', 'post_datetime', 'zone_id', 'location', 'description'], 'required'],
+            [['file', 'master_animal_id', 'safari_session_id', 'zone_id', 'location', 'description'], 'required'],
             [
                 ['file'],
                 'file',
@@ -81,6 +81,14 @@ class SightingForm extends Model
             [['description'], 'string'],
             [['v_size', 'v_duration', 'master_animal_id', 'safari_session_id', 'zone_id', 'location'], 'integer'],
             [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
+            ['post_datetime', 'compare', 'compareValue' => date("Y-m-d H:i:s"), 'operator' => '<='],
+            [
+                'post_datetime',
+                'default',
+                'value' => function () {
+                    return date("Y-m-d H:i:s");
+                }
+            ],
             ['master_animal_id', 'exist', 'targetClass' => MasterAnimal::class, 'targetAttribute' => ['master_animal_id' => 'id']],
             ['safari_session_id', 'exist', 'targetClass' => MetaSafariSession::class, 'targetAttribute' => ['safari_session_id' => 'id']],
             ['zone_id', 'exist', 'targetClass' => MetaZoneType::class, 'targetAttribute' => ['zone_id' => 'id']],
