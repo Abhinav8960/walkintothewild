@@ -129,10 +129,13 @@ class Moderation extends Component
         'military',
     ];
 
-    public function prepareModeration($content, $type, $ownermodel, $model_id)
+    public function prepareModeration($endpoint, $content, $type, $ownermodel, $model_id)
     {
 
-        $model = new ModerationModeration();
+        $model = ModerationModeration::find()->where(['collection' => $ownermodel, 'collection_id' => $model_id])->one();
+        if (empty($model)) {
+            $model = new ModerationModeration();
+        }
         $model->collection = $ownermodel;
         $model->collection_id = $model_id;
         if ($type == ModerationForm::MODERATION_TYPE_IMAGE) {
@@ -145,19 +148,15 @@ class Moderation extends Component
             $model->type = ModerationModeration::MODERATION_TYPE_TEXT;
             $model->text = $content;
         }
-        // print_r($model);
-        // die();
+
         $model->save(false);
-        // if (!$model->save(false)) {
-        //     echo "Error: " . json_encode($model->errors);
-        //     die;
-        // }
+
         if ($model->type == ModerationModeration::MODERATION_TYPE_IMAGE) {
-            $this->imageFeedback($model->image_url, $model->id);
+            $this->imageFeedback($endpoint . '' . $model->image_url, $model->id);
         } elseif ($model->type == ModerationModeration::MODERATION_TYPE_VIDEO) {
-            $this->videoFeedback($model->video_url, $model->id);
+            $this->videoFeedback($endpoint . '' . $model->video_url, $model->id);
         } elseif ($model->type == ModerationModeration::MODERATION_TYPE_TEXT) {
-            $this->textFeedback($model->text, $model->id);
+            $this->textFeedback($endpoint . '' . $model->text, $model->id);
         }
         return true;
     }

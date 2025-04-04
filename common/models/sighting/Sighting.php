@@ -21,6 +21,12 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function behaviors()
     {
         return [
+            //  [
+            //     'class' => \common\behaviors\ModerationBehavior::class,
+            //     'attributes' => ['filepath'],
+            //     'type' => 'video',
+            //     'collection' => Feeds::MODEL_SIGHTING,
+            // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'Sighting',

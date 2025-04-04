@@ -37,8 +37,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             // [
             //     'class' => \common\behaviors\ModerationBehavior::class,
             //     'attributes' => ['filepath'],
-            //     'type' => 'type_of_post',
-            //     'type_options' => [SELF::IMAGE_TYPE => 'image', SELF::VIDEO_TYPE => 'video'],
+            //     'type' => 'image',
+            //     'collection' => Feeds::MODEL_POSTS,
             // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
