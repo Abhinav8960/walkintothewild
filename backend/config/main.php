@@ -84,6 +84,10 @@ return [
         'moderation' =>
         [
             'class' => 'backend\modules\moderation\Module'
+        ],
+        'business' =>
+        [
+            'class' => 'backend\modules\business\Module'
         ]
     ],
     'components' => [
