@@ -12,6 +12,7 @@ class ModerationBehavior extends Behavior
     public $type_options = [];
     public $type;
     public $end_ponit = 'https://d281t0xjcq032r.cloudfront.net/';
+    public $collection;
 
     public function events()
     {
@@ -24,17 +25,23 @@ class ModerationBehavior extends Behavior
     public function moderateContent($event)
     {
         $type = $this->type;
-        $type = $this->owner->$type;
-        if ($type) {
-            $type = $this->type_options[$type];
-        }
+        // echo "<pre>";
+        // print_r($event);
+        // die();
+
+        // $type = $this->owner->$type;
+        // if ($type) {
+        //     $type = $this->type_options[$type];
+        // }
+
 
         foreach ($this->attributes as $attributes) {
             $content = $this->owner->$attributes;
             if ($content) {
-
-                \Yii::$app->moderation->prepareModeration($this->end_ponit . '' . $content, $type, get_class($this->owner), $this->owner->id);
+                \Yii::$app->moderation->prepareModeration($this->end_ponit , $content, $type, $this->collection, $this->owner->id);
             }
         }
     }
+
+
 }
