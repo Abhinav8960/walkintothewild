@@ -28,10 +28,12 @@ $this->params['title'] = $this->title;
                         'attribute' => 'business_name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->business_name, ['view', 'id' => $model->id], [
-                                'title' => 'View',
-                                'style' => 'color: black !important;'
-                            ]);
+                            // return Html::a($model->business_name, ['view', 'id' => $model->id], [
+                            //     'title' => 'View',
+                            //     'style' => 'color: black !important;'
+                            // ]);
+                            return $model->business_name;
+
                         },
                         'contentOptions' => ['style' => 'width: 20%;'],
                     ],
