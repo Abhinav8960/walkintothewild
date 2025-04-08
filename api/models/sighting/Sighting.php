@@ -37,7 +37,10 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getFullfilepath()
     {
-        return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
+        if ($this->file) {
+            return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
+        }
+        return null;
     }
 
     // public function getThumbnail()

@@ -93,8 +93,21 @@ class DataCopyController extends Controller
     public function actionDelete()
     {
         $models = Feeds::find()->where(['collection' => "3"])->all();
-        foreach($models as $model){
-        $model->delete();
+        foreach ($models as $model) {
+            $model->delete();
         }
     }
+
+    // public function actionRun()
+    // { 
+    //      for ($i = 0; $i < 10; $i++) {
+    //     $command = 'php '. $i . ' > /dev/null 2>&1 & echo $!';
+    //     $output = [];
+    //     // $pid = getmygid();
+    //     exec($command, $output);
+    //     echo "Number"." ".$i." "."with PID: " .$output[0]. PHP_EOL; //$output[0] 
+    //     sleep(1);
+    // }
+    //    return "";
+    // }
 }

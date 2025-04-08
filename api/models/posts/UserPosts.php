@@ -17,7 +17,7 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'postuserdetail';
-        $hold_fields = ['filepath','file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
     }
@@ -36,7 +36,10 @@ class UserPosts extends \common\models\UserPosts
 
         // return $this->filepath;
         // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
-        return  'https://d281t0xjcq032r.cloudfront.net/post/' . $this->user_id . '/media/' . $this->file;
+        if ($this->file) {
+            return  'https://d281t0xjcq032r.cloudfront.net/post/' . $this->user_id . '/media/' . $this->file;
+        }
+        return null;
     }
 
     // public function getThumbnail()
