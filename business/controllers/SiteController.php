@@ -7,7 +7,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use bussiness\components\AuthHandler;
+use business\components\AuthHandler;
 use common\models\MailLog;
 use yii\web\Response;
 
