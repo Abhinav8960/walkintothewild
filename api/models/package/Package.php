@@ -32,7 +32,7 @@ class Package extends \common\models\package\Package
     public function fields()
     {
         $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date',];
-
+        $fields[] = 'resourceuri';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
@@ -504,5 +504,11 @@ class Package extends \common\models\package\Package
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
             'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
         ];
+    }
+
+    public function getResourceuri()
+    {
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->package_slug;
+        
     }
 }
