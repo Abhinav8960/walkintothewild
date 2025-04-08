@@ -204,4 +204,6 @@ return [
     '/site/verify/<passcode>' => '/site/login-new-verify',
 
     // '/account/<id>' => '/account/default/index',
+    '/sighting/<eid>' => '/sighting/default/view',
+    '/posts/<eid>' => '/posts/default/view',
 ];
