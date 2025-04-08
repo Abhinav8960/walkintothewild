@@ -64,7 +64,7 @@ class SightingForm extends Model
     public function rules()
     {
         return [
-            [['file', 'master_animal_id', 'safari_session_id', 'zone_id', 'location', 'description'], 'required'],
+            [['file', 'master_animal_id', 'safari_session_id', 'location', 'description'], 'required'],
             [
                 ['file'],
                 'file',
