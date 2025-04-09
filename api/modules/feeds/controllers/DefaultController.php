@@ -68,7 +68,10 @@ class DefaultController extends RestController
 
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
-        $searchModel->collection = Feeds::MODEL_SIGHTING;
+        
+        $collections = [Feeds::MODEL_SIGHTING,Feeds::MODEL_PACKAGE];
+        $randomIndex = array_rand($collections);
+        $searchModel->collection = $collections[$randomIndex];;
 
         $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
