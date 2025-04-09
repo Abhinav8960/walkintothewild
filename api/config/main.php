@@ -173,6 +173,7 @@ return [
 
                 /** feeds */
                 'feeds' => 'feeds/default/index',
+                'feeds/sighting-home' => 'feeds/default/sighting-home',
                 
 
 
