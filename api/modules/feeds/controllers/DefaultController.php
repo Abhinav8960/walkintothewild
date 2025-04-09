@@ -68,10 +68,7 @@ class DefaultController extends RestController
 
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
-        
-        $collections = [Feeds::MODEL_SIGHTING,Feeds::MODEL_PACKAGE];
-        $randomIndex = array_rand($collections);
-        $searchModel->collection = $collections[$randomIndex];
+        $searchModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
 
         $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
@@ -97,5 +94,12 @@ class DefaultController extends RestController
         $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
 
         return Yii::$app->api->sendResponse($data);
+    }
+
+    private function getRandomArrayElement($array)
+    {
+        $randomIndex = array_rand($array);
+        $randomElement = $array[$randomIndex];
+        return $randomElement;
     }
 }
