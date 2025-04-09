@@ -71,7 +71,7 @@ class DefaultController extends RestController
         
         $collections = [Feeds::MODEL_SIGHTING,Feeds::MODEL_PACKAGE];
         $randomIndex = array_rand($collections);
-        $searchModel->collection = $collections[$randomIndex];;
+        $searchModel->collection = $collections[$randomIndex];
 
         $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
