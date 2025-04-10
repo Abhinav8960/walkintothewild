@@ -95,7 +95,7 @@ class DefaultController extends RestController
         $horizontalProvider = $horizontalModel->search(Yii::$app->request->getQueryParams());
         $horizontalProvider->query->orderBy(new \yii\db\Expression('RAND()'));
 
-        $horizontalProvider->pagination->pageSize = 3;
+        $horizontalProvider->pagination->pageSize = 6;
 
         if (!empty($data['data']['feeds'])) {
             $hr = [
