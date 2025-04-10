@@ -10,7 +10,7 @@ use yii\base\Model;
 
 class SightingCommentForm extends Model
 {
-    public $message;
+    public $comment;
 
 
     /**
@@ -19,11 +19,11 @@ class SightingCommentForm extends Model
     public function rules()
     {
         return [
-            [['message'], 'required'],
-            ['message', 'validateContent'],
-            ['message', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->message)) {
-                    $this->addError('message', 'Invalid Characters!!!');
+            [['comment'], 'required'],
+            ['comment', 'validateContent'],
+            ['comment', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
+                    $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],
         ];
@@ -34,8 +34,8 @@ class SightingCommentForm extends Model
     public function comment(Sighting $sighting)
     {
         $comment = new SightingComment();
-        $comment->message = $this->message;
-        $comment->comment_datetime = date('Y-m-d H:i:s');
+        $comment->comment = $this->comment;
+        $comment->dateTime = date('Y-m-d H:i:s');
         $comment->user_id = Yii::$app->user->id;
         $comment->sighting_id = $sighting->id;
         $comment->status = 1;

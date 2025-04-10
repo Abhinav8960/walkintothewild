@@ -13,7 +13,7 @@ use Yii;
  * @property int $user_id
  * @property int $user_posts_id
  * @property int|null $parent_id
- * @property string $message
+ * @property string $comment
  * @property string $comment_date
  * @property int|null $like_counts
  * @property int|null $status
@@ -39,8 +39,8 @@ class UserPostComment extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'user_posts_id', 'parent_id','status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
-            [['comment_datetime'], 'safe'],
+            [['comment'], 'string'],
+            [['dateTime'], 'safe'],
         ];
     }
 
@@ -73,8 +73,8 @@ class UserPostComment extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'user_posts_id' => 'User Posts ID',
             'parent_id' => 'Parent ID',
-            'message' => 'Message',
-            'comment_datetime' => 'Comment Date',
+            'comment' => 'comment',
+            'dateTime' => 'Comment Date',
             'status' => 'Status',
             'created_by' => 'Created By',
             'created_at' => 'Created At',

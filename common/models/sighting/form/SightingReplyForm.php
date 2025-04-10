@@ -13,7 +13,7 @@ use yii\base\Model;
  */
 class SightingReplyForm extends Model
 {
-    public $message;
+    public $comment;
     public $parent_id;
 
 
@@ -23,11 +23,11 @@ class SightingReplyForm extends Model
     public function rules()
     {
         return [
-            [['message', 'parent_id'], 'required'],
-            ['message', 'validateContent'],
-            ['message', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->message)) {
-                    $this->addError('message', 'Invalid Characters!!!');
+            [['comment', 'parent_id'], 'required'],
+            ['comment', 'validateContent'],
+            ['comment', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
+                    $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],
         ];
@@ -37,8 +37,8 @@ class SightingReplyForm extends Model
     public function reply(Sighting $sighting)
     {
         $reply = new SightingComment();
-        $reply->message = $this->message;
-        $reply->comment_datetime = date('Y-m-d H:i:s');
+        $reply->comment = $this->comment;
+        $reply->dateTime = date('Y-m-d H:i:s');
         $reply->user_id = Yii::$app->user->id;
         $reply->sighting_id = $sighting->id;
         $reply->parent_id = $this->parent_id;

@@ -6,14 +6,14 @@ use common\models\User;
 use Yii;
 
 /**
- * This is the model class for table "post_comment".
+ * This is the model class for table "sighting_comment".
  *
  * @property int $id
  * @property int $user_id
  * @property int $user_posts_id
  * @property int|null $parent_id
- * @property string $message
- * @property string $comment_date
+ * @property string $comment
+ * @property string $dateTime
  * @property int|null $like_counts
  * @property int|null $status
  * @property int|null $created_by
@@ -38,8 +38,8 @@ class SightingComment extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'sighting_id', 'parent_id', 'status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
-            [['comment_datetime'], 'safe'],
+            [['comment'], 'string'],
+            [['dateTime'], 'safe'],
         ];
     }
 
@@ -72,8 +72,8 @@ class SightingComment extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'sighting_id' => 'Sighting ID',
             'parent_id' => 'Parent ID',
-            'message' => 'Message',
-            'comment_datetime' => 'Comment Datetime',
+            'comment' => 'Comment',
+            'dateTime' => 'Comment Datetime',
             'status' => 'Status',
             'created_by' => 'Created By',
             'created_at' => 'Created At',
