@@ -84,22 +84,21 @@ class DefaultController extends RestController
         $data['data']['summary']['query_params'] = $this->query_params;
         $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
 
+        // $horizontalModel = new FeedsSearch();
+        // $horizontalModel->status = Feeds::STATUS_ACTIVE;
+        // $horizontalModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
 
-        $horizontalModel = new FeedsSearch();
-        $horizontalModel->status = Feeds::STATUS_ACTIVE;
-        $horizontalModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
+        // $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
+        // $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
 
-        $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
-        $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
+        // $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
+        // $horizontalProvider->query->orderBy(new Expression('RAND()'));
+        // $horizontalProvider->pagination->pageSize = 3;
 
-        $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
-        $horizontalProvider->query->orderBy(new Expression('RAND()'));
-        $horizontalProvider->pagination->pageSize = 3;
-
-        if(!empty($data['data']['feeds'])){
-            $hr = $this->serializeData($horizontalProvider->getModels());
-            array_push($data['data']['feeds'], $hr);
-        }
+        // if(!empty($data['data']['feeds'])){
+        //     $hr = $this->serializeData($horizontalProvider->getModels());
+        //     array_push($data['data']['feeds'], $hr);
+        // }
 
         return Yii::$app->api->sendResponse($data);
     }
