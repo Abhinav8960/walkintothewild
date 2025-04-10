@@ -11,9 +11,6 @@ class Feeds extends \common\models\feeds\Feeds
     {
         $fields = ['objective'];
         $fields[] = 'feed';
-
-
-
         return $fields;
     }
 

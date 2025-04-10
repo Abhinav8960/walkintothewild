@@ -71,7 +71,7 @@ class DefaultController extends RestController
 
         $data = [];
         if ($dataProvider->pagination) {
-            $pageSize = $this->query_params['pageSize'] ?? 20;
+            $pageSize = $this->query_params['pageSize'] ?? 5;
             $dataProvider->pagination->pageSize = $pageSize;
             $dataProvider->pagination->validatePage = false;
 
@@ -84,21 +84,28 @@ class DefaultController extends RestController
         $data['data']['summary']['query_params'] = $this->query_params;
         $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
 
-        // $horizontalModel = new FeedsSearch();
-        // $horizontalModel->status = Feeds::STATUS_ACTIVE;
-        // $horizontalModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
 
-        // $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
-        // $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
+        //Horizontal Feeds
+        $horizontalModel = new FeedsSearch();
+        $horizontalModel->status = Feeds::STATUS_ACTIVE;
+        $horizontalModel->collection = Feeds::MODEL_SIGHTING;
+        $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
 
-        // $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
-        // $horizontalProvider->query->orderBy(new Expression('RAND()'));
-        // $horizontalProvider->pagination->pageSize = 3;
+        $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
+        $horizontalProvider->query->orderBy(new Expression('RAND()'));
+        $horizontalProvider->pagination->pageSize = 3;
 
-        // if(!empty($data['data']['feeds'])){
-        //     $hr = $this->serializeData($horizontalProvider->getModels());
-        //     array_push($data['data']['feeds'], $hr);
-        // }
+        
+
+        if(!empty($data['data']['feeds'])){
+            $hr = [
+                "objective" => "sightings",
+                "feedlist" => $this->serializeData($horizontalProvider->getModels()),
+            ];
+            array_push($data['data']['feeds'], $hr);
+        }
+
 
         return Yii::$app->api->sendResponse($data);
     }
