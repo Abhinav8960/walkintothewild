@@ -60,7 +60,44 @@ class DefaultController extends RestController
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "feeds");
+        $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+
+        if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+            $dataProvider->pagination = false;
+        }
+
+        $data = [];
+        if ($dataProvider->pagination) {
+            $pageSize = $this->query_params['pageSize'] ?? 20;
+            $dataProvider->pagination->pageSize = $pageSize;
+            $data['data']['summary']['total'] = $dataProvider->getTotalCount();
+            $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+            $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+
+        $data['data']['summary']['query_params'] = $this->query_params;
+        $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
+
+
+        $horizontalModel = new FeedsSearch();
+        $horizontalModel->status = Feeds::STATUS_ACTIVE;
+        $horizontalModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
+
+        $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
+        $horizontalProvider->query->orderBy(new Expression('RAND()'));
+        $horizontalProvider->pagination->pageSize = 3;
+
+        $hr = $this->serializeData($horizontalProvider->getModels());
+        array_push($data['data']['feeds'], $hr);
+
+        return Yii::$app->api->sendResponse($data);
     }
 
     public function actionSightingHome()
