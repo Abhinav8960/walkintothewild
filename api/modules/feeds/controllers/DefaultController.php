@@ -73,9 +73,11 @@ class DefaultController extends RestController
         if ($dataProvider->pagination) {
             $pageSize = $this->query_params['pageSize'] ?? 20;
             $dataProvider->pagination->pageSize = $pageSize;
+            $dataProvider->pagination->validatePage = false;
+
             $data['data']['summary']['total'] = $dataProvider->getTotalCount();
             $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize + 1;
             $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
@@ -94,8 +96,10 @@ class DefaultController extends RestController
         $horizontalProvider->query->orderBy(new Expression('RAND()'));
         $horizontalProvider->pagination->pageSize = 3;
 
-        $hr = $this->serializeData($horizontalProvider->getModels());
-        array_push($data['data']['feeds'], $hr);
+        if(!empty($data['data']['feeds'])){
+            $hr = $this->serializeData($horizontalProvider->getModels());
+            array_push($data['data']['feeds'], $hr);
+        }
 
         return Yii::$app->api->sendResponse($data);
     }
