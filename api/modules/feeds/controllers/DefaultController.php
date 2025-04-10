@@ -86,25 +86,25 @@ class DefaultController extends RestController
 
 
         //Horizontal Feeds
+        $types = ['Sighting' => Feeds::MODEL_SIGHTING, 'Package' => Feeds::MODEL_PACKAGE];
+        $randomType = $this->getRandomArrayElement(array_keys($types));
         $horizontalModel = new FeedsSearch();
         $horizontalModel->status = Feeds::STATUS_ACTIVE;
-        $horizontalModel->collection = Feeds::MODEL_SIGHTING;
-        $horizontalModel->load(\Yii::$app->getRequest()->getQueryParams());
-        $horizontalModel->setAttributes(\Yii::$app->request->queryParams);
+        $horizontalModel->collection = $types[$randomType];
 
-        $horizontalProvider = $horizontalModel->search(\Yii::$app->request->queryParams);
-        $horizontalProvider->query->orderBy(new Expression('RAND()'));
+        $horizontalProvider = $horizontalModel->search(Yii::$app->request->getQueryParams());
+        $horizontalProvider->query->orderBy(new \yii\db\Expression('RAND()'));
+
         $horizontalProvider->pagination->pageSize = 3;
 
-        
-
-        if(!empty($data['data']['feeds'])){
+        if (!empty($data['data']['feeds'])) {
             $hr = [
-                "objective" => "sightings",
-                "feedlist" => $this->serializeData($horizontalProvider->getModels()),
+                "objective" => $randomType,
+                "horizontalfeeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
             array_push($data['data']['feeds'], $hr);
         }
+
 
 
         return Yii::$app->api->sendResponse($data);
