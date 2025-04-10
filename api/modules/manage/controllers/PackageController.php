@@ -19,6 +19,8 @@ use api\models\package\PackageIncluded;
 use api\models\package\PackageSafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\NewStatusInterface;
+use common\models\GeneralModel;
+use common\models\MailLog;
 use common\models\package\form\PackageForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\DayItineraryForm;
@@ -134,6 +136,17 @@ class PackageController extends RestController
                         $packagesafaripark->park_id = $park;
                         $packagesafaripark->save(false);
                     }
+                }
+
+                $to_mail = Yii::$app->params['adminEmail'];
+                $subject = 'New Package Created | ' . substr($model->package_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
+                $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_model->package_slug, 'operator_slug' => $safari_operator->slug]);
+
+                $req = ['package' => $model->package_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_model->package_slug], ['message' => "Package create successfully"]);
