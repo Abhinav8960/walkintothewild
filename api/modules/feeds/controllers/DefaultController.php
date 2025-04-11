@@ -100,7 +100,7 @@ class DefaultController extends RestController
         if (!empty($data['data']['feeds'])) {
             $hr = [
                 "objective" => $randomType,
-                "horizontalfeeds" => $this->serializeData($horizontalProvider->getModels()),
+                $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
             array_push($data['data']['feeds'], $hr);
         }
