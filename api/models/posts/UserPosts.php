@@ -63,6 +63,7 @@ class UserPosts extends \common\models\UserPosts
             'name' => $this->user ? $this->user->name : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profileimage : '',
+            'isfollowed' => $this->user ? $this->user->isFollowed : ''
         ];
     }
 
