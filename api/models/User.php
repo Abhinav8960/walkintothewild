@@ -26,6 +26,7 @@ class User extends \common\models\User
         $fields[] = 'coverimage';
         $fields[] = 'usename';
         $fields[] = 'is_safari_operator';
+        $fields[] = 'isFollowed';
 
         $hold_fields = [
             'id',
@@ -194,7 +195,7 @@ class User extends \common\models\User
         if ($this->operator && $this->operator->user_id == $this->id) {
             return $this->operator->imagepath;
         }
-        
+
         if ($this->profile_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/user/' . $this->id . '/' . $this->profile_image;
         }
@@ -355,5 +356,14 @@ class User extends \common\models\User
         } else {
             return $this->name;
         }
+    }
+
+    public function getIsFollowed()
+    {
+        $is_followed = UserFollow::find()->where(['user_id' => \Yii::$app->params['active_user_id'], 'follow_user_id' => $this->id, 'status' => '1'])->one();
+        if ($is_followed) {
+            return true;
+        }
+        return false;
     }
 }
