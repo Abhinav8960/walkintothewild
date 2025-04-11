@@ -64,6 +64,7 @@ class DefaultController extends RestController
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
 
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'collection', Feeds::MODEL_SIGHTING]);
 
         if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
             $dataProvider->pagination = false;
