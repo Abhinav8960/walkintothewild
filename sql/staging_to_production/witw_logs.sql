@@ -67,27 +67,6 @@ CREATE TABLE `frontend_error_log` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mail_log`
---
-
-CREATE TABLE `mail_log` (
-  `id` int NOT NULL,
-  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `mail_template_id` int DEFAULT NULL,
-  `params` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `aws_message_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `mail_send_time` datetime DEFAULT NULL,
-  `try_send_count` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` int DEFAULT NULL,
-  `created_by` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `status` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `site_api_request`
 --
 
