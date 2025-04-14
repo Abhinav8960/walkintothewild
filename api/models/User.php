@@ -193,7 +193,7 @@ class User extends \common\models\User
     public function getProfileimage()
     {
         if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->imagepath;
+            return $this->operator->imagepath ? $this->operator->imagepath : \Yii::$app->params['frontend_url'] . '/img/witw.png';
         }
 
         if ($this->profile_image != '') {
