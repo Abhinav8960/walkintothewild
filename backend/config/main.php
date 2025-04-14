@@ -93,7 +93,10 @@ return [
         [
             'class' => 'backend\modules\paymentlinks\Module'
         ],
-        
+        'home' => [
+            'class' => 'backend\modules\home\Module'
+        ]
+
     ],
     'components' => [
         'reCaptcha3' => [

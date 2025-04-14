@@ -1,13 +1,11 @@
 <?php
 
-namespace api\models\posts;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * UserPostSearch represents the model behind the search form of `api\models\posts\UserPosts`.
- */
+
 class UserPostSearch extends UserPosts
 {
     /**
@@ -18,7 +16,7 @@ class UserPostSearch extends UserPosts
         return [
             [['caption'], 'string'],
             [['file'], 'string', 'max' => 512],
-            [['safari_session_id', 'location','master_animal_id','status'],'safe']
+            [['safari_session_id', 'location', 'master_animal_id', 'status'], 'safe']
         ];
     }
 
@@ -40,7 +38,7 @@ class UserPostSearch extends UserPosts
      */
     public function search($params)
     {
-        $query = UserPosts::find()->where(['status' => [UserPosts::STATUS_ACTIVE]]);
+        $query = UserPosts::find()->where(['status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -63,7 +61,7 @@ class UserPostSearch extends UserPosts
             'id' => $this->id,
             'status' => $this->status,
         ]);
-        
+
 
         return $dataProvider;
     }

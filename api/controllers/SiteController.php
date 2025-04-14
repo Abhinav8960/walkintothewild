@@ -133,7 +133,7 @@ class SiteController extends RestController
 
                 if ($auth && $model->apiLogin()) { // login
                     /* @var User $user */
-                    if ($auth->user->status == User::STATUS_ACTIVE) {
+                    if ($auth->user->status != User::STATUS_ACTIVE) {
                         return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
                         
                     }
@@ -154,7 +154,10 @@ class SiteController extends RestController
 
 
                         if ($user) {
-
+                            if ($user->status != User::STATUS_ACTIVE) {
+                                return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
+                                
+                            }
 
                             $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                             $data = [];
