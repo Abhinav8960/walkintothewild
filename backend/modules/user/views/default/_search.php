@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
         'data-pjax' => true,
         'id' => 'Searchform'
     ],
-    'method' => 'get',
+    'method' => 'post',
     'fieldConfig' => [
         'template' => '{input}{error}',
     ],
