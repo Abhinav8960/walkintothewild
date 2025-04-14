@@ -23,8 +23,6 @@ class ShareSafariSearch extends ShareSafari
     public $share_safari_title;
 
 
-
-
     /**
      * {@inheritdoc}
      */
@@ -33,7 +31,7 @@ class ShareSafariSearch extends ShareSafari
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'share_safari_title'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max', 'type'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max', 'type', 'is_published_on_api', 'is_published_on_web'], 'safe'],
         ];
     }
 
@@ -104,9 +102,11 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.created_by' => $this->created_by,
             'share_safari.updated_at' => $this->updated_at,
             'share_safari.updated_by' => $this->updated_by,
+            'share_safari.is_published_on_api' => $this->is_published_on_api,
+            'share_safari.is_published_on_web' => $this->is_published_on_web,
             'share_safari.status' => $this->status,
         ]);
-        
+
         $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
 
         if ($this->month_id) {
@@ -220,6 +220,8 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.park_id' => $this->park_id,
             'share_safari.host_type' => $this->host_type,
             'share_safari.status' => $this->status,
+            'share_safari.is_published_on_api' => $this->is_published_on_api,
+            'share_safari.is_published_on_web' => $this->is_published_on_web,
         ]);
 
         $query->andFilterWhere(['like', 'share_safari.share_safari_title', $this->share_safari_title]);
