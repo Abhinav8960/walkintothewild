@@ -359,7 +359,7 @@ $this->params['title'] = $this->title; ?>
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'login_safarioperator' => $login_safarioperator]) ?>
             <div class="col-lg-3  mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
-                    Interested - <?= $total_intersted = $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
+                    Interested - <?= $total_intersted = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->count() ?></button>
                 <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>

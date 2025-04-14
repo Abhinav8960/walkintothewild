@@ -42,10 +42,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari'],
+                'only' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari'],
+                        'actions' => ['index', 'profile-photo', 'cover-photo', 'privacy', 'dropdownoptions', 'wishlist-package', 'wishlist-shared-safari','profile-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,6 +62,7 @@ class DefaultController extends RestController
                     'dropdownoptions' => ['GET'],
                     'wishlist-package' => ['GET'],
                     'wishlist-shared-safari' => ['GET'],
+                    'profile-delete' => ['POST']
                 ],
             ],
         ];
@@ -257,11 +258,10 @@ class DefaultController extends RestController
         $packageIds =  array_column($wishlist_items, 'item_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Package::find()->where(['id'=> $packageIds]),
+            'query' => Package::find()->where(['id' => $packageIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "packages");
-
+        return $this->querySender($dataProvider, $rootIndexName = "packages");
     }
 
     /**
@@ -274,15 +274,26 @@ class DefaultController extends RestController
         $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => $this->userinfo ? $this->userinfoId : null])->all();
 
         $saafariIds =  array_column($wishlist_items, 'item_id');
-       
+
         $dataProvider = new ActiveDataProvider([
-            'query' => ShareSafari::find()->where(['id'=> $saafariIds]),
+            'query' => ShareSafari::find()->where(['id' => $saafariIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-       return $this->querySender($dataProvider, $rootIndexName = "sharedsafari");
-        
+        return $this->querySender($dataProvider, $rootIndexName = "sharedsafari");
+    }
 
+    public function actionProfileDelete()
+    {
+        $user_model = $this->userinfo;
+        if ($user_model && $user_model->operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+        }
+        $model = User::find()->where(['id' => $user_model->id])->limit(1)->one();
+        $model->status = User::STATUS_DELETED;
 
-
+        if ($model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Profile Deleted Successfully!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Profile Not Deleted!!!"]);
     }
 }
