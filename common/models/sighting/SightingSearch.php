@@ -38,7 +38,7 @@ class SightingSearch extends Sighting
      */
     public function search($params)
     {
-        $query = Sighting::find()->where(['status' => [Sighting::STATUS_ACTIVE]]);
+        $query = Sighting::find()->where(['status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

@@ -98,4 +98,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     //         return '/storage/userpost/' . $this->user_id . '/' . $this->file;
     //     }
     // }
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
 }
