@@ -200,7 +200,7 @@ class DefaultController extends FrontendBaseController
                         $model->shared_safari_model->savehistory();
                         $model->UploadFiles($model->shared_safari_model->id);
 
-                        $intrested_users = $shared_safari_model->getIntrested()->where(['status' => 1])->all();
+                        $intrested_users = $shared_safari_model->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->all();
                         if ($intrested_users) {
                             foreach ($intrested_users as $intrest) {
                                 $user = $intrest->user;
