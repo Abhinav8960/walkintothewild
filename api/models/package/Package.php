@@ -304,7 +304,7 @@ class Package extends \common\models\package\Package
 
     public function getCommentCount()
     {
-        return $this->getComments()->count();
+        return $this->getComments()->where(['parent_id' => null])->count();
     }
 
 
