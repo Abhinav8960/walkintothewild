@@ -33,6 +33,8 @@ class Package extends \common\models\package\Package
     {
         $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date',];
         $fields[] = 'resourceuri';
+        $fields[] = 'canComment';
+        $fields[] = 'canReply';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
@@ -509,6 +511,23 @@ class Package extends \common\models\package\Package
     public function getResourceuri()
     {
         return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->package_slug;
-        
+    }
+
+    public function getCanComment()
+    {
+        if (\Yii::$app->params['active_user_id']) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public function getCanReply()
+    {
+        if(\Yii::$app->params['active_user_id'] == $this->owned_by_id)
+        {
+            return true;
+        }
+        return false;
     }
 }

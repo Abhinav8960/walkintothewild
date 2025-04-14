@@ -26,6 +26,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields = ['id', 'haveYouJoined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organizedbyname', 'organizedbyimage', 'organizedslug', 'sharedimagepath', 'seatfullStatus', 'isWishlist', 'isFollowed', 'interseted_user_count', 'park_title'];
         $fields[] = 'resourceuri';
         $fields[] = 'canComment';
+        $fields[] = 'canReply';
 
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $fields[] = 'cost_per_person';
@@ -501,6 +502,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
 
     public function getCanComment()
+    {
+        $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
+        if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
+            return true;
+        } else if ($this->host_user_id == $login_safarioperator->id) {
+            return true;
+        } else {
+            return $this->getHaveYouJoined();
+        }
+    }
+
+    public function getCanReply()
     {
         $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
         if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
