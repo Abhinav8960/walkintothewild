@@ -22,7 +22,7 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MailLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
