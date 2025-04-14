@@ -135,6 +135,7 @@ class SiteController extends RestController
                     /* @var User $user */
                     if ($auth->user->status == User::STATUS_ACTIVE) {
                         return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
+                        
                     }
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
