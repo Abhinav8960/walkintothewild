@@ -213,4 +213,30 @@ class DefaultController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionPublishOnApi($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        if ($model) {
+            $model->is_published_on_api = !$model->is_published_on_api;
+            $model->save(false);
+            \Yii::$app->session->setFlash('success', 'Api Publish change Successfully');
+        } else {
+            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionPublishOnWeb($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        if ($model) {
+            $model->is_published_on_web = !$model->is_published_on_web;
+            $model->save(false);
+            \Yii::$app->session->setFlash('success', 'Web Publish change Successfully');
+        } else {
+            \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }

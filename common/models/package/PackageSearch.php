@@ -55,7 +55,7 @@ class PackageSearch extends Package
             [['package_slug'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe'],
-            [['show_in_filter','is_published_on_web','is_published_on_api'], 'boolean'],
+            [['is_published_on_web','is_published_on_api'], 'boolean'],
             [['is_published_on_web','is_published_on_api'], 'safe'],
         ];
     }
