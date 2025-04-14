@@ -35,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like','user-post-report'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like','user-post-report'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +55,8 @@ class DefaultController extends RestController
                     'reply' => ['POST'],
                     'user-post-like' => ['POST'],
                     'comment-like' => ['POST'],
-                    'user-post-report'=>['POST']
+                    'user-post-report' => ['POST'],
+                    'post-delete' => ['POST']
                 ],
             ],
         ];
@@ -137,6 +138,26 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment Not Submitted!"]);
     }
 
+    public function actionPostDelete($id)
+    {
+        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$userpost) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+        if ($this->userinfo) {
+            if ($this->userinfoId != $userpost->user_id) {
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot delete this post!!!"]);
+            }
+        }
+
+        $userpost->status = UserPosts::STATUS_DELETE;
+        if ($userpost->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete Successfully!!!"]);
+        }
+
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+    }
+
 
     public function actionReply($id, $parent_id)
     {
@@ -170,11 +191,11 @@ class DefaultController extends RestController
             $like->user_post_comment_id = $user_post_comment_id;
             $like->status = UserPostCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1 ,'isLike'=> true], ['message' => "Liked Comment or Reply"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Liked Comment or Reply"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1 , 'isLike'=> false], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
         }
     }
 
@@ -193,11 +214,11 @@ class DefaultController extends RestController
             $like->user_post_id = $id;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1 , 'isLike'=> true], ['message' => "Post Liked Successfully"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Post Liked Successfully"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1 , 'isLike'=> false], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
         }
     }
 

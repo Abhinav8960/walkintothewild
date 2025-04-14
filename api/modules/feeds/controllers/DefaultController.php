@@ -9,6 +9,7 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\feeds\Feeds;
 use api\models\feeds\FeedsSearch;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 
 /**
@@ -31,10 +32,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index', 'sighting-home'],
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'sighting-home'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,6 +47,7 @@ class DefaultController extends RestController
                 'actions' => [
                     'index' => ['GET'],
                     'view' => ['GET'],
+                    'sighting-home' => ['GET']
                 ],
             ],
         ];
@@ -54,13 +56,98 @@ class DefaultController extends RestController
 
     public function actionIndex()
     {
-       
+
         $searchModel = new FeedsSearch();
         $searchModel->status = Feeds::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "feeds");
+        $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'collection', Feeds::MODEL_SIGHTING]);
+
+        if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+            $dataProvider->pagination = false;
+        }
+
+        $data = [];
+        if ($dataProvider->pagination) {
+            $pageSize = $this->query_params['pageSize'] ?? 5;
+            $dataProvider->pagination->pageSize = $pageSize;
+            $dataProvider->pagination->validatePage = false;
+
+            $data['data']['summary']['total'] = $dataProvider->getTotalCount();
+            $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize + 1;
+            $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+
+        $data['data']['summary']['query_params'] = $this->query_params;
+        $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
+
+
+        //Horizontal Feeds
+        $types = ['Sighting' => Feeds::MODEL_SIGHTING, 'Package' => Feeds::MODEL_PACKAGE];
+        $randomType = $this->getRandomArrayElement(array_keys($types));
+        $horizontalModel = new FeedsSearch();
+        $horizontalModel->status = Feeds::STATUS_ACTIVE;
+        $horizontalModel->collection = $types[$randomType];
+
+        $horizontalProvider = $horizontalModel->search(Yii::$app->request->getQueryParams());
+        $horizontalProvider->query->orderBy(new \yii\db\Expression('RAND()'));
+
+        $horizontalProvider->pagination->pageSize = 6;
+
+        if (!empty($data['data']['feeds'])) {
+            $hr = [
+                "objective" => $randomType,
+                $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
+            ];
+            array_push($data['data']['feeds'], $hr);
+        }
+
+
+
+        return Yii::$app->api->sendResponse($data);
     }
 
+    public function actionSightingHome()
+    {
 
-   
+        $searchModel = new FeedsSearch();
+        $searchModel->status = Feeds::STATUS_ACTIVE;
+        $searchModel->collection = $this->getRandomArrayElement([Feeds::MODEL_SIGHTING, Feeds::MODEL_PACKAGE]);
+
+        $searchModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider->query->orderBy(new Expression('RAND()'));
+
+        if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+            $dataProvider->pagination = false;
+        }
+
+        $data = [];
+        if ($dataProvider->pagination) {
+            $pageSize = $this->query_params['pageSize'] ?? 3;
+            $dataProvider->pagination->pageSize = $pageSize;
+            $data['data']['summary']['total'] = $dataProvider->getTotalCount();
+            $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+            $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+
+        $data['data']['summary']['query_params'] = $this->query_params;
+        $data['data']['feeds'] = $this->serializeData($dataProvider->getModels());
+
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    private function getRandomArrayElement($array)
+    {
+        $randomIndex = array_rand($array);
+        $randomElement = $array[$randomIndex];
+        return $randomElement;
+    }
 }

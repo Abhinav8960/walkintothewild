@@ -17,7 +17,7 @@ class FeedsSearch extends Feeds
     public function rules()
     {
         return [
-            [['objctive','collection','collection_id'], 'safe'],
+            [['objective', 'collection', 'collection_id'], 'safe'],
             [['objective'], 'string', 'max' => 255],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
@@ -63,7 +63,7 @@ class FeedsSearch extends Feeds
             'id' => $this->id,
             'objective' => $this->objective,
             'collection' => $this->collection,
-            'collectio_id' => $this->collection_id,
+            'collection_id' => $this->collection_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

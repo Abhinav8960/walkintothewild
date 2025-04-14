@@ -148,44 +148,44 @@ class DefaultController extends SafariController
             if ($model->shared_safari_model->save()) {
                 $model->shared_safari_model->savehistory();
                 $model->UploadFiles($model->shared_safari_model->id);
-                // if ($model->shared_safari_model->user) {
-                //     /**User Info Who created safari */
-                //     $user = $model->shared_safari_model->user;
-                //     $username = $user->name;
-                //     /**Sent to admin */
-                //     $to_mail = Yii::$app->params['adminEmail'];
-                //     $subject = 'New Shared Safari | ' . substr($model->shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_CREATEDBY_USER;
-                //     /**Url of shared Safari */
-                //     $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_model->slug, 'organized_slug' => $model->shared_safari_model->organizedslug ? $model->shared_safari_model->organizedslug : '']);
+                if ($model->shared_safari_model->user) {
+                    /**User Info Who created safari */
+                    $user = $model->shared_safari_model->user;
+                    $username = $user->name;
+                    /**Sent to admin */
+                    $to_mail = Yii::$app->params['adminEmail'];
+                    $subject = 'New Shared Safari | ' . substr($model->shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_CREATEDBY_USER;
+                    /**Url of shared Safari */
+                    $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_model->slug, 'organized_slug' => $model->shared_safari_model->organizedslug ? $model->shared_safari_model->organizedslug : '']);
 
-                //     $req = ['shared_safari' => $model->shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
-                //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    $req = ['shared_safari' => $model->shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
+                    $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
-                //     if (!empty($maillog_data['log_id'])) {
-                //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //     }
-                // }
+                    if (!empty($maillog_data['log_id'])) {
+                        GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                    }
+                }
+                
+                if ($active_followers = $model->shared_safari_model->sharesafarifollowerlist) {
+                    foreach ($active_followers as $follower) {
+                        /** Creator Info */
+                        $creator_name = $model->shared_safari_model->organizedbyname;
+                        /**User Info */
+                        $to_mail = $follower->user->username;
+                        /**Template info */
+                        $subject = 'New Shared Safari | ' . substr($model->shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_TO_FOLLOWER;
+                        /**Url Info */
+                        $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_model->slug, 'organized_slug' => $model->shared_safari_model->organizedslug ? $model->shared_safari_model->organizedslug : '']);
+                        $req = ['shared_safari' => $model->shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'creator_name' => $creator_name];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
-                // if ($active_followers = $model->shared_safari_model->sharesafarifollowerlist) {
-                //     foreach ($active_followers as $follower) {
-                //         /** Creator Info */
-                //         $creator_name = $model->shared_safari_model->organizedbyname;
-                //         /**User Info */
-                //         $to_mail = isset($follower->user) ? $follower->user->username : '';
-                //         /**Template info */
-                //         $subject = 'New Shared Safari | ' . substr($model->shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_TO_FOLLOWER;
-                //         /**Url Info */
-                //         $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_model->slug, 'organized_slug' => $model->shared_safari_model->organizedslug ? $model->shared_safari_model->organizedslug : '']);
-                //         $req = ['shared_safari' => $model->shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'creator_name' => $creator_name];
-                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-
-                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //         }
-                //     }
-                // }
+                        if (!empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
+                    }
+                }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not created successfully"]);
@@ -223,23 +223,23 @@ class DefaultController extends SafariController
             $share_safari_intrested->intrested_at = time();
             if ($share_safari_intrested->save(false)) {
                 /* Login User Info */
-                // $user = $this->userinfo;
-                // $username = $user->name;
-                // /*Creator Info*/
-                // if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
-                //     $to_mail = $share_safari->user->username;
-                // } else {
-                //     $to_mail = $share_safari->safarioperator->user->username;
-                // }
-                // $creator_name = $share_safari->organizedbyname;
-                // $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
-                // $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-                // $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
-                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                // }
+                $user = $this->userinfo;
+                $username = $user->name;
+                /*Creator Info*/
+                if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                    $to_mail = $share_safari->user->username;
+                } else {
+                    $to_mail = $share_safari->safarioperator->user->username;
+                }
+                $creator_name = $share_safari->organizedbyname;
+                $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
+                $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
 
                 FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                 FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
@@ -407,40 +407,40 @@ class DefaultController extends SafariController
         if ($replymodel->validate()) {
             if ($replymodel->reply($share_safari)) {
                 /* To Creator*/
-                // if ($this->userinfo && $share_safari->host_user_id != $this->userinfoId) {
-                //     $user = $this->userinfo;
-                //     $username = $user->name;
-                //     if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
-                //         $to_mail = $share_safari->user->username;
-                //     } else {
-                //         $to_mail = $share_safari->safarioperator->user->username;
-                //     }
-                //     $creator_name = $share_safari->organizedbyname;
-                //     $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_COMMENT_REPLY_SAFARI;
-                //     $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-                //     $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
-                //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                //     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //     }
-                //     FrontendNotificationHelper::sharedSafariReply($share_safari);
-                // }
+                if ($this->userinfo && $share_safari->host_user_id != $this->userinfoId) {
+                    $user = $this->userinfo;
+                    $username = $user->name;
+                    if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                        $to_mail = $share_safari->user->username;
+                    } else {
+                        $to_mail = $share_safari->safarioperator->user->username;
+                    }
+                    $creator_name = $share_safari->organizedbyname;
+                    $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_COMMENT_REPLY_SAFARI;
+                    $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                    $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                    $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                        GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                    }
+                    FrontendNotificationHelper::sharedSafariReply($share_safari);
+                }
                 // /* Comment Owner*/
-                // if ($this->userinfo && $on_comment && $to_comment_user = $on_comment->user) {
-                //     $reply_user = $this->userinfo;
-                //     $reply_username = $reply_user->name;
-                //     $to_mail = $to_comment_user->username;
-                //     $safari_creator_name = $share_safari->organizedbyname;
-                //     $subject = 'New Reply';
-                //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REPLY_BY_USER_TO_COMMENTUSER;
-                //     $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-                //     $req = ['username' => $reply_username, 'creator_name' => $safari_creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
-                //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                //     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //     }
-                // }
+                if ($this->userinfo && $on_comment && $to_comment_user = $on_comment->user) {
+                    $reply_user = $this->userinfo;
+                    $reply_username = $reply_user->name;
+                    $to_mail = $to_comment_user->username;
+                    $safari_creator_name = $share_safari->organizedbyname;
+                    $subject = 'New Reply';
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REPLY_BY_USER_TO_COMMENTUSER;
+                    $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                    $req = ['username' => $reply_username, 'creator_name' => $safari_creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                    $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                        GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                    }
+                }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
@@ -473,14 +473,14 @@ class DefaultController extends SafariController
                 $comments->flaged = 1;
                 $comments->save(false);
                 /*Send Email*/
-                // $to_mail = Yii::$app->params['adminEmail'];
-                // $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-                // $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
-                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                // }
+                $to_mail = Yii::$app->params['adminEmail'];
+                $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reported successfully!"]);
             }
@@ -605,24 +605,24 @@ class DefaultController extends SafariController
                 $model->shared_safari_model->savehistory();
                 $model->UploadFiles($model->shared_safari_model->id);
                 /* All Joined User*/
-                // $intrested_users = $shared_safari_model->getIntrested()->where(['share_safari_intrested.status' => 1])->all();
-                // if ($intrested_users) {
-                //     foreach ($intrested_users as $intrest) {
-                //         $user = $intrest->user;
-                //         $username = $user->name;
-                //         $to_mail = $user->username;
-                //         $creator_name = $shared_safari_model->organizedbyname;
-                //         $subject = 'Update Shared Safari | ' . substr($shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_SAFARI_CREATEDBY_USER;
-                //         $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']);
-                //         $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
-                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //         }
-                //     }
-                // }
-                // \Yii::$app->session->setFlash('success', 'Shared safari updated successfully');
+                $intrested_users = $shared_safari_model->getIntrested()->where(['share_safari_intrested.status' => 1])->all();
+                if ($intrested_users) {
+                    foreach ($intrested_users as $intrest) {
+                        $user = $intrest->user;
+                        $username = $user->name;
+                        $to_mail = $user->username;
+                        $creator_name = $shared_safari_model->organizedbyname;
+                        $subject = 'Update Shared Safari | ' . substr($shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_SAFARI_CREATEDBY_USER;
+                        $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']);
+                        $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
+                    }
+                }
+
                 FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
             }

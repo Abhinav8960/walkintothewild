@@ -17,6 +17,7 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'postuserdetail';
+        $fields[] = 'resourceuri';
         $hold_fields = ['filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
@@ -62,6 +63,7 @@ class UserPosts extends \common\models\UserPosts
             'name' => $this->user ? $this->user->name : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profileimage : '',
+            'isfollowed' => $this->user ? $this->user->isFollowed : ''
         ];
     }
 
@@ -89,5 +91,10 @@ class UserPosts extends \common\models\UserPosts
     public function getCommentsCount()
     {
         return $this->getComments()->andWhere(['user_post_comment.status' => 1])->count();
+    }
+
+    public function getResourceuri()
+    {
+        return Yii::$app->params['frontend_url'] . '/posts/' . base64_encode($this->id);
     }
 }

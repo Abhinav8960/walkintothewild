@@ -21,6 +21,7 @@ class Sighting extends \common\models\sighting\Sighting
         $fields[] = 'likesCount';
         $fields[] = 'commentsCount';
         $fields[] = 'sightinguserdetail';
+        $fields[] = 'resourceuri';
         $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
@@ -63,6 +64,7 @@ class Sighting extends \common\models\sighting\Sighting
             'name' => $this->user ? $this->user->safarioperatorname : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profileimage : '',
+            'isFollowed' => $this->user ? $this->user->isFollowed : ''
         ];
     }
 
@@ -102,5 +104,10 @@ class Sighting extends \common\models\sighting\Sighting
             return $this->safaripark->title;
         }
         return '';
+    }
+
+    public function getResourceuri()
+    {
+        return Yii::$app->params['frontend_url'] . '/sighting/' . base64_encode($this->id);
     }
 }
