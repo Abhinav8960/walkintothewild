@@ -54,7 +54,9 @@ class PackageSearch extends Package
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe'],
+            [['is_published_on_web','is_published_on_api'], 'boolean'],
+            [['is_published_on_web','is_published_on_api'], 'safe'],
         ];
     }
 
@@ -113,6 +115,8 @@ class PackageSearch extends Package
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
             'package.status' => $this->status,
         ]);
 

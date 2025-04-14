@@ -18,7 +18,7 @@ class UserPostSearch extends UserPosts
         return [
             [['caption'], 'string'],
             [['file'], 'string', 'max' => 512],
-            [['safari_session_id', 'location','master_animal_id'],'safe']
+            [['safari_session_id', 'location','master_animal_id','status'],'safe']
         ];
     }
 

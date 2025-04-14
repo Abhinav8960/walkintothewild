@@ -121,6 +121,17 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         }
                     ],
                     [
+                        'label' => 'Is Publish on Web/App',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str = $model->is_published_on_web == 1 ? '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            $str .= '/';
+                            $str .= $model->is_published_on_api == 1 ? '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            return $str;
+                        }
+                    ],
+                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',

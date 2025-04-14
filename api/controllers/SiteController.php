@@ -96,7 +96,7 @@ class SiteController extends RestController
                 "name"  => ($exception instanceof \Exception || $exception instanceof \ErrorException) ? $exception->getName() : 'Exception',
                 'message' => $exception->getMessage(),
                 "code"  => $exception->getCode(),
-                "type"  =>get_class($exception),
+                "type"  => get_class($exception),
                 "file"  => $exception->getFile(),
                 "line"  => $exception->getLine(),
                 // "stack-trace"  => $exception->getTrace(),
@@ -130,21 +130,23 @@ class SiteController extends RestController
                     'source_id' => $model->source_id,
                 ])->one();
 
+
                 if ($auth && $model->apiLogin()) { // login
                     /* @var User $user */
-
+                    if ($auth->user->status != User::STATUS_ACTIVE) {
+                        return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
+                        
+                    }
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
                     $data = [];
                     // $data['authorization_code'] = $auth_code;
                     $data['access_token'] = $accesstoken->token;
-
                     // $data['expires_at'] = $accesstoken->expires_at;
-
                     return \Yii::$app->api->sendResponse($data);
                     // $this->updateUserInfo($user);
                 } else {
-
+                    
                     if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
 
                         $user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one();
@@ -152,7 +154,10 @@ class SiteController extends RestController
 
 
                         if ($user) {
-
+                            if ($user->status != User::STATUS_ACTIVE) {
+                                return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
+                                
+                            }
 
                             $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                             $data = [];

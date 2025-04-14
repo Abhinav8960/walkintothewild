@@ -3,6 +3,7 @@
 namespace common\models\sighting;
 
 use common\models\feeds\Feeds;
+use common\models\User;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -99,5 +100,10 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

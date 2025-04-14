@@ -21,6 +21,8 @@ class SafariParkSearch extends SafariPark
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'show_in_filter'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
+            [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api'], 'safe'],
         ];
     }
 
@@ -67,6 +69,8 @@ class SafariParkSearch extends SafariPark
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
             'status' => $this->status,
         ]);
 
