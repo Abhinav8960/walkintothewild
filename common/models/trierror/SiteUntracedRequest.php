@@ -11,7 +11,7 @@ use Yii;
  * @property string $url
  * @property int $status
  */
-class SiteUntracedRequest extends \yii\db\ActiveRecord
+class SiteUntracedRequest extends \common\models\trierror\ActiveLogRecord
 {
     /**
      * {@inheritdoc}

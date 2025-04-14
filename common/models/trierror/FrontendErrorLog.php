@@ -19,7 +19,7 @@ use Yii;
  * @property int|null $user_session_id
  * @property int|null $created_at
  */
-class FrontendErrorLog extends \yii\db\ActiveRecord
+class FrontendErrorLog extends \common\models\trierror\ActiveLogRecord
 {
     public $cnt;
     /**

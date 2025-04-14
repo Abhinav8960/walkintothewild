@@ -24,7 +24,7 @@ use Yii;
  * @property string|null $description
  * @property string|null $keywords
  */
-class SitePages extends \yii\db\ActiveRecord
+class SitePages extends \common\models\trierror\ActiveLogRecord
 {
     /**
      * {@inheritdoc}
@@ -33,6 +33,7 @@ class SitePages extends \yii\db\ActiveRecord
     {
         return 'site_pages';
     }
+
 
     /**
      * {@inheritdoc}

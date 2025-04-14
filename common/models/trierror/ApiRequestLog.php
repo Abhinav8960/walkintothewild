@@ -32,14 +32,14 @@ use common\models\User;
  * @property int $is_reqeust_trace
  * @property string $created_at
  */
-class ApiRequestLog extends \yii\db\ActiveRecord
+class ApiRequestLog extends \common\models\trierror\ActiveLogRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'site_api_request';
+        return  'site_api_request';
     }
 
     /**

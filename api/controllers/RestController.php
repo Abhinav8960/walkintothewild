@@ -26,7 +26,7 @@ class RestController extends Controller
     public $userinfoId;
     public $access_token;
 
-    public $pageSize = 10;
+    public $pageSize = 2;
 
 
 

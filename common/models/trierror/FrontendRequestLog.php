@@ -17,7 +17,7 @@ use common\models\User;
  * @property string $response_error
  * @property string $created_at
  */
-class FrontendRequestLog extends \yii\db\ActiveRecord
+class FrontendRequestLog extends \common\models\trierror\ActiveLogRecord
 {
     /**
      * {@inheritdoc}

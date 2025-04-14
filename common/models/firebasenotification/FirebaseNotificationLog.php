@@ -23,7 +23,7 @@ use yii\db\ActiveRecord;
  * @property int|null $created_by
  * @property int $created_at
  */
-class FirebaseNotificationLog extends \yii\db\ActiveRecord
+class FirebaseNotificationLog extends \common\models\firebasenotification\ActiveLogRecord
 {
 
     /**
