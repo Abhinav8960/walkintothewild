@@ -88,7 +88,12 @@ return [
         'business' =>
         [
             'class' => 'backend\modules\business\Module'
-        ]
+        ],
+        'paymentlinks' =>
+        [
+            'class' => 'backend\modules\paymentlinks\Module'
+        ],
+        
     ],
     'components' => [
         'reCaptcha3' => [
