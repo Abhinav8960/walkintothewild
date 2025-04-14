@@ -264,6 +264,7 @@ class DefaultController extends FrontendBaseController
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
+        
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $model = new ShareSafariCommentForm();

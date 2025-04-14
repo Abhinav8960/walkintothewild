@@ -26,7 +26,7 @@ class ShareSafariRequestSearch extends ShareSafariRequest
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter','is_approved'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_approved'], 'safe'],
         ];
     }
 
@@ -84,7 +84,7 @@ class ShareSafariRequestSearch extends ShareSafariRequest
             'share_safari_request.created_at' => $this->created_at,
             'share_safari_request.created_by' => $this->created_by,
             'share_safari_request.updated_at' => $this->updated_at,
-            'share_safari_request.updated_by' => $this->updated_by,
+            'share_safari_request.updated_by' => $this->updated_by,            
             'share_safari_request.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);

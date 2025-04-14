@@ -86,7 +86,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             [['share_safari_title'], 'string'],
             [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'tour_duration', 'cost_per_person', 'type'], 'integer'],
-            [['start_date', 'end_date', 'slug'], 'safe'],
+            [['start_date', 'end_date', 'slug','is_published_on_api', 'is_published_on_web'], 'safe'],
+            [['is_published_on_api', 'is_published_on_web'], 'boolean'],            
             [['safari_plan'], 'string'],
             [['image'], 'string'],
         ];
@@ -116,6 +117,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'is_published_on_api' => 'Is Published On Api',
+            'is_published_on_web' => 'Is Published On Web',
             'status' => 'Status',
         ];
     }

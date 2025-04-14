@@ -88,6 +88,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['show_in_filter','is_published_on_web','is_published_on_api'], 'boolean'],
+            [['is_published_on_web','is_published_on_api'], 'safe'],
         ];
     }
 
@@ -117,6 +119,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'is_published_on_api' => 'Is Published On Api',
+            'is_published_on_web' => 'Is Published On Web',
             'status' => 'Status',
         ];
     }

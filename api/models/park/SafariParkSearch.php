@@ -35,7 +35,9 @@ class SafariParkSearch extends SafariPark
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
             [['latitude', 'longitude', 'custom_sort_by','master_animal_slug','is_single'], 'safe'],
-            [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe']
+            [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe'],
+            [['show_in_filter','is_published_on_web','is_published_on_api'], 'boolean'],
+            [['is_published_on_web','is_published_on_api'], 'safe'],
         ];
     }
 
@@ -163,6 +165,8 @@ class SafariParkSearch extends SafariPark
             'safari_park.created_by' => $this->created_by,
             'safari_park.updated_at' => $this->updated_at,
             'safari_park.updated_by' => $this->updated_by,
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
             'safari_park.status' => $this->status,
         ]);
 
