@@ -504,9 +504,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getCanComment()
     {
         $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
-            return true;
-        } else if ($this->host_user_id == $login_safarioperator->id) {
+        if ($login_safarioperator) {
+            if ($this->host_user_id == $login_safarioperator->id) {
+                return true;
+            }
+        } else if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
             return true;
         } else {
             return $this->getHaveYouJoined();
@@ -516,9 +518,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getCanReply()
     {
         $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
-            return true;
-        } else if ($this->host_user_id == $login_safarioperator->id) {
+        if ($login_safarioperator) {
+            if ($this->host_user_id == $login_safarioperator->id) {
+                return true;
+            }
+        } else if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
             return true;
         } else {
             return $this->getHaveYouJoined();
