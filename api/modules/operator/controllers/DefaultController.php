@@ -81,17 +81,31 @@ class DefaultController extends RestController
         ];
     }
 
+    // public function actionView($slug)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
+    //     $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (!$operator) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
+    //     }
+    //     $searchModel = new SafariOperatorSearch();
+    //     $searchModel->id = $operator->id;
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+    //     // return $this->dataSender($operator, $rootIndexName = "Operator");
+    // }
+
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
         }
-        $searchModel = new SafariOperatorSearch();
-        $searchModel->id = $operator->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
-        // return $this->dataSender($operator, $rootIndexName = "Operator");
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['data' => $operator], ['message' => "Inactive or Deleted Operator!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['data' => $operator]);
     }
 
 
