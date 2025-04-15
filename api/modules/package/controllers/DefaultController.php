@@ -93,6 +93,18 @@ class DefaultController extends RestController
     }
 
 
+    // public function actionView($slug)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
+    //     $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
+    //     if (!$package) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+    //     }
+    //     $searchModel = new PackageSearch();
+    //     $searchModel->id = $package->id;
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+    // }
+
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
@@ -100,11 +112,13 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        $searchModel = new PackageSearch();
-        $searchModel->id = $package->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
-    }
 
+        if ($package->status != SafariOperator::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
+        }
+
+        return Yii::$app->api->sendResponse($data = ['data' => $package]);
+    }
 
 
 
