@@ -18,7 +18,7 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  */
-class MailLogRecipients extends \yii\db\ActiveRecord
+class MailLogRecipients extends \common\models\trierror\ActiveLogRecord
 {
     const SEND_AS_TO_RECIPIENTS = 1;
     const SEND_AS_CC_RECIPIENTS = 2;
