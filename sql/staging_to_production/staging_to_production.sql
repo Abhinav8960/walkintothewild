@@ -218,10 +218,6 @@ ALTER TABLE `user_post_like`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
@@ -285,9 +281,6 @@ ALTER TABLE `post_report`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
@@ -306,13 +299,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `walkintothewild`
---
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `sighting`
@@ -462,9 +449,6 @@ ALTER TABLE `sighting_like`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
@@ -478,12 +462,6 @@ COMMIT;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `walkintothewild`
@@ -529,30 +507,32 @@ ALTER TABLE `sighting_report`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-ALTER TABLE `user_posts`
-  DROP `type_of_post`,
-  DROP `video_thumbnail`,
-  DROP `video_thumbnail_path`,
-  DROP `video_thumbnail_etag`,
-  DROP `like_count`,
-  DROP `latitude`,
-  DROP `longitude`,
-  DROP `location`,
-  DROP `description`,
-  DROP `master_animal_id`,
-  DROP `safari_session_id`,
-  DROP `post_datetime`,
-  DROP `zone_id`,
-  DROP `v_size`,
-  DROP `v_duration`;
+
+-- ALTER TABLE `user_posts`
+--   DROP `type_of_post`,
+--   DROP `video_thumbnail`,
+--   DROP `video_thumbnail_path`,
+--   DROP `video_thumbnail_etag`,
+--   DROP `like_count`,
+--   DROP `latitude`,
+--   DROP `longitude`,
+--   DROP `location`,
+--   DROP `description`,
+--   DROP `master_animal_id`,
+--   DROP `safari_session_id`,
+--   DROP `post_datetime`,
+--   DROP `zone_id`,
+--   DROP `v_size`,
+--   DROP `v_duration`;
 ALTER TABLE `user_posts` ADD `size` INT NULL AFTER `etag`;
 ALTER TABLE `user_post_comment` CHANGE `message` `comment` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
 ALTER TABLE `user_post_comment` CHANGE `comment_datetime` `dateTime` DATETIME NOT NULL;
 ALTER TABLE `sighting_comment` CHANGE `comment_datetime` `dateTime` DATETIME NOT NULL;
 ALTER TABLE `sighting_comment` CHANGE `message` `comment` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
 ALTER TABLE site_api_request MODIFY COLUMN response LONGTEXT;
+
+ALTER TABLE `share_safari` ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `status`, ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_api`;
+ALTER TABLE `safari_park` ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `google_review_count`, ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_web`;
+ALTER TABLE `package` ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `updated_by`, ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_web`;
