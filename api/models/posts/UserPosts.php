@@ -60,10 +60,12 @@ class UserPosts extends \common\models\UserPosts
     public function getPostuserdetail()
     {
         return [
-            'name' => $this->user ? $this->user->name : '',
+            'name' => $this->user ? $this->user->safarioperatorname : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profileimage : '',
-            'isfollowed' => $this->user ? $this->user->isFollowed : ''
+            'isfollowed' => $this->user ? $this->user->isFollowed : '',
+            'isSafariOperator' => $this->user->operator ? true : false,
+            'operatorSlug' => $this->user->operator ? $this->user->operator->slug : '',
         ];
     }
 
