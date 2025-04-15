@@ -65,8 +65,8 @@ class Sighting extends \common\models\sighting\Sighting
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profileimage : '',
             'isFollowed' => $this->user ? $this->user->isFollowed : '',
-            // 'isSafariOperator' => $this->user->operator ? true : false,
-            // 'operatorSlug' => $this->user->operator ? $this->user->operator->slug : '',
+            'isSafariOperator' => $this->user->operator ? true : false,
+            'operatorSlug' => $this->user->operator ? $this->user->operator->slug : '',
         ];
     }
 
