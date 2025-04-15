@@ -64,7 +64,8 @@ class DefaultController extends RestController
     {
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
         $safari_operator = $this->module->operatormodel();
-        return Yii::$app->api->sendResponse($data = $safari_operator);
+        $data['data'] = $safari_operator;
+        return Yii::$app->api->sendResponse($data);
     }
 
 
