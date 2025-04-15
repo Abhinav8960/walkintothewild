@@ -344,7 +344,7 @@ class Package extends \common\models\package\Package
 
     public function getPrimaryPark()
     {
-        return $this->singlepark ? $this->singlepark->park->title : '';
+        return $this->singlepark ? $this->singlepark->park->title : null;
     }
 
 
