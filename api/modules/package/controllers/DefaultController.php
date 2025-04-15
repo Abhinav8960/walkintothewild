@@ -113,7 +113,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
-        if ($package->status != SafariOperator::STATUS_ACTIVE) {
+        if ($package->status != Package::STATUS_ACTIVE) {
             return Yii::$app->api->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
         }
 

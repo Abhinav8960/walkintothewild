@@ -101,18 +101,33 @@ class DefaultController extends SafariController
     }
 
 
+    // public function actionView($slug)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+    //     $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+    //     if (!$share_safari) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+    //     }
+
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' => ShareSafari::find()->where(['slug' => $slug]),
+    //     ]);
+    //     return $this->querySender($dataProvider, $rootIndexName = 0, $singleRecord = true);
+    // }
+
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Share Safari Not Found!!!"]);
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => ShareSafari::find()->where(['slug' => $slug]),
-        ]);
-        return $this->querySender($dataProvider, $rootIndexName = 0, $singleRecord = true);
+        if ($share_safari->status != ShareSafari::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
+        }
+
+        return Yii::$app->api->sendResponse($data = ['data' => $share_safari]);
     }
 
     public function actionOrganizeSafari()

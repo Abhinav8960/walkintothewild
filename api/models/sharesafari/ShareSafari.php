@@ -23,7 +23,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
 
 
-        $fields = ['id', 'haveYouJoined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organizedbyname', 'organizedbyimage', 'organizedslug', 'sharedimagepath', 'seatfullStatus', 'isWishlist', 'isFollowed', 'interseted_user_count', 'park_title'];
+        $fields = ['id', 'haveYouJoined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organizedbyname', 'organizedbyimage', 'organizedslug', 'sharedimagepath', 'seatfullStatus', 'isWishlist', 'isFollowed', 'interseted_user_count', 'park_title', 'status'];
         $fields[] = 'resourceuri';
         $fields[] = 'canComment';
         $fields[] = 'canReply';
