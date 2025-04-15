@@ -504,28 +504,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getCanComment()
     {
         $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($login_safarioperator) {
-            if ($this->host_user_id == $login_safarioperator->id) {
-                return true;
-            }
-        } else if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
+        if ($this->getHaveYouJoined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_safarioperator) && $this->host_user_id == $login_safarioperator->id)) {
             return true;
-        } else {
-            return $this->getHaveYouJoined();
         }
+        return false;
     }
 
     public function getCanReply()
     {
         $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($login_safarioperator) {
-            if ($this->host_user_id == $login_safarioperator->id) {
-                return true;
-            }
-        } else if ($this->host_user_id == \Yii::$app->params['active_user_id']) {
+        if ($this->getHaveYouJoined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_safarioperator) && $this->host_user_id == $login_safarioperator->id)) {
             return true;
-        } else {
-            return $this->getHaveYouJoined();
         }
+        return false;
     }
 }
