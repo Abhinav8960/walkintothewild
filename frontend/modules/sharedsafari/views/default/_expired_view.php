@@ -51,11 +51,6 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                                     <div class="safrititles 44">
                                         <h5><?= $share_safari->share_safari_title ?>
-                                            <?php if ($share_safari->sharedSafariHistory) { ?>
-                                                <span class="history">
-                                                    <button value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" class="history_btn bg-sethistory" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history" style="color: #000;"></i></button>
-                                                </span>
-                                            <?php } ?>
                                         </h5>
 
                                         <div class="date_bx">
