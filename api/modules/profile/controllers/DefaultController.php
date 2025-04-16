@@ -68,7 +68,7 @@ class DefaultController extends RestController
     public function actionIndex($user_handle)
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
-        $user = $this->findUserbyHandle($user_handle);
+        $user = $this->findUser($user_handle);
         if ($user->operator) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
@@ -184,6 +184,15 @@ class DefaultController extends RestController
         }
 
         throw new ForbiddenHttpException('User Not Found / User Account may be Blocked');
+    }
+
+    public function findUser($user_handle)
+    {
+        if ($user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one()) {
+            return $user;
+        }
+
+        throw new ForbiddenHttpException('User Not Found');
     }
 
     public function actionUseractivity($user_handle)
