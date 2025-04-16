@@ -123,7 +123,7 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Share Safari Not Found!!!"]);
         }
 
-        if ($share_safari->status != ShareSafari::STATUS_ACTIVE) {
+        if (!in_array($share_safari->status, [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT])) {
             return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
         }
 
@@ -181,7 +181,7 @@ class DefaultController extends SafariController
                         GeneralModel::sendmailfromlog($maillog_data['log_id']);
                     }
                 }
-                
+
                 if ($active_followers = $model->shared_safari_model->sharesafarifollowerlist) {
                     foreach ($active_followers as $follower) {
                         /** Creator Info */
@@ -267,7 +267,7 @@ class DefaultController extends SafariController
 
     public function actionUnjoin($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
@@ -298,7 +298,7 @@ class DefaultController extends SafariController
     public function actionWishlist($slug)
     {
 
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
@@ -319,7 +319,7 @@ class DefaultController extends SafariController
 
     public function actionUnwishlist($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
@@ -389,7 +389,7 @@ class DefaultController extends SafariController
 
     public function actionComment($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
         }
@@ -411,7 +411,7 @@ class DefaultController extends SafariController
 
     public function actionReply($slug, $parent_id)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
