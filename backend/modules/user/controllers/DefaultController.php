@@ -24,7 +24,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->status = User::STATUS_ACTIVE;
+        $dataProvider = $searchModel->search(Yii::$app->request->post());
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel
