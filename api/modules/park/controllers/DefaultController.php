@@ -87,20 +87,34 @@ class DefaultController extends RestController
      * Renders the index view for the module
      * @return string
      */
+    // public function actionView($slug)
+    // {
+
+    //     $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
+    //     $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (!$model) {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    //     $searchModel = new SafariParkSearch();
+
+    //     $searchModel->id = $model->id; // for show Selected Park name in search
+    //     $searchModel->is_single = true; // for show Selected Park name in search
+
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+    // }
+
     public function actionView($slug)
     {
-
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
-        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $model = SafariPark::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
-        $searchModel = new SafariParkSearch();
 
-        $searchModel->id = $model->id; // for show Selected Park name in search
-        $searchModel->is_single = true; // for show Selected Park name in search
-
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+        if ($model->status != SafariPark::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => "Park Not in use!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['data' => $model]);
     }
 
 
@@ -196,9 +210,9 @@ class DefaultController extends RestController
         }
         $operatorsearchModel = new SafariOperatorSearch();
         $operatorsearchModel->status = 1;
-      
 
-        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$parl_id=$model->id]);
+
+        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$parl_id = $model->id]);
     }
 
     public function actionParkSharedSafari($slug)

@@ -30,7 +30,7 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location'];
+        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location', 'status'];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
