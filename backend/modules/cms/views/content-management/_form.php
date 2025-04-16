@@ -28,11 +28,7 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'content')->widget(CKEditor::className(), [
-            'options' => ['rows' => 4],
-            'preset' => 'full',
-
-        ]) ?>
+        <?= $form->field($model, 'content')->textarea(['rows' => '6', 'placeholder' => 'Add Content']) ?>
     </div>
     <div class="col-md-6">
         <?php if ($model->formModel->id) { ?>
@@ -55,3 +51,15 @@ use yii\bootstrap5\ActiveForm;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('contentmanagementform-content');
+JS;
+$this->registerJs($script);
+?>
