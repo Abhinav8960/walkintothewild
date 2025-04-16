@@ -76,10 +76,16 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->limit(6)->all();
@@ -115,11 +121,24 @@ class DefaultController extends FrontendBaseController
 
     public function actionPackage($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE])->limit(6)->all();
         $model = new OperatorQuoteForm();
         if (Yii::$app->user->identity) {
@@ -155,13 +174,27 @@ class DefaultController extends FrontendBaseController
      */
     public function actionReviewlist($slug, $sort_by = null)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        $replymodel = new SafariOperatorRatingCommentForm();
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
 
-        if (empty($operator)) {
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
+        $replymodel = new SafariOperatorRatingCommentForm();
 
         $ratingsearchModel = new SafariOperatorRatingSearch();
         $ratingsearchModel->custom_sort_by = $sort_by;
@@ -239,11 +272,23 @@ class DefaultController extends FrontendBaseController
      */
     public function actionSharedsafari($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         $shared_safaries = ShareSafari::find()->where([
             'status' => ShareSafari::STATUS_ACTIVE,
             'host_user_id' => $operator->id,
@@ -307,7 +352,20 @@ class DefaultController extends FrontendBaseController
      */
     public function actionFollow($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+
+        if (!$operator) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         if ($operator) {
             if (Yii::$app->user->identity) {
                 if (Yii::$app->user->identity->id == $operator->user_id) {
@@ -353,7 +411,19 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUnfollow($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         if ($operator) {
             if (Yii::$app->user->identity) {
                 $my_follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $operator->user_id])->one();
@@ -384,9 +454,21 @@ class DefaultController extends FrontendBaseController
 
     public function actionReview($operator_id)
     {
-        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        // $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        // if (!$operator) {
+        //     return $this->redirect(['/operator']);
+        // }
+
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->limit(1)->one();
         if (!$operator) {
             return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
         $model = new SafariOperatorReviewForm();
@@ -406,7 +488,7 @@ class DefaultController extends FrontendBaseController
                         $operator_name = $operator->business_name;
                         /**Operator Mail Info */
                         $to_mail = $operator->user->username;
-                        
+
                         /**Template info */
                         $subject = 'New Review';
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_REVIEW_TO_OPERATOR;
@@ -445,7 +527,19 @@ class DefaultController extends FrontendBaseController
 
     public function actionReviewupdate($operator_id, $user_id, $id)
     {
-        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        // $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->limit(1)->one();
+        if (!$operator) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         $rating_model = SafariOperatorRating::find()->where(['user_id' => $user_id, 'safari_operator_id' => $operator_id, 'id' => $id])->one();
         $model = new SafariOperatorReviewForm($rating_model);
         if ($this->request->isPost) {
@@ -490,9 +584,20 @@ class DefaultController extends FrontendBaseController
 
     public function actionFlag($operator_id, $park_id, $safari_operator_rating_id)
     {
-        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        // $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        // if (!$operator) {
+        //     return $this->redirect(['/operator']);
+        // }
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->limit(1)->one();
         if (!$operator) {
             return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
         $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
@@ -619,10 +724,21 @@ class DefaultController extends FrontendBaseController
 
     public function actionContact($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
 
@@ -664,11 +780,24 @@ class DefaultController extends FrontendBaseController
 
     public function actionReportOperator($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
+
         $model = new SafariOperatorReportProfileForm();
         $model->user_id = Yii::$app->user->identity->id;
         $model->safari_operator_id = $operator->id;
@@ -700,10 +829,21 @@ class DefaultController extends FrontendBaseController
 
     public function actionSharedsafariseeall($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
         $model = new OperatorQuoteForm();
@@ -749,10 +889,21 @@ class DefaultController extends FrontendBaseController
 
     public function actionPackageseeall($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
 
         $model = new OperatorQuoteForm();
@@ -793,10 +944,21 @@ class DefaultController extends FrontendBaseController
 
     public function actionParkseeall($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
         }
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1]);
         $dataProvider = new ActiveDataProvider([
@@ -893,12 +1055,22 @@ class DefaultController extends FrontendBaseController
      */
     public function actionFollower($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
 
         $model = new OperatorQuoteForm();
         if (Yii::$app->user->identity) {
@@ -934,12 +1106,22 @@ class DefaultController extends FrontendBaseController
      */
     public function actionFollowing($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
+        // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        // if (empty($operator)) {
+        //     return $this->redirect(['/operator']);
+        //     throw new NotFoundHttpException('The requested page does not exist.');
+        // }
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
+        
+        if ($operator->status != SafariOperator::STATUS_ACTIVE) {
+            return $this->render('_blocked_view', [
+                'operator' => $operator,
+            ]);
+        }
 
         $model = new OperatorQuoteForm();
         if (Yii::$app->user->identity) {
