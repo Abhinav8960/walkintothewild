@@ -102,7 +102,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             <div class="col-xxl-8 col-xl-10 col-lg-12">
                 <div class="card card_bodyPadding mt-2">
                     <div class="card-body">
-                        <h1 class="text-danger">"Your account has been deactivated."</h1>
+                        <h1 class="text-danger">"The operator has been deactivated."</h1>
                     </div>
                 </div>
             </div>
