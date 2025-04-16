@@ -55,7 +55,7 @@ use common\models\UserFollow;
                                 </div>
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
                                     <div class="message">
-                                        <a href="<?= Url::toRoute(['/chat/message/' . $operator->user->user_handle]) ?>" class="parkrevieBtn">Message</a>
+                                        <a href="<?= Url::toRoute(['/chat/default/message' ,'user_handle' => isset($operator->user->user_handle)? $operator->user->user_handle : '']) ?>" class="parkrevieBtn">Message</a>
                                     </div>
                                 <?php } ?>
                             </div>
