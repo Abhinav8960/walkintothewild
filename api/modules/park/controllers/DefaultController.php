@@ -206,7 +206,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
         $operatorsearchModel = new SafariOperatorSearch();
         $operatorsearchModel->status = 1;
