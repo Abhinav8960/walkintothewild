@@ -264,7 +264,13 @@ class DefaultController extends FrontendBaseController
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
-        
+
+        if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->start_date <= date("Y-m-d")) {
+            return $this->render('_expired_view', ['share_safari' => $share_safari]);
+        } else if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE && $share_safari->start_date <= date("Y-m-d")) {
+            return $this->render('_expired_fixed_view', ['share_safari' => $share_safari]);
+        }
+
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $model = new ShareSafariCommentForm();
@@ -366,7 +372,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
@@ -515,7 +521,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
@@ -885,7 +891,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -919,7 +925,7 @@ class DefaultController extends FrontendBaseController
         if (!Yii::$app->user->identity) {
             return $this->redirect(['index']);
         }
-        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
             throw new NotFoundHttpException('The requested page does not exist.');
