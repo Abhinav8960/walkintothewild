@@ -65,10 +65,21 @@ class DefaultController extends RestController
     }
 
 
+    // public function actionIndex($user_handle)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
+    //     $user = $this->findUser($user_handle);
+    //     if ($user->operator) {
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+    //     }
+
+    //     return Yii::$app->api->sendResponse($data = $user);
+    // }
+
     public function actionIndex($user_handle)
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
-        $user = $this->findUser($user_handle);
+        $user = $this->findUserbyHandle($user_handle);
         if ($user->operator) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
