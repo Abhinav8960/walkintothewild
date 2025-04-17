@@ -46,7 +46,7 @@ class AuthHandler
 
                 /* @var User $user */
                 $this->loginUser($auth->user);
-                return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
+                return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/');
             } else { // signup
                 if ($email !== null && User::find()->where(['username' => $email])->orWhere(['email' => $email])->exists()) {
                     $user_found = User::find()->where(['username' => $email])->orWhere(['email' => $email])->one();
@@ -59,7 +59,7 @@ class AuthHandler
                     $auth->save();
                     $this->updateUserInfo($auth->user);
                     $this->loginUser($auth->user);
-                    return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
+                    return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/');
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
@@ -82,7 +82,7 @@ class AuthHandler
                         if ($auth->save()) {
                             $transaction->commit();
                             $this->loginUser($user);
-                            return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
+                            return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/');
                         } else {
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
