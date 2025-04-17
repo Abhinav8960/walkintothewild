@@ -14,6 +14,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         $fields[] = 'user';
         $fields[] = 'replies';
         $fields[] = 'isLiked';
+        $fields[] = 'likedCount';
         $hold_fields = ['user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -47,6 +48,16 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
             return true;
         }
         return false;
+    }
+
+    public function getLike()
+    {
+        return $this->hasMany(UserPostCommentLike::class, ['user_post_comment_id' => 'id'])->andWhere(['user_post_comment_like.status' => 1]);
+    }
+
+    public function getLikedCount()
+    {
+        return $this->getLike()->count();
     }
 
 }

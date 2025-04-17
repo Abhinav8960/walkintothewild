@@ -14,6 +14,7 @@ class SightingComment extends \common\models\sighting\SightingComment
         $fields[] = 'user';
         $fields[] = 'replies';
         $fields[] = 'isLiked';
+        $fields[] = 'likedCount';
         $hold_fields = ['sighting_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -47,5 +48,15 @@ class SightingComment extends \common\models\sighting\SightingComment
             return true;
         }
         return false;
+    }
+
+    public function getLike()
+    {
+        return $this->hasMany(SightingCommentLike::class, ['sighting_comment_id' => 'id'])->andWhere(['sighting_comment_like.status' => 1]);
+    }
+
+    public function getLikedCount()
+    {
+        return $this->getLike()->count();
     }
 }
