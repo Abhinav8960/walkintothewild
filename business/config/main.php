@@ -12,7 +12,11 @@ return [
     'controllerNamespace' => 'business\controllers',
     'bootstrap' => ['log', '\business\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
-    'modules' => [],
+    'modules' => [
+       'package' => [
+            'class' => 'business\modules\package\Module',
+        ],
+    ],
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
