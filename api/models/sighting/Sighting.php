@@ -116,6 +116,6 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getThumbnail()
     {
-        return Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
+        return 'https://d26fop8cp5dhfy.cloudfront.net/thumbnail/' . $this->filepath . '.jpg';
     }
 }
