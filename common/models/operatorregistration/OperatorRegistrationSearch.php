@@ -1,15 +1,14 @@
 <?php
 
-namespace common\models;
+namespace common\models\operatorregistration;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\OperatorForm;
 
 /**
- * OperatorFormSearch represents the model behind the search form of `common\models\OperatorForm`.
+ * OperatorRegistrationSearch represents the model behind the search form of `common\models\OperatorRegistration`.
  */
-class OperatorFormSearch extends OperatorForm
+class OperatorRegistrationSearch extends OperatorRegistration
 {
     /**
      * {@inheritdoc}
@@ -41,7 +40,7 @@ class OperatorFormSearch extends OperatorForm
      */
     public function search($params, $formName = null)
     {
-        $query = OperatorForm::find();
+        $query = OperatorRegistration::find();
 
         // add conditions that should always apply here
 
