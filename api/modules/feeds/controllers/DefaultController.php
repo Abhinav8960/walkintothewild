@@ -72,7 +72,8 @@ class DefaultController extends RestController
 
         $data = [];
         if ($dataProvider->pagination) {
-            $pageSize = $this->query_params['pageSize'] ?? 5;
+            $pageSize = 5;
+            // $pageSize = $this->query_params['pageSize'] ?? 5;
             $dataProvider->pagination->pageSize = $pageSize;
             $dataProvider->pagination->validatePage = false;
 
