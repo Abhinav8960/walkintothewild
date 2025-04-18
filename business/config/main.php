@@ -16,6 +16,9 @@ return [
        'package' => [
             'class' => 'business\modules\package\Module',
         ],
+        'sharesafari' => [
+            'class' => 'business\modules\sharesafari\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
