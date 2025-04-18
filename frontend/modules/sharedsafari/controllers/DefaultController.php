@@ -265,9 +265,9 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['index']);
         }
 
-        if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->start_date <= date("Y-m-d")) {
+        if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->start_date < date("Y-m-d")) {
             return $this->render('_expired_view', ['share_safari' => $share_safari]);
-        } else if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE && $share_safari->start_date <= date("Y-m-d")) {
+        } else if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE && $share_safari->start_date < date("Y-m-d")) {
             return $this->render('_expired_fixed_view', ['share_safari' => $share_safari]);
         }
 
