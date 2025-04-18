@@ -22,7 +22,8 @@ class Sighting extends \common\models\sighting\Sighting
         $fields[] = 'commentsCount';
         $fields[] = 'sightinguserdetail';
         $fields[] = 'resourceuri';
-        $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $fields[] = 'thumbnail';
+        $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
 
 
         return array_diff($fields, $hold_fields);
@@ -111,5 +112,10 @@ class Sighting extends \common\models\sighting\Sighting
     public function getResourceuri()
     {
         return Yii::$app->params['frontend_url'] . '/sighting/' . base64_encode($this->id);
+    }
+
+    public function getThumbnail()
+    {
+        return Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
     }
 }
