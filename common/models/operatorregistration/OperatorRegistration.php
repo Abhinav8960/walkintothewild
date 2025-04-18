@@ -12,7 +12,7 @@ class OperatorRegistration extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'user_form';
+        return 'operator_registration_form';
     }
 
     public function rules()
