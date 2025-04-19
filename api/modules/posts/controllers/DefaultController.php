@@ -35,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete','post-edit'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete','post-edit'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,7 +56,8 @@ class DefaultController extends RestController
                     'user-post-like' => ['POST'],
                     'comment-like' => ['POST'],
                     'user-post-report' => ['POST'],
-                    'post-delete' => ['POST']
+                    'post-delete' => ['POST'],
+                    'post-edit' => ['POST'],
                 ],
             ],
         ];
@@ -242,6 +243,45 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post Report Submitted"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionPostEdit($id)
+    {
+        $user_image_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$user_image_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        if ($this->userinfo) {
+            if ($this->userinfoId != $user_image_model->user_id) {
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot edit this post!!!"]);
+            }
+        }
+
+        $model = new UserPostsImageForm($user_image_model);
+        $model->attributes = $this->request;
+        $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->user_image_model->save()) {
+                $model->uploadFile();
+
+                if ($model->file) {
+                    list($width, $height) = getimagesize($model->file->tempName);
+                    $model->user_image_model->height = $height;
+                    $model->user_image_model->width = $width;
+                    $model->user_image_model->size = $model->file->size;
+                }
+
+                if ($model->user_image_model->save()) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post edit successfully"]);
+                }
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not edit successfully"]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);

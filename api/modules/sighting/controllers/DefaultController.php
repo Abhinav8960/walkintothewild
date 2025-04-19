@@ -35,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report','sighting-delete'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report','sighting-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -54,7 +54,8 @@ class DefaultController extends RestController
                     'reply' => ['POST'],
                     'sighting-like' => ['POST'],
                     'comment-like' => ['POST'],
-                    'sighting-report' => ['POST']
+                    'sighting-report' => ['POST'],
+                    'sighting-delete' => ['POST'],
                 ],
             ],
         ];
