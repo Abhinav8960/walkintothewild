@@ -127,7 +127,7 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
         }
 
-        if ($share_safari->start_date <= date('Y-m-d')) {
+        if ($share_safari->start_date < date('Y-m-d')) {
             return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari Expired!!!"]);
         }
 
