@@ -103,11 +103,14 @@ return [
         'chat' => [ // Chating and Messaging Module
             'class' => 'frontend\modules\chat\Module',
         ],
-        'sighting' => [ 
+        'sighting' => [
             'class' => 'frontend\modules\sighting\Module',
         ],
         'posts' => [
             'class' => 'frontend\modules\posts\Module',
+        ],
+        'quatation' => [
+            'class' => 'frontend\modules\quatation\Module',
         ],
     ],
     'container' => [
