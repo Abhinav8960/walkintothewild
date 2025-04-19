@@ -27,6 +27,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'resourceuri';
         $fields[] = 'canComment';
         $fields[] = 'canReply';
+        $fields[] = 'isSafariOperator';
 
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $fields[] = 'cost_per_person';
@@ -517,5 +518,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             return true;
         }
         return false;
+    }
+
+    public function getIsSafariOperator()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            if ($user = $this->user) {
+                return $user->operator ? true : false;
+            }
+            return false;
+        }
+        if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return true;
+        }
     }
 }
