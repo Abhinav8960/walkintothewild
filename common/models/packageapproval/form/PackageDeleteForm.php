@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\packageapproval\Package;
 
 class PackageDeleteForm extends model
 {

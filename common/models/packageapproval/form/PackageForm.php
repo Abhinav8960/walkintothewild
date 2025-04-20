@@ -1,16 +1,18 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use Yii;
-use common\models\package\Package;
-use common\models\package\PackageFeature;
-use common\models\package\PackageIncluded;
-use common\models\package\PackageSafariPark;
-
+use common\models\packageapproval\Package;
+use common\models\packageapproval\PackageFeature;
+use common\models\packageapproval\PackageIncluded;
+use common\models\packageapproval\PackageSafariPark;
+use Ramsey\Uuid\Uuid;
 class PackageForm extends \yii\base\Model
 {
     public $owned_by_id;
+    public $uuid;
+    public $version;
     public $package_name;
     public $package_slug;
     public $package_agenda_id;
@@ -83,9 +85,13 @@ class PackageForm extends \yii\base\Model
         $this->package_model = Yii::createObject([
             'class' => Package::className()
         ]);
+        $this->uuid = Uuid::uuid4()->toString();;
+        $this->version = 'v1';
         if ($package_model != null) {
             $this->package_model = $package_model;
             $this->owned_by_id = $this->package_model->owned_by_id;
+            $this->uuid = $this->package_model->uuid;
+            $this->version = $this->package_model->version;
             $this->package_name = $this->package_model->package_name;
             $this->package_image = $this->package_model->package_image;
             $this->package_banner_image = $this->package_model->package_banner_image;
@@ -153,7 +159,7 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'uuid', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
 
@@ -305,6 +311,8 @@ class PackageForm extends \yii\base\Model
      */
     public function initializeForm()
     {
+        $this->package_model->uuid = $this->uuid;
+        $this->package_model->version = $this->version;
         $this->package_model->owned_by_id = $this->owned_by_id;
         $this->package_model->package_name = $this->package_name;
         $this->package_model->package_agenda_id = $this->package_agenda_id;

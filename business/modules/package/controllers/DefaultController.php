@@ -3,17 +3,17 @@
 namespace business\modules\package\controllers;
 
 use common\models\master\faq\MasterFaq;
-use common\models\package\form\DayItineraryForm;
-use common\models\package\form\PackageFaqForm;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
-use common\models\package\PackageDay;
-use common\models\package\PackageFaq;
-use common\models\package\PackageFaqSearch;
-use common\models\package\PackageFeature;
-use common\models\package\PackageIncluded;
-use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
+use common\models\packageapproval\form\DayItineraryForm;
+use common\models\packageapproval\form\PackageFaqForm;
+use common\models\packageapproval\form\PackageForm;
+use common\models\packageapproval\Package;
+use common\models\packageapproval\PackageDay;
+use common\models\packageapproval\PackageFaq;
+use common\models\packageapproval\PackageFaqSearch;
+use common\models\packageapproval\PackageFeature;
+use common\models\packageapproval\PackageIncluded;
+use common\models\packageapproval\PackageSafariPark;
+use common\models\packageapproval\PackageSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -32,6 +32,7 @@ class DefaultController extends Controller
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
+        $searchModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,14 +50,15 @@ class DefaultController extends Controller
     {
         $model = new PackageForm();
         $model->status = Package::STATUS_ACTIVE;
+        $model->status = Package::EDIATBLE_APPROVAL_STATUS;
         // $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
+
                     $model->initializeForm();
                     if ($model->package_model->save()) {
                         $model->uploadFile();
@@ -86,7 +88,17 @@ class DefaultController extends Controller
 
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
                         return $this->redirect(['index']);
+                    } else {
+                        print_r($model->getErrors());
+                        print_r($model->package_model->getErrors());
+                        die();
+                        \Yii::$app->session->setFlash('error', 'Failed to create package.');
                     }
+                } else {
+                    print_r($model->getErrors());
+                    print_r($model->package_model->getErrors());
+                    die();
+                    \Yii::$app->session->setFlash('error', 'Failed to create package.');
                 }
             }
         } else {
@@ -413,8 +425,8 @@ class DefaultController extends Controller
         }
     }
 
-    
-    
+
+
 
     public function actionView($package_id)
     {

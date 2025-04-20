@@ -1,10 +1,10 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use common\models\master\faq\MasterFaq;
 use Yii;
-use common\models\package\PackageFaq;
+use common\models\packageapproval\PackageFaq;
 
 class PackageFaqSelectForm extends \yii\base\Model
 {

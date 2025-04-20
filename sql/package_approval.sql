@@ -430,3 +430,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE `package_approval`  ADD `uuid` VARCHAR(255) NOT NULL  AFTER `id`,  ADD `version` VARCHAR(10) NOT NULL DEFAULT 'v1'  AFTER `uuid`;
+ALTER TABLE `package_approval` ADD `approval_status` INT NOT NULL DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable' AFTER `is_published_on_api`, ADD `cancellation_reason` TEXT NULL DEFAULT NULL AFTER `approval_status`;

@@ -1,8 +1,8 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
-use common\models\package\PackageCommentReport;
+use common\models\packageapproval\PackageCommentReport;
 use common\models\User;
 use Yii;
 use yii\base\Model;

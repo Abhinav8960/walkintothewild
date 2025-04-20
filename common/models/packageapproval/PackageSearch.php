@@ -48,7 +48,7 @@ class PackageSearch extends Package
         return [
             [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name','uuid','version'], 'safe'],
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
@@ -76,7 +76,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where(['package.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        $query = Package::find()->where([Package::tableName() . '.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -100,6 +100,8 @@ class PackageSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
+            'uuid' => $this->uuid,
+            'version' => $this->version,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
             'stay_category_id' => $this->stay_category_id,
@@ -115,7 +117,7 @@ class PackageSearch extends Package
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            'package.status' => $this->status,
+            Package::tableName() . '.status' => $this->status,
         ]);
 
 

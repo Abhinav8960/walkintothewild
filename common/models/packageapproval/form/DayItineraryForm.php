@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use Yii;
-use common\models\package\Package;
-use common\models\package\PackageDay;
-use common\models\package\PackageFeature;
-use common\models\package\PackageIncluded;
-use common\models\package\PackageSafariPark;
+use common\models\packageapproval\Package;
+use common\models\packageapproval\PackageDay;
+use common\models\packageapproval\PackageFeature;
+use common\models\packageapproval\PackageIncluded;
+use common\models\packageapproval\PackageSafariPark;
 
 
 class DayItineraryForm  extends \yii\base\Model

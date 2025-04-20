@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use Yii;
-use common\models\package\PackageFaq;
+use common\models\packageapproval\PackageFaq;
 
 class PackageFaqForm extends \yii\base\Model
 {

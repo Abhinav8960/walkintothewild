@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\package\form;
+namespace common\models\packageapproval\form;
 
 use Yii;
-use common\models\package\PackageGallery;
+use common\models\packageapproval\PackageGallery;
 
 class PackageGalleryForm extends \yii\base\Model
 {

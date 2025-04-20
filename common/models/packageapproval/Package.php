@@ -36,6 +36,12 @@ use yii\behaviors\SluggableBehavior;
  */
 class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+
+    const NOT_APPROVED_APPROVAL_STATUS = 0;
+    const APPROVED_AND_LIVE_APPROVAL_STATUS = 1;
+    const SEND_FOR_APPROVAL_APPROVAL_STATUS = 2;
+    const EDIATBLE_APPROVAL_STATUS = 3;
+
     use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
@@ -82,14 +88,15 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return [
             [['package_name', 'package_slug'], 'required'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package', 'approval_status'], 'integer'],
             [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition', 'uuid', 'version', 'cancellation_reason'], 'string'],
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['version'], 'string', 'max' => 10],
+            [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api', 'uuid', 'version'], 'safe'],
         ];
     }
 
@@ -145,13 +152,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
