@@ -2,6 +2,7 @@
 
 
 use common\models\GeneralModel;
+use common\models\packageapproval\Package;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -48,7 +49,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return 'v1';
+                            return $model->live_version;
                         }
                     ],
 
@@ -57,7 +58,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return 'Yes';
+                            return $model->approval_status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
                         }
                     ],
                     [

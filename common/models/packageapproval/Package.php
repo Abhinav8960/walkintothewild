@@ -375,4 +375,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }
+
+    public function getLive_version(){
+        return 'Not done yet, working on it';
+    }
 }

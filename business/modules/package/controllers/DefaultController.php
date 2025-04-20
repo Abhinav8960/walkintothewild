@@ -2,6 +2,7 @@
 
 namespace business\modules\package\controllers;
 
+use api\behaviours\Verbcheck;
 use common\models\master\faq\MasterFaq;
 use common\models\packageapproval\form\DayItineraryForm;
 use common\models\packageapproval\form\PackageFaqForm;
@@ -15,6 +16,7 @@ use common\models\packageapproval\PackageIncluded;
 use common\models\packageapproval\PackageSafariPark;
 use common\models\packageapproval\PackageSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -24,6 +26,62 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends Controller
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+
+        return $behaviors + [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq'],
+                        'allow' => $this->isPackageEditable(),
+                        'roles' => ['@'],
+                    ],
+                ],
+
+            ],
+            'verbs' => [
+                'class' => Verbcheck::className(),
+                'actions' => [
+                    'creators-dashboard' => ['GET'],
+                    'pending-trips' => ['GET'],
+                    // 'all-trips' => ['GET'],
+                    'index' => ['GET'],
+                    'view' => ['GET'],
+                    'about-trip' => ['POST'],
+                    'tags' => ['POST'],
+                    'details' => ['POST'],
+                    'category' => ['POST'],
+                    'availability' => ['POST'],
+                    'included-excluded' => ['POST'],
+                    'seo' => ['POST'],
+                    'privacy-policy' => ['POST'],
+                    'term-and-conditions' => ['POST'],
+                    'change-policy' => ['POST'],
+                    'must-carry' => ['POST'],
+                    // 'delete-banner' => ['POST', 'DELETE'],
+                    // 'delete-listing-image' => ['POST', 'DELETE'],
+                    'send-for-approval' => ['POST'],
+                    'copy-trip' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
@@ -457,6 +515,18 @@ class DefaultController extends Controller
     {
         if (($model = PackageDay::findOne(['package_id' => $id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
+        }
+    }
+
+
+    protected function isPackageEditable()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        if ($model) {
+            return $model->approval_status == Package::EDIATBLE_APPROVAL_STATUS;
+        } else {
+            return false;
         }
     }
 }
