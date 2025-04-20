@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2025 at 11:16 AM
+-- Generation Time: Apr 20, 2025 at 01:05 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `package_approval`;
 CREATE TABLE `package_approval` (
   `id` int NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `version` varchar(10) NOT NULL DEFAULT 'v1',
   `package_name` varchar(512) NOT NULL,
   `owned_by_id` int DEFAULT NULL,
   `package_slug` varchar(720) NOT NULL,
@@ -74,6 +76,8 @@ CREATE TABLE `package_approval` (
   `updated_by` int DEFAULT NULL,
   `is_published_on_web` tinyint(1) NOT NULL DEFAULT '1',
   `is_published_on_api` tinyint(1) NOT NULL DEFAULT '1',
+  `approval_status` int NOT NULL DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable,4=>Terminated',
+  `cancellation_reason` text,
   `status` int DEFAULT '1',
   `total_view` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -299,6 +303,24 @@ CREATE TABLE `package_safari_park_approval` (
   `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_states_approval`
+--
+
+DROP TABLE IF EXISTS `package_states_approval`;
+CREATE TABLE `package_states_approval` (
+  `id` int NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `live_version` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `pending_for_approval_version` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `editable_version` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -375,6 +397,13 @@ ALTER TABLE `package_safari_park_approval`
   ADD UNIQUE KEY `package_id` (`package_id`,`park_id`);
 
 --
+-- Indexes for table `package_states_approval`
+--
+ALTER TABLE `package_states_approval`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uuid` (`uuid`,`slug`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -425,10 +454,20 @@ ALTER TABLE `package_feature_approval`
 --
 ALTER TABLE `package_gallery_approval`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `package_safari_park_approval`
+--
+ALTER TABLE `package_safari_park_approval`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `package_states_approval`
+--
+ALTER TABLE `package_states_approval`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-ALTER TABLE `package_approval`  ADD `uuid` VARCHAR(255) NOT NULL  AFTER `id`,  ADD `version` VARCHAR(10) NOT NULL DEFAULT 'v1'  AFTER `uuid`;
-ALTER TABLE `package_approval` ADD `approval_status` INT NOT NULL DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable' AFTER `is_published_on_api`, ADD `cancellation_reason` TEXT NULL DEFAULT NULL AFTER `approval_status`;

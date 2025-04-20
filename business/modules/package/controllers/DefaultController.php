@@ -39,15 +39,15 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq'],
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'copy'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create'],
+                        'actions' => ['index', 'view', 'create', 'copy'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq'],
+                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                         'allow' => $this->isPackageEditable(),
                         'roles' => ['@'],
                     ],
@@ -516,6 +516,12 @@ class DefaultController extends Controller
         if (($model = PackageDay::findOne(['package_id' => $id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
+    }
+
+    public function actionSendForApproval($id)
+    {
+        $m = $this->findModel($id);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 

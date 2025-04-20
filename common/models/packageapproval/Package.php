@@ -41,6 +41,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     const APPROVED_AND_LIVE_APPROVAL_STATUS = 1;
     const SEND_FOR_APPROVAL_APPROVAL_STATUS = 2;
     const EDIATBLE_APPROVAL_STATUS = 3;
+    const TERMINATED_APPROVAL_STATUS = 4;
 
     use \common\traits\CommanRelationship;
     /**
@@ -376,7 +377,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }
 
-    public function getLive_version(){
+    public function getLive_version()
+    {
         return 'Not done yet, working on it';
     }
 }
