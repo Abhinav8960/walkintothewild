@@ -46,7 +46,7 @@ class AuthHandler
 
                 /* @var User $user */
                 $this->loginUser($auth->user);
-                return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/');
+                return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/operator-registration/create');
             } else { // signup
                 if ($email !== null && User::find()->where(['username' => $email])->orWhere(['email' => $email])->exists()) {
                     $user_found = User::find()->where(['username' => $email])->orWhere(['email' => $email])->one();
