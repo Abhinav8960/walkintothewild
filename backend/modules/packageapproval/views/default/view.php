@@ -39,7 +39,6 @@ $this->params['title'] = $this->title;
                 </ul>
             </div>
 
-
         </div>
 
         <div class="row d-flex">
