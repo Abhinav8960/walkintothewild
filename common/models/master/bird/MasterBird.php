@@ -122,7 +122,7 @@ class MasterBird extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/bird/' . $this->id . '/' . $this->image;
+            return '/bird/' . $this->id . '/' . $this->image;
         }
     }
 

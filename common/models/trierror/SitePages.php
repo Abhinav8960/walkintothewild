@@ -96,7 +96,7 @@ class SitePages extends \yii\db\ActiveRecord
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/ogtag_images/' . $this->id . '/' . $this->image;
+            return '/ogtag_images/' . $this->id . '/' . $this->image;
         }
     }
 }

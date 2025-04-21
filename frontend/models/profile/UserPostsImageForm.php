@@ -103,11 +103,10 @@ class UserPostsImageForm extends Model
 
             $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
-                if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-                    $this->user_image_model->file = $fileName;
+                if (isset($fileName['filename'], $fileName['etag'])) {
+                    $this->user_image_model->file = $fileName['filename'];
                     $this->user_image_model->filepath = $filePath;
-                    $this->user_image_model->etag = $etag;
-
+                    $this->user_image_model->etag = $fileName['etag'];
                     $this->user_image_model->save(false);
                 }
             }

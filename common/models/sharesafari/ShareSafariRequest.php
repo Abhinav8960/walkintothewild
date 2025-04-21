@@ -123,7 +123,7 @@ class ShareSafariRequest extends \yii\db\ActiveRecord implements \common\interfa
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? ('/storage/share_safari_request/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? ('/share_safari_request/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()

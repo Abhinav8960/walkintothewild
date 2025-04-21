@@ -1,0 +1,3 @@
+ALTER TABLE `package_approval` DROP `package_slug`;
+
+ALTER TABLE `package_states_approval` CHANGE `live_version` `live_version` CHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `pending_for_approval_version` `pending_for_approval_version` CHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `editable_version` `editable_version` CHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;

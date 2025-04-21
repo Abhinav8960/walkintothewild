@@ -108,13 +108,13 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/article/' . $this->id . '/' . $this->image;
+            return '/article/' . $this->id . '/' . $this->image;
         }
     }
     public function getVideopath()
     {
         if ($this->video != '') {
-            return '/storage/article/' . $this->id . '/' . $this->video;
+            return '/article/' . $this->id . '/' . $this->video;
         }
     }
 }
