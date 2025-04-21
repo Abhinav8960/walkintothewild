@@ -127,7 +127,7 @@ $this->params['title'] = $this->title;
 </div>
 <?php
 $script = <<< JS
-window.handleReject = function(url) {
+function handleReject(url) {
     // Open a prompt to ask for the cancellation reason
     const reason = window.prompt("Please provide a reason for rejection:");
 
@@ -150,7 +150,7 @@ window.handleReject = function(url) {
             alert("An error occurred while submitting the rejection.");
         }
     });
-};
+}
 JS;
-$this->registerJs($script, \yii\web\View::POS_END);
+$this->registerJs($script);
 ?>

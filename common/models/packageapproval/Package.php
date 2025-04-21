@@ -369,8 +369,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }
 
-    public function getLive_version()
+    public function getLiveVersion()
     {
-        return 'Not done yet, working on it';
+        return $this->hasMany(PackageStates::className(), ['uuid' => 'uuid', 'live_version' => 'version']);
+
     }
 }
