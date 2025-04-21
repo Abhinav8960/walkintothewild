@@ -71,7 +71,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         }
                     ],
 
-
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
@@ -91,7 +90,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                 ', ['/package/default/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
-
                                 ]);
                             },
 

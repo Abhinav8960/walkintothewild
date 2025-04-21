@@ -42,6 +42,51 @@ $this->params['title'] = $this->title;
 
         </div>
 
+        <div class="row d-flex">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#a8daf7">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Wishlist</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#ffdddd">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Booking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#bebaf5">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Quote Request</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <section class="bg-white pt-4">
             <div class="container-lg">
                 <div class="row my-4 packageSfari">
