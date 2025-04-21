@@ -85,7 +85,7 @@ class ShareSafariGallery extends \yii\db\ActiveRecord implements \common\interfa
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/share_safari/gallery/' . $this->id . '/' . $this->image;
+            return '/share_safari/gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

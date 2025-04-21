@@ -83,7 +83,7 @@ class PackageGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/package_gallery/' . $this->id . '/' . $this->image;
+            return '/package_gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

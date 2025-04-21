@@ -105,7 +105,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     public function getImagepath()
     {
         if ($this->day_image != '') {
-            return '/storage/package/day/' . $this->id . '/' . $this->day_image;
+            return '/package/day/' . $this->id . '/' . $this->day_image;
         }
     }
 }

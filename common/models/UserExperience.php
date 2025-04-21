@@ -83,7 +83,7 @@ class UserExperience extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->file != '') {
-            return '/storage/userpost/' . $this->id . '/' . $this->file;
+            return '/userpost/' . $this->id . '/' . $this->file;
         }
     }
 

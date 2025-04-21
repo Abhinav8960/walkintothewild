@@ -167,14 +167,14 @@ class BirdingPark extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return '/storage/birdingpark/' . $this->id . '/' . $this->feature_image;
+            return '/birdingpark/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getLogoimagepath()
     {
         if ($this->logo != '') {
-            return '/storage/birdingpark/' . $this->id . '/' . $this->logo;
+            return '/birdingpark/' . $this->id . '/' . $this->logo;
         }
     }
 }
