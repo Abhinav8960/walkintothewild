@@ -46,7 +46,7 @@ $this->params['title'] = $this->title;
             <div class="col-xl-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-content">
-                        <div class="card-body" style="background-color:#ffdddd">
+                        <div class="card-body" style="background-color:#a8daf7">
                             <div class="media d-flex">
                                 <div class="media-body text-right">
                                     <h3>156</h3>
@@ -74,7 +74,7 @@ $this->params['title'] = $this->title;
             <div class="col-xl-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-content">
-                        <div class="card-body" style="background-color:#ffdddd">
+                        <div class="card-body" style="background-color:#bebaf5">
                             <div class="media d-flex">
                                 <div class="media-body text-right">
                                     <h3>156</h3>
