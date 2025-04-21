@@ -104,6 +104,7 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->package_model->save()) {
                         $model->uploadFile();
+                        $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_APPROVAL_STATUS);
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
@@ -579,13 +580,14 @@ class DefaultController extends Controller
             $newModel->version = 'v' . (intval(substr($model->version, 1)) + 1);
 
             if ($isNewRecord) {
-                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHi');
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = Package::STATUS_ACTIVE;
             $newModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
             $newModel->save(false);
+            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_APPROVAL_STATUS);
             $this->CopyPackageComment($model->id, $newModel->id);
             $this->CopyPackageCommentReport($model->id, $newModel->id);
             $this->CopyPackageDay($model->id, $newModel->id);
@@ -752,6 +754,12 @@ class DefaultController extends Controller
             }
             $model->pending_for_approval_version = $version;
         }
+        if ($status == Package::EDIATBLE_APPROVAL_STATUS) {
+            if (!empty($model->editable_version)) {
+                $this->terminatePackage($model->uuid, $model->editable_version);
+            }
+            $model->editable_version = $version;
+        }
         if ($model->save(false)) {
             return true;
         }
@@ -767,5 +775,19 @@ class DefaultController extends Controller
             return true;
         }
         return false;
+    }
+
+    public function upsertEditablePackageStates($uuid, $version)
+    {
+
+        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        if (empty($model)) {
+            $model = new PackageStates();
+        }
+        $model->editable_version = $version;
+        $model->uuid = $uuid;
+        $model->slug = PackageStates::prepareUniqueSlug($model->package_name);
+        $model->save();
+        return true;
     }
 }
