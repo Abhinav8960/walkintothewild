@@ -127,7 +127,7 @@ class SightingForm extends Model
         $this->sighting_model->user_id = $this->user_id;
         $this->sighting_model->v_size = $this->v_size;
         $this->sighting_model->v_duration = $this->v_duration;
-        $this->sighting_model->video_thumbnail = $this->video_thumbnail;
+        // $this->sighting_model->video_thumbnail = $this->video_thumbnail;
         $this->sighting_model->location = $this->location;
         $this->sighting_model->status = $this->status;
 
@@ -141,25 +141,23 @@ class SightingForm extends Model
 
     public function uploadFile()
     {
-
         if ($this->file) {
             $storagePath = 'watchpost';
             $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/media';
 
             $fileName = $this->sighting_model->user_id . '_media_' . time() . '.' . $this->file->extension;
             $filePath = $userPath . '/' . $fileName;
-
             $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-            if ($fileName) {
-                // try {
-                if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-                    $this->sighting_model->file = $fileName;
-                    $this->sighting_model->filepath = $filePath;
-                    $this->sighting_model->etag = $etag;
+            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'),$fileName);
 
+            if ($fileName) {
+                if (isset($fileName['filename'], $fileName['etag'])) {
+                    $this->sighting_model->file = $fileName['filename'];
+                    $this->sighting_model->filepath = $filePath;
+                    $this->sighting_model->etag = $fileName['etag'];
                     $this->sighting_model->save(false);
                 }
-            }
+            }      
         }
 
         if ($this->video_thumbnail) {
@@ -176,7 +174,6 @@ class SightingForm extends Model
                     $this->sighting_model->video_thumbnail = $fileName;
                     $this->sighting_model->video_thumbnail_path = $filePath;
                     $this->sighting_model->video_thumbnail_etag = $video_thumbnail_etag;
-
                     $this->sighting_model->save(false);
                 }
             }

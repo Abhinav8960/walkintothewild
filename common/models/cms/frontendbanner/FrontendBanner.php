@@ -53,7 +53,7 @@ class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->frontend_banner != '') {
-            return \Yii::$app->params['endpoint'] . '/storage/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
+            return \Yii::$app->params['endpoint'] . '/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
         }
     }
 

@@ -115,14 +115,14 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\Ne
     public function getImagepath()
     {
         if ($this->feature_image != '') {
-            return \Yii::$app->params['endpoint'] . '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['endpoint'] . '/rareanimal/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getBannerimagepath()
     {
         if ($this->banner != '') {
-            return \Yii::$app->params['endpoint'] . '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+            return \Yii::$app->params['endpoint'] . '/rareanimal/' . $this->id . '/' . $this->banner;
         }
     }
 

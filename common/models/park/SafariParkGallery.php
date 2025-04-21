@@ -83,7 +83,7 @@ class SafariParkGallery extends \yii\db\ActiveRecord implements \common\interfac
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/safariparkgallery/' . $this->id . '/' . $this->image;
+            return '/safariparkgallery/' . $this->id . '/' . $this->image;
         }
     }
 }

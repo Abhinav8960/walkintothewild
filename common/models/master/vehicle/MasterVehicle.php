@@ -86,7 +86,7 @@ class MasterVehicle extends \yii\db\ActiveRecord implements \common\interfaces\N
     public function getImagepath()
     {
         if ($this->icon != '') {
-            return '/storage/vehicle/' . $this->id . '/' . $this->icon;
+            return '/vehicle/' . $this->id . '/' . $this->icon;
         }
     }
 

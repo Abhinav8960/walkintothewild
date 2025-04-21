@@ -114,7 +114,7 @@ class ShareSafariDay extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->day_image != '') {
-            return '/storage/share_safari/day/' . $this->id . '/' . $this->day_image;
+            return '/share_safari/day/' . $this->id . '/' . $this->day_image;
         }
     }
 }

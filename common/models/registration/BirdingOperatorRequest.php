@@ -144,7 +144,7 @@ class BirdingOperatorRequest extends \yii\db\ActiveRecord
     public function getImagepath()
     {
         if ($this->logo != '') {
-            return '/storage/birdingoperator/' . $this->id . '/' . $this->logo;
+            return '/birdingoperator/' . $this->id . '/' . $this->logo;
         }
     }
 }
