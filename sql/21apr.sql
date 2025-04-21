@@ -1,0 +1,1 @@
+ALTER TABLE `package_approval` DROP `package_slug`;

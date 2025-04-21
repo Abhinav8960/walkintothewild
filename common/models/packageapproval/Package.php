@@ -15,7 +15,6 @@ use yii\behaviors\SluggableBehavior;
  *
  * @property int $id
  * @property string $package_name
- * @property string $package_slug
  * @property int $no_of_day
  * @property int|null $no_of_night
  * @property int|null $no_of_safari
@@ -73,12 +72,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                     return time();
                 },
             ],
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'package_name',
-                'slugAttribute' => 'package_slug',
-                'ensureUnique' => true,
-            ],
         ];
     }
 
@@ -93,7 +86,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition', 'uuid', 'version', 'cancellation_reason'], 'string'],
             [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],

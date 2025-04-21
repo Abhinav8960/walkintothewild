@@ -2,6 +2,7 @@
 
 namespace common\models\packageapproval;
 
+use Google\Service\CloudDeploy\Stage;
 use Yii;
 
 /**
@@ -72,6 +73,20 @@ class PackageStates extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public static function prepareUniqueSlug($str)
+    {
+        $slug = \yii\helpers\Inflector::slug($str, '-');
+        $count = 0;
+        $originalSlug = $slug;
+
+        while (self::find()->where(['slug' => $slug])->exists()) {
+            $count++;
+            $slug = $originalSlug . '-' . $count;
+        }
+
+        return $slug;
     }
 
 }

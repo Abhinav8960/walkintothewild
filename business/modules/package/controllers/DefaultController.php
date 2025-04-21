@@ -58,31 +58,6 @@ class DefaultController extends Controller
                 ],
 
             ],
-            'verbs' => [
-                'class' => Verbcheck::className(),
-                'actions' => [
-                    'creators-dashboard' => ['GET'],
-                    'pending-trips' => ['GET'],
-                    // 'all-trips' => ['GET'],
-                    'index' => ['GET'],
-                    'view' => ['GET'],
-                    'about-trip' => ['POST'],
-                    'tags' => ['POST'],
-                    'details' => ['POST'],
-                    'category' => ['POST'],
-                    'availability' => ['POST'],
-                    'included-excluded' => ['POST'],
-                    'seo' => ['POST'],
-                    'privacy-policy' => ['POST'],
-                    'term-and-conditions' => ['POST'],
-                    'change-policy' => ['POST'],
-                    'must-carry' => ['POST'],
-                    // 'delete-banner' => ['POST', 'DELETE'],
-                    // 'delete-listing-image' => ['POST', 'DELETE'],
-                    'send-for-approval' => ['POST'],
-                    'copy-trip' => ['POST'],
-                ],
-            ],
         ];
     }
 
@@ -530,15 +505,19 @@ class DefaultController extends Controller
         try {
             $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
             $m->save(false);
-            $m->CopyPackage($id);
+            $this->CopyPackage($id);
             $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
-            $transaction->commit();
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
         }
+        $transaction->commit();
+
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -561,6 +540,8 @@ class DefaultController extends Controller
         if ($model) {
             $newModel = new Package();
             $newModel->attributes = $model->attributes;
+            $newModel->version = 'v' . (intval(substr($model->version, 1)) + 1);
+
             if ($isNewRecord) {
                 $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                 $newModel->version = 'v1';
@@ -568,17 +549,15 @@ class DefaultController extends Controller
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = Package::STATUS_ACTIVE;
             $newModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
-            if ($isNewRecord) {
-                $newModel->save(false);
-                $this->CopyPackageComment($model->id, $newModel->id);
-                $this->CopyPackageCommentReport($model->id, $newModel->id);
-                $this->CopyPackageDay($model->id, $newModel->id);
-                $this->CopyPackageIncluded($model->id, $newModel->id);
-                $this->CopyPackageFeature($model->id, $newModel->id);
-                $this->CopyPackageSafariPark($model->id, $newModel->id);
-                $this->CopyPackageFaq($model->id, $newModel->id);
-                $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
-            }
+            $newModel->save(false);
+            $this->CopyPackageComment($model->id, $newModel->id);
+            $this->CopyPackageCommentReport($model->id, $newModel->id);
+            $this->CopyPackageDay($model->id, $newModel->id);
+            $this->CopyPackageIncluded($model->id, $newModel->id);
+            $this->CopyPackageFeature($model->id, $newModel->id);
+            $this->CopyPackageSafariPark($model->id, $newModel->id);
+            $this->CopyPackageFaq($model->id, $newModel->id);
+            $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
             return $newModel;
         }
         return true;
@@ -724,9 +703,12 @@ class DefaultController extends Controller
     private function updatePackageStatus($uuid, $version, $status)
     {
         $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        $package = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
 
         if (empty($model)) {
             $model = new PackageStates();
+            $model->uuid = $uuid;
+            $model->slug = PackageStates::prepareUniqueSlug($package->package_name);
         }
         if ($status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS) {
             if (!empty($model->pending_for_approval_version)) {
