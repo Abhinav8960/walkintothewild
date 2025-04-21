@@ -511,8 +511,8 @@ class DefaultController extends Controller
         try {
             $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
             $m->save(false);
+            $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
             $this->copyPackageNow($id);
-            // $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -587,7 +587,6 @@ class DefaultController extends Controller
             $newModel->status = Package::STATUS_ACTIVE;
             $newModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
             $newModel->save(false);
-            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_APPROVAL_STATUS);
             $this->CopyPackageComment($model->id, $newModel->id);
             $this->CopyPackageCommentReport($model->id, $newModel->id);
             $this->CopyPackageDay($model->id, $newModel->id);
@@ -596,6 +595,8 @@ class DefaultController extends Controller
             $this->CopyPackageSafariPark($model->id, $newModel->id);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
+            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_APPROVAL_STATUS);
+
             return $newModel;
         }
         return true;
@@ -754,12 +755,12 @@ class DefaultController extends Controller
             }
             $model->pending_for_approval_version = $version;
         }
-        if ($status == Package::EDIATBLE_APPROVAL_STATUS) {
-            if (!empty($model->editable_version)) {
-                $this->terminatePackage($model->uuid, $model->editable_version);
-            }
-            $model->editable_version = $version;
-        }
+        // if ($status == Package::EDIATBLE_APPROVAL_STATUS) {
+        //     if (!empty($model->editable_version)) {
+        //         $this->terminatePackage($model->uuid, $model->editable_version);
+        //     }
+        //     $model->editable_version = $version;
+        // }
         if ($model->save(false)) {
             return true;
         }
