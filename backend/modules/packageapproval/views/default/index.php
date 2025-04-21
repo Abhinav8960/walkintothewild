@@ -111,7 +111,7 @@ $this->params['title'] = $this->title;
                                     return Html::button(
                                         'Reject',
                                         [
-                                            'class' => 'btn btn-danger reasonpopup m-2',
+                                            'class' => 'btn btn-danger m-2',
                                             'title' => 'Reject',
                                             'onclick' => "handleReject('" . Url::toRoute(['reject', 'uuid' => $model->uuid, 'version' => $model->version]) . "')",
                                         ]
@@ -127,7 +127,7 @@ $this->params['title'] = $this->title;
 </div>
 <?php
 $script = <<< JS
-function handleReject(url) {
+window.handleReject = function(url) {
     // Open a prompt to ask for the cancellation reason
     const reason = window.prompt("Please provide a reason for rejection:");
 
@@ -150,7 +150,7 @@ function handleReject(url) {
             alert("An error occurred while submitting the rejection.");
         }
     });
-}
+};
 JS;
-$this->registerJs($script);
+$this->registerJs($script, \yii\web\View::POS_END);
 ?>
