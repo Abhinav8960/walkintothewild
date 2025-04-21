@@ -3,7 +3,6 @@
 use business\assets\AppAsset;
 use common\models\GeneralModel;
 use frontend\assets\FrontAppAsset;
-use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -17,10 +16,74 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="card-body">
         <div class="btn-delet float-end" style="position: relative;">
-            <a href="<?= Url::toRoute(['copy-package', 'id' => $package->id]) ?>" style="background:#4287f5 !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
-                <i class="fa-solid fa-copy" style="margin-right: 6px;"></i> Copy
+            <a style="background:#09422d !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px; margin-right:6px;">
+                <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Approve
             </a>
 
+            <a style="background:#ffdddd !important;color:#f44336 !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
+                <i class="fa fa-times" style="margin-right: 6px;"></i> Reject
+            </a>
+
+            <a style="background:red !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
+                <i class="fas fa-edit" style="margin-right: 6px;"></i> Edit
+            </a>
+
+            <div style="display:inline-block; position:relative;">
+                <button id="versionBtn" onclick="toggleDropdown()" style="background:yellow !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:50px;  margin-right:6px;">
+                    <i class="fa fa-angle-down" style="margin-right: 6px;"></i> Version
+                </button>
+                <ul id="versionDropdown" style="display:none; position:absolute; top:100%; left:0; background:white; border:1px solid #ccc; border-radius:5px; margin-top:5px; list-style:none; padding:0; min-width:120px; z-index:1000;">
+                    <li style="padding:8px 12px; cursor:pointer;">Version 1</li>
+                    <li style="padding:8px 12px; cursor:pointer;">Version 2</li>
+                    <li style="padding:8px 12px; cursor:pointer;">Version 3</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row d-flex">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#a8daf7">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Wishlist</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#ffdddd">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Booking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body" style="background-color:#bebaf5">
+                            <div class="media d-flex">
+                                <div class="media-body text-right">
+                                    <h3>156</h3>
+                                    <span>Quote Request</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <section class="bg-white pt-4">
@@ -170,9 +233,9 @@ $this->params['title'] = $this->title;
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
                                     </li>
-                                    <!-- <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-                            </li> -->
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+                                    </li>
                                 </ul>
 
                             </div>
@@ -242,6 +305,20 @@ $this->params['title'] = $this->title;
                                 <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                                     <div class="accordion-body height_set">
                                         <?= $this->render('_policy', ['package' => $package]) ?>
+                                    </div>
+                                </div>
+                                <!-- Rendered on 2024-07-09 13:16:37 -->
+                            </div>
+
+                            <div class="tab-pane fade accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
+                                <h2 class="accordion-header d-lg-none" id="headingFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        FAQ
+                                    </button>
+                                </h2>
+                                <div id="collapseFive" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                                    <div class="accordion-body height_set">
+                                        <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                                     </div>
                                 </div>
                                 <!-- Rendered on 2024-07-09 13:16:37 -->

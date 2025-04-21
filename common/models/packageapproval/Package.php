@@ -15,7 +15,6 @@ use yii\behaviors\SluggableBehavior;
  *
  * @property int $id
  * @property string $package_name
- * @property string $package_slug
  * @property int $no_of_day
  * @property int|null $no_of_night
  * @property int|null $no_of_safari
@@ -55,30 +54,24 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function behaviors()
     {
         return [
-            [
-                'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Package',
-                'collection' => Feeds::MODEL_PACKAGE,
-            ],
+            // [
+            //     'class' => \common\behaviors\FeedsBehavior::class,
+            //     'objective' => 'Package',
+            //     'collection' => Feeds::MODEL_PACKAGE,
+            // ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
             ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'package_name',
-                'slugAttribute' => 'package_slug',
-                'ensureUnique' => true,
-            ],
+            // [
+            //     'class' => \yii\behaviors\TimestampBehavior::className(),
+            //     'createdAtAttribute' => 'created_at',
+            //     'updatedAtAttribute' => 'updated_at',
+            //     'value' => function () {
+            //         return time();
+            //     },
+            // ],
         ];
     }
 
@@ -88,16 +81,16 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function rules()
     {
         return [
-            [['package_name', 'package_slug'], 'required'],
+            [['package_name'], 'required'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package', 'approval_status'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition', 'uuid', 'version', 'cancellation_reason'], 'string'],
             [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api', 'uuid', 'version'], 'safe'],
+            ['cancellation_reason', 'required', 'on' => 'reject'],
         ];
     }
 
@@ -109,7 +102,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return [
             'id' => 'ID',
             'package_name' => 'Package Name',
-            'package_slug' => 'Package Slug',
             'no_of_day' => 'No Of Day',
             'no_of_night' => 'No Of Night',
             'no_of_safari' => 'No Of Safari',
@@ -379,6 +371,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getLive_version()
     {
+
         return 'Not done yet, working on it';
     }
 }

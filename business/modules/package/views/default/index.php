@@ -5,6 +5,7 @@ use common\models\GeneralModel;
 use common\models\packageapproval\Package;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Package';
 $this->params['breadcrumbs_home_url'] = '/package';
@@ -54,14 +55,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
 
                     [
-                        'label' => 'Pending for Approval',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->approval_status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
-                        }
-                    ],
-                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -69,11 +62,12 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return $model->newstatuslabel;
                         }
                     ],
+
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{suspend}',
+                        'template' => '{SentforApproval}&nbsp;{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -82,16 +76,25 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'title' => 'View',
 
                                 ]);
-                            
                             },
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/package/default/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
-
                                 ]);
-                            }
+                            },
+
+                            'SentforApproval' => function ($url, $model) {
+                                if ($model->approval_status == Package::EDIATBLE_APPROVAL_STATUS) {
+
+                                    return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
+                                        'class' => 'btn btn-danger p-0 change-menuicon',
+                                        'title' => 'send-for-approval',
+
+                                    ]);
+                                }
+                            },
                         ]
                     ],
                 ],
