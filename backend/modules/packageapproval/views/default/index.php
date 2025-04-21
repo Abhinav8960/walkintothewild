@@ -80,7 +80,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{view}&nbsp;&nbsp;{approved}&nbsp;&nbsp;{reject}&nbsp;&nbsp;',
+                        'template' => '{view}{approved}{reject}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
