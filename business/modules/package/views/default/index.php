@@ -55,14 +55,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
 
                     [
-                        'label' => 'Pending for Approval',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->approval_status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
-                        }
-                    ],
-                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
