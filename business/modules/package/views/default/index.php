@@ -78,7 +78,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'value' => function ($model) {
                             return Html::button('Sent for Approval', [
                                 'value' => Url::toRoute(['#', 'id' => $model->id]),
-                                'class' => 'btn btn-warning flag-action mb-2',
+                                'class' => 'btn btn-warning flag-action m-2',
                                 'title' => 'Edit'
                             ]);
                         }
