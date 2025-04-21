@@ -111,9 +111,9 @@ $this->params['title'] = $this->title;
                                     return Html::button(
                                         'Reject',
                                         [
-                                            'class' => 'btn btn-danger m-2',
-                                            'title' => 'Reject',
-                                            'onclick' => "handleReject('" . Url::toRoute(['reject', 'uuid' => $model->uuid, 'version' => $model->version]) . "')",
+                                            'value' => Url::toRoute(['reject', 'uuid' => $model->uuid, 'version' => $model->version]),
+                                            'class' => 'btn btn-danger reasonpopup m-2',
+                                            'title' => 'Reject'
                                         ]
                                     );
                                 }
@@ -125,32 +125,28 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+<div class="modal fade _standard-text" id="reject-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Reason For Rejection</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='reasonContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $script = <<< JS
-function handleReject(url) {
-    // Open a prompt to ask for the cancellation reason
-    const reason = window.prompt("Please provide a reason for rejection:");
-
-    // Check if the user provided a reason
-    if (reason === null || reason.trim() === "") {
-        alert("Rejection reason is required.");
-        return; // Do not proceed if no reason is provided
-    }
-
-    // Send the reason via an AJAX POST request
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: { cancellation_reason: reason },
-        success: function (response) {
-            alert("Rejection submitted successfully.");
-            location.reload(); // Reload the page or handle success
-        },
-        error: function () {
-            alert("An error occurred while submitting the rejection.");
-        }
-    });
+function rejection() {
+	$('.reasonpopup').on('click', function () {
+        $('#reject-modal').modal('show')
+		.find('#reasonContent')
+		.load($(this).attr('value'));
+	});
 }
+rejection();
 JS;
 $this->registerJs($script);
 ?>

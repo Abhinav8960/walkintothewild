@@ -144,6 +144,7 @@ class DefaultController extends Controller
                 }
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+                return $this->redirect(Yii::$app->request->referrer);
             }
         }
 
