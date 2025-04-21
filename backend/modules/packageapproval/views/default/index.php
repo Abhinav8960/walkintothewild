@@ -5,6 +5,7 @@ use common\models\GeneralModel;
 use common\models\packageapproval\Package;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Package';
 $this->params['breadcrumbs_home_url'] = '/package';
@@ -79,7 +80,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{suspend}',
+                        'template' => '{view}&nbsp;&nbsp;{approved}&nbsp;&nbsp;{reject}&nbsp;&nbsp;',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
@@ -88,7 +89,29 @@ $this->params['title'] = $this->title;
                                     'title' => 'View',
 
                                 ]);
-                            }
+                            },
+                            'approved' => function ($url, $model) {
+                                return Html::a(
+                                    'Approved',
+                                    [Url::toRoute(['#', 'id' => $model->id])],
+                                    [
+                                        'class' => 'btn btn-warning  m-2',
+                                        'title' => 'Approved'
+                                    ]
+                                );
+                            },
+                            'reject' => function ($url, $model) {
+                                return Html::a(
+                                    'Reject',
+                                    [
+                                        Url::toRoute(['#', 'id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'btn btn-info  m-2',
+                                        'title' => 'Reject'
+                                    ]
+                                );
+                            },
                         ]
                     ],
                 ],
