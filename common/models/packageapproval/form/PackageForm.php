@@ -87,7 +87,7 @@ class PackageForm extends \yii\base\Model
         $this->package_model = Yii::createObject([
             'class' => Package::className()
         ]);
-        $this->uuid = Uuid::uuid4()->toString();;
+        $this->uuid = Uuid::uuid4()->toString();
         $this->version = 'v1';
         if ($package_model != null) {
             $this->package_model = $package_model;

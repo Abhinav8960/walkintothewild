@@ -8,13 +8,17 @@ use common\models\packageapproval\form\DayItineraryForm;
 use common\models\packageapproval\form\PackageFaqForm;
 use common\models\packageapproval\form\PackageForm;
 use common\models\packageapproval\Package;
+use common\models\packageapproval\PackageComment;
+use common\models\packageapproval\PackageCommentReport;
 use common\models\packageapproval\PackageDay;
 use common\models\packageapproval\PackageFaq;
 use common\models\packageapproval\PackageFaqSearch;
 use common\models\packageapproval\PackageFeature;
+use common\models\packageapproval\PackageGallery;
 use common\models\packageapproval\PackageIncluded;
 use common\models\packageapproval\PackageSafariPark;
 use common\models\packageapproval\PackageSearch;
+use common\models\packageapproval\PackageStates;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -520,7 +524,21 @@ class DefaultController extends Controller
 
     public function actionSendForApproval($id)
     {
+
         $m = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
+            $m->save(false);
+            $m->CopyPackage($id);
+            $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
+            Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
+            $transaction->commit();
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+        }
         return $this->redirect(Yii::$app->request->referrer);
     }
 
@@ -534,5 +552,202 @@ class DefaultController extends Controller
         } else {
             return false;
         }
+    }
+
+    private function CopyPackage($id, $isNewRecord = false)
+    {
+        $model = Package::findOne($id);
+
+        if ($model) {
+            $newModel = new Package();
+            $newModel->attributes = $model->attributes;
+            if ($isNewRecord) {
+                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                $newModel->version = 'v1';
+            }
+            $newModel->id = null; // Set the ID to null for the new record
+            $newModel->status = Package::STATUS_ACTIVE;
+            $newModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
+            if ($isNewRecord) {
+                $newModel->save(false);
+                $this->CopyPackageComment($model->id, $newModel->id);
+                $this->CopyPackageCommentReport($model->id, $newModel->id);
+                $this->CopyPackageDay($model->id, $newModel->id);
+                $this->CopyPackageIncluded($model->id, $newModel->id);
+                $this->CopyPackageFeature($model->id, $newModel->id);
+                $this->CopyPackageSafariPark($model->id, $newModel->id);
+                $this->CopyPackageFaq($model->id, $newModel->id);
+                $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
+            }
+            return $newModel;
+        }
+        return true;
+    }
+
+    private function CopyPackageComment($old_package_id, $new_package_id)
+    {
+        // package_comment_approval;
+
+        $model = PackageComment::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $comment) {
+                $newModel = new PackageComment();
+                $newModel->attributes = $comment->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageCommentReport($old_package_id, $new_package_id)
+    {
+        // package_comment_report_approval;
+
+        $model = PackageCommentReport::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $comment) {
+                $newModel = new PackageCommentReport();
+                $newModel->attributes = $comment->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageDay($old_package_id, $new_package_id)
+    {
+        // package_day_approval;
+
+        $model = PackageDay::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $day) {
+                $newModel = new PackageDay();
+                $newModel->attributes = $day->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageIncluded($old_package_id, $new_package_id)
+    {
+        // package_included_approval;         
+        $model = PackageIncluded::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $included) {
+                $newModel = new PackageIncluded();
+                $newModel->attributes = $included->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+    private function CopyPackageFeature($old_package_id, $new_package_id)
+    {
+        // package_feature_approval;      
+
+        $model = PackageFeature::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $feature) {
+                $newModel = new PackageFeature();
+                $newModel->attributes = $feature->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageSafariPark($old_package_id, $new_package_id)
+    {
+        // package_safari_park_approval; 
+        $model = PackageSafariPark::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $safari) {
+                $newModel = new PackageSafariPark();
+                $newModel->attributes = $safari->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageFaq($old_package_id, $new_package_id)
+    {        // package_faq_approval;
+        $model = PackageFaq::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $faq) {
+                $newModel = new PackageFaq();
+                $newModel->attributes = $faq->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+
+        return true;;
+    }
+
+    private function CopyPackageIncludedExcluded($old_package_id, $new_package_id)
+    {
+        // package_states_approval;   
+        $model = PackageIncluded::find()->where(['package_id' => $old_package_id])->all();
+        if ($model) {
+            foreach ($model as $included) {
+                $newModel = new PackageIncluded();
+                $newModel->attributes = $included->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->save(false);
+            }
+        }
+        return true;
+    }
+
+    private function updatePackageStatus($uuid, $version, $status)
+    {
+        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+
+        if (empty($model)) {
+            $model = new PackageStates();
+        }
+        if ($status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS) {
+            if (!empty($model->pending_for_approval_version)) {
+                $this->terminatePackage($model->uuid, $model->pending_for_approval_version);
+            }
+            $model->pending_for_approval_version = $version;
+        }
+        if ($model->save(false)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function terminatePackage($uuid, $version)
+    {
+        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        if ($model) {
+            $model->approval_status = Package::TERMINATED_APPROVAL_STATUS;
+            $model->save(false);
+            return true;
+        }
+        return false;
     }
 }
