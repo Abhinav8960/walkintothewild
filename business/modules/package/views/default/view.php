@@ -3,6 +3,7 @@
 use business\assets\AppAsset;
 use common\models\GeneralModel;
 use frontend\assets\FrontAppAsset;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -15,6 +16,12 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
+        <div class="btn-delet float-end" style="position: relative;">
+            <a href="<?= Url::toRoute(['copy-package', 'id' => $package->id]) ?>" style="background:#4287f5 !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
+                <i class="fa-solid fa-copy" style="margin-right: 6px;"></i> Copy
+            </a>
+
+        </div>
 
         <section class="bg-white pt-4">
             <div class="container-lg">

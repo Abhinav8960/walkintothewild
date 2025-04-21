@@ -234,9 +234,9 @@ $this->params['title'] = $this->title;
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
                                     </li>
-                                    <!-- <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-                            </li> -->
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+                                    </li>
                                 </ul>
 
                             </div>
@@ -306,6 +306,20 @@ $this->params['title'] = $this->title;
                                 <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                                     <div class="accordion-body height_set">
                                         <?= $this->render('_policy', ['package' => $package]) ?>
+                                    </div>
+                                </div>
+                                <!-- Rendered on 2024-07-09 13:16:37 -->
+                            </div>
+
+                            <div class="tab-pane fade accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
+                                <h2 class="accordion-header d-lg-none" id="headingFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        FAQ
+                                    </button>
+                                </h2>
+                                <div id="collapseFive" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                                    <div class="accordion-body height_set">
+                                        <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                                     </div>
                                 </div>
                                 <!-- Rendered on 2024-07-09 13:16:37 -->
