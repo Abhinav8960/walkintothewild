@@ -50,10 +50,14 @@ class OperatorRegistration extends \yii\db\ActiveRecord
                 'name',
                 'email',
                 'phone_no',
-                'dob',
                 'business_whatsap_no',
+                "business_registration_name",
+                'business_brand_name',
+                'business_brand_name',
                 'business_email_id',
                 'account_holder_name',
+                'pan_no',
+                'upload_adhar_no',
                 'account_no',
                 'gender'
             ], 'required', 'message' => 'This field is required.'],
@@ -121,7 +125,7 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'pan_upload' => 'PAN Upload',
             'upload_registration_number' => 'Reg Number',
             'upload_registration_cert' => 'Reg Certificate',
-            'upload_document' => 'Supporting Document',
+            'upload_document' => 'Upload Document',
         ];
     }
 
@@ -137,24 +141,26 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             mkdir($userFolder, 0777, true);
         }
 
-        foreach (
-            [
-                'business_logo_upload',
-                'business_kyc_detail',
-                'cancle_check',
-                'upload_aadhar_front',
-                'upload_aadhar_back',
-                'pan_upload',
-                'upload_registration_cert',
-                'upload_document'
-            ] as $field
-        ) {
+        foreach ([
+            'business_logo_upload',
+            'business_kyc_detail',
+            'cancle_check',
+            'upload_aadhar_front',
+            'upload_aadhar_back',
+            'pan_upload',
+            'upload_registration_cert',
+            'upload_document',
+        ] as $field) {
             $file = UploadedFile::getInstance($this, $field);
             if ($file) {
                 $fileName = $field . '_' . time() . '.' . $file->extension;
                 $filePath = $userFolder . '/' . $fileName;
-                $file->saveAs($filePath);
-                $this->$field = $filePath;
+
+                if ($file->saveAs($filePath)) {
+                    $this->$field = $fileName; 
+                } else {
+                    Yii::error("File upload failed for: $field", __METHOD__);
+                }
             }
         }
     }

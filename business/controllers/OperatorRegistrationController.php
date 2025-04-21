@@ -93,10 +93,12 @@ class OperatorRegistrationController extends Controller
             if ($formModel->validate()) {
                 $formModel->initializeForm();
 
-                $formModel->operator_model->uploadFiles();
+                $formModel->uploadFiles();
 
                 if ($formModel->operator_model->save(false)) {
                     return $this->redirect(['view', 'id' => $formModel->operator_model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to save operator data.');
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Validation failed: ' . json_encode($formModel->getErrors()));
@@ -107,6 +109,7 @@ class OperatorRegistrationController extends Controller
             'model' => $formModel
         ]);
     }
+
 
 
     // public function actionCreate()
@@ -139,6 +142,61 @@ class OperatorRegistrationController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+    // public function actionUpdate($id)
+    // {
+    //     $operator_model = $this->findModel($id);
+
+    //     if (!$operator_model) {
+    //         throw new NotFoundHttpException("The requested page does not exist.");
+    //     }
+
+    //     $formModel = new OperatorRegistrationForm($operator_model);
+
+
+    //     $oldAttributes = $operator_model->getAttributes([
+    //         'business_logo_upload',
+    //         'business_kyc_detail',
+    //         'cancle_check',
+    //         'upload_aadhar_front',
+    //         'upload_aadhar_back',
+    //         'pan_upload',
+    //         'upload_registration_number',
+    //         'upload_registration_cert',
+    //         'upload_document',
+    //     ]);
+
+    //     if (Yii::$app->request->isPost) {
+
+    //         if ($formModel->load(Yii::$app->request->post()) && $formModel->validate()) {
+
+
+    //             $formModel->initializeForm();
+
+    //             foreach ($oldAttributes as $key => $value) {
+    //                 if (UploadedFile::getInstance($formModel->operator_model, $key) === null) {
+    //                     $formModel->operator_model->$key = $value;
+    //                 }
+    //             }
+
+
+    //             $formModel->operator_model->uploadFiles();
+
+
+
+    //             if ($formModel->operator_model->save(false)) {
+    //                 Yii::$app->session->setFlash('success', 'Updated Successfully');
+    //                 return $this->redirect(['view', 'id' => $formModel->operator_model->id]);
+    //             }
+    //         } else {
+    //             Yii::$app->session->setFlash('error', 'Validation failed: ' . json_encode($formModel->getErrors()));
+    //         }
+    //     }
+
+    //     return $this->render('update', [
+    //         'operator_model' => $formModel
+    //     ]);
+    // }
+
     public function actionUpdate($id)
     {
         $operator_model = $this->findModel($id);
@@ -163,19 +221,22 @@ class OperatorRegistrationController extends Controller
 
         if (Yii::$app->request->isPost) {
             if ($formModel->load(Yii::$app->request->post()) && $formModel->validate()) {
+
                 $formModel->initializeForm();
 
                 foreach ($oldAttributes as $key => $value) {
-                    if (UploadedFile::getInstance($formModel->operator_model, $key) === null) {
+                    if (UploadedFile::getInstance($formModel, $key) === null) {
                         $formModel->operator_model->$key = $value;
                     }
                 }
 
-                $formModel->operator_model->uploadFiles();
+                $formModel->uploadFiles();
 
                 if ($formModel->operator_model->save(false)) {
                     Yii::$app->session->setFlash('success', 'Updated Successfully');
                     return $this->redirect(['view', 'id' => $formModel->operator_model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Failed to save operator model.');
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Validation failed: ' . json_encode($formModel->getErrors()));
@@ -187,48 +248,6 @@ class OperatorRegistrationController extends Controller
         ]);
     }
 
-    // public function actionUpdate($id)
-    // {
-    //     $model = $this->findModel($id);
-
-    //     if (!$model) {
-    //         throw new NotFoundHttpException("The requested page does not exist.");
-    //     }
-
-    //     $oldAttributes = $model->getAttributes([
-    //         'business_logo_upload',
-    //         'business_kyc_detail',
-    //         'cancle_check',
-    //         'upload_aadhar_front',
-    //         'upload_aadhar_back',
-    //         'pan_upload',
-    //         'upload_registration_number',
-    //         'upload_registration_cert',
-    //         'upload_document',
-    //     ]);
-
-    //     if (Yii::$app->request->isPost) {
-    //         $model->load(Yii::$app->request->post());
-
-    //         foreach ($oldAttributes as $key => $value) {
-    //             if (UploadedFile::getInstance($model, $key) === null) {
-    //                 $model->$key = $value;
-    //             }
-    //         }
-
-    //         $model->uploadFiles();
-
-    //         if ($model->validate()) {
-    //             if ($model->save(false)) {
-    //                 return $this->redirect(['view', 'id' => $model->id]);
-    //             }
-    //         } else {
-    //             Yii::$app->session->setFlash('error', 'Validation failed: ' . json_encode($model->getErrors()));
-    //         }
-    //     }
-
-    //     return $this->render('update', ['model' => $model]);
-    // }
 
 
 
