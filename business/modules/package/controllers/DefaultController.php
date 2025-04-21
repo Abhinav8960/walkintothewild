@@ -43,16 +43,21 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'copy'],
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'copy-package'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'copy'],
+                        'actions' => ['index', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
+                        'actions' => ['view', 'copy-package'],
+                        'allow' => $this->isPackageOwner(),
+                        'roles' => ['@'],
+                    ],
+                    [
                         'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
-                        'allow' => $this->isPackageEditable(),
+                        'allow' => $this->isPackageEditable() && $this->isPackageOwner(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -505,9 +510,32 @@ class DefaultController extends Controller
         try {
             $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
             $m->save(false);
-            $this->CopyPackage($id);
+            $this->copyPackageNow($id);
             $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
+        }
+        $transaction->commit();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionCopyPackage($id)
+    {
+
+        $m = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            $this->copyPackageNow($id, true);
+            // $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
+            Yii::$app->session->setFlash('success', 'Package copy successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
@@ -533,7 +561,13 @@ class DefaultController extends Controller
         }
     }
 
-    private function CopyPackage($id, $isNewRecord = false)
+    protected function isPackageOwner()
+    {
+
+        return true;
+    }
+
+    private function copyPackageNow($id, $isNewRecord = false)
     {
         $model = Package::findOne($id);
 
