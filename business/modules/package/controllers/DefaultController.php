@@ -512,7 +512,7 @@ class DefaultController extends Controller
             $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
             $m->save(false);
             $this->copyPackageNow($id);
-            $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
+            // $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
