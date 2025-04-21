@@ -517,6 +517,8 @@ class DefaultController extends Controller
             Yii::error($e->getMessage());
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            return $this->redirect(Yii::$app->request->referrer);
+
             echo "<pre>";
             print_r($e->getMessage());
             die();

@@ -4,6 +4,7 @@ namespace backend\modules\packageapproval\controllers;
 
 use common\models\packageapproval\Package;
 use common\models\packageapproval\PackageSearch;
+use common\models\packageapproval\PackageStates;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -55,4 +56,84 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function actionApproved($uuid, $version)
+    {
+        $packagestate = PackageStates::find()->where(['uuid' => $uuid, 'pending_for_approval_version' => $version])->one();
+        if (empty($packagestate)) {
+            Yii::$app->session->setFlash('error', 'Package not found.');
+            return $this->redirect(['index']);
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if (!empty($packagestate->live_version)) {
+                $this->terminatePackage($uuid, $packagestate->live_version);
+            }
+            $packagestate->live_version = $version;
+            $packagestate->pending_for_approval_version = null;
+            $packagestate->save(false);
+
+            $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+            $model->approval_status = Package::APPROVED_AND_LIVE_APPROVAL_STATUS;
+            $model->status = Package::STATUS_ACTIVE;
+            $model->save(false);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            // echo "<pre>";
+            // print_r($e->getMessage());
+            // die();
+            Yii::$app->session->setFlash('error', 'Failed to approve package.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $transaction->commit();
+
+
+        Yii::$app->session->setFlash('success', 'Package approved and Live successfully.');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionReject($uuid, $version)
+    {
+        $packagestate = PackageStates::find()->where(['uuid' => $uuid, 'pending_for_approval_version' => $version])->one();
+        if (empty($packagestate)) {
+            Yii::$app->session->setFlash('error', 'Package not found.');
+            return $this->redirect(['index']);
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $packagestate->pending_for_approval_version = null;
+            $packagestate->save(false);
+
+            $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+            $model->approval_status = Package::NOT_APPROVED_APPROVAL_STATUS;
+            $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
+            $model->status = Package::STATUS_SUSPEND;
+            $model->save(false);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            Yii::$app->session->setFlash('error', 'Failed to reject package.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $transaction->commit();
+
+        Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
+    private function terminatePackage($uuid, $version)
+    {
+        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        if ($model) {
+            $model->approval_status = Package::TERMINATED_APPROVAL_STATUS;
+            $model->save(false);
+            return true;
+        }
+        return false;
+    }
 }

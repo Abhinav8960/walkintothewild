@@ -91,26 +91,37 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
                             'approved' => function ($url, $model) {
-                                return Html::a(
-                                    'Approved',
-                                    [Url::toRoute(['#', 'id' => $model->id])],
-                                    [
-                                        'class' => 'btn btn-warning  m-2',
-                                        'title' => 'Approved'
-                                    ]
-                                );
+                                if ($model->approval_status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS) {
+                                    return Html::a(
+                                        'Approve',
+                                        [Url::toRoute(['approved', 'uuid' => $model->uuid, 'version' => $model->version])],
+                                        [
+                                            'data' => [
+                                                'confirm' => 'Are you sure you want to approve this package?',
+                                                'method' => 'post',
+                                            ],
+                                            'class' => 'btn btn-success  m-2',
+                                            'title' => 'Approve'
+                                        ]
+                                    );
+                                }
                             },
                             'reject' => function ($url, $model) {
-                                return Html::a(
-                                    'Reject',
-                                    [
-                                        Url::toRoute(['#', 'id' => $model->id])
-                                    ],
-                                    [
-                                        'class' => 'btn btn-info  m-2',
-                                        'title' => 'Reject'
-                                    ]
-                                );
+                                if ($model->approval_status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS) {
+                                    return Html::a(
+                                        'Reject',
+                                        [Url::toRoute(['reject', 'uuid' => $model->uuid, 'version' => $model->version])],
+                                        [
+                                            'data' => [
+                                                'confirm' => 'Are you sure you want to reject this package?',
+                                                'method' => 'post',
+                                            ],
+                                            'class' => 'btn btn-danger  m-2',
+                                            'title' => 'Reject'
+                                        ]
+
+                                    );
+                                }
                             },
                         ]
                     ],
