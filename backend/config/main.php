@@ -95,7 +95,10 @@ return [
         ],
         'home' => [
             'class' => 'backend\modules\home\Module'
-        ]
+        ],
+        'packageapproval' => [
+            'class' => 'backend\modules\packageapproval\Module',
+        ],
 
     ],
     'components' => [

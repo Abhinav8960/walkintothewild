@@ -15,6 +15,32 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
+        <div class="btn-delet float-end" style="position: relative;">
+            <a style="background:#09422d !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px; margin-right:6px;">
+                <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Approve
+            </a>
+
+            <a style="background:#ffdddd !important;color:#f44336 !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
+                <i class="fa fa-times" style="margin-right: 6px;"></i> Reject
+            </a>
+
+            <a style="background:red !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px;  margin-right:6px;">
+                <i class="fas fa-edit" style="margin-right: 6px;"></i> Edit
+            </a>
+
+            <div style="display:inline-block; position:relative;">
+                <button id="versionBtn" onclick="toggleDropdown()" style="background:yellow !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:50px;  margin-right:6px;">
+                    <i class="fa fa-angle-down" style="margin-right: 6px;"></i> Version
+                </button>
+                <ul id="versionDropdown" style="display:none; position:absolute; top:100%; left:0; background:white; border:1px solid #ccc; border-radius:5px; margin-top:5px; list-style:none; padding:0; min-width:120px; z-index:1000;">
+                    <li style="padding:8px 12px; cursor:pointer;">Version 1</li>
+                    <li style="padding:8px 12px; cursor:pointer;">Version 2</li>
+                    <li style="padding:8px 12px; cursor:pointer;">Version 3</li>
+                </ul>
+            </div>
+
+
+        </div>
 
         <section class="bg-white pt-4">
             <div class="container-lg">
