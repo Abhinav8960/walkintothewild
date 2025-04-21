@@ -101,6 +101,19 @@ class DefaultController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionRejectview($uuid, $version)
+    {
+        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_rejection_form', [
+                'uuid' => $uuid,
+                'version' => $version,
+                'model' => $model
+            ]);
+        }
+    }
+
     public function actionReject($uuid, $version)
     {
         $packagestate = PackageStates::find()->where(['uuid' => $uuid, 'pending_for_approval_version' => $version])->one();
@@ -108,28 +121,37 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('error', 'Package not found.');
             return $this->redirect(['index']);
         }
+        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        $model->scenario = 'reject';
 
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $packagestate->pending_for_approval_version = null;
-            $packagestate->save(false);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $packagestate->pending_for_approval_version = null;
+                    $packagestate->save(false);
 
-            $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
-            $model->approval_status = Package::NOT_APPROVED_APPROVAL_STATUS;
-            $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
-            $model->status = Package::STATUS_SUSPEND;
-            $model->save(false);
-        } catch (\Exception $e) {
-            Yii::error($e->getMessage());
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
-            Yii::$app->session->setFlash('error', 'Failed to reject package.');
-            return $this->redirect(Yii::$app->request->referrer);
+                    $model->approval_status = Package::NOT_APPROVED_APPROVAL_STATUS;
+                    $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
+                    $model->status = Package::STATUS_SUSPEND;
+                    $model->save(false);
+                } catch (\Exception $e) {
+                    Yii::error($e->getMessage());
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+                    Yii::$app->session->setFlash('error', 'Failed to reject package.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+                $transaction->commit();
+                Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+            }
         }
-        $transaction->commit();
 
-        Yii::$app->session->setFlash('success', 'Package rejected successfully.');
-        return $this->redirect(Yii::$app->request->referrer);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_rejection_form', [
+                'model' => $model,
+            ]);
+        }
     }
 
 

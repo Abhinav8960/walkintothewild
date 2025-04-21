@@ -90,6 +90,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['version'], 'string', 'max' => 10],
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api', 'uuid', 'version'], 'safe'],
+            ['cancellation_reason', 'required', 'on' => 'reject'],
         ];
     }
 
