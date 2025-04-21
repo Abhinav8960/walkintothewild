@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Sign Out</a>
+                                <a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Log Out</a>
                             </div>
                         </li>
                     </ul>

@@ -73,7 +73,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -82,7 +82,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'title' => 'View',
 
                                 ]);
+                            
                             },
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['/package/default/view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+
+                                ]);
+                            }
                         ]
                     ],
                 ],

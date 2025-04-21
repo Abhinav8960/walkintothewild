@@ -108,7 +108,7 @@ class DefaultController extends Controller
     {
         $model = new PackageForm();
         $model->status = Package::STATUS_ACTIVE;
-        $model->status = Package::EDIATBLE_APPROVAL_STATUS;
+        $model->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
         // $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
         if ($this->request->isPost) {
@@ -486,12 +486,12 @@ class DefaultController extends Controller
 
 
 
-    public function actionView($package_id)
+    public function actionView($id)
     {
-        $model = $this->findModel($package_id);
+        $model = $this->findModel($id);
 
         return $this->render('view', [
-            'model' => $model,
+            'package' => $model,
         ]);
     }
 

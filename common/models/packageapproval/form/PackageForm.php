@@ -76,6 +76,8 @@ class PackageForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
 
+    public $approval_status;
+
 
     /**
      * @param [type] $package_model
