@@ -35,6 +35,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Operator Name',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                        }
+                    ],
+                    [
                         'label' => 'Cost Per Person',
                         'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',

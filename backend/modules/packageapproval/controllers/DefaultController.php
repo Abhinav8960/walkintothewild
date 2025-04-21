@@ -21,7 +21,7 @@ class DefaultController extends Controller
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
-        $searchModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
+        $searchModel->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
