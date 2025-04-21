@@ -3,95 +3,11 @@
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\OperatorForm $model */
-
-$this->registerCss(
-    <<<CSS
-.stepper {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-.stepper-item {
-    position: relative;
-    width: 2.5rem;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    border-radius: 50%;
-    background: #e0e0e0;
-    text-align: center;
-    font-weight: bold;
-    z-index: 1;
-    color: #555;
-}
-.stepper-item.active {
-    background:rgb(4, 29, 10);
-    color: #fff;
-}
-.stepper-item.completed {
-    background:rgb(4, 29, 10);
-    color: #fff;
-    font-size: 1rem;
-}
-.stepper-line {
-    flex: 1;
-    height: 4px;
-    background: #e0e0e0;
-    margin: 0 -1px;
-}
-.stepper-line.filled {
-    background:rgb(4, 29, 10);
-}
-.card-header {
-    background: #f0f4f8;
-    font-weight: bold;
-}
-CSS
-);
-
-$this->registerJs(
-    <<<JS
-function updateStepper(stepId) {
-    $('.step').hide();
-    $('#' + stepId).show();
-    var current = parseInt(stepId.split('-')[1]);
-    $('.stepper-item').each(function() {
-        var idx = parseInt(this.id.split('-')[1]);
-        $(this).removeClass('active completed').text(idx);
-        if (idx < current) {
-            $(this).addClass('completed').html('✔');
-        } else if (idx === current) {
-            $(this).addClass('active');
-        }
-    });
-    $('.stepper-line').each(function(i) {
-        if (i < current - 1) $(this).addClass('filled');
-        else $(this).removeClass('filled');
-    });
-    $('#step-text').text('Step ' + current + '/4');
-}
-
-document.getElementById('kyc_detail').addEventListener('change', function() {
-  const fileName = this.files[0] ? this.files[0].name : '';
-  document.getElementById('kyc_detail_name').value = fileName;
-});
-
-$(document).ready(function() {
-    updateStepper('step-1');
-    $('.next-step').click(function(){ updateStepper($(this).data('next')); });
-    $('.prev-step').click(function(){ updateStepper($(this).data('prev')); });
-});
-JS
-);
-
-
 ?>
 
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-<br>
-<br>
-
+<?php $form = ActiveForm::begin(
+    ['options' => ['enctype' => 'multipart/form-data']]
+); ?>
 
 <!-- Stepper -->
 <div class="stepper">
@@ -110,11 +26,11 @@ JS
     <div class="card-header">PERSONAL DETAILS</div>
     <div class="card-body">
         <div class="row gy-3">
-            <div class="col-md-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-6"><?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-6"><?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'whatsap_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-6"><?= $form->field($model, 'dob')->input('date') ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'dob',)->input('date',) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'gender')->dropDownList(['Male' => 'Male', 'Female' => 'Female'], ['prompt' => 'Select']) ?></div>
             <div class="col-md-4">
                 <label for="kyc_detail" class="form-label">KYC DETAILS</label>
@@ -147,16 +63,16 @@ JS
     <div class="card-header">BUSINESS DETAILS</div>
     <div class="card-body">
         <div class="row gy-3">
-            <div class="col-md-4"><?= $form->field($model, 'business_registration_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-4"><?= $form->field($model, 'business_brand_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-4"><?= $form->field($model, 'business_full_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
+            <div class="col-md-4"><?= $form->field($model, 'business_registration_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-4"><?= $form->field($model, 'business_brand_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-4"><?= $form->field($model, 'business_full_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
             <div class="col-md-4"><?= $form->field($model, 'business_phone_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-4"><?= $form->field($model, 'business_whatsap_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-4"><?= $form->field($model, 'business_email_id')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
+            <div class="col-md-4"><?= $form->field($model, 'business_whatsap_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-4"><?= $form->field($model, 'business_email_id')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'business_logo_upload')->fileInput() ?></div>
 
 
-            
+
             <div class="col-md-4"><?= $form->field($model, 'type_of_business')->dropDownList(['Manufacturing' => 'Manufacturing', 'Retail' => 'Retail', 'Service' => 'Service'], ['prompt' => 'Select']) ?></div>
             <div class="col-md-4"><?= $form->field($model, 'business_doc_reg_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'business_kyc_detail')->fileInput() ?></div>
@@ -164,10 +80,10 @@ JS
             <div class="col-md-4"><?= $form->field($model, 'business_operated_park')->dropDownList(['Park A' => 'Park A', 'Park B' => 'Park B'], ['prompt' => 'Select']) ?></div>
             <div class="col-md-12"><?= $form->field($model, 'business_detail')->textarea(['rows' => 3, 'placeholder' => 'Enter']) ?></div>
             <div class="col-md-4 d-flex align-items-center">
-                <?= $form->field($model, 'gst')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])?>
+                <?= $form->field($model, 'gst')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
                 <?= Html::button('Add', ['class' => 'btn btn-warning ms-2']) ?>
             </div>
-            
+
         </div>
         <div class="mt-4 d-flex justify-content-front">
             <?= Html::button('Previous', ['class' => 'btn btn-secondary prev-step', 'data-prev' => 'step-1']) ?>
@@ -182,8 +98,8 @@ JS
     <div class="card-body">
         <div class="row gy-3">
             <div class="col-md-6"><?= $form->field($model, 'bank_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-6"><?= $form->field($model, 'account_holder_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
-            <div class="col-md-6"><?= $form->field($model, 'account_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'account_holder_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
+            <div class="col-md-6"><?= $form->field($model, 'account_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'required' => true]) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'ifsc_code')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
             <div class="col-md-6"><?= $form->field($model, 'cancle_check')->fileInput() ?></div>
 
@@ -215,7 +131,7 @@ JS
             <div class="col-md-6"><?= $form->field($model, 'upload_registration_number')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?></div>
 
 
-            <!-- <div class="col-md-6"><?= $form->field($model, 'upload_registration_cert')->fileInput() ?></div> -->
+            <div class="col-md-6"><?= $form->field($model, 'upload_registration_cert')->fileInput() ?></div>
 
 
             <div class="col-md-6"><?= $form->field($model, 'upload_document')->fileInput() ?></div>
@@ -231,7 +147,121 @@ JS
     </div>
 </div>
 
-<!-- Step 5 -->
 
 
 <?php ActiveForm::end(); ?>
+
+<style>
+    .stepper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .stepper-item {
+        position: relative;
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        border-radius: 50%;
+        background: #e0e0e0;
+        text-align: center;
+        font-weight: bold;
+        z-index: 1;
+        color: #555;
+    }
+
+    .stepper-item.active {
+        background: rgb(4, 29, 10);
+        color: #fff;
+    }
+
+    .stepper-item.completed {
+        background: rgb(4, 29, 10);
+        color: #fff;
+        font-size: 1rem;
+    }
+
+    .stepper-line {
+        flex: 1;
+        height: 4px;
+        background: #e0e0e0;
+        margin: 0 -1px;
+    }
+
+    .stepper-line.filled {
+        background: rgb(4, 29, 10);
+    }
+
+    .card-header {
+        background: #f0f4f8;
+        font-weight: bold;
+    }
+</style>
+
+<?php
+
+
+$this->registerJs(
+    <<<JS
+function updateStepper(stepId) {
+    $('.step').hide();
+    $('#' + stepId).show();
+
+    var current = parseInt(stepId.split('-')[1]);
+    $('.stepper-item').each(function() {
+        var idx = parseInt(this.id.split('-')[1]);
+        $(this).removeClass('active completed').text(idx);
+        if (idx < current) {
+            $(this).addClass('completed').html('✔');
+        } else if (idx === current) {
+            $(this).addClass('active');
+        }
+    });
+
+    $('.stepper-line').each(function(i) {
+        if (i < current - 1) $(this).addClass('filled');
+        else $(this).removeClass('filled');
+    });
+
+    $('#step-text').text('Step ' + current + '/4');
+}
+
+document.getElementById('kyc_detail').addEventListener('change', function() {
+    const fileName = this.files[0] ? this.files[0].name : '';
+    document.getElementById('kyc_detail_name').value = fileName;
+});
+
+$(document).ready(function() {
+    updateStepper('step-1');
+
+    $('.next-step').click(function(){
+        var currentStepId = $(this).closest('.step').attr('id');
+        var currentStep = document.getElementById(currentStepId);
+        
+        var inputs = currentStep.querySelectorAll('input, select, textarea');
+        var isValid = true;
+
+        inputs.forEach(function(input) {
+            if (input.hasAttribute('required') && !input.checkValidity()) {
+                input.reportValidity();
+                isValid = false;
+                return false;
+            }
+        });
+
+        if (isValid) {
+            var nextStepId = $(this).data('next');
+            updateStepper(nextStepId);
+        }
+    });
+
+    $('.prev-step').click(function(){
+        var prevStepId = $(this).data('prev');
+        updateStepper(prevStepId);
+    });
+});
+JS
+);
+
+?>

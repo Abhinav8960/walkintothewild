@@ -120,10 +120,14 @@ class OperatorRegistrationForm extends Model
                 'name',
                 'email',
                 'phone_no',
-                'dob',
                 'business_whatsap_no',
+                "business_registration_name",
+                'business_brand_name',
+                'business_brand_name',
                 'business_email_id',
                 'account_holder_name',
+                'pan_no',
+                'upload_adhar_no',
                 'account_no',
                 'gender'
             ], 'required'],
@@ -314,6 +318,50 @@ class OperatorRegistrationForm extends Model
 
 
 
+    // public function uploadFiles()
+    // {
+    //     $basePath = Yii::$app->params['datapath'] . '/Uploads';
+    //     if (!file_exists($basePath)) {
+    //         mkdir($basePath, 0777, true);
+    //     }
+
+    //     $userFolder = $basePath . '/' . $this->id;
+    //     if (!file_exists($userFolder)) {
+    //         mkdir($userFolder, 0777, true);
+    //     }
+
+    //     // Loop through file fields and upload
+    //     foreach (
+    //         [
+    //             'business_logo_upload',
+    //             'business_kyc_detail',
+    //             'cancle_check',
+    //             'upload_aadhar_front',
+    //             'upload_aadhar_back',
+    //             'pan_upload',
+    //             'upload_registration_cert',
+    //             'upload_document'
+    //         ] as $field
+    //     ) {
+    //         $file = UploadedFile::getInstance($this, $field);
+    //         if ($file) {
+    //             $fileName = $field . '_' . time() . '.' . $file->extension;
+    //             $filePath = $userFolder . '/' . $fileName;
+
+    //             $file->saveAs($filePath);
+
+    //             $this->$field = $filePath;
+
+    //             $this->operator_model->$field = $filePath; 
+    //         }
+    //     }
+
+    //     if (!$this->operator_model->save()) {
+    //         Yii::error("Failed to save operator model with uploaded files.");
+    //     }
+    // }
+
+
     public function uploadFiles()
     {
         $basePath = Yii::$app->params['datapath'] . '/Uploads';
@@ -321,30 +369,40 @@ class OperatorRegistrationForm extends Model
             mkdir($basePath, 0777, true);
         }
 
-        $userFolder = $basePath . '/' . $this->id;
+        $userFolder = $basePath . '/' . $this->operator_model->id;
         if (!file_exists($userFolder)) {
             mkdir($userFolder, 0777, true);
         }
 
-        foreach (
-            [
-                'business_logo_upload',
-                'business_kyc_detail',
-                'cancle_check',
-                'upload_aadhar_front',
-                'upload_aadhar_back',
-                'pan_upload',
-                'upload_registration_cert',
-                'upload_document'
-            ] as $field
-        ) {
+        $fileFields = [
+            'business_logo_upload',
+            'business_kyc_detail',
+            'cancle_check',
+            'upload_aadhar_front',
+            'upload_aadhar_back',
+            'pan_upload',
+            'upload_registration_cert',
+            'upload_document'
+        ];
+
+        foreach ($fileFields as $field) {
             $file = UploadedFile::getInstance($this, $field);
+
             if ($file) {
                 $fileName = $field . '_' . time() . '.' . $file->extension;
                 $filePath = $userFolder . '/' . $fileName;
-                $file->saveAs($filePath);
-                $this->$field = $filePath;
+
+                if ($file->saveAs($filePath)) {
+                    $this->$field = $filePath;
+                    $this->operator_model->$field = $filePath;
+                } else {
+                    Yii::error("Failed to save file: $fileName", __METHOD__);
+                }
             }
+        }
+
+        if (!$this->operator_model->save(false)) {
+            Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
         }
     }
 }
