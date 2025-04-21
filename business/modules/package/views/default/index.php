@@ -5,6 +5,7 @@ use common\models\GeneralModel;
 use common\models\packageapproval\Package;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Package';
 $this->params['breadcrumbs_home_url'] = '/package';
@@ -69,11 +70,24 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return $model->newstatuslabel;
                         }
                     ],
+
+                    [
+                        'label' => 'Approval Action',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::button('Sent for Approval', [
+                                'value' => Url::toRoute(['#', 'id' => $model->id]),
+                                'class' => 'btn btn-warning flag-action mb-2',
+                                'title' => 'Edit'
+                            ]);
+                        }
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{suspend}',
+                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -82,7 +96,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'title' => 'View',
 
                                 ]);
-                            
                             },
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
@@ -91,7 +104,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'title' => 'View',
 
                                 ]);
-                            }
+                            },
                         ]
                     ],
                 ],
