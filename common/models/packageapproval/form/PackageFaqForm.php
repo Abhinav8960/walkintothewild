@@ -1,0 +1,77 @@
+<?php
+
+namespace common\models\packageapproval\form;
+
+use Yii;
+use common\models\packageapproval\PackageFaq;
+
+class PackageFaqForm extends \yii\base\Model
+{
+    public $package_id;
+    public $question;
+    public $answer;
+    public $position;
+    public $status;
+    public $package_faq_model;
+    public $action_url;
+    public $action_validate_url;
+
+
+    /**
+     * @param [type] $package_faq_model
+     */
+    public function __construct(PackageFaq $package_faq_model = null)
+    {
+        $this->package_faq_model = Yii::createObject([
+            'class' => PackageFaq::className()
+        ]);
+        if ($package_faq_model != null) {
+            $this->package_faq_model = $package_faq_model;
+            $this->package_id = $this->package_faq_model->package_id;
+            $this->question = $this->package_faq_model->question;
+            $this->answer = $this->package_faq_model->answer;
+            $this->position = $this->package_faq_model->position;
+            $this->status = $this->package_faq_model->status;
+        }
+    }
+
+    public function rules()
+    {
+        return [
+            [['answer', 'question'], 'required'],
+            [['package_id', 'position', 'status'], 'integer'],
+            [['answer'], 'string'],
+            [['position'], 'default', 'value' => 0],
+            [['question'], 'string', 'max' => 512],
+        ];
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'question' => 'Question',
+            'answer' => 'Answer',
+            'position' => 'Position',
+            'status' => 'Status',
+        ];
+    }
+
+    /**
+     * Initialize Form Model
+     *
+     * @return void
+     */
+    public function initializeForm()
+    {
+        $this->package_faq_model->package_id = $this->package_id;
+        $this->package_faq_model->question = $this->question;
+        $this->package_faq_model->answer = $this->answer;
+        $this->package_faq_model->position = $this->position;
+        $this->package_faq_model->status = $this->status;
+    }
+}
