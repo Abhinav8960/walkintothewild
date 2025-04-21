@@ -3,6 +3,7 @@
 namespace backend\modules\packageapproval\controllers;
 
 use common\models\packageapproval\Package;
+use common\models\packageapproval\PackageFaqSearch;
 use common\models\packageapproval\PackageSearch;
 use Yii;
 use yii\web\Controller;
@@ -34,8 +35,14 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $model->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
         return $this->render('view', [
             'package' => $model,
+            'faqs' => $faqs,
         ]);
     }
 
