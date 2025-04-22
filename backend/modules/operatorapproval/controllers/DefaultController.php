@@ -125,9 +125,9 @@ class DefaultController extends Controller
         $safari_operator_model->phone_no = $model->phone_no;
         $safari_operator_model->email = $model->email;
         $safari_operator_model->website = null;
-        $safari_operator_model->is_register_company = 1;
-        $safari_operator_model->has_a_website = 1;
-        $safari_operator_model->has_cancellation_policy = 1;
+        $safari_operator_model->is_register_company = 0;
+        $safari_operator_model->has_a_website = 0;
+        $safari_operator_model->has_cancellation_policy = 0;
         $safari_operator_model->wildlife_photographer = 0;
         $safari_operator_model->wildlife_influencer = 0;
         $safari_operator_model->is_offer_premium_budget = 1;
