@@ -31,7 +31,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 40%;'],
+                        'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
@@ -39,7 +39,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Policy For',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->policy_for;
@@ -49,14 +49,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'attribute' => 'Effective From',
                         'format' => 'html',
                         'enableSorting' => true,
-                        'contentOptions' => ['style' => 'width:10%'],
+                        'contentOptions' => ['style' => 'width:20%'],
                         'value' => function ($model) {
                             return \Yii::$app->formatter->asDatetime($model->effective_from, "php:d-m-Y");
                         }
                     ],
                     [
                         'label' => 'Version',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 20%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = '<span class="badge badge-success fs-6">' . $model->version . '</span>';
