@@ -99,6 +99,9 @@ return [
         'packageapproval' => [
             'class' => 'backend\modules\packageapproval\Module',
         ],
+        'operatorapproval' => [
+            'class' => 'backend\modules\operatorapproval\Module',
+        ],
 
     ],
     'components' => [
