@@ -3,7 +3,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
-$readOnly = $operator_model->is_step_1_approved == 1 || $operator_model->is_step_1_approved == 2
+$readOnly = isset($operator_model) && in_array($operator_model->is_step_1_approved, [1, 2]);
+
 ?>
 
 <?= $this->render('stepper', ['currentStep' => 1]) ?>

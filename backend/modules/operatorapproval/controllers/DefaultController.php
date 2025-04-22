@@ -2,6 +2,7 @@
 
 namespace backend\modules\operatorapproval\controllers;
 
+use common\models\operator\SafariOperator;
 use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
 use yii\web\Controller;
@@ -63,6 +64,7 @@ class DefaultController extends Controller
                 $model->final_approved = 1;
                 $model->updated_time_final_approved = date('Y-m-d H:i:s');
                 if ($model->save(false)) {
+                    $this->makeoperator($model);
                     \Yii::$app->session->setFlash('success', 'Final Approved Successfully');
                     return $this->redirect(['update', 'id' => $model->id]);
                 }
@@ -99,6 +101,19 @@ class DefaultController extends Controller
             }
             \Yii::$app->session->setFlash('success', 'Business Detail Approved Successfully');
             return $this->redirect(['update', 'id' => $model->id]);
+        }
+    }
+
+    public function makeoperator($model)
+    {
+        $safari_operator_model = new SafariOperator();
+        $safari_operator_model->operator_name = $model->name;
+        $safari_operator_model->operator_email = $model->email;
+        $safari_operator_model->operator_phone_no = $model->phone_no;
+        $safari_operator_model->user_id = $model->user_id;
+        $safari_operator_model->is_approved = 1;
+        if ($safari_operator_model->save(false)) {
+            return true;
         }
     }
 
