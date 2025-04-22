@@ -58,7 +58,9 @@ class OperatorRegistrationForm extends Model
 
     public $current_step;
     public $user_id;
-    public $status;
+    public $status = 0;
+    public $final;
+    public $updated_time_final;
 
 
     public function __construct(OperatorRegistration $operator_model = null)
@@ -108,6 +110,8 @@ class OperatorRegistrationForm extends Model
             $this->upload_document = $this->operator_model->upload_document;
             $this->current_step = $this->operator_model->current_step;
             $this->status = $this->operator_model->status;
+            $this->final = $this->operator_model->final;
+            $this->updated_time_final = $this->operator_model->updated_time_final;
         }
     }
 
@@ -117,7 +121,7 @@ class OperatorRegistrationForm extends Model
             self::SCENARIO_STEP1 => ['name', 'email', 'phone_no'],
             self::SCENARIO_STEP2 => ['business_whatsap_no', 'business_registration_name', 'business_brand_name'],
             self::SCENARIO_STEP3 => ['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'],
-            self::SCENARIO_STEP4 => ['upload_adhar_no'],
+            self::SCENARIO_STEP4 => ['upload_adhar_no', 'final', 'updated_time_final'],
         ];
     }
 
@@ -128,7 +132,9 @@ class OperatorRegistrationForm extends Model
             [['business_whatsap_no', 'business_registration_name', 'business_brand_name'], 'required', 'on' => self::SCENARIO_STEP2],
             [['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'], 'required', 'on' => self::SCENARIO_STEP3],
             [['upload_adhar_no'], 'required', 'on' => self::SCENARIO_STEP4],
-            ['status', 'integer'],
+            [['final', 'status'], 'integer'],
+            [['updated_time_final'], 'safe'],
+
 
             // [[
             //     'business_whatsap_no',
@@ -284,6 +290,9 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->upload_document = $this->upload_document;
         $this->operator_model->current_step = $this->current_step;
         $this->operator_model->status = $this->status;
+
+        $this->operator_model->final = $this->final;
+        $this->operator_model->updated_time_final = $this->updated_time_final;
     }
 
     public function uploadFiles()
