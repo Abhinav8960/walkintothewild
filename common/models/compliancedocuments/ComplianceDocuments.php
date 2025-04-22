@@ -12,7 +12,7 @@ use Yii;
  * @property string $uuid
  * @property string|null $title
  * @property string|null $policy_for
- * @property string|null $effective_form
+ * @property string|null $effective_from
  * @property string|null $description
  * @property string|null $version
  * @property int $status 1 => Active , 0 => Suspended
@@ -25,12 +25,24 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
 {
     use CommanRelationship;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const STATUS_DELETE = -1;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'compliance_documents';
+    }
+    
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
     }
 
     /**
@@ -39,13 +51,12 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     public function rules()
     {
         return [
-            [['title', 'policy_for', 'effective_form', 'description', 'version', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['title', 'policy_for', 'effective_from', 'description', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
-            [['uuid'], 'required'],
-            [['effective_form'], 'safe'],
-            [['description'], 'string'],
+            [['version'], 'string', 'max' => 10],
+            [['effective_from','uuid','version'], 'safe'],
+            [['description','uuid','version'], 'string'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['uuid', 'title', 'policy_for', 'version'], 'string', 'max' => 255],
         ];
     }
 
@@ -56,12 +67,10 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return [
             'id' => 'ID',
-            'uuid' => 'Uuid',
             'title' => 'Title',
             'policy_for' => 'Policy For',
-            'effective_form' => 'Effective Form',
+            'effective_from' => 'Effective From',
             'description' => 'Description',
-            'version' => 'Version',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
@@ -69,11 +78,5 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'updated_by' => 'Updated By',
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     * @return ComplianceDocumentsQuery the active query used by this AR class.
-     */
    
-
 }

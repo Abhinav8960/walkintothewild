@@ -3,6 +3,7 @@
 namespace business\modules\package\controllers;
 
 use api\behaviours\Verbcheck;
+use business\controllers\BusinessController;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
@@ -28,7 +29,7 @@ use yii\web\UploadedFile;
 /**
  * DefaultController.
  */
-class DefaultController extends Controller
+class DefaultController extends BusinessController
 {
 
     /**

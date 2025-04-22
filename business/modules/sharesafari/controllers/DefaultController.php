@@ -2,6 +2,7 @@
 
 namespace business\modules\sharesafari\controllers;
 
+use business\controllers\BusinessController;
 use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\form\CreateDepartureForm;
 use common\models\sharesafari\form\DayItineraryForm;
@@ -22,7 +23,7 @@ use yii\web\UploadedFile;
 /**
  * DefaultController.
  */
-class DefaultController extends Controller
+class DefaultController extends BusinessController
 {
 
     public function actionIndex()
