@@ -30,7 +30,7 @@ use yii\bootstrap5\ActiveForm;
 
     <?php if ($model->cdocument_model->id) { ?>
         <div class="col-md-4">
-            <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoptions(),['prompt' => 'Select Status']) ?>
+            <?= $form->field($model, 'status')->dropDownList(GeneralModel:: newstatusoption(),['prompt' => 'Select Status']) ?>
         </div>
     <?php } ?>
 

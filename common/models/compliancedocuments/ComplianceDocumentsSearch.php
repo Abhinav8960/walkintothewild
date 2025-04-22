@@ -31,7 +31,7 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
      */
     public function search($params)
     {
-        $query = ComplianceDocuments::find();
+        $query = ComplianceDocuments::find()->where(['status'=>[0,1]]);
 
         // add conditions that should always apply here
 

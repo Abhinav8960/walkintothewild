@@ -25,6 +25,10 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
 {
     use CommanRelationship;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const STATUS_DELETE = -1;
+
     /**
      * {@inheritdoc}
      */

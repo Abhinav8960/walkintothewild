@@ -2,7 +2,6 @@
 
 namespace backend\modules\compliancedocuments\controllers;
 
-use common\interfaces\StatusInterface;
 use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\compliancedocuments\ComplianceDocumentsSearch;
 use common\models\compliancedocuments\form\ComplianceDocumentsForm;
@@ -39,7 +38,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new ComplianceDocumentsForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = ComplianceDocuments ::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -97,7 +96,7 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         $model->version = $model->id . '_' . $model->version;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = ComplianceDocuments ::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -105,7 +104,7 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = ComplianceDocuments::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = ComplianceDocuments::findOne(['id' => $id, 'status' => [ComplianceDocuments::STATUS_ACTIVE, ComplianceDocuments::STATUS_INACTIVE]])) !== null) {
             return $model;
         }
 
