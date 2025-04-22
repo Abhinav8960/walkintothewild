@@ -5,6 +5,7 @@ namespace backend\modules\compliancedocuments\controllers;
 use common\models\compliancedocuments\ComplianceDocuments;
 use common\models\compliancedocuments\ComplianceDocumentsSearch;
 use common\models\compliancedocuments\form\ComplianceDocumentsForm;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -109,5 +110,51 @@ class DefaultController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    public function actionVersionUpgrade($id)
+    {
+
+        $m = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            $this->upgradeNow($id);
+            // $this->updatePackageStatus($m->uuid, $m->version, $m->status);
+            Yii::$app->session->setFlash('success', 'Upgraded successfully');
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred !' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
+        }
+        $transaction->commit();
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    private function upgradeNow($id)
+    {
+        $model = ComplianceDocuments::findOne($id);
+
+        if ($model) {
+            $newModel = new ComplianceDocuments();
+            $newModel->attributes = $model->attributes;
+            $newModel->version = 'v' . (intval(substr($this->latestVersion($model->uuid), 1)) + 1);
+
+            
+            $newModel->id = null; // Set the ID to null for the new record
+            $newModel->status = ComplianceDocuments::STATUS_ACTIVE;
+            $newModel->save(false);
+            return $newModel;
+        }
+        return true;
+    }
+
+    private function latestVersion($uuid){
+       $cd = ComplianceDocuments::find()->where(['uuid'=>$uuid])->orderBy(['id'=>SORT_DESC])->one();
+       return $cd->version;
     }
 }
