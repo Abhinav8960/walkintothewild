@@ -3,7 +3,21 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
-$readOnly = isset($operator_model) && in_array($operator_model->is_step_1_approved, [1, 2]);
+$readOnly = false;
+if ($operator_model) {
+    // echo $operator_model->final_approved;
+    // echo "<br>";
+    // echo $operator_model->is_step_1_approved;
+    if ($operator_model->final == 1) {
+        $readOnly = true;
+    }
+    if ($operator_model->final_approved == 2 && $operator_model->is_step_1_approved != 1) {
+        $readOnly = false;
+    }
+    // elseif ($operator_model->final == 1) {
+    //     $readOnly = true;
+    // }
+}
 
 ?>
 

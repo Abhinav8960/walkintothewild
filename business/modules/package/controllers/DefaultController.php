@@ -75,7 +75,7 @@ class DefaultController extends BusinessController
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
-        $searchModel->status = Package::EDIATBLE_status;
+        $searchModel->status = Package::EDIATBLE_STATUS;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -93,7 +93,7 @@ class DefaultController extends BusinessController
     {
         $model = new PackageForm();
         $model->status = Package::APPROVED_AND_LIVE_STATUS;
-        $model->status = Package::EDIATBLE_status;
+        $model->status = Package::EDIATBLE_STATUS;
         // $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
         if ($this->request->isPost) {
@@ -105,7 +105,7 @@ class DefaultController extends BusinessController
                     $model->initializeForm();
                     if ($model->package_model->save()) {
                         $model->uploadFile();
-                        $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_status);
+                        $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_STATUS);
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
@@ -559,7 +559,7 @@ class DefaultController extends BusinessController
         $id = Yii::$app->request->get('id');
         $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
         if ($model) {
-            return $model->status == Package::EDIATBLE_status;
+            return $model->status == Package::EDIATBLE_STATUS;
         } else {
             return false;
         }
@@ -581,12 +581,12 @@ class DefaultController extends BusinessController
             $newModel->version = 'v' . (intval(substr($model->version, 1)) + 1);
 
             if ($isNewRecord) {
-                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHi');
+                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHis');
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = Package::APPROVED_AND_LIVE_STATUS;
-            $newModel->status = Package::EDIATBLE_status;
+            $newModel->status = Package::EDIATBLE_STATUS;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);
             $this->CopyPackageCommentReport($model->id, $newModel->id);
@@ -596,7 +596,7 @@ class DefaultController extends BusinessController
             $this->CopyPackageSafariPark($model->id, $newModel->id);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
-            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_status);
+            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_STATUS);
 
             return $newModel;
         }
@@ -756,7 +756,7 @@ class DefaultController extends BusinessController
             }
             $model->pending_for_approval_version = $version;
         }
-        // if ($status == Package::EDIATBLE_status) {
+        // if ($status == Package::EDIATBLE_STATUS) {
         //     if (!empty($model->editable_version)) {
         //         $this->terminatePackage($model->uuid, $model->editable_version);
         //     }
