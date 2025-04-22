@@ -30,8 +30,10 @@ class NovaAppAsset extends AssetBundle
         'forceCopy' => true,
     ];
     public $js = [
+        'plugins/accordion/js/accordion.min.js',
         'plugins/bootstrap/js/popper.min.js',
         'plugins/bootstrap/js/bootstrap.min.js',
+        'plugins/bootstrap/js/bootstrap.bundle.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
         'plugins/ionicons/ionicons.js',
         'plugins/moment/moment.js',
@@ -63,7 +65,7 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js',
         'https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js',
         'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js',
-        'https://code.highcharts.com/highcharts.js'
+        'https://code.highcharts.com/highcharts.js',
     ];
 
     public $depends = [
