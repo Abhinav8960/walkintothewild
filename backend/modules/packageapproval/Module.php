@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\package;
+namespace backend\modules\packageapproval;
 
 use Yii;
 
@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'backend\modules\package\controllers';
+    public $controllerNamespace = 'backend\modules\packageapproval\controllers';
 
     /**
      * {@inheritdoc}
