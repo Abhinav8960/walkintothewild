@@ -17,52 +17,146 @@ use Yii;
  */
 class OperatorRegistrationController extends Controller
 {
-    
-   
-    public function actionView($id)
-    {
-        $operator_model = $this->findModel($id);
 
-        return $this->render('view', [
-            'operator_model' => $operator_model,
-        ]);
-    }
-
-
-
-    /**
-     * Creates a new OperatorRegistration model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $this->layout = 'registration';
-        $formModel = new OperatorRegistrationForm();
 
-        if (Yii::$app->request->isPost) {
-            $formModel->load(Yii::$app->request->post());
-
-            if ($formModel->validate()) {
-                $formModel->initializeForm();
-
-                $formModel->uploadFiles();
-
-                if ($formModel->operator_model->save(false)) {
-                    return $this->redirect(['view', 'id' => $formModel->operator_model->id]);
-                } else {
-                    Yii::$app->session->setFlash('error', 'Failed to save operator data.');
-                }
+        if (Yii::$app->user->identity) {
+            $operator_model = OperatorRegistration::findOne(['user_id' => Yii::$app->user->identity->id]);
+            if (!$operator_model) {
+                $model = new OperatorRegistrationForm();
             } else {
-                Yii::$app->session->setFlash('error', 'Validation failed: ' . json_encode($formModel->getErrors()));
+                $model = new OperatorRegistrationForm($operator_model);
             }
         }
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP1);
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    $model->operator_model->current_step = 2;
+                    if ($model->operator_model->save()) {
+                        return $this->redirect(['step-2', 'id' => $model->operator_model->id]);
+                    } else {
+                        Yii::error($model->operator_model->errors);
+                        print_r($model->operator_model->errors);
+                    }
+                }
+            }
+        } else {
+            $model->operator_model->loadDefaultValues();
+        }
 
-        return $this->render('create', [
-            'model' => $formModel
+        return $this->render('_step1', [
+            'model' => $model,
         ]);
     }
 
+    public function actionStep2($id)
+    {
+        $this->layout = 'registration';
+        $operator_model = $this->findModel($id);
+
+        if ($operator_model->current_step < 2) {
+            return $this->redirect(['create']);
+        }
+
+        $model = new OperatorRegistrationForm($operator_model);
+        $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP2);
+        $model->current_step = 3;
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->operator_model->save(false)) {
+                        return $this->redirect(['step-3', 'id' => $model->operator_model->id]);
+                    } else {
+                        Yii::error($model->operator_model->errors);
+                        print_r($model->operator_model->errors);
+                    }
+                }
+            }
+        } else {
+            $model->operator_model->loadDefaultValues();
+        }
+
+        return $this->render('_step2', [
+            'model' => $model,
+        ]);
+    }
+    public function actionStep3($id)
+    {
+        $this->layout = 'registration';
+        $operator_model = $this->findModel($id);
+
+        if ($operator_model->current_step < 3) {
+            return $this->redirect(['step-2', 'id' => $id]);
+        }
+
+        $model = new OperatorRegistrationForm($operator_model);
+        $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP3);
+        $model->current_step = 4;
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->operator_model->save(false)) {
+                        return $this->redirect(['step-4', 'id' => $model->operator_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->operator_model->loadDefaultValues();
+        }
+
+        return $this->render('_step3', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionStep4($id)
+    {
+        $this->layout = 'registration';
+
+        $operator_model = $this->findModel($id);
+
+        if ($operator_model->current_step < 4) {
+            return $this->redirect(['step-3', 'id' => $id]);
+        }
+        $model = new OperatorRegistrationForm($operator_model);
+        $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP4);
+        $model->current_step = 5;
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->operator_model->save(false)) {
+                        return $this->redirect(['view',  'id' => $model->operator_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->operator_model->loadDefaultValues();
+        }
+
+        return $this->render('_step4', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        $this->layout = 'registration';
+        $operator_model = $this->findModel($id);
+        return $this->render('_step5', [
+            'operator_model' => $operator_model,
+        ]);
+    }
 
 
     public function actionUpdate($id)

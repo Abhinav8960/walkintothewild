@@ -11,6 +11,13 @@ use yii\web\UploadedFile;
 
 class OperatorRegistrationForm extends Model
 {
+
+    const SCENARIO_STEP1 = 'step1';
+    const SCENARIO_STEP2 = 'step2';
+    const SCENARIO_STEP3 = 'step3';
+    const SCENARIO_STEP4 = 'step4';
+
+    public $id;
     public $operator_model;
     public $name;
     public $email;
@@ -30,10 +37,12 @@ class OperatorRegistrationForm extends Model
     public $business_operated_park;
     public $business_detail;
     public $gst;
+
     public $bank_name;
     public $account_holder_name;
     public $account_no;
     public $ifsc_code;
+
     public $upload_adhar_no;
     public $pan_no;
     public $upload_registration_number;
@@ -47,24 +56,8 @@ class OperatorRegistrationForm extends Model
     public $upload_registration_cert;
     public $upload_document;
 
-    // public function __construct(OperatorRegistration $operator_model = null)
-    // {
-    //     $this->operator_model = Yii::createObject([
-    //         'class' => OperatorRegistration::className()
-    //     ]);
-
-    //     if ($operator_model !== null) {
-    //         $this->operator_model = $operator_model;
-
-    //         foreach ($this->operator_model->attributes as $attr => $val) {
-    //             if (property_exists($this, $attr)) {
-    //                 $this->$attr = $val;
-    //             }
-    //         }
-    //     }
-
-    //     parent::__construct();
-    // }
+    public $current_step;
+    public $user_id;
 
 
     public function __construct(OperatorRegistration $operator_model = null)
@@ -75,7 +68,8 @@ class OperatorRegistrationForm extends Model
 
         if ($operator_model !== null) {
             $this->operator_model = $operator_model;
-            // $this->id = $this->operator_model->id;
+            $this->id = $this->operator_model->id;
+            $this->user_id = $this->operator_model->user_id;
             $this->name = $this->operator_model->name;
             $this->email = $this->operator_model->email;
             $this->phone_no = $this->operator_model->phone_no;
@@ -96,10 +90,12 @@ class OperatorRegistrationForm extends Model
             $this->business_operated_park = $this->operator_model->business_operated_park;
             $this->business_detail = $this->operator_model->business_detail;
             $this->gst = $this->operator_model->gst;
+
             $this->bank_name = $this->operator_model->bank_name;
             $this->account_holder_name = $this->operator_model->account_holder_name;
             $this->account_no = $this->operator_model->account_no;
             $this->ifsc_code = $this->operator_model->ifsc_code;
+
             $this->cancle_check = $this->operator_model->cancle_check;
             $this->upload_adhar_no = $this->operator_model->upload_adhar_no;
             $this->upload_aadhar_front = $this->operator_model->upload_aadhar_front;
@@ -109,65 +105,83 @@ class OperatorRegistrationForm extends Model
             $this->upload_registration_number = $this->operator_model->upload_registration_number;
             $this->upload_registration_cert = $this->operator_model->upload_registration_cert;
             $this->upload_document = $this->operator_model->upload_document;
+            $this->current_step = $this->operator_model->current_step;
         }
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_STEP1 => ['name', 'email', 'phone_no'],
+            self::SCENARIO_STEP2 => ['business_whatsap_no', 'business_registration_name', 'business_brand_name'],
+            self::SCENARIO_STEP3 => ['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'],
+            self::SCENARIO_STEP4 => ['upload_adhar_no'],
+        ];
+    }
 
     public function rules()
     {
         return [
-            [[
-                'name',
-                'email',
-                'phone_no',
-                'business_whatsap_no',
-                "business_registration_name",
-                'business_brand_name',
-                'business_brand_name',
-                'business_email_id',
-                'account_holder_name',
-                'pan_no',
-                'upload_adhar_no',
-                'account_no',
-                'gender'
-            ], 'required'],
+            [['name', 'email', 'phone_no'], 'required', 'on' => self::SCENARIO_STEP1],
+            [['business_whatsap_no', 'business_registration_name', 'business_brand_name'], 'required', 'on' => self::SCENARIO_STEP2],
+            [['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'], 'required', 'on' => self::SCENARIO_STEP3],
+            [['upload_adhar_no'], 'required', 'on' => self::SCENARIO_STEP4],
 
-            [[
-                'name',
-                'email',
-                'phone_no',
-                'whatsap_no',
-                'dob',
-                'gender',
-                'kyc_detail',
-                'business_registration_name',
-                'business_brand_name',
-                'business_full_name',
-                'business_phone_no',
-                'business_whatsap_no',
-                'business_email_id',
-                'type_of_business',
-                'business_doc_reg_no',
-                'business_operated_park',
-                'business_detail',
-                'gst',
-                'bank_name',
-                'account_holder_name',
-                'account_no',
-                'ifsc_code',
-                'upload_adhar_no',
-                'pan_no',
-                'upload_registration_number'
-            ], 'string'],
+            // [[
+            //     'business_whatsap_no',
+            //     "business_registration_name",
+            //     'business_brand_name',
+            //     'business_brand_name',
+            //     'business_email_id',
+            //     'account_holder_name',
+            //     'pan_no',
+            //     'upload_adhar_no',
+            //     'account_no',
+            //     'gender'
+            // ], 'safe'],
 
-            [['dob'], 'safe'],
+            // [[
+            //     'name',
+            //     'email',
+            //     'phone_no',
+            //     'whatsap_no',
+            //     'dob',
+            //     'gender',
+            //     'kyc_detail',
+            //     'business_registration_name',
+            //     'business_brand_name',
+            //     'business_full_name',
+            //     'business_phone_no',
+            //     'business_whatsap_no',
+            //     'business_email_id',
+            //     'type_of_business',
+            //     'business_doc_reg_no',
+            //     'business_operated_park',
+            //     'business_detail',
+            //     'gst',
+            //     'bank_name',
+            //     'account_holder_name',
+            //     'account_no',
+            //     'ifsc_code',
+            //     'upload_adhar_no',
+            //     'pan_no',
+            //     'upload_registration_number'
+            // ], 'string'],
 
-            [[
-                'phone_no',
-                'whatsap_no',
-                'business_phone_no',
-                'business_whatsap_no'
-            ], 'match', 'pattern' => '/^[5-9][0-9]{9}$/', 'message' => 'Phone number must be 10 digits and start with 5 or higher.'],
+            // [['dob'], 'safe'],
+
+            // [[
+            //     'phone_no',
+            //     'whatsap_no',
+            //     'business_phone_no',
+            //     'business_whatsap_no'
+            // ], 'match', 'pattern' => "/^[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/", 'message' => ' Mobile number should have 10 digits.'],
+            // [[
+            //     'phone_no',
+            //     'whatsap_no',
+            //     'business_phone_no',
+            //     'business_whatsap_no'
+            // ], 'safe'],
 
             [['email', 'business_email_id'], 'email'],
 
@@ -181,6 +195,8 @@ class OperatorRegistrationForm extends Model
                 'upload_registration_cert',
                 'upload_document'
             ], 'file', 'skipOnEmpty' => true],
+
+            [['user_id', 'current_step'], 'integer']
         ];
     }
 
@@ -229,58 +245,9 @@ class OperatorRegistrationForm extends Model
         ];
     }
 
-    // public function attributes()
-    // {
-    //     return [
-    //         'name',
-    //         'email',
-    //         'phone_no',
-    //         'whatsap_no',
-    //         'dob',
-    //         'gender',
-    //         'kyc_detail',
-    //         'business_registration_name',
-    //         'business_brand_name',
-    //         'business_full_name',
-    //         'business_phone_no',
-    //         'business_whatsap_no',
-    //         'business_email_id',
-    //         'type_of_business',
-    //         'business_doc_reg_no',
-    //         'business_operated_park',
-    //         'business_detail',
-    //         'gst',
-    //         'bank_name',
-    //         'account_holder_name',
-    //         'account_no',
-    //         'ifsc_code',
-    //         'upload_adhar_no',
-    //         'pan_no',
-    //         'upload_registration_number',
-
-    //         'business_logo_upload',
-    //         'business_kyc_detail',
-    //         'cancle_check',
-    //         'upload_aadhar_front',
-    //         'upload_aadhar_back',
-    //         'pan_upload',
-    //         'upload_registration_cert',
-    //         'upload_document',
-    //     ];
-    // }
-
-    // public function initializeForm()
-    // {
-    //     foreach ($this->attributes() as $attr) {
-    //         if (property_exists($this->operator_model, $attr)) {
-    //             $this->operator_model->$attr = $this->$attr;
-    //         }
-    //     }
-    // }
-
     public function initializeForm()
     {
-        // $this->operator_model->id = $this->id;
+        $this->operator_model->user_id = $this->user_id;
         $this->operator_model->name = $this->name;
         $this->operator_model->email = $this->email;
         $this->operator_model->phone_no = $this->phone_no;
@@ -301,10 +268,12 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->business_operated_park = $this->business_operated_park;
         $this->operator_model->business_detail = $this->business_detail;
         $this->operator_model->gst = $this->gst;
+
         $this->operator_model->bank_name = $this->bank_name;
         $this->operator_model->account_holder_name = $this->account_holder_name;
         $this->operator_model->account_no = $this->account_no;
         $this->operator_model->ifsc_code = $this->ifsc_code;
+        
         $this->operator_model->cancle_check = $this->cancle_check;
         $this->operator_model->upload_adhar_no = $this->upload_adhar_no;
         $this->operator_model->upload_aadhar_front = $this->upload_aadhar_front;
@@ -314,6 +283,7 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->upload_registration_number = $this->upload_registration_number;
         $this->operator_model->upload_registration_cert = $this->upload_registration_cert;
         $this->operator_model->upload_document = $this->upload_document;
+        $this->operator_model->current_step = $this->current_step;
     }
 
 

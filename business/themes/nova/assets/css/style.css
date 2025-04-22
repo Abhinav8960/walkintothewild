@@ -112596,3 +112596,54 @@ table tbody tr td {
 td {
   padding: .2rem .2rem !important;
 }
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 1rem;
+}
+
+.stepper-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px; /* adjust spacing between items */
+}
+
+.stepper-item {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #e0e0e0;
+    text-align: center;
+    line-height: 2.5rem;
+    font-weight: bold;
+    color: #555;
+    z-index: 1;
+}
+
+.stepper-item.active,
+.stepper-item.completed {
+    background: #041d0a;
+    color: #fff;
+}
+
+.stepper-label {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+    white-space: nowrap;
+}
+
+.stepper-line {
+    flex-grow: 1;
+    height: 4px;
+    background: #e0e0e0;
+    margin: 0 5px;
+}
+
+.stepper-line.filled {
+    background: #041d0a;
+}
