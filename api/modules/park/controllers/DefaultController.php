@@ -239,7 +239,7 @@ class DefaultController extends RestController
         $packageIds = array_column($safaripackages, 'package_id');
         $searchModel = new PackageSearch();
         $searchModel->id = $packageIds;
-        $searchModel->status = Package::STATUS_ACTIVE;
+        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
         return $this->dataProviderSender($searchModel, "packages");
     }
 }

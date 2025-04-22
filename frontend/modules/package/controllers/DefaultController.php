@@ -62,7 +62,7 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = Package::STATUS_ACTIVE;
+        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
         $searchModel->custom_sort_by = 5;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -87,7 +87,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -166,7 +166,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -243,7 +243,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andwhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andwhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -299,7 +299,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionEnquiry($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }

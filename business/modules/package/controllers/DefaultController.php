@@ -91,7 +91,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new PackageForm();
-        $model->status = Package::STATUS_ACTIVE;
+        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->status = Package::EDIATBLE_status;
         // $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
@@ -489,7 +489,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -556,7 +556,7 @@ class DefaultController extends Controller
     protected function isPackageEditable()
     {
         $id = Yii::$app->request->get('id');
-        $model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
         if ($model) {
             return $model->status == Package::EDIATBLE_status;
         } else {
@@ -584,7 +584,7 @@ class DefaultController extends Controller
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
-            $newModel->status = Package::STATUS_ACTIVE;
+            $newModel->status = Package::APPROVED_AND_LIVE_STATUS;
             $newModel->status = Package::EDIATBLE_status;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);

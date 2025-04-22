@@ -102,7 +102,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $model = new PackageForm();
-        $model->status = Package::STATUS_ACTIVE;
+        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -501,7 +501,7 @@ class PackageController extends RestController
      */
     protected function findModel($slug, $owned_by_id)
     {
-        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -510,7 +510,7 @@ class PackageController extends RestController
 
     protected function findModelfaq($id)
     {
-        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -528,7 +528,7 @@ class PackageController extends RestController
 
     protected function findModelgallery($id)
     {
-        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
