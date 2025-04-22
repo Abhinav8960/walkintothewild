@@ -51,6 +51,7 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step1', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
@@ -85,6 +86,7 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step2', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
     public function actionStep3()
@@ -115,6 +117,7 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step3', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
@@ -148,6 +151,7 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step4', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
