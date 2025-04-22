@@ -2,8 +2,10 @@
 
 namespace backend\modules\operatorapproval\controllers;
 
+use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController.
@@ -25,5 +27,20 @@ class DefaultController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    // public function actionUpdate($id)
+    // {
+
+    //     $model = $this->findModel($id);
+    // }
+
+    protected function findModel($id)
+    {
+        if (($model = OperatorRegistration::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
