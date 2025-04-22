@@ -7,15 +7,12 @@ use common\models\package\Package;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use Ramsey\Uuid\Uuid;
 
 class PackageForm extends \yii\base\Model
 {
     public $owned_by_id;
-    public $uuid;
-    public $version;
     public $package_name;
-    // public $package_slug;
+    public $package_slug;
     public $package_agenda_id;
 
     public $no_of_day;
@@ -78,7 +75,6 @@ class PackageForm extends \yii\base\Model
     public $action_validate_url;
 
 
-
     /**
      * @param [type] $package_model
      */
@@ -87,13 +83,9 @@ class PackageForm extends \yii\base\Model
         $this->package_model = Yii::createObject([
             'class' => Package::className()
         ]);
-        $this->uuid = Uuid::uuid4()->toString() . '-' . date('ymdHi');;
-        $this->version = 'v1';
         if ($package_model != null) {
             $this->package_model = $package_model;
             $this->owned_by_id = $this->package_model->owned_by_id;
-            $this->uuid = $this->package_model->uuid;
-            $this->version = $this->package_model->version;
             $this->package_name = $this->package_model->package_name;
             $this->package_image = $this->package_model->package_image;
             $this->package_banner_image = $this->package_model->package_banner_image;
@@ -159,9 +151,9 @@ class PackageForm extends \yii\base\Model
             [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there', 'package_agenda_id'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
-            // [['package_slug'], 'string', 'max' => 720],
+            [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'uuid', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
 
@@ -280,7 +272,7 @@ class PackageForm extends \yii\base\Model
         return [
             'id' => 'ID',
             'package_name' => 'Package Name',
-            // 'package_slug' => 'Package Slug',
+            'package_slug' => 'Package Slug',
             'no_of_day' => 'Number Of Days',
             'no_of_night' => 'Number Of Nights',
             'no_of_safari' => 'Number Of Safaries',
@@ -313,8 +305,6 @@ class PackageForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $this->package_model->uuid = $this->uuid;
-        $this->package_model->version = $this->version;
         $this->package_model->owned_by_id = $this->owned_by_id;
         $this->package_model->package_name = $this->package_name;
         $this->package_model->package_agenda_id = $this->package_agenda_id;
@@ -379,86 +369,47 @@ class PackageForm extends \yii\base\Model
     public function UploadFile()
     {
         if ($this->package_image) {
-            // $storagePath = Yii::$app->params['datapath'] . '/package';
+            $storagePath = Yii::$app->params['datapath'] . '/package';
 
-            // if (!file_exists($storagePath)) {
-            //     mkdir($storagePath);
-            //     chmod($storagePath, 0777);
-            // }
-            // $storagePath = $storagePath . '/' . $this->package_model->id;
-            // if (!file_exists($storagePath)) {
-            //     mkdir($storagePath);
-            //     chmod($storagePath, 0777);
-            // }
-
-            // $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
-            // $filePath = $storagePath . '/' . $fileName;
-
-            // if ($this->package_image->saveAs($filePath)) {
-            //     $this->package_model->package_image = $fileName;
-            //     $this->package_model->save(false);
-            // }
-            // _______________________Move to S3 From apr 22, 2025_____________________________________
-
-            $storagePath = 'package';
-            $userPath = $storagePath . '/' . $this->package_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->package_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
 
             $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
 
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
-
-            if ($fileName) {
-                // try {
-                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-                    // $this->package_model->file = $fileName;
-                    $this->package_model->package_image = $filePath;
-                    // $this->package_model->etag = $etag;
-
-                    $this->package_model->save(false);
-                }
+            if ($this->package_image->saveAs($filePath)) {
+                $this->package_model->package_image = $fileName;
+                $this->package_model->save(false);
             }
         }
 
 
         if ($this->package_banner_image) {
-            // $storagePath = Yii::$app->params['datapath'] . '/package';
+            $storagePath = Yii::$app->params['datapath'] . '/package';
 
-            // if (!file_exists($storagePath)) {
-            //     mkdir($storagePath);
-            //     chmod($storagePath, 0777);
-            // }
-            // $storagePath = $storagePath . '/' . $this->package_model->id;
-            // if (!file_exists($storagePath)) {
-            //     mkdir($storagePath);
-            //     chmod($storagePath, 0777);
-            // }
-
-            // $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
-            // $filePath = $storagePath . '/' . $fileName;
-
-            // if ($this->package_banner_image->saveAs($filePath)) {
-            //     $this->package_model->package_banner_image = $fileName;
-            //     $this->package_model->save(false);
-            // }
-
-            // _______________________Move to S3 From apr 22, 2025_____________________________________
-
-            $storagePath = 'package';
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
             $storagePath = $storagePath . '/' . $this->package_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
             $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
-            if ($fileName) {
-                // try {
-                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-                    // $this->package_model->file = $fileName;
-                    $this->package_model->package_banner_image = $filePath;
-                    // $this->package_model->etag = $etag;
-                    $this->package_model->save(false);
-                }
+
+            if ($this->package_banner_image->saveAs($filePath)) {
+                $this->package_model->package_banner_image = $fileName;
+                $this->package_model->save(false);
             }
         }
     }

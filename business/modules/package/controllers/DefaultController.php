@@ -4,21 +4,21 @@ namespace business\modules\package\controllers;
 
 use api\behaviours\Verbcheck;
 use common\models\master\faq\MasterFaq;
-use common\models\packageapproval\form\DayItineraryForm;
-use common\models\packageapproval\form\PackageFaqForm;
-use common\models\packageapproval\form\PackageForm;
-use common\models\packageapproval\Package;
-use common\models\packageapproval\PackageComment;
-use common\models\packageapproval\PackageCommentReport;
-use common\models\packageapproval\PackageDay;
-use common\models\packageapproval\PackageFaq;
-use common\models\packageapproval\PackageFaqSearch;
-use common\models\packageapproval\PackageFeature;
-use common\models\packageapproval\PackageGallery;
-use common\models\packageapproval\PackageIncluded;
-use common\models\packageapproval\PackageSafariPark;
-use common\models\packageapproval\PackageSearch;
-use common\models\packageapproval\PackageStates;
+use common\models\package\form\DayItineraryForm;
+use common\models\package\form\PackageFaqForm;
+use common\models\package\form\PackageForm;
+use common\models\package\Package;
+use common\models\package\PackageComment;
+use common\models\package\PackageCommentReport;
+use common\models\package\PackageDay;
+use common\models\package\PackageFaq;
+use common\models\package\PackageFaqSearch;
+use common\models\package\PackageFeature;
+use common\models\package\PackageGallery;
+use common\models\package\PackageIncluded;
+use common\models\package\PackageSafariPark;
+use common\models\package\PackageSearch;
+use common\models\package\PackageStates;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -74,7 +74,7 @@ class DefaultController extends Controller
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
-        $searchModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
+        $searchModel->status = Package::EDIATBLE_status;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -92,7 +92,7 @@ class DefaultController extends Controller
     {
         $model = new PackageForm();
         $model->status = Package::STATUS_ACTIVE;
-        $model->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
+        $model->status = Package::EDIATBLE_status;
         // $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
         if ($this->request->isPost) {
@@ -104,7 +104,7 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->package_model->save()) {
                         $model->uploadFile();
-                        $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_APPROVAL_STATUS);
+                        $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_status);
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
@@ -509,9 +509,9 @@ class DefaultController extends Controller
         $m = $this->findModel($id);
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $m->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
+            $m->status = Package::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
-            $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
+            $this->updatePackageStatus($m->uuid, $m->version, $m->status);
             $this->copyPackageNow($id);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
         } catch (\Exception $e) {
@@ -537,7 +537,7 @@ class DefaultController extends Controller
         try {
 
             $this->copyPackageNow($id, true);
-            // $this->updatePackageStatus($m->uuid, $m->version, $m->approval_status);
+            // $this->updatePackageStatus($m->uuid, $m->version, $m->status);
             Yii::$app->session->setFlash('success', 'Package copy successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -558,7 +558,7 @@ class DefaultController extends Controller
         $id = Yii::$app->request->get('id');
         $model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
         if ($model) {
-            return $model->approval_status == Package::EDIATBLE_APPROVAL_STATUS;
+            return $model->status == Package::EDIATBLE_status;
         } else {
             return false;
         }
@@ -585,7 +585,7 @@ class DefaultController extends Controller
             }
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = Package::STATUS_ACTIVE;
-            $newModel->approval_status = Package::EDIATBLE_APPROVAL_STATUS;
+            $newModel->status = Package::EDIATBLE_status;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);
             $this->CopyPackageCommentReport($model->id, $newModel->id);
@@ -595,7 +595,7 @@ class DefaultController extends Controller
             $this->CopyPackageSafariPark($model->id, $newModel->id);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
-            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_APPROVAL_STATUS);
+            $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_status);
 
             return $newModel;
         }
@@ -749,13 +749,13 @@ class DefaultController extends Controller
             $model->uuid = $uuid;
             $model->slug = PackageStates::prepareUniqueSlug($package->package_name);
         }
-        if ($status == Package::SEND_FOR_APPROVAL_APPROVAL_STATUS) {
+        if ($status == Package::SEND_FOR_APPROVAL_STATUS) {
             if (!empty($model->pending_for_approval_version)) {
                 $this->terminatePackage($model->uuid, $model->pending_for_approval_version);
             }
             $model->pending_for_approval_version = $version;
         }
-        // if ($status == Package::EDIATBLE_APPROVAL_STATUS) {
+        // if ($status == Package::EDIATBLE_status) {
         //     if (!empty($model->editable_version)) {
         //         $this->terminatePackage($model->uuid, $model->editable_version);
         //     }
@@ -771,7 +771,7 @@ class DefaultController extends Controller
     {
         $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
         if ($model) {
-            $model->approval_status = Package::TERMINATED_APPROVAL_STATUS;
+            $model->status = Package::TERMINATED_status;
             $model->save(false);
             return true;
         }

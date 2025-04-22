@@ -85,7 +85,7 @@ class DefaultController extends RestController
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = Package::STATUS_ACTIVE;
+        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
         $searchModel->custom_sort_by = 5;
         $condition = "owned_by_id IN (SELECT id from safari_operator WHERE status=1)";
 
@@ -108,12 +108,12 @@ class DefaultController extends RestController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
-        if ($package->status != Package::STATUS_ACTIVE) {
+        if ($package->status != Package::APPROVED_AND_LIVE_STATUS) {
             return Yii::$app->api->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
         }
 
@@ -126,7 +126,7 @@ class DefaultController extends RestController
     public function actionComment($slug)
     {
 
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -161,7 +161,7 @@ class DefaultController extends RestController
 
     public function actionReply($slug, $parent_id)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -200,7 +200,7 @@ class DefaultController extends RestController
 
     public function actionWishlist($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -223,7 +223,7 @@ class DefaultController extends RestController
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -242,7 +242,7 @@ class DefaultController extends RestController
 
     public function actionPackageQuote($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -264,7 +264,7 @@ class DefaultController extends RestController
 
     public function actionFlag($slug, $package_comment_id)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -314,27 +314,27 @@ class DefaultController extends RestController
 
     public function actionCommentView($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageCommentSearch();
-        $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
+        $searchModel->status = PackageCommentSearch::APPROVED_AND_LIVE_STATUS;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "comments");
     }
 
     public function actionPackagePark($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
 
         $packageSafariPark = PackageSafariPark::find()
-            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
+            ->where(['status' => SafariOperator::APPROVED_AND_LIVE_STATUS, 'package_id' => $package->id])
             ->all();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
@@ -353,26 +353,26 @@ class DefaultController extends RestController
 
     public function actionPackageDays($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageDaySearch();
-        $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
+        $searchModel->status = PackageDaySearch::APPROVED_AND_LIVE_STATUS;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "PackageDay");
     }
 
     public function actionPackageFaqs($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
+        $searchModel->status = PackageFaqSearch::APPROVED_AND_LIVE_STATUS;
         $searchModel->package_id = $package->id;
 
 

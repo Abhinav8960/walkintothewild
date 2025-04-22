@@ -23,8 +23,8 @@ class DefaultController extends Controller
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
-        // $searchModel->approval_status = [Package::APPROVED_AND_LIVE_APPROVAL_STATUS,Package::SEND_FOR_APPROVAL_APPROVAL_STATUS];
-        $searchModel->approval_status = Package::SEND_FOR_APPROVAL_APPROVAL_STATUS;
+        // $searchModel->approval_status = [Package::APPROVED_AND_LIVE_STATUS,Package::SEND_FOR_APPROVAL_STATUS];
+        $searchModel->approval_status = Package::SEND_FOR_APPROVAL_STATUS;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -82,7 +82,7 @@ class DefaultController extends Controller
             $packagestate->save(false);
 
             $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
-            $model->approval_status = Package::APPROVED_AND_LIVE_APPROVAL_STATUS;
+            $model->approval_status = Package::APPROVED_AND_LIVE_STATUS;
             $model->status = Package::STATUS_ACTIVE;
             $model->save(false);
         } catch (\Exception $e) {
@@ -132,7 +132,7 @@ class DefaultController extends Controller
                     $packagestate->pending_for_approval_version = null;
                     $packagestate->save(false);
 
-                    $model->approval_status = Package::NOT_APPROVED_APPROVAL_STATUS;
+                    $model->approval_status = Package::NOT_APPROVED_STATUS;
                     $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
                     $model->status = Package::STATUS_SUSPEND;
                     $model->save(false);
@@ -161,7 +161,7 @@ class DefaultController extends Controller
     {
         $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
         if ($model) {
-            $model->approval_status = Package::TERMINATED_APPROVAL_STATUS;
+            $model->approval_status = Package::TERMINATED_STATUS;
             $model->save(false);
             return true;
         }

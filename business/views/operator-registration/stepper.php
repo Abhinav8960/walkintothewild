@@ -3,10 +3,10 @@
 /** @var int $currentStep */
 
 $steps = [
-    1 => 'Register',
-    2 => 'Security Code',
-    3 => 'User Profile',
-    4 => 'Thank You',
+    1 => 'Legal Entity',
+    2 => 'Business Detail',
+    3 => 'Bank Detail',
+    4 => 'Personal',
 ];
 ?>
 
@@ -15,9 +15,6 @@ $steps = [
         <div class="stepper-block text-center">
             <div class="stepper-item <?= $currentStep === $step ? 'active' : ($currentStep > $step ? 'completed' : '') ?>">
                 <?= $step ?>
-            </div>
-            <div class="stepper-label">
-                <?= $label ?>
             </div>
         </div>
         <?php if ($step < count($steps)): ?>

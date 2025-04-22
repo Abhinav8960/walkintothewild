@@ -103,6 +103,9 @@ return [
         'compliancedocuments' => [
             'class' => 'backend\modules\compliancedocuments\Module',
         ],
+        'operatorapproval' => [
+            'class' => 'backend\modules\operatorapproval\Module',
+        ],
 
     ],
     'components' => [
