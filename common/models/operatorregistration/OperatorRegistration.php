@@ -18,6 +18,25 @@ class OperatorRegistration extends \yii\db\ActiveRecord
         return 'operator_registration_form';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -101,5 +120,4 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
-
 }

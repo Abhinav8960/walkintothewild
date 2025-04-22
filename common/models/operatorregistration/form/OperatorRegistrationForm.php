@@ -286,52 +286,6 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->current_step = $this->current_step;
     }
 
-
-
-    // public function uploadFiles()
-    // {
-    //     $basePath = Yii::$app->params['datapath'] . '/Uploads';
-    //     if (!file_exists($basePath)) {
-    //         mkdir($basePath, 0777, true);
-    //     }
-
-    //     $userFolder = $basePath . '/' . $this->id;
-    //     if (!file_exists($userFolder)) {
-    //         mkdir($userFolder, 0777, true);
-    //     }
-
-    //     // Loop through file fields and upload
-    //     foreach (
-    //         [
-    //             'business_logo_upload',
-    //             'business_kyc_detail',
-    //             'cancle_check',
-    //             'upload_aadhar_front',
-    //             'upload_aadhar_back',
-    //             'pan_upload',
-    //             'upload_registration_cert',
-    //             'upload_document'
-    //         ] as $field
-    //     ) {
-    //         $file = UploadedFile::getInstance($this, $field);
-    //         if ($file) {
-    //             $fileName = $field . '_' . time() . '.' . $file->extension;
-    //             $filePath = $userFolder . '/' . $fileName;
-
-    //             $file->saveAs($filePath);
-
-    //             $this->$field = $filePath;
-
-    //             $this->operator_model->$field = $filePath; 
-    //         }
-    //     }
-
-    //     if (!$this->operator_model->save()) {
-    //         Yii::error("Failed to save operator model with uploaded files.");
-    //     }
-    // }
-
-
     public function uploadFiles()
     {
         $basePath = Yii::$app->params['datapath'] . '/Uploads';
