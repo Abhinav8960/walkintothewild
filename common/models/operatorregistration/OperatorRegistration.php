@@ -45,10 +45,11 @@ class OperatorRegistration extends \yii\db\ActiveRecord
         return [
             [['name', 'email', 'phone_no', 'whatsap_no', 'dob', 'gender', 'kyc_detail', 'business_registration_name', 'business_brand_name', 'business_full_name', 'business_phone_no', 'business_whatsap_no', 'business_email_id', 'business_logo_upload', 'type_of_business', 'business_doc_reg_no', 'business_kyc_detail', 'business_operated_park', 'business_detail', 'gst', 'bank_name', 'account_holder_name', 'account_no', 'ifsc_code', 'cancle_check', 'upload_adhar_no', 'upload_aadhar_front', 'upload_aadhar_back', 'pan_no', 'pan_upload', 'upload_registration_number', 'upload_registration_cert', 'upload_document', 'updated_time_step_1', 'updated_time_step_2', 'updated_time_step_3', 'updated_time_step_4', 'updated_time_step_5', 'final', 'updated_time_final', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['current_step'], 'default', 'value' => 1],
-            [['step_5'], 'default', 'value' => 0],
+            [['is_step_5_approved'], 'default', 'value' => 0],
+            [['user_id'], 'required'],
+            [['user_id', 'current_step', 'is_step_1_approved', 'is_step_2_approved', 'is_step_3_approved', 'is_step_4_approved', 'is_step_5_approved', 'updated_time_step_1', 'updated_time_step_2', 'updated_time_step_3', 'updated_time_step_4', 'updated_time_step_5', 'final', 'updated_time_final', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['dob'], 'safe'],
             [['kyc_detail', 'business_detail'], 'string'],
-            [['current_step', 'step_1', 'step_2', 'step_3', 'step_4', 'step_5', 'updated_time_step_1', 'updated_time_step_2', 'updated_time_step_3', 'updated_time_step_4', 'updated_time_step_5', 'final', 'updated_time_final', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'email', 'type_of_business', 'business_doc_reg_no', 'bank_name', 'account_holder_name', 'upload_registration_number'], 'string', 'max' => 100],
             [['phone_no', 'whatsap_no'], 'string', 'max' => 15],
             [['gender'], 'string', 'max' => 10],
@@ -67,6 +68,7 @@ class OperatorRegistration extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id' => 'User ID',
             'name' => 'Name',
             'email' => 'Email',
             'phone_no' => 'Phone No',
@@ -101,11 +103,11 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'upload_registration_cert' => 'Upload Registration Cert',
             'upload_document' => 'Upload Document',
             'current_step' => 'Current Step',
-            'step_1' => 'Step 1',
-            'step_2' => 'Step 2',
-            'step_3' => 'Step 3',
-            'step_4' => 'Step 4',
-            'step_5' => 'Step 5',
+            'is_step_1_approved' => 'Is Step 1 Approved',
+            'is_step_2_approved' => 'Is Step 2 Approved',
+            'is_step_3_approved' => 'Is Step 3 Approved',
+            'is_step_4_approved' => 'Is Step 4 Approved',
+            'is_step_5_approved' => 'Is Step 5 Approved',
             'updated_time_step_1' => 'Updated Time Step 1',
             'updated_time_step_2' => 'Updated Time Step 2',
             'updated_time_step_3' => 'Updated Time Step 3',
@@ -120,4 +122,5 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
 }
