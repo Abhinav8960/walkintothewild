@@ -178,7 +178,7 @@ class DefaultController extends Controller
     public function actionActive($id)
     {
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
-        $model->status = Package::STATUS_ACTIVE;
+        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -193,7 +193,7 @@ class DefaultController extends Controller
     public function actionSuspend($id)
     {
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
-        $model->status = Package::STATUS_SUSPEND;
+        $model->status = Package::NOT_APPROVED_STATUS;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -207,7 +207,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 

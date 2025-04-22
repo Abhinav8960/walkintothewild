@@ -31,7 +31,7 @@ class PreviewController extends Controller
      */
     public function actionIndex($id)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $package = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -61,7 +61,7 @@ class PreviewController extends Controller
 
     public function actionUpdate($id)
     {
-        $package_model = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $package_model = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
         if (empty($package_model)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -97,7 +97,7 @@ class PreviewController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 

@@ -448,7 +448,7 @@ class DefaultController extends FrontendBaseController
         }
 
         $park_id = $model->id;
-        $query = Package::find()->where(['package.status' => Package::STATUS_ACTIVE]);
+        $query = Package::find()->where(['package.status' => Package::APPROVED_AND_LIVE_STATUS]);
         $query->joinwith(['packagepark' => function ($query) use ($park_id) {
             $query->andWhere(['park_id' => $park_id, 'package_safari_park.status' => 1]);
         }]);

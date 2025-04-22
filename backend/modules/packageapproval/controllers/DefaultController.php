@@ -23,8 +23,8 @@ class DefaultController extends Controller
     {
         $searchModel = new PackageSearch();
         $searchModel->status = 1;
-        // $searchModel->approval_status = [Package::APPROVED_AND_LIVE_STATUS,Package::SEND_FOR_APPROVAL_STATUS];
-        $searchModel->approval_status = Package::SEND_FOR_APPROVAL_STATUS;
+        // $searchModel->status = [Package::APPROVED_AND_LIVE_STATUS,Package::SEND_FOR_status];
+        $searchModel->status = Package::SEND_FOR_APPROVAL_STATUS;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -57,7 +57,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -82,8 +82,7 @@ class DefaultController extends Controller
             $packagestate->save(false);
 
             $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
-            $model->approval_status = Package::APPROVED_AND_LIVE_STATUS;
-            $model->status = Package::STATUS_ACTIVE;
+            $model->status = Package::APPROVED_AND_LIVE_STATUS;
             $model->save(false);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -132,9 +131,9 @@ class DefaultController extends Controller
                     $packagestate->pending_for_approval_version = null;
                     $packagestate->save(false);
 
-                    $model->approval_status = Package::NOT_APPROVED_STATUS;
+                    $model->status = Package::NOT_APPROVED_STATUS;
                     $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
-                    $model->status = Package::STATUS_SUSPEND;
+                    $model->status = Package::NOT_APPROVED_STATUS;
                     $model->save(false);
                 } catch (\Exception $e) {
                     Yii::error($e->getMessage());
@@ -161,7 +160,7 @@ class DefaultController extends Controller
     {
         $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
         if ($model) {
-            $model->approval_status = Package::TERMINATED_STATUS;
+            $model->status = Package::TERMINATED_STATUS;
             $model->save(false);
             return true;
         }

@@ -28,7 +28,7 @@ class SafariPackagesController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams, false);
 
 
-        $packages = Package::find()->where(['status' => Package::STATUS_ACTIVE])->limit(9)->orderby("RAND()")->all();
+        $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(9)->orderby("RAND()")->all();
         $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->limit(3)->orderby("RAND()")->all();
 
         return $this->render(

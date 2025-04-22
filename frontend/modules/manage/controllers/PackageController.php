@@ -74,7 +74,7 @@ class PackageController extends FrontendBaseController
             return $this->redirect('/manage');
         }
         $model = new PackageForm();
-        $model->status = Package::STATUS_ACTIVE;
+        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -728,7 +728,7 @@ class PackageController extends FrontendBaseController
      */
     protected function findModel($slug, $owned_by_id)
     {
-        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -737,7 +737,7 @@ class PackageController extends FrontendBaseController
 
     protected function findModelfaq($id)
     {
-        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -755,7 +755,7 @@ class PackageController extends FrontendBaseController
 
     protected function findModelgallery($id)
     {
-        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 

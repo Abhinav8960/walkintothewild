@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->approval_status == Package::SEND_FOR_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
+                            return $model->status == Package::SEND_FOR_status ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
                         }
                     ],
                     [
@@ -91,7 +91,7 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
                             'approved' => function ($url, $model) {
-                                if ($model->approval_status == Package::SEND_FOR_APPROVAL_STATUS) {
+                                if ($model->status == Package::SEND_FOR_status) {
                                     return Html::a(
                                         'Approve',
                                         [Url::toRoute(['approved', 'uuid' => $model->uuid, 'version' => $model->version])],
@@ -107,7 +107,7 @@ $this->params['title'] = $this->title;
                                 }
                             },
                             'reject' => function ($url, $model) {
-                                if ($model->approval_status == Package::SEND_FOR_APPROVAL_STATUS) {
+                                if ($model->status == Package::SEND_FOR_status) {
                                     return Html::button(
                                         'Reject',
                                         [

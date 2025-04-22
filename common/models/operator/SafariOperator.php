@@ -166,7 +166,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackagecount()
     {
-        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::STATUS_ACTIVE])->count();
+        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::APPROVED_AND_LIVE_STATUS])->count();
     }
 
     public function getQuotescount()

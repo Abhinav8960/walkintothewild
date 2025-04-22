@@ -42,7 +42,7 @@ class PackageDaySearch extends PackageDay
      */
     public function search($params)
     {
-        $query = PackageDay::find()->where(['status' => [PackageDay::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        $query = PackageDay::find()->where(['status' => [PackageDay::STATUS_ACTIVE, Package::NOT_APPROVED_STATUS]]);
 
         // add conditions that should always apply here
 

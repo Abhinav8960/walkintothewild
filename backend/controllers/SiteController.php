@@ -133,22 +133,22 @@ class SiteController extends Controller
 
 
         $todaynew_package = Package::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])
             ->count();
 
         $thisweek_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])
             ->count();
 
         $thismonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])
             ->count();
 
         $lastmonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])
             ->count();
 
-        $total_new_package = Package::find()->where(['status' => Package::STATUS_ACTIVE])->count();
+        $total_new_package = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->count();
 
 
         $todaypackage_request_quote = PackageQuote::find()
