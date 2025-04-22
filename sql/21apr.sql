@@ -66,11 +66,11 @@ CREATE TABLE `operator_registration_form` (
   `upload_registration_cert` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `upload_document` varchar(255) DEFAULT NULL,
   `current_step` int DEFAULT '1',
-  `step_1` int DEFAULT '0',
-  `step_2` int DEFAULT '0',
-  `step_3` int DEFAULT '0',
-  `step_4` int DEFAULT '0',
-  `step_5` int DEFAULT '0',
+  `is_step_1_approved` int DEFAULT '0',
+  `is_step_2_approved` int DEFAULT '0',
+  `is_step_3_approved` int DEFAULT '0',
+  `is_step_4_approved` int DEFAULT '0',
+  `is_step_5_approved` int DEFAULT '0',
   `updated_time_step_1` int DEFAULT NULL,
   `updated_time_step_2` int DEFAULT NULL,
   `updated_time_step_3` int DEFAULT NULL,
@@ -89,8 +89,6 @@ CREATE TABLE `operator_registration_form` (
 -- Dumping data for table `operator_registration_form`
 --
 
-INSERT INTO `operator_registration_form` (`id`, `user_id`, `name`, `email`, `phone_no`, `whatsap_no`, `dob`, `gender`, `kyc_detail`, `business_registration_name`, `business_brand_name`, `business_full_name`, `business_phone_no`, `business_whatsap_no`, `business_email_id`, `business_logo_upload`, `type_of_business`, `business_doc_reg_no`, `business_kyc_detail`, `business_operated_park`, `business_detail`, `gst`, `bank_name`, `account_holder_name`, `account_no`, `ifsc_code`, `cancle_check`, `upload_adhar_no`, `upload_aadhar_front`, `upload_aadhar_back`, `pan_no`, `pan_upload`, `upload_registration_number`, `upload_registration_cert`, `upload_document`, `current_step`, `step_1`, `step_2`, `step_3`, `step_4`, `step_5`, `updated_time_step_1`, `updated_time_step_2`, `updated_time_step_3`, `updated_time_step_4`, `updated_time_step_5`, `final`, `updated_time_final`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 747, 'asfdasf', 'sadfasf@gmail.com', '1234567890', NULL, NULL, NULL, NULL, 'Business Registration Name', 'Business Brand Name', NULL, NULL, '8761249310', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'adfsdf', 'sdfasdf', '1234567890', '1234567890', NULL, '1234567890', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1745303418, 747, 1745303439, 747);
 
 --
 -- Indexes for dumped tables
