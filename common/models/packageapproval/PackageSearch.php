@@ -48,7 +48,7 @@ class PackageSearch extends Package
         return [
             [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name','uuid','version','approval_status'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name','uuid','version'], 'safe'],
             [['package_name'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe'],
@@ -113,7 +113,6 @@ class PackageSearch extends Package
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
-            'approval_status' => $this->approval_status,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
             Package::tableName() . '.status' => $this->status,

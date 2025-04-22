@@ -1,5 +1,5 @@
-
-
+ALTER TABLE `package_approval` DROP `status`;
+-- 
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
