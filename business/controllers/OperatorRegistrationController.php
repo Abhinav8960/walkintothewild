@@ -27,6 +27,9 @@ class OperatorRegistrationController extends Controller
             if (!$operator_model) {
                 $model = new OperatorRegistrationForm();
             } else {
+                if ($operator_model->current_step == 5) {
+                    return $this->redirect(['view',  'id' => $operator_model->id]);
+                }
                 $model = new OperatorRegistrationForm($operator_model);
             }
         }
