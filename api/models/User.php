@@ -22,7 +22,6 @@ class User extends \common\models\User
         $fields = parent::fields();
 
         $fields[] = 'profileimage';
-        $fields[] = 'profileimage';
         $fields[] = 'coverimage';
         $fields[] = 'usename';
         $fields[] = 'is_safari_operator';
@@ -82,11 +81,9 @@ class User extends \common\models\User
 
             $hold_fields = [
                 'id',
-                'mobile_no',
                 "password_hash",
                 "auth_key",
-                "user_bio",
-                "date_of_birth",
+                
                 "gender",
                 "token_key",
                 "is_adminstrator",
