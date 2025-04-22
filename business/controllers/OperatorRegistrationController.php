@@ -27,9 +27,6 @@ class OperatorRegistrationController extends Controller
             if (!$operator_model) {
                 $model = new OperatorRegistrationForm();
             } else {
-                if ($operator_model->current_step == 5) {
-                    return $this->redirect(['view',  'id' => $operator_model->id]);
-                }
                 $model = new OperatorRegistrationForm($operator_model);
             }
         }
@@ -41,7 +38,7 @@ class OperatorRegistrationController extends Controller
                     $model->initializeForm();
                     $model->operator_model->current_step = 2;
                     if ($model->operator_model->save()) {
-                        return $this->redirect(['step-2', 'id' => $model->operator_model->id]);
+                        return $this->redirect(['step-2']);
                     } else {
                         Yii::error($model->operator_model->errors);
                         print_r($model->operator_model->errors);
@@ -54,13 +51,14 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step1', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
-    public function actionStep2($id)
+    public function actionStep2()
     {
         $this->layout = 'registration';
-        $operator_model = $this->findModel($id);
+        $operator_model = $this->findModel();
 
         if ($operator_model->current_step < 2) {
             return $this->redirect(['create']);
@@ -75,7 +73,7 @@ class OperatorRegistrationController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->operator_model->save(false)) {
-                        return $this->redirect(['step-3', 'id' => $model->operator_model->id]);
+                        return $this->redirect(['step-3']);
                     } else {
                         Yii::error($model->operator_model->errors);
                         print_r($model->operator_model->errors);
@@ -88,15 +86,16 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step2', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
-    public function actionStep3($id)
+    public function actionStep3()
     {
         $this->layout = 'registration';
-        $operator_model = $this->findModel($id);
+        $operator_model = $this->findModel();
 
         if ($operator_model->current_step < 3) {
-            return $this->redirect(['step-2', 'id' => $id]);
+            return $this->redirect(['step-2']);
         }
 
         $model = new OperatorRegistrationForm($operator_model);
@@ -108,7 +107,7 @@ class OperatorRegistrationController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->operator_model->save(false)) {
-                        return $this->redirect(['step-4', 'id' => $model->operator_model->id]);
+                        return $this->redirect(['step-4']);
                     }
                 }
             }
@@ -118,29 +117,31 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step3', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
-    public function actionStep4($id)
+    public function actionStep4()
     {
         $this->layout = 'registration';
 
-        $operator_model = $this->findModel($id);
+        $operator_model = $this->findModel();
 
         if ($operator_model->current_step < 4) {
-            return $this->redirect(['step-3', 'id' => $id]);
+            return $this->redirect(['step-3']);
         }
         $model = new OperatorRegistrationForm($operator_model);
         $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP4);
         $model->current_step = 5;
-        $model->status = 1;
+        $model->final = 1;
+        $model->updated_time_final = date('Y-m-d H:i:s');
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->operator_model->save(false)) {
-                        return $this->redirect(['view',  'id' => $model->operator_model->id]);
+                        return $this->redirect(['view',]);
                     }
                 }
             }
@@ -150,22 +151,23 @@ class OperatorRegistrationController extends Controller
 
         return $this->render('_step4', [
             'model' => $model,
+            'operator_model' => $operator_model,
         ]);
     }
 
-    public function actionView($id)
+    public function actionView()
     {
         $this->layout = 'registration';
-        $operator_model = $this->findModel($id);
+        $operator_model = $this->findModel();
         return $this->render('_step5', [
             'operator_model' => $operator_model,
         ]);
     }
 
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $operator_model = $this->findModel($id);
+        $operator_model = $this->findModel();
 
         if (!$operator_model) {
             throw new NotFoundHttpException("The requested page does not exist.");
@@ -222,9 +224,9 @@ class OperatorRegistrationController extends Controller
      * @return OperatorRegistration the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel()
     {
-        if (($model = OperatorRegistration::findOne(['id' => $id])) !== null) {
+        if (($model = OperatorRegistration::find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id'=>SORT_DESC])->one()) !== null) {
             return $model;
         }
 

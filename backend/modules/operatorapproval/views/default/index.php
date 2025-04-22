@@ -54,12 +54,19 @@ $this->params['title'] = $this->title;
                             return $model->business_registration_name;
                         }
                     ],
+
                     [
-                        'label' => 'Business Phone No',
+                        'label' => 'Approval',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->business_phone_no;
+                            if ($model->final_approved == 1) {
+                                return "Approved";
+                            } else if ($model->final_approved == 2) {
+                                return 'Reject';
+                            } else {
+                                return "Not Approved";
+                            }
                         }
                     ],
                     [
@@ -69,17 +76,17 @@ $this->params['title'] = $this->title;
                         'template' => '&nbsp{update} &nbsp{suspend}',
                         'buttons' => [
 
-                            // 'update' => function ($url, $model) {
+                            'update' => function ($url, $model) {
 
-                            //     return Html::a(
-                            //         '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
-                            //         ['update', 'id' => $model->id],
-                            //         [
-                            //             'class' => 'btn p-0 change-menuicon',
-                            //             'title' => 'Update',
-                            //         ]
-                            //     );
-                            // },
+                                return Html::a(
+                                    '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
+                                    ['update', 'id' => $model->id],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Update',
+                                    ]
+                                );
+                            },
 
                         ]
                     ],
