@@ -133,6 +133,7 @@ class OperatorRegistrationController extends Controller
         $model = new OperatorRegistrationForm($operator_model);
         $model->setScenario(OperatorRegistrationForm::SCENARIO_STEP4);
         $model->current_step = 5;
+        $model->status = 1;
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {

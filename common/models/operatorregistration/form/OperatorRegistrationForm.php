@@ -58,6 +58,7 @@ class OperatorRegistrationForm extends Model
 
     public $current_step;
     public $user_id;
+    public $status;
 
 
     public function __construct(OperatorRegistration $operator_model = null)
@@ -106,6 +107,7 @@ class OperatorRegistrationForm extends Model
             $this->upload_registration_cert = $this->operator_model->upload_registration_cert;
             $this->upload_document = $this->operator_model->upload_document;
             $this->current_step = $this->operator_model->current_step;
+            $this->status = $this->operator_model->status;
         }
     }
 
@@ -126,6 +128,7 @@ class OperatorRegistrationForm extends Model
             [['business_whatsap_no', 'business_registration_name', 'business_brand_name'], 'required', 'on' => self::SCENARIO_STEP2],
             [['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'], 'required', 'on' => self::SCENARIO_STEP3],
             [['upload_adhar_no'], 'required', 'on' => self::SCENARIO_STEP4],
+            ['status', 'integer'],
 
             // [[
             //     'business_whatsap_no',
@@ -200,10 +203,6 @@ class OperatorRegistrationForm extends Model
         ];
     }
 
-    // public function attributeLabels()
-    // {
-    //     return $this->operator_model->attributeLabels();
-    // }
 
     public function attributeLabels()
     {
@@ -273,7 +272,7 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->account_holder_name = $this->account_holder_name;
         $this->operator_model->account_no = $this->account_no;
         $this->operator_model->ifsc_code = $this->ifsc_code;
-        
+
         $this->operator_model->cancle_check = $this->cancle_check;
         $this->operator_model->upload_adhar_no = $this->upload_adhar_no;
         $this->operator_model->upload_aadhar_front = $this->upload_aadhar_front;
@@ -284,6 +283,7 @@ class OperatorRegistrationForm extends Model
         $this->operator_model->upload_registration_cert = $this->upload_registration_cert;
         $this->operator_model->upload_document = $this->upload_document;
         $this->operator_model->current_step = $this->current_step;
+        $this->operator_model->status = $this->status;
     }
 
     public function uploadFiles()
