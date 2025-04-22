@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\package\controllers;
+namespace backend\modules\packageapproval\controllers;
 
 use common\models\package\Package;
 use common\models\package\PackageFaqSearch;
