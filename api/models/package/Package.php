@@ -9,6 +9,7 @@ use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
 use api\models\UserWishlist;
+use common\models\package\PackageStates;
 use Yii;
 use common\models\User;
 // $fields[] = 'pickanddrop';
@@ -31,7 +32,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date','status'];
+        $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date', 'status'];
         $fields[] = 'resourceuri';
         $fields[] = 'canComment';
         $fields[] = 'canReply';
@@ -222,6 +223,17 @@ class Package extends \common\models\package\Package
             }
         }
         return $arr;
+    }
+
+    public function getPackageState()
+    {
+        return $this->hasOne(PackageStates::class, ['uuid' => 'uuid']);
+    }
+
+
+    public function getPackage_slug()
+    {
+        return $this->getPackageState()->package_slug ?? NULL;
     }
 
 
@@ -519,13 +531,11 @@ class Package extends \common\models\package\Package
             return true;
         }
         return false;
-
     }
 
     public function getCanReply()
     {
-        if(\Yii::$app->params['active_user_id'] == $this->owned_by_id)
-        {
+        if (\Yii::$app->params['active_user_id'] == $this->owned_by_id) {
             return true;
         }
         return false;

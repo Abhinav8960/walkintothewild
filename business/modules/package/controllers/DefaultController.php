@@ -4,21 +4,21 @@ namespace business\modules\package\controllers;
 
 use api\behaviours\Verbcheck;
 use common\models\master\faq\MasterFaq;
-use common\models\packageapproval\form\DayItineraryForm;
-use common\models\packageapproval\form\PackageFaqForm;
-use common\models\packageapproval\form\PackageForm;
-use common\models\packageapproval\Package;
-use common\models\packageapproval\PackageComment;
-use common\models\packageapproval\PackageCommentReport;
-use common\models\packageapproval\PackageDay;
-use common\models\packageapproval\PackageFaq;
-use common\models\packageapproval\PackageFaqSearch;
-use common\models\packageapproval\PackageFeature;
-use common\models\packageapproval\PackageGallery;
-use common\models\packageapproval\PackageIncluded;
-use common\models\packageapproval\PackageSafariPark;
-use common\models\packageapproval\PackageSearch;
-use common\models\packageapproval\PackageStates;
+use common\models\package\form\DayItineraryForm;
+use common\models\package\form\PackageFaqForm;
+use common\models\package\form\PackageForm;
+use common\models\package\Package;
+use common\models\package\PackageComment;
+use common\models\package\PackageCommentReport;
+use common\models\package\PackageDay;
+use common\models\package\PackageFaq;
+use common\models\package\PackageFaqSearch;
+use common\models\package\PackageFeature;
+use common\models\package\PackageGallery;
+use common\models\package\PackageIncluded;
+use common\models\package\PackageSafariPark;
+use common\models\package\PackageSearch;
+use common\models\package\PackageStates;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -509,7 +509,7 @@ class DefaultController extends Controller
         $m = $this->findModel($id);
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $m->status = Package::SEND_FOR_APPROVAL_status;
+            $m->status = Package::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
             $this->updatePackageStatus($m->uuid, $m->version, $m->status);
             $this->copyPackageNow($id);
@@ -749,7 +749,7 @@ class DefaultController extends Controller
             $model->uuid = $uuid;
             $model->slug = PackageStates::prepareUniqueSlug($package->package_name);
         }
-        if ($status == Package::SEND_FOR_APPROVAL_status) {
+        if ($status == Package::SEND_FOR_APPROVAL_STATUS) {
             if (!empty($model->pending_for_approval_version)) {
                 $this->terminatePackage($model->uuid, $model->pending_for_approval_version);
             }
