@@ -64,6 +64,7 @@ use common\models\MailLogRecipients;
 use common\models\master\userflag\MasterUserFlag;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 
 class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStatusInterface
 {

@@ -93,7 +93,7 @@ class PackageApprovalController extends Controller
 
             // $m = $this->findModel($m->id);
             if (empty($m->uuid)) {
-                $m->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHi');
+                $m->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHis');
                 $m->version = 'v1';
                 $m->status = Package::EDIATBLE_STATUS;
                 $m->save(false);
@@ -175,7 +175,7 @@ class PackageApprovalController extends Controller
             $newModel->version = 'v' . (intval(substr($model->version, 1)) + 1);
 
             if ($isNewRecord) {
-                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHi');
+                $newModel->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString() . '-' . date('ymdHis');
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
