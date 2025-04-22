@@ -165,7 +165,8 @@ class FsHelper
         // $filemodel->filepath = $fullpath . '/' . $filename;
         // $filemodel->save(false);
         $etag =  FsHelper::saveUploadedFile($file,  $filename, true);
-        return  ['filename'=>$filemodel->file,'etag'=>$etag];
+        return $filemodel->file;
+        // return  ['filename'=>$filemodel->file,'etag'=>$etag];
         return false;
     }
 
