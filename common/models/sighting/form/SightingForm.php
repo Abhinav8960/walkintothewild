@@ -147,17 +147,20 @@ class SightingForm extends Model
 
             $fileName = $this->sighting_model->user_id . '_media_' . time() . '.' . $this->file->extension;
             $filePath = $userPath . '/' . $fileName;
-            $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'),$fileName);
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
+
+            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
 
             if ($fileName) {
-                if (isset($fileName['filename'], $fileName['etag'])) {
-                    $this->sighting_model->file = $fileName['filename'];
+                // try {
+                if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
+                    $this->sighting_model->file = $fileName;
                     $this->sighting_model->filepath = $filePath;
-                    $this->sighting_model->etag = $fileName['etag'];
+                    $this->sighting_model->etag = $etag;
+
                     $this->sighting_model->save(false);
                 }
-            }      
+            }
         }
 
         if ($this->video_thumbnail) {
@@ -167,7 +170,8 @@ class SightingForm extends Model
             $fileName = $this->sighting_model->user_id . '_thumbnail_' . time() . '.' . $this->video_thumbnail->extension;
             $filePath = $userPath . '/' . $fileName;
 
-            $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
+            // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
+            // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
             if ($fileName) {
                 // try {
                 if ($video_thumbnail_etag =  FsHelper::saveUploadedFile($this->video_thumbnail, $filePath, $fileName, true)) {
