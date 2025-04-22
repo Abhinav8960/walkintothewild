@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use Google\Service\VMwareEngine\Upgrade;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
@@ -28,28 +29,27 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'uuid',
-                    [
-                        'label' => 'Policy For',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->policy_for;
-                        }
-                    ],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 30%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
                         }
                     ],
                     [
+                        'label' => 'Policy For',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->policy_for;
+                        }
+                    ],
+                    [
                         'attribute' => 'Effective From',
                         'format' => 'html',
                         'enableSorting' => true,
-                        'contentOptions' => ['style' => 'width:10%'],
+                        'contentOptions' => ['style' => 'width:20%;text-align: center;'],
                         'value' => function ($model) {
                             return \Yii::$app->formatter->asDatetime($model->effective_from, "php:d-m-Y");
                         }
@@ -75,7 +75,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{update}&nbsp;&nbsp;{delete}&nbsp{upgrade}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -96,7 +96,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     ],
                                 ]);
                             },
+                         
+                            'upgrade' => function ($url, $model) {
+                                return Html::a('Upgrade', 
+                                    ['version-upgrade', 'id' => $model->id], [
+                                        'class' => 'btn btn-sm btn-warning',
+                                        'title' => 'Upgrade Version',
+                                    ]);
+                            },
                         ]
+                        
                     ],
                 ],
             ]); ?>
