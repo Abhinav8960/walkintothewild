@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\modules\packageapproval\controllers;
+namespace backend\modules\package\controllers;
 
-use common\models\packageapproval\Package;
-use common\models\packageapproval\PackageFaqSearch;
-use common\models\packageapproval\PackageSearch;
-use common\models\packageapproval\PackageStates;
+use common\models\package\Package;
+use common\models\package\PackageFaqSearch;
+use common\models\package\PackageSearch;
+use common\models\package\PackageStates;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

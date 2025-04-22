@@ -2,7 +2,7 @@
 
 
 use common\models\GeneralModel;
-use common\models\packageapproval\Package;
+use common\models\package\Package;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -84,7 +84,7 @@ $this->params['title'] = $this->title;
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/packageapproval/default/view', 'id' => $model->id], [
+                                ', ['/package/default/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
 
