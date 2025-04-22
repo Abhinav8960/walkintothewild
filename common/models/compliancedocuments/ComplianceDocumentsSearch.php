@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ComplianceDocumentsSearch represents the model behind the search form of `common\models\deployment`.
+ * ComplianceDocumentsSearch represents the model behind the search form of `common\models\compliancedocuments`.
  */
 class ComplianceDocumentsSearch extends ComplianceDocuments
 {
@@ -16,20 +16,10 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
     public function rules()
     {
         return [
-            [['date', 'description', 'migration'], 'safe'],
-            [['version', 'commit_no'], 'string', 'max' => 255],
-
+            [['effective_from', 'description', 'title','uuid','policy_for'], 'safe'],
+            [['version'], 'string', 'max' => 255],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**
@@ -41,7 +31,7 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
      */
     public function search($params)
     {
-        $query = ComplianceDocuments::find()->where(['status' => [1, 2]]);
+        $query = ComplianceDocuments::find();
 
         // add conditions that should always apply here
 
@@ -61,8 +51,10 @@ class ComplianceDocumentsSearch extends ComplianceDocuments
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
-            'commit_no' => $this->commit_no,
+            'uuid' => $this->uuid,
+            'title' => $this->title,
+            'policy_for' => $this->policy_for,
+            'effective_from' => $this->effective_from,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

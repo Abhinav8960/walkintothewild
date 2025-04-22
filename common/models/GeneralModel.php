@@ -93,6 +93,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ['1' => 'Active', '2' => 'Deactivate'];
     }
 
+    public static function statusoptions()
+    {
+        return ['1' => 'Active', '0' => 'Deactivate'];
+    }
+
     /**
      * Get Status Active/Inactive Options List
      *

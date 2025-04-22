@@ -99,6 +99,10 @@ return [
         'packageapproval' => [
             'class' => 'backend\modules\packageapproval\Module',
         ],
+        
+        'compliancedocuments' => [
+            'class' => 'backend\modules\compliancedocuments\Module',
+        ],
 
     ],
     'components' => [
