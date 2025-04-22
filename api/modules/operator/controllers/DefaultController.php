@@ -362,7 +362,7 @@ class DefaultController extends RestController
 
         $searchModel = new PackageSearch();
         $searchModel->owned_by_id = $operator->id;
-        $searchModel->status = Package::STATUS_ACTIVE;
+        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
         return $this->dataProviderSender($searchModel, "packages");
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }

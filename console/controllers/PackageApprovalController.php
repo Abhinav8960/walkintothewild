@@ -32,6 +32,35 @@ class PackageApprovalController extends Controller
 {
 
 
+    public function actionPathChange()
+    {
+        $model = Package::find()->all();
+        foreach ($model as $m) {
+            if (!empty($m->package_image)) {
+
+                $m->package_image = 'package/' . $m->id . '/' . $m->package_image;
+            }
+            if (!empty($m->package_banner_image)) {
+                $m->package_banner_image = 'package/' . $m->id . '/' . $m->package_banner_image;
+            }
+            $m->save(false);
+        }
+        echo 'done';
+        die();
+    }
+
+    public function actionRemoveFirstcharter()
+    {
+        $model = Package::find()->all();
+        foreach ($model as $m) {
+            $m->package_image = substr($m->package_image, 1);
+            $m->package_banner_image = substr($m->package_banner_image, 1);
+            $m->save(false);
+        }
+        echo 'done';
+        die();
+    }
+
 
     /**
      * Finds the Package model based on its primary key value.
@@ -42,7 +71,7 @@ class PackageApprovalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
             return $model;
         }
 
@@ -122,7 +151,7 @@ class PackageApprovalController extends Controller
     protected function isPackageEditable()
     {
         $id = Yii::$app->request->get('id');
-        $model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
+        $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
         if ($model) {
             return $model->status == Package::EDIATBLE_STATUS;
         } else {

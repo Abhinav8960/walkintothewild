@@ -139,7 +139,7 @@ class DefaultController extends FrontendBaseController
             ]);
         }
 
-        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE])->limit(6)->all();
+        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::APPROVED_AND_LIVE_STATUS])->limit(6)->all();
         $model = new OperatorQuoteForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
@@ -923,7 +923,7 @@ class DefaultController extends FrontendBaseController
             }
         }
 
-        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE]);
+        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::APPROVED_AND_LIVE_STATUS]);
         $dataProvider = new ActiveDataProvider([
             'query' => $operator_packages,
             'pagination' => [

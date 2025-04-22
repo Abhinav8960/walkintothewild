@@ -1,7 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
-use common\models\packageapproval\PackageIncluded;
+use common\models\package\PackageIncluded;
 
 // Retrieve selected package inclusions
 $package_included = PackageIncluded::find()
