@@ -29,21 +29,20 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'uuid',
+                    [
+                        'label' => 'Title',
+                        'contentOptions' => ['style' => 'width: 40%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->title;
+                        }
+                    ],
                     [
                         'label' => 'Policy For',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->policy_for;
-                        }
-                    ],
-                    [
-                        'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->title;
                         }
                     ],
                     [

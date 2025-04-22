@@ -33,7 +33,7 @@ class ComplianceDocumentsForm extends model
             'class' => ComplianceDocuments::className()
         ]);
 
-        $this->uuid = Uuid::uuid4()->toString().'-'.date('ymdHi');;
+        $this->uuid = Uuid::uuid4()->toString().'-'.date('ymdHis');;
         $this->version = 'v1';
 
         if ($cdocument_model  != null) {
