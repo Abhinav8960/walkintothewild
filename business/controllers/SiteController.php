@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use business\components\AuthHandler;
 use common\models\MailLog;
+use common\models\operator\SafariOperator;
 use yii\web\Response;
 
 /**
@@ -68,6 +69,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
+            return $this->redirect(['/operator-registration/create']);
+        }
         return $this->render('index');
     }
 
