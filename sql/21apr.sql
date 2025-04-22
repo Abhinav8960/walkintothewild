@@ -1,17 +1,9 @@
-ALTER TABLE `package` DROP `package_slug`;
-ALTER TABLE `package` CHANGE `status` `status` INT NULL DEFAULT '1' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable,4=>Terminated';
-ALTER TABLE `package` ADD `uuid` VARCHAR(255) NOT NULL AFTER `id`, ADD `version` VARCHAR(10) NOT NULL DEFAULT 'v1' AFTER `uuid`, ADD `cancellation_reason` TEXT NULL DEFAULT NULL AFTER `version`;
-ALTER TABLE `package` CHANGE `status` `status` INT NULL DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable,4=>Terminated';
-DROP TABLE `package_approval`, `package_comment_approval`, `package_comment_report_approval`, `package_day_approval`, `package_enquiry_approval`, `package_faq_approval`, `package_feature_approval`, `package_gallery_approval`, `package_included_approval`, `package_quote_approval`, `package_safari_park_approval`, `package_states_approval`;
-UPDATE `package_states` SET `live_version`='v1',`editable_version`='v2';
-UPDATE `package` SET `status`=1 WHERE `version` ='v1';
--- 
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 22, 2025 at 12:09 PM
+-- Generation Time: Apr 22, 2025 at 05:45 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -35,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `operator_registration_form`
 --
 
+DROP TABLE IF EXISTS `operator_registration_form`;
 CREATE TABLE `operator_registration_form` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
@@ -77,24 +70,21 @@ CREATE TABLE `operator_registration_form` (
   `is_step_3_approved` int DEFAULT '0',
   `is_step_4_approved` int DEFAULT '0',
   `is_step_5_approved` int DEFAULT '0',
-  `updated_time_step_1` int DEFAULT NULL,
-  `updated_time_step_2` int DEFAULT NULL,
-  `updated_time_step_3` int DEFAULT NULL,
-  `updated_time_step_4` int DEFAULT NULL,
-  `updated_time_step_5` int DEFAULT NULL,
+  `updated_time_step_1` datetime DEFAULT NULL,
+  `updated_time_step_2` datetime DEFAULT NULL,
+  `updated_time_step_3` datetime DEFAULT NULL,
+  `updated_time_step_4` datetime DEFAULT NULL,
+  `updated_time_step_5` datetime DEFAULT NULL,
   `final` int DEFAULT NULL,
-  `updated_time_final` int DEFAULT NULL,
-  `status` int DEFAULT NULL,
+  `final_approved` int DEFAULT '0',
+  `updated_time_final_approved` datetime DEFAULT NULL,
+  `updated_time_final` datetime DEFAULT NULL,
+  `status` int DEFAULT '0',
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `operator_registration_form`
---
-
 
 --
 -- Indexes for dumped tables
@@ -114,7 +104,7 @@ ALTER TABLE `operator_registration_form`
 -- AUTO_INCREMENT for table `operator_registration_form`
 --
 ALTER TABLE `operator_registration_form`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
