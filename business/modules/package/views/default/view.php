@@ -254,7 +254,13 @@ $this->params['title'] = $this->title;
 
                     <div class="col-lg-3 col-xl-3">
                         <div class="card">
-                            <div class="card-body">Version</div>
+                            <div class="card-body">
+                                <h4>Version</h4>
+                                <hr>
+                                <div>
+                                    <h5><?= $package->version ?></h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
