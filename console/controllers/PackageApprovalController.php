@@ -19,6 +19,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
 use common\models\package\PackageStates;
+use common\models\UserWishlist;
 use Yii;
 use yii\filters\AccessControl;
 use yii\console\Controller;
@@ -30,6 +31,18 @@ use yii\web\UploadedFile;
  */
 class PackageApprovalController extends Controller
 {
+
+    public function actionUpdateUserWishlist(){
+        $uw = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE])->all();
+        foreach ($uw as $w) {
+            if(is_numeric($w->item_id)){
+                $package = Package::find()->where(['id' => $w->item_id])->one();
+                $w->item_id = $package->uuid;
+                $w->save(false);
+            }
+        }
+        echo "done";
+    }
 
 
     public function actionPathChange()

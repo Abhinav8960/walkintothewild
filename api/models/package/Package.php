@@ -32,7 +32,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date', 'status'];
+        $fields = ['id', 'uuid', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date', 'status'];
         $fields[] = 'resourceuri';
         $fields[] = 'canComment';
         $fields[] = 'canReply';
@@ -490,7 +490,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'uuid'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 

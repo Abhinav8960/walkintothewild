@@ -1,3 +1,5 @@
+ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
+
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/

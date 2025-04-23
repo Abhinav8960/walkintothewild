@@ -249,12 +249,12 @@ class DefaultController extends FrontendBaseController
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->uuid, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
-                $wishlist->item_id = $package->id;
+                $wishlist->item_id = $package->uuid;
                 $wishlist->item_type_id = UserWishlist::SAFARI_PACKAGE;
                 $wishlist->item_type = 'package';
                 $wishlist->status = 1;
