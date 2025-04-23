@@ -540,4 +540,11 @@ class Package extends \common\models\package\Package
         }
         return false;
     }
+
+    public function attributeTypes()
+    {
+        return [
+            'status' => self::TYPE_BOOLEAN,
+        ];
+    }
 }
