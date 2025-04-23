@@ -186,6 +186,6 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 
-    <?php if ($model->is_step_1_approved == 1 && $model->is_step_2_approved == 1 && $model->is_step_3_approved == 1 && $model->is_step_4_approved == 1) { ?>
+    <?php if ($model->final_approved != 1 && $model->is_step_1_approved == 1 && $model->is_step_2_approved == 1 && $model->is_step_3_approved == 1 && $model->is_step_4_approved == 1) { ?>
         <a href="<?= Url::toRoute(['final-approved', 'id' => $model->id]) ?>" class="btn btn-success mt-2">Final Approved</a>
     <?php } ?>
