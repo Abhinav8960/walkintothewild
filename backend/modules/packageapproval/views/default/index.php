@@ -56,7 +56,11 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->live_version;
+                            if ($model->live_version) {
+                                return Html::a($model->live_version, [
+                                    Url::toRoute(['view', 'id' => $model->id])
+                                ]);
+                            }
                         }
                     ],
 
