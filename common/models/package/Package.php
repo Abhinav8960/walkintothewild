@@ -418,4 +418,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
         return 'Not done yet, working on it';
     }
+
+    public function getVersions()
+    {
+        return $this->hasMany(self::className(), ['uuid' => 'uuid']);
+    }
 }

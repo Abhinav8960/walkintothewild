@@ -255,10 +255,14 @@ $this->params['title'] = $this->title;
                     <div class="col-lg-3 col-xl-3">
                         <div class="card">
                             <div class="card-body">
-                                <h4>Version</h4>
+                                <h4>Versions</h4>
                                 <hr>
                                 <div>
-                                    <h5><?= $package->version ?></h5>
+                                    <?php if ($package->versions) {
+                                        foreach ($package->versions as $v) { ?>
+                                            <h5><?= $v->version ?></h5>
+                                    <?php }
+                                    } ?>
                                 </div>
                             </div>
                         </div>
