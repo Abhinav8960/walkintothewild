@@ -191,7 +191,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackage_slug()
     {
-        return $this->packageState->slug ?? NULL;
+        return $this->getPackageState()->slug ?? NULL;
     }
 
 
