@@ -63,6 +63,17 @@ class OperatorRegistrationForm extends Model
     public $updated_time_final;
 
 
+    public $is_step_1_submit;
+    public $is_step_2_submit;
+    public $is_step_3_submit;
+    public $is_step_4_submit;
+
+    public $is_step_1_approved;
+    public $is_step_2_approved;
+    public $is_step_3_approved;
+    public $is_step_4_approved;
+
+
     public function __construct(OperatorRegistration $operator_model = null)
     {
         $this->operator_model = Yii::createObject([
@@ -112,16 +123,24 @@ class OperatorRegistrationForm extends Model
             $this->status = $this->operator_model->status;
             $this->final = $this->operator_model->final;
             $this->updated_time_final = $this->operator_model->updated_time_final;
+            $this->is_step_1_submit = $this->operator_model->is_step_1_submit;
+            $this->is_step_2_submit = $this->operator_model->is_step_2_submit;
+            $this->is_step_3_submit = $this->operator_model->is_step_3_submit;
+            $this->is_step_4_submit = $this->operator_model->is_step_4_submit;
+            $this->is_step_1_approved = $this->operator_model->is_step_1_approved;
+            $this->is_step_2_approved = $this->operator_model->is_step_2_approved;
+            $this->is_step_3_approved = $this->operator_model->is_step_3_approved;
+            $this->is_step_4_approved = $this->operator_model->is_step_4_approved;
         }
     }
 
     public function scenarios()
     {
         return [
-            self::SCENARIO_STEP1 => ['name', 'email', 'phone_no'],
-            self::SCENARIO_STEP2 => ['business_whatsap_no', 'business_registration_name', 'business_brand_name'],
-            self::SCENARIO_STEP3 => ['bank_name', 'account_holder_name', 'ifsc_code', 'account_no'],
-            self::SCENARIO_STEP4 => ['upload_adhar_no', 'final', 'updated_time_final'],
+            self::SCENARIO_STEP1 => ['name', 'email', 'phone_no', 'is_step_1_submit', 'is_step_1_approved'],
+            self::SCENARIO_STEP2 => ['business_whatsap_no', 'business_registration_name', 'business_brand_name', 'is_step_2_submit', 'is_step_2_approved'],
+            self::SCENARIO_STEP3 => ['bank_name', 'account_holder_name', 'ifsc_code', 'account_no', 'is_step_3_submit', 'is_step_3_approved'],
+            self::SCENARIO_STEP4 => ['upload_adhar_no', 'final', 'updated_time_final', 'is_step_4_submit', 'is_step_4_approved'],
         ];
     }
 
@@ -134,63 +153,19 @@ class OperatorRegistrationForm extends Model
             [['upload_adhar_no'], 'required', 'on' => self::SCENARIO_STEP4],
             [['final', 'status'], 'integer'],
             [['updated_time_final'], 'safe'],
+            [[
+                'is_step_1_submit',
+                'is_step_2_submit',
+                'is_step_3_submit',
+                'is_step_4_submit',
+            ], 'integer'],
+            [[
+                'is_step_1_approved',
+                'is_step_2_approved',
+                'is_step_3_approved',
+                'is_step_4_approved'
+            ], 'integer'],
 
-
-            // [[
-            //     'business_whatsap_no',
-            //     "business_registration_name",
-            //     'business_brand_name',
-            //     'business_brand_name',
-            //     'business_email_id',
-            //     'account_holder_name',
-            //     'pan_no',
-            //     'upload_adhar_no',
-            //     'account_no',
-            //     'gender'
-            // ], 'safe'],
-
-            // [[
-            //     'name',
-            //     'email',
-            //     'phone_no',
-            //     'whatsap_no',
-            //     'dob',
-            //     'gender',
-            //     'kyc_detail',
-            //     'business_registration_name',
-            //     'business_brand_name',
-            //     'business_full_name',
-            //     'business_phone_no',
-            //     'business_whatsap_no',
-            //     'business_email_id',
-            //     'type_of_business',
-            //     'business_doc_reg_no',
-            //     'business_operated_park',
-            //     'business_detail',
-            //     'gst',
-            //     'bank_name',
-            //     'account_holder_name',
-            //     'account_no',
-            //     'ifsc_code',
-            //     'upload_adhar_no',
-            //     'pan_no',
-            //     'upload_registration_number'
-            // ], 'string'],
-
-            // [['dob'], 'safe'],
-
-            // [[
-            //     'phone_no',
-            //     'whatsap_no',
-            //     'business_phone_no',
-            //     'business_whatsap_no'
-            // ], 'match', 'pattern' => "/^[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/", 'message' => ' Mobile number should have 10 digits.'],
-            // [[
-            //     'phone_no',
-            //     'whatsap_no',
-            //     'business_phone_no',
-            //     'business_whatsap_no'
-            // ], 'safe'],
 
             [['email', 'business_email_id'], 'email'],
 
@@ -293,6 +268,15 @@ class OperatorRegistrationForm extends Model
 
         $this->operator_model->final = $this->final;
         $this->operator_model->updated_time_final = $this->updated_time_final;
+
+        $this->operator_model->is_step_1_submit = $this->is_step_1_submit;
+        $this->operator_model->is_step_2_submit = $this->is_step_2_submit;
+        $this->operator_model->is_step_3_submit = $this->is_step_3_submit;
+        $this->operator_model->is_step_4_submit = $this->is_step_4_submit;
+        $this->operator_model->is_step_1_approved = $this->is_step_1_approved;
+        $this->operator_model->is_step_2_approved = $this->is_step_2_approved;
+        $this->operator_model->is_step_3_approved = $this->is_step_3_approved;
+        $this->operator_model->is_step_4_approved = $this->is_step_4_approved;
     }
 
     public function uploadFiles()

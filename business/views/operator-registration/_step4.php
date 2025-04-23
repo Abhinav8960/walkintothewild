@@ -6,12 +6,9 @@ use yii\helpers\Html;
 $readOnly = false;
 
 if ($operator_model) {
-    if ($operator_model->final == 1) {
+    if ($operator_model->is_step_4_submit == 1) {
         $readOnly = true;
     }
-    if ($operator_model->final_approved == 2 && $operator_model->is_step_4_approved != 1) {
-        $readOnly = false;
-    } 
 }
 ?>
 <?= $this->render('stepper', ['currentStep' => 4]) ?>
