@@ -78,7 +78,7 @@ class DefaultController extends RestController
             $dataProvider->pagination->validatePage = false;
 
             $data['data']['summary']['total'] = $dataProvider->getTotalCount();
-            $data['data']['summary']['page'] = (int) \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data['data']['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
             $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize + 1;
             $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
