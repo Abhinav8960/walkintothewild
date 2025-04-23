@@ -233,7 +233,7 @@ class Package extends \common\models\package\Package
 
     public function getPackage_slug()
     {
-        return $this->packageState->package_slug ?? NULL;
+        return $this->packageState->slug ?? NULL;
     }
 
 
@@ -516,13 +516,13 @@ class Package extends \common\models\package\Package
             // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
             // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
-            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->packageState->package_slug . '/comment-view',
+            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->packageState->slug . '/comment-view',
         ];
     }
 
     public function getResourceuri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->packageState->package_slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->packageState->slug;
     }
 
     public function getCanComment()
