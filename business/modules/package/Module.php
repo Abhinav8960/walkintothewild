@@ -4,6 +4,7 @@ namespace business\modules\package;
 
 use common\models\operator\SafariOperator;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * admin module definition class

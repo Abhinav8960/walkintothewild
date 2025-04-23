@@ -3,6 +3,7 @@
 namespace business\modules\package\controllers;
 
 use common\models\master\faq\MasterFaq;
+use common\models\operator\SafariOperator;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageForm;
@@ -21,6 +22,7 @@ use common\models\package\PackageStates;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
@@ -72,8 +74,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = 1;
-        $searchModel->status = Package::EDIATBLE_STATUS;
+        $searchModel->status = [Package::APPROVED_AND_LIVE_STATUS, Package::EDIATBLE_STATUS];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -89,11 +90,14 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
+        $safari_operator = $this->operatormodel();
+
         $model = new PackageForm();
-        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->status = Package::EDIATBLE_STATUS;
-        // $model->owned_by_id = $safari_operator->id;
+        $model->owned_by_id = $safari_operator->id;
+
         $model->scenario = 'create';
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
@@ -565,8 +569,15 @@ class DefaultController extends Controller
 
     protected function isPackageOwner()
     {
+        $id = Yii::$app->request->get('id');
 
-        return true;
+        $operator = $this->operatormodel();
+        $model = Package::findOne(['id' => $id]);
+
+        if ($model && $model->owned_by_id == $operator->id) {
+            return true;
+        }
+        return false;
     }
 
     private function copyPackageNow($id, $isNewRecord = false)
@@ -770,7 +781,7 @@ class DefaultController extends Controller
     {
         $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
         if ($model) {
-            $model->status = Package::TERMINATED_status;
+            $model->status = Package::TERMINATED_STATUS;
             $model->save(false);
             return true;
         }
@@ -789,5 +800,14 @@ class DefaultController extends Controller
         $model->slug = PackageStates::prepareUniqueSlug($model->package_name);
         $model->save();
         return true;
+    }
+
+
+    public function operatormodel()
+    {
+        if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+            return $operator;
+        }
+        throw new ForbiddenHttpException('You are not Allowed to access this Page');
     }
 }

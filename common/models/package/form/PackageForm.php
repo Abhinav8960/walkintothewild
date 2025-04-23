@@ -401,17 +401,17 @@ class PackageForm extends \yii\base\Model
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
             $storagePath = 'package';
-            $userPath = $storagePath . '/' . $this->package_model->id;
+            $storagePath = $storagePath . '/' . $this->package_model->id;
 
             $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
             $filePath = $storagePath . '/' . $fileName;
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
 
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
+            // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
 
             if ($fileName) {
                 // try {
-                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_image, $filePath, $fileName, true)) {
                     // $this->package_model->file = $fileName;
                     $this->package_model->package_image = $filePath;
                     // $this->package_model->etag = $etag;
@@ -450,10 +450,10 @@ class PackageForm extends \yii\base\Model
             $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
+            // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
             if ($fileName) {
                 // try {
-                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_banner_image, $filePath, $fileName, true)) {
                     // $this->package_model->file = $fileName;
                     $this->package_model->package_banner_image = $filePath;
                     // $this->package_model->etag = $etag;
