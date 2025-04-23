@@ -42,7 +42,7 @@ $this->params['title'] = $this->title;
                                         <div class="d-flex gap-2">
                                             <?php if ($model->is_step_1_approved == 0) { ?>
                                                 <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-success">Approved</a>
-                                                <a href="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-danger">Reject</a>
+                                                <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-danger reject-action">Reject</button>
                                         </div>
                                     <?php } ?>
                                     </div>
@@ -86,7 +86,7 @@ $this->params['title'] = $this->title;
                                         <div class="d-flex gap-2">
                                             <?php if ($model->is_step_2_approved == 0) { ?>
                                                 <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-success">Approved</a>
-                                                <a href="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-danger">Reject</a>
+                                                <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@ $this->params['title'] = $this->title;
                                         <div class="d-flex gap-2">
                                             <?php if ($model->is_step_3_approved == 0) { ?>
                                                 <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-success">Approved</a>
-                                                <a href="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-danger">Reject</a>
+                                                <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@ $this->params['title'] = $this->title;
                                         <div class="d-flex gap-2">
                                             <?php if ($model->is_step_4_approved == 0) { ?>
                                                 <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-success">Approved</a>
-                                                <a href="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-danger">Reject</a>
+                                                <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -185,7 +185,37 @@ $this->params['title'] = $this->title;
             </div>
         </div>
     </div>
+</div>
+<?php if ($model->final_approved != 1 && $model->is_step_1_approved == 1 && $model->is_step_2_approved == 1 && $model->is_step_3_approved == 1 && $model->is_step_4_approved == 1) { ?>
+    <a href="<?= Url::toRoute(['final-approved', 'id' => $model->id]) ?>" class="btn btn-success mt-2">Final Approved</a>
+<?php } ?>
 
-    <?php if ($model->final_approved != 1 && $model->is_step_1_approved == 1 && $model->is_step_2_approved == 1 && $model->is_step_3_approved == 1 && $model->is_step_4_approved == 1) { ?>
-        <a href="<?= Url::toRoute(['final-approved', 'id' => $model->id]) ?>" class="btn btn-success mt-2">Final Approved</a>
-    <?php } ?>
+<div class="modal fade" id="modalReject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Reject Reason
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.reject-action').on('click', function () {
+        $('#modalReject').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+?>

@@ -10,6 +10,7 @@ use yii\web\UploadedFile;
  */
 class OperatorRegistration extends \yii\db\ActiveRecord
 {
+    public $reason;
     /**
      * {@inheritdoc}
      */
@@ -43,7 +44,7 @@ class OperatorRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'phone_no', 'whatsap_no', 'dob', 'gender', 'kyc_detail', 'business_registration_name', 'business_brand_name', 'business_full_name', 'business_phone_no', 'business_whatsap_no', 'business_email_id', 'business_logo_upload', 'type_of_business', 'business_doc_reg_no', 'business_kyc_detail', 'business_operated_park', 'business_detail', 'gst', 'bank_name', 'account_holder_name', 'account_no', 'ifsc_code', 'cancle_check', 'upload_adhar_no', 'upload_aadhar_front', 'upload_aadhar_back', 'pan_no', 'pan_upload', 'upload_registration_number', 'upload_registration_cert', 'upload_document', 'updated_time_step_1', 'updated_time_step_2', 'updated_time_step_3', 'updated_time_step_4', 'updated_time_step_5', 'final', 'updated_time_final_approved', 'updated_time_final', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['name', 'email', 'phone_no', 'whatsap_no', 'dob', 'gender', 'kyc_detail', 'business_registration_name', 'business_brand_name', 'business_full_name', 'business_phone_no', 'business_whatsap_no', 'business_email_id', 'business_logo_upload', 'type_of_business', 'business_doc_reg_no', 'business_kyc_detail', 'business_operated_park', 'business_detail', 'gst', 'bank_name', 'account_holder_name', 'account_no', 'ifsc_code', 'cancle_check', 'upload_adhar_no', 'upload_aadhar_front', 'upload_aadhar_back', 'pan_no', 'pan_upload', 'upload_registration_number', 'upload_registration_cert', 'upload_document', 'step_1_reject_reason', 'step_2_reject_reason', 'step_3_reject_reason', 'step_4_reject_reason', 'updated_time_step_1', 'updated_time_step_2', 'updated_time_step_3', 'updated_time_step_4', 'updated_time_step_5', 'final', 'updated_time_final_approved', 'updated_time_final', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['current_step'], 'default', 'value' => 1],
             [['status'], 'default', 'value' => 0],
             [['user_id'], 'required'],
@@ -58,6 +59,8 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             [['business_logo_upload', 'business_kyc_detail', 'business_operated_park', 'cancle_check', 'upload_aadhar_front', 'upload_aadhar_back', 'pan_upload', 'upload_registration_cert', 'upload_document'], 'string', 'max' => 255],
             [['gst'], 'string', 'max' => 30],
             [['account_no'], 'string', 'max' => 50],
+            [['step_1_reject_reason', 'step_2_reject_reason', 'step_3_reject_reason', 'step_4_reject_reason'], 'string', 'max' => 512],
+            [['reason'], 'safe'],
         ];
     }
 
@@ -112,6 +115,10 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'is_step_3_approved' => 'Is Step 3 Approved',
             'is_step_4_approved' => 'Is Step 4 Approved',
             'is_step_5_approved' => 'Is Step 5 Approved',
+            'step_1_reject_reason' => 'Step 1 Reject Reason',
+            'step_2_reject_reason' => 'Step 2 Reject Reason',
+            'step_3_reject_reason' => 'Step 3 Reject Reason',
+            'step_4_reject_reason' => 'Step 4 Reject Reason',
             'updated_time_step_1' => 'Updated Time Step 1',
             'updated_time_step_2' => 'Updated Time Step 2',
             'updated_time_step_3' => 'Updated Time Step 3',
@@ -128,5 +135,4 @@ class OperatorRegistration extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
-
 }

@@ -5,6 +5,7 @@ namespace backend\modules\operatorapproval\controllers;
 use common\models\operator\SafariOperator;
 use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -84,11 +85,31 @@ class DefaultController extends Controller
             $model->updated_time_step_4 = date('Y-m-d H:i:s');
         }
 
-        if ($model->save(false)) {
-
-            \Yii::$app->session->setFlash('success', 'Business Detail Approved Successfully');
-            return $this->redirect(['update', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $reason = $model->reason;
+                if ($model->validate()) {
+                    if ($step == 1) {
+                        $model->step_1_reject_reason = $reason;
+                    } else if ($step == 2) {
+                        $model->step_2_reject_reason = $reason;
+                    } else if ($step == 3) {
+                        $model->step_3_reject_reason = $reason;
+                    } else if ($step == 4) {
+                        $model->step_4_reject_reason = $reason;
+                    }
+                    if ($model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Reject Successfully');
+                        return $this->redirect(['update', 'id' => $model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
+        return $this->renderAjax('_reject_reason', [
+            'model' => $model,
+        ]);
     }
 
     public function makeoperator($model)
