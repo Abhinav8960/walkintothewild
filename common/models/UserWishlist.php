@@ -58,8 +58,8 @@ class UserWishlist extends \yii\db\ActiveRecord implements \common\interfaces\St
     public function rules()
     {
         return [
-            [['user_id', 'item_id', 'item_type_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['item_type'], 'string', 'max' => 255],
+            [['user_id','item_type_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['item_type','item_id'], 'string', 'max' => 255],
         ];
     }
 
