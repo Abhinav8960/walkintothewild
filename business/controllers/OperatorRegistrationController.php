@@ -2,6 +2,7 @@
 
 namespace business\controllers;
 
+use common\models\operator\SafariOperator;
 use common\models\operatorregistration\form\OperatorRegistrationForm;
 use common\models\operatorregistration\OperatorRegistration;
 use yii\web\Controller;
@@ -17,6 +18,12 @@ use Yii;
  */
 class OperatorRegistrationController extends Controller
 {
+    public function actionIndex()
+    {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
+            return $this->redirect(['/operator-registration/create']);
+        }
+    }
 
     public function actionCreate()
     {
