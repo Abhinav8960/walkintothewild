@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->status == Package::SEND_FOR_status ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
+                            return $model->status == Package::SEND_FOR_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
                         }
                     ],
                     [
@@ -84,14 +84,14 @@ $this->params['title'] = $this->title;
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/package/default/view', 'id' => $model->id], [
+                                ', ['/packageapproval/default/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
 
                                 ]);
                             },
                             'approved' => function ($url, $model) {
-                                if ($model->status == Package::SEND_FOR_status) {
+                                if ($model->status == Package::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::a(
                                         'Approve',
                                         [Url::toRoute(['approved', 'uuid' => $model->uuid, 'version' => $model->version])],
@@ -107,7 +107,7 @@ $this->params['title'] = $this->title;
                                 }
                             },
                             'reject' => function ($url, $model) {
-                                if ($model->status == Package::SEND_FOR_status) {
+                                if ($model->status == Package::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::button(
                                         'Reject',
                                         [
