@@ -74,8 +74,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = [Package::APPROVED_AND_LIVE_STATUS, Package::EDIATBLE_STATUS];
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->status = Package::EDIATBLE_STATUS;
+        $searchModel->owned_by_id = $this->operatormodel()->id;
+
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -492,7 +494,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
@@ -522,10 +524,6 @@ class DefaultController extends Controller
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
             return $this->redirect(Yii::$app->request->referrer);
-
-            echo "<pre>";
-            print_r($e->getMessage());
-            die();
         }
         $transaction->commit();
 
@@ -559,7 +557,7 @@ class DefaultController extends Controller
     protected function isPackageEditable()
     {
         $id = Yii::$app->request->get('id');
-        $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $model = Package::findOne(['id' => $id]);
         if ($model) {
             return $model->status == Package::EDIATBLE_STATUS;
         } else {

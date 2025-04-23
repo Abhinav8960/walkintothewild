@@ -53,16 +53,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return $model->live_version;
                         }
                     ],
-
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
-
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
@@ -86,7 +76,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             },
 
                             'SentforApproval' => function ($url, $model) {
-                                if ($model->status == Package::EDIATBLE_status) {
+                                if ($model->status == Package::EDIATBLE_STATUS) {
 
                                     return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
                                         'class' => 'btn btn-danger p-0 change-menuicon',
