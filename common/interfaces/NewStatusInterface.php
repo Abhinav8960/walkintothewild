@@ -61,7 +61,7 @@ interface NewStatusInterface
     /**
      * @var string attribute type.
      */
-    const TYPE_JSON = 'json'
+    const TYPE_JSON = 'json';
 
 
 }
