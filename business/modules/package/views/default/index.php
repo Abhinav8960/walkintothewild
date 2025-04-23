@@ -51,9 +51,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->live_version) {
-                                return Html::a($model->live_version, [
-                                    Url::toRoute(['view', 'id' => $model->id])
-                                ]);
+                                return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]));
                             }
                         }
                     ],

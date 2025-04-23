@@ -57,9 +57,7 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->live_version) {
-                                return Html::a($model->live_version, [
-                                    Url::toRoute(['view', 'id' => $model->id])
-                                ]);
+                                return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]));
                             }
                         }
                     ],
