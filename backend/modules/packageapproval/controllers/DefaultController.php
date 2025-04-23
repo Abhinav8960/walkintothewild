@@ -56,7 +56,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
