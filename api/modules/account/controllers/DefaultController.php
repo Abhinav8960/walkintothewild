@@ -258,7 +258,7 @@ class DefaultController extends RestController
         $packageIds =  array_column($wishlist_items, 'item_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Package::find()->where(['id' => $packageIds]),
+            'query' => Package::find()->where(['uuid' => $packageIds, 'status'=> Package::APPROVED_AND_LIVE_STATUS]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "packages");
