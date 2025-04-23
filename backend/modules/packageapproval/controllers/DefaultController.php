@@ -132,12 +132,10 @@ class DefaultController extends Controller
 
                     $model->status = Package::NOT_APPROVED_STATUS;
                     $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
-                    $model->status = Package::NOT_APPROVED_STATUS;
                     $model->save(false);
                 } catch (\Exception $e) {
                     Yii::error($e->getMessage());
                     $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
                     Yii::$app->session->setFlash('error', 'Failed to reject package.');
                     return $this->redirect(Yii::$app->request->referrer);
                 }
