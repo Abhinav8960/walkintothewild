@@ -295,7 +295,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public function getPackagepark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_uuid' => 'uuid']);
     }
 
     public function getPackagerange()

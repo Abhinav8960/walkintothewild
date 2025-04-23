@@ -102,10 +102,11 @@ class PackageController extends FrontendBaseController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -174,10 +175,11 @@ class PackageController extends FrontendBaseController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }

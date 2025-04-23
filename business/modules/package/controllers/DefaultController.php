@@ -125,10 +125,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -199,10 +200,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -599,7 +601,7 @@ class DefaultController extends Controller
             $this->CopyPackageDay($model->id, $newModel->id);
             $this->CopyPackageIncluded($model->id, $newModel->id);
             $this->CopyPackageFeature($model->id, $newModel->id);
-            $this->CopyPackageSafariPark($model->id, $newModel->id);
+            $this->CopyPackageSafariPark($model->id, $newModel->id, $model->uuid, $newModel->uuid);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
             $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_STATUS);
@@ -697,16 +699,17 @@ class DefaultController extends Controller
         return true;
     }
 
-    private function CopyPackageSafariPark($old_package_id, $new_package_id)
+    private function CopyPackageSafariPark($old_package_id, $new_package_id, $old_package_uuid, $new_package_uuid)
     {
         // package_safari_park_approval; 
-        $model = PackageSafariPark::find()->where(['package_id' => $old_package_id])->all();
+        $model = PackageSafariPark::find()->where(['package_uuid' => $old_package_uuid])->all();
         if ($model) {
             foreach ($model as $safari) {
                 $newModel = new PackageSafariPark();
                 $newModel->attributes = $safari->attributes;
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
+                $newModel->package_uuid = $new_package_uuid;
                 $newModel->save(false);
             }
         }
