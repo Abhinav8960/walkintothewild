@@ -38,7 +38,7 @@ class PackageApprovalController extends Controller
         foreach ($packages as $package) {
             $ps =  PackageStates::find()->where(['uuid' => $package->uuid])->one();
             $ps->live_version = $package->version;
-            $package->save(false);
+            $ps->save(false);
         }
         echo "done";
     }
