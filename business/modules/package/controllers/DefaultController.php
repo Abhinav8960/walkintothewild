@@ -592,7 +592,6 @@ class DefaultController extends Controller
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
-            $newModel->status = Package::APPROVED_AND_LIVE_STATUS;
             $newModel->status = Package::EDIATBLE_STATUS;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);
@@ -762,13 +761,14 @@ class DefaultController extends Controller
                 $this->terminatePackage($model->uuid, $model->pending_for_approval_version);
             }
             $model->pending_for_approval_version = $version;
+            $model->editable_version = NULL;
         }
-        // if ($status == Package::EDIATBLE_STATUS) {
-        //     if (!empty($model->editable_version)) {
-        //         $this->terminatePackage($model->uuid, $model->editable_version);
-        //     }
-        //     $model->editable_version = $version;
-        // }
+        if ($status == Package::EDIATBLE_STATUS) {
+            if (!empty($model->editable_version)) {
+                $this->terminatePackage($model->uuid, $model->editable_version);
+            }
+            $model->editable_version = $version;
+        }
         if ($model->save(false)) {
             return true;
         }
