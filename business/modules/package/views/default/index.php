@@ -53,6 +53,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             if ($model->live_version) {
                                 return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]));
                             }
+                            return '';
                         }
                     ],
                     [
