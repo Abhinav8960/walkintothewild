@@ -32,6 +32,17 @@ use yii\web\UploadedFile;
 class PackageApprovalController extends Controller
 {
 
+    public function actionMakeOldLive()
+    {
+        $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->all();
+        foreach ($packages as $package) {
+            $ps =  PackageStates::find()->where(['uuid' => $package->uuid])->one();
+            $ps->live_version = $package->version;
+            $package->save(false);
+        }
+        echo "done";
+    }
+
     public function actionPackagePark()
     {
         $psp = PackageSafariPark::find()->all();
