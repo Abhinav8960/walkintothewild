@@ -416,11 +416,23 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function getLive_version()
     {
 
-        return 'Not done yet, working on it';
+        return $this->hasOne(self::className(), ['uuid' => 'uuid'])->where(['status'=>SELF::APPROVED_AND_LIVE_STATUS]);
+
     }
 
     public function getVersions()
     {
         return $this->hasMany(self::className(), ['uuid' => 'uuid']);
+    }
+
+    public function getStatusLabel(){
+        $arr=[
+            SELF::NOT_APPROVED_STATUS => "Rejected",
+            SELF::APPROVED_AND_LIVE_STATUS => "Approved and Live",
+            SELF::SEND_FOR_APPROVAL_STATUS => "Send For approvals",
+            SELF::EDIATBLE_STATUS => "Editable",
+            SELF::TERMINATED_STATUS => "Terminated",
+        ];
+        return $arr[$this->status] ?? "";
     }
 }
