@@ -65,22 +65,22 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                    [
-                        'label' => 'Pending for Approval',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->status == Package::SEND_FOR_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
-                        }
-                    ],
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Pending for Approval',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->status == Package::SEND_FOR_APPROVAL_STATUS ? '<span class="badge badge-warning">Yes</span>' : '<span class="badge badge-success">No</span>';
+                    //     }
+                    // ],
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->statuslabel;
+                    //     }
+                    // ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",

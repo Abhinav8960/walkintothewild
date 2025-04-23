@@ -260,9 +260,10 @@ $this->params['title'] = $this->title;
                                 <div>
                                     <?php if ($package->versions) {
                                         foreach ($package->versions as $v) { ?>
-                                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
-                                                <h5><?= $v->version ?>-<?= $v->statusLabel ?></h5>
+                                            <div><a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
+                                                <?= $v->version ?>-<?= $v->statusLabel ?>
                                             </a>
+                                            </div>
                                     <?php }
                                     } ?>
                                 </div>

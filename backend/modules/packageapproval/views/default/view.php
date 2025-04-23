@@ -3,6 +3,7 @@
 use business\assets\AppAsset;
 use common\models\GeneralModel;
 use frontend\assets\FrontAppAsset;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -15,7 +16,7 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
-        <div class="btn-delet float-end" style="position: relative;">
+        <!-- <div class="btn-delet float-end" style="position: relative;">
             <a style="background:#09422d !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px; margin-right:6px;">
                 <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Approve
             </a>
@@ -39,7 +40,7 @@ $this->params['title'] = $this->title;
                 </ul>
             </div>
 
-        </div>
+        </div> -->
 
         <div class="row d-flex">
             <div class="col-xl-3 col-sm-6 col-12">
@@ -331,7 +332,20 @@ $this->params['title'] = $this->title;
 
                     <div class="col-lg-3 col-xl-3">
                         <div class="card">
-                            <div class="card-body">Version</div>
+                            <div class="card-body">
+                                <h4>Versions</h4>
+                                <hr>
+                                <div>
+                                    <?php if ($package->versions) {
+                                        foreach ($package->versions as $v) { ?>
+                                            <div><a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
+                                                <?= $v->version ?>-<?= $v->statusLabel ?>
+                                            </a>
+                                            </div>
+                                    <?php }
+                                    } ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
