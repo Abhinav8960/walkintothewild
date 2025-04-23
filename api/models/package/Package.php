@@ -180,12 +180,12 @@ class Package extends \common\models\package\Package
     public function rules()
     {
         return [
-            [['package_name', 'package_slug'], 'required'],
+            [['package_name'], 'required'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
             [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
+            // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
         ];
     }
@@ -516,13 +516,13 @@ class Package extends \common\models\package\Package
             // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
             // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
-            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
+            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->getPackageState()->package_slug . '/comment-view',
         ];
     }
 
     public function getResourceuri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->package_slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->getPackageState()->package_slug;
     }
 
     public function getCanComment()
