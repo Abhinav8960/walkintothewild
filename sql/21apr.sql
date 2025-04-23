@@ -1,7 +1,7 @@
 
 ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
 ALTER TABLE `package_safari_park`  ADD `package_uuid` VARCHAR(255) NOT NULL  AFTER `package_id`;
-ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
+
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
