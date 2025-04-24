@@ -17,7 +17,7 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'uuid', 'package_display_name', 'package_name', 'package_slug', 'primary_park', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'image_path', 'image_banner_path', 'is_wishlist', 'package_day_night_labels', 'pick_and_drop', 'package_range', 'meals_listing', 'safarioperator', 'comment_count', 'urls', 
+        $fields = ['id', 'uuid', 'package_display_name', 'package_name', 'package_slug', 'primary_park', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'image_path', 'image_banner_path', 'is_wishlist', 'package_day_night_labels', 'pick_and_drop', 'package_range', 'meals_listing', 'partner', 'comment_count', 'urls', 
                     'lunch_included'=> function () {
                         return (bool)$this->lunch_included;
                     }, 
@@ -219,7 +219,7 @@ class Package extends \common\models\package\Package
         // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 
-    public function getSafarioperator()
+    public function getPartner()
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
     }

@@ -327,7 +327,7 @@ class ___Package extends \common\models\package\Package
         // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 
-    public function getSafarioperator()
+    public function getPartner()
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
     }

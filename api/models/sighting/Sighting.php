@@ -64,7 +64,7 @@ class Sighting extends \common\models\sighting\Sighting
     public function getSighting_user_detail()
     {
         return [
-            'name' => $this->user ? $this->user->safarioperatorname : '',
+            'name' => $this->user ? $this->user->partnername : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
             'image' => $this->user ? $this->user->profile_display_image : '',
             'is_followed' => $this->user ? $this->user->is_followed : '',

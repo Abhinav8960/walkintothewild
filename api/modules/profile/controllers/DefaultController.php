@@ -69,7 +69,7 @@ class DefaultController extends RestController
     // {
     //     $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
     //     $user = $this->findUser($user_handle);
-    //     if ($user->operator) {
+    //     if ($user->partner) {
     //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
     //     }
 
@@ -80,7 +80,7 @@ class DefaultController extends RestController
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
 
@@ -90,7 +90,7 @@ class DefaultController extends RestController
     public function actionOrganizedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($user->id == $this->userinfoId) {
@@ -105,7 +105,7 @@ class DefaultController extends RestController
     public function actionJoinedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($user->id == $this->userinfoId) {
@@ -134,7 +134,7 @@ class DefaultController extends RestController
     public function actionFollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($this->userinfo) {
@@ -170,7 +170,7 @@ class DefaultController extends RestController
     public function actionUnfollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($this->userinfo) {
@@ -209,7 +209,7 @@ class DefaultController extends RestController
     public function actionUseractivity($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($user) {

@@ -111,7 +111,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->hasOne(User::className(), ['id' => 'host_user_id']);
     }
 
-    public function getSafarioperator()
+    public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'host_user_id']);
     }
@@ -176,7 +176,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->name : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
+            return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
     }
 
@@ -185,7 +185,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->user_handle : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
+            return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
     }
     public function getOrganized_by_image()
@@ -193,7 +193,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->profileimage : '';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return $this->safarioperator &&  $this->safarioperator->logo  ? $this->safarioperator->imagepath : '';
+            return $this->partner &&  $this->partner->logo  ? $this->partner->imagepath : '';
         }
     }
     public function getOrganized_by_profileurl()
@@ -201,7 +201,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user ? $this->user->user_handle : '']);
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->safarioperator ? $this->safarioperator->slug : '']);
+            return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->partner ? $this->partner->slug : '']);
         }
     }
 
@@ -232,7 +232,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->user_handle : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return isset($this->safarioperator) ? $this->safarioperator->slug : "N/A";
+            return isset($this->partner) ? $this->partner->slug : "N/A";
         }
     }
 
@@ -347,8 +347,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getWitw_average_rating()
     {
-        if (isset($this->safarioperator)) {
-            $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
+        if (isset($this->partner)) {
+            $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->partner->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
             return round($avg, 1);
         }
         return 0;
@@ -356,8 +356,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getWitw_review_count()
     {
-        if (isset($this->safarioperator)) {
-            return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->safarioperator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
+        if (isset($this->partner)) {
+            return SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $this->partner->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count();
         }
         return 0;
     }
@@ -365,8 +365,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getActiveFollowed()
     {
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            if ($this->safarioperator) {
-                return UserFollow::find()->where(['follow_user_id' => $this->safarioperator->user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
+            if ($this->partner) {
+                return UserFollow::find()->where(['follow_user_id' => $this->partner->user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
             }
         } else if ($this->type == ShareSafari::TYPE_SAFARI) {
             return UserFollow::find()->where(['follow_user_id' => $this->host_user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
@@ -395,7 +395,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->id : '';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return isset($this->safarioperator) ? $this->safarioperator->user->id : '';
+            return isset($this->partner) ? $this->partner->user->id : '';
         }
     }
 
@@ -415,8 +415,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getCan_comment()
     {
-        $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($this->getHave_you_joined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_safarioperator) && $this->host_user_id == $login_safarioperator->id)) {
+        $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
+        if ($this->getHave_you_joined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_partner) && $this->host_user_id == $login_partner->id)) {
             return true;
         }
         return false;
@@ -424,8 +424,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getCan_reply()
     {
-        $login_safarioperator = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ($this->getHave_you_joined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_safarioperator) && $this->host_user_id == $login_safarioperator->id)) {
+        $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
+        if ($this->getHave_you_joined() || \Yii::$app->params['active_user_id'] ==  $this->host_user_id || (!empty($login_partner) && $this->host_user_id == $login_partner->id)) {
             return true;
         }
         return false;
