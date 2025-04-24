@@ -25,13 +25,32 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
 {
     public function fields()
     {
-        $fields = parent::fields();
+        $fields = [
+            'id',
+            'name',
+            'slug',
+            'short_description',
+            'banner',
+            'feature_image',
+            'know_as',
+            'animal_type',
+            'is_feature_sequence',
+            'is_filter' => function () {
+                return (bool)$this->is_filter;
+            },
+            'is_filter_sequence',
+            'is_searchable' => function () {
+                return (bool)$this->is_searchable;
+            },
+            'total_view',
+        ];
+        
         $fields[] = 'image_path';
         $fields[] = 'banner_image_path';
         // $fields[] = 'rareparkanimals';
 
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        return array_diff($fields, $hold_fields);
+        // $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        // return array_diff($fields, $hold_fields);
         return $fields;
     }
 

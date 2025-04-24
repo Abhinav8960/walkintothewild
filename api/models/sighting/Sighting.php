@@ -9,12 +9,13 @@ use Yii;
 
 class Sighting extends \common\models\sighting\Sighting
 {
+
     public function fields()
     {
         $fields = parent::fields();
 
         // $fields[] = 'thumbnail';
-        $fields[] = 'locationname';
+        $fields[] = 'location_name';
         $fields[] = 'full_file_path';
         $fields[] = 'comments';
         $fields[] = 'is_liked';
@@ -23,7 +24,8 @@ class Sighting extends \common\models\sighting\Sighting
         $fields[] = 'sighting_user_detail';
         $fields[] = 'resource_uri';
         $fields[] = 'thumbnail';
-        $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
+        $hold_fields = ['height', 'width', 'latitude', 'longitude', 'v_size', 'v_duration', 'etag', 'location', 'filepath', 'like_count', 'file', 'total_view', 'status',
+                        'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
 
 
         return array_diff($fields, $hold_fields);
@@ -101,7 +103,7 @@ class Sighting extends \common\models\sighting\Sighting
         return $this->hasOne(SafariPark::class, ['id' => 'location']);
     }
 
-    public function getLocationname()
+    public function getLocation_name()
     {
         if ($this->safaripark) {
             return $this->safaripark->title;

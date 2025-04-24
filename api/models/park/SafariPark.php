@@ -30,7 +30,24 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['id', 'title', 'slug', 'feature_image_path', 'avg_safari_price_min', 'avg_safari_price_max', 'city', 'state', 'location', 'status'];
+        $fields = [
+            'id',
+            'title',
+            'slug',
+            'feature_image_path',
+            'avg_safari_price_min' => function () {
+                return (int)$this->avg_safari_price_min;
+            },
+            'avg_safari_price_max' => function () {
+                return (int)$this->avg_safari_price_max;
+            },
+            'city',
+            'state',
+            'location',
+            'status' => function () {
+                return (bool)$this->status;
+            },
+        ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
@@ -46,7 +63,9 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'official_website';
             // $fields[] = 'short_description';
             $fields[] = 'country';
-            $fields[] = 'pincode';
+            $fields['pincode'] = function () {
+                return (int)$this->pincode;
+            };
             $fields[] = 'about_title';
             $fields[] = 'about_description';
             $fields[] = 'module_title';
