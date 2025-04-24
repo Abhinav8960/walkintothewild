@@ -248,7 +248,7 @@ class DefaultController extends SafariController
                 if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                     $to_mail = $share_safari->user->username;
                 } else {
-                    $to_mail = $share_safari->safarioperator->user->username;
+                    $to_mail = $share_safari->partner->user->username;
                 }
                 $creator_name = $share_safari->organizedbyname;
                 $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
@@ -432,7 +432,7 @@ class DefaultController extends SafariController
                     if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                         $to_mail = $share_safari->user->username;
                     } else {
-                        $to_mail = $share_safari->safarioperator->user->username;
+                        $to_mail = $share_safari->partner->user->username;
                     }
                     $creator_name = $share_safari->organizedbyname;
                     $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
