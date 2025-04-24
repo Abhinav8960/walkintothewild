@@ -26,8 +26,8 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'imagepath';
-        $fields[] = 'bannerimagepath';
+        $fields[] = 'image_path';
+        $fields[] = 'banner_image_path';
         // $fields[] = 'rareparkanimals';
 
         $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
@@ -35,14 +35,14 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
         return $fields;
     }
 
-    public function getImagepath()
+    public function getImage_path()
     {
         if ($this->feature_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/rareanimal/' . $this->id . '/' . $this->feature_image;
         }
     }
 
-    public function getBannerimagepath()
+    public function getBanner_image_path()
     {
         if ($this->banner != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/rareanimal/' . $this->id . '/' . $this->banner;
