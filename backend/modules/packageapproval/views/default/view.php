@@ -5,7 +5,7 @@ use common\models\GeneralModel;
 use frontend\assets\FrontAppAsset;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
+$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 FrontAppAsset::register($this);
 AppAsset::register($this);
@@ -16,7 +16,7 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
-        <!-- <div class="btn-delet float-end" style="position: relative;">
+        <div class="btn-delet float-end" style="position: relative;">
             <a style="background:#09422d !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px; margin-right:6px;">
                 <i class="fa-solid fa-check" style="margin-right: 6px;"></i> Approve
             </a>
@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                 </ul>
             </div>
 
-        </div> -->
+        </div>
 
         <div class="row d-flex">
             <div class="col-xl-3 col-sm-6 col-12">
@@ -339,8 +339,8 @@ $this->params['title'] = $this->title;
                                     <?php if ($package->versions) {
                                         foreach ($package->versions as $v) { ?>
                                             <div><a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
-                                                <?= $v->version ?>-<?= $v->statusLabel ?>
-                                            </a>
+                                                    <?= $v->version ?>-<?= $v->statusLabel ?>
+                                                </a>
                                             </div>
                                     <?php }
                                     } ?>

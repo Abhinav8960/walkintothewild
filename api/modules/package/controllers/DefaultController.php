@@ -321,7 +321,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageCommentSearch();
-        $searchModel->status = PackageCommentSearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "comments");
     }
@@ -335,7 +335,7 @@ class DefaultController extends RestController
 
 
         $packageSafariPark = PackageSafariPark::find()
-            ->where(['status' => SafariOperator::APPROVED_AND_LIVE_STATUS, 'package_id' => $package->id])
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
             ->all();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);

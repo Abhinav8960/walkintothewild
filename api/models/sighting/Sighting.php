@@ -9,21 +9,23 @@ use Yii;
 
 class Sighting extends \common\models\sighting\Sighting
 {
+
     public function fields()
     {
         $fields = parent::fields();
 
         // $fields[] = 'thumbnail';
-        $fields[] = 'locationname';
-        $fields[] = 'fullfilepath';
+        $fields[] = 'location_name';
+        $fields[] = 'full_file_path';
         $fields[] = 'comments';
-        $fields[] = 'isLiked';
-        $fields[] = 'likesCount';
-        $fields[] = 'commentsCount';
-        $fields[] = 'sightinguserdetail';
-        $fields[] = 'resourceuri';
+        $fields[] = 'is_liked';
+        $fields[] = 'likes_count';
+        $fields[] = 'comments_count';
+        $fields[] = 'sighting_user_detail';
+        $fields[] = 'resource_uri';
         $fields[] = 'thumbnail';
-        $hold_fields = ['location', 'filepath', 'like_count', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
+        $hold_fields = ['height', 'width', 'latitude', 'longitude', 'v_size', 'v_duration', 'etag', 'location', 'filepath', 'like_count', 'file', 'total_view', 'status',
+                        'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
 
 
         return array_diff($fields, $hold_fields);
@@ -37,7 +39,7 @@ class Sighting extends \common\models\sighting\Sighting
     }
 
 
-    public function getFullfilepath()
+    public function getFull_file_path()
     {
         if ($this->file) {
             return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
@@ -59,19 +61,19 @@ class Sighting extends \common\models\sighting\Sighting
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getSightinguserdetail()
+    public function getSighting_user_detail()
     {
         return [
             'name' => $this->user ? $this->user->safarioperatorname : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
-            'image' => $this->user ? $this->user->profileimage : '',
-            'isFollowed' => $this->user ? $this->user->isFollowed : '',
-            'isSafariOperator' => $this->user->operator ? true : false,
-            'operatorSlug' => $this->user->operator ? $this->user->operator->slug : '',
+            'image' => $this->user ? $this->user->profile_display_image : '',
+            'is_followed' => $this->user ? $this->user->is_followed : '',
+            'is_safari_operator' => $this->user->operator ? true : false,
+            'operator_slug' => $this->user->operator ? $this->user->operator->slug : '',
         ];
     }
 
-    public function getIsLiked()
+    public function getIs_liked()
     {
         $is_liked = SightingLike::find()->where(['sighting_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'sighting_like.status' => 1])->limit(1)->one();
         if ($is_liked) {
@@ -86,12 +88,12 @@ class Sighting extends \common\models\sighting\Sighting
         return $this->hasMany(SightingLike::class, ['sighting_id' => 'id']);
     }
 
-    public function getLikesCount()
+    public function getLikes_count()
     {
         return $this->getLike()->count();
     }
 
-    public function getCommentsCount()
+    public function getComments_count()
     {
         return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
     }
@@ -101,7 +103,7 @@ class Sighting extends \common\models\sighting\Sighting
         return $this->hasOne(SafariPark::class, ['id' => 'location']);
     }
 
-    public function getLocationname()
+    public function getLocation_name()
     {
         if ($this->safaripark) {
             return $this->safaripark->title;
@@ -109,7 +111,7 @@ class Sighting extends \common\models\sighting\Sighting
         return '';
     }
 
-    public function getResourceuri()
+    public function getResource_uri()
     {
         return Yii::$app->params['frontend_url'] . '/sighting/' . base64_encode($this->id);
     }

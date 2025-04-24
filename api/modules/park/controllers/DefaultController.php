@@ -212,7 +212,7 @@ class DefaultController extends RestController
         $operatorsearchModel->status = 1;
 
 
-        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$parl_id = $model->id]);
+        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$park_id = $model->id]);
     }
 
     public function actionParkSharedSafari($slug)

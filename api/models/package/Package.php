@@ -12,34 +12,32 @@ use api\models\UserWishlist;
 use common\models\package\PackageStates;
 use Yii;
 use common\models\User;
-// $fields[] = 'pickanddrop';
-//     $fields[] = 'mealslisting';
-//     $fields[] = 'packagerange';
-//     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
-//         $fields[] = 'safarioperator';
-//     }
-//     $fields[] = 'imagepath';
-//     $fields[] = 'imagebannerpath';
-//     $fields[] = 'packagename';
-//     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
-//         $fields[] = 'packagepark';
-//     }
-
-//     $fields[] = 'packagedaynightlabels';
-//     $fields[] = 'isWishlist';
 
 class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'uuid', 'packagename', 'package_name', 'package_slug', 'primaryPark', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'imagepath', 'imagebannerpath', 'isWishlist', 'packagedaynightlabels', 'pickanddrop', 'packagerange', 'mealslisting', 'safarioperator', 'commentCount', 'urls', 'lunch_included', 'dinner_included', 'meal_not_included', 'breakfast_included', 'start_location', 'end_location', 'start_date', 'end_date', 'status'];
-        $fields[] = 'resourceuri';
-        $fields[] = 'canComment';
-        $fields[] = 'canReply';
+        $fields = ['id', 'uuid', 'package_display_name', 'package_name', 'package_slug', 'primary_park', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'image_path', 'image_banner_path', 'is_wishlist', 'package_day_night_labels', 'pick_and_drop', 'package_range', 'meals_listing', 'safarioperator', 'comment_count', 'urls', 
+                    'lunch_included'=> function () {
+                        return (bool)$this->lunch_included;
+                    }, 
+                    'dinner_included'=> function () {
+                        return (bool)$this->dinner_included;
+                    }, 
+                    'meal_not_included'=> function () {
+                        return (bool)$this->meal_not_included;
+                    }, 
+                    'breakfast_included'=> function () {
+                        return (bool)$this->breakfast_included;
+                    }, 
+                    'start_location', 'end_location', 'start_date', 'end_date', 'status'];
+        $fields[] = 'resource_uri';
+        $fields[] = 'can_comment';
+        $fields[] = 'can_reply';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
-            $fields[] = 'masterPackageWithIncluded';
+            $fields[] = 'master_package_with_included';
             $fields[] = 'package_inclusion';
             $fields[] = 'package_exclusion';
             $fields[] = 'package_terms_condtition';
@@ -49,16 +47,16 @@ class Package extends \common\models\package\Package
             $fields[] = 'date_change_policy';
             $fields[] = 'refund_policy';
             $fields[] = 'getting_there';
-            $fields[] = 'pickanddrop';
+            $fields[] = 'pick_and_drop';
             $fields[] = 'meals';
-            $fields[] = 'mealslabel';
+            $fields[] = 'meals_label';
 
-            $fields[] = 'packagepark';
-            $fields[] = 'packagedays';
+            $fields[] = 'package_park';
+            $fields[] = 'package_days';
             $fields[] = 'faqs';
             $fields[] = 'type';
             $fields[] = 'master_vehicle_id';
-            $fields[] = 'packagefeaturesname';
+            $fields[] = 'package_features_name';
             $fields[] = 'safari_type';
             $fields[] = 'gst_percentage';
             $fields[] = 'package_agenda_id';
@@ -66,112 +64,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'status';
         }
         return $fields;
-        // if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
-        //     $fields[] = 'packagename';
-        //     $fields[] = 'masterPackageWithIncluded';
-        //     $fields[] = 'safarioperator';
-        //     $fields[] = 'packagepark';
-        //     $fields[] = 'pickanddrop';
-        //     $fields[] = 'meals';
-        //     $fields[] = 'mealslisting';
-        //     $fields[] = 'packagerange';
-        //     $fields[] = 'imagepath';
-        //     $fields[] = 'imagebannerpath';
-        //     $fields[] =  'packagedays';
-        //     // $fields[] = 'comments';
-        //     $fields[] = 'faqs';
-        //     $fields[] = 'isWishlist';
-        //     $hold_fields = [
-        //         'start_location',
-        //         'end_location',
-        //         'start_date',
-        //         'end_date',
-        //         'package_image',
-        //         'package_banner_image',
-        //         'owned_by_id',
-        //         'package_name',
-        //         'type',
-        //         'gst_percentage',
-        //         'master_vehicle_id',
-        //         'breakfast_included',
-        //         'lunch_included',
-        //         'dinner_included',
-        //         'meal_not_included',
-        //         'popular_package',
-        //         'delete_reason_id',
-        //         'delete_reason',
-        //         'total_view',
-        //         'status',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'created_by',
-        //         'updated_at',
-        //     ];
-        // } else {
-        //     $fields[] = 'pickanddrop';
-        //     $fields[] = 'mealslisting';
-        //     $fields[] = 'packagerange';
-        //     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['operator/default/view'])) {
-        //         $fields[] = 'safarioperator';
-        //     }
-        //     $fields[] = 'imagepath';
-        //     $fields[] = 'imagebannerpath';
-        //     $fields[] = 'packagename';
-        //     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
-        //         $fields[] = 'packagepark';
-        //     }
-
-        //     $fields[] = 'packagedaynightlabels';
-        //     $fields[] = 'isWishlist';
-        //     $hold_fields = [
-        //         'package_agenda_id',
-        //         'safari_type',
-        //         'start_location',
-        //         'end_location',
-        //         'start_date',
-        //         'end_date',
-        //         'package_image',
-        //         'package_banner_image',
-        //         'stay_category_id',
-        //         'cost_per_person',
-        //         'type',
-        //         'gst_percentage',
-        //         'package_description',
-        //         'package_itinerary_overview',
-        //         'package_inclusion',
-        //         'package_exclusion',
-        //         'package_terms_condtition',
-        //         'privacy_policy',
-        //         'change_policy',
-        //         'what_you_must_carry',
-        //         'date_change_policy',
-        //         'refund_policy',
-        //         'getting_there',
-        //         'master_vehicle_id',
-        //         'breakfast_included',
-        //         'lunch_included',
-        //         'dinner_included',
-        //         'meal_not_included',
-        //         'popular_package',
-        //         'delete_reason_id',
-        //         'delete_reason',
-        //         'owned_by_id',
-        //         'package_name',
-        //         'total_view',
-        //         'status',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'created_by',
-        //         'updated_at',
-        //     ];
-        // }
-
-
-
-        // return array_diff($fields, $hold_fields);
-        // return $fields;
+        
     }
 
     /**
@@ -191,7 +84,7 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getPackagename()
+    public function getPackage_display_name()
     {
 
         $name = $this->package_name;
@@ -209,7 +102,7 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getMasterPackageWithIncluded()
+    public function getMaster_package_with_included()
     {
 
         $arr = [];
@@ -250,7 +143,7 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
-    public function getPackagefeaturesname()
+    public function getPackage_features_name()
     {
         return $this->hasMany(MasterPackagefeature::class, ['id' => 'feature_id'])->via('packagefeatures');
     }
@@ -261,12 +154,12 @@ class Package extends \common\models\package\Package
     //     return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
     // }
 
-    public function getPackagedays()
+    public function getPackage_days()
     {
         return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
     }
 
-    public function getImagepath()
+    public function getImage_path()
     {
         $image_path = '';
         if (isset($this->package_image)) {
@@ -288,7 +181,7 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getImagebannerpath()
+    public function getImage_banner_path()
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
@@ -314,7 +207,7 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
     }
 
-    public function getCommentCount()
+    public function getComment_count()
     {
         return $this->getComments()->where(['parent_id' => null])->count();
     }
@@ -354,7 +247,7 @@ class Package extends \common\models\package\Package
         return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
     }
 
-    public function getPrimaryPark()
+    public function getPrimary_park()
     {
         return $this->singlepark ? $this->singlepark->park->title : null;
     }
@@ -368,12 +261,12 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
     }
 
-    public function getPackagepark()
+    public function getPackage_park()
     {
         return $this->hasMany(SafariPark::class, ['id' => 'park_id'])->via('packagesafaripark');
     }
 
-    public function getPackagerange()
+    public function getPackage_range()
     {
         return $this->hasOne(MetaPackageRange::class, ['id' => 'stay_category_id']);
     }
@@ -383,7 +276,7 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
     }
 
-    public function getPackagedaynightlabels()
+    public function getPackage_day_night_labels()
     {
         $options = [
             1 => '0N/1D',
@@ -407,7 +300,7 @@ class Package extends \common\models\package\Package
     }
 
 
-    public function getPickanddrop()
+    public function getPick_and_drop()
     {
         $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
@@ -429,7 +322,7 @@ class Package extends \common\models\package\Package
         return ($meals_text) ? $meals_text : 'Not Included';
     }
 
-    public function getMealslisting()
+    public function getMeals_listing()
     {
         if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
             return 'Included';
@@ -439,7 +332,7 @@ class Package extends \common\models\package\Package
         return 'Not Included';
     }
 
-    public function getMealslabel()
+    public function getMeals_label()
     {
         $mealOptions = [];
 
@@ -477,7 +370,7 @@ class Package extends \common\models\package\Package
             ],
             [
                 'question' => "Does the Package include transport to and from the resort?",
-                'answer' => $this->pickanddrop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
+                'answer' => $this->pick_and_drop == 'Included' ? "Yes: Transport to and from the resort is included in the Package." : "No: Transport is not included; you will need to arrange your own.",
             ],
             [
                 'question' => "Are accommodation arrangements included in the Package?",
@@ -495,7 +388,7 @@ class Package extends \common\models\package\Package
 
 
 
-    public function getIsWishlist()
+    public function getIs_wishlist()
     {
         $is_whislist = $this->activeUserWishlist;
         if (!empty($is_whislist)) {
@@ -514,18 +407,18 @@ class Package extends \common\models\package\Package
         return [
             // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
             // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
-            // 'packagedays' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
+            // 'package_days' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
             'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->packageState->slug . '/comment-view',
         ];
     }
 
-    public function getResourceuri()
+    public function getResource_uri()
     {
         return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->packageState->slug;
     }
 
-    public function getCanComment()
+    public function getCan_comment()
     {
         if (\Yii::$app->params['active_user_id']) {
             return true;
@@ -533,7 +426,7 @@ class Package extends \common\models\package\Package
         return false;
     }
 
-    public function getCanReply()
+    public function getCan_reply()
     {
         if (\Yii::$app->params['active_user_id'] == $this->owned_by_id) {
             return true;

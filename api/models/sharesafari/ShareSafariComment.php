@@ -14,10 +14,10 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         $fields = parent::fields();
         // $fields[] = 'park';
         // $fields[] = 'sharesafari';
-        $fields[] = 'dateTime';
+        $fields[] = 'date_time';
         $fields[] = 'user';
         // $fields[] = 'parent';
-        $fields[] = 'willflag';
+        $fields[] = 'will_flag';
         $fields[] = 'replies';
         $hold_fields = ['user_id','flaged', 'is_deleted', 'share_safari_id', 'park_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
@@ -57,7 +57,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         return $this->hasMany(self::class, ['parent_id' => 'id']);
     }
 
-    public function getWillflag()
+    public function getWill_flag()
     {
         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' =>  \Yii::$app->params['active_user_id'], 'share_safari_id' => $this->sharesafari->id, 'status' => 1])->limit(1)->one();
         if ($share_safari_intrested && $share_safari_intrested->user_id != $this->user_id) {
@@ -66,7 +66,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         return false;
     }
 
-    public function getDateTime()
+    public function getDate_time()
     {
         return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
     }

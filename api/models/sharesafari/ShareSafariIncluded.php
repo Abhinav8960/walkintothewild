@@ -11,7 +11,7 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
     public function fields()
     {
         $fields = [
-            'masterId',
+            'master_id',
             'title',
             'option'
         ];
@@ -41,7 +41,7 @@ class ShareSafariIncluded extends \common\models\sharesafari\ShareSafariIncluded
         return isset($this->masterPackageInclude) ? $this->masterPackageInclude->title : '';
     }
 
-    public function getMasterId()
+    public function getMaster_id()
     {
         return isset($this->masterPackageInclude) ? $this->masterPackageInclude->id : '';
     }

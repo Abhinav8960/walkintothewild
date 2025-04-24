@@ -35,7 +35,7 @@ class SafariParkRating extends \common\models\park\SafariParkRating
         $fields = parent::fields();
 
         $fields[] = 'user';
-        $fields[] = 'reviewdate';
+        $fields[] = 'review_date';
         $hold_fields = ['id', 'user_id', 'safari_park_id', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
 
@@ -52,7 +52,7 @@ class SafariParkRating extends \common\models\park\SafariParkRating
         return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
     }
 
-    public function getReviewdate()
+    public function getReview_date()
     {
         if ($this->created_at) {
             return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
