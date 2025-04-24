@@ -158,7 +158,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             3 => 'Wildelife Influencer'
         ];
 
-        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : $this->category_id;
+        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : null;
     }
 
     public function getUser()
