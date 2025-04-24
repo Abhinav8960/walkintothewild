@@ -702,7 +702,7 @@ class DefaultController extends Controller
     private function CopyPackageSafariPark($old_package_id, $new_package_id, $old_package_uuid, $new_package_uuid)
     {
         // package_safari_park_approval; 
-        $model = PackageSafariPark::find()->where(['package_uuid' => $old_package_uuid])->all();
+        $model = PackageSafariPark::find()->where(['package_id' => $old_package_id])->all();
         if ($model) {
             foreach ($model as $safari) {
                 $newModel = new PackageSafariPark();
