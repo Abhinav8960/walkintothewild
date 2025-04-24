@@ -10,13 +10,13 @@ class ShareSafariGallery extends \common\models\sharesafari\ShareSafariGallery
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'imagepath';
+        $fields[] = 'image_path';
         $hold_fields = ['image','sequence','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
    
-    public function getImagepath()
+    public function getImage_path()
     {
         if ($this->image != '') {
             return \Yii::$app->params['frontend_url_for_api'] .'storage/share_safari/gallery/' . $this->id . '/' . $this->image;

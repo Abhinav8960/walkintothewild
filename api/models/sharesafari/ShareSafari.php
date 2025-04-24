@@ -62,100 +62,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'share_safari_agenda';
             $fields[] = 'budget';
             $fields[] = 'comments_count';
-
-            // $fields[] = 'organizedId';
-            // $fields[] = 'intrestedUser';
             $fields[] = 'parks';
             $fields[] = 'share_safari_agenda_id';
             $fields[] = 'status';
         }
         return $fields;
-
-        // if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
-        //     $fields[] = 'types';
-        //     $fields[] = 'share_safari_agenda';
-        //     $fields[] = 'budget';
-        //     $fields[] = 'organizedbyname';
-        //     $fields[] = 'hosttype';
-        //     $fields[] = 'sharedimagepath';
-        //     $fields[] = 'park';
-        //     $fields[] = 'includeds';
-        //     $fields[] = 'share_safari_days';
-        //     $fields[] = 'sharesafarigallery';
-        //     if (!in_array(\Yii::$app->controller->action->uniqueId,  ['profile/default/index'])) {
-        //         $fields[] = 'intrestedUser';
-        //         // $fields[] = 'comments';
-        //     }
-        //     $fields[] = 'sharesafariFaqs';
-        //     $fields[] = 'isWishlist';
-        //     $fields[] = 'organizedbyimage';
-        //     $fields[] = 'witwaveragerating';
-        //     $fields[] = 'Witwreviewcount';
-        //     $fields[] = 'isFollowed';
-        //     $fields[] = 'organizedslug';
-        //     $fields[] = 'seatfullStatus';
-
-        //     $hold_fields = [
-        //         'delete_reason_id',
-        //         'delete_reason',
-        //         'share_safari_request_id',
-        //         'share_safari_agenda_id',
-        //         'stay_category_id',
-        //         'type',
-        //         'image',
-        //         'privacy_policy',
-        //         'change_policy',
-        //         'what_you_must_carry',
-        //         'park_id',
-        //         'total_view',
-        //         'host_user_id',
-        //         'status',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'created_by',
-        //         'updated_at',
-        //         'host_type'
-        //     ];
-        // } else {
-        //     $fields[] = 'types';
-        //     $fields[] = 'share_safari_agenda';
-        //     $fields[] = 'budget';
-        //     $fields[] = 'organizedbyname';
-        //     $fields[] = 'hosttype';
-        //     $fields[] = 'sharedimagepath';
-        //     $fields[] = 'intrestedUser';
-        //     $fields[] = 'organizedbyimage';
-        //     $fields[] = 'organizedslug';
-        //     $fields[] = 'seatfullStatus';
-
-        //     $hold_fields = [
-        //         'delete_reason_id',
-        //         'delete_reason',
-        //         'share_safari_request_id',
-        //         'share_safari_agenda_id',
-        //         'stay_category_id',
-        //         'type',
-        //         'image',
-        //         'park',
-        //         'privacy_policy',
-        //         'change_policy',
-        //         'what_you_must_carry',
-        //         'park_id',
-        //         'total_view',
-        //         'host_user_id',
-        //         'status',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'created_by',
-        //         'updated_at',
-        //         'host_type'
-        //     ];
-        // }
-
-        // return array_diff($fields, $hold_fields);
-        // return $fields;
     }
 
 
@@ -498,7 +409,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/sharedsafari/' . $this->getOrganizedslug() . '/' . $this->slug;
+        return Yii::$app->params['frontend_url'] . '/sharedsafari/' . $this->getOrganized_slug() . '/' . $this->slug;
     }
 
 

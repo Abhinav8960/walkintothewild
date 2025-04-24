@@ -16,7 +16,7 @@ class ShareSafariCommentReport extends \common\models\sharesafari\ShareSafariCom
         // $fields[] = 'sharesafari';
         $fields[] = 'comment';
         $fields[] = 'park';
-        $fields[] = 'reportreason';
+        $fields[] = 'report_reason';
         $fields[] = 'user';
         $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
@@ -42,7 +42,7 @@ class ShareSafariCommentReport extends \common\models\sharesafari\ShareSafariCom
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
-    public function getReportreason()
+    public function getReport_reason()
     {
         return $this->hasOne(Flagreason::className(), ['id' => 'report_reason_id']);
     }
