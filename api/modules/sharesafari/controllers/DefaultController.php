@@ -221,7 +221,7 @@ class DefaultController extends SafariController
         }
 
         if ($this->userinfo) {
-            if ($this->userinfo->operator) {
+            if ($this->userinfo->partner) {
                 return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
             }
             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
