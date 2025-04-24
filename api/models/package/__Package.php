@@ -323,7 +323,7 @@ class ___Package extends \common\models\package\Package
 
     public function getUser()
     {
-        return $this->safarioperator ? $this->safarioperator->user : null;
+        return $this->partner ? $this->partner->user : null;
         // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 
@@ -482,7 +482,7 @@ class ___Package extends \common\models\package\Package
     public function getUrls()
     {
         return [
-            'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
+            'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->partner->slug,
         ];
     }
 }

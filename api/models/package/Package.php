@@ -215,7 +215,7 @@ class Package extends \common\models\package\Package
 
     public function getSafarioperatorUser()
     {
-        return $this->safarioperator ? $this->safarioperator->user : null;
+        return $this->partner ? $this->partner->user : null;
         // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 
@@ -405,7 +405,7 @@ class Package extends \common\models\package\Package
     public function getUrls()
     {
         return [
-            // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->safarioperator->slug,
+            // 'operators' =>  Yii::$app->params['api_url'] . '/operator/' . $this->partner->slug,
             // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
             // 'package_days' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
@@ -415,7 +415,7 @@ class Package extends \common\models\package\Package
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->safarioperator->slug . '/' . $this->packageState->slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->slug . '/' . $this->packageState->slug;
     }
 
     public function getCan_comment()
