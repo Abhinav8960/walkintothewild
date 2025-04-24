@@ -23,17 +23,23 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
 
 
-        $fields = ['id', 'have_you_joined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organized_by_name', 'organized_by_image', 'organized_slug', 'shared_image_path', 'seat_full_Status', 'is_wishlist', 'is_followed', 'interseted_user_count', 'park_title', 'status'];
+        $fields = ['id', 'have_you_joined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organized_by_name', 'organized_by_image', 'organized_slug', 'shared_image_path', 'seat_full_status', 'is_wishlist', 'is_followed', 'interseted_user_count', 'park_title', 'status'];
         $fields[] = 'resource_uri';
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
         $fields[] = 'is_safari_operator';
 
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            $fields[] = 'cost_per_person';
+            $fields['cost_per_person'] =  function () {
+                return (int) ceil($this->cost_per_person);
+            };
         } else {
-            $fields[] = 'estimate_price_min';
-            $fields[] = 'estimate_price_max';
+            $fields['estimate_price_min'] =function () {
+                return (int) ceil($this->estimate_price_min);
+            };
+            $fields['estimate_price_max'] = function () {
+                return (int) ceil($this->estimate_price_max);
+            };
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
