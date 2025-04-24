@@ -79,7 +79,7 @@ class DefaultController extends RestController
 
             $data['data']['summary']['total'] = $dataProvider->getTotalCount();
             $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize + 1;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
             $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
@@ -104,6 +104,8 @@ class DefaultController extends RestController
                 "objective" => $randomType,
                 $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
+            $data['data']['summary']['is_additional_feed'] = 1;
+
             array_push($data['data']['feeds'], $hr);
         }
 

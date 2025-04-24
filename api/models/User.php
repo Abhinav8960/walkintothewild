@@ -21,11 +21,11 @@ class User extends \common\models\User
     {
         $fields = parent::fields();
 
-        $fields[] = 'profileimage';
-        $fields[] = 'coverimage';
-        $fields[] = 'usename';
+        $fields[] = 'profile_display_image';
+        $fields[] = 'cover_display_image';
+        $fields[] = 'display_name';
         $fields[] = 'is_safari_operator';
-        $fields[] = 'isFollowed';
+        $fields[] = 'is_followed';
 
         $hold_fields = [
             'id',
@@ -70,14 +70,14 @@ class User extends \common\models\User
             'updated_at'
         ];
         if (in_array(\Yii::$app->controller->layout, [\common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL])) {
-            $fields[] = 'userfollowerscount';
-            $fields[] = 'userfollowingscount';
-            $fields[] = 'organizedSafariCount';
-            $fields[] = 'joinedSafariCount';
-            $fields[] = 'parkvisted';
-            $fields[] = 'operatortype';
-            $fields[] = 'operatorSlug';
-            $fields[] = 'operatorStatus';
+            $fields[] = 'user_followers_count';
+            $fields[] = 'user_followings_count';
+            $fields[] = 'organized_safari_count';
+            $fields[] = 'joined_safari_count';
+            $fields[] = 'park_visted';
+            $fields[] = 'operator_type';
+            $fields[] = 'operator_slug';
+            $fields[] = 'operator_status';
 
             $hold_fields = [
                 'id',
@@ -107,7 +107,9 @@ class User extends \common\models\User
                 'created_by',
                 'updated_by',
                 'created_at',
-                'updated_at'
+                'updated_at',
+                'profile_image',
+                'cover_image',
             ];
             return array_diff($fields, $hold_fields);
             return $fields;
@@ -185,7 +187,7 @@ class User extends \common\models\User
         // return $fields;
     }
 
-    public function getProfileimage()
+    public function getProfile_display_image()
     {
         if ($this->operator && $this->operator->user_id == $this->id) {
             return $this->operator->imagepath ? $this->operator->imagepath : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
@@ -200,7 +202,7 @@ class User extends \common\models\User
         }
     }
 
-    public function getCoverimage()
+    public function getCover_display_image()
     {
         if ($this->cover_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
@@ -227,7 +229,7 @@ class User extends \common\models\User
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
 
-    public function getUsename()
+    public function getDisplay_name()
     {
         if ($this->operator && $this->operator->user_id == $this->id) {
             return $this->operator->businessname;
@@ -235,7 +237,7 @@ class User extends \common\models\User
         return $this->name;
     }
 
-    public function getOperatortype()
+    public function getOperator_type()
     {
         $arr = [
             'status' => 0,
@@ -247,18 +249,18 @@ class User extends \common\models\User
         return $arr;
     }
 
-    public function getUserfollowerscount()
+    public function getUser_followers_count()
     {
         return $this->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
-    public function getUserfollowingscount()
+    public function getUser_followings_count()
     {
         return $this->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
 
-    public function getOrganizedSafari()
+    public function getOrganized_safari()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
@@ -269,7 +271,7 @@ class User extends \common\models\User
         }
     }
 
-    public function getOrganizedSafariCount()
+    public function getOrganized_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->count();
@@ -279,7 +281,7 @@ class User extends \common\models\User
             return $organized_by;
         }
     }
-    public function getJoinedSafariCount()
+    public function getJoined_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
@@ -314,7 +316,7 @@ class User extends \common\models\User
         return $this->hasMany(UserExperience::className(), ['user_id' => 'id'])->where(['status' => UserExperience::STATUS_ACTIVE]);
     }
 
-    public function getParkvisted()
+    public function getPark_visted()
     {
         return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('userexperienced');
     }
@@ -328,7 +330,7 @@ class User extends \common\models\User
         return false;
     }
 
-    public function getOperatorSlug()
+    public function getOperator_slug()
     {
         if ($this->operator && $this->operator->user_id == $this->id) {
             return $this->operator->slug;
@@ -336,7 +338,7 @@ class User extends \common\models\User
         return '';
     }
 
-    public function getOperatorStatus()
+    public function getOperator_status()
     {
         if ($this->operator) {
             return $this->operator->status;
@@ -353,7 +355,7 @@ class User extends \common\models\User
         }
     }
 
-    public function getIsFollowed()
+    public function getIs_followed()
     {
         $is_followed = UserFollow::find()->where(['user_id' => \Yii::$app->params['active_user_id'], 'follow_user_id' => $this->id, 'status' => '1'])->one();
         if ($is_followed) {

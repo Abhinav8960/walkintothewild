@@ -27,7 +27,7 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $js = [
         'plugins/accordion/js/accordion.min.js',

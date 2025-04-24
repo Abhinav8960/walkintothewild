@@ -64,10 +64,10 @@ class Sighting extends \common\models\sighting\Sighting
         return [
             'name' => $this->user ? $this->user->safarioperatorname : '',
             'subtitle' => $this->user ? $this->user->user_handle : '',
-            'image' => $this->user ? $this->user->profileimage : '',
-            'isFollowed' => $this->user ? $this->user->isFollowed : '',
-            'isSafariOperator' => $this->user->operator ? true : false,
-            'operatorSlug' => $this->user->operator ? $this->user->operator->slug : '',
+            'image' => $this->user ? $this->user->profile_display_image : '',
+            'is_followed' => $this->user ? $this->user->is_followed : '',
+            'is_safari_operator' => $this->user->operator ? true : false,
+            'operator_slug' => $this->user->operator ? $this->user->operator->slug : '',
         ];
     }
 
