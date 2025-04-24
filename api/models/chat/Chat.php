@@ -21,6 +21,36 @@ use api\models\operator\SafariOperator;
  */
 class Chat extends \common\models\chat\Chat
 {
+
+    public function fields()
+    {
+
+
+
+        $fields = [
+            'id',
+            'chat_hash',
+            // 'user_id',
+            // 'recipient_user_id',
+            'last_message',
+            'last_message_at',
+            // 'chat_type',
+            // 'park_id',
+            // 'package_id',
+            'quote_id',
+            'status',
+            'is_seen',
+            'is_quote_accept',
+            'quote_price',
+            'quote_price_max',
+            'quote_more_detail',
+            // 'created_at',
+            // 'created_by',
+            // 'updated_at',
+            // 'updated_by'
+        ];
+        return $fields;
+    }
     /**
      * {@inheritdoc}
      */

@@ -39,7 +39,12 @@ class PackageQuoteForm extends Model
     public function rules()
     {
         return [
-            [['travelers', 'pack_start_date'], 'required', 'message' => 'Required'],
+            [['travelers', 'pack_start_date'], 'required', 'message' => '{attribute} is Required'],
+            [['pack_start_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['travelers'], 'integer', 'min' => 1, 'max' => 100, 'tooSmall' => 'Minimum 1 traveler', 'tooBig' => 'Maximum 100 travelers'],
+            [['pack_start_date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>=', 'type' => 'date', 'message' => '{attribute} must be today or a future date.'],
+
+
         ];
     }
 

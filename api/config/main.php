@@ -56,6 +56,9 @@ return [
         'sighting' => [
             'class' => 'api\modules\sighting\Module',
         ],
+        'chat' => [
+            'class' => 'api\modules\chat\Module',
+        ],
 
     ],
     'components' => [
@@ -174,8 +177,9 @@ return [
                 /** feeds */
                 'feeds' => 'feeds/default/index',
                 'feeds/sighting-home' => 'feeds/default/sighting-home',
-                
 
+                'chat/direct-user-chat'      => 'chat/default/direct-user-chat',
+                'chat/quatation-chat'   => 'chat/default/quatation-chat',
 
 
             ],

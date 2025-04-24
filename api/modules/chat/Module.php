@@ -1,6 +1,6 @@
 <?php
 
-namespace business\modules\chat;
+namespace api\modules\chat;
 
 use Yii;
 
@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'business\modules\chat\controllers';
+    public $controllerNamespace = 'api\modules\chat\controllers';
 
     /**
      * {@inheritdoc}
@@ -20,11 +20,6 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
-        if (!isset(Yii::$app->user->identity)) {
-            return Yii::$app->getResponse()->redirect('/site/login')->send();
-            exit;
-        }
+       
     }
 }

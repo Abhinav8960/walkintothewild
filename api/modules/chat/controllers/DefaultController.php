@@ -1,23 +1,124 @@
 <?php
 
-namespace business\modules\chat\controllers;
+namespace api\modules\chat\controllers;
 
+use api\behaviours\Apiauth;
 use Yii;
-use common\models\User;
-use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
-use common\models\chat\ChatSearch;
-use common\models\package\Package;
-use common\models\park\SafariPark;
-use common\models\MailLog;
-use common\models\GeneralModel;
-use yii\web\Controller;
+use api\models\User;
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
+use api\models\chat\ChatSearch;
+use api\models\package\Package;
+use api\models\park\SafariPark;
+use api\models\MailLog;
+use api\models\GeneralModel;
+use api\controllers\RestController;
+use yii\filters\AccessControl;
+use api\behaviours\Verbcheck;
+use yii\data\ActiveDataProvider;
+
 
 /**
  * Default controller for the `chat` module
  */
-class DefaultController extends  Controller
+class DefaultController extends RestController
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+
+        return $behaviors + [
+            'apiauth' => [
+                'class' => Apiauth::className(),
+                'exclude' => [],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'direct', 'quatation-chat'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'direct', 'quatation-chat'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+
+                ],
+            ],
+            'verbs' => [
+                'class' => Verbcheck::className(),
+                'actions' => [
+                    'index' => ['GET'],
+                    'direct-user-chat' => ['GET'],
+                    'quotation-chat' => ['GET'],
+                    'quotations' => ['GET'],
+                    'chat-user-list' => ['GET'],
+                ],
+            ],
+        ];
+    }
+
+
+
+    public function actionDirectUserChat()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 1]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "chats");
+    }
+
+    public function actionQuatationChat()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "quotations");
+    }
+
+    public function actionQuotations(){
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "quotations");
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Renders the index view for the module
      * @return string
@@ -25,14 +126,14 @@ class DefaultController extends  Controller
     public function actionIndex()
     {
         $searchModel = new ChatSearch();
-        $login_user = Yii::$app->user->identity;
+        $login_user = $this->userinfo;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($login_user) {
-            $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
+            $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC])->all();
 
-            $active_quote_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
-            $unseen_quote_chat_count = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->andWhere(['chat_type' => 2, 'is_seen' => 0])->orderby(['last_message_at' => SORT_DESC])->andWhere('updated_by<>' . Yii::$app->user->id)->count();
+            $active_quote_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+            $unseen_quote_chat_count = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2, 'is_seen' => 0])->orderby(['last_message_at' => SORT_DESC])->andWhere('updated_by<>' . $this->userinfo->id)->count();
         } else {
             $active_chat_list = [];
             $active_quote_chat_list = [];
@@ -76,6 +177,8 @@ class DefaultController extends  Controller
                 $individual_chat->save(false);
             }
         }
+
+
         $searchModel = new ChatSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($login_user) {
