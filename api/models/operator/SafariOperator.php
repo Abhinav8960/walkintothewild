@@ -19,12 +19,18 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status'];
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
+            return (bool)$this->status;
+        },];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'park';
-            $fields[] = 'is_approved';
-            $fields[] = 'has_cancellation_policy';
+            $fields['is_approved'] = function () {
+                return (bool)$this->is_approved;
+            };
+            $fields['has_cancellation_policy'] = function () {
+                return (bool)$this->has_cancellation_policy;
+            };
             $fields[] = 'budget';
             $fields[] = 'other_wildlife_activity';
             $fields[] = 'facebook_url';
