@@ -189,8 +189,8 @@ class User extends \common\models\User
 
     public function getProfile_display_image()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->imagepath ? $this->operator->imagepath : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->imagepath ? $this->partner->imagepath : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
         }
 
         if ($this->profile_image != '') {
@@ -224,15 +224,15 @@ class User extends \common\models\User
         return $this->hasMany(ShareSafari::class, ['host_user_id' => 'id']);
     }
 
-    public function getOperator()
+    public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
 
     public function getDisplay_name()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->businessname;
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->businessname;
         }
         return $this->name;
     }
@@ -242,9 +242,9 @@ class User extends \common\models\User
         $arr = [
             'status' => 0,
         ];
-        if (!empty($this->operator)) {
-            $arr['status'] = $this->operator->status;
-            $arr['title'] = $this->operator->categorytitle ?? NULL;
+        if (!empty($this->partner)) {
+            $arr['status'] = $this->partner->status;
+            $arr['title'] = $this->partner->categorytitle ?? NULL;
         }
         return $arr;
     }
@@ -332,24 +332,24 @@ class User extends \common\models\User
 
     public function getOperator_slug()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->slug;
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->slug;
         }
         return '';
     }
 
     public function getOperator_status()
     {
-        if ($this->operator) {
-            return $this->operator->status;
+        if ($this->partner) {
+            return $this->partner->status;
         }
         return 0;
     }
 
-    public function getSafarioperatorname()
+    public function getPartnername()
     {
         if ($this->is_safari_operator == 1) {
-            return $this->operator ? $this->operator->businessname : $this->name;
+            return $this->partner ? $this->partner->businessname : $this->name;
         } else {
             return $this->name;
         }
