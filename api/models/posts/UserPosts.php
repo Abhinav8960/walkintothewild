@@ -11,13 +11,13 @@ class UserPosts extends \common\models\UserPosts
     {
         $fields = parent::fields();
 
-        $fields[] = 'fullimagepath';
+        $fields[] = 'full_image_path';
         $fields[] = 'comments';
-        $fields[] = 'isLiked';
-        $fields[] = 'likesCount';
-        $fields[] = 'commentsCount';
-        $fields[] = 'postuserdetail';
-        $fields[] = 'resourceuri';
+        $fields[] = 'is_liked';
+        $fields[] = 'likes_count';
+        $fields[] = 'comments_count';
+        $fields[] = 'post_user_detail';
+        $fields[] = 'resource_uri';
         $hold_fields = ['filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
@@ -31,7 +31,7 @@ class UserPosts extends \common\models\UserPosts
     }
 
 
-    public function getFullimagepath()
+    public function getFull_image_path()
     {
         // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
 
@@ -57,7 +57,7 @@ class UserPosts extends \common\models\UserPosts
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getPostuserdetail()
+    public function getPost_user_detail()
     {
         return [
             'name' => $this->user ? $this->user->name : '',
@@ -70,7 +70,7 @@ class UserPosts extends \common\models\UserPosts
     }
 
 
-    public function getIsLiked()
+    public function getIs_liked()
     {
         $is_liked = UserPostLike::find()->where(['user_post_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'user_post_like.status' => 1])->limit(1)->one();
         if ($is_liked) {
@@ -85,17 +85,17 @@ class UserPosts extends \common\models\UserPosts
         return $this->hasMany(UserPostLike::class, ['user_post_id' => 'id']);
     }
 
-    public function getLikesCount()
+    public function getLikes_count()
     {
         return $this->getLike()->count();
     }
 
-    public function getCommentsCount()
+    public function getComments_count()
     {
         return $this->getComments()->andWhere(['user_post_comment.status' => 1])->count();
     }
 
-    public function getResourceuri()
+    public function getResource_uri()
     {
         return Yii::$app->params['frontend_url'] . '/posts/' . base64_encode($this->id);
     }
