@@ -24,7 +24,7 @@ class SafariParkGallery extends \common\models\park\SafariParkGallery
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'imagepath';
+        $fields[] = 'image_path';
 
 
 
@@ -44,7 +44,7 @@ class SafariParkGallery extends \common\models\park\SafariParkGallery
         return $fields;
     }
 
-    public function getImagepath()
+    public function getImage_path()
     {
         if ($this->image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/safariparkgallery/' . $this->id . '/' . $this->image;
