@@ -74,7 +74,7 @@ class User extends \common\models\User
             $fields[] = 'user_followings_count';
             $fields[] = 'organized_safari_count';
             $fields[] = 'joined_safari_count';
-            $fields[] = 'park_visted';
+            $fields[] = 'park_visited';
             $fields[] = 'operator_type';
             $fields[] = 'operator_slug';
             $fields[] = 'operator_status';
@@ -316,7 +316,7 @@ class User extends \common\models\User
         return $this->hasMany(UserExperience::className(), ['user_id' => 'id'])->where(['status' => UserExperience::STATUS_ACTIVE]);
     }
 
-    public function getPark_visted()
+    public function getPark_visited()
     {
         return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('userexperienced');
     }
