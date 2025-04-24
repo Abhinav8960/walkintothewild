@@ -34,7 +34,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 return (int) ceil($this->cost_per_person);
             };
         } else {
-            $fields['estimate_price_min'] =function () {
+            $fields['estimate_price_min'] = function () {
                 return (int) ceil($this->estimate_price_min);
             };
             $fields['estimate_price_max'] = function () {
@@ -47,10 +47,18 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'website_url';
             $fields[] = 'witw_average_rating';
             $fields[] = 'witw_review_count';
-            $fields[] = 'breakfast_included';
-            $fields[] = 'lunch_included';
-            $fields[] = 'dinner_included';
-            $fields[] = 'meal_not_included';
+            $fields['breakfast_included'] = function () {
+                return (bool) $this->breakfast_included;
+            };
+            $fields['lunch_included'] = function () {
+                return (bool) $this->lunch_included;
+            };
+            $fields['dinner_included'] = function () {
+                return (bool) $this->dinner_included;
+            };
+            $fields['meal_not_included'] = function () {
+                return (bool) $this->meal_not_included;
+            };
             $fields[] = 'faqs';
             $fields[] = 'meals_label';
 
