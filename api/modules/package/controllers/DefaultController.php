@@ -46,14 +46,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'staycategory', 'comment-view', 'package-park', 'package-days', 'package-faqs'],
+                'exclude' => ['index', 'view', 'staycategory', 'comment-view', 'package-park', 'package-days', 'package-faqs', 'quotation'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,6 +76,7 @@ class DefaultController extends RestController
                     'package-park' => ['GET'],
                     'package-days'  => ['GET'],
                     'package-faqs' => ['GET'],
+                    'quotation' => ['POST'],
                 ],
             ],
         ];
@@ -359,7 +360,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageDaySearch();
-        $searchModel->status = PackageDaySearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "PackageDay");
     }
@@ -372,7 +373,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->status = PackageFaqSearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
 
 
@@ -420,5 +421,43 @@ class DefaultController extends RestController
             ],
 
         ];
+    }
+
+    public function actionQuotation($slug)
+    {
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+        if (!$package) {
+            return \Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        if ($this->userinfo && isset($package->safarioperator) && $this->userinfoId == $package->safarioperator->user_id) {
+            return \Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
+        }
+        $packagemodel = new PackageQuoteForm();
+
+        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
+            if ($packagemodel->validate()) {
+                $packagemodel->request($package->id);
+            } else {
+                return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
+            // Send Notification for Package Quote
+            // FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity);
+
+            // return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+        }
+
+        // return $this->render(
+        //     'view',
+        //     [
+        //         // 'package' => $package,
+        //         'faqs' => $faqs,
+        //         'model' => $model,
+        //         'packagemodel' => $packagemodel,
+        //         'login_safarioperator' => $login_safarioperator,
+        //     ]
+        // );
+
+        // return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "packages", $condition);
     }
 }

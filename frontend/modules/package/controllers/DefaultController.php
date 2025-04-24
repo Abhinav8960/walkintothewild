@@ -483,6 +483,4 @@ class DefaultController extends FrontendBaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-    
 }

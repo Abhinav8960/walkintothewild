@@ -64,8 +64,11 @@ class PackageQuoteForm extends Model
     {
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
+        $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+
         $package_quote = new PackageQuote();
         $package_quote->package_id = $package_id;
+        $package_quote->package_uuid = $package->uuid;
         $package_quote->travelers = $this->travelers;
         $package_quote->start_date = $this->pack_start_date;
         $package_quote->ip_address = Yii::$app->getRequest()->getUserIp();
@@ -78,7 +81,7 @@ class PackageQuoteForm extends Model
         if ($package_quote->save(false)) {
             //save quote chat 
             $login_user = Yii::$app->user->identity;
-            $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+            // $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
 
             $package_data = Package::find()->where(['id' => $package_quote->package_id])->asArray()->one();
             $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
@@ -98,7 +101,7 @@ class PackageQuoteForm extends Model
             $chat->package_id = $package_quote->package_id;
             $chat->quote_id = $package_quote->id;
             $chat->is_seen = 0;
-            
+
 
             if ($chat->save(false)) {
                 $chat_message = new ChatMessage();
@@ -118,11 +121,11 @@ class PackageQuoteForm extends Model
                         $chat_url = "/chat/message/" . Yii::$app->user->identity->user_handle . "/" . base64_encode($chat->id);
                         $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'chat_url' => $chat_url, 'is_email_sending' => true];
 
-                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                            FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity, $chat_url);
-                        }
+                        // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                        //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        //     FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity, $chat_url);
+                        // }
                     }
                 }
             }
