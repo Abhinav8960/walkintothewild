@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 
 $this->title = 'Package : ' . $package_model->package_name;
 $this->params['breadcrumbs_home_url'] = '#';
@@ -22,7 +22,7 @@ $this->params['title'] = $this->title;
                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                         <div class="card mb-0">
                             <div class="card-header" id="heading<?= $i ?>" role="tab">
-                                <a class="day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>" href="#">Day <?= $i ?></a>
+                                <a class="day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>" href="#" style="text-decoration:none;">Day <?= $i ?></a>
                             </div>
                             <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
                                 <div class="card-body">
@@ -38,14 +38,14 @@ $this->params['title'] = $this->title;
                                                 'value' => $i,
                                                 'placeholder' => 'Enter Day',
                                                 'id' => 'dayitineraryform-day' . $i,
-                                            ]) ?>
+                                            ])->label('DAY'); ?>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <?= $form->field($model, 'day_title')->textInput([
                                                 'maxlength' => true,
                                                 'placeholder' => 'Enter Day Title',
                                                 'id' => 'dayitineraryform-day_title' . $i,
-                                            ]) ?>
+                                            ])->label('DAY TITLE'); ?>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -58,35 +58,34 @@ $this->params['title'] = $this->title;
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <?= $form->field($model, 'start_location')->textInput([
                                                 'maxlength' => true,
-                                                'placeholder' => 'Enter Start Location',
+                                                'placeholder' => 'Enter',
                                                 'id' => 'dayitineraryform-start_location' . $i,
-                                            ]) ?>
+                                            ])->label('START LOCATION'); ?>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <?= $form->field($model, 'end_location')->textInput([
                                                 'maxlength' => true,
-                                                'placeholder' => 'Enter End Location',
+                                                'placeholder' => 'Enter',
                                                 'id' => 'dayitineraryform-end_location' . $i,
-                                            ]) ?>
+                                            ])->label('END LOCATION'); ?>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <?= $form->field($model, 'hotel_name')->textInput([
                                                 'maxlength' => true,
-                                                'placeholder' => 'Enter Accommodation Name',
+                                                'placeholder' => 'Enter',
                                                 'id' => 'dayitineraryform-hotel_name' . $i,
-                                            ])->label('Accommodation') ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Latitude'])->label('Accommodation Latitude') ?>
+                                            ])->label('ACCOMODATION') ?>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Longitude'])->label('Accommodation Longitude') ?>
+                                        <div class="col-md-2">
+                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('ACCOMODATION LATITUDE') ?>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('ACCOMODATION LONGITUDE') ?>
                                         </div>
                                         <?php
 
@@ -106,14 +105,14 @@ $this->params['title'] = $this->title;
                                     </div>
                                     <div class="row">
                                         <?php if ($model->package_day_model->day_image) { ?>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                                             </div>
                                             <div class="col-md-1">
                                                 <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
                                             </div>
                                         <?php } else { ?>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                                             </div>
                                         <?php } ?>
@@ -141,7 +140,7 @@ $this->params['title'] = $this->title;
 
 <style>
     .ck-editor__editable {
-        min-height: 350px;
+        min-height: 150px;
     }
 </style>
 
