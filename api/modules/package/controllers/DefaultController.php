@@ -50,10 +50,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,6 +76,7 @@ class DefaultController extends RestController
                     'package-park' => ['GET'],
                     'package-days'  => ['GET'],
                     'package-faqs' => ['GET'],
+                    'quotation' => ['POST'],
                 ],
             ],
         ];
@@ -246,7 +247,7 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        if ($this->userinfo && isset($package->safarioperator) && $this->userinfoId == $package->safarioperator->user_id) {
+        if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
         $packagemodel = new PackageQuoteForm();
@@ -320,7 +321,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageCommentSearch();
-        $searchModel->status = PackageCommentSearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageCommentSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "comments");
     }
@@ -334,7 +335,7 @@ class DefaultController extends RestController
 
 
         $packageSafariPark = PackageSafariPark::find()
-            ->where(['status' => SafariOperator::APPROVED_AND_LIVE_STATUS, 'package_id' => $package->id])
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
             ->all();
         if (!$packageSafariPark) {
             return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
@@ -359,7 +360,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageDaySearch();
-        $searchModel->status = PackageDaySearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageDaySearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
         return $this->dataProviderSender($searchModel, "PackageDay");
     }
@@ -372,7 +373,7 @@ class DefaultController extends RestController
         }
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->status = PackageFaqSearch::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageFaqSearch::STATUS_ACTIVE;
         $searchModel->package_id = $package->id;
 
 
@@ -421,4 +422,6 @@ class DefaultController extends RestController
 
         ];
     }
+
+    
 }

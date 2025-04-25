@@ -2,6 +2,7 @@
 
 namespace api\models;
 
+use api\models\chat\Chat;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -21,11 +22,10 @@ class User extends \common\models\User
     {
         $fields = parent::fields();
 
-        $fields[] = 'profileimage';
-        $fields[] = 'coverimage';
-        $fields[] = 'usename';
-        $fields[] = 'is_safari_operator';
-        $fields[] = 'isFollowed';
+        $fields[] = 'profile_display_image';
+        $fields[] = 'cover_display_image';
+        $fields[] = 'display_name';
+        $fields[] = 'is_followed';
 
         $hold_fields = [
             'id',
@@ -70,20 +70,20 @@ class User extends \common\models\User
             'updated_at'
         ];
         if (in_array(\Yii::$app->controller->layout, [\common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL])) {
-            $fields[] = 'userfollowerscount';
-            $fields[] = 'userfollowingscount';
-            $fields[] = 'organizedSafariCount';
-            $fields[] = 'joinedSafariCount';
-            $fields[] = 'parkvisted';
-            $fields[] = 'operatortype';
-            $fields[] = 'operatorSlug';
-            $fields[] = 'operatorStatus';
+            $fields[] = 'user_followers_count';
+            $fields[] = 'user_followings_count';
+            $fields[] = 'organized_safari_count';
+            $fields[] = 'joined_safari_count';
+            $fields[] = 'park_visited';
+            $fields[] = 'operator_type';
+            $fields[] = 'operator_slug';
+            $fields[] = 'operator_status';
 
             $hold_fields = [
                 'id',
                 "password_hash",
                 "auth_key",
-                
+
                 "gender",
                 "token_key",
                 "is_adminstrator",
@@ -107,88 +107,27 @@ class User extends \common\models\User
                 'created_by',
                 'updated_by',
                 'created_at',
-                'updated_at'
+                'updated_at',
+                'profile_image',
+                'cover_image',
             ];
-            return array_diff($fields, $hold_fields);
+            $fields = array_diff($fields, $hold_fields);
+            $fields['is_safari_operator'] = function () {
+                return (bool) $this->is_safari_operator;
+            };
             return $fields;
         }
-        return array_diff($fields, $hold_fields);
+        $fields =  array_diff($fields, $hold_fields);
+        $fields['is_safari_operator'] = function () {
+            return (bool) $this->is_safari_operator;
+        };
         return $fields;
-
-        // if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index', 'sharesafari/default/comment-view', 'package/default/comment-view','sharesafari/default/intrested-user'])) {
-        //     if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
-        //         $fields[] = 'userfollowerscount';
-        //         $fields[] = 'userfollowingscount';
-        //         // $fields[] = 'organizedSafari';
-        //         // $fields[] = 'joinedsharesafari';
-        //         $fields[] = 'organizedSafariCount';
-        //         $fields[] = 'joinedSafariCount';
-        //         $fields[] = 'parkvisted';
-        //         $fields[] = 'loggedinuserfollowed';
-        //     }
-        //     $hold_fields = [
-        //         'mobile_no',
-        //         "password_hash",
-        //         "auth_key",
-        //         // "facebook_url",
-        //         // "whatsapp_url",
-        //         // "x_url",
-        //         // "insta_url",
-        //         // "website_url",
-        //         // "youtube_url",
-        //         // "about",
-        //         "user_bio",
-        //         "date_of_birth",
-        //         "gender",
-        //         "token_key",
-        //         "is_adminstrator",
-        //         "is_admin",
-        //         "is_safari_operator",
-        //         "is_birding_operator",
-        //         "is_cms_manager",
-        //         "is_resort_manager",
-        //         "is_report_manager",
-        //         "is_community_manager",
-        //         "avatar",
-        //         "gmail",
-        //         "google_source_id",
-        //         "profile_image",
-        //         "cover_image",
-        //         // "user_handle",
-        //         "blocked_at",
-        //         "account_type",
-        //         "password_updated_at",
-        //         "gender_privacy",
-        //         "email_privacy",
-        //         "photo_privacy",
-        //         "contribution_privacy",
-        //         "can_login",
-        //         "verification_token",
-        //         "status",
-        //         'password_reset_token',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'updated_at'
-        //     ];
-        // } else {
-        //     if (in_array(\Yii::$app->controller->action->uniqueId, ['site/profile'])) {
-        //         $fields[] = 'operatortype';
-        //         $fields[] = 'operatorSlug';
-        //         $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image",    "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        //     } else {
-
-        //         $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image",    "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        //     }
-        // }
-        // return array_diff($fields, $hold_fields);
-        // return $fields;
     }
 
-    public function getProfileimage()
+    public function getProfile_display_image()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->imagepath ? $this->operator->imagepath : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->imagepath ? $this->partner->imagepath : \Yii::$app->params['frontend_url'] . '/img/operator-placeholder-80.jpg';
         }
 
         if ($this->profile_image != '') {
@@ -200,7 +139,7 @@ class User extends \common\models\User
         }
     }
 
-    public function getCoverimage()
+    public function getCover_display_image()
     {
         if ($this->cover_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
@@ -222,43 +161,43 @@ class User extends \common\models\User
         return $this->hasMany(ShareSafari::class, ['host_user_id' => 'id']);
     }
 
-    public function getOperator()
+    public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
 
-    public function getUsename()
+    public function getDisplay_name()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->businessname;
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->businessname;
         }
         return $this->name;
     }
 
-    public function getOperatortype()
+    public function getOperator_type()
     {
         $arr = [
             'status' => 0,
         ];
-        if (!empty($this->operator)) {
-            $arr['status'] = $this->operator->status;
-            $arr['title'] = $this->operator->categorytitle ?? NULL;
+        if (!empty($this->partner)) {
+            $arr['status'] = $this->partner->status;
+            $arr['title'] = $this->partner->categorytitle ?? NULL;
         }
         return $arr;
     }
 
-    public function getUserfollowerscount()
+    public function getUser_followers_count()
     {
         return $this->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
-    public function getUserfollowingscount()
+    public function getUser_followings_count()
     {
         return $this->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
 
-    public function getOrganizedSafari()
+    public function getOrganized_safari()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
@@ -269,7 +208,7 @@ class User extends \common\models\User
         }
     }
 
-    public function getOrganizedSafariCount()
+    public function getOrganized_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $this->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->count();
@@ -279,7 +218,7 @@ class User extends \common\models\User
             return $organized_by;
         }
     }
-    public function getJoinedSafariCount()
+    public function getJoined_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
@@ -314,7 +253,7 @@ class User extends \common\models\User
         return $this->hasMany(UserExperience::className(), ['user_id' => 'id'])->where(['status' => UserExperience::STATUS_ACTIVE]);
     }
 
-    public function getParkvisted()
+    public function getPark_visited()
     {
         return $this->hasMany(SafariPark::className(), ['id' => 'park_id'])->via('userexperienced');
     }
@@ -328,37 +267,53 @@ class User extends \common\models\User
         return false;
     }
 
-    public function getOperatorSlug()
+    public function getOperator_slug()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->slug;
+        if ($this->partner && $this->partner->user_id == $this->id) {
+            return $this->partner->slug;
         }
         return '';
     }
 
-    public function getOperatorStatus()
+    public function getOperator_status()
     {
-        if ($this->operator) {
-            return $this->operator->status;
+        if ($this->partner) {
+            return $this->partner->status;
         }
         return 0;
     }
 
-    public function getSafarioperatorname()
+    public function getPartnername()
     {
         if ($this->is_safari_operator == 1) {
-            return $this->operator ? $this->operator->businessname : $this->name;
+            return $this->partner ? $this->partner->businessname : $this->name;
         } else {
             return $this->name;
         }
     }
 
-    public function getIsFollowed()
+    public function getIs_followed()
     {
         $is_followed = UserFollow::find()->where(['user_id' => \Yii::$app->params['active_user_id'], 'follow_user_id' => $this->id, 'status' => '1'])->one();
         if ($is_followed) {
             return true;
         }
         return false;
+    }
+
+    public function getChatsend()
+    {
+        return $this->hasMany(Chat::className(), ['user_id' => 'id']);
+    }
+
+    public function getChatrecive()
+    {
+        return $this->hasMany(Chat::className(), ['recipient_user_id' => 'id']);
+    }
+
+    public function getChat()
+    {
+        return $this->hasMany(Chat::className(), [])
+            ->onCondition(['or', ['chat.user_id' => new \yii\db\Expression('user.id')], ['chat.recipient_user_id' => new \yii\db\Expression('user.id')]]);
     }
 }

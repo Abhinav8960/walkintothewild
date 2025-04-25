@@ -534,4 +534,5 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return implode(', ', $roles);
     }
+    
 }

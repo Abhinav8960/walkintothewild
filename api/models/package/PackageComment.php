@@ -31,9 +31,9 @@ class PackageComment extends \common\models\package\PackageComment
     {
         $fields = parent::fields();
         $fields[] = 'user';
-        $fields[] = 'dateTime';
+        $fields[] = 'date_time';
         $fields[] = 'replies';
-        $fields[] = 'willflag';
+        $fields[] = 'will_flag';
         $hold_fields = [ 'user_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -61,7 +61,7 @@ class PackageComment extends \common\models\package\PackageComment
     // }
 
     /**User Will flag */
-    public function getWillflag()
+    public function getwill_flag()
     {
         if (\Yii::$app->params['active_user_id'] && $this->user_id != \Yii::$app->params['active_user_id']) {
             return true;
@@ -69,7 +69,7 @@ class PackageComment extends \common\models\package\PackageComment
         return false;
     }
 
-    public function getDateTime()
+    public function getDate_time()
     {
         return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
     }

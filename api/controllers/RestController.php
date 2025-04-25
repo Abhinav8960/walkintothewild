@@ -140,11 +140,13 @@ class RestController extends Controller
 
     protected function dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search")
     {
+        // print_r($additionalSearchQueryParams);
+        // die();
         $data = [];
         $searchModel->load(\Yii::$app->request->queryParams);
         $searchModel->setAttributes(\Yii::$app->request->queryParams);
         if (!empty($additionalSearchQueryParams)) {
-            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams, implode(",", $additionalSearchQueryParams));
+            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams, implode(", ", $additionalSearchQueryParams));
         } else {
             $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams);
         }
@@ -154,6 +156,7 @@ class RestController extends Controller
                 $dataProvider->pagination = false;
             }
         }
+        
         // print_r($dataProvider->pagination);
 
         // die();
@@ -162,12 +165,13 @@ class RestController extends Controller
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
+           
             $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
             $data[$rootIndexName]['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
             $data[$rootIndexName]['summary']['pageSize'] = (int) $dataProvider->pagination->pageSize;
             $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
-
+        
         return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
     }
 
@@ -302,13 +306,13 @@ class RestController extends Controller
         if (array_key_exists('slug', $request->queryParams)) {
             $slug = $request->queryParams['slug'];
         }
-       
+
         $request_url = $request->pathInfo;
         if (strpos($request_url, 'storage') === false) {
             $model = new ApiRequestLog();
             $model->user_id = $userid;
             $model->slug = $slug;
-            $model->route = NULL;//$route;
+            $model->route = NULL; //$route;
             $model->request_url = $request->pathInfo;
             $model->request_full_url = $request->absoluteUrl;
             $model->request_type = $request->method;
@@ -319,17 +323,17 @@ class RestController extends Controller
             $model->is_server_error = $response->isServerError;
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
-            $model->device = NULL ;//$agent->device();
-            
+            $model->device = NULL; //$agent->device();
+
             // if(is_array($result)){
             //     $result =  json_encode($result);
             // }
             $model->response =  json_encode($result);
-           
-            $model->system = NULL ; //$system_type;
-            $model->platform = NULL ; //$agent->platform();
-            $model->browser = NULL ; //$agent->browser();
-            $model->browser_version = NULL;//$agent->version($agent->browser());
+
+            $model->system = NULL; //$system_type;
+            $model->platform = NULL; //$agent->platform();
+            $model->browser = NULL; //$agent->browser();
+            $model->browser_version = NULL; //$agent->version($agent->browser());
             $model->save(false);
         }
         //end code to each request trace by sonu shokeen

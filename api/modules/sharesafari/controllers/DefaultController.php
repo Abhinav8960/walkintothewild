@@ -221,7 +221,7 @@ class DefaultController extends SafariController
         }
 
         if ($this->userinfo) {
-            if ($this->userinfo->operator) {
+            if ($this->userinfo->partner) {
                 return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
             }
             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
@@ -248,7 +248,7 @@ class DefaultController extends SafariController
                 if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                     $to_mail = $share_safari->user->username;
                 } else {
-                    $to_mail = $share_safari->safarioperator->user->username;
+                    $to_mail = $share_safari->partner->user->username;
                 }
                 $creator_name = $share_safari->organizedbyname;
                 $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
@@ -432,7 +432,7 @@ class DefaultController extends SafariController
                     if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                         $to_mail = $share_safari->user->username;
                     } else {
-                        $to_mail = $share_safari->safarioperator->user->username;
+                        $to_mail = $share_safari->partner->user->username;
                     }
                     $creator_name = $share_safari->organizedbyname;
                     $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');

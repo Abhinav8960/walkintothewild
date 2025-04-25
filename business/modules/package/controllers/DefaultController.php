@@ -2,9 +2,8 @@
 
 namespace business\modules\package\controllers;
 
-use api\behaviours\Verbcheck;
-use business\controllers\BusinessController;
 use common\models\master\faq\MasterFaq;
+use common\models\operator\SafariOperator;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageForm;
@@ -23,15 +22,15 @@ use common\models\package\PackageStates;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
  * DefaultController.
  */
-class DefaultController extends BusinessController
+class DefaultController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -74,9 +73,10 @@ class DefaultController extends BusinessController
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = 1;
         $searchModel->status = Package::EDIATBLE_STATUS;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->owned_by_id = $this->operatormodel()->id;
+
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -91,11 +91,14 @@ class DefaultController extends BusinessController
      */
     public function actionCreate()
     {
+        $safari_operator = $this->operatormodel();
+
         $model = new PackageForm();
-        $model->status = Package::APPROVED_AND_LIVE_STATUS;
         $model->status = Package::EDIATBLE_STATUS;
-        // $model->owned_by_id = $safari_operator->id;
+        $model->owned_by_id = $safari_operator->id;
+
         $model->scenario = 'create';
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
@@ -121,17 +124,18 @@ class DefaultController extends BusinessController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
                         }
 
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['update', 'id' => $model->package_model->id]);
                     } else {
                         print_r($model->getErrors());
                         print_r($model->package_model->getErrors());
@@ -195,10 +199,11 @@ class DefaultController extends BusinessController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_uuid = $model->package_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -476,8 +481,15 @@ class DefaultController extends BusinessController
     {
         $model = $this->findModel($id);
 
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $model->id;
+        $searchModel->status = PackageFaq::STATUS_ACTIVE;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
         return $this->render('view', [
             'package' => $model,
+            'faqs' => $faqs,
         ]);
     }
 
@@ -490,7 +502,7 @@ class DefaultController extends BusinessController
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
@@ -520,10 +532,6 @@ class DefaultController extends BusinessController
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
             return $this->redirect(Yii::$app->request->referrer);
-
-            echo "<pre>";
-            print_r($e->getMessage());
-            die();
         }
         $transaction->commit();
 
@@ -557,7 +565,7 @@ class DefaultController extends BusinessController
     protected function isPackageEditable()
     {
         $id = Yii::$app->request->get('id');
-        $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $model = Package::findOne(['id' => $id]);
         if ($model) {
             return $model->status == Package::EDIATBLE_STATUS;
         } else {
@@ -567,8 +575,15 @@ class DefaultController extends BusinessController
 
     protected function isPackageOwner()
     {
+        $id = Yii::$app->request->get('id');
 
-        return true;
+        $operator = $this->operatormodel();
+        $model = Package::findOne(['id' => $id]);
+
+        if ($model && $model->owned_by_id == $operator->id) {
+            return true;
+        }
+        return false;
     }
 
     private function copyPackageNow($id, $isNewRecord = false)
@@ -585,7 +600,6 @@ class DefaultController extends BusinessController
                 $newModel->version = 'v1';
             }
             $newModel->id = null; // Set the ID to null for the new record
-            $newModel->status = Package::APPROVED_AND_LIVE_STATUS;
             $newModel->status = Package::EDIATBLE_STATUS;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);
@@ -593,7 +607,7 @@ class DefaultController extends BusinessController
             $this->CopyPackageDay($model->id, $newModel->id);
             $this->CopyPackageIncluded($model->id, $newModel->id);
             $this->CopyPackageFeature($model->id, $newModel->id);
-            $this->CopyPackageSafariPark($model->id, $newModel->id);
+            $this->CopyPackageSafariPark($model->id, $newModel->id, $model->uuid, $newModel->uuid);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
             $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_STATUS);
@@ -691,7 +705,7 @@ class DefaultController extends BusinessController
         return true;
     }
 
-    private function CopyPackageSafariPark($old_package_id, $new_package_id)
+    private function CopyPackageSafariPark($old_package_id, $new_package_id, $old_package_uuid, $new_package_uuid)
     {
         // package_safari_park_approval; 
         $model = PackageSafariPark::find()->where(['package_id' => $old_package_id])->all();
@@ -701,6 +715,7 @@ class DefaultController extends BusinessController
                 $newModel->attributes = $safari->attributes;
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
+                $newModel->package_uuid = $new_package_uuid;
                 $newModel->save(false);
             }
         }
@@ -755,13 +770,14 @@ class DefaultController extends BusinessController
                 $this->terminatePackage($model->uuid, $model->pending_for_approval_version);
             }
             $model->pending_for_approval_version = $version;
+            $model->editable_version = NULL;
         }
-        // if ($status == Package::EDIATBLE_STATUS) {
-        //     if (!empty($model->editable_version)) {
-        //         $this->terminatePackage($model->uuid, $model->editable_version);
-        //     }
-        //     $model->editable_version = $version;
-        // }
+        if ($status == Package::EDIATBLE_STATUS) {
+            if (!empty($model->editable_version)) {
+                $this->terminatePackage($model->uuid, $model->editable_version);
+            }
+            $model->editable_version = $version;
+        }
         if ($model->save(false)) {
             return true;
         }
@@ -772,7 +788,7 @@ class DefaultController extends BusinessController
     {
         $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
         if ($model) {
-            $model->status = Package::TERMINATED_status;
+            $model->status = Package::TERMINATED_STATUS;
             $model->save(false);
             return true;
         }
@@ -791,5 +807,14 @@ class DefaultController extends BusinessController
         $model->slug = PackageStates::prepareUniqueSlug($model->package_name);
         $model->save();
         return true;
+    }
+
+
+    public function operatormodel()
+    {
+        if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+            return $operator;
+        }
+        throw new ForbiddenHttpException('You are not Allowed to access this Page');
     }
 }

@@ -41,7 +41,7 @@ class FeedsSearch extends Feeds
      */
     public function search($params)
     {
-        $query = Feeds::find()->where(['feeds.status' => [Feeds::STATUS_ACTIVE, Feeds::STATUS_SUSPEND]]);
+        $query = Feeds::find();
 
         // add conditions that should always apply here
 

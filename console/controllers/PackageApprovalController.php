@@ -19,6 +19,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
 use common\models\package\PackageStates;
+use common\models\UserWishlist;
 use Yii;
 use yii\filters\AccessControl;
 use yii\console\Controller;
@@ -30,6 +31,43 @@ use yii\web\UploadedFile;
  */
 class PackageApprovalController extends Controller
 {
+
+    public function actionMakeOldLive()
+    {
+        $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->all();
+        foreach ($packages as $package) {
+            $ps =  PackageStates::find()->where(['uuid' => $package->uuid])->one();
+            $ps->live_version = $package->version;
+            $ps->save(false);
+        }
+        echo "done";
+    }
+
+    public function actionPackagePark()
+    {
+        $psp = PackageSafariPark::find()->all();
+        foreach ($psp as $p) {
+            $safari = Package::find()->where(['id' => $p->package_id])->one();
+            if ($safari) {
+                $p->package_uuid = $safari->uuid;
+                $p->save(false);
+            }
+        }
+    }
+
+
+    public function actionUpdateUserWishlist()
+    {
+        $uw = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE])->all();
+        foreach ($uw as $w) {
+            if (is_numeric($w->item_id)) {
+                $package = Package::find()->where(['id' => $w->item_id])->one();
+                $w->item_id = $package->uuid;
+                $w->save(false);
+            }
+        }
+        echo "done";
+    }
 
 
     public function actionPathChange()
@@ -186,7 +224,7 @@ class PackageApprovalController extends Controller
             $this->CopyPackageDay($model->id, $newModel->id);
             $this->CopyPackageIncluded($model->id, $newModel->id);
             $this->CopyPackageFeature($model->id, $newModel->id);
-            $this->CopyPackageSafariPark($model->id, $newModel->id);
+            $this->CopyPackageSafariPark($model->id, $newModel->id, $model->uuid, $newModel->uuid);
             $this->CopyPackageFaq($model->id, $newModel->id);
             $this->CopyPackageIncludedExcluded($model->id, $newModel->id);
             $this->updatePackageStatus($newModel->uuid, $newModel->version, Package::EDIATBLE_STATUS);
@@ -284,7 +322,7 @@ class PackageApprovalController extends Controller
         return true;
     }
 
-    private function CopyPackageSafariPark($old_package_id, $new_package_id)
+    private function CopyPackageSafariPark($old_package_id, $new_package_id, $old_package_uuid, $new_package_uuid)
     {
         // package_safari_park_approval; 
         $model = PackageSafariPark::find()->where(['package_id' => $old_package_id])->all();
@@ -294,6 +332,7 @@ class PackageApprovalController extends Controller
                 $newModel->attributes = $safari->attributes;
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
+                $newModel->package_uuid = $new_package_uuid;
                 $newModel->save(false);
             }
         }

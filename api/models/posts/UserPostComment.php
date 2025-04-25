@@ -13,8 +13,8 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         $fields = parent::fields();
         $fields[] = 'user';
         $fields[] = 'replies';
-        $fields[] = 'isLiked';
-        $fields[] = 'likedCount';
+        $fields[] = 'is_liked';
+        $fields[] = 'liked_count';
         $hold_fields = ['user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -41,7 +41,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         return $this->hasMany(self::class, ['parent_id' => 'id']);
     }
 
-    public function getIsLiked()
+    public function getIs_liked()
     {
         $is_liked = UserPostCommentLike::find()->where(['user_post_comment_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'], 'user_post_comment_like.status' => 1])->limit(1)->one();
         if ($is_liked) {
@@ -55,7 +55,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         return $this->hasMany(UserPostCommentLike::class, ['user_post_comment_id' => 'id'])->andWhere(['user_post_comment_like.status' => 1]);
     }
 
-    public function getLikedCount()
+    public function getLiked_count()
     {
         return $this->getLike()->count();
     }

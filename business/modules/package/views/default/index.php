@@ -50,19 +50,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->live_version;
+                            if ($model->live_version) {
+                                return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
+                                    'class' => 'btn btn-sm btn-primary',
+                                ]);
+                            }
+                            return '';
                         }
                     ],
-
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
-
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
@@ -86,7 +81,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             },
 
                             'SentforApproval' => function ($url, $model) {
-                                if ($model->status == Package::EDIATBLE_status) {
+                                if ($model->status == Package::EDIATBLE_STATUS) {
 
                                     return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
                                         'class' => 'btn btn-danger p-0 change-menuicon',

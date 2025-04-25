@@ -19,14 +19,24 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'imagepath', 'parkcount', 'packagecount', 'sharedsafaricount', 'followerlistcount', 'categorytitle', 'isFollowed', 'status'];
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating' => function () {
+            return (string) ($this->google_rating);
+        }, 'google_review_count' => function () {
+            return (int) ($this->google_review_count);
+        }, 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
+            return (bool)$this->status;
+        },];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'park';
-            $fields[] = 'is_approved';
-            $fields[] = 'has_cancellation_policy';
+            $fields['is_approved'] = function () {
+                return (bool)$this->is_approved;
+            };
+            $fields['has_cancellation_policy'] = function () {
+                return (bool)$this->has_cancellation_policy;
+            };
             $fields[] = 'budget';
-            $fields[] = 'otherWildlifeActivity';
+            $fields[] = 'other_wildlife_activity';
             $fields[] = 'facebook_url';
             $fields[] = 'youtube_link';
             $fields[] = 'instagram_url';
@@ -63,18 +73,18 @@ class SafariOperator extends \common\models\operator\SafariOperator
     }
 
 
-    public function getParkcount()
+    public function getPark_count()
     {
         return SafariOperatorPark::find()->where(['safari_operator_id' => $this->id])->andWhere(['safari_operator_park.status' => 1])->count();
     }
 
-    public function getPackagecount()
+    public function getPackage_count()
     {
         return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::APPROVED_AND_LIVE_STATUS])->count();
     }
 
 
-    public function getSharedsafaricount()
+    public function getShared_safari_count()
     {
         return ShareSafari::find()->where([
             'status' => ShareSafari::STATUS_ACTIVE,
@@ -108,14 +118,14 @@ class SafariOperator extends \common\models\operator\SafariOperator
         return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id'])->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
     }
 
-    public function getFollowerlistcount()
+    public function getFollower_list_count()
     {
         return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id'])->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
 
 
-    public function getImagepath()
+    public function getImage_path()
     {
         if ($this->logo != '') {
             return Yii::$app->params['frontend_url_for_api'] . 'storage/safarioperator/' . $this->id . '/' . $this->logo;
@@ -140,7 +150,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         return $name . $category;
     }
 
-    public function getCategorytitle()
+    public function getCategory_title()
     {
         $category_list = [
             1 => 'Safari Tour Operator',
@@ -148,7 +158,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             3 => 'Wildelife Influencer'
         ];
 
-        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : $this->category_id;
+        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : null;
     }
 
     public function getUser()
@@ -175,7 +185,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
 
 
-    public function getIsFollowed()
+    public function getIs_followed()
     {
         $is_followed = $this->activeFollowed;
         if (!empty($is_followed)) {
@@ -211,7 +221,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         return $this->hasMany(SafariOperatorActivities::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_activities.status' => 1]);
     }
 
-    public function getOtherWildlifeActivity()
+    public function getOther_wildlife_activity()
     {
         return $this->hasMany(MetaOtherWildlifeActivities::className(), ['id' => 'wildlife_activity_id'])->via('operatorsOtherWildlifeActivity');
     }

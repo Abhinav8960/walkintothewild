@@ -13,12 +13,18 @@ return [
     'bootstrap' => ['log', '\business\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
     'modules' => [
-       'package' => [
+        'package' => [
             'class' => 'business\modules\package\Module',
         ],
         'sharesafari' => [
             'class' => 'business\modules\sharesafari\Module',
         ],
+        'chat' => [ // Chating and Messaging Module
+            'class' => 'business\modules\chat\Module',
+        ],
+
+
+
     ],
     'components' => [
         'reCaptcha3' => [
@@ -65,6 +71,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/chat/message/<user_handle>' => '/chat/default/message',
+                '/chat/message/<user_handle>/<chat_id>' => '/chat/default/message',
+                '/chat/quote/<user_handle>/<chat_id>' => '/chat/default/message',
             ],
         ],
 

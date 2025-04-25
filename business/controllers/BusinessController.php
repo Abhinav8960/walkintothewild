@@ -13,8 +13,8 @@ class BusinessController extends Controller
 {
     public function init()
     {
-        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
-            return $this->redirect(['/operator-registration/create']);
-        }
+        // if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
+        //     return $this->redirect(['/operator-registration/create']);
+        // }
     }
 }

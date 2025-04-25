@@ -1,9 +1,21 @@
+-- 24 apr 2025
+ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
+
+
+
+
+
+
+
+ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
+ALTER TABLE `package_safari_park`  ADD `package_uuid` VARCHAR(255) NOT NULL  AFTER `package_id`;
+
 -- phpMyAdmin SQL Dump
 -- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 22, 2025 at 05:45 PM
+-- Generation Time: Apr 23, 2025 at 01:44 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -65,11 +77,19 @@ CREATE TABLE `operator_registration_form` (
   `upload_registration_cert` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `upload_document` varchar(255) DEFAULT NULL,
   `current_step` int DEFAULT '1',
+  `is_step_1_submit` tinyint(1) DEFAULT '0',
+  `is_step_2_submit` tinyint(1) DEFAULT '0',
+  `is_step_3_submit` tinyint(1) DEFAULT '0',
+  `is_step_4_submit` tinyint(1) DEFAULT '0',
   `is_step_1_approved` int DEFAULT '0',
   `is_step_2_approved` int DEFAULT '0',
   `is_step_3_approved` int DEFAULT '0',
   `is_step_4_approved` int DEFAULT '0',
   `is_step_5_approved` int DEFAULT '0',
+  `step_1_reject_reason` varchar(512) DEFAULT NULL,
+  `step_2_reject_reason` varchar(512) DEFAULT NULL,
+  `step_3_reject_reason` varchar(512) DEFAULT NULL,
+  `step_4_reject_reason` varchar(512) DEFAULT NULL,
   `updated_time_step_1` datetime DEFAULT NULL,
   `updated_time_step_2` datetime DEFAULT NULL,
   `updated_time_step_3` datetime DEFAULT NULL,

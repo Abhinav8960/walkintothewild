@@ -21,6 +21,9 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
+            return $this->redirect(['/operator-registration/create']);
+        }
 
         // if (!Yii::$app->request->isConsoleRequest) {
         //     if (!Yii::$app->user->identity) {

@@ -25,20 +25,21 @@ class SafariParkZone extends \common\models\park\SafariParkZone
 {
     public function fields()
     {
-        $fields = parent::fields();
-        
-
-
-        $hold_fields = [
-            'safari_park_id',
-            'master_zone_type_id',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at'
+        // $fields = parent::fields();
+        $fields = [
+            'id',
+            'master_zone_type_name',
+            'zone_name',
+            'entry_gate_name',
+            'entry_gate_latitude',
+            'entry_gate_longitude',
+            'is_open_in_monsoon' => function () {
+                return (bool)$this->is_open_in_monsoon;
+            },
+            'open_after_date',
         ];
-        return array_diff($fields, $hold_fields);
+
+        // return array_diff($fields, $hold_fields);
         return $fields;
     }
 }
