@@ -104,7 +104,7 @@ class DefaultController extends RestController
                 "objective" => $randomType,
                 $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
-            $data['data']['summary']['is_additional_feed'] = 1;
+            $data['data']['summary']['additional_feed'] = 1;
 
             array_push($data['data']['feeds'], $hr);
         }
