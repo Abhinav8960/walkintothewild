@@ -50,10 +50,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,6 +76,7 @@ class DefaultController extends RestController
                     'package-park' => ['GET'],
                     'package-days'  => ['GET'],
                     'package-faqs' => ['GET'],
+                    'quotation' => ['POST'],
                 ],
             ],
         ];
@@ -246,7 +247,7 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
-        if ($this->userinfo && isset($package->safarioperator) && $this->userinfoId == $package->safarioperator->user_id) {
+        if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
         $packagemodel = new PackageQuoteForm();
@@ -421,4 +422,6 @@ class DefaultController extends RestController
 
         ];
     }
+
+    
 }

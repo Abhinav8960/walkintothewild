@@ -1,3 +1,11 @@
+-- 24 apr 2025
+ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
+
+
+
+
+
+
 
 ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
 ALTER TABLE `package_safari_park`  ADD `package_uuid` VARCHAR(255) NOT NULL  AFTER `package_id`;

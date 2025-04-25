@@ -1,0 +1,262 @@
+<?php
+
+use yii\helpers\Url;
+use yii\grid\GridView;
+use common\models\chat\Chat;
+use yii\widgets\Pjax;
+
+\business\assets\EmojiAsset::register($this);
+$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+$this->title = 'Message';
+
+$emoji_base_url =  NULL;
+// $emoji_base_url =  $this->assetManager->getBundle('\business\assets\EmojiAsset')->baseUrl; 
+?>
+
+<div class="row mt-5 mb-5">
+    <div class="col-md-12">
+        <h6 class="fs-3 "><?= $this->title ?></h6>
+    </div>
+    <div class="col-md-12">
+        <?= $this->render('@business/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-5 col-xl-4 col-xxl-3 mb-3">
+        <div class="chat-card-sidebar card">
+            <div class="card-body">
+                <?php Pjax::begin([
+                    'id' => 'grid-data',
+                    'enablePushState' => FALSE,
+                    'enableReplaceState' => FALSE,
+                    'timeout' => false,
+                ]); ?>
+
+                <div class="tablmassage safartabs">
+                    <ul class="nav  nav-tabs slider_profilemobilechat " id="pills-tab" role="tablist" style="justify-content:between">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link <?php if (empty($chat_id)) {
+                                                        echo 'active';
+                                                    } ?> 
+                                                                chatFonts" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Chat</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link <?php if (!empty($chat_id)) {
+                                                        echo 'active';
+                                                    } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quotation (<?= $unseen_quote_chat_count ?>)</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                    <!-- direct msg user lists -->
+                    <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id)) {
+                                                                                                                    echo 'show active mt-4';
+                                                                                                                } ?>">
+                        <div class="chat-search-user mb-3 position-relative">
+                            <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false, 'chat_type' => 1]) ?>
+                            <div class="secrchIcons">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </div>
+                        <div class="chat-cardlist pt-3 ">
+                            <div class="chatboxslid">
+                                <?php if ($searchModel->name == '' && $active_chat_list) {
+                                    foreach ($active_chat_list as $active_chat) {
+                                        if ($active_chat->user_id == $login_user->id) {
+                                            $user = $active_chat->recipient;
+                                        } else {
+                                            $user = $active_chat->user;
+                                        } ?>
+
+                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
+                                            <div class="chat-sidebar-user-card <?= $active_chat->is_seen == 0 && $active_chat->updated_by <> Yii::$app->user->id ? 'unseen_chat' : '' ?>">
+                                                <div class="d-flex chat-user_message">
+                                                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                    <div class="chat-user_name">
+                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->getName() ?></h6>
+                                                        <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                <?php }
+                                }
+
+                                if ($searchModel->name) {
+                                    echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                }
+                                ?>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- quote msg user lists -->
+                    <div id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" class="tab-pane fade 
+                                <?php if (!empty($chat_id)) {
+                                    echo 'show active mt-4';
+                                } ?>">
+
+                        <!-- start quote user search here -->
+                        <!-- end quote user search here-->
+                        <div class="chat-cardlist pt-3">
+                            <?php if ($searchModel->name == '' && $active_quote_chat_list) {
+                                foreach ($active_quote_chat_list as $active_chat) {
+                                    if ($active_chat->user_id == $login_user->id) {
+                                        $user = $active_chat->recipient;
+                                    } else {
+                                        $user = $active_chat->user;
+                                    } ?>
+
+                                    <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
+
+                                        <div class="chat-sidebar-user-card ">
+                                            <div class="d-flex chat-user_message <?= $active_chat->is_seen == 0 && $active_chat->updated_by <> Yii::$app->user->id ? 'unseen_chat' : '' ?>">
+                                                <?php if ($active_chat->recipient_user_id == $user->id) { ?>
+                                                    <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
+                                                        <?php
+                                                        if (isset($user->operator)) { ?>
+                                                            <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                        <?php } else { ?>
+                                                            <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                        <?php }  ?>
+                                                    </h6>
+                                                <?php } else { ?>
+                                                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                <?php } ?>
+
+                                                <div class="chat-user_name">
+                                                    <?php if ($active_chat->recipient_user_id == $user->id) { ?>
+                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
+                                                            <?php if (isset($user->operator)) {
+                                                                echo $user->operator->business_name;
+                                                            } else {
+                                                                echo $user->name;
+                                                            }  ?>
+                                                        </h6>
+                                                    <?php } else { ?>
+                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->name ?></h6>
+                                                    <?php } ?>
+                                                    <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
+                                                    <p class="mb-0 lastmassge" style="color:#4c4c4c;"><b>Last Msg:</b> <?= date('M j, Y H:i', $active_chat->last_message_at) ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                            <?php }
+                            }
+
+                            if ($searchModel->name) {
+                                echo $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php Pjax::end(); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7 col-xl-8 col-xxl-9 d-md-block  d-none">
+        <?php Pjax::begin([
+            'id' => 'grid-data-chat',
+            'enablePushState' => FALSE,
+            'enableReplaceState' => FALSE,
+            'timeout' => false,
+        ]); ?>
+        <div class="chat_box  card  h-100 p-3">
+            <div class="card-body">
+                <div class="d-flex chat-message-header pb-4 justify-content-between">
+                    <div class="chat-profile">
+                    </div>
+                    <!-- <div class="chat-action-in-right">
+                                    <i class="fa fa-search"></i>
+                                    &nbsp;
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </div> -->
+                </div>
+
+                <div class="chat-message-container" id="chat-message-container">
+                </div>
+
+                <div class="chat-send-message-form pt-3">
+                </div>
+            </div>
+        </div>
+        <?php Pjax::end(); ?>
+
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+$(document).ready(function() {
+    // $(function() {
+    //     window.emojiPicker = new EmojiPicker({
+    //         emojiable_selector: '[data-emojiable=true]',
+    //         assetsPath: '{$emoji_base_url}/lib/img/',
+    //         popupButtonClasses: 'fa-solid fa-face-smile'
+    //     });
+    //     window.emojiPicker.discover();
+    // });
+
+    function sendmessage(){
+        $.ajax({
+            type: 'POST',
+            url: '/chat/default/sendmessage',
+            data:$("#chatmessageform").serialize(),
+            success:function(data){
+                // console.log(data);
+                $('#chat-message').val('');
+                location.reload();
+            },
+            dataType:'html'
+        });   
+    }
+
+    $('#message_sent_btn').click(function(){
+        sendmessage();
+    });
+
+    $('#chat-message').keydown(function(e) {
+        if (e.keyCode === 13) { 
+            if (e.shiftKey) {
+                return ;
+            } else {
+                e.preventDefault(); 
+                sendmessage();
+            }
+        }
+    });
+
+    function scrollToBottom() {
+        const container = document.getElementById('chat-message-container');
+        container.scrollTop = container.scrollHeight;
+    }
+    scrollToBottom();
+
+    const maxLength = 500;
+    $('#chat-message').on('input', function() {
+        const currentLength = $(this).val().length;
+        const remaining = maxLength - currentLength;
+        $('#char-count').text(remaining);
+        
+        if (remaining <= 0) {
+            $('.character-count').addClass('warning');
+        } else {
+            $('.character-count').removeClass('warning');
+        }
+        
+        if (currentLength > maxLength) {
+            $(this).val($(this).val().substr(0, maxLength));
+        }
+    });
+
+    $('#char-count').text(maxLength - $('#chat-message').val().length);
+});
+JS;
+$this->registerJs($script);
+?>

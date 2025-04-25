@@ -2,6 +2,7 @@
 
 namespace api\models;
 
+use api\models\chat\Chat;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -298,5 +299,21 @@ class User extends \common\models\User
             return true;
         }
         return false;
+    }
+
+    public function getChatsend()
+    {
+        return $this->hasMany(Chat::className(), ['user_id' => 'id']);
+    }
+
+    public function getChatrecive()
+    {
+        return $this->hasMany(Chat::className(), ['recipient_user_id' => 'id']);
+    }
+
+    public function getChat()
+    {
+        return $this->hasMany(Chat::className(), [])
+            ->onCondition(['or', ['chat.user_id' => new \yii\db\Expression('user.id')], ['chat.recipient_user_id' => new \yii\db\Expression('user.id')]]);
     }
 }

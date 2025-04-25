@@ -31,7 +31,6 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends Controller
 {
-
     /**
      * @inheritdoc
      */
