@@ -17,191 +17,128 @@ use kartik\datetime\DateTimePicker;
 
 ]); ?>
 <div class="row">
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_name', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'package_name')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Package Name',
-            'id' => 'packageform-package_name', // Add an ID for JavaScript targeting
-        ])->label('Package Name <span class="necessary">*</span>') ?>
+        ])->label('PACKAGE NAME <span class="necessary">*</span>') ?>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'no_of_day', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::packagedayoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Day/Night', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Day/Night <span class="necessary">*</span>') ?>
-    </div>
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'safari_type', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
-            'data' => ['1' => 'Shared Safari', '2' => 'Private Safari'],
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Safari Type', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Safari Type <span class="necessary">*</span>') ?>
+        <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select'])->label('DAY/NIGHT <span class="necessary">*</span>') ?>
     </div>
 
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'no_of_safari', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'safari_type')->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Select'])->label('SAFARI TYPE <span class="necessary">*</span>') ?>
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'no_of_safari')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Number of Safaris',
-        ]) ?>
+        ])->label('NUMBER OF SAFARIS') ?>
     </div>
 
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'start_location', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'start_location')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Start Location',
-        ]) ?>
+        ])->label('TOUR START') ?>
     </div>
+
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'end_location', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'end_location')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter End Location',
-        ]) ?>
+        ])->label('TOUR END') ?>
     </div>
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'start_date', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\datetime\DateTimePicker::classname(), [
-            'options' => ['placeholder' => 'Enter Start Date'],
-            'pluginOptions' => [
 
-                'type' => DateTimePicker::TYPE_BUTTON,
-                'format' => 'yyyy-mm-dd',
-                'startDate' => 'today',
-                'minView' => 'month',
-                'maxView' => 'decade',
-                'autoclose' => true,
-            ]
-        ]); ?>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'end_date', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\datetime\DateTimePicker::classname(), [
-            'options' => ['placeholder' => 'Enter End Date'],
-            'pluginOptions' => [
 
-                'type' => DateTimePicker::TYPE_BUTTON,
-                'format' => 'yyyy-mm-dd',
-                'startDate' => 'today',
-                'minView' => 'month',
-                'maxView' => 'decade',
-                'autoclose' => true,
-            ]
-        ]); ?>
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('START DATE') ?>
     </div>
+
+
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('END DATE') ?>
+    </div>
+
 
     <?php
     if ($model->package_model->package_image) { ?>
         <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_image', [
-                'labelOptions' => ['class' => 'Modal_label']
-            ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 250kb)') ?>
+            <?= $form->field($model, 'package_image')->fileInput()->label('PACKAGE IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
         <div class="col-md-1">
             <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_image', [
-                'labelOptions' => ['class' => 'Modal_label']
-            ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 250kb)') ?>
+            <?= $form->field($model, 'package_image')->fileInput()->label('PACKAGE IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
     <?php  } ?>
+
 
     <?php
     if ($model->package_model->package_banner_image) { ?>
         <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_banner_image', [
-                'labelOptions' => ['class' => 'Modal_label']
-            ])->fileInput()->label('Banner Image (JPEG / JPG / PNG / 250kb)') ?>
+            <?= $form->field($model, 'package_banner_image')->fileInput()->label('BANNER IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
         <div class="col-md-1">
             <?php echo '<img src="' . $model->package_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_banner_image', [
-                'labelOptions' => ['class' => 'Modal_label']
-            ])->fileInput()->label('Banner Image (JPEG / JPG / PNG / 250kb)') ?>
+            <?= $form->field($model, 'package_banner_image')->fileInput()->label('BANNER IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
     <?php  } ?>
 
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_park', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
+        <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::safariparklist(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
             'options' => ['placeholder' => 'Select', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ])->label('Safari Park') ?>
+        ])->label('SAFARI PARK') ?>
     </div>
 
+    
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'stay_category_id', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::packageoption(),
-            'options' => ['placeholder' => 'Not Included', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Accomodation') ?>
+        <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select'])->label('ACCOMDATION') ?>
     </div>
 
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'cost_per_person', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'cost_per_person')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Cost Per Person',
-        ]) ?>
+        ])->label('COST PER PERSON') ?>
     </div>
+
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'type', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
+        <?= $form->field($model, 'type')->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion'], ['prompt' => 'Select']) ?>
     </div>
 
+
     <div class="col-lg-3 col-md-6">
-        <?= $form->field($model, 'gst_percentage', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textInput([
+        <?= $form->field($model, 'gst_percentage')->textInput([
             'placeholder' => 'GST (%)',
         ]) ?>
     </div>
 
+
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_feature', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
+        <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::packagefeatureoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
             'options' => ['placeholder' => 'Select', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true
@@ -209,42 +146,24 @@ use kartik\datetime\DateTimePicker;
         ])->label('Package Feature') ?>
     </div>
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'master_vehicle_id', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::vehicleoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Vehicle', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Select Vehicle') ?>
-    </div>
-    
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_agenda_id', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->widget(\kartik\select2\Select2::classname(), [
-            'data' => ['1' => 'Photography', '3' => 'Safari Experience'],
-            'options' => ['placeholder' => 'Select Theme', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Theme') ?>
-    </div>
-    
-    <div class="col-md-12">
-        <?= $form->field($model, 'package_description', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
+        <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select'])->label('VEHICLE') ?>
     </div>
 
+
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select'])->label('THEME') ?>
+    </div>
+
+
     <div class="col-md-12">
-        <?= $form->field($model, 'package_itinerary_overview', [
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->textarea(['rows' => '2', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
+        <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Description Detail '])->label('Description') ?>
+    </div>
+
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '1', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
     </div>
 </div>
 <div class="row">

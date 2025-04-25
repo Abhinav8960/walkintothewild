@@ -96,8 +96,12 @@ class SafariPark extends \common\models\park\SafariPark
             // $fields[] = 'animals';
             $fields[] = 'average_rating';
             // $fields[] = 'countreview';
-            $fields[] = 'google_rating';
-            $fields[] = 'google_review_count';
+            $fields['google_rating'] = function () {
+                return (int)$this->google_rating;
+            };
+            $fields['google_review_count'] = function () {
+                return (int)$this->google_review_count;
+            };
             // $fields[] = 'total_view';
             // $fields[] = 'gallery';
             $fields[] = 'urls';

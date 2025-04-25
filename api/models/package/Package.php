@@ -17,20 +17,53 @@ class Package extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields = ['id', 'uuid', 'package_display_name', 'package_name', 'package_slug', 'primary_park', 'no_of_day', 'no_of_night', 'no_of_night', 'no_of_safari', 'cost_per_person', 'total_price', 'package_description', 'image_path', 'image_banner_path', 'is_wishlist', 'package_day_night_labels', 'pick_and_drop', 'package_range', 'meals_listing', 'partner', 'comment_count', 'urls', 
-                    'lunch_included'=> function () {
-                        return (bool)$this->lunch_included;
-                    }, 
-                    'dinner_included'=> function () {
-                        return (bool)$this->dinner_included;
-                    }, 
-                    'meal_not_included'=> function () {
-                        return (bool)$this->meal_not_included;
-                    }, 
-                    'breakfast_included'=> function () {
-                        return (bool)$this->breakfast_included;
-                    }, 
-                    'start_location', 'end_location', 'start_date', 'end_date', 'status'];
+        $fields = [
+            'id',
+            'uuid',
+            'package_display_name',
+            'package_name',
+            'package_slug',
+            'primary_park',
+            'no_of_day',
+            'no_of_night',
+            'no_of_night',
+            'no_of_safari',
+            'cost_per_person' => function () {
+                return (int) ceil($this->cost_per_person);
+            },
+            'total_price' => function () {
+                return (int) ceil($this->total_price);
+            },
+            'package_description',
+            'image_path',
+            'image_banner_path',
+            'is_wishlist',
+            'package_day_night_labels',
+            'pick_and_drop',
+            'pick_and_drop_display',
+            'package_range',
+            'meals_listing',
+            'partner',
+            'comment_count',
+            'urls',
+            'lunch_included' => function () {
+                return (bool)$this->lunch_included;
+            },
+            'dinner_included' => function () {
+                return (bool)$this->dinner_included;
+            },
+            'meal_not_included' => function () {
+                return (bool)$this->meal_not_included;
+            },
+            'breakfast_included' => function () {
+                return (bool)$this->breakfast_included;
+            },
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'status'
+        ];
         $fields[] = 'resource_uri';
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
@@ -64,7 +97,6 @@ class Package extends \common\models\package\Package
             $fields[] = 'status';
         }
         return $fields;
-        
     }
 
     /**
@@ -304,7 +336,13 @@ class Package extends \common\models\package\Package
     {
         $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
-        return ($pick_drop_includes) ? 'Included' : 'Not Included';
+        // return ($pick_drop_includes) ? 'Included' : 'Not Included';
+        return ($pick_drop_includes) ? true : false;
+    }
+
+    public function getPick_and_drop_display()
+    {
+        return $this->getPick_and_drop() == 1 ?  'Included' : 'Not Included';
     }
 
 

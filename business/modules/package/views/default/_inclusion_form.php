@@ -23,11 +23,11 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-12">
                 <div class="form-group">
                     <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) { ?>
-                        <div class="row mb-3">
-                            <div class="col-sm-3">
+                        <div class="row">
+                            <div class="col-lg-2">
                                 <label class="control-label"><?= $optionLabel ?></label>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-lg-10">
                                 <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
                                     [
                                         '1' => 'Included',
@@ -53,16 +53,16 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-2">
                 Meals :
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast') ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch') ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner') ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included"])->label('Meal Not Included') ?>
             </div>
         </div>
@@ -88,7 +88,7 @@ use yii\bootstrap5\ActiveForm;
 
 <style>
     .ck-editor__editable {
-        min-height: 350px;
+        min-height: 150px;
     }
 </style>
 <?php
@@ -147,3 +147,10 @@ $this->registerJs($script);
         updateMealNotIncludedState();
     });
 </script>
+
+<style>
+    .form-check-inline {
+    display: inline-block;
+    margin-right: 2rem !important;
+}
+</style>

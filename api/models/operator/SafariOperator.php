@@ -19,7 +19,11 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function fields()
     {
 
-        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating', 'google_review_count', 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
+        $fields = ['id', 'business_name', 'phone_no', 'email', 'operator_phone_no', 'operator_email', 'slug', 'register_comapany_name', 'address', 'google_rating' => function () {
+            return (int) ($this->google_rating);
+        }, 'google_review_count' => function () {
+            return (int) ($this->google_review_count);
+        }, 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
             return (bool)$this->status;
         },];
 
@@ -154,7 +158,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
             3 => 'Wildelife Influencer'
         ];
 
-        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : $this->category_id;
+        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : null;
     }
 
     public function getUser()
