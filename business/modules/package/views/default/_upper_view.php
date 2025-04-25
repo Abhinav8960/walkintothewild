@@ -199,12 +199,14 @@ use common\models\GeneralModel;
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
                     </li>
-
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#faq" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">FAQs</button>
                     </li>
                 </ul>
 

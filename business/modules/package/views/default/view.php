@@ -18,6 +18,16 @@ AppAsset::register($this);
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
         <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown button
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -83,6 +93,20 @@ AppAsset::register($this);
                 <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                     <div class="accordion-body height_set">
                         <?= $this->render('_policy', ['package' => $package]) ?>
+                    </div>
+                </div>
+                <!-- Rendered on 2024-07-09 13:16:37 -->
+            </div>
+
+            <div class="tab-pane fade accordion-item mb-3" id="faq" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        FAQs
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                    <div class="accordion-body height_set">
+                        <?= $this->render('_faqs', ['package' => $package, 'faqs' => $faqs]) ?>
                     </div>
                 </div>
                 <!-- Rendered on 2024-07-09 13:16:37 -->

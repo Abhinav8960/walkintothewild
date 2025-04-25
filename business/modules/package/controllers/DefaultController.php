@@ -482,8 +482,15 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $model->id;
+        $searchModel->status = PackageFaq::STATUS_ACTIVE;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
         return $this->render('view', [
             'package' => $model,
+            'faqs' => $faqs,
         ]);
     }
 
