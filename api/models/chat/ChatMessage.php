@@ -21,22 +21,15 @@ class ChatMessage extends \common\models\chat\ChatMessage
 {
     public function fields()
     {
-
-
-
-
         $fields = [
             'id',
             'message',
             'message_datetime',
-            // 'recipient_user_id',
-            
-
+            // 'recipient_user_id',           
             'sender',
-            'data ' => function () {
+            'additional_data ' => function () {
                 return json_decode($this->data);
             },
-
         ];
         return $fields;
     }

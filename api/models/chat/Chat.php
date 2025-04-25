@@ -5,6 +5,7 @@ namespace api\models\chat;
 use Yii;
 use api\models\User;
 use api\models\operator\SafariOperator;
+use api\models\park\SafariPark;
 
 /**
  * This is the model class for table "chat".
@@ -155,5 +156,10 @@ class Chat extends \common\models\chat\Chat
             return date('Y-m-d H:i:s', $this->last_message_at);
         }
         return null;
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 }
