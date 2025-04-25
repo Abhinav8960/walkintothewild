@@ -4,11 +4,10 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 $this->title = 'Package : ' . $package_model->package_name;
-$this->params['breadcrumbs_home_url'] = '#';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['title'] = $this->title;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+
+<?= $this->render('_form_upper_view', ['package' => $package_model]) ?>
 
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>

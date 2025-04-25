@@ -3,11 +3,13 @@
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
 
-$this->title = 'Package : ' . $package_model->package_name . '';
-$this->params['breadcrumbs_home_url'] = '#';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['title'] = $this->title;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$this->title = 'Package: ' . $package_model->package_name;
 ?>
+<?= $this->render('_form_upper_view', ['package' => $package_model]) ?>
+
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('_navbar', ['package' => $package_model, 'overview_active' => 'active']) ?>
 
