@@ -19,22 +19,27 @@ use api\models\User;
  */
 class ChatMessage extends \common\models\chat\ChatMessage
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'chat_message';
-    }
 
-    public function behaviors()
-    {
-        return [
-            \yii\behaviors\TimestampBehavior::className(),
-            \yii\behaviors\BlameableBehavior::className(),
+
+
+
+        $fields = [
+            'id',
+            'message',
+            'message_datetime',
+            // 'recipient_user_id',
+            
+
+            'sender',
+            'data ' => function () {
+                return json_decode($this->data);
+            },
+
         ];
+        return $fields;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -68,5 +73,21 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function getCreateduser()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function getMessage_datetime()
+    {
+        return date('Y-m-d H:i:s', $this->created_at);
+    }
+
+    public function getSender()
+    {
+
+        $data['name'] = $this->createduser->name;
+        $data['user_handle'] = $this->createduser->user_handle;
+        $data['profile_image'] = $this->createduser->profile_image;
+        $data['is_safari_operator'] = $this->createduser->is_safari_operator;
+        $data['display_name'] = $this->createduser->display_name;
+        return $data;
     }
 }

@@ -39,10 +39,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list'],
+                'only' => ['index', 'direct', 'quatation-chat', 'operator-list'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list'],
+                        'actions' => ['index', 'direct', 'quatation-chat', 'operator-list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -58,7 +58,6 @@ class DefaultController extends RestController
                     'quotations' => ['GET'],
                     'chat-user-list' => ['GET'],
                     'operator-list' => ['GET'],
-                    'user-list' => ['GET'],
                 ],
             ],
         ];
@@ -106,29 +105,12 @@ class DefaultController extends RestController
 
     public function actionUserList()
     {
-        $searchModel = new ChatSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "contcats", $additionalSearchQueryParams = [$this->userinfo->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "directchatcontcatsearch");
+        $chat = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 1])->orderby(['last_message_at' => SORT_DESC]);
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new User;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "operator");
     }
 
-    public function actionMessages($chat_hash)
-    {
-        $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
-        if (!$chat) {
-            return Yii::$app->api->sendFailedResponse([], 'Chat not found', 400);
-        }
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderby(['last_message_at' => SORT_DESC]),
-        //     'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-        // ]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
-            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
-            // 'pagination' => [
-            //     'pageSize' => 5, // Adjust the page size as needed
-            //     'page' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->count() / 10 - 1, // Calculate the last page
-            // ],
-        ]);
-        return $this->querySender($dataProvider, $rootIndexName = "chat_messages");
-    }
+
 }
