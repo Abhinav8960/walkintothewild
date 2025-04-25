@@ -24,7 +24,6 @@ class User extends \common\models\User
         $fields[] = 'profile_display_image';
         $fields[] = 'cover_display_image';
         $fields[] = 'display_name';
-        $fields[] = 'is_safari_operator';
         $fields[] = 'is_followed';
 
         $hold_fields = [
@@ -83,7 +82,7 @@ class User extends \common\models\User
                 'id',
                 "password_hash",
                 "auth_key",
-                
+
                 "gender",
                 "token_key",
                 "is_adminstrator",
@@ -111,80 +110,17 @@ class User extends \common\models\User
                 'profile_image',
                 'cover_image',
             ];
-            return array_diff($fields, $hold_fields);
+            $fields = array_diff($fields, $hold_fields);
+            $fields['is_safari_operator'] = function () {
+                return (bool) $this->is_safari_operator;
+            };
             return $fields;
         }
-        return array_diff($fields, $hold_fields);
+        $fields =  array_diff($fields, $hold_fields);
+        $fields['is_safari_operator'] = function () {
+            return (bool) $this->is_safari_operator;
+        };
         return $fields;
-
-        // if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'package/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist', 'park/default/view', 'operator/default/reviewlist', 'operator/default/view', 'profile/default/index', 'sharesafari/default/comment-view', 'package/default/comment-view','sharesafari/default/intrested-user'])) {
-        //     if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/index'])) {
-        //         $fields[] = 'userfollowerscount';
-        //         $fields[] = 'userfollowingscount';
-        //         // $fields[] = 'organizedSafari';
-        //         // $fields[] = 'joinedsharesafari';
-        //         $fields[] = 'organizedSafariCount';
-        //         $fields[] = 'joinedSafariCount';
-        //         $fields[] = 'parkvisted';
-        //         $fields[] = 'loggedinuserfollowed';
-        //     }
-        //     $hold_fields = [
-        //         'mobile_no',
-        //         "password_hash",
-        //         "auth_key",
-        //         // "facebook_url",
-        //         // "whatsapp_url",
-        //         // "x_url",
-        //         // "insta_url",
-        //         // "website_url",
-        //         // "youtube_url",
-        //         // "about",
-        //         "user_bio",
-        //         "date_of_birth",
-        //         "gender",
-        //         "token_key",
-        //         "is_adminstrator",
-        //         "is_admin",
-        //         "is_safari_operator",
-        //         "is_birding_operator",
-        //         "is_cms_manager",
-        //         "is_resort_manager",
-        //         "is_report_manager",
-        //         "is_community_manager",
-        //         "avatar",
-        //         "gmail",
-        //         "google_source_id",
-        //         "profile_image",
-        //         "cover_image",
-        //         // "user_handle",
-        //         "blocked_at",
-        //         "account_type",
-        //         "password_updated_at",
-        //         "gender_privacy",
-        //         "email_privacy",
-        //         "photo_privacy",
-        //         "contribution_privacy",
-        //         "can_login",
-        //         "verification_token",
-        //         "status",
-        //         'password_reset_token',
-        //         'created_by',
-        //         'updated_by',
-        //         'created_at',
-        //         'updated_at'
-        //     ];
-        // } else {
-        //     if (in_array(\Yii::$app->controller->action->uniqueId, ['site/profile'])) {
-        //         $fields[] = 'operatortype';
-        //         $fields[] = 'operatorSlug';
-        //         $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image",    "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        //     } else {
-
-        //         $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image",    "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        //     }
-        // }
-        // return array_diff($fields, $hold_fields);
-        // return $fields;
     }
 
     public function getProfile_display_image()
