@@ -21,7 +21,6 @@ $this->title = 'Package : ' . $package_model->package_name . '';
                 <div class="card">
                     <div class="card-body">
                         <div>
-
                             <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_model->id]), 'class' => 'btn create-action btn-orange me-2', 'title' => 'Create FAQ']); ?>
                         </div>
                         <div class="table-responsive">

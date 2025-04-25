@@ -1,8 +1,24 @@
 <?php
 
+use backend\assets\AppAsset;
 use common\models\GeneralModel;
+use frontend\assets\FrontAppAsset;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+FrontAppAsset::register($this);
+AppAsset::register($this);
 
 ?>
+
+<div class="d-flex justify-content-between align-items-center mt-5">
+    <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
+    <div>
+        <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>View', [Url::toRoute(['view', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'View']) ?>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-xl-4 col-sm-6 col-12">
@@ -190,27 +206,6 @@ use common\models\GeneralModel;
                 </div>
             </div>
         </div>
-        <div class="row  mt-4 itenary_tabs">
-            <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#faq" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">FAQs</button>
-                    </li>
-                </ul>
 
-            </div>
-        </div>
     </div>
 </div>
