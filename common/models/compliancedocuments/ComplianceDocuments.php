@@ -12,9 +12,11 @@ use Yii;
  * @property string $uuid
  * @property string|null $title
  * @property string|null $policy_for
- * @property string|null $effective_from
- * @property string|null $description
- * @property string|null $version
+ * @property string|null $effective_from 
+ * @property string|null $effective_to
+ *  @property string|null $meta_title
+ * @property string|null $meta_description
+ * @property string|null $meta_keywords
  * @property int $status 1 => Active , 0 => Suspended
  * @property int|null $created_at
  * @property int|null $created_by
@@ -36,7 +38,7 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     {
         return 'compliance_documents';
     }
-    
+
     public function behaviors()
     {
         return [
@@ -51,11 +53,11 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
     public function rules()
     {
         return [
-            [['title', 'policy_for', 'effective_from', 'description', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['title', 'policy_for', 'effective_from', 'effective_to', 'description', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
             [['version'], 'string', 'max' => 10],
-            [['effective_from','uuid','version'], 'safe'],
-            [['description','uuid','version'], 'string'],
+            [['effective_from', 'version'], 'safe'],
+            [['meta_title', 'meta_description', 'meta_keywords', 'version'], 'string'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
@@ -70,7 +72,10 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'title' => 'Title',
             'policy_for' => 'Policy For',
             'effective_from' => 'Effective From',
-            'description' => 'Description',
+            'effective_to' => 'Effective To',
+            'meta_title' => 'Meta Title',
+            'meta_description' => 'Meta Description',
+            'meta_keywords' => 'Meta Keywords',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
@@ -78,5 +83,19 @@ class ComplianceDocuments extends \yii\db\ActiveRecord implements \common\interf
             'updated_by' => 'Updated By',
         ];
     }
-   
+
+    public function getVersions()
+    {
+        return $this->hasMany(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
+    }
+
+    public function getLatestVersion()
+    {
+        return $this->getVersions()->orderBy(['id' => SORT_DESC])->one();
+    }
+
+    public function getVersiondata()
+    {
+        return $this->hasOne(ComplianceDocumentsVersion::class, ['compliance_documents_id' => 'id']);
+    }
 }

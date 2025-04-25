@@ -1291,6 +1291,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [self::STATUS_ACTIVE => "Active", self::STATUS_SUSPEND => "Inactive"];
     }
 
+    public static function livestatusoption()
+    {
+        return ['1' => 'Live', '0' => 'Dead'];
+    }
+
     public static function newrecentstatusoption()
     {
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Inactive', self::STATUS_DELETE => 'Deleted'];
@@ -1391,4 +1396,5 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     
         return $dom->saveHTML();
     }
+    
 }

@@ -19,8 +19,10 @@ class ComplianceDocumentsForm extends model
     public $title;
     public $policy_for;
     public $effective_from;
-    public $version;
-    public $description;
+    public $effective_to;
+    public $meta_title;
+    public $meta_description;
+    public $meta_keywords;
     public $status;
     public $status_option = [];
     public $cdocument_model;
@@ -33,17 +35,19 @@ class ComplianceDocumentsForm extends model
             'class' => ComplianceDocuments::className()
         ]);
 
-        $this->uuid = Uuid::uuid4()->toString().'-'.date('ymdHis');;
-        $this->version = 'v1';
+        // $this->uuid = Uuid::uuid4()->toString().'-'.date('ymdHis');;
+        // $this->version = 'v1';
 
         if ($cdocument_model  != null) {
             $this->cdocument_model = $cdocument_model;
-            $this->uuid =  $this->cdocument_model->uuid;
+            // $this->uuid =  $this->cdocument_model->uuid;
             $this->title =  $this->cdocument_model->title;
             $this->policy_for =  $this->cdocument_model->policy_for;
             $this->effective_from =  $this->cdocument_model->effective_from;
-            $this->description = $this->cdocument_model->description;
-            $this->version = $this->cdocument_model->version;
+            $this->effective_to =  $this->cdocument_model->effective_to;
+            $this->meta_title = $this->cdocument_model->meta_title;
+            $this->meta_keywords = $this->cdocument_model->meta_keywords;
+            $this->meta_description = $this->cdocument_model->meta_description;
             $this->status = $this->cdocument_model->status;
         }
 
@@ -57,9 +61,9 @@ class ComplianceDocumentsForm extends model
     public function rules()
     {
         return [
-            [['title','policy_for','description', 'effective_from'], 'required'],
+            [['title','policy_for', 'effective_from','effective_to'], 'required'],
             [['status'], 'integer'],
-            [['uuid','version'],'safe'],
+            [['meta_title','meta_description','meta_keywords'],'safe'],
             [['status'], 'default', 'value' => 0],
         ];
     }
@@ -73,7 +77,10 @@ class ComplianceDocumentsForm extends model
             'title'=>'Title',
             'policy_form'=>'Policy For',
             'effective_from' => 'Effective From',
-            'description' => 'Description',
+            'effective_to' => 'Effective To',
+            'meta_title' => 'Meta Title',
+            'meta_description' => 'Meta Description',
+            'meta_keywords' => 'Meta Keywords',
             'status' => 'Status',
         ];
     }
@@ -84,12 +91,14 @@ class ComplianceDocumentsForm extends model
      */
     public function initializeForm()
     {
-        $this->cdocument_model->uuid = $this->uuid;
+        // $this->cdocument_model->uuid = $this->uuid;
         $this->cdocument_model->title = $this->title;
         $this->cdocument_model->policy_for = $this->policy_for;
         $this->cdocument_model->effective_from = GeneralModel::DateFormatForDb($this->effective_from);
-        $this->cdocument_model->description = $this->description;
-        $this->cdocument_model->version = $this->version;
+        $this->cdocument_model->effective_to = GeneralModel::DateFormatForDb($this->effective_to);
+        $this->cdocument_model->meta_title = $this->meta_title;
+        $this->cdocument_model->meta_description = $this->meta_description;
+        $this->cdocument_model->meta_keywords = $this->meta_keywords;
         $this->cdocument_model->status = $this->status;
     }
 }

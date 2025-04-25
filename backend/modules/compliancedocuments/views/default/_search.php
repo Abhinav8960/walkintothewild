@@ -26,10 +26,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'policy_for')->dropDownList(['User' => 'User', 'Business' => 'Business'], ['prompt' => 'Search by Policy For'])->label(false) ?>
     </div>
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'version')->textInput(['placeholder' => 'Search by Version'])->label(false) ?>
-    </div>
-
+  
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel:: newrecentstatusoption(),

@@ -28,7 +28,7 @@ NotifyAsset::register($this);
 <body class="main-body">
     <?php $this->beginBody() ?>
 
-    <div class="page">
+    <!-- <div class="page"> -->
 
         <div>
             <!-- /main-header -->
@@ -39,7 +39,10 @@ NotifyAsset::register($this);
 
         <!-- main-content -->
         <div class="container">
-            <?= $content ?>
+            <!-- container -->
+            <!-- <div class="main-container"> -->
+                <?= $content ?>
+            <!-- </div> -->
         </div>
 
 
@@ -47,7 +50,7 @@ NotifyAsset::register($this);
         <?= \common\widgets\NotifyAlert::widget() ?>
 
         <!-- END Setting -->
-    </div>
+    <!-- </div> -->
     <!-- END #app -->
     <?php $this->endBody() ?>
 </body>

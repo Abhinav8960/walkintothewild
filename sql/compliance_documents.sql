@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 22, 2025 at 05:45 PM
+-- Generation Time: Apr 25, 2025 at 08:39 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.32
 
@@ -29,17 +29,36 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `compliance_documents` (
   `id` int NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `policy_for` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `effective_from` date DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `effective_from` datetime DEFAULT NULL,
+  `effective_to` datetime DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text,
+  `meta_keywords` text,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '1 => Active , \r\n0 => Suspended\r\n-1 => Deleted',
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `compliance_documents_version`
+--
+
+CREATE TABLE `compliance_documents_version` (
+  `id` int NOT NULL,
+  `compliance_documents_id` int NOT NULL,
+  `version` varchar(255) NOT NULL DEFAULT 'v1',
+  `description` text NOT NULL,
+  `is_live` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -53,6 +72,13 @@ ALTER TABLE `compliance_documents`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `compliance_documents_version`
+--
+ALTER TABLE `compliance_documents_version`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `compliance_documents_id` (`compliance_documents_id`,`version`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -60,6 +86,12 @@ ALTER TABLE `compliance_documents`
 -- AUTO_INCREMENT for table `compliance_documents`
 --
 ALTER TABLE `compliance_documents`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `compliance_documents_version`
+--
+ALTER TABLE `compliance_documents_version`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
