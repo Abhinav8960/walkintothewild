@@ -70,8 +70,7 @@ use yii\bootstrap5\ActiveForm;
 
 <style>
     .ck-editor__editable {
-        min-height: 350px;
-        min-width: 350px;
+        min-height: 200px;
     }
 </style>
 <?php
