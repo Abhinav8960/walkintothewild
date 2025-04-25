@@ -9,7 +9,9 @@ $package_included = PackageIncluded::find()
     ->where(['package_id' => $package->id, 'status' => 1])
     ->asArray()
     ->all();
+
 ?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
@@ -21,39 +23,57 @@ $package_included = PackageIncluded::find()
 
             // Generate radio options
             foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <label class="control-label font_sizes"><?= $optionLabel ?></label>
+                <div class="row mb-2">
+                    <div class="col-md-3 col-sm-4">
+                        <ul class="mb-0 px-3">
+                            <li><label class="control-label font_sizes"><?= $optionLabel ?> </label></li>
+                        </ul>
+
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-md-9 col-sm-8">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="package_included[<?= $optionValue ?>]" value="1" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1) ? 'checked' : '' ?> onclick="return false;">
-                            <label class="form-check-label">Include</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="package_included[<?= $optionValue ?>]" value="2" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2) ? 'checked' : '' ?> onclick="return false;">
-                            <label class="form-check-label">Exclude</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="package_included[<?= $optionValue ?>]" value="3" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3) ? 'checked' : '' ?> onclick="return false;">
-                            <label class="form-check-label">Optional</label>
+                            <label class="form-check-label">
+                                <?php if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1)) {
+                                    echo 'Included';
+                                } else if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2)) {
+                                    echo 'Not Included';
+                                } else  if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3)) {
+                                    echo 'Optional';
+                                } else {
+                                    echo '';
+                                }  ?>
+                            </label>
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
+
+            <div class="row mb-2">
+                <div class="col-md-3 col-sm-4">
+                    <ul class="mb-0 px-3">
+                        <li><label class="control-label font_sizes">Meals </label></li>
+                    </ul>
+
+                </div>
+                <div class="col-md-9 col-sm-8">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label d-flex gap-3">
+                            <?php echo $package->mealslabel; ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="row inclusions">
+    <div class="col-md-12 pt-3">
+        <div class="itenary_text font_familydd">
+            <p class="mb-2"><?= $package->package_inclusion ?></p>
+        </div>
+        <div class="itenary_text">
+            <p class="mb-2"><?= $package->package_exclusion ?></p>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="itenary_text">
-            <p><?= $package->package_inclusion ?></p>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="itenary_text">
-            <p><?= $package->package_exclusion ?></p>
-        </div>
-    </div>
 </div>

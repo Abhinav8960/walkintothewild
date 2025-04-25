@@ -1,6 +1,6 @@
 <div class="card mt-2">
     <div class="card-body">
-        <div class="row pt-4">git 
+        <div class="row pt-4">
             <div class="col-12">
                 <div class="accordion" id="accordionExample" style="background-color: #CED2E0;">
                     <?php if ($package->packagedays) {
