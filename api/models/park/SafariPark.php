@@ -94,10 +94,12 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'railway_station_list';
             $fields[] = 'locked_months';
             // $fields[] = 'animals';
-            $fields[] = 'average_rating';
+            $fields['average_rating'] = function () {
+                return (float)$this->average_rating;
+            };
             // $fields[] = 'countreview';
             $fields['google_rating'] = function () {
-                return (int)$this->google_rating;
+                return (float)$this->google_rating;
             };
             $fields['google_review_count'] = function () {
                 return (int)$this->google_review_count;
