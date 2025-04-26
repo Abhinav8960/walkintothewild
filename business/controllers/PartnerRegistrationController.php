@@ -31,6 +31,7 @@ class PartnerRegistrationController extends Controller
         $model->form1_status = 1;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $model->uploadFiles();
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 2;
@@ -65,6 +66,7 @@ class PartnerRegistrationController extends Controller
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                $model->uploadFiles();
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 3;
@@ -110,10 +112,10 @@ class PartnerRegistrationController extends Controller
                     if ($isGstLoaded) {
                         $gst_model->uploadFiles();
                         $gst_model->save(false);
-                        $model->partner_model->gst_id = $gst_model->id;
                     }
                     $model->initializeForm();
                     $model->partner_model->current_step = 4;
+                    $model->partner_model->gst_id = $gst_model->id; 
                     if ($model->partner_model->save(false)) {
                         return $this->redirect(['step-4']);
                     }
@@ -181,7 +183,7 @@ class PartnerRegistrationController extends Controller
                     $model->initializeForm();
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
-                        return $this->render('final-view', ['currentStep' => 5, 'model' => $model]);
+                        return $this->redirect(['final-view']);
                     }
                 }
             }
@@ -195,7 +197,17 @@ class PartnerRegistrationController extends Controller
         ]);
     }
 
-
+    public function actionFinalView()
+    {
+        $this->layout = 'registration';
+        $model = $this->findModel();
+    
+        return $this->render('final-view', [
+            'model' => $model,
+            'currentStep' => 5,
+        ]);
+    }
+    
     protected function findModel()
     {
         if (($model = PartnerRegistration::find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one()) !== null) {

@@ -178,7 +178,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
                     'logo', 
                     'registration_copy_upload', 
                     'pan_upload', 
-                    'gst_upload', 
+                    // 'gst_upload', 
                     'cancel_check_upload', 
                     'kyc_pan_upload', 
                     'aadhar_front_upload', 

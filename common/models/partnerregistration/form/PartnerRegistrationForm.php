@@ -149,11 +149,11 @@ class PartnerRegistrationForm extends Model
     public function rules()
     {
         return [
-            [['legal_entity_name', 'legal_entity_type', 'brand_name', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
+            [['legal_entity_name', 'legal_entity_type', 'brand_name','logo','legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
             [['logo'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP1],
 
-            [['registration_number', 'pan_number',], 'required', 'on' => self::SCENARIO_STEP2],
+            [['registration_number', 'pan_number','registration_copy_upload', 'pan_upload'], 'required', 'on' => self::SCENARIO_STEP2],
             [['registration_copy_upload', 'pan_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
 
             [['operated_park', 'about_business','billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
@@ -161,11 +161,11 @@ class PartnerRegistrationForm extends Model
             // [['gst_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP3],
 
 
-            [['bank_name','account_holder_name','account_number','ifsc_number'], 'required', 'on' => self::SCENARIO_STEP4],
+            [['bank_name','account_holder_name','account_number','ifsc_number','cancel_check_upload'], 'required', 'on' => self::SCENARIO_STEP4],
             [['cancel_check_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
 
 
-            [['owner_name','kyc_phone','kyc_whatsapp','kyc_email','kyc_pan','aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
+            [['owner_name','kyc_phone','kyc_whatsapp','kyc_email','kyc_pan','kyc_pan_upload','aadhar_number','aadhar_front_upload','aadhar_back_upload'], 'required', 'on' => self::SCENARIO_STEP5],
             ['kyc_email', 'email', 'on' => self::SCENARIO_STEP5],
             [['kyc_pan_upload','aadhar_front_upload','aadhar_back_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
 
