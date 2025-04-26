@@ -69,7 +69,7 @@ class DefaultController extends RestController
     {
         $searchModel = new SightingSearch();
         $searchModel->status = Sighting::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Sighting");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sighting");
     }
 
 

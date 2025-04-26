@@ -604,7 +604,7 @@ class DefaultController extends SafariController
             'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
             // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "intrested-users");
+        return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
     }
 
     public function actionUpdate($slug)
