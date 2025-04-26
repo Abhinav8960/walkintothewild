@@ -5,29 +5,97 @@ use yii\bootstrap5\Html;
 
 ?>
 
-<div class="card-body">
-        <div class="row mb-3">
-            <div class="col-md-5">
-                <div class="text-box">
-                    <p>
-                    <span>USER KYC : </span><?= Html::encode($model->owner_name) ?>
-                    </p>
-                </div>
+<div class="container-fluid py-3">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Owner Name:</strong>
+                <span><?= Html::encode($model->owner_name) ?></span>
             </div>
         </div>
-
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
-        <div class="row">
-            <div class="col-md-12">
-                <?= Html::a('Close', ['partner-registration/create'], ['class' => 'btn btn-orange text-white']) ?>
-            </div>
-        </div>
-
-        <?php ActiveForm::end(); ?>
     </div>
-    <style>
-        .text-box p span {
-            color: brown !important;
-        }
-    </style>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Legal Entity Type:</strong>
+                <span><?= Html::encode($model->legal_entity_type) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Phone Number :</strong>
+                <span><?= Html::encode($model->kyc_phone) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger"> Whatsapp :</strong>
+                <span><?= Html::encode($model->kyc_whatsapp) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">PAN Number :</strong>
+                <span><?= Html::encode($model->kyc_pan) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">PAN Uploaded File :</strong>
+                <span><?= Html::encode($model->kyc_pan_upload) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Aadhar :</strong>
+                <span><?= Html::encode($model->aadhar_number) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Aadhar Front :</strong>
+                <span><?= Html::encode($model->aadhar_front_upload) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Aadhar Back :</strong>
+                <span><?= Html::encode($model->aadhar_back_upload) ?></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-label {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .container-fluid span {
+        font-size: 1rem;
+        color: #444;
+    }
+</style>

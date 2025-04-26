@@ -77,16 +77,6 @@ use yii\bootstrap5\Html;
             </div>
         </div>
     </div>
-
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
-    <div class="row mt-4">
-        <div class="col-md-12 d-flex justify-content-end">
-            <?= Html::a('Close', ['partner-registration/create'], ['class' => 'btn btn-orange text-white']) ?>
-        </div>
-    </div>
-
-    <?php ActiveForm::end(); ?>
 </div>
 
 <style>

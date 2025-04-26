@@ -6,23 +6,6 @@ use yii\helpers\Html;
 $readOnly = false;
 ?>
 
-
-
-<?php
-if ($model->form4_status == 1 || $model->form4_status == 2) {
-    $this->title = 'Bank Details';
-    $this->params['title'] = $this->title;
-?>
-
-    <div class="card">
-        <?= $this->render('bankdetails-view', ['model' => $model]) ?>
-    </div>
-
-<?php
-} elseif ($model->form4_status == 0 || $model->form4_status == 3) {
-    $this->title = 'Bank Details';
-    $this->params['title'] = $this->title;
-?>
     <?php $form = ActiveForm::begin([
         'options' => ['id' => 'bank-details', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
     ]); ?>
@@ -82,7 +65,6 @@ if ($model->form4_status == 1 || $model->form4_status == 2) {
         <?= Html::submitButton('Next', ['class' => 'btn btn-info']) ?>
     </div>
 
-<?php ActiveForm::end();
-} ?>
+<?php ActiveForm::end();?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

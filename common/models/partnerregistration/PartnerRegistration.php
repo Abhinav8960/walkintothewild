@@ -52,7 +52,7 @@ use yii\web\UploadedFile;
  * @property int $form2_status 0 => empty,1=filled,2=>approved,3=>return
  * @property int $form3_status 0 => empty,1=filled,2=>approved,3=>return
  * @property int $form4_status 0 => empty,1=filled,2=>approved,3=>return
- * @property int $form4_status 0 => empty,1=filled,2=>approved,3=>return
+ * @property int $form5_status 0 => empty,1=filled,2=>approved,3=>return
 
  * @property int $created_at
  * @property int $created_by
@@ -145,7 +145,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
             ], 'default', 'value' => null],
 
 
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status'.'is_sendforapproval'], 'default', 'value' => 0],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
 
@@ -173,7 +173,23 @@ class PartnerRegistration extends \yii\db\ActiveRecord
                 'aadhar_front_upload',
                 'aadhar_back_upload',
             ], 'string', 'max' => 255],
-
+            [
+                [
+                    'logo', 
+                    'registration_copy_upload', 
+                    'pan_upload', 
+                    'gst_upload', 
+                    'cancel_check_upload', 
+                    'kyc_pan_upload', 
+                    'aadhar_front_upload', 
+                    'aadhar_back_upload'
+                ], 
+                'file', 
+                'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 
+                'maxSize' => 2 * 1024 * 1024, // 2 MB
+                'skipOnEmpty' => true
+            ],
+            
             [['legal_entity_type', 'legal_entity_phone', 'legal_entity_whatsapp', 'registration_number','billing_phone', 'account_number', 'kyc_phone', 'kyc_whatsapp', 'aadhar_number'], 'integer'],
 
 

@@ -103,7 +103,6 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
             $filePath = $userFolder . '/' . $fileName;
 
             if ($file->saveAs($filePath)) {
-                // Save relative path to DB
                 $this->filepath = 'Uploads/' . $folderName . '/' . $fileName;
             } else {
                 Yii::error("Failed to save GST file: $fileName", __METHOD__);

@@ -1,120 +1,87 @@
 <?php
 
-use common\models\GeneralModel;
-use common\models\partnerregistration\PartnerRegistration;
-use yii\bootstrap5\ActiveForm;
-use yii\helpers\Html;
-
-$readOnly = false;
+use yii\helpers\Url;
 
 ?>
+<?= $this->render('card', ['currentStep' => 3]) ?>
 
-<?php
-if ($model->form3_status == 1 || $model->form3_status == 2) {
-    $this->title = 'Business Details';
-    $this->params['title'] = $this->title;
-?>
+<div class="container mt-5">
+    <div class="accordion" id="formAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading1">
+                <button class="accordion-button d-flex align-items-center" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse1"
+                    aria-expanded="true" aria-controls="collapse1">
+                    Legal Entity
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse show"
+                aria-labelledby="heading1" data-bs-parent="#formAccordion">
+                <div class="accordion-body">
+                    <?= $this->render('legalentity-view', ['currentStep' => 1, 'model' => $model]) ?>
+                </div>
+            </div>
+        </div>
 
-    <div class="card">
-        <?= $this->render('businessdetails-view', ['model' => $model]) ?>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse2"
+                    aria-expanded="false" aria-controls="collapse2">
+                    Registration Proof
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-2']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse show"
+                aria-labelledby="heading2" data-bs-parent="#formAccordion">
+                <div class="accordion-body">
+                    <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading3">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse3"
+                    aria-expanded="false" aria-controls="collapse3">
+                    Business Details
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-3']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
+                </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse show"
+                aria-labelledby="heading3" data-bs-parent="#formAccordion">
+                <div class="accordion-body">
+                    <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model]) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading4">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse4"
+                    aria-expanded="false" aria-controls="collapse4">
+                    Bank Details
+                </button>
+            </h2>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading5">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse5"
+                    aria-expanded="false" aria-controls="collapse5">
+                    User KYC
+                </button>
+            </h2>
+        </div>
     </div>
-
-<?php
-} elseif ($model->form3_status == 0 || $model->form3_status == 3) {
-    $this->title = 'Business Details';
-    $this->params['title'] = $this->title;
-?>
-    <?php $form = ActiveForm::begin([
-        'options' => ['id' => 'business-details', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
-    ]); ?>
-<div class = "row">
-    <div class="col-md-12">
-        <?= $form->field($model, 'operated_park', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->dropDownList(
-            GeneralModel::safariparklist(),
-            [
-                'prompt' => 'Select Park',
-                'disabled' => $readOnly,
-                'class' => 'form-control',
-            ]
-        ) ?>
-    </div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'about_business', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textarea([
-            'class' => 'form-control',
-            'rows' => 3,
-            'placeholder' => 'Enter About Your Business',
-            'readonly' => $readOnly,
-        ]) ?>
-    </div>
-    <hr>
-    <h5>GST</h5>
-    <div class="col-md-4">
-        <?= $form->field($gst_model, 'state', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->dropDownList(
-            GeneralModel::stateoption(),
-            [
-                'prompt' => 'Select State',
-                'class' => 'form-control',
-                'disabled' => $readOnly,
-            ]
-        ) ?>
-    </div>
-
-    <div class="col-md-4">
-        <?= $form->field($gst_model, 'gst_number', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
-            'class' => 'form-control',
-            'placeholder' => 'Enter GST Number',
-            'readonly' => $readOnly,
-        ]) ?>
-    </div>
-
-    <div class="col-md-4">
-        <?= $form->field($gst_model, 'filepath', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'billing_phone', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
-            'class' => 'form-control',
-            'placeholder' => 'Enter Billing Phone',
-            'readonly' => $readOnly,
-        ]) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'billing_mail', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
-            'class' => 'form-control',
-            'placeholder' => 'Enter Billing Mail',
-            'readonly' => $readOnly,
-        ]) ?>
-    </div>
-
-
-    </div>
-
-    <div class="d-flex justify-content-end mt-3">
-        <?= Html::hiddenInput('step', $currentStep) ?>
-        <?= $form->field($model, 'form3_status')->hiddenInput(['value' => 1])->label(false) ?>
-        <?= Html::submitButton('Next', ['class' => 'btn btn-info']) ?>
-    </div>
-
-<?php ActiveForm::end();
-} ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</div>

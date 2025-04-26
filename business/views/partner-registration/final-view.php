@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 
 ?>
-<?= $this->render('card', ['currentStep' => 3]) ?>
+<?= $this->render('card', ['currentStep' => 5]) ?>
 
 <div class="container mt-5">
     <div class="accordion" id="formAccordion">
@@ -51,12 +51,15 @@ use yii\helpers\Url;
                     data-bs-toggle="collapse" data-bs-target="#collapse3"
                     aria-expanded="false" aria-controls="collapse3">
                     Business Details
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-3']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
                 </button>
             </h2>
             <div id="collapse3" class="accordion-collapse collapse show"
                 aria-labelledby="heading3" data-bs-parent="#formAccordion">
                 <div class="accordion-body">
-                    <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model]) ?>
+                    <?= $this->render('businessdetails-view', ['currentStep' => 3, 'model' => $model]) ?>
                 </div>
             </div>
         </div>
@@ -67,8 +70,17 @@ use yii\helpers\Url;
                     data-bs-toggle="collapse" data-bs-target="#collapse4"
                     aria-expanded="false" aria-controls="collapse4">
                     Bank Details
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-4']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
                 </button>
             </h2>
+            <div id="collapse4" class="accordion-collapse collapse show"
+                aria-labelledby="heading4" data-bs-parent="#formAccordion">
+                <div class="accordion-body">
+                    <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
+                </div>
+            </div>
         </div>
 
         <div class="accordion-item">
@@ -77,8 +89,18 @@ use yii\helpers\Url;
                     data-bs-toggle="collapse" data-bs-target="#collapse5"
                     aria-expanded="false" aria-controls="collapse5">
                     User KYC
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-5']) ?>"><i class="bi bi-pencil-square"></i></a>
+                    </span>
                 </button>
             </h2>
+            <div id="collapse5" class="accordion-collapse collapse show"
+                aria-labelledby="heading5" data-bs-parent="#formAccordion">
+                <div class="accordion-body">
+                    <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+

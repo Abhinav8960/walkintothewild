@@ -11,7 +11,7 @@ $readOnly = false;
 
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'business-details', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
+    'options' => ['id' => 'business-details','enctype' => 'multipart/form-data']
 ]); ?>
 <div class="row">
     <div class="col-md-12">

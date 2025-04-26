@@ -1,11 +1,49 @@
 <?php
 
 use yii\bootstrap5\Html;
-use yii\helpers\Url;
 
+$steps = [
+    1 => 'Legal Entity',
+    2 => 'Registration Proof',
+    3 => 'Business Details',
+    4 => 'Bank Details',
+    5 => 'User KYC'
+];
 ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+<div class="card shadow-sm border-0 rounded-4 mt-5">
+    <div class="card-body p-4 bg-light">
+        <div class="row text-center">
+            <div class="col-12 mb-3">
+                <h4 class="fw-bold">Activate Your Account</h4>
+            </div>
+            <div class="col-12 mb-2">
+                <p class="text-secondary fs-5">
+                    Follow these <strong>5 simple steps</strong> to complete your partner account setup.
+                </p>
+            </div>
+            <div class="col-12">
+                <p class="text-dark fs-6 fst-italic">
+                    “Complete your KYC to activate your business account.”
+                </p>
+            </div>
+
+
+            <div class="col-12 stepper mt-4">
+                <?php foreach ($steps as $step => $label): ?>
+                    <div class="step <?= $currentStep > $step ? 'completed' : '' ?> <?= $currentStep == $step ? 'active' : '' ?>" data-step="<?= $step ?>">
+                        <div class="circle"><?= $step ?></div>
+                        <div class="label"><?= $label ?></div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <style>
     .stepper {
@@ -72,136 +110,3 @@ use yii\helpers\Url;
         color: #fff;
     }
 </style>
-
-<div class="card shadow-sm border-0 rounded-4 mt-5">
-    <div class="card-body p-4 bg-light">
-        <div class="row text-center">
-            <div class="col-12 mb-3">
-                <h4 class="fw-bold">Activate Your Account</h4>
-            </div>
-            <div class="col-12 mb-2">
-                <p class="text-secondary fs-5">
-                    Follow these <strong>5 simple steps</strong> to complete your partner account setup.
-                </p>
-            </div>
-            <div class="col-12">
-                <p class="text-dark fs-6 fst-italic">
-                    “Complete your KYC to activate your business account.”
-                </p>
-            </div>
-
-            <div class="col-12 stepper mt-4">
-                <div class="step <?= $currentStep > 1 ? 'completed' : '' ?> <?= $currentStep == 1 ? 'active' : '' ?>" data-step="1">
-                    <div class="circle">1</div>
-                    <div class="label">Legal Entity</div>
-                </div>
-                <div class="step <?= $currentStep > 2 ? 'completed' : '' ?> <?= $currentStep == 2 ? 'active' : '' ?>" data-step="2">
-                    <div class="circle">2</div>
-                    <div class="label">Registration Proof</div>
-                </div>
-                <div class="step <?= $currentStep > 3 ? 'completed' : '' ?> <?= $currentStep == 3 ? 'active' : '' ?>" data-step="3">
-                    <div class="circle">3</div>
-                    <div class="label">Business Details</div>
-                </div>
-                <div class="step <?= $currentStep > 4 ? 'completed' : '' ?> <?= $currentStep == 4 ? 'active' : '' ?>" data-step="4">
-                    <div class="circle">4</div>
-                    <div class="label">Bank Details</div>
-                </div>
-                <div class="step <?= $currentStep > 5 ? 'completed' : '' ?> <?= $currentStep == 5 ? 'active' : '' ?>" data-step="5">
-                    <div class="circle">5</div>
-                    <div class="label">User KYC</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container mt-5">
-    <div class="accordion" id="formAccordion">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading1">
-                <button class="accordion-button <?= $currentStep > 1 ? 'bg-success text-white' : ($currentStep == 1 ? '' : 'collapsed') ?>" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapse1"
-                        aria-expanded="<?= $currentStep == 1 ? 'true' : 'false' ?>" aria-controls="collapse1">
-                    Legal Entity
-                </button>
-            </h2>
-            <div id="collapse1" class="accordion-collapse collapse <?= $currentStep == 1 ? 'show' : '' ?>"
-                 aria-labelledby="heading1" data-bs-parent="#formAccordion">
-                <div class="accordion-body">
-                    <?= $this->render('legalentity', ['currentStep' => 1, 'model' => $model, 'gst_model' => $gst_model]) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading2">
-                <button class="accordion-button <?= $currentStep > 2 ? 'bg-success text-white' : ($currentStep == 2 ? '' : 'collapsed') ?>" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapse2"
-                        aria-expanded="<?= $currentStep == 2 ? 'true' : 'false' ?>" aria-controls="collapse2">
-                    Registration Proof
-                </button>
-            </h2>
-            <div id="collapse2" class="accordion-collapse collapse <?= $currentStep == 2 ? 'show' : '' ?>"
-                 aria-labelledby="heading2" data-bs-parent="#formAccordion">
-                <div class="accordion-body">
-                    <?= $this->render('registrationproof', ['currentStep' => 2, 'model' => $model, 'gst_model' => $gst_model]) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading3">
-                <button class="accordion-button <?= $currentStep > 3 ? 'bg-success text-white' : ($currentStep == 3 ? '' : 'collapsed') ?>" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapse3"
-                        aria-expanded="<?= $currentStep == 3 ? 'true' : 'false' ?>" aria-controls="collapse3">
-                    Business Details
-                </button>
-            </h2>
-            <div id="collapse3" class="accordion-collapse collapse <?= $currentStep == 3 ? 'show' : '' ?>"
-                 aria-labelledby="heading3" data-bs-parent="#formAccordion">
-                <div class="accordion-body">
-                    <?= $this->render('businessdetails', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model]) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading4">
-                <button class="accordion-button <?= $currentStep > 4 ? 'bg-success text-white' : ($currentStep == 4 ? '' : 'collapsed') ?>" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapse4"
-                        aria-expanded="<?= $currentStep == 4 ? 'true' : 'false' ?>" aria-controls="collapse4">
-                    Bank Details
-                </button>
-            </h2>
-            <div id="collapse4" class="accordion-collapse collapse <?= $currentStep == 4 ? 'show' : '' ?>"
-                 aria-labelledby="heading4" data-bs-parent="#formAccordion">
-                <div class="accordion-body">
-                    <?= $this->render('bankdetails', ['currentStep' => 4, 'model' => $model, 'gst_model' => $gst_model]) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading5">
-                <button class="accordion-button <?= $currentStep > 5 ? 'bg-success text-white' : ($currentStep == 5 ? '' : 'collapsed') ?>" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapse5"
-                        aria-expanded="<?= $currentStep == 5 ? 'true' : 'false' ?>" aria-controls="collapse5">
-                    User KYC
-                </button>
-            </h2>
-            <div id="collapse5" class="accordion-collapse collapse <?= $currentStep == 5 ? 'show' : '' ?>"
-                 aria-labelledby="heading5" data-bs-parent="#formAccordion">
-                <div class="accordion-body">
-                    <?= $this->render('userkyc', ['currentStep' => 5, 'model' => $model, 'gst_model' => $gst_model]) ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 
-
-<div class="d-flex justify-content-start mt-3">
-    <?= Html::a('<i class="bi bi-send me-2"></i> Send For Approval', Url::to(['partner/send-for-approval']), ['class' => 'btn btn-orange text-black']) ?>
-</div> -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

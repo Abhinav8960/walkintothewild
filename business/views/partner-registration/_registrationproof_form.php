@@ -2,7 +2,6 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
-
 $readOnly = false;
 ?>
 

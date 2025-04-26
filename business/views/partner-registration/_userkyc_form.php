@@ -6,20 +6,6 @@ use yii\helpers\Html;
 $readOnly = false;
 ?>
 
-<?php
-if ($model->form5_status == 1 || $model->form5_status == 2) {
-    $this->title = 'User KYC';
-    $this->params['title'] = $this->title;
-?>
-    <div class="card">
-        <?= $this->render('userkyc-view', ['model' => $model]) ?>
-    </div>
-
-<?php
-} elseif ($model->form5_status == 0 || $model->form5_status == 3) {
-    $this->title = 'User KYC';
-    $this->params['title'] = $this->title;
-?>
     <?php $form = ActiveForm::begin([
         'options' => ['id' => 'user-kyc', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
     ]); ?>
@@ -125,11 +111,7 @@ if ($model->form5_status == 1 || $model->form5_status == 2) {
                 'disabled' => $readOnly,
             ]) ?>
         </div>
-
-
-
     </div>
-
 
     <div class="d-flex justify-content-end mt-3">
         <?= Html::hiddenInput('step', $currentStep) ?>
@@ -137,8 +119,7 @@ if ($model->form5_status == 1 || $model->form5_status == 2) {
         <?= Html::submitButton('Save', ['class' => 'btn btn-info']) ?>
     </div>
 
-<?php ActiveForm::end();
-} ?>
+<?php ActiveForm::end();?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
