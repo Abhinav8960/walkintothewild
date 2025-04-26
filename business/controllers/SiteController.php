@@ -70,7 +70,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
-            return $this->redirect(['/operator-registration/create']);
+            return $this->redirect(['/partner-registration/create']);
         }
         return $this->render('index');
     }

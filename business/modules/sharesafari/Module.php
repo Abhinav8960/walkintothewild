@@ -22,7 +22,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
-            return $this->redirect(['/operator-registration/create']);
+            return $this->redirect(['/partner-registration/create']);
         }
 
         // if (!Yii::$app->request->isConsoleRequest) {
