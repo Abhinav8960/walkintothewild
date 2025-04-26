@@ -216,7 +216,7 @@ class DefaultController extends RestController
             $searchModel = new FeedsSearch();
             $searchModel->created_by = $user->id;
             $searchModel->status = Feeds::STATUS_ACTIVE;
-            return $this->dataProviderSender($searchModel, $rootIndexName = "User Activity");
+            return $this->dataProviderSender($searchModel, $rootIndexName = "user_activity");
         }
     }
 }
