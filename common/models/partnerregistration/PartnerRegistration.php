@@ -145,7 +145,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
             ], 'default', 'value' => null],
 
 
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status'], 'default', 'value' => 0],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status'.'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
 
@@ -178,7 +178,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
 
 
             [['current_step'], 'default', 'value' => 1],
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'safe'],
         ];
     }
 
@@ -241,6 +241,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
             'form3_status' => 'Form3 Status',
             'form4_status' => 'Form4 Status',
             'form5_status' => 'Form5 Status',
+            'is_sendforapproval'=>'Is Send For Approval',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap5\Html;
+use yii\helpers\Url;
 
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -198,5 +199,9 @@ use yii\bootstrap5\Html;
         </div>
     </div>
 </div>
+<!-- 
 
+<div class="d-flex justify-content-start mt-3">
+    <?= Html::a('<i class="bi bi-send me-2"></i> Send For Approval', Url::to(['partner/send-for-approval']), ['class' => 'btn btn-orange text-black']) ?>
+</div> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

@@ -70,6 +70,7 @@ class PartnerRegistrationForm extends Model
     public $form3_status;
     public $form4_status;
     public $form5_status;
+    public $is_sendforapproval;
     public $partner_model;
 
     public function __construct(PartnerRegistration $partner_model = null)
@@ -84,6 +85,7 @@ class PartnerRegistrationForm extends Model
             $this->user_id = $this->partner_model->user_id;
 
             $this->legal_entity_name = $this->partner_model->legal_entity_name;
+            $this->legal_entity_type = $this->partner_model->legal_entity_type;
             $this->brand_name = $this->partner_model->brand_name;
             $this->logo = $this->partner_model->logo;
             $this->legal_entity_phone = $this->partner_model->legal_entity_phone;
@@ -127,6 +129,8 @@ class PartnerRegistrationForm extends Model
             $this->form3_status = $this->partner_model->form3_status;
             $this->form4_status = $this->partner_model->form4_status;
             $this->form5_status = $this->partner_model->form5_status;
+            $this->is_sendforapproval = $this->partner_model->is_sendforapproval;
+
         }
     }
 
@@ -165,9 +169,9 @@ class PartnerRegistrationForm extends Model
             ['kyc_email', 'email', 'on' => self::SCENARIO_STEP5],
             [['kyc_pan_upload','aadhar_front_upload','aadhar_back_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
 
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status'], 'default', 'value' => 0],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status','is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id','user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status','is_sendforapproval'], 'safe'],
 
         ];
     }
@@ -274,6 +278,8 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->form3_status = $this->form3_status;
         $this->partner_model->form4_status = $this->form4_status;
         $this->partner_model->form5_status = $this->form5_status;
+        $this->partner_model->is_sendforapproval = $this->is_sendforapproval;
+
     }
 
 

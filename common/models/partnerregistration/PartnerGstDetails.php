@@ -9,7 +9,7 @@ use yii\web\UploadedFile;
  * This is the model class for table "partner_gst_details".
  *
  * @property int $id
- * @property int|null $gst_number
+ * @property string|null $gst_number
  * @property string|null $filepath
  * @property int $status
  * @property int $created_at
@@ -20,8 +20,6 @@ use yii\web\UploadedFile;
  */
 class PartnerGstDetails extends \yii\db\ActiveRecord
 {
-
-
     /**
      * {@inheritdoc}
      */
@@ -34,20 +32,16 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'class' => \yii\behaviors\BlameableBehavior::class,
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
-                'value' => function () {
-                    return Yii::$app->user->id ?? '';
-                },
+                'value' => fn () => Yii::$app->user->id ?? null,
             ],
             [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'class' => \yii\behaviors\TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
+                'value' => fn () => time(),
             ],
         ];
     }
@@ -58,11 +52,11 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gst_number', 'filepath', 'state'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
-            [['gst_number', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'state'], 'integer'],
-            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['state', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['gst_number'], 'string', 'max' => 50],
             [['filepath'], 'string', 'max' => 255],
+            [['gst_number', 'state'], 'required'],
+            [['filepath'], 'file', 'skipOnEmpty' => true, 'extensions' => ['pdf', 'jpg', 'jpeg', 'png']],
         ];
     }
 
@@ -73,8 +67,8 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'gst_number' => 'Gst Number',
-            'filepath' => 'Filepath',
+            'gst_number' => 'GST Number',
+            'filepath' => 'GST File Upload',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
@@ -84,34 +78,36 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
         ];
     }
 
-
+    /**
+     * Handles file upload and sets the path
+     */
     public function uploadFiles()
     {
-        $basePath = Yii::$app->params['datapath'] . '/Uploads';
-        if (!file_exists($basePath)) {
-            mkdir($basePath, 0777, true);
-        }
-
-        $userFolder = $basePath . '/' . $this->id;
-        if (!file_exists($userFolder)) {
-            mkdir($userFolder, 0777, true);
-        }
-
         $file = UploadedFile::getInstance($this, 'filepath');
 
         if ($file) {
-            $fileName = 'filepath' . '_' . time() . '.' . $file->extension;
+            $basePath = Yii::$app->params['datapath'] . '/Uploads';
+
+            if (!is_dir($basePath)) {
+                mkdir($basePath, 0777, true);
+            }
+
+            $folderName = Yii::$app->user->id;
+            $userFolder = $basePath . '/' . $folderName;
+
+            if (!is_dir($userFolder)) {
+                mkdir($userFolder, 0777, true);
+            }
+
+            $fileName = 'gst_' . time() . '.' . $file->extension;
             $filePath = $userFolder . '/' . $fileName;
 
             if ($file->saveAs($filePath)) {
-                $this->filepath = $filePath;
+                // Save relative path to DB
+                $this->filepath = 'Uploads/' . $folderName . '/' . $fileName;
             } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+                Yii::error("Failed to save GST file: $fileName", __METHOD__);
             }
         }
-        if (!$this->save(false)) {
-            Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
-        }
     }
-
 }
