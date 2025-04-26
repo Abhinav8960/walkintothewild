@@ -5,6 +5,8 @@ namespace backend\modules\operatorapproval\controllers;
 use common\models\operator\SafariOperator;
 use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
+use common\models\partnerregistration\PartnerRegistration;
+use common\models\partnerregistration\PartnerRegistrationSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,7 +23,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OperatorRegistrationSearch();
+        $searchModel = new PartnerRegistrationSearch();
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 

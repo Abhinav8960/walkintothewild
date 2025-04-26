@@ -27,7 +27,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->name;
+                            return $model->legal_entity_name;
                         }
                     ],
                     [
@@ -35,7 +35,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->email;
+                            return $model->legal_entity_email;
                         }
                     ],
                     [
@@ -43,17 +43,17 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->phone_no;
+                            return $model->legal_entity_phone;
                         }
                     ],
-                    [
-                        'label' => 'Business Registration Name',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->business_registration_name;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Business Registration Name',
+                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->business_registration_name;
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Approval',
