@@ -3,6 +3,7 @@
 namespace api\models;
 
 use api\models\chat\Chat;
+use api\models\feeds\Feeds;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -26,6 +27,7 @@ class User extends \common\models\User
         $fields[] = 'cover_display_image';
         $fields[] = 'display_name';
         $fields[] = 'is_followed';
+        $fields[] = 'user_activity_count';
 
         $hold_fields = [
             'id',
@@ -315,5 +317,14 @@ class User extends \common\models\User
     {
         return $this->hasMany(Chat::className(), [])
             ->onCondition(['or', ['chat.user_id' => new \yii\db\Expression('user.id')], ['chat.recipient_user_id' => new \yii\db\Expression('user.id')]]);
+    }
+
+    public function getUser_activity_count()
+    {
+        $count = Feeds::find()->where(['created_by' => $this->id, 'status' => Feeds::STATUS_ACTIVE])->count();
+        if ($count > 0) {
+            return $count;
+        }
+        return 0;
     }
 }

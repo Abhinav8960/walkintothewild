@@ -108,7 +108,7 @@ class SiteController extends RestController
     public function actionMasterMetaInfo()
     {
         $searchModel = new MasterMetaTableInfoSearch();
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterMetaTableInfo");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "master_meta_table_info");
     }
 
 

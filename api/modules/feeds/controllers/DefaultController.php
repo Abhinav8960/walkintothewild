@@ -88,7 +88,7 @@ class DefaultController extends RestController
 
 
         //Horizontal Feeds
-        $types = ['Sighting' => Feeds::MODEL_SIGHTING, 'Package' => Feeds::MODEL_PACKAGE];
+        $types = ['sighting' => Feeds::MODEL_SIGHTING, 'package' => Feeds::MODEL_PACKAGE];
         $randomType = $this->getRandomArrayElement(array_keys($types));
         $horizontalModel = new FeedsSearch();
         $horizontalModel->status = Feeds::STATUS_ACTIVE;
@@ -102,7 +102,7 @@ class DefaultController extends RestController
         if (!empty($data['data']['feeds'])) {
             $hr = [
                 "objective" => $randomType,
-                $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
+                $randomType . "_feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
             $data['data']['summary']['additional_feed'] = 1;
 

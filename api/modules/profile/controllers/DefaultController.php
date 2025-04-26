@@ -95,10 +95,10 @@ class DefaultController extends RestController
         }
         if ($user->id == $this->userinfoId) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $organized_by]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
         } else {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $organized_by]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
         }
     }
 
@@ -117,7 +117,7 @@ class DefaultController extends RestController
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
                 ->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $shared_safari]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
         } else {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
             $safariIds = array_map(function ($item) {
@@ -127,7 +127,7 @@ class DefaultController extends RestController
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
                 ->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $shared_safari]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
         }
     }
 
@@ -216,7 +216,7 @@ class DefaultController extends RestController
             $searchModel = new FeedsSearch();
             $searchModel->created_by = $user->id;
             $searchModel->status = Feeds::STATUS_ACTIVE;
-            return $this->dataProviderSender($searchModel, $rootIndexName = "User Activity");
+            return $this->dataProviderSender($searchModel, $rootIndexName = "user_activity");
         }
     }
 }

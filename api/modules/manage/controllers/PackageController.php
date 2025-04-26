@@ -367,7 +367,7 @@ class PackageController extends RestController
         $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_model->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Faqs");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "faqs");
     }
 
     /**
@@ -459,7 +459,7 @@ class PackageController extends RestController
         $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageGallerySearch();
         $searchModel->package_id = $package_model->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Gallery");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "gallery");
     }
 
     public function actionCreateGallery($slug, $id = null)

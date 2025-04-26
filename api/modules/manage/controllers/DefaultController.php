@@ -174,7 +174,7 @@ class DefaultController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "share_safari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
 

@@ -46,7 +46,7 @@ class DefaultController extends RestController
 
         $condition = ['!=', 'sequence', ''];
         $defaultsort = ['sequence' => SORT_ASC];
-        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "FeaturePark", $condition, $defaultsort);
+        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "feature_park", $condition, $defaultsort);
     }
 
 
@@ -57,7 +57,7 @@ class DefaultController extends RestController
         $defaultsort = ['is_feature_sequence' => SORT_ASC];
         $condition = ['!=', 'is_feature_sequence', ''];
 
-        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "RareAnimalExotic", $condition, $defaultsort);
+        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "rare_animal_exotic", $condition, $defaultsort);
         // $rare_exotic_animal =  MasterAnimal::find()->where(['status' => MasterAnimal::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->asArray()->all();
         // return $this->dataSender($rare_exotic_animal, $rootIndexName = "Rare Animal Exotic");
     }
