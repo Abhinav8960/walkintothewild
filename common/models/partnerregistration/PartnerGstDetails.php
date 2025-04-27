@@ -2,6 +2,7 @@
 
 namespace common\models\partnerregistration;
 
+use api\models\master\state\MasterState;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -108,5 +109,9 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
                 Yii::error("Failed to save GST file: $fileName", __METHOD__);
             }
         }
+    }
+
+    public function getStateRelation(){
+        return $this->hasOne(MasterState :: class ,['id'=>'state']);
     }
 }

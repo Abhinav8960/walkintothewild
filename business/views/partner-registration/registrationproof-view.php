@@ -3,6 +3,9 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+
+$webasset = Yii::$app->getUrlManager();
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container-fluid py-3">
@@ -19,7 +22,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Registration Copy:</strong>
-                <span><?= Html::encode($model->registration_copy_upload) ?></span>
+                <span>
+                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->registration_copy_upload) ?>" alt="Logo" style="max-height:100px;">
+                </span>
             </div>
         </div>
     </div>
@@ -37,7 +42,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">PAN Upload:</strong>
-                <span><?= Html::encode($model->pan_upload) ?></span>
+                <span>
+                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->pan_upload) ?>" alt="Logo" style="max-height:100px;">
+                </span>
             </div>
         </div>
     </div>

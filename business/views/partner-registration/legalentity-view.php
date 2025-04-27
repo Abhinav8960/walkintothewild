@@ -3,6 +3,9 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+
+$webasset = Yii::$app->getUrlManager();
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container-fluid py-3">
@@ -34,13 +37,17 @@ use yii\bootstrap5\Html;
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="d-flex align-items-center">
-                <strong class="form-label me-2 text-danger">Logo:</strong>
-                <span><?= Html::encode($model->logo) ?></span>
-            </div>
+    <div class="col-md-6">
+        <div class="d-flex align-items-center">
+            <strong class="form-label me-2 text-danger">Logo:</strong>
+            <span>
+            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->logo) ?>" alt="Logo" style="max-height:100px;">
+            </span>
         </div>
     </div>
+</div>
+
+
 
     <div class="row mb-3">
         <div class="col-md-6">

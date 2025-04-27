@@ -200,11 +200,13 @@ class PartnerRegistrationController extends Controller
     public function actionFinalView()
     {
         $this->layout = 'registration';
-        $model = $this->findModel();
-    
+        // $model = $this->findModel();
+        $partner_model = $this->findModel();
+        $model = new PartnerRegistrationForm($partner_model); 
         return $this->render('final-view', [
             'model' => $model,
             'currentStep' => 5,
+            'partner_model'=>$partner_model,
         ]);
     }
     

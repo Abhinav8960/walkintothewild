@@ -325,4 +325,5 @@ class PartnerRegistrationForm extends Model
             Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
         }
     }
+    
 }

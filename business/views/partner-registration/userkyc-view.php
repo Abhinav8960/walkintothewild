@@ -3,6 +3,10 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+
+
+$webasset = Yii::$app->getUrlManager();
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container-fluid py-3">
@@ -55,7 +59,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">PAN Uploaded File :</strong>
-                <span><?= Html::encode($model->kyc_pan_upload) ?></span>
+                <span>
+                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->kyc_pan_upload) ?>" alt="Logo" style="max-height:100px;">
+                </span>
             </div>
         </div>
     </div>
@@ -73,7 +79,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Aadhar Front :</strong>
-                <span><?= Html::encode($model->aadhar_front_upload) ?></span>
+                <span>
+                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_front_upload) ?>" alt="Logo" style="max-height:100px;">
+                </span>
             </div>
         </div>
     </div>
@@ -82,7 +90,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Aadhar Back :</strong>
-                <span><?= Html::encode($model->aadhar_back_upload) ?></span>
+                <span>
+                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_back_upload) ?>" alt="Logo" style="max-height:100px;">
+                </span>
             </div>
         </div>
     </div>

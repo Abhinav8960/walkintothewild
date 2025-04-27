@@ -269,4 +269,8 @@ class PartnerRegistration extends \yii\db\ActiveRecord
     {
         return [self::PROP_WRITER => "Prop Writer", self::PVT_LTD => "Pvt. Ltd", self::LLP => "LLP"];
     }
+
+    public function getGstDetails(){
+        return $this->hasOne(PartnerGstDetails :: class , ['id'=>'gst_id']);
+    }
 }

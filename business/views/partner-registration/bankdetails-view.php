@@ -3,6 +3,8 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
+
+
 ?>
 
 <div class="container-fluid py-3">
@@ -46,7 +48,9 @@ use yii\bootstrap5\Html;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Cancel Check Upload :</strong>
-                <span><?= Html::encode($model->cancel_check_upload) ?></span>
+                <span>
+                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->cancel_check_upload) ?>" alt="Logo" style="max-height:100px;">
+</span>
             </div>
         </div>
     </div>
