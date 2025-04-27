@@ -80,7 +80,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getPackage_count()
     {
-        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::APPROVED_AND_LIVE_STATUS])->count();
+        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::STATUS_ACTIVE])->count();
     }
 
 
@@ -100,7 +100,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getPackages()
     {
-        return $this->hasMany(Package::className(), ['owned_by_id' => 'id'])->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS]);
+        return $this->hasMany(Package::className(), ['owned_by_id' => 'id'])->andWhere(['status' => Package::STATUS_ACTIVE]);
     }
 
     public function getsafaricount()
