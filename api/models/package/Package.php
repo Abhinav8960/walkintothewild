@@ -2,7 +2,7 @@
 
 namespace api\models\package;
 
-
+use api\models\UserWishlist;
 use Yii;
 use common\models\User;
 
