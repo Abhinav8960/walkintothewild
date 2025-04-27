@@ -5,7 +5,7 @@ use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = ' Update Package : ' . $package_model->package_name;
+$this->title = ' Update Package : ' . $package_version_model->package_name;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
@@ -38,10 +38,10 @@ $this->title = ' Update Package : ' . $package_model->package_name;
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1><?= $package_model->package_name ?></h1>
+                                <h1><?= $package_version_model->package_name ?></h1>
                             </div>
                             <?php
-                            if (!empty($model->package_model->id)) { ?>
+                            if (!empty($model->package_version_model->id)) { ?>
                                 <div class="col-md-2 mt-4">
                                     <?= $form->field($model, 'popular_package')->checkbox() ?>
                                 </div>

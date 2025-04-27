@@ -5,7 +5,7 @@ namespace common\models\package\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 
 class PackageDeleteForm extends model
 {

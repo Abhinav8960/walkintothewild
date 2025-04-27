@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\cms\article\Article;
 use common\models\master\animal\MasterRareAnimal;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\SafariParkSearch;
 use frontend\controllers\FrontendBaseController;
@@ -30,7 +30,7 @@ class AnimalController extends FrontendBaseController
       ->limit(3)->orderBy(['sequence' => SORT_ASC])->all();
     $shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_safari_intrested` WHERE share_safari_id=share_safari.id and share_safari_intrested.status=1) AS `instreted_user_count`")->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(3)->orderby(['instreted_user_count' => SORT_DESC])->all();
 
-    $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(3)->orderby("RAND()")->all();
+    $packages = PackageVersion::find()->where(['status' => PackageVersion::APPROVED_AND_LIVE_STATUS])->limit(3)->orderby("RAND()")->all();
 
     return $this->render(
       '/plan-safari/index',

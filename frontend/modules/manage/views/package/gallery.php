@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 $this->params['title'] = $this->title;
 
 ?>
@@ -17,11 +17,11 @@ $this->params['title'] = $this->title;
         <div class="d-flex justify-content-between align-items-center  flex-wrap mb-4">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class=" mt-xxl-0 mt-3">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2" target="_blank">
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_version_model->package_slug, 'operator_slug' => $package_version_model->safarioperator ? $package_version_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2" target="_blank">
                     <i class="fa fa-eye"></i> View
                 </a>
                 &nbsp;
-                <a href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery', 'slug' => $package_model->package_slug]) ?>">
+                <a href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery', 'slug' => $package_version_model->package_slug]) ?>">
                     + Add Gallery
                 </a>
             </div>
@@ -35,7 +35,7 @@ $this->params['title'] = $this->title;
                     <div class="row">
                         <div class="col-12">
 
-                            <?= $this->render('_profile_navbar', ['package' => $package_model, 'gallery_active' => 'active']) ?>
+                            <?= $this->render('_profile_navbar', ['package' => $package_version_model, 'gallery_active' => 'active']) ?>
                         </div>
                     </div>
                     <div class="row">
@@ -74,8 +74,8 @@ $this->params['title'] = $this->title;
                                                             'contentOptions' => ['style' => 'width: 15%;'],
                                                             'template' => '{update}',
                                                             'buttons' => [
-                                                                'update' => function ($url, $model) use ($package_model) {
-                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?slug=$package_model->package_slug&id=$model->id", 'class' => 'packageBtn btn btn-info join_btn py-2', 'title' => 'Edit Gallery Image']);
+                                                                'update' => function ($url, $model) use ($package_version_model) {
+                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?slug=$package_version_model->package_slug&id=$model->id", 'class' => 'packageBtn btn btn-info join_btn py-2', 'title' => 'Edit Gallery Image']);
                                                                 },
                                                             ]
                                                         ],

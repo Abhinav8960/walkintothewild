@@ -10,7 +10,7 @@ use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorRequestActivities;
 use api\models\operator\SafariOperatorRequestPark;
 use api\models\package\Package;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\User;

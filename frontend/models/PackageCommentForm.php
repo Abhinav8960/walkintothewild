@@ -52,6 +52,7 @@ class PackageCommentForm extends Model
         $comment = new PackageComment();
 
         $comment->package_id = $package->id;
+        $comment->version = $package->version;
         $comment->user_id = Yii::$app->user->id;
         $comment->comment = $this->comment;
         // $comment->user_device = $agent->device();

@@ -4,8 +4,8 @@ namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageDeleteForm;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
+use common\models\package\form\PackageVersionForm;
+use common\models\package\PackageVersion;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
 use common\models\package\PackageCommentSearch;
@@ -13,7 +13,7 @@ use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
+use common\models\package\PackageVersionSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -61,30 +61,30 @@ class PreviewController extends Controller
 
     public function actionUpdate($id)
     {
-        $package_model = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
-        if (empty($package_model)) {
+        $package_version_model = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
+        if (empty($package_version_model)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $model = new PackageForm($package_model);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->package_model->popular_package = $model->popular_package;
-                if ($model->package_model->save(false)) {
+                $model->package_version_model->popular_package = $model->popular_package;
+                if ($model->package_version_model->save(false)) {
                     \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                    return $this->redirect(['index', 'id' => $package_model->id]);
+                    return $this->redirect(['index', 'id' => $package_version_model->id]);
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('update', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 

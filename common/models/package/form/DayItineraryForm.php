@@ -3,7 +3,7 @@
 namespace common\models\package\form;
 
 use Yii;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;

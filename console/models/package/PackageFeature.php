@@ -1,24 +1,23 @@
 <?php
 
-namespace common\models\__package;
+namespace console\models\package;
 
+use common\models\master\packagefeature\MasterPackagefeature;
 use Yii;
 
 /**
- * This is the model class for table "package_faq".
+ * This is the model class for table "package_feature".
  *
  * @property int $id
  * @property int $package_id
- * @property string|null $question
- * @property string|null $answer
- * @property int|null $position
+ * @property int $feature_id
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $created_by
- * @property int|null $updated_at
  * @property int|null $updated_by
+ * @property int|null $updated_at
  */
-class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class PackageFeature extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
@@ -26,7 +25,15 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
      */
     public static function tableName()
     {
-        return 'package_faq';
+        return 'package_feature';
+    }
+
+     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_package');
     }
 
     public function behaviors()
@@ -54,10 +61,9 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     public function rules()
     {
         return [
-            [['package_id'], 'required'],
-            [['package_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['answer'], 'string'],
-            [['question'], 'string', 'max' => 512],
+            [['package_id', 'feature_id'], 'required'],
+            [['package_id', 'feature_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
+            [['feature_id', 'package_id'], 'unique', 'targetAttribute' => ['feature_id', 'package_id']],
         ];
     }
 
@@ -69,14 +75,17 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
         return [
             'id' => 'ID',
             'package_id' => 'Package ID',
-            'question' => 'Question',
-            'answer' => 'Answer',
-            'position' => 'Position',
+            'feature_id' => 'Feature ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getFeaturename()
+    {
+        return $this->hasOne(MasterPackagefeature::class, ['id' => 'feature_id']);
     }
 }

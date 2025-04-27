@@ -50,7 +50,7 @@ class PackageEnquiry extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             [['safari_operator_id', 'package_id', 'user_id', 'no_of_travelers', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['start_date', 'end_date','version'], 'safe'],
             [['name', 'email_address'], 'string', 'max' => 512],
             [['phone'], 'string', 'max' => 12],
         ];

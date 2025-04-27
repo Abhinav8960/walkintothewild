@@ -6,14 +6,14 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::Button('+ Add New Gallery Image', ['value' => "/package/profile/create-gallery?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create Gallery']);
+$this->params['buttons'][] = Html::Button('+ Add New Gallery Image', ['value' => "/package/profile/create-gallery?package_id=$package_version_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create Gallery']);
 ?>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'book_now_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_version_model, 'book_now_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">

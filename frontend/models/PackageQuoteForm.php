@@ -8,6 +8,7 @@ use common\models\User;
 use common\models\MailLog;
 use common\models\chat\Chat;
 use common\models\GeneralModel;
+use common\models\package\PackageVersion;
 use common\models\package\Package;
 use common\models\chat\ChatMessage;
 use common\models\package\PackageQuote;
@@ -73,7 +74,7 @@ class PackageQuoteForm extends Model
 
         $package_quote = new PackageQuote();
         $package_quote->package_id = $package_id;
-        $package_quote->package_uuid = $package->uuid;
+        $package_quote->version = $package->live_version;
         $package_quote->travelers = $this->travelers;
         $package_quote->start_date = $this->pack_start_date;
         $package_quote->ip_address = Yii::$app->getRequest()->getUserIp();

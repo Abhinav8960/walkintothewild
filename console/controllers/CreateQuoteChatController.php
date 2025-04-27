@@ -11,7 +11,7 @@ use common\models\User;
 use common\models\chat\Chat;
 use common\models\chat\ChatMessage;
 use common\models\chat\ChatSearch;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\park\SafariPark;
 use common\models\MailLog;
 use common\models\GeneralModel;

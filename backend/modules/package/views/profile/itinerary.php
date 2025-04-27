@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Package : ' . $package_model->package_name;
+$this->title = 'Package : ' . $package_version_model->package_name;
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -11,14 +11,14 @@ $this->params['title'] = $this->title;
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_version_model, 'itinerary_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
                 <div aria-multiselectable="true" class="accordion" id="accordion" role="tablist">
                     <?php
-                    $no_of_day = $package_model->no_of_day;
+                    $no_of_day = $package_version_model->no_of_day;
                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                         <div class="card mb-0">
                             <div class="card-header" id="heading<?= $i ?>" role="tab">
@@ -28,9 +28,9 @@ $this->params['title'] = $this->title;
                                 <div class="card-body">
                                     <?php $form = ActiveForm::begin(); ?>
 
-                                    <?= $form->field($model, 'package_id')->hiddenInput(['value' => $package_model->id])->label(false) ?>
+                                    <?= $form->field($model, 'package_id')->hiddenInput(['value' => $package_version_model->id])->label(false) ?>
 
-                                    <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_model->no_of_day])->label(false) ?>
+                                    <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <?= $form->field($model, 'day')->textInput([
@@ -169,7 +169,7 @@ $(document).ready(function() {
         
         var dayNumber = $(this).data('day');
         var accordionId = 'collapse' + dayNumber;
-        var url = '/package/profile/itinerary?package_id={$package_model->id}&day=' + dayNumber + '#' + accordionId;
+        var url = '/package/profile/itinerary?package_id={$package_version_model->id}&day=' + dayNumber + '#' + accordionId;
 
         // Update URL
         window.history.pushState({ path: url }, '', url);

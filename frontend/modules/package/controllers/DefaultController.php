@@ -62,7 +62,7 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = Package::STATUS_ACTIVE;
         $searchModel->custom_sort_by = 5;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -87,13 +87,14 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+        $package = Package::find()->andWhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package->id;
+        $searchModel->version = $package->live_version;
         $searchModel->status = PackageFaq::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
@@ -166,7 +167,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -243,7 +244,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andwhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andwhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -299,7 +300,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionEnquiry($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }

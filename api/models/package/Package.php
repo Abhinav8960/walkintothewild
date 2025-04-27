@@ -3,13 +3,11 @@
 namespace api\models\package;
 
 use api\models\master\packagefeature\MasterPackagefeature;
-use api\models\master\packageinclude\MasterPackageInclude;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
 use api\models\UserWishlist;
-use common\models\package\PackageStates;
 use Yii;
 use common\models\User;
 
@@ -19,7 +17,6 @@ class Package extends \common\models\package\Package
     {
         $fields = [
             'id',
-            'uuid',
             'package_display_name',
             'package_name',
             'package_slug',
@@ -150,15 +147,22 @@ class Package extends \common\models\package\Package
         return $arr;
     }
 
-    public function getPackageState()
+   
+
+    public function getLivePackage()
     {
-        return $this->hasOne(PackageStates::class, ['uuid' => 'uuid']);
+        return $this->hasOne(Package::class, ['id' => 'package_id', 'live_version' => 'version']);
+    }
+
+    public function getPackage()
+    {
+        return $this->hasOne(Package::class, ['id' => 'package_id']);
     }
 
 
     public function getPackage_slug()
     {
-        return $this->packageState->slug ?? NULL;
+        return $this->getPackage()->slug ?? NULL;
     }
 
 
@@ -421,7 +425,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'uuid'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'package_id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 
@@ -447,13 +451,13 @@ class Package extends \common\models\package\Package
             // 'parks' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-park',
             // 'package_days' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-faqs',
             // 'faqs' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/package-days',
-            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->packageState->slug . '/comment-view',
+            'comments' =>  Yii::$app->params['api_url'] . '/package/' . $this->package_slug . '/comment-view',
         ];
     }
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->slug . '/' . $this->packageState->slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->slug . '/' . $this->package_slug;
     }
 
     public function getCan_comment()

@@ -5,7 +5,7 @@ namespace common\Helper;
 use common\models\firebasenotification\FirebaseNotificationLog;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\operator\SafariOperator;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use Yii;

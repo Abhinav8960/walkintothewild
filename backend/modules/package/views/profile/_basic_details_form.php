@@ -29,7 +29,7 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'package_name')->textInput([
                     'maxlength' => true,
                     'placeholder' => 'Enter Package Name',
-                    'id' => 'packageform-package_name', // Add an ID for JavaScript targeting
+                    'id' => 'PackageVersionForm-package_name', // Add an ID for JavaScript targeting
                 ]) ?>
             </div>
 
@@ -37,8 +37,8 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'package_slug')->textInput([
                     'maxlength' => true,
                     'placeholder' => 'Enter Slug',
-                    'readonly' => isset($model->package_model->id) ? true : false, // Make it readonly for existing records
-                    'id' => 'packageform-package_slug', // Add an ID for JavaScript targeting
+                    'readonly' => isset($model->package_version_model->id) ? true : false, // Make it readonly for existing records
+                    'id' => 'PackageVersionForm-package_slug', // Add an ID for JavaScript targeting
                 ]) ?>
             </div>
 
@@ -100,12 +100,12 @@ use yii\bootstrap5\ActiveForm;
 
 
             <?php
-            if ($model->package_model->package_image) { ?>
+            if ($model->package_version_model->package_image) { ?>
                 <div class="col-md-3">
                     <?= $form->field($model, 'package_image')->fileInput()->label('Package Image (JPEG / JPG / PNG  / 250kb)') ?>
                 </div>
                 <div class="col-md-1">
-                    <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
+                    <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
                 </div>
             <?php } else { ?>
                 <div class="col-md-3">
@@ -115,12 +115,12 @@ use yii\bootstrap5\ActiveForm;
 
 
             <?php
-            if ($model->package_model->package_banner_image) { ?>
+            if ($model->package_version_model->package_banner_image) { ?>
                 <div class="col-md-3">
                     <?= $form->field($model, 'package_banner_image')->fileInput()->label('Package Banner Image (JPEG / JPG / PNG  / 250kb)') ?>
                 </div>
                 <div class="col-md-1">
-                    <?php echo '<img src="' . $model->package_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
+                    <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
                 </div>
             <?php } else { ?>
                 <div class="col-md-3">
@@ -195,7 +195,7 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
             <?php
-            if (!empty($model->package_model->id)) { ?>
+            if (!empty($model->package_version_model->id)) { ?>
                 <div class="col-md-2 mt-4">
                     <?= $form->field($model, 'popular_package')->checkbox() ?>
                 </div>
@@ -226,8 +226,8 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-editor('packageform-package_description');
-editor('packageform-package_itinerary_overview');
+editor('PackageVersionForm-package_description');
+editor('PackageVersionForm-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
@@ -237,19 +237,19 @@ $this->registerJs($script);
 
 $gst_script = <<< JS
     $(function() {
-        $('.field-packageform-gst_percentage').hide();
-        var gst_type =$("#packageform-type").val();
+        $('.field-PackageVersionForm-gst_percentage').hide();
+        var gst_type =$("#PackageVersionForm-type").val();
             
         if(gst_type == 1){
-            $('.field-packageform-gst_percentage').show();
+            $('.field-PackageVersionForm-gst_percentage').show();
         }
        
-        $('#packageform-type').on('change', function() {
+        $('#PackageVersionForm-type').on('change', function() {
             var selectValue = $(this).val();
             if (selectValue == 1) {
-                $('.field-packageform-gst_percentage').show();
+                $('.field-PackageVersionForm-gst_percentage').show();
             } else {
-                $('.field-packageform-gst_percentage').hide();
+                $('.field-PackageVersionForm-gst_percentage').hide();
             }
         });
     });
@@ -271,17 +271,17 @@ $this->registerJs($gst_script);
 //         }
 
 //         // Handle title change to update slug
-//         $('#packageform-package_name').on('input', function() {
+//         $('#PackageVersionForm-package_name').on('input', function() {
 //             var package_name = $(this).val();
 //             var package_slug = slugify(package_name);
-//             $('#packageform-package_slug').val(package_slug);
+//             $('#PackageVersionForm-package_slug').val(package_slug);
 //         });
 
 //         // Initialize slug when editing existing record
-//         if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
-//             var package_name = $('#packageform-package_name').val();
+//         if (!$('#PackageVersionForm-slug').val() && $('#PackageVersionForm-package_name').val()) {
+//             var package_name = $('#PackageVersionForm-package_name').val();
 //             var package_slug = slugify(package_name);
-//             $('#packageform-package_slug').val(package_slug);
+//             $('#PackageVersionForm-package_slug').val(package_slug);
 //         }
 //     });
 // JS;

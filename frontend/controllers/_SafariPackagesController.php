@@ -28,7 +28,7 @@ class SafariPackagesController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams, false);
 
 
-        $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->limit(9)->orderby("RAND()")->all();
+        $packages = Package::find()->where(['status' => PackageVersion::APPROVED_AND_LIVE_STATUS])->limit(9)->orderby("RAND()")->all();
         $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->limit(3)->orderby("RAND()")->all();
 
         return $this->render(
@@ -54,12 +54,12 @@ class SafariPackagesController extends FrontendBaseController
             $url = ['/package'];
 
             // Loop through the payload parameters
-            foreach (Yii::$app->request->post('PackageSearch') as $key => $value) {
+            foreach (Yii::$app->request->post('PackageVersionSearch') as $key => $value) {
                 // Only add parameters that are not empty
                 if (!empty($value)) {
-                    $url['PackageSearch[' . $key . ']'] = $value;
+                    $url['PackageVersionSearch[' . $key . ']'] = $value;
                 } else {
-                    $url['PackageSearch[' . $key . ']'] = '';
+                    $url['PackageVersionSearch[' . $key . ']'] = '';
                 }
             }
 
