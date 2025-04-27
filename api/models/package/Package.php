@@ -2,6 +2,8 @@
 
 namespace api\models\package;
 
+use api\models\meta\MetaPackageRange;
+use api\models\park\SafariPark;
 use api\models\UserWishlist;
 use Yii;
 use common\models\User;
