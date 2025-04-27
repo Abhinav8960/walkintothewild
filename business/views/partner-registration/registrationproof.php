@@ -14,7 +14,7 @@ use yii\helpers\Url;
                     aria-expanded="true" aria-controls="collapse1">
                     Legal Entity
                     <span class="ms-auto">
-                        <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil-square"></i></a>
+                        <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil text-black"></i></a>
                     </span>
                 </button>
             </h2>

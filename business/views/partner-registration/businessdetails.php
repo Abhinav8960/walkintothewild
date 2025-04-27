@@ -14,7 +14,7 @@ use yii\helpers\Url;
                     aria-expanded="true" aria-controls="collapse1">
                     Legal Entity
                     <span class="ms-auto">
-                        <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil-square"></i></a>
+                        <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil text-black"></i></a>
                     </span>
                 </button>
             </h2>
@@ -33,7 +33,7 @@ use yii\helpers\Url;
                     aria-expanded="false" aria-controls="collapse2">
                     Registration Proof
                     <span class="ms-auto">
-                        <a href="<?= Url::toRoute(['step-2']) ?>"><i class="bi bi-pencil-square"></i></a>
+                        <a href="<?= Url::toRoute(['step-2']) ?>"><i class="bi bi-pencil text-black"></i></a>
                     </span>
                 </button>
             </h2>
@@ -51,9 +51,6 @@ use yii\helpers\Url;
                     data-bs-toggle="collapse" data-bs-target="#collapse3"
                     aria-expanded="false" aria-controls="collapse3">
                     Business Details
-                    <span class="ms-auto">
-                        <a href="<?= Url::toRoute(['step-3']) ?>"><i class="bi bi-pencil-square"></i></a>
-                    </span>
                 </button>
             </h2>
             <div id="collapse3" class="accordion-collapse collapse show"

@@ -22,15 +22,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="d-flex align-items-center">
-                <strong class="form-label me-2 text-danger">Legal Entity Type:</strong>
-                <span><?= Html::encode($model->legal_entity_type) ?></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Phone Number :</strong>
                 <span><?= Html::encode($model->kyc_phone) ?></span>
             </div>
@@ -42,6 +33,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger"> Whatsapp :</strong>
                 <span><?= Html::encode($model->kyc_whatsapp) ?></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                <strong class="form-label me-2 text-danger">Email :</strong>
+                <span><?= Html::encode($model->kyc_email) ?></span>
             </div>
         </div>
     </div>
