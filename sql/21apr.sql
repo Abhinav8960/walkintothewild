@@ -1,3 +1,19 @@
+-- 27apr 2025
+ALTER TABLE `package`  ADD `package_id` INT NOT NULL  AFTER `id`;
+ALTER TABLE `package_comment`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_comment_report`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_day`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_enquiry`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_faq`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_feature`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
+ALTER TABLE `package_gallery`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_included` ADD `version` VARCHAR(10) NOT NULL AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
+ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
+ALTER TABLE `package_states` DROP `uuid`;
+ALTER TABLE `package_states` ADD `live_version_data` JSON NULL DEFAULT NULL AFTER `editable_version`;
 -- 24 apr 2025
 ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
 
