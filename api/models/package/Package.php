@@ -11,7 +11,7 @@ use api\models\UserWishlist;
 use Yii;
 use common\models\User;
 
-class Package extends \common\models\package\PackageVersion
+class Package extends \common\models\package\Package
 {
     public function fields()
     {
