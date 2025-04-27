@@ -7,13 +7,13 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 ?>
 
-<?= $this->render('_form_upper_view', ['package' => $package_model]) ?>
+<?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('_navbar', ['package' => $package_version_model, 'faq_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
@@ -21,7 +21,7 @@ $this->title = 'Package : ' . $package_model->package_name . '';
                 <div class="card">
                     <div class="card-body">
                         <div>
-                            <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_model->id]), 'class' => 'btn create-action btn-orange me-2', 'title' => 'Create FAQ']); ?>
+                            <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_version_model->id]), 'class' => 'btn create-action btn-orange me-2', 'title' => 'Create FAQ']); ?>
                         </div>
                         <div class="table-responsive">
                             <?= GridView::widget([

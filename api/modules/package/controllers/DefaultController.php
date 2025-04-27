@@ -14,7 +14,7 @@ use api\models\package\PackageCommentSearch;
 use api\models\package\PackageFaq;
 use api\models\package\PackageFaqSearch;
 use api\models\package\PackageSafariPark;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\park\SafariPark;
 use api\models\park\SafariParkSearch;
 use api\models\UserWishlist;
@@ -85,8 +85,8 @@ class DefaultController extends RestController
 
     public function actionIndex()
     {
-        $searchModel = new PackageSearch();
-        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
+        $searchModel = new PackageVersionSearch();
+        $searchModel->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
         $searchModel->custom_sort_by = 5;
         $condition = "owned_by_id IN (SELECT id from safari_operator WHERE status=1)";
 
@@ -101,7 +101,7 @@ class DefaultController extends RestController
     //     if (!$package) {
     //         return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
     //     }
-    //     $searchModel = new PackageSearch();
+    //     $searchModel = new PackageVersionSearch();
     //     $searchModel->id = $package->id;
     //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     // }

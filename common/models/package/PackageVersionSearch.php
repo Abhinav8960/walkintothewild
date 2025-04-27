@@ -1,14 +1,18 @@
 <?php
 
-namespace api\models\package;
+namespace common\models\package;
 
 use common\models\GeneralModel;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\package\PackageVersion;
 use DateTime;
 
-
-class PackageSearch extends Package
+/**
+ * PackageVersionSearch represents the model behind the search form of `common\models\package\Package`.
+ */
+class PackageVersionSearch extends PackageVersion
 {
     public $park_id;
     public $month_id;
@@ -23,7 +27,9 @@ class PackageSearch extends Package
     public $custom_sort_by;
     public $package_name;
     public $report_days;
-    public $owned_by_id;
+    public $package_start_date;
+    public $package_end_date;
+
 
     public $report_days_option = [
         'all' => 'All',
@@ -40,15 +46,14 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'owned_by_id', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'owned_by_id'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name', 'version'], 'safe'],
             [['package_name'], 'safe'],
-            [['package_slug'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe'],
-            [['is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
+            [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api'], 'safe'],
         ];
     }
 
@@ -70,7 +75,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where(['package.status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $query = PackageVersion::find()->where([PackageVersion::tableName() . '.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
 
         // add conditions that should always apply here
 
@@ -94,6 +99,7 @@ class PackageSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
+            'version' => $this->version,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
             'stay_category_id' => $this->stay_category_id,
@@ -101,19 +107,16 @@ class PackageSearch extends Package
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'package_slug' => $this->package_slug,
-            'package_image' => $this->package_image,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
-            'package.status' => $this->status,
-            'package.is_published_on_web' => $this->is_published_on_web,
-            'package.is_published_on_api' => $this->is_published_on_api,
-            'owned_by_id' => $this->owned_by_id,
-            
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
+            PackageVersion::tableName() . '.status' => $this->status,
         ]);
-        
+
 
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
@@ -152,7 +155,7 @@ class PackageSearch extends Package
 
 
         if ($this->park_id) {
-            $query->joinwith(['searchpackagepark' => function ($park_query) {
+            $query->joinwith(['packagepark' => function ($park_query) {
                 $park_query->andFilterWhere(['park_id' => $this->park_id]);
             }]);
         }
@@ -206,7 +209,7 @@ class PackageSearch extends Package
 
     public function managesearch($params, $safari_operator_id)
     {
-        $query =  Package::find()->where([
+        $query =  PackageVersion::find()->where([
             'owned_by_id' => $safari_operator_id
         ]);
 
@@ -291,5 +294,186 @@ class PackageSearch extends Package
         }
 
         return $query;
+    }
+
+    public function reportsearch($params)
+    {
+        $query =  PackageVersion::find()->where(['package.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package.status' => $this->status,
+            'package.start_date' => $this->package_start_date,
+            'package.end_date' => $this->package_end_date,
+        ]);
+
+        $query->andFilterWhere(['like', 'package.package_name', $this->package_name]);
+
+        if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
+            if ($this->estimated_price_filter_max >= 50000) {
+                $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+            }
+        }
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
+        return $dataProvider;
+    }
+
+
+    public function partnersearch($params)
+    {
+        $query = PackageVersion::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+            'pagination' => [
+                'pageSize' => 50,
+            ],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'no_of_day' => $this->no_of_day,
+            'version' => $this->version,
+            'start_location' => $this->start_location,
+            'end_location' => $this->end_location,
+            'stay_category_id' => $this->stay_category_id,
+            'package_inclusion' => $this->package_inclusion,
+            'package_description' => $this->package_description,
+            'package_exclusion' => $this->package_exclusion,
+            'package_terms_condtition' => $this->package_terms_condtition,
+            'owned_by_id' => $this->owned_by_id,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
+            PackageVersion::tableName() . '.status' => $this->status,
+        ]);
+
+
+
+        $query->andFilterWhere(['like', 'package_name', $this->package_name]);
+
+        // if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
+        //     if ($this->estimated_price_filter_max >= 50000) {
+        //         $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
+        //     } else {
+        //         $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+        //     }
+        // }
+
+        if ($this->no_of_night_min && $this->no_of_night_max) {
+            if ($this->no_of_night_max >= 10) {
+                $dataProvider->query->andWhere('no_of_night>=' . $this->no_of_night_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_night', $this->no_of_night_min, $this->no_of_night_max]);
+            }
+        }
+
+        if ($this->no_of_safari_min && $this->no_of_safari_max) {
+            if ($this->no_of_safari_max >= 10) {
+                $dataProvider->query->andWhere('no_of_safari>=' . $this->no_of_safari_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_safari', $this->no_of_safari_min, $this->no_of_safari_max]);
+            }
+        }
+
+
+        if ($this->month_id) {
+            $query->andWhere("MONTH(start_date)=" . $this->month_id);
+            // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
+        }
+
+
+
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
+
+        if ($this->package_include) {
+            $query->joinwith(['packageincluded' => function ($package_include_query) {
+                $package_include_query->andFilterWhere(['include_id' => $this->package_include]);
+            }]);
+        }
+
+        if ($this->package_feature) {
+            $query->joinwith(['packagefeatures' => function ($package_feature_query) {
+                $package_feature_query->andFilterWhere(['feature_id' => $this->package_feature]);
+            }]);
+        }
+
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == '1') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '2') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '3') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '4') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['cost_per_person' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '5') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['popular_package' => SORT_DESC]
+                ];
+            }
+        }
+
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+
+        return $dataProvider;
     }
 }

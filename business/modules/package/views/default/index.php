@@ -2,7 +2,7 @@
 
 
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -81,7 +81,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             },
 
                             'SentforApproval' => function ($url, $model) {
-                                if ($model->status == Package::EDIATBLE_STATUS) {
+                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
 
                                     return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
                                         'class' => 'btn btn-danger p-0 change-menuicon',

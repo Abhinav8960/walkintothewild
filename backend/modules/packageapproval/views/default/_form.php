@@ -71,12 +71,12 @@ use kartik\datetime\DateTimePicker;
 
 
     <?php
-    if ($model->package_model->package_image) { ?>
+    if ($model->package_version_model->package_image) { ?>
         <div class="col-md-6 col-lg-3">
             <?= $form->field($model, 'package_image')->fileInput()->label('PACKAGE IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
         <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
+            <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6 col-lg-3">
@@ -86,12 +86,12 @@ use kartik\datetime\DateTimePicker;
 
 
     <?php
-    if ($model->package_model->package_banner_image) { ?>
+    if ($model->package_version_model->package_banner_image) { ?>
         <div class="col-md-6 col-lg-3">
             <?= $form->field($model, 'package_banner_image')->fileInput()->label('BANNER IMAGE (JPEG / JPG / PNG / 250kb)') ?>
         </div>
         <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
+            <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6 col-lg-3">
@@ -185,8 +185,8 @@ use kartik\datetime\DateTimePicker;
 </style>
 <?php
 $script = <<< JS
-editor('packageform-package_description');
-editor('packageform-package_itinerary_overview');
+editor('PackageVersionForm-package_description');
+editor('PackageVersionForm-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
@@ -195,19 +195,19 @@ $this->registerJs($script);
 <?php
 $gst_script = <<< JS
     $(function() {
-        $('.field-packageform-gst_percentage').hide();
-        var gst_type =$("#packageform-type").val();
+        $('.field-PackageVersionForm-gst_percentage').hide();
+        var gst_type =$("#PackageVersionForm-type").val();
             
         if(gst_type == 1){
-            $('.field-packageform-gst_percentage').show();
+            $('.field-PackageVersionForm-gst_percentage').show();
         }
        
-        $('#packageform-type').on('change', function() {
+        $('#PackageVersionForm-type').on('change', function() {
             var selectValue = $(this).val();
             if (selectValue == 1) {
-                $('.field-packageform-gst_percentage').show();
+                $('.field-PackageVersionForm-gst_percentage').show();
             } else {
-                $('.field-packageform-gst_percentage').hide();
+                $('.field-PackageVersionForm-gst_percentage').hide();
             }
         });
     });

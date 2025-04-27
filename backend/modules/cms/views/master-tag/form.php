@@ -92,7 +92,7 @@ $script = <<< JS
         });
 
         // Initialize slug when editing existing record
-        if (!$('#packageform-slug').val() && $('#masterblogtagform-title').val()) {
+        if (!$('#PackageVersionForm-slug').val() && $('#masterblogtagform-title').val()) {
             var tag_name = $('#masterblogtagform-title').val();
             var tag_slug = slugify(tag_name);
             $('#masterblogtagform-slug').val(tag_slug);

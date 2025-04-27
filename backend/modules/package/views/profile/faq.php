@@ -7,15 +7,15 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => Url::toRoute(['/package/profile/create-faq', 'package_id' => $package_model->id]), 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
-// $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
+$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => Url::toRoute(['/package/profile/create-faq', 'package_id' => $package_version_model->id]), 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
+// $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_version_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
 ?>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_version_model, 'faq_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">

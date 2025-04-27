@@ -222,7 +222,7 @@ $this->params['title'] = $this->title;
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
                 <div class="col">
-                    <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=today">
+                    <a style="text-decoration:none;" href="/package/default/index?PackageVersionSearch%5Breport_days%5D=today">
 
                         <!-- BEGIN card -->
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -243,7 +243,7 @@ $this->params['title'] = $this->title;
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=tw">
+                    <a style="text-decoration:none;" href="/package/default/index?PackageVersionSearch%5Breport_days%5D=tw">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -262,7 +262,7 @@ $this->params['title'] = $this->title;
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=tm">
+                    <a style="text-decoration:none;" href="/package/default/index?PackageVersionSearch%5Breport_days%5D=tm">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -281,7 +281,7 @@ $this->params['title'] = $this->title;
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=lm">
+                    <a style="text-decoration:none;" href="/package/default/index?PackageVersionSearch%5Breport_days%5D=lm">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -300,7 +300,7 @@ $this->params['title'] = $this->title;
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=all">
+                    <a style="text-decoration:none;" href="/package/default/index?PackageVersionSearch%5Breport_days%5D=all">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->

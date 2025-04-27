@@ -62,7 +62,7 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             [['package_id', 'parent_id', 'user_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['comment'], 'string'],
+            [['comment','version'], 'string'],
 
         ];
     }

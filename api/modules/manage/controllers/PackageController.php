@@ -21,7 +21,7 @@ use yii\web\NotFoundHttpException;
 use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\MailLog;
-use common\models\package\form\PackageForm;
+use common\models\package\form\PackageVersionForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageGalleryForm;
@@ -101,8 +101,8 @@ class PackageController extends RestController
         if ($safari_operator->category_id == 2) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $model = new PackageForm();
-        $model->status = Package::APPROVED_AND_LIVE_STATUS;
+        $model = new PackageVersionForm();
+        $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -112,15 +112,15 @@ class PackageController extends RestController
         $model->package_banner_image = UploadedFile::getInstanceByName('package_banner_image');
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->package_model->save()) {
+            if ($model->package_version_model->save()) {
                 $model->uploadFile();
 
                 $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                     foreach ($package_feature as $feature) {
                         $packagefeature = new PackageFeature();
-                        $packagefeature->package_id = $model->package_model->id;
+                        $packagefeature->package_id = $model->package_version_model->id;
                         $packagefeature->feature_id = $feature;
                         $packagefeature->save(false);
                     }
@@ -129,28 +129,28 @@ class PackageController extends RestController
 
                 $package_park = explode(",", (string)$model->package_park);
                 if ($package_park) {
-                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                     foreach ($package_park as $park) {
                         $packagesafaripark = new PackageSafariPark();
-                        $packagesafaripark->package_id = $model->package_model->id;
-                        $packagesafaripark->package_uuid = $model->package_model->uuid;
+                        $packagesafaripark->package_id = $model->package_version_model->id;
+                        $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                         $packagesafaripark->park_id = $park;
                         $packagesafaripark->save(false);
                     }
                 }
 
                 $to_mail = Yii::$app->params['adminEmail'];
-                $subject = 'New Package Created | ' . substr($model->package_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                $subject = 'New Package Created | ' . substr($model->package_version_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
-                $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_model->package_slug, 'operator_slug' => $safari_operator->slug]);
+                $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_version_model->package_slug, 'operator_slug' => $safari_operator->slug]);
 
-                $req = ['package' => $model->package_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
+                $req = ['package' => $model->package_version_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
                 $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_model->package_slug], ['message' => "Package create successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->package_slug], ['message' => "Package create successfully"]);
             }
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not create successfully"]);
@@ -167,8 +167,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
         $model->attributes = $this->request;
@@ -178,15 +178,15 @@ class PackageController extends RestController
         $model->package_banner_image = UploadedFile::getInstanceByName('package_banner_image');
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->package_model->save(false)) {
+            if ($model->package_version_model->save(false)) {
                 $model->uploadFile();
 
                 $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                     foreach ($package_feature as $feature) {
                         $packagefeature = new PackageFeature();
-                        $packagefeature->package_id = $model->package_model->id;
+                        $packagefeature->package_id = $model->package_version_model->id;
                         $packagefeature->feature_id = $feature;
                         $packagefeature->save(false);
                     }
@@ -196,11 +196,11 @@ class PackageController extends RestController
 
                 $package_park = explode(",", (string)$model->package_park);
                 if ($package_park) {
-                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                     foreach ($package_park as $park) {
                         $packagesafaripark = new PackageSafariPark();
-                        $packagesafaripark->package_id = $model->package_model->id;
-                        $packagesafaripark->package_uuid = $model->package_model->uuid;
+                        $packagesafaripark->package_id = $model->package_version_model->id;
+                        $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                         $packagesafaripark->park_id = $park;
                         $packagesafaripark->save(false);
                     }
@@ -222,15 +222,15 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
         $model->attributes = $this->request;
 
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->package_model->save(false)) {
+            if ($model->package_version_model->save(false)) {
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Policy info updated successfully"]);
             }
 
@@ -248,8 +248,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
         $model->attributes = $this->request;
@@ -257,7 +257,7 @@ class PackageController extends RestController
 
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->package_model->save(false)) {
+            if ($model->package_version_model->save(false)) {
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Getting there updated successfully"]);
             }
 
@@ -274,8 +274,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
         $model->attributes = $this->request;
@@ -284,13 +284,13 @@ class PackageController extends RestController
             $model->initializeForm();
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                if ($model->package_model->save(false)) {
+                if ($model->package_version_model->save(false)) {
                     foreach (json_decode($model->package_included, true) as $optionId => $selection) {
-                        $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_model->id]);
+                        $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
                         if (!$packageIncluded) {
                             $packageIncluded = new PackageIncluded();
                             $packageIncluded->include_id = $optionId;
-                            $packageIncluded->package_id = $package_model->id;
+                            $packageIncluded->package_id = $package_version_model->id;
                         }
                         $packageIncluded->selection = $selection;
                         if (!$packageIncluded->save()) {
@@ -298,7 +298,7 @@ class PackageController extends RestController
                         }
 
                         if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                            $package_days = PackageDay::find()->where(['package_id' => $package_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
+                            $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
                             if ($package_days) {
                                 foreach ($package_days as $package_day) {
                                     $package_day->meal_breakfast = 1;
@@ -331,14 +331,14 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_day_model = $this->findModelDay($package_model->id, $day);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_day_model = $this->findModelDay($package_version_model->id, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
-            $model->package_id = $package_model->id;
-            $model->no_of_day = $package_model->no_of_day;
+            $model->package_id = $package_version_model->id;
+            $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
 
@@ -364,9 +364,9 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_model->id;
+        $searchModel->package_id = $package_version_model->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "faqs");
     }
 
@@ -382,9 +382,9 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqForm();
-        $model->package_id =  $package_model->id;
+        $model->package_id =  $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
 
         $model->attributes = $this->request;
@@ -419,10 +419,10 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
 
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
 
         $model->attributes = $this->request;
 
@@ -456,9 +456,9 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageGallerySearch();
-        $searchModel->package_id = $package_model->id;
+        $searchModel->package_id = $package_version_model->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "gallery");
     }
 
@@ -469,13 +469,13 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
             $model = new PackageGalleryForm($package_gallery_model);
         } else {
             $model = new PackageGalleryForm();
-            $model->package_id =  $package_model->id;
+            $model->package_id =  $package_version_model->id;
         }
 
         $model->attributes = $this->request;

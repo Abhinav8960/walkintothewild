@@ -5,16 +5,16 @@ namespace backend\modules\packageapproval\controllers;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
+use common\models\package\form\PackageVersionForm;
+use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
-use common\models\package\PackageStates;
+use common\models\package\PackageVersionSearch;
+use common\models\package\Package;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,9 +31,9 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageSearch();
+        $searchModel = new PackageVersionSearch();
         // $searchModel->status = [Package::APPROVED_AND_LIVE_STATUS,Package::SEND_FOR_status];
-        $searchModel->status = Package::SEND_FOR_APPROVAL_STATUS;
+        $searchModel->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -66,32 +66,32 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id])) !== null) {
+        if (($model = PackageVersion::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionApproved($uuid, $version)
+    public function actionApproved($package_id, $version)
     {
-        $packagestate = PackageStates::find()->where(['uuid' => $uuid, 'pending_for_approval_version' => $version])->one();
-        if (empty($packagestate)) {
+        $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
+        if (empty($package)) {
             Yii::$app->session->setFlash('error', 'Package not found.');
             return $this->redirect(['index']);
         }
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            if (!empty($packagestate->live_version)) {
-                $this->terminatePackage($uuid, $packagestate->live_version);
+            if (!empty($package->live_version)) {
+                $this->terminatePackage($package_id, $package->live_version);
             }
-            $packagestate->live_version = $version;
-            $packagestate->pending_for_approval_version = null;
-            $packagestate->save(false);
+            $package->live_version = $version;
+            $package->pending_for_approval_version = null;
+            $package->save(false);
 
-            $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
-            $model->status = Package::APPROVED_AND_LIVE_STATUS;
+            $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+            $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
             $model->save(false);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -110,46 +110,46 @@ class DefaultController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionRejectview($uuid, $version)
+    public function actionRejectview($package_id, $version)
     {
-        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        $model = Package::find()->where(['id' => $package_id, 'version' => $version])->one();
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_rejection_form', [
-                'uuid' => $uuid,
+                'package_id' => $package_id,
                 'version' => $version,
                 'model' => $model
             ]);
         }
     }
 
-    public function actionReject($uuid, $version)
+    public function actionReject($package_id, $version)
     {
-        $packagestate = PackageStates::find()->where(['uuid' => $uuid, 'pending_for_approval_version' => $version])->one();
-        if (empty($packagestate)) {
+        $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
+        if (empty($package)) {
             Yii::$app->session->setFlash('error', 'Package not found.');
             return $this->redirect(['index']);
         }
-        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
         $model->scenario = 'reject';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    $packagestate->pending_for_approval_version = null;
-                    $packagestate->save(false);
+                // $transaction = Yii::$app->db->beginTransaction();
+                // try {
+                    $package->pending_for_approval_version = null;
+                    $package->save(false);
 
-                    $model->status = Package::NOT_APPROVED_STATUS;
+                    $model->status = PackageVersion::NOT_APPROVED_STATUS;
                     $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
                     $model->save(false);
-                } catch (\Exception $e) {
-                    Yii::error($e->getMessage());
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', 'Failed to reject package.');
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
-                $transaction->commit();
+                // } catch (\Exception $e) {
+                //     Yii::error($e->getMessage());
+                //     $transaction->rollBack();
+                //     Yii::$app->session->setFlash('error', 'Failed to reject package.');
+                //     return $this->redirect(Yii::$app->request->referrer);
+                // }
+                // $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
                 return $this->redirect(Yii::$app->request->referrer);
             }
@@ -163,11 +163,11 @@ class DefaultController extends Controller
     }
 
 
-    private function terminatePackage($uuid, $version)
+    private function terminatePackage($package_id, $version)
     {
-        $model = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
+        $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
         if ($model) {
-            $model->status = Package::TERMINATED_STATUS;
+            $model->status = PackageVersion::TERMINATED_STATUS;
             $model->save(false);
             return true;
         }
@@ -177,8 +177,8 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
 
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersion($package_version_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
@@ -187,15 +187,15 @@ class DefaultController extends Controller
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -205,11 +205,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_package_id' => $model->package_version_model->package_id]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->package_uuid = $model->package_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
+                                $packagesafaripark->package_package_id = $model->package_version_model->package_id;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -221,25 +221,25 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('update', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionItinerary($id, $day = 1)
     {
         $package_day_model = $this->findModelDay($id, $day);
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
             $model->package_id = $id;
-            $model->no_of_day = $package_model->no_of_day;
+            $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
 
@@ -260,15 +260,15 @@ class DefaultController extends Controller
         }
 
         return $this->render('itinerary', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'model' => $model,
         ]);
     }
 
     public function actionInclusion($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
         if ($this->request->isPost) {
@@ -277,13 +277,13 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
-                        if ($model->package_model->save(false)) {
+                        if ($model->package_version_model->save(false)) {
                             foreach ($model->package_included as $optionId => $selection) {
-                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_model->id]);
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_model->id;
+                                    $packageIncluded->package_id = $package_version_model->id;
                                 }
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
@@ -291,7 +291,7 @@ class DefaultController extends Controller
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_model->id, 'status' => 1])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => 1])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -305,7 +305,7 @@ class DefaultController extends Controller
 
                             $transaction->commit();
                             Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                            return $this->redirect(['inclusion', 'id' => $package_model->id]);
+                            return $this->redirect(['inclusion', 'id' => $package_version_model->id]);
                         } else {
                             Yii::$app->session->setFlash('error', 'Failed to update package details.');
                         }
@@ -316,9 +316,9 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
             $includedOptions = [];
-            foreach ($package_model->packageIncludeds as $includedOption) {
+            foreach ($package_version_model->packageIncludeds as $includedOption) {
                 $includedOptions[$includedOption->include_id] = $includedOption->selection;
             }
             $model->package_included = $includedOptions;
@@ -326,73 +326,73 @@ class DefaultController extends Controller
 
         return $this->render('inclusion', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionPolicyInfo($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['policy-info', 'id' => $id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('policy_info', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
 
     public function actionGettingThere($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['getting-there', 'id' => $id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('getting_there', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionFaq($id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_model->id;
+        $searchModel->package_id = $package_version_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('faq', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -400,9 +400,9 @@ class DefaultController extends Controller
 
     public function actionCreateFaq($id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $model = new PackageFaqForm();
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -419,7 +419,7 @@ class DefaultController extends Controller
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'id' => $package_model->id]);
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }
             }
@@ -430,7 +430,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -443,10 +443,10 @@ class DefaultController extends Controller
      */
     public function actionUpdateFaq($id, $faq_id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -463,7 +463,7 @@ class DefaultController extends Controller
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'id' => $package_model->id]);
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }
             }
@@ -475,7 +475,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }

@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use common\models\MailLog;
 use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
 use common\interfaces\StatusInterface;

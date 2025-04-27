@@ -123,12 +123,12 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-package_terms_condtition');
-bulleteditor('packageform-privacy_policy');
-bulleteditor('packageform-change_policy');
-bulleteditor('packageform-what_you_must_carry');
-bulleteditor('packageform-date_change_policy');
-bulleteditor('packageform-refund_policy');
+bulleteditor('PackageVersionForm-package_terms_condtition');
+bulleteditor('PackageVersionForm-privacy_policy');
+bulleteditor('PackageVersionForm-change_policy');
+bulleteditor('PackageVersionForm-what_you_must_carry');
+bulleteditor('PackageVersionForm-date_change_policy');
+bulleteditor('PackageVersionForm-refund_policy');
 JS;
 $this->registerJs($script);
 ?>

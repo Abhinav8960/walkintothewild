@@ -13,7 +13,7 @@ use api\models\operator\SafariOperatorRating;
 use api\models\operator\SafariOperatorRatingSearch;
 use api\models\operator\SafariOperatorSearch;
 use api\models\package\Package;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\park\SafariPark;
 use api\models\park\SafariParkSearch;
 use api\models\sharesafari\ShareSafari;
@@ -360,9 +360,9 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
 
-        $searchModel = new PackageSearch();
+        $searchModel = new PackageVersionSearch();
         $searchModel->owned_by_id = $operator->id;
-        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
         return $this->dataProviderSender($searchModel, "packages");
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
     }

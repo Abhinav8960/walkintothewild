@@ -3,13 +3,12 @@
 namespace common\models\package\form;
 
 use Yii;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use Ramsey\Uuid\Uuid;
 
-class PackageForm extends \yii\base\Model
+class PackageVersionForm extends \yii\base\Model
 {
     public $owned_by_id;
     public $uuid;
@@ -73,71 +72,70 @@ class PackageForm extends \yii\base\Model
     public $master_vehicle_id;
     public $popular_package;
 
-    public $package_model;
+    public $package_version_model;
     public $action_url;
     public $action_validate_url;
 
 
 
     /**
-     * @param [type] $package_model
+     * @param [type] $package_version_model
      */
-    public function __construct(Package $package_model = null)
+    public function __construct($package_version_model = null)
     {
-        $this->package_model = Yii::createObject([
-            'class' => Package::className()
+        $this->package_version_model = Yii::createObject([
+            'class' => PackageVersion::className()
         ]);
-        $this->uuid = Uuid::uuid4()->toString() . '-' . date('ymdHis');
+
         $this->version = 'v1';
-        if ($package_model != null) {
-            $this->package_model = $package_model;
-            $this->owned_by_id = $this->package_model->owned_by_id;
-            $this->uuid = $this->package_model->uuid;
-            $this->version = $this->package_model->version;
-            $this->package_name = $this->package_model->package_name;
-            $this->package_image = $this->package_model->package_image;
-            $this->package_banner_image = $this->package_model->package_banner_image;
-            $this->package_agenda_id = $this->package_model->package_agenda_id;
-            // $this->package_slug = $this->package_model->package_slug;
-            $this->no_of_day = $this->package_model->no_of_day;
-            $this->no_of_night = $this->package_model->no_of_night;
-            $this->no_of_safari = $this->package_model->no_of_safari;
-            $this->safari_type = $this->package_model->safari_type;
-            $this->start_location = $this->package_model->start_location;
-            $this->end_location = $this->package_model->end_location;
-            $this->start_date = $this->package_model->start_date;
-            $this->end_date = $this->package_model->end_date;
-            $this->stay_category_id = $this->package_model->stay_category_id;
-            $this->cost_per_person = $this->package_model->cost_per_person;
-            $this->package_description = $this->package_model->package_description;
-            $this->package_itinerary_overview = $this->package_model->package_itinerary_overview;
-            $this->package_inclusion = $this->package_model->package_inclusion;
-            $this->package_exclusion = $this->package_model->package_exclusion;
-            $this->package_terms_condtition = $this->package_model->package_terms_condtition;
-            $this->privacy_policy = $this->package_model->privacy_policy;
-            $this->change_policy = $this->package_model->change_policy;
-            $this->what_you_must_carry = $this->package_model->what_you_must_carry;
-            $this->date_change_policy = $this->package_model->date_change_policy;
-            $this->refund_policy = $this->package_model->refund_policy;
-            $this->getting_there = $this->package_model->getting_there;
-            $this->master_vehicle_id = $this->package_model->master_vehicle_id;
+        if ($package_version_model != null) {
+            $this->package_version_model = $package_version_model;
+            $this->owned_by_id = $this->package_version_model->owned_by_id;
+            $this->version = $this->package_version_model->version;
+            $this->package_name = $this->package_version_model->package_name;
+            $this->package_image = $this->package_version_model->package_image;
+            $this->package_banner_image = $this->package_version_model->package_banner_image;
+            $this->package_agenda_id = $this->package_version_model->package_agenda_id;
+            // $this->package_slug = $this->package_version_model->package_slug;
+            $this->no_of_day = $this->package_version_model->no_of_day;
+            $this->no_of_night = $this->package_version_model->no_of_night;
+            $this->no_of_safari = $this->package_version_model->no_of_safari;
+            $this->safari_type = $this->package_version_model->safari_type;
+            $this->start_location = $this->package_version_model->start_location;
+            $this->end_location = $this->package_version_model->end_location;
+            $this->start_date = $this->package_version_model->start_date;
+            $this->end_date = $this->package_version_model->end_date;
+            $this->stay_category_id = $this->package_version_model->stay_category_id;
+            $this->cost_per_person = $this->package_version_model->cost_per_person;
+            $this->package_description = $this->package_version_model->package_description;
+            $this->package_itinerary_overview = $this->package_version_model->package_itinerary_overview;
+            $this->package_inclusion = $this->package_version_model->package_inclusion;
+            $this->package_exclusion = $this->package_version_model->package_exclusion;
+            $this->package_terms_condtition = $this->package_version_model->package_terms_condtition;
+            $this->privacy_policy = $this->package_version_model->privacy_policy;
+            $this->change_policy = $this->package_version_model->change_policy;
+            $this->what_you_must_carry = $this->package_version_model->what_you_must_carry;
+            $this->date_change_policy = $this->package_version_model->date_change_policy;
+            $this->refund_policy = $this->package_version_model->refund_policy;
+            $this->getting_there = $this->package_version_model->getting_there;
+            $this->master_vehicle_id = $this->package_version_model->master_vehicle_id;
 
-            $this->breakfast_included = $this->package_model->breakfast_included;
-            $this->lunch_included = $this->package_model->lunch_included;
-            $this->dinner_included = $this->package_model->dinner_included;
-            $this->meal_not_included = $this->package_model->meal_not_included;
+            $this->breakfast_included = $this->package_version_model->breakfast_included;
+            $this->lunch_included = $this->package_version_model->lunch_included;
+            $this->dinner_included = $this->package_version_model->dinner_included;
+            $this->meal_not_included = $this->package_version_model->meal_not_included;
 
-            $this->type = $this->package_model->type;
-            $this->gst_percentage = $this->package_model->gst_percentage;
-            $this->popular_package = $this->package_model->popular_package;
-
+            $this->type = $this->package_version_model->type;
+            $this->gst_percentage = $this->package_version_model->gst_percentage;
+            $this->popular_package = $this->package_version_model->popular_package;
 
 
-            $this->status = $this->package_model->status;
 
-            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_model->id, 'status' => PackageFeature::STATUS_ACTIVE])->column();
-            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_model->id, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
-            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_model->id, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
+            $this->status = $this->package_version_model->status;
+
+            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->id, 'status' => PackageFeature::STATUS_ACTIVE])->column();
+            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->id, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
+            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->id, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
         }
     }
 
@@ -161,7 +159,7 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'uuid', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id',  'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
 
@@ -313,61 +311,60 @@ class PackageForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $this->package_model->uuid = $this->uuid;
-        $this->package_model->version = $this->version;
-        $this->package_model->owned_by_id = $this->owned_by_id;
-        $this->package_model->package_name = $this->package_name;
-        $this->package_model->package_agenda_id = $this->package_agenda_id;
-        $this->package_model->no_of_day = $this->no_of_day;
+        $this->package_version_model->version = $this->version;
+        $this->package_version_model->owned_by_id = $this->owned_by_id;
+        $this->package_version_model->package_name = $this->package_name;
+        $this->package_version_model->package_agenda_id = $this->package_agenda_id;
+        $this->package_version_model->no_of_day = $this->no_of_day;
         if ($this->no_of_day) {
-            $this->package_model->no_of_night = $this->no_of_day - 1;
+            $this->package_version_model->no_of_night = $this->no_of_day - 1;
         }
-        $this->package_model->no_of_safari = $this->no_of_safari;
-        $this->package_model->safari_type = $this->safari_type;
-        $this->package_model->start_location = $this->start_location;
-        $this->package_model->end_location = $this->end_location;
-        $this->package_model->start_date = $this->start_date;
-        $this->package_model->end_date = $this->end_date;
-        $this->package_model->stay_category_id = $this->stay_category_id;
-        $this->package_model->cost_per_person = $this->cost_per_person;
-        $this->package_model->package_description = $this->package_description;
-        $this->package_model->package_itinerary_overview = $this->package_itinerary_overview;
-        $this->package_model->package_inclusion = $this->package_inclusion;
-        $this->package_model->package_exclusion = $this->package_exclusion;
-        $this->package_model->package_terms_condtition = $this->package_terms_condtition;
-        $this->package_model->privacy_policy = $this->privacy_policy;
-        $this->package_model->change_policy = $this->change_policy;
-        $this->package_model->what_you_must_carry = $this->what_you_must_carry;
-        $this->package_model->date_change_policy = $this->date_change_policy;
-        $this->package_model->refund_policy = $this->refund_policy;
-        $this->package_model->getting_there = $this->getting_there;
+        $this->package_version_model->no_of_safari = $this->no_of_safari;
+        $this->package_version_model->safari_type = $this->safari_type;
+        $this->package_version_model->start_location = $this->start_location;
+        $this->package_version_model->end_location = $this->end_location;
+        $this->package_version_model->start_date = $this->start_date;
+        $this->package_version_model->end_date = $this->end_date;
+        $this->package_version_model->stay_category_id = $this->stay_category_id;
+        $this->package_version_model->cost_per_person = $this->cost_per_person;
+        $this->package_version_model->package_description = $this->package_description;
+        $this->package_version_model->package_itinerary_overview = $this->package_itinerary_overview;
+        $this->package_version_model->package_inclusion = $this->package_inclusion;
+        $this->package_version_model->package_exclusion = $this->package_exclusion;
+        $this->package_version_model->package_terms_condtition = $this->package_terms_condtition;
+        $this->package_version_model->privacy_policy = $this->privacy_policy;
+        $this->package_version_model->change_policy = $this->change_policy;
+        $this->package_version_model->what_you_must_carry = $this->what_you_must_carry;
+        $this->package_version_model->date_change_policy = $this->date_change_policy;
+        $this->package_version_model->refund_policy = $this->refund_policy;
+        $this->package_version_model->getting_there = $this->getting_there;
 
-        $this->package_model->breakfast_included = $this->breakfast_included;
-        $this->package_model->lunch_included = $this->lunch_included;
-        $this->package_model->dinner_included = $this->dinner_included;
-        $this->package_model->meal_not_included = $this->meal_not_included;
+        $this->package_version_model->breakfast_included = $this->breakfast_included;
+        $this->package_version_model->lunch_included = $this->lunch_included;
+        $this->package_version_model->dinner_included = $this->dinner_included;
+        $this->package_version_model->meal_not_included = $this->meal_not_included;
 
-        $this->package_model->type = $this->type;
+        $this->package_version_model->type = $this->type;
         if ($this->type == 1) { // With GST
-            $this->package_model->gst_percentage = $this->gst_percentage;
+            $this->package_version_model->gst_percentage = $this->gst_percentage;
             $gst_amount = (float)(0.01 * $this->gst_percentage) * (float)$this->cost_per_person;
-            $this->package_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
+            $this->package_version_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
         } else { // Without GST
-            $this->package_model->total_price = (float)$this->cost_per_person;
+            $this->package_version_model->total_price = (float)$this->cost_per_person;
         }
 
-        $this->package_model->status = $this->status;
+        $this->package_version_model->status = $this->status;
 
-        // $this->package_model->package_slug = $this->package_slug;
-        $this->package_model->master_vehicle_id = $this->master_vehicle_id;
-        $this->package_model->popular_package = $this->popular_package;
+        // $this->package_version_model->package_slug = $this->package_slug;
+        $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
+        $this->package_version_model->popular_package = $this->popular_package;
 
-        // if ($this->package_model->package_slug == '') {
-        //     $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));
-        //     $package_name = str_replace(' ', '-', strtolower($this->package_model->package_name));
+        // if ($this->package_version_model->package_slug == '') {
+        //     $without_space_string = str_replace(' ', '-', strtolower($this->package_version_model->safarioperator->business_name));
+        //     $package_name = str_replace(' ', '-', strtolower($this->package_version_model->package_name));
         //     $string = preg_replace('/[^A-Za-z0-9\-]/', '', ($without_space_string . '-' . $package_name));
-        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_model->owned_by_id . time() . '-safari-package';
-        //     $this->package_model->package_slug = $slug;
+        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_version_model->owned_by_id . time() . '-safari-package';
+        //     $this->package_version_model->package_slug = $slug;
         // }
     }
 
@@ -385,7 +382,7 @@ class PackageForm extends \yii\base\Model
             //     mkdir($storagePath);
             //     chmod($storagePath, 0777);
             // }
-            // $storagePath = $storagePath . '/' . $this->package_model->id;
+            // $storagePath = $storagePath . '/' . $this->package_version_model->id;
             // if (!file_exists($storagePath)) {
             //     mkdir($storagePath);
             //     chmod($storagePath, 0777);
@@ -395,13 +392,13 @@ class PackageForm extends \yii\base\Model
             // $filePath = $storagePath . '/' . $fileName;
 
             // if ($this->package_image->saveAs($filePath)) {
-            //     $this->package_model->package_image = $fileName;
-            //     $this->package_model->save(false);
+            //     $this->package_version_model->package_image = $fileName;
+            //     $this->package_version_model->save(false);
             // }
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
             $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_model->id;
+            $storagePath = $storagePath . '/' . $this->package_version_model->id;
 
             $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
             $filePath = $storagePath . '/' . $fileName;
@@ -412,11 +409,11 @@ class PackageForm extends \yii\base\Model
             if ($fileName) {
                 // try {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_image, $filePath, $fileName, true)) {
-                    // $this->package_model->file = $fileName;
-                    $this->package_model->package_image = $filePath;
-                    // $this->package_model->etag = $etag;
+                    // $this->package_version_model->file = $fileName;
+                    $this->package_version_model->package_image = $filePath;
+                    // $this->package_version_model->etag = $etag;
 
-                    $this->package_model->save(false);
+                    $this->package_version_model->save(false);
                 }
             }
         }
@@ -429,7 +426,7 @@ class PackageForm extends \yii\base\Model
             //     mkdir($storagePath);
             //     chmod($storagePath, 0777);
             // }
-            // $storagePath = $storagePath . '/' . $this->package_model->id;
+            // $storagePath = $storagePath . '/' . $this->package_version_model->id;
             // if (!file_exists($storagePath)) {
             //     mkdir($storagePath);
             //     chmod($storagePath, 0777);
@@ -439,14 +436,14 @@ class PackageForm extends \yii\base\Model
             // $filePath = $storagePath . '/' . $fileName;
 
             // if ($this->package_banner_image->saveAs($filePath)) {
-            //     $this->package_model->package_banner_image = $fileName;
-            //     $this->package_model->save(false);
+            //     $this->package_version_model->package_banner_image = $fileName;
+            //     $this->package_version_model->save(false);
             // }
 
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
             $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_model->id;
+            $storagePath = $storagePath . '/' . $this->package_version_model->id;
             $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
@@ -454,10 +451,10 @@ class PackageForm extends \yii\base\Model
             if ($fileName) {
                 // try {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_banner_image, $filePath, $fileName, true)) {
-                    // $this->package_model->file = $fileName;
-                    $this->package_model->package_banner_image = $filePath;
-                    // $this->package_model->etag = $etag;
-                    $this->package_model->save(false);
+                    // $this->package_version_model->file = $fileName;
+                    $this->package_version_model->package_banner_image = $filePath;
+                    // $this->package_version_model->etag = $etag;
+                    $this->package_version_model->save(false);
                 }
             }
         }

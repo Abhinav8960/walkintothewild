@@ -10,7 +10,7 @@ use api\behaviours\Verbcheck;
 use api\models\operator\SafariOperatorSearch;
 use api\models\package\Package;
 use api\models\package\PackageSafariPark;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\park\SafariParkRating;
 use api\models\park\SafariParkRatingSearch;
 use api\models\park\SafariParkSearch;
@@ -237,9 +237,9 @@ class DefaultController extends RestController
 
         $safaripackages = PackageSafariPark::find()->where(['park_id' => $model->id, 'status' => 1])->all();
         $packageIds = array_column($safaripackages, 'package_id');
-        $searchModel = new PackageSearch();
+        $searchModel = new PackageVersionSearch();
         $searchModel->id = $packageIds;
-        $searchModel->status = Package::APPROVED_AND_LIVE_STATUS;
+        $searchModel->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
         return $this->dataProviderSender($searchModel, "packages");
     }
 }

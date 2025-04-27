@@ -34,10 +34,16 @@ use yii\db\ActiveQuery;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
+    public $package_slug;
 
+    const NOT_APPROVED_STATUS = 0;
+    const APPROVED_AND_LIVE_STATUS = 1;
+    const SEND_FOR_APPROVAL_STATUS = 2;
+    const EDIATBLE_STATUS = 3;
+    const TERMINATED_STATUS = 4;
 
     use \common\traits\CommanRelationship;
     /**
@@ -45,23 +51,17 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public static function tableName()
     {
-        return 'package';
+        return 'package_version';
     }
 
     public function behaviors()
     {
         return [
+
             [
-                'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Package',
-                'collection' => Feeds::MODEL_PACKAGE,
-            ],         
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => 'package_slug',
-                'ensureUnique' => true,
-                'slugAttribute' => 'package_name',
-                'immutable' => true,
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
             ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
@@ -71,11 +71,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                     return time();
                 },
             ],
-            
         ];
     }
-
-
 
     /**
      * {@inheritdoc}
@@ -105,10 +102,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['total_price'], 'default', 'value' => 0.00],
             [['is_published_on_api'], 'default', 'value' => 1],
             // [['status'], 'default', 'value' => 3],
-            [['version', 'package_name'], 'required'],
+            [['version', 'package_name','package_id'], 'required'],
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
-            [['start_date', 'end_date', 'status','package_slug'], 'safe'],
-            [['live_version', 'pending_for_approval_version', 'editable_version'], 'safe'],
+            [['start_date', 'end_date', 'status'], 'safe'],
             [['cost_per_person', 'total_price'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
             [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
@@ -168,27 +164,45 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return $name;
     }
 
+
+
+
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version'=>'version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
+    public function getLivePackage()
+    {
+        return $this->hasOne(Package::class, ['id' => 'package_id', 'live_version' => 'version']);
+    }
+
+    public function getPackage()
+    {
+        return $this->hasOne(Package::class, ['id' => 'package_id']);
+    }
+
+
+    public function getPackage_slug()
+    {
+        return $this->getPackage()->slug ?? NULL;
+    }
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=>'version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
     public function getPackageIncludeds()
     {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version'=> 'live_version']);
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version' => 'version']);
     }
 
     public function getPackagedays()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version'=> 'live_version']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version' => 'version']);
     }
 
     public function getImagepath()
@@ -234,7 +248,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getComments()
     {
-        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageComment::class, ['package_id' => 'package_id']);
     }
 
 
@@ -257,7 +271,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPickdrop()
     {
-        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
         return ($package_includes) ? 'Included' : 'Not Included';
     }
 
@@ -267,7 +281,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public function getSinglepark()
     {
-        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id', 'version' => 'live_version']);
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'package_id',  'version' => 'version']);
     }
 
     /**
@@ -275,7 +289,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public function getPackagepark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id', 'version' => 'live_version']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPackagerange()
@@ -285,7 +299,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackagegallery()
     {
-        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id', 'version' => 'live_version']);
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id','version' => 'version']);
     }
 
     public function getPackagedaynightlabels()
@@ -314,7 +328,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->live_version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }
@@ -388,16 +402,31 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getAccomodationIncludes()
     {
-        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->live_version,  'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }
 
+    public function getLive_version()
+    {
 
+        return $this->hasOne(self::className(), ['package_id' => 'package_id'])->where(['status' => SELF::APPROVED_AND_LIVE_STATUS]);
+    }
 
     public function getVersions()
     {
-        return $this->hasMany(PackageVersion::className(), ['package_id' => 'id']);
+        return $this->hasMany(self::className(), ['package_id' => 'package_id']);
     }
 
+    public function getStatusLabel()
+    {
+        $arr = [
+            SELF::NOT_APPROVED_STATUS => "Rejected",
+            SELF::APPROVED_AND_LIVE_STATUS => "Approved and Live",
+            SELF::SEND_FOR_APPROVAL_STATUS => "Send For approvals",
+            SELF::EDIATBLE_STATUS => "Editable",
+            SELF::TERMINATED_STATUS => "Terminated",
+        ];
+        return $arr[$this->status] ?? "";
+    }
 }

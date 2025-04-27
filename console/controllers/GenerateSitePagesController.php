@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\console\Controller;
 use yii\filters\VerbFilter;
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\models\trierror\SitePages;

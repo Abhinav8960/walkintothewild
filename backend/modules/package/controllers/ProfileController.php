@@ -7,9 +7,9 @@ use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
-use common\models\package\form\PackageForm;
+use common\models\package\form\PackageVersionForm;
 use common\models\package\form\PackageGalleryForm;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
 use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
@@ -33,8 +33,8 @@ class ProfileController extends Controller
 {
     public function actionIndex($package_id)
     {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($package_id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
@@ -43,15 +43,15 @@ class ProfileController extends Controller
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -61,10 +61,10 @@ class ProfileController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -76,66 +76,66 @@ class ProfileController extends Controller
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('index', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
 
     public function actionPolicyInfo($package_id)
     {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($package_id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['policy-info', 'package_id' => $package_id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('policy_info', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
 
     public function actionGettingThere($package_id)
     {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($package_id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['getting-there', 'package_id' => $package_id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('getting_there', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -143,10 +143,10 @@ class ProfileController extends Controller
     public function actionInclusion($package_id)
     {
         // Find the package model based on $package_id
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
 
-        // Instantiate PackageForm using the found package model
-        $model = new PackageForm($package_model);
+        // Instantiate PackageVersionForm using the found package model
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion'; // Set scenario to 'inclusion' for validation purposes
 
         if ($this->request->isPost) {
@@ -158,7 +158,7 @@ class ProfileController extends Controller
                     // Save the package model first
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
-                        if ($model->package_model->save(false)) {
+                        if ($model->package_version_model->save(false)) {
                             // Save package inclusion options
                             foreach ($model->package_included as $optionId => $selection) {
                                 // Check if option exists, and update or create as needed
@@ -200,11 +200,11 @@ class ProfileController extends Controller
             }
         } else {
             // Populate the form with existing data
-            $model->package_model->loadDefaultValues(); // Ensure package model has default values
+            $model->package_version_model->loadDefaultValues(); // Ensure package model has default values
 
             // Fetch related package inclusion options
             $includedOptions = [];
-            foreach ($package_model->packageIncludeds as $includedOption) {
+            foreach ($package_version_model->packageIncludeds as $includedOption) {
                 $includedOptions[$includedOption->include_id] = $includedOption->selection;
             }
             $model->package_included = $includedOptions;
@@ -212,7 +212,7 @@ class ProfileController extends Controller
 
         return $this->render('inclusion', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -223,13 +223,13 @@ class ProfileController extends Controller
     public function actionItinerary($package_id, $day = 1)
     {
         $package_day_model = $this->findModelDay($package_id, $day);
-        $package_model = Package::findOne(['id' => $package_id]);
+        $package_version_model = Package::findOne(['id' => $package_id]);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
             $model->package_id = $package_id;
-            $model->no_of_day = $package_model->no_of_day;
+            $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
         // Validate and save each day's itinerary entries
@@ -252,21 +252,21 @@ class ProfileController extends Controller
         }
 
         return $this->render('itinerary', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'model' => $model,
         ]);
     }
 
     public function actionFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('faq', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -280,7 +280,7 @@ class ProfileController extends Controller
      */
     public function actionCreateFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $model = new PackageFaqForm();
         $model->package_id = $package_id;
         $model->status = StatusInterface::STATUS_ACTIVE;
@@ -311,7 +311,7 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -324,7 +324,7 @@ class ProfileController extends Controller
      */
     public function actionUpdateFaq($package_id, $faq_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_id;
@@ -356,7 +356,7 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -368,7 +368,7 @@ class ProfileController extends Controller
      */
     public function actionSelectFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $model = new PackageFaqSelectForm();
         $model->package_id = $package_id;
         $model->status = StatusInterface::STATUS_ACTIVE;
@@ -390,7 +390,7 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('select_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -399,14 +399,14 @@ class ProfileController extends Controller
 
     public function actionQuote($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $searchModel = new PackageQuoteSearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('quote', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -417,14 +417,14 @@ class ProfileController extends Controller
 
     public function actionGallery($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $searchModel = new PackageGallerySearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('gallery', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -432,7 +432,7 @@ class ProfileController extends Controller
 
     public function actionCreateGallery($package_id, $id = null)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
             $model = new PackageGalleryForm($package_gallery_model);
@@ -460,14 +460,14 @@ class ProfileController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_gallery', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
 
     public function actionBookNow($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $package_version_model = $this->findModel($package_id);
         $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
 
         $enquire_provider = new ActiveDataProvider([
@@ -477,7 +477,7 @@ class ProfileController extends Controller
             ],
         ]);
         return $this->render('book_now', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'enquire_provider' => $enquire_provider,
 
         ]);

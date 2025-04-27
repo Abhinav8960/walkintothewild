@@ -6,13 +6,13 @@ use common\models\GeneralModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use DateTime;
 
 /**
  * PackageSearch represents the model behind the search form of `common\models\package\Package`.
  */
-class PackageSearch extends Package
+class PackageSearch extends PackageVersion
 {
     public $park_id;
     public $month_id;
@@ -46,14 +46,14 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status','owned_by_id'], 'safe'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'owned_by_id'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name','uuid','version'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name', 'version'], 'safe'],
             [['package_name'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe'],
-            [['is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
+            [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api'], 'safe'],
         ];
     }
 
@@ -75,7 +75,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where([Package::tableName() . '.status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $query = Package::find()->where([PackageVersion::tableName() . '.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
 
         // add conditions that should always apply here
 
@@ -99,7 +99,6 @@ class PackageSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
-            'uuid' => $this->uuid,
             'version' => $this->version,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
@@ -108,14 +107,14 @@ class PackageSearch extends Package
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'status' => $this->status,            
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            Package::tableName() . '.status' => $this->status,
+            PackageVersion::tableName() . '.status' => $this->status,
         ]);
 
 
@@ -210,7 +209,7 @@ class PackageSearch extends Package
 
     public function managesearch($params, $safari_operator_id)
     {
-        $query =  Package::find()->where([
+        $query =  PackageVersion::find()->where([
             'owned_by_id' => $safari_operator_id
         ]);
 
@@ -299,7 +298,7 @@ class PackageSearch extends Package
 
     public function reportsearch($params)
     {
-        $query =  Package::find()->where(['package.status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $query =  PackageVersion::find()->where(['package.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
 
         // add conditions that should always apply here
 
@@ -346,7 +345,7 @@ class PackageSearch extends Package
 
     public function partnersearch($params)
     {
-        $query = Package::find();
+        $query = PackageVersion::find();
 
         // add conditions that should always apply here
 
@@ -370,7 +369,6 @@ class PackageSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
-            'uuid' => $this->uuid,
             'version' => $this->version,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
@@ -379,7 +377,7 @@ class PackageSearch extends Package
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'owned_by_id' => $this->owned_by_id,            
+            'owned_by_id' => $this->owned_by_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

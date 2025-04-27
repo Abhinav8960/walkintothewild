@@ -6,8 +6,8 @@ use api\behaviours\Verbcheck;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
+use common\models\package\form\PackageVersionForm;
+use common\models\package\PackageVersion;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
 use common\models\package\PackageDay;
@@ -17,8 +17,8 @@ use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
-use common\models\package\PackageStates;
+use common\models\package\PackageVersionSearch;
+use common\models\package\Package;
 use common\models\UserWishlist;
 use Yii;
 use yii\filters\AccessControl;
@@ -32,11 +32,14 @@ use yii\web\UploadedFile;
 class PackageApprovalController extends Controller
 {
 
+
+
+
     public function actionMakeOldLive()
     {
         $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->all();
         foreach ($packages as $package) {
-            $ps =  PackageStates::find()->where(['uuid' => $package->uuid])->one();
+            $ps =  Package::find()->where(['uuid' => $package->uuid])->one();
             $ps->live_version = $package->version;
             $ps->save(false);
         }
@@ -374,13 +377,13 @@ class PackageApprovalController extends Controller
 
     private function updatePackageStatus($uuid, $version, $status)
     {
-        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        $model = Package::find()->where(['uuid' => $uuid])->one();
         $package = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
 
         if (empty($model)) {
-            $model = new PackageStates();
+            $model = new Package();
             $model->uuid = $uuid;
-            $model->slug = PackageStates::prepareUniqueSlug($package->package_name);
+            $model->slug = Package::prepareUniqueSlug($package->package_name);
         }
         if ($status == Package::SEND_FOR_APPROVAL_STATUS) {
             if (!empty($model->pending_for_approval_version)) {
@@ -411,16 +414,16 @@ class PackageApprovalController extends Controller
         return false;
     }
 
-    public function upsertEditablePackageStates($uuid, $version)
+    public function upsertEditablePackage($uuid, $version)
     {
 
-        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        $model = Package::find()->where(['uuid' => $uuid])->one();
         if (empty($model)) {
-            $model = new PackageStates();
+            $model = new Package();
         }
         $model->editable_version = $version;
         $model->uuid = $uuid;
-        $model->slug = PackageStates::prepareUniqueSlug($model->package_name);
+        $model->slug = Package::prepareUniqueSlug($model->package_name);
         $model->save();
         return true;
     }

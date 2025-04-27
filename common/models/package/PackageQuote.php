@@ -3,7 +3,7 @@
 namespace common\models\package;
 
 use common\models\User;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use Yii;
 
 /**

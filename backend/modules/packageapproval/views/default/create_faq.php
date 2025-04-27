@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;

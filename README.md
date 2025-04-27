@@ -1,3 +1,18 @@
+TRUNCATE `package`;
+TRUNCATE `package_comment`;
+TRUNCATE `package_comment_report`;
+TRUNCATE `package_day`;
+TRUNCATE `package_enquiry`;
+TRUNCATE `package_faq`;
+TRUNCATE `package_feature`;
+TRUNCATE `package_gallery`;
+TRUNCATE `package_included`;
+TRUNCATE `package_quote`;
+TRUNCATE `package_safari_park`;
+TRUNCATE `package_states`;
+TRUNCATE `package_version`;
+
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
