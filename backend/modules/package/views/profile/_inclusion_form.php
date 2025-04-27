@@ -97,8 +97,8 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-package_inclusion');
-bulleteditor('packageform-package_exclusion');
+bulleteditor('PackageVersionForm-package_inclusion');
+bulleteditor('PackageVersionForm-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\package; // Adjust if your namespace is different
+namespace console\models\package; // Adjust if your namespace is different
 
 use yii\db\ActiveQuery;
 

@@ -1,7 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 
 $query = Package::find()
     ->select("count(package.id) as total_data")

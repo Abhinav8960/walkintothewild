@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;

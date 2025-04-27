@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Package : ' . $package_model->package_name;
+$this->title = 'Package : ' . $package_version_model->package_name;
 $this->params['title'] = $this->title;
 ?>
 
@@ -14,7 +14,7 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
             <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
             <div class="d-flex justify-content-between">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_version_model->package_slug, 'operator_slug' => $package_version_model->safarioperator ? $package_version_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
@@ -25,7 +25,7 @@ $this->params['title'] = $this->title;
                 <div class="card-body p-4 safartabs">
                     <div class="row">
                         <div class="col-12">
-                            <?= $this->render('_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
+                            <?= $this->render('_profile_navbar', ['package' => $package_version_model, 'itinerary_active' => 'active']) ?>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -33,11 +33,11 @@ $this->params['title'] = $this->title;
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <?php
-                                    $no_of_day = $package_model->no_of_day;
+                                    $no_of_day = $package_version_model->no_of_day;
                                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
-                                                <a class="accordion-button" href="<?= Url::toRoute(['/manage/package/itinerary', 'slug' => $package_model->package_slug, 'day' => $i]) ?>">
+                                                <a class="accordion-button" href="<?= Url::toRoute(['/manage/package/itinerary', 'slug' => $package_version_model->package_slug, 'day' => $i]) ?>">
                                                     Day <?= $i ?>
                                                 </a>
                                             </h2>
@@ -48,9 +48,9 @@ $this->params['title'] = $this->title;
                                                             <div class="card-body">
                                                                 <?php $form = ActiveForm::begin(); ?>
 
-                                                                <?= $form->field($model, 'package_id',)->hiddenInput(['value' => $package_model->id])->label(false) ?>
+                                                                <?= $form->field($model, 'package_id',)->hiddenInput(['value' => $package_version_model->id])->label(false) ?>
 
-                                                                <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_model->no_of_day])->label(false) ?>
+                                                                <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
                                                                 <div class="row">
                                                                     <div class="col-md-6 mb-3">
                                                                         <?= $form->field($model, 'day', [

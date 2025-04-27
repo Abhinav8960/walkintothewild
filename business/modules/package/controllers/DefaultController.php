@@ -6,8 +6,8 @@ use common\models\master\faq\MasterFaq;
 use common\models\operator\SafariOperator;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
+use common\models\package\form\PackageVersionForm;
+use common\models\package\PackageVersion;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
 use common\models\package\PackageDay;
@@ -17,8 +17,8 @@ use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
-use common\models\package\PackageStates;
+use common\models\package\PackageVersionSearch;
+use common\models\package\Package;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -72,7 +72,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageSearch();
+        $searchModel = new PackageVersionSearch();
         $searchModel->status = Package::EDIATBLE_STATUS;
         $searchModel->owned_by_id = $this->operatormodel()->id;
 
@@ -93,7 +93,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->operatormodel();
 
-        $model = new PackageForm();
+        $model = new PackageVersionForm();
         $model->status = Package::EDIATBLE_STATUS;
         $model->owned_by_id = $safari_operator->id;
 
@@ -106,16 +106,16 @@ class DefaultController extends Controller
                 if ($model->validate()) {
 
                     $model->initializeForm();
-                    if ($model->package_model->save()) {
+                    if ($model->package_version_model->save()) {
                         $model->uploadFile();
                         $this->updatePackageStatus($model->uuid, $model->version, Package::EDIATBLE_STATUS);
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -124,33 +124,33 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->package_uuid = $model->package_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
+                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
                         }
 
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
-                        return $this->redirect(['update', 'id' => $model->package_model->id]);
+                        return $this->redirect(['update', 'id' => $model->package_version_model->id]);
                     } else {
                         print_r($model->getErrors());
-                        print_r($model->package_model->getErrors());
+                        print_r($model->package_version_model->getErrors());
                         die();
                         \Yii::$app->session->setFlash('error', 'Failed to create package.');
                     }
                 } else {
                     print_r($model->getErrors());
-                    print_r($model->package_model->getErrors());
+                    print_r($model->package_version_model->getErrors());
                     die();
                     \Yii::$app->session->setFlash('error', 'Failed to create package.');
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
 
@@ -171,8 +171,8 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
 
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
@@ -181,15 +181,15 @@ class DefaultController extends Controller
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -199,11 +199,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->package_uuid = $model->package_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
+                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -215,25 +215,25 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('update', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionItinerary($id, $day = 1)
     {
         $package_day_model = $this->findModelDay($id, $day);
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
             $model->package_id = $id;
-            $model->no_of_day = $package_model->no_of_day;
+            $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
 
@@ -254,15 +254,15 @@ class DefaultController extends Controller
         }
 
         return $this->render('itinerary', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'model' => $model,
         ]);
     }
 
     public function actionInclusion($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
         if ($this->request->isPost) {
@@ -271,13 +271,13 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
-                        if ($model->package_model->save(false)) {
+                        if ($model->package_version_model->save(false)) {
                             foreach ($model->package_included as $optionId => $selection) {
-                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_model->id]);
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_model->id;
+                                    $packageIncluded->package_id = $package_version_model->id;
                                 }
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
@@ -285,7 +285,7 @@ class DefaultController extends Controller
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_model->id, 'status' => 1])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => 1])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -299,7 +299,7 @@ class DefaultController extends Controller
 
                             $transaction->commit();
                             Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                            return $this->redirect(['inclusion', 'id' => $package_model->id]);
+                            return $this->redirect(['inclusion', 'id' => $package_version_model->id]);
                         } else {
                             Yii::$app->session->setFlash('error', 'Failed to update package details.');
                         }
@@ -310,9 +310,9 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
             $includedOptions = [];
-            foreach ($package_model->packageIncludeds as $includedOption) {
+            foreach ($package_version_model->packageIncludeds as $includedOption) {
                 $includedOptions[$includedOption->include_id] = $includedOption->selection;
             }
             $model->package_included = $includedOptions;
@@ -320,73 +320,73 @@ class DefaultController extends Controller
 
         return $this->render('inclusion', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionPolicyInfo($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['policy-info', 'id' => $id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('policy_info', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
 
     public function actionGettingThere($id)
     {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['getting-there', 'id' => $id]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('getting_there', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
     public function actionFaq($id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_model->id;
+        $searchModel->package_id = $package_version_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('faq', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -394,9 +394,9 @@ class DefaultController extends Controller
 
     public function actionCreateFaq($id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $model = new PackageFaqForm();
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -413,7 +413,7 @@ class DefaultController extends Controller
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'id' => $package_model->id]);
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }
             }
@@ -424,7 +424,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -437,10 +437,10 @@ class DefaultController extends Controller
      */
     public function actionUpdateFaq($id, $faq_id)
     {
-        $package_model = $this->findModel($id);
+        $package_version_model = $this->findModel($id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -457,7 +457,7 @@ class DefaultController extends Controller
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'id' => $package_model->id]);
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
                 }
             }
@@ -469,7 +469,7 @@ class DefaultController extends Controller
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -757,13 +757,13 @@ class DefaultController extends Controller
 
     private function updatePackageStatus($uuid, $version, $status)
     {
-        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        $model = Package::find()->where(['uuid' => $uuid])->one();
         $package = Package::find()->where(['uuid' => $uuid, 'version' => $version])->one();
 
         if (empty($model)) {
-            $model = new PackageStates();
+            $model = new Package();
             $model->uuid = $uuid;
-            $model->slug = PackageStates::prepareUniqueSlug($package->package_name);
+            $model->slug = Package::prepareUniqueSlug($package->package_name);
         }
         if ($status == Package::SEND_FOR_APPROVAL_STATUS) {
             if (!empty($model->pending_for_approval_version)) {
@@ -795,16 +795,16 @@ class DefaultController extends Controller
         return false;
     }
 
-    public function upsertEditablePackageStates($uuid, $version)
+    public function upsertEditablePackage($uuid, $version)
     {
 
-        $model = PackageStates::find()->where(['uuid' => $uuid])->one();
+        $model = Package::find()->where(['uuid' => $uuid])->one();
         if (empty($model)) {
-            $model = new PackageStates();
+            $model = new Package();
         }
         $model->editable_version = $version;
         $model->uuid = $uuid;
-        $model->slug = PackageStates::prepareUniqueSlug($model->package_name);
+        $model->slug = Package::prepareUniqueSlug($model->package_name);
         $model->save();
         return true;
     }

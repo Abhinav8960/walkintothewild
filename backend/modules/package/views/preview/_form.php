@@ -23,7 +23,7 @@ use kartik\datetime\DateTimePicker;
         <?= $form->field($model, 'package_name')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Package Name',
-            'id' => 'packageform-package_name', // Add an ID for JavaScript targeting
+            'id' => 'PackageVersionForm-package_name', // Add an ID for JavaScript targeting
         ]) ?>
     </div>
 
@@ -31,8 +31,8 @@ use kartik\datetime\DateTimePicker;
         <?= $form->field($model, 'package_slug')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Slug',
-            'readonly' => isset($model->package_model->id) ? true : false, // Make it readonly for existing records
-            'id' => 'packageform-package_slug', // Add an ID for JavaScript targeting
+            'readonly' => isset($model->package_version_model->id) ? true : false, // Make it readonly for existing records
+            'id' => 'PackageVersionForm-package_slug', // Add an ID for JavaScript targeting
         ]) ?>
     </div>
 
@@ -91,12 +91,12 @@ use kartik\datetime\DateTimePicker;
 
 
     <?php
-    if ($model->package_model->package_image) { ?>
+    if ($model->package_version_model->package_image) { ?>
         <div class="col-md-6">
             <?= $form->field($model, 'package_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
         </div>
         <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
+            <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6">
@@ -140,7 +140,7 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <?php
-    if (!empty($model->package_model->id)) { ?>
+    if (!empty($model->package_version_model->id)) { ?>
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => '--Select Status--']) ?>
         </div>
@@ -167,7 +167,7 @@ use kartik\datetime\DateTimePicker;
 </style>
 <?php
 $script = <<< JS
-editor('packageform-package_description');
+editor('PackageVersionForm-package_description');
 JS;
 $this->registerJs($script);
 ?>
@@ -186,17 +186,17 @@ $script = <<< JS
         }
 
         // Handle title change to update slug
-        $('#packageform-package_name').on('input', function() {
+        $('#PackageVersionForm-package_name').on('input', function() {
             var package_name = $(this).val();
             var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
+            $('#PackageVersionForm-package_slug').val(package_slug);
         });
 
         // Initialize slug when editing existing record
-        if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
-            var package_name = $('#packageform-package_name').val();
+        if (!$('#PackageVersionForm-slug').val() && $('#PackageVersionForm-package_name').val()) {
+            var package_name = $('#PackageVersionForm-package_name').val();
             var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
+            $('#PackageVersionForm-package_slug').val(package_slug);
         }
     });
 JS;

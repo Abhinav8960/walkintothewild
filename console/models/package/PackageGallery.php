@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\__package;
+namespace console\models\package;
 
 use Yii;
 
@@ -27,6 +27,14 @@ class PackageGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public static function tableName()
     {
         return 'package_gallery';
+    }
+
+     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_package');
     }
 
     public function behaviors()

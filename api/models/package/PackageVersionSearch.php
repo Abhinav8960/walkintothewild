@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use DateTime;
 
 
-class PackageSearch extends Package
+class PackageVersionSearch extends PackageVersion
 {
     public $park_id;
     public $month_id;
@@ -70,7 +70,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where(['package.status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $query = PackageVersion::find()->where(['package.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
 
         // add conditions that should always apply here
 
@@ -206,7 +206,7 @@ class PackageSearch extends Package
 
     public function managesearch($params, $safari_operator_id)
     {
-        $query =  Package::find()->where([
+        $query =  PackageVersion::find()->where([
             'owned_by_id' => $safari_operator_id
         ]);
 

@@ -3,7 +3,7 @@
 namespace common\models\operator;
 
 use Yii;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\traits\CommanRelationship;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;

@@ -13,7 +13,7 @@ use common\models\cms\blog\Blog;
 use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageQuote;
 use common\models\sharesafari\ShareSafari;
 //use common\models\trierror\BackendErrorLog;

@@ -14,6 +14,12 @@ ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `pa
 ALTER TABLE `wildwalks`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
 ALTER TABLE `package_states` DROP `uuid`;
 ALTER TABLE `package_states` ADD `live_version_data` JSON NULL DEFAULT NULL AFTER `editable_version`;
+RENAME TABLE `wildwalks_package_staging`.`package`
+                  TO `wildwalks_package_staging`.`package_version`;
+
+RENAME TABLE `wildwalks_package_staging`.`package_states` TO `wildwalks_package_staging`.`package`;
+
+ALTER TABLE `package_quote` CHANGE `package_uuid` `version` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
 -- 24 apr 2025
 ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
 

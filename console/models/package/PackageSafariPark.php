@@ -1,22 +1,23 @@
 <?php
 
-namespace common\models\__package;
+namespace console\models\package;
 
+use common\models\park\SafariPark;
 use Yii;
 
 /**
- * This is the model class for table "package_included".
+ * This is the model class for table "package_safari_park".
  *
  * @property int $id
  * @property int $package_id
- * @property int $include_id
+ * @property int $park_id
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $created_by
- * @property int|null $updated_by
  * @property int|null $updated_at
+ * @property int|null $updated_by
  */
-class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class PackageSafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
@@ -24,7 +25,15 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
      */
     public static function tableName()
     {
-        return 'package_included';
+        return 'package_safari_park';
+    }
+
+     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_package');
     }
 
     public function behaviors()
@@ -52,9 +61,9 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
     public function rules()
     {
         return [
-            [['package_id', 'include_id'], 'required'],
-            [['package_id', 'include_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
-            [['package_id', 'include_id'], 'unique', 'targetAttribute' => ['package_id', 'include_id']],
+            [['package_id', 'package_uuid', 'park_id'], 'required'],
+            [['package_id', 'park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['package_uuid', 'park_id'], 'unique', 'targetAttribute' => ['package_id', 'park_id']],
         ];
     }
 
@@ -66,12 +75,17 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
         return [
             'id' => 'ID',
             'package_id' => 'Package ID',
-            'include_id' => 'Include ID',
+            'park_id' => 'Park ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
             'updated_at' => 'Updated At',
+            'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'park_id']);
     }
 }

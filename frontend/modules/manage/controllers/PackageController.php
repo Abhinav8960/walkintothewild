@@ -7,19 +7,19 @@ use yii\web\UploadedFile;
 use common\models\MailLog;
 use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use yii\web\NotFoundHttpException;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\master\faq\MasterFaq;
-use common\models\package\PackageSearch;
+use common\models\package\PackageVersionSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\package\PackageComment;
 use common\models\package\PackageEnquiry;
 use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
 use common\models\package\PackageIncluded;
-use common\models\package\form\PackageForm;
+use common\models\package\form\PackageVersionForm;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageQuoteSearch;
@@ -50,7 +50,7 @@ class PackageController extends FrontendBaseController
             return $this->redirect('/manage');
         }
 
-        $searchModel = new PackageSearch();
+        $searchModel = new PackageVersionSearch();
         $dataProvider = $searchModel->managesearch($this->request->queryParams, [
             'owned_by_id' => $safari_operator->id
         ]);
@@ -73,8 +73,8 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $model = new PackageForm();
-        $model->status = Package::APPROVED_AND_LIVE_STATUS;
+        $model = new PackageVersionForm();
+        $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -85,15 +85,15 @@ class PackageController extends FrontendBaseController
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save()) {
+                    if ($model->package_version_model->save()) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -102,11 +102,11 @@ class PackageController extends FrontendBaseController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->package_uuid = $model->package_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
+                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -114,11 +114,11 @@ class PackageController extends FrontendBaseController
 
                         // Send Email to Admin
                         $to_mail = Yii::$app->params['adminEmail'];
-                        $subject = 'New Package Created | ' . substr($model->package_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $subject = 'New Package Created | ' . substr($model->package_version_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
-                        $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_model->package_slug, 'operator_slug' => $safari_operator->slug]);
+                        $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_version_model->package_slug, 'operator_slug' => $safari_operator->slug]);
 
-                        $req = ['package' => $model->package_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
+                        $req = ['package' => $model->package_version_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
                         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                             GeneralModel::sendmailfromlog($maillog_data['log_id']);
@@ -129,7 +129,7 @@ class PackageController extends FrontendBaseController
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
 
@@ -147,8 +147,8 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
@@ -157,15 +157,15 @@ class PackageController extends FrontendBaseController
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
+                                $packagefeature->package_id = $model->package_version_model->id;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -175,11 +175,11 @@ class PackageController extends FrontendBaseController
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->package_uuid = $model->package_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->id;
+                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -191,12 +191,12 @@ class PackageController extends FrontendBaseController
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('update', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -206,27 +206,27 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Policy information updated successfully');
                         return $this->redirect(['policy-info', 'slug' => $slug]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('policy_info', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -237,27 +237,27 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_version_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Getting there updated successfully');
                         return $this->redirect(['getting-there', 'slug' => $slug]);
                     }
                 }
             }
         } else {
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
         }
 
         return $this->render('getting_there', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -267,8 +267,8 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $model = new PackageForm($package_model);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
         if ($this->request->isPost) {
@@ -277,13 +277,13 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
-                        if ($model->package_model->save(false)) {
+                        if ($model->package_version_model->save(false)) {
                             foreach ($model->package_included as $optionId => $selection) {
-                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_model->id]);
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_model->id;
+                                    $packageIncluded->package_id = $package_version_model->id;
                                 }
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
@@ -291,7 +291,7 @@ class PackageController extends FrontendBaseController
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -317,9 +317,9 @@ class PackageController extends FrontendBaseController
             }
         } else {
 
-            $model->package_model->loadDefaultValues();
+            $model->package_version_model->loadDefaultValues();
             $includedOptions = [];
-            foreach ($package_model->packageIncludeds as $includedOption) {
+            foreach ($package_version_model->packageIncludeds as $includedOption) {
                 $includedOptions[$includedOption->include_id] = $includedOption->selection;
             }
             $model->package_included = $includedOptions;
@@ -327,7 +327,7 @@ class PackageController extends FrontendBaseController
 
         return $this->render('inclusion', [
             'model' => $model,
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
         ]);
     }
 
@@ -337,14 +337,14 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_day_model = $this->findModelDay($package_model->id, $day);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_day_model = $this->findModelDay($package_version_model->id, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
-            $model->package_id = $package_model->id;
-            $model->no_of_day = $package_model->no_of_day;
+            $model->package_id = $package_version_model->id;
+            $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
         // Validate and save each day's itinerary entries
@@ -367,7 +367,7 @@ class PackageController extends FrontendBaseController
         }
 
         return $this->render('itinerary', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'model' => $model,
         ]);
     }
@@ -378,14 +378,14 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_model->id;
+        $searchModel->package_id = $package_version_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('faq', [
-            'package_model' => $package_model,
+            'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -402,9 +402,9 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqForm();
-        $model->package_id =  $package_model->id;
+        $model->package_id =  $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -433,7 +433,7 @@ class PackageController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -451,10 +451,10 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -482,7 +482,7 @@ class PackageController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -498,9 +498,9 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqSelectForm();
-        $model->package_id = $package_model->id;
+        $model->package_id = $package_version_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -520,7 +520,7 @@ class PackageController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('select_faq', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }
@@ -530,14 +530,14 @@ class PackageController extends FrontendBaseController
     // public function actionView($package_id)
     // {
     //     $safari_operator = $this->module->operatormodel();
-    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $package_version_model = $this->findModel($package_id, $safari_operator->id);
     //     $searchModel = new PackageQuoteSearch();
     //     $searchModel->package_id = $package_id;
     //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     //     $model = $dataProvider->getModels();
 
     //     return $this->render('view', [
-    //         'package_model' => $package_model,
+    //         'package_version_model' => $package_version_model,
     //         'searchModel' => $searchModel,
     //         'dataProvider' => $dataProvider,
     //         'model' => $model,
@@ -547,7 +547,7 @@ class PackageController extends FrontendBaseController
     // public function actionComment($package_id)
     // {
     //     $safari_operator = $this->module->operatormodel();
-    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $package_version_model = $this->findModel($package_id, $safari_operator->id);
     //     $dataProvider = new ActiveDataProvider([
     //         'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => PackageComment::STATUS_ACTIVE])->andWhere(['parent_id' => null]),
     //         'pagination' => [
@@ -555,7 +555,7 @@ class PackageController extends FrontendBaseController
     //         ],
     //     ]);
     //     return $this->render('comment', [
-    //         'package_model' => $package_model,
+    //         'package_version_model' => $package_version_model,
     //         'dataProvider' => $dataProvider,
 
     //     ]);
@@ -566,7 +566,7 @@ class PackageController extends FrontendBaseController
     // {
     //     $comment = PackageComment::find()->where(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])->limit(1)->one();
     //     $safari_operator = $this->module->operatormodel();
-    //     $package_model = $this->findModel($comment->package_id, $safari_operator->id);
+    //     $package_version_model = $this->findModel($comment->package_id, $safari_operator->id);
     //     $dataProvider = new ActiveDataProvider([
     //         'query' =>  $comment->getReplies()->where(['status' =>  PackageComment::STATUS_ACTIVE]),
     //         'pagination' => [
@@ -574,7 +574,7 @@ class PackageController extends FrontendBaseController
     //         ],
     //     ]);
     //     return $this->renderAjax('replies', [
-    //         'package_model' => $package_model,
+    //         'package_version_model' => $package_version_model,
     //         'dataProvider' => $dataProvider,
 
     //     ]);
@@ -583,7 +583,7 @@ class PackageController extends FrontendBaseController
     // public function actionBookNow($package_id)
     // {
     //     $safari_operator = $this->module->operatormodel();
-    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $package_version_model = $this->findModel($package_id, $safari_operator->id);
     //     $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
     //     $enquire_provider = new ActiveDataProvider([
     //         'query' => $enquiries,
@@ -592,7 +592,7 @@ class PackageController extends FrontendBaseController
     //         ],
     //     ]);
     //     return $this->render('book_now', [
-    //         'package_model' => $package_model,
+    //         'package_version_model' => $package_version_model,
     //         'enquire_provider' => $enquire_provider,
 
     //     ]);
@@ -645,14 +645,14 @@ class PackageController extends FrontendBaseController
     //     if ($safari_operator->category_id != 1) {
     //         return $this->redirect('/manage');
     //     }
-    //     $package_model = $this->findModel($slug, $safari_operator->id);
+    //     $package_version_model = $this->findModel($slug, $safari_operator->id);
     //     $searchModel = new PackageGallerySearch();
-    //     $searchModel->package_id = $package_model->id;
+    //     $searchModel->package_id = $package_version_model->id;
     //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
     //     return $this->render('gallery', [
-    //         'package_model' => $package_model,
+    //         'package_version_model' => $package_version_model,
     //         'searchModel' => $searchModel,
     //         'dataProvider' => $dataProvider,
     //     ]);
@@ -664,13 +664,13 @@ class PackageController extends FrontendBaseController
         if ($safari_operator->category_id != 1) {
             return $this->redirect('/manage');
         }
-        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findModel($slug, $safari_operator->id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
             $model = new PackageGalleryForm($package_gallery_model);
         } else {
             $model = new PackageGalleryForm();
-            $model->package_id =  $package_model->id;
+            $model->package_id =  $package_version_model->id;
         }
 
         if ($this->request->isPost) {
@@ -692,7 +692,7 @@ class PackageController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('create_gallery', [
                 'model' => $model,
-                'package_model' => $package_model,
+                'package_version_model' => $package_version_model,
             ]);
         }
     }

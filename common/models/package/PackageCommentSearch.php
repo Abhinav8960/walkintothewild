@@ -2,7 +2,7 @@
 
 namespace common\models\package;
 
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageComment;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

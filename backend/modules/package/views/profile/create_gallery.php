@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 /** @var common\models\master\airport\MasterAirport $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$this->title = 'Package : ' . $package_model->package_name . '';
+$this->title = 'Package : ' . $package_version_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;

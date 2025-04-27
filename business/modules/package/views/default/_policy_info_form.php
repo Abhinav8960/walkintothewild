@@ -77,9 +77,9 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-package_terms_condtition');
-bulleteditor('packageform-date_change_policy');
-bulleteditor('packageform-refund_policy');
+bulleteditor('PackageVersionForm-package_terms_condtition');
+bulleteditor('PackageVersionForm-date_change_policy');
+bulleteditor('PackageVersionForm-refund_policy');
 JS;
 $this->registerJs($script);
 ?>

@@ -57,7 +57,7 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['package_id'], 'required'],
             [['package_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['answer'], 'string'],
-            [['question'], 'string', 'max' => 512],
+            [['question','version'], 'string', 'max' => 512],
         ];
     }
 

@@ -45,7 +45,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;

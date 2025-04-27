@@ -2,7 +2,7 @@
 
 
 use common\models\GeneralModel;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
+use common\models\package\PackageVersion;
 use common\models\package\Package;
 use common\models\package\PackageComment;
 use Yii;
@@ -53,6 +54,7 @@ class PackageReplyForm extends Model
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $reply = new PackageComment();
         $reply->package_id = $package->id;
+        $reply->version = Package::findOne($package->id)->live_version;
         $reply->user_id = Yii::$app->user->id;
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;

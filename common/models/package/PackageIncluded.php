@@ -52,9 +52,9 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
     public function rules()
     {
         return [
-            [['package_id', 'include_id'], 'required'],
+            [['package_id', 'version', 'include_id'], 'required'],
             [['package_id', 'include_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
-            [['package_id', 'include_id'], 'unique', 'targetAttribute' => ['package_id', 'include_id']],
+            [['package_id', 'version', 'include_id'], 'unique', 'targetAttribute' => ['package_id', 'version', 'include_id']],
         ];
     }
 
