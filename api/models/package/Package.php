@@ -2,7 +2,10 @@
 
 namespace api\models\package;
 
+use api\models\master\packagefeature\MasterPackagefeature;
+use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
+use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
 use api\models\UserWishlist;
 use Yii;
