@@ -384,7 +384,7 @@ class PackageVersionSearch extends PackageVersion
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            Package::tableName() . '.status' => $this->status,
+            PackageVersion::tableName() . '.status' => $this->status,
         ]);
 
 

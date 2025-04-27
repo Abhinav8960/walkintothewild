@@ -81,7 +81,7 @@ class PackageVersionForm extends \yii\base\Model
     /**
      * @param [type] $package_version_model
      */
-    public function __construct(PackageVersion $package_version_model = null)
+    public function __construct($package_version_model = null)
     {
         $this->package_version_model = Yii::createObject([
             'class' => PackageVersion::className()

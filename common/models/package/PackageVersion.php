@@ -38,7 +38,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 {
 
     public $package_slug;
-    
+
     const NOT_APPROVED_STATUS = 0;
     const APPROVED_AND_LIVE_STATUS = 1;
     const SEND_FOR_APPROVAL_STATUS = 2;
@@ -57,7 +57,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
     public function behaviors()
     {
         return [
-            
+
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
@@ -166,14 +166,10 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
 
 
-    public static function find()
-    {
-        return new PackageQuery(get_called_class());
-    }
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version'=>'version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
     public function getLivePackage()
@@ -195,18 +191,18 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=>'version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
     public function getPackageIncludeds()
     {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version' => 'version']);
     }
 
     public function getPackagedays()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version' => 'version']);
     }
 
     public function getImagepath()
@@ -252,7 +248,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getComments()
     {
-        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageComment::class, ['package_id' => 'package_id']);
     }
 
 
@@ -275,7 +271,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPickdrop()
     {
-        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
         return ($package_includes) ? 'Included' : 'Not Included';
     }
 
@@ -285,7 +281,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
      */
     public function getSinglepark()
     {
-        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'package_id',  'version' => 'version']);
     }
 
     /**
@@ -293,7 +289,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
      */
     public function getPackagepark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'package_id','version' => 'version']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPackagerange()
@@ -303,7 +299,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackagegallery()
     {
-        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id','version' => 'version']);
     }
 
     public function getPackagedaynightlabels()
@@ -332,7 +328,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }
@@ -406,7 +402,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getAccomodationIncludes()
     {
-        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version'=>$this->version, 'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }

@@ -55,7 +55,23 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'Package',
                 'collection' => Feeds::MODEL_PACKAGE,
+            ],         
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'package_slug',
+                'ensureUnique' => true,
+                'slugAttribute' => 'package_name',
+                'immutable' => true,
             ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+            
         ];
     }
 
@@ -91,7 +107,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             // [['status'], 'default', 'value' => 3],
             [['version', 'package_name'], 'required'],
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
-            [['start_date', 'end_date', 'status',], 'safe'],
+            [['start_date', 'end_date', 'status','package_slug'], 'safe'],
             [['live_version', 'pending_for_approval_version', 'editable_version'], 'safe'],
             [['cost_per_person', 'total_price'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
@@ -383,4 +399,5 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return $this->hasMany(PackageVersion::className(), ['package_id' => 'id']);
     }
+
 }
