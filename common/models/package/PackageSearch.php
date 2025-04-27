@@ -75,7 +75,7 @@ class PackageSearch extends PackageVersion
      */
     public function search($params)
     {
-        $query = Package::find()->where([PackageVersion::tableName() . '.status' => [PackageVersion::APPROVED_AND_LIVE_STATUS, PackageVersion::NOT_APPROVED_STATUS]]);
+        $query = Package::find()->where([Package::tableName() . '.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -114,7 +114,7 @@ class PackageSearch extends PackageVersion
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            PackageVersion::tableName() . '.status' => $this->status,
+            Package::tableName() . '.status' => $this->status,
         ]);
 
 
