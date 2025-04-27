@@ -66,7 +66,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id])) !== null) {
+        if (($model = PackageVersion::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
@@ -75,20 +75,20 @@ class DefaultController extends Controller
 
     public function actionApproved($package_id, $version)
     {
-        $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'pending_for_approval_version' => $version])->one();
-        if (empty($packageversion)) {
+        $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
+        if (empty($package)) {
             Yii::$app->session->setFlash('error', 'Package not found.');
             return $this->redirect(['index']);
         }
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            if (!empty($packageversion->live_version)) {
-                $this->terminatePackage($package_id, $packageversion->live_version);
+            if (!empty($package->live_version)) {
+                $this->terminatePackage($package_id, $package->live_version);
             }
-            $packageversion->live_version = $version;
-            $packageversion->pending_for_approval_version = null;
-            $packageversion->save(false);
+            $package->live_version = $version;
+            $package->pending_for_approval_version = null;
+            $package->save(false);
 
             $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
@@ -112,7 +112,7 @@ class DefaultController extends Controller
 
     public function actionRejectview($package_id, $version)
     {
-        $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+        $model = Package::find()->where(['id' => $package_id, 'version' => $version])->one();
 
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_rejection_form', [
@@ -125,8 +125,8 @@ class DefaultController extends Controller
 
     public function actionReject($package_id, $version)
     {
-        $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'pending_for_approval_version' => $version])->one();
-        if (empty($packageversion)) {
+        $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
+        if (empty($package)) {
             Yii::$app->session->setFlash('error', 'Package not found.');
             return $this->redirect(['index']);
         }
@@ -135,21 +135,21 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $transaction = Yii::$app->db->beginTransaction();
-                try {
-                    $packageversion->pending_for_approval_version = null;
-                    $packageversion->save(false);
+                // $transaction = Yii::$app->db->beginTransaction();
+                // try {
+                    $package->pending_for_approval_version = null;
+                    $package->save(false);
 
                     $model->status = PackageVersion::NOT_APPROVED_STATUS;
                     $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
                     $model->save(false);
-                } catch (\Exception $e) {
-                    Yii::error($e->getMessage());
-                    $transaction->rollBack();
-                    Yii::$app->session->setFlash('error', 'Failed to reject package.');
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
-                $transaction->commit();
+                // } catch (\Exception $e) {
+                //     Yii::error($e->getMessage());
+                //     $transaction->rollBack();
+                //     Yii::$app->session->setFlash('error', 'Failed to reject package.');
+                //     return $this->redirect(Yii::$app->request->referrer);
+                // }
+                // $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
                 return $this->redirect(Yii::$app->request->referrer);
             }

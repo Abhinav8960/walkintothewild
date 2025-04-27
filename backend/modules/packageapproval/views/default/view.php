@@ -16,8 +16,8 @@ AppAsset::register($this);
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
-        <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'uuid' => $package->uuid, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#09422D;color:#EFF8F5;', 'title' => 'Approved']) ?>
-        <?= Html::a('<i class="fa fa-times" style="font-size:15px; color:#DA2F49 margin-right:5px"></i>Reject', [Url::toRoute(['reject', 'uuid' => $package->uuid, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#FBE7E8; color:#DA2F49', 'title' => 'Reject']) ?>
+        <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#09422D;color:#EFF8F5;', 'title' => 'Approved']) ?>
+        <?= Html::a('<i class="fa fa-times" style="font-size:15px; color:#DA2F49 margin-right:5px"></i>Reject', [Url::toRoute(['reject', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#FBE7E8; color:#DA2F49', 'title' => 'Reject']) ?>
         <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
     </div>
 </div>

@@ -46,14 +46,14 @@ class PackageVersionSearch extends PackageVersion
     public function rules()
     {
         return [
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status','owned_by_id'], 'safe'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'owned_by_id'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name','version'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name', 'version'], 'safe'],
             [['package_name'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by','package_start_date','package_end_date'], 'safe'],
-            [['is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
+            [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api'], 'safe'],
         ];
     }
 
@@ -107,7 +107,7 @@ class PackageVersionSearch extends PackageVersion
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'status' => $this->status,            
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
@@ -377,7 +377,7 @@ class PackageVersionSearch extends PackageVersion
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'owned_by_id' => $this->owned_by_id,            
+            'owned_by_id' => $this->owned_by_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

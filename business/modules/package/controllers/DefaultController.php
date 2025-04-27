@@ -526,13 +526,16 @@ class DefaultController extends Controller
         try {
             $m->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
-            // $this->updatePackageStatus($m->package_id, $m->version, $m->status);
+            $this->updatePackageStatus($m->package_id, $m->version, $m->status);
             $this->copyPackageNow($id);
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
             return $this->redirect(Yii::$app->request->referrer);
         }
         $transaction->commit();
@@ -765,7 +768,7 @@ class DefaultController extends Controller
         }
         if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
-            $model->editable_version = NULL;
+            // $model->editable_version = NULL;
         }
         if ($status == PackageVersion::EDIATBLE_STATUS) {
 
@@ -793,6 +796,7 @@ class DefaultController extends Controller
             } else {
                 $version->status = PackageVersion::TERMINATED_STATUS;
             }
+            $version->save(false);
         }
 
         return true;

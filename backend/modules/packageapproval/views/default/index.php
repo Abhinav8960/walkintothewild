@@ -96,10 +96,10 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
                             'approved' => function ($url, $model) {
-                                if ($model->status == Package::SEND_FOR_APPROVAL_STATUS) {
+                                if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::a(
                                         'Approve',
-                                        [Url::toRoute(['approved', 'uuid' => $model->uuid, 'version' => $model->version])],
+                                        [Url::toRoute(['approved', 'package_id' => $model->package_id, 'version' => $model->version])],
                                         [
                                             'data' => [
                                                 'confirm' => 'Are you sure you want to approve this package?',
@@ -112,11 +112,11 @@ $this->params['title'] = $this->title;
                                 }
                             },
                             'reject' => function ($url, $model) {
-                                if ($model->status == Package::SEND_FOR_APPROVAL_STATUS) {
+                                if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::button(
                                         'Reject',
                                         [
-                                            'value' => Url::toRoute(['reject', 'uuid' => $model->uuid, 'version' => $model->version]),
+                                            'value' => Url::toRoute(['reject', 'package_id' => $model->package_id, 'version' => $model->version]),
                                             'class' => 'btn btn-danger reasonpopup m-2',
                                             'title' => 'Reject'
                                         ]
