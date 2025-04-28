@@ -42,7 +42,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Posts',
+                'objective' => 'posts',
                 'collection' => Feeds::MODEL_POSTS,
             ],
             [
