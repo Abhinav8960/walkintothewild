@@ -44,21 +44,47 @@ class DefaultController extends Controller
     }
 
 
+    // public function actionStepApproved($id, $step)
+    // {
+    //     $model = $this->findModel($id);
+    //     if ($step == 1) {
+    //         $model->is_step_1_approved = 1;
+    //         $model->updated_time_step_1 = date('Y-m-d H:i:s');
+    //     } else if ($step == 2) {
+    //         $model->is_step_2_approved = 1;
+    //         $model->updated_time_step_2 = date('Y-m-d H:i:s');
+    //     } else if ($step == 3) {
+    //         $model->is_step_3_approved = 1;
+    //         $model->updated_time_step_3 = date('Y-m-d H:i:s');
+    //     } else if ($step == 4) {
+    //         $model->is_step_4_approved = 1;
+    //         $model->updated_time_step_4 = date('Y-m-d H:i:s');
+    //     }
+    //     if ($model->save(false)) {
+    //         \Yii::$app->session->setFlash('success', 'Approved Successfully');
+    //         return $this->redirect(['update', 'id' => $model->id]);
+    //     }
+    // }
+
     public function actionStepApproved($id, $step)
     {
         $model = $this->findModel($id);
         if ($step == 1) {
-            $model->is_step_1_approved = 1;
-            $model->updated_time_step_1 = date('Y-m-d H:i:s');
+            $model->form1_status = PartnerRegistration :: FORM_APPROVED;
+            $model->updated_time_form_1 = date('Y-m-d H:i:s');
         } else if ($step == 2) {
-            $model->is_step_2_approved = 1;
-            $model->updated_time_step_2 = date('Y-m-d H:i:s');
+            $model->form2_status = PartnerRegistration :: FORM_APPROVED;
+            $model->updated_time_form_2 = date('Y-m-d H:i:s');
         } else if ($step == 3) {
-            $model->is_step_3_approved = 1;
-            $model->updated_time_step_3 = date('Y-m-d H:i:s');
+            $model->form3_status = PartnerRegistration :: FORM_APPROVED;
+            $model->updated_time_form_3 = date('Y-m-d H:i:s');
         } else if ($step == 4) {
-            $model->is_step_4_approved = 1;
-            $model->updated_time_step_4 = date('Y-m-d H:i:s');
+            $model->form4_status = PartnerRegistration :: FORM_APPROVED;
+            $model->updated_time_form_4 = date('Y-m-d H:i:s');
+        }
+        else if ($step == 5) {
+            $model->form5_status = PartnerRegistration :: FORM_APPROVED;
+            $model->updated_time_form_5 = date('Y-m-d H:i:s');
         }
         if ($model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Approved Successfully');
@@ -70,35 +96,44 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         if ($step == 1) {
-            $model->is_step_1_approved = 2;
-            $model->is_step_1_submit = 0;
-            $model->updated_time_step_1 = date('Y-m-d H:i:s');
+            $model->form1_status = PartnerRegistration :: FORM_REJECTED;
+            // $model->is_step_1_submit = 0;
+            $model->updated_time_form_1 = date('Y-m-d H:i:s');
         } else if ($step == 2) {
-            $model->is_step_2_approved = 2;
-            $model->is_step_2_submit = 0;
-            $model->updated_time_step_2 = date('Y-m-d H:i:s');
+            $model->form2_status = PartnerRegistration :: FORM_REJECTED;
+            // $model->is_step_2_submit = 0;
+            $model->updated_time_form_2 = date('Y-m-d H:i:s');
         } else if ($step == 3) {
-            $model->is_step_3_approved = 2;
-            $model->is_step_3_submit = 0;
-            $model->updated_time_step_3 = date('Y-m-d H:i:s');
+            $model->form3_status = PartnerRegistration :: FORM_REJECTED;
+            // $model->is_step_3_submit = 0;
+            $model->updated_time_form_3 = date('Y-m-d H:i:s');
         } else if ($step == 4) {
-            $model->is_step_4_approved = 2;
-            $model->is_step_4_submit = 0;
-            $model->updated_time_step_4 = date('Y-m-d H:i:s');
+            $model->form4_status = PartnerRegistration :: FORM_REJECTED;
+            // $model->is_step_4_submit = 0;
+            $model->updated_time_form_4 = date('Y-m-d H:i:s');
+        }
+        else if ($step == 5) {
+            $model->form5_status = PartnerRegistration :: FORM_REJECTED;
+            // $model->is_step_4_submit = 0;
+            $model->updated_time_form_5 = date('Y-m-d H:i:s');
         }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $reason = $model->reason;
-                if ($model->validate()) {
+                // if ($model->validate()) {
+                if($reason){
                     if ($step == 1) {
-                        $model->step_1_reject_reason = $reason;
+                        $model->form1_reject_reason = $reason;
                     } else if ($step == 2) {
-                        $model->step_2_reject_reason = $reason;
+                        $model->form2_reject_reason = $reason;
                     } else if ($step == 3) {
-                        $model->step_3_reject_reason = $reason;
+                        $model->form3_reject_reason = $reason;
                     } else if ($step == 4) {
-                        $model->step_4_reject_reason = $reason;
+                        $model->form4_reject_reason = $reason;
+                    }
+                    else if ($step == 5) {
+                        $model->form5_reject_reason = $reason;
                     }
                     if ($model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Reject Successfully');
@@ -106,13 +141,62 @@ class DefaultController extends Controller
                     }
                 }
             }
-        } else {
+        }
+         else {
             $model->loadDefaultValues();
         }
         return $this->renderAjax('_reject_reason', [
             'model' => $model,
         ]);
     }
+
+    // public function actionStepReject($id, $step)
+    // {
+    //     $model = $this->findModel($id);
+    //     if ($step == 1) {
+    //         $model->is_step_1_approved = 2;
+    //         $model->is_step_1_submit = 0;
+    //         $model->updated_time_step_1 = date('Y-m-d H:i:s');
+    //     } else if ($step == 2) {
+    //         $model->is_step_2_approved = 2;
+    //         $model->is_step_2_submit = 0;
+    //         $model->updated_time_step_2 = date('Y-m-d H:i:s');
+    //     } else if ($step == 3) {
+    //         $model->is_step_3_approved = 2;
+    //         $model->is_step_3_submit = 0;
+    //         $model->updated_time_step_3 = date('Y-m-d H:i:s');
+    //     } else if ($step == 4) {
+    //         $model->is_step_4_approved = 2;
+    //         $model->is_step_4_submit = 0;
+    //         $model->updated_time_step_4 = date('Y-m-d H:i:s');
+    //     }
+
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             $reason = $model->reason;
+    //             if ($model->validate()) {
+    //                 if ($step == 1) {
+    //                     $model->step_1_reject_reason = $reason;
+    //                 } else if ($step == 2) {
+    //                     $model->step_2_reject_reason = $reason;
+    //                 } else if ($step == 3) {
+    //                     $model->step_3_reject_reason = $reason;
+    //                 } else if ($step == 4) {
+    //                     $model->step_4_reject_reason = $reason;
+    //                 }
+    //                 if ($model->save(false)) {
+    //                     \Yii::$app->session->setFlash('success', 'Reject Successfully');
+    //                     return $this->redirect(['update', 'id' => $model->id]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->loadDefaultValues();
+    //     }
+    //     return $this->renderAjax('_reject_reason', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     public function makeoperator($model)
     {
@@ -156,17 +240,16 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = OperatorRegistration::findOne(['id' => $id])) !== null) {
+        if (($model = PartnerRegistration::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     public function actionFinalApproved($id)
     {
         $model = $this->findModel($id);
-        if ($model->is_step_1_approved == 1 && $model->is_step_2_approved == 1 && $model->is_step_3_approved == 1 && $model->is_step_4_approved == 1) {
+        if (($model->final_approved != 1) && ($model->form1_status == PartnerRegistration :: FORM_APPROVED) && ($model->form2_status == PartnerRegistration :: FORM_APPROVED) && ($model->form3_status == PartnerRegistration :: FORM_APPROVED) && ($model->form4_status == PartnerRegistration :: FORM_APPROVED) &&( $model->form5_status == PartnerRegistration :: FORM_APPROVED)) {
             $model->final_approved = 1;
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {

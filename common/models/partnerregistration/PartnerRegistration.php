@@ -62,6 +62,7 @@ use yii\web\UploadedFile;
 class PartnerRegistration extends \yii\db\ActiveRecord
 {
 
+    public $reason;
 
     /**
      * {@inheritdoc}
@@ -76,7 +77,10 @@ class PartnerRegistration extends \yii\db\ActiveRecord
     const LLP = 3;
 
 
-
+    const FORM_EMPTY = 0;
+    const FORM_FILLED = 1;
+    const FORM_APPROVED = 2;
+    const FORM_REJECTED = 3;
 
     public function behaviors()
     {
@@ -142,11 +146,16 @@ class PartnerRegistration extends \yii\db\ActiveRecord
                 'aadhar_number',
                 'aadhar_front_upload',
                 'aadhar_back_upload',
+                'form1_reject_reason', 'form2_reject_reason', 'form3_reject_reason', 'form4_reject_reason', 'form5_reject_reason','updated_time_form_1', 'updated_time_form_2', 'updated_time_form_3', 'updated_time_form_4', 'updated_time_form_5', 'final', 'updated_time_final_approved', 'updated_time_final', 
             ], 'default', 'value' => null],
+            [['status'], 'default', 'value' => 0],
 
+            [['updated_time_form_1', 'updated_time_form_2', 'updated_time_form_3', 'updated_time_form_4', 'updated_time_form_5', 'final', 'updated_time_final_approved', 'updated_time_final'], 'safe'],
+            [['form1_reject_reason', 'form2_reject_reason', 'form3_reject_reason', 'form4_reject_reason','form5_reject_reason'], 'string', 'max' => 512],
+            [['reason'], 'safe'],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'default', 'value' => 0],
-            [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'final', 'final_approved', 'status'], 'integer'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
 
             [[
@@ -258,6 +267,22 @@ class PartnerRegistration extends \yii\db\ActiveRecord
             'form4_status' => 'Form4 Status',
             'form5_status' => 'Form5 Status',
             'is_sendforapproval'=>'Is Send For Approval',
+            'form1_reject_reason' => 'Form 1 Reject Reason',
+            'form2_reject_reason' => 'Form 2 Reject Reason',
+            'form3_reject_reason' => 'Form 3 Reject Reason',
+            'form4_reject_reason' => 'Form 4 Reject Reason',
+            'form5_reject_reason' => 'Form 5 Reject Reason',
+            'updated_time_form_1' => 'Updated Time Form 1',
+            'updated_time_form_2' => 'Updated Time Form 2',
+            'updated_time_form_3' => 'Updated Time Form 3',
+            'updated_time_form_4' => 'Updated Time Form 4',
+            'updated_time_form_5' => 'Updated Time Form 5',
+            'final' => 'Final',
+            'final_approved' => 'Final Approved',
+            'updated_time_final_approved' => 'Updated Time Final Approved',
+            'updated_time_final' => 'Updated Time Final',
+            'status' => 'Status',
+
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

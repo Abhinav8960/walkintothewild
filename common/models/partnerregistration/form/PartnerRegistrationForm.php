@@ -17,7 +17,6 @@ class PartnerRegistrationForm extends Model
     const SCENARIO_STEP4 = 'step4';
     const SCENARIO_STEP5 = 'step5';
 
-
     public $id;
     public $user_id;
 
@@ -71,6 +70,9 @@ class PartnerRegistrationForm extends Model
     public $form4_status;
     public $form5_status;
     public $is_sendforapproval;
+    public $status = 0;
+    public $final;
+    public $updated_time_final;
     public $partner_model;
 
     public function __construct(PartnerRegistration $partner_model = null)
@@ -112,7 +114,7 @@ class PartnerRegistrationForm extends Model
             $this->account_number = $this->partner_model->account_number;
             $this->ifsc_number = $this->partner_model->ifsc_number;
             $this->cancel_check_upload = $this->partner_model->cancel_check_upload;
-            
+
             $this->owner_name = $this->partner_model->owner_name;
             $this->kyc_phone = $this->partner_model->kyc_phone;
             $this->kyc_whatsapp = $this->partner_model->kyc_whatsapp;
@@ -130,7 +132,9 @@ class PartnerRegistrationForm extends Model
             $this->form4_status = $this->partner_model->form4_status;
             $this->form5_status = $this->partner_model->form5_status;
             $this->is_sendforapproval = $this->partner_model->is_sendforapproval;
-
+            $this->status = $this->partner_model->status;
+            $this->final = $this->partner_model->final;
+            $this->updated_time_final = $this->partner_model->updated_time_final;
         }
     }
 
@@ -140,38 +144,38 @@ class PartnerRegistrationForm extends Model
             self::SCENARIO_STEP1 => ['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'],
             self::SCENARIO_STEP2 => ['registration_number', 'registration_copy_upload', 'pan_number', 'pan_upload'],
             // self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'state', 'gst_number', 'gst_upload', 'billing_phone', 'billing_mail'],
-            self::SCENARIO_STEP3 => ['operated_park', 'about_business','billing_phone', 'billing_mail'],
-            self::SCENARIO_STEP4 => ['bank_name','account_holder_name','account_number','ifsc_number','cancel_check_upload'],
-            self::SCENARIO_STEP5 => ['owner_name','kyc_phone','kyc_whatsapp','kyc_email','kyc_pan','kyc_pan_upload','aadhar_number','aadhar_front_upload','aadhar_back_upload'],
+            self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'billing_phone', 'billing_mail'],
+            self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload'],
+            self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload', 'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'],
         ];
     }
 
     public function rules()
     {
         return [
-            [['legal_entity_name', 'legal_entity_type', 'brand_name','logo','legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
+            [['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
             [['logo'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP1],
 
-            [['registration_number', 'pan_number','registration_copy_upload', 'pan_upload'], 'required', 'on' => self::SCENARIO_STEP2],
+            [['registration_number', 'pan_number', 'registration_copy_upload', 'pan_upload'], 'required', 'on' => self::SCENARIO_STEP2],
             [['registration_copy_upload', 'pan_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
 
-            [['operated_park', 'about_business','billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
+            [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
             // [['gst_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP3],
 
 
-            [['bank_name','account_holder_name','account_number','ifsc_number','cancel_check_upload'], 'required', 'on' => self::SCENARIO_STEP4],
+            [['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload'], 'required', 'on' => self::SCENARIO_STEP4],
             [['cancel_check_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
 
 
-            [['owner_name','kyc_phone','kyc_whatsapp','kyc_email','kyc_pan','kyc_pan_upload','aadhar_number','aadhar_front_upload','aadhar_back_upload'], 'required', 'on' => self::SCENARIO_STEP5],
+            [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload', 'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'], 'required', 'on' => self::SCENARIO_STEP5],
             ['kyc_email', 'email', 'on' => self::SCENARIO_STEP5],
-            [['kyc_pan_upload','aadhar_front_upload','aadhar_back_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
+            [['kyc_pan_upload', 'aadhar_front_upload', 'aadhar_back_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
 
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status','is_sendforapproval'], 'default', 'value' => 0],
-            [['gst_id','user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status','is_sendforapproval'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
+            [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'safe'],
 
         ];
     }
@@ -201,7 +205,7 @@ class PartnerRegistrationForm extends Model
             //Business Details
             'operated_park' => 'Operated Park',
             'about_business' => 'About Business',
-            'gst_id'=>'GST Id',
+            'gst_id' => 'GST Id',
             // 'gst_upload' => 'GST Upload',
             // 'state' => 'State',
             // 'gst_number' => 'GST Number',
@@ -214,18 +218,18 @@ class PartnerRegistrationForm extends Model
             'account_number' => 'Account Number',
             'ifsc_number' => 'IFSC',
             'cancel_check_upload' => 'Cancel Check Upload',
-            
-            
-              //User KYC 
-              'owner_name' => 'Owner Name',
-              'kyc_phone' => 'Phone Number',
-              'kyc_whatsapp' => 'Whatsapp Number',
-              'kyc_email' => 'Email',
-              'kyc_pan' => 'PAN Number',
-              'kyc_pan_upload' => 'Pan Upload',
-              'aadhar_number' => 'Aadhar',
-              'aadhar_front_upload' => 'Aadhar Front Upload',
-              'aadhar_back_upload' => 'Aadhar Back Upload',
+
+
+            //User KYC 
+            'owner_name' => 'Owner Name',
+            'kyc_phone' => 'Phone Number',
+            'kyc_whatsapp' => 'Whatsapp Number',
+            'kyc_email' => 'Email',
+            'kyc_pan' => 'PAN Number',
+            'kyc_pan_upload' => 'Pan Upload',
+            'aadhar_number' => 'Aadhar',
+            'aadhar_front_upload' => 'Aadhar Front Upload',
+            'aadhar_back_upload' => 'Aadhar Back Upload',
         ];
     }
 
@@ -279,7 +283,9 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->form4_status = $this->form4_status;
         $this->partner_model->form5_status = $this->form5_status;
         $this->partner_model->is_sendforapproval = $this->is_sendforapproval;
-
+        $this->operator_model->status = $this->status;
+        $this->operator_model->final = $this->final;
+        $this->operator_model->updated_time_final = $this->updated_time_final;
     }
 
 
@@ -325,5 +331,4 @@ class PartnerRegistrationForm extends Model
             Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
         }
     }
-    
 }
