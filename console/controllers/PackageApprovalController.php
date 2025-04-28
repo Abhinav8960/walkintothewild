@@ -37,7 +37,7 @@ class PackageApprovalController extends Controller
 
     public function actionMakeOldLive()
     {
-        $packages = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS])->all();
+        $packages = Package::find()->where(['status' => Package::STATUS_ACTIVE])->all();
         foreach ($packages as $package) {
             $ps =  Package::find()->where(['uuid' => $package->uuid])->one();
             $ps->live_version = $package->version;
@@ -112,7 +112,7 @@ class PackageApprovalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -192,9 +192,9 @@ class PackageApprovalController extends Controller
     protected function isPackageEditable()
     {
         $id = Yii::$app->request->get('id');
-        $model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]]);
+        $model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
         if ($model) {
-            return $model->status == Package::EDIATBLE_STATUS;
+            return $model->status == Package::STATUS_ACTIVE;
         } else {
             return false;
         }

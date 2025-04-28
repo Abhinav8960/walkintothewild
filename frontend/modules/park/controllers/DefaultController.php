@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
@@ -448,7 +448,7 @@ class DefaultController extends FrontendBaseController
         }
 
         $park_id = $model->id;
-        $query = Package::find()->where(['package.status' => Package::APPROVED_AND_LIVE_STATUS]);
+        $query = Package::find()->where(['package.status' => Package::STATUS_ACTIVE]);
         $query->joinwith(['packagepark' => function ($query) use ($park_id) {
             $query->andWhere(['park_id' => $park_id, 'package_safari_park.status' => 1]);
         }]);
