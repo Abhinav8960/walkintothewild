@@ -106,7 +106,6 @@ class DefaultController extends Controller
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
-
                     $model->initializeForm();
                     if ($model->package_version_model->save()) {
                         $model->uploadFile();
@@ -114,10 +113,12 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
+
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_version_model->id;
+                                $packagefeature->package_id = $model->package_version_model->package_id;
+                                $packagefeature->version = $model->package_version_model->version;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -126,11 +127,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_version_model->id;
-                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->package_id;
+                                $packagesafaripark->version = $model->package_version_model->version;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -188,10 +189,11 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_version_model->id;
+                                $packagefeature->package_id = $model->package_version_model->package_id;
+                                $packagefeature->version = $model->package_version_model->version;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
                             }
@@ -201,11 +203,11 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_version_model->id;
-                                $packagesafaripark->package_uuid = $model->package_version_model->uuid;
+                                $packagesafaripark->package_id = $model->package_version_model->package_id;
+                                $packagesafaripark->version = $model->package_version_model->version;
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
@@ -228,13 +230,15 @@ class DefaultController extends Controller
 
     public function actionItinerary($id, $day = 1)
     {
-        $package_day_model = $this->findModelDay($id, $day);
         $package_version_model = $this->findModel($id);
+        
+        $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
-            $model->package_id = $id;
+            $model->package_id = $package_version_model->package_id;
+            $model->version = $package_version_model->version;
             $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
@@ -244,6 +248,7 @@ class DefaultController extends Controller
                 $model->day_image = UploadedFile::getInstance($model, 'day_image');
                 if ($model->validate()) {
                     $model->initializeForm();
+                   
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -275,11 +280,12 @@ class DefaultController extends Controller
                     try {
                         if ($model->package_version_model->save(false)) {
                             foreach ($model->package_included as $optionId => $selection) {
-                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
+                                $packageIncluded = PackageIncluded::find()->andWhere(['include_id' => $optionId, 'package_id' => $package_version_model->package_id, 'version' => $package_version_model->version])->one();
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_version_model->id;
+                                    $packageIncluded->package_id = $package_version_model->package_id;
+                                    $packageIncluded->version = $package_version_model->version;
                                 }
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
@@ -287,7 +293,7 @@ class DefaultController extends Controller
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => 1])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version, 'status' => 1])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -383,7 +389,8 @@ class DefaultController extends Controller
     {
         $package_version_model = $this->findModel($id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_version_model->id;
+        $searchModel->package_id = $package_version_model->package_id;
+        $searchModel->version = $package_version_model->version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
@@ -398,7 +405,8 @@ class DefaultController extends Controller
     {
         $package_version_model = $this->findModel($id);
         $model = new PackageFaqForm();
-        $model->package_id = $package_version_model->id;
+        $model->package_id = $package_version_model->package_id;
+        $model->version = $package_version_model->version;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -442,7 +450,8 @@ class DefaultController extends Controller
         $package_version_model = $this->findModel($id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_version_model->id;
+        $model->package_id = $package_version_model->package_id;
+        $model->version = $package_version_model->version;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -484,7 +493,8 @@ class DefaultController extends Controller
         $model = $this->findModel($id);
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $model->id;
+        $searchModel->package_id = $model->package_id;
+        $searchModel->version = $model->version;
         $searchModel->status = PackageFaq::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
@@ -511,9 +521,9 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function findModelDay($id, $day)
+    protected function findModelDay($id, $version, $day)
     {
-        if (($model = PackageDay::findOne(['package_id' => $id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageDay::find()->andWhere(['package_id' => $id, 'version' => $version, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])->one()) !== null) {
             return $model;
         }
     }

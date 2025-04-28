@@ -8,6 +8,7 @@ use common\models\package\PackageFaq;
 class PackageFaqForm extends \yii\base\Model
 {
     public $package_id;
+    public $version;
     public $question;
     public $answer;
     public $position;
@@ -28,6 +29,7 @@ class PackageFaqForm extends \yii\base\Model
         if ($package_faq_model != null) {
             $this->package_faq_model = $package_faq_model;
             $this->package_id = $this->package_faq_model->package_id;
+            $this->version = $this->package_faq_model->version;
             $this->question = $this->package_faq_model->question;
             $this->answer = $this->package_faq_model->answer;
             $this->position = $this->package_faq_model->position;
@@ -42,7 +44,7 @@ class PackageFaqForm extends \yii\base\Model
             [['package_id', 'position', 'status'], 'integer'],
             [['answer'], 'string'],
             [['position'], 'default', 'value' => 0],
-            [['question'], 'string', 'max' => 512],
+            [['question','version'], 'string', 'max' => 512],
         ];
     }
 
@@ -69,6 +71,7 @@ class PackageFaqForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->package_faq_model->package_id = $this->package_id;
+        $this->package_faq_model->version = $this->version;
         $this->package_faq_model->question = $this->question;
         $this->package_faq_model->answer = $this->answer;
         $this->package_faq_model->position = $this->position;

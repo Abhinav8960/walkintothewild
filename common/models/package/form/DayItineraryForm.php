@@ -14,6 +14,7 @@ class DayItineraryForm  extends \yii\base\Model
 
 {
     public $package_id;
+    public $version;
     public $no_of_day;
     public $day;
     public $day_title;
@@ -45,6 +46,7 @@ class DayItineraryForm  extends \yii\base\Model
         if ($package_day_model != null) {
             $this->package_day_model = $package_day_model;
             $this->package_id = $this->package_day_model->package_id;
+            $this->version = $this->package_day_model->version;
             $this->day = $this->package_day_model->day;
             $this->day_title = $this->package_day_model->day_title;
             $this->meal_breakfast = $this->package_day_model->meal_breakfast;
@@ -67,7 +69,7 @@ class DayItineraryForm  extends \yii\base\Model
     public function rules()
     {
         return [
-            [['package_id', 'day', 'day_title'], 'required'],
+            [['package_id', 'version', 'day', 'day_title'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
@@ -107,10 +109,11 @@ class DayItineraryForm  extends \yii\base\Model
     public function initializeForm()
     {
         $this->package_day_model->package_id = $this->package_id;
+        $this->package_day_model->version = $this->version;
         $this->package_day_model->day = $this->day;
         $this->package_day_model->day_title = $this->day_title;
         if ($this->package_id) {
-            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'include_id' => 2, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'version' => $this->version, 'include_id' => 2, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
             if ($package_includes) {
                 $this->package_day_model->meal_breakfast = 1;
                 $this->package_day_model->meal_lunch = 1;

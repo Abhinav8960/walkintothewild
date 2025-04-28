@@ -2,6 +2,7 @@
 
 namespace common\models\package\form;
 
+use common\models\package\Package;
 use Yii;
 use common\models\package\PackageVersion;
 use common\models\package\PackageFeature;
@@ -11,7 +12,7 @@ use common\models\package\PackageSafariPark;
 class PackageVersionForm extends \yii\base\Model
 {
     public $owned_by_id;
-    public $uuid;
+    public $package_id;
     public $version;
     public $package_name;
     // public $package_slug;
@@ -91,6 +92,7 @@ class PackageVersionForm extends \yii\base\Model
         if ($package_version_model != null) {
             $this->package_version_model = $package_version_model;
             $this->owned_by_id = $this->package_version_model->owned_by_id;
+            $this->package_id = $this->package_version_model->package_id;
             $this->version = $this->package_version_model->version;
             $this->package_name = $this->package_version_model->package_name;
             $this->package_image = $this->package_version_model->package_image;
@@ -133,9 +135,9 @@ class PackageVersionForm extends \yii\base\Model
 
             $this->status = $this->package_version_model->status;
 
-            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->id, 'status' => PackageFeature::STATUS_ACTIVE])->column();
-            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->id, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
-            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->id, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
+            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
+            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
+            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
         }
     }
 
@@ -159,7 +161,7 @@ class PackageVersionForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id',  'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'package_id', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
 
@@ -309,8 +311,21 @@ class PackageVersionForm extends \yii\base\Model
      *
      * @return void
      */
+    private function getPackageId()
+    {
+        $m = new Package();
+        $m->package_name = $this->package_name;
+        $m->owned_by_id = $this->owned_by_id;
+        $m->status = 0;
+        $m->save(false);
+        return $m->id;
+    }
     public function initializeForm()
     {
+        if ($this->package_id == null) {
+            $this->package_id = $this->getPackageId();
+        }
+        $this->package_version_model->package_id = $this->package_id;
         $this->package_version_model->version = $this->version;
         $this->package_version_model->owned_by_id = $this->owned_by_id;
         $this->package_version_model->package_name = $this->package_name;
