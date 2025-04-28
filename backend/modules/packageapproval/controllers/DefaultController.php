@@ -86,20 +86,58 @@ class DefaultController extends Controller
             if (!empty($package->live_version)) {
                 $this->terminatePackage($package_id, $package->live_version);
             }
-            $package->live_version = $version;
+            $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+
+            $package->package_name = $model->package_name;
+            $package->owned_by_id = $model->owned_by_id;
+            $package->package_agenda_id = $model->package_agenda_id;
+            $package->no_of_day = $model->no_of_day;
+            $package->no_of_night = $model->no_of_night;
+            $package->safari_type = $model->safari_type;
+            $package->no_of_safari = $model->no_of_safari;
+            $package->start_location = $model->start_location;
+            $package->end_location = $model->end_location;
+            $package->start_date = $model->start_date;
+            $package->end_date = $model->end_date;
+            $package->package_image = $model->package_image;
+            $package->package_banner_image = $model->package_banner_image;
+            $package->stay_category_id = $model->stay_category_id;
+            $package->cost_per_person = $model->cost_per_person;
+            $package->type = $model->type;
+            $package->gst_percentage = $model->gst_percentage;
+            $package->total_price = $model->total_price;
+            $package->package_description = $model->package_description;
+            $package->package_itinerary_overview = $model->package_itinerary_overview;
+            $package->package_inclusion = $model->package_inclusion;
+            $package->package_exclusion = $model->package_exclusion;
+            $package->package_terms_condtition = $model->package_terms_condtition;
+            $package->privacy_policy = $model->privacy_policy;
+            $package->change_policy = $model->change_policy;
+            $package->what_you_must_carry = $model->what_you_must_carry;
+            $package->date_change_policy = $model->date_change_policy;
+            $package->refund_policy = $model->refund_policy;
+            $package->getting_there = $model->getting_there;
+            $package->master_vehicle_id = $model->master_vehicle_id;
+            $package->cancellation_reason = $model->cancellation_reason;
+            $package->breakfast_included = $model->breakfast_included;
+            $package->lunch_included = $model->lunch_included;
+            $package->dinner_included = $model->dinner_included;
+            $package->meal_not_included = $model->meal_not_included;
+            $package->popular_package = $model->popular_package;
+            $package->refund_policy = $model->refund_policy;
             $package->pending_for_approval_version = null;
+            $package->live_version = $version;
             $package->save(false);
 
-            $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
             $model->save(false);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
-            // echo "<pre>";
-            // print_r($e->getMessage());
-            // die();
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
             Yii::$app->session->setFlash('error', 'Failed to approve package.');
             return $this->redirect(Yii::$app->request->referrer);
         }
