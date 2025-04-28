@@ -62,7 +62,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'ShareSafari',
+                'objective' => 'share_safari',
                 'collection' => Feeds::MODEL_SHARESFARI,
             ],
 

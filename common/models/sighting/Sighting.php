@@ -30,7 +30,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Sighting',
+                'objective' => 'sighting',
                 'collection' => Feeds::MODEL_SIGHTING,
             ],
             [
