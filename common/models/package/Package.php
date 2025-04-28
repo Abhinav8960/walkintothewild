@@ -53,7 +53,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return [
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Package',
+                'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
             ],         
             [

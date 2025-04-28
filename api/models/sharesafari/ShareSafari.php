@@ -138,7 +138,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getHave_you_joined()
     {
-        return $this->getIntrested()->where(['user_id' => \Yii::$app->params['active_user_id']])->joinWith('user')->andWhere(['user.status' => 10])->exists();
+        return $this->getIntrested()->andWhere(['share_safari_intrested.user_id' => \Yii::$app->params['active_user_id']])->joinWith('user')->andWhere(['user.status' => 10])->exists();
     }
 
     public function getIntrestedUser()

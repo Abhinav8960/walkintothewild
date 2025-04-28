@@ -58,8 +58,8 @@ use common\models\GeneralModel;
 
 <div class="row">
     <div class="col-12">
-        <div class="wrapper-skybgsafri pb-0 mb-2" style="height:250px;background-color:rgb(197, 182, 182) !important;">
-            <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+        <div class="mb-2">
+            <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100 banner_image">
         </div>
     </div>
 </div>
@@ -214,3 +214,11 @@ use common\models\GeneralModel;
         </div>
     </div>
 </div>
+
+
+<style>
+.banner_image{
+    height: 220px !important;
+    object-fit: cover !important;
+}
+</style>

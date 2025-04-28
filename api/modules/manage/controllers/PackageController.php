@@ -17,6 +17,7 @@ use api\models\package\PackageGallery;
 use api\models\package\PackageGallerySearch;
 use api\models\package\PackageIncluded;
 use api\models\package\PackageSafariPark;
+use api\models\package\PackageVersion;
 use yii\web\NotFoundHttpException;
 use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
@@ -54,7 +55,8 @@ class PackageController extends RestController
                     'create-faq',
                     'update-faq',
                     'faqs',
-                    'gallery'
+                    'gallery',
+                    'send-for-approval',
                 ],
                 'rules' => [
                     [
@@ -68,8 +70,8 @@ class PackageController extends RestController
                             'create-faq',
                             'update-faq',
                             'faqs',
-                            'gallery'
-
+                            'gallery',
+                            'send-for-approval',
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -89,6 +91,7 @@ class PackageController extends RestController
                     'update-faq' => ['POST'],
                     'faqs' => ['GET'],
                     'gallery' => ['GET'],
+                    'send-for-approval' => ['POST'],
                 ],
             ],
         ];
@@ -102,7 +105,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $model = new PackageVersionForm();
-        $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
+        $model->status = PackageVersion::EDIATBLE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -115,25 +118,29 @@ class PackageController extends RestController
             if ($model->package_version_model->save()) {
                 $model->uploadFile();
 
-                $package_feature = explode(",", (string)$model->package_feature);
+                $this->updatePackageStatus($model->package_id, $model->version, PackageVersion::EDIATBLE_STATUS);
+
+                $package_feature = $model->package_feature;
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
                     foreach ($package_feature as $feature) {
+
                         $packagefeature = new PackageFeature();
-                        $packagefeature->package_id = $model->package_version_model->id;
+                        $packagefeature->package_id = $model->package_version_model->package_id;
+                        $packagefeature->version = $model->package_version_model->version;
                         $packagefeature->feature_id = $feature;
                         $packagefeature->save(false);
                     }
                 }
 
 
-                $package_park = explode(",", (string)$model->package_park);
+                $package_park = $model->package_park;
                 if ($package_park) {
-                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
+                    PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                     foreach ($package_park as $park) {
                         $packagesafaripark = new PackageSafariPark();
-                        $packagesafaripark->package_id = $model->package_version_model->id;
-                        $packagesafaripark->package_uuid = $model->package_version_model->uuid;
+                        $packagesafaripark->package_id = $model->package_version_model->package_id;
+                        $packagesafaripark->version = $model->package_version_model->version;
                         $packagesafaripark->park_id = $park;
                         $packagesafaripark->save(false);
                     }
@@ -167,7 +174,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
@@ -183,10 +191,12 @@ class PackageController extends RestController
 
                 $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+
                     foreach ($package_feature as $feature) {
                         $packagefeature = new PackageFeature();
-                        $packagefeature->package_id = $model->package_version_model->id;
+                        $packagefeature->package_id = $model->package_version_model->package_id;
+                        $packagefeature->version = $model->package_version_model->version;
                         $packagefeature->feature_id = $feature;
                         $packagefeature->save(false);
                     }
@@ -196,11 +206,12 @@ class PackageController extends RestController
 
                 $package_park = explode(",", (string)$model->package_park);
                 if ($package_park) {
-                    PackageSafariPark::deleteAll(['package_uuid' => $model->package_version_model->uuid]);
+                    PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
+
                     foreach ($package_park as $park) {
                         $packagesafaripark = new PackageSafariPark();
-                        $packagesafaripark->package_id = $model->package_version_model->id;
-                        $packagesafaripark->package_uuid = $model->package_version_model->uuid;
+                        $packagesafaripark->package_id = $model->package_version_model->package_id;
+                        $packagesafaripark->version = $model->package_version_model->version;
                         $packagesafaripark->park_id = $park;
                         $packagesafaripark->save(false);
                     }
@@ -222,7 +233,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
@@ -248,7 +260,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
@@ -274,7 +287,8 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
@@ -286,7 +300,8 @@ class PackageController extends RestController
             try {
                 if ($model->package_version_model->save(false)) {
                     foreach (json_decode($model->package_included, true) as $optionId => $selection) {
-                        $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_version_model->id]);
+                        $packageIncluded = PackageIncluded::find()->andWhere(['include_id' => $optionId, 'package_id' => $package_version_model->package_id, 'version' => $package_version_model->version])->one();
+
                         if (!$packageIncluded) {
                             $packageIncluded = new PackageIncluded();
                             $packageIncluded->include_id = $optionId;
@@ -298,7 +313,8 @@ class PackageController extends RestController
                         }
 
                         if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                            $package_days = PackageDay::find()->where(['package_id' => $package_version_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
+                            $package_days = PackageDay::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version, 'status' => 1])->all();
+
                             if ($package_days) {
                                 foreach ($package_days as $package_day) {
                                     $package_day->meal_breakfast = 1;
@@ -331,13 +347,15 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
-        $package_day_model = $this->findModelDay($package_version_model->id, $day);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
-            $model->package_id = $package_version_model->id;
+            $model->package_id = $package_version_model->package_id;
+            $model->version = $package_version_model->version;
             $model->no_of_day = $package_version_model->no_of_day;
             $model->day = $day;
         }
@@ -361,12 +379,13 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_version_model->id;
+        $searchModel->package_id = $package_version_model->package_id;
+        $searchModel->version = $package_version_model->version;
         return $this->dataProviderSender($searchModel, $rootIndexName = "faqs");
     }
 
@@ -382,9 +401,11 @@ class PackageController extends RestController
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageFaqForm();
-        $model->package_id =  $package_version_model->id;
+        $model->package_id =  $package_version_model->package_id;
+        $model->version =  $package_version_model->version;
         $model->status = PackageFaq::STATUS_ACTIVE;
 
         $model->attributes = $this->request;
@@ -419,10 +440,12 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
 
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_version_model->id;
+        $model->package_id = $package_version_model->package_id;
+        $model->version = $package_version_model->version;
 
         $model->attributes = $this->request;
 
@@ -449,50 +472,81 @@ class PackageController extends RestController
     }
 
 
-    public function actionGallery($slug)
+    public function actionSendForApproval($slug)
     {
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
-        $searchModel = new PackageGallerySearch();
-        $searchModel->package_id = $package_version_model->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "gallery");
+
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $package_version_model->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
+            $package_version_model->save(false);
+            $this->updatePackageStatus($package_version_model->package_id, $package_version_model->version, $package_version_model->status);
+            $this->copyPackageNow($package_version_model->id);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while sending for approval"]);
+        }
+        $transaction->commit();
+
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package sent for approval successfully"]);
     }
 
-    public function actionCreateGallery($slug, $id = null)
-    {
-        $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id == 2) {
 
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
-        }
-        $package_version_model = $this->findModel($slug, $safari_operator->id);
-        if ($id) {
-            $package_gallery_model = $this->findModelgallery($id);
-            $model = new PackageGalleryForm($package_gallery_model);
-        } else {
-            $model = new PackageGalleryForm();
-            $model->package_id =  $package_version_model->id;
-        }
 
-        $model->attributes = $this->request;
 
-        $model->image = UploadedFile::getInstanceByName('image');
-        if ($model->validate()) {
-            $model->initializeForm();
-            if ($model->package_gallery_model->save(false)) {
-                $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery updated successfully"]);
-            }
+    // public function actionGallery($slug)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     if ($safari_operator->category_id == 2) {
 
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery not updated successfully"]);
-        }
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+    //     }
+    //     $package_version_model = $this->findModel($slug, $safari_operator->id);
+    //     $searchModel = new PackageGallerySearch();
+    //     $searchModel->package_id = $package_version_model->id;
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = "gallery");
+    // }
 
-        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-    }
+    // public function actionCreateGallery($slug, $id = null)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     if ($safari_operator->category_id == 2) {
+
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+    //     }
+    //     $package_version_model = $this->findModel($slug, $safari_operator->id);
+    //     if ($id) {
+    //         $package_gallery_model = $this->findModelgallery($id);
+    //         $model = new PackageGalleryForm($package_gallery_model);
+    //     } else {
+    //         $model = new PackageGalleryForm();
+    //         $model->package_id =  $package_version_model->id;
+    //     }
+
+    //     $model->attributes = $this->request;
+
+    //     $model->image = UploadedFile::getInstanceByName('image');
+    //     if ($model->validate()) {
+    //         $model->initializeForm();
+    //         if ($model->package_gallery_model->save(false)) {
+    //             $model->uploadFile();
+    //             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery updated successfully"]);
+    //         }
+
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery not updated successfully"]);
+    //     }
+
+    //     return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    // }
 
     /**
      * Finds the Package model based on its primary key value.
@@ -510,6 +564,15 @@ class PackageController extends RestController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    protected function findPackageVersionModel($package_id, $version)
+    {
+        if (($model = Package::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     protected function findModelfaq($id)
     {
         if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
@@ -520,9 +583,9 @@ class PackageController extends RestController
     }
 
 
-    protected function findModelDay($package_id, $day)
+    protected function findModelDay($package_id, $version, $day)
     {
-        if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageDay::findOne(['package_id' => $package_id, 'version' => $version, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
     }
@@ -535,5 +598,235 @@ class PackageController extends RestController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function copyPackageNow($id, $isNewRecord = false)
+    {
+        $model = PackageVersion::findOne($id);
+
+        if ($model) {
+            $newModel = new PackageVersion();
+            $newModel->attributes = $model->attributes;
+            $this->version = $newModel->version = 'v' . (intval(substr($model->version, 1)) + 1);
+
+            if ($isNewRecord) {
+                $newModel->package_id = $this->newpackage($model);
+                $this->version =  $newModel->version = 'v1';
+            }
+            $newModel->id = null; // Set the ID to null for the new record
+            $newModel->status = PackageVersion::EDIATBLE_STATUS;
+            $newModel->save(false);
+            $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
+            $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
+            $this->CopyPackageDay($model->package_id, $model->version, $newModel->package_id);
+            $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);;
+            $this->CopyPackageFeature($model->package_id, $model->version, $newModel->package_id);
+            $this->CopyPackageSafariPark($model->package_id, $model->version, $newModel->package_id);
+            $this->CopyPackageFaq($model->package_id, $model->version, $newModel->package_id);
+            $this->updatePackageStatus($newModel->package_id, $newModel->version, PackageVersion::EDIATBLE_STATUS);
+
+            return $newModel;
+        }
+        return true;
+    }
+
+    private function CopyPackageComment($old_package_id, $old_version, $new_package_id)
+    {
+        // package_comment_approval;
+
+        $model = PackageComment::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $comment) {
+                $newModel = new PackageComment();
+                $newModel->attributes = $comment->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
+    {
+        // package_comment_report_approval;
+
+        $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $comment) {
+                $newModel = new PackageCommentReport();
+                $newModel->attributes = $comment->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageDay($old_package_id, $old_version, $new_package_id)
+    {
+        // package_day_approval;
+
+        $model = PackageDay::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $day) {
+                $newModel = new PackageDay();
+                $newModel->attributes = $day->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageIncluded($old_package_id, $old_version, $new_package_id)
+    {
+        // package_included_approval;         
+        $model = PackageIncluded::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $included) {
+                $newModel = new PackageIncluded();
+                $newModel->attributes = $included->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+    private function CopyPackageFeature($old_package_id, $old_version, $new_package_id)
+    {
+        // package_feature_approval;      
+
+        $model = PackageFeature::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $feature) {
+                $newModel = new PackageFeature();
+                $newModel->attributes = $feature->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageSafariPark($old_package_id, $old_version, $new_package_id)
+    {
+        // package_safari_park_approval; 
+        $model = PackageSafariPark::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $safari) {
+                $newModel = new PackageSafariPark();
+                $newModel->attributes = $safari->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+                $newModel->save(false);
+            }
+        }
+
+        return true;
+    }
+
+    private function CopyPackageFaq($old_package_id, $old_version, $new_package_id)
+    {        // package_faq_approval;
+        $model = PackageFaq::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+        if ($model) {
+            foreach ($model as $faq) {
+                $newModel = new PackageFaq();
+                $newModel->attributes = $faq->attributes;
+                $newModel->id = null; // Set the ID to null for the new record
+                $newModel->package_id = $new_package_id;
+                $newModel->version = $this->version;
+
+                $newModel->save(false);
+            }
+        }
+
+        return true;;
+    }
+
+
+
+    private function updatePackageStatus($package_id, $version, $status)
+    {
+        $model = Package::find()->where(['id' => $package_id])->one();
+        $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+
+        if (empty($model)) {
+            $model = new Package();
+            $model->package_name = $packageversion->package_name;
+        }
+        if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+            $model->pending_for_approval_version = $version;
+            // $model->editable_version = NULL;
+        }
+        if ($status == PackageVersion::EDIATBLE_STATUS) {
+
+            $model->editable_version = $version;
+        }
+        if ($model->save(false)) {
+            $this->terminatePackage($package_id);
+            return true;
+        }
+        return false;
+    }
+
+    private function terminatePackage($package_id)
+    {
+        $model = Package::find()->where(['id' => $package_id])->one();
+        $packageversion = PackageVersion::find()->where(['package_id' => $package_id])->all();
+
+        foreach ($packageversion as $version) {
+            if ($version->version == $model->live_version) {
+                $version->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
+            } elseif ($version->version == $model->pending_for_approval_version) {
+                $version->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
+            } elseif ($version->version ==  $model->editable_version) {
+                $version->status = PackageVersion::EDIATBLE_STATUS;
+            } else {
+                $version->status = PackageVersion::TERMINATED_STATUS;
+            }
+            $version->save(false);
+        }
+
+        return true;
+    }
+
+
+
+
+    private function newpackage($model)
+    {
+        $newModel = new Package();
+        $newModel->package_name = $model->package_name;
+        // $newModel->package_agenda_id = $model->package_agenda_id;
+        // $newModel->no_of_day = $model->no_of_day;
+        // $newModel->no_of_night = $model->no_of_night;
+        // $newModel->safari_type = $model->safari_type;
+        // $newModel->safari_type = $model->safari_type;
+        $newModel->editable_version = 'v1';
+        $newModel->id = null; // Set the ID to null for the new record
+        $newModel->status = Package::STATUS_SUSPEND;
+        $newModel->save(false);
+        return $newModel->id;
     }
 }
