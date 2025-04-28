@@ -7,23 +7,19 @@ $readOnly = false;
 ?>
 
     <?php $form = ActiveForm::begin([
-        'options' => ['id' => 'bank-details', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
+        'options' => ['id' => 'bank-details',  'enctype' => 'multipart/form-data']
     ]); ?>
 
     <div class="row">
         <div class="col-md-3">
-            <?= $form->field($model, 'bank_name', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'bank_name')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Bank Name',
                 'readonly' => $readOnly,
             ]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'account_holder_name', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'account_holder_name')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Account Holder`s Name',
                 'readonly' => $readOnly,
@@ -31,18 +27,14 @@ $readOnly = false;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'account_number', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'account_number')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Account Number',
                 'readonly' => $readOnly,
             ]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'ifsc_number', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'ifsc_number')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter IFSC',
                 'readonly' => $readOnly,
@@ -50,9 +42,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'cancel_check_upload', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->fileInput([
+            <?= $form->field($model, 'cancel_check_upload')->fileInput([
                 'class' => 'form-control',
                 'disabled' => $readOnly,
             ]) ?>

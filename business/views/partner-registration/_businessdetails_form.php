@@ -11,13 +11,11 @@ $readOnly = false;
 
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'business-details','enctype' => 'multipart/form-data']
+    'options' => ['id' => 'business-details', 'enctype' => 'multipart/form-data']
 ]); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= $form->field($model, 'operated_park', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->dropDownList(
+        <?= $form->field($model, 'operated_park')->dropDownList(
             GeneralModel::safariparklist(),
             [
                 'prompt' => 'Select Park',
@@ -28,9 +26,7 @@ $readOnly = false;
     </div>
 
     <div class="col-md-12">
-        <?= $form->field($model, 'about_business', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textarea([
+        <?= $form->field($model, 'about_business')->textarea([
             'class' => 'form-control',
             'rows' => 3,
             'placeholder' => 'Enter About Your Business',
@@ -40,9 +36,7 @@ $readOnly = false;
     <hr>
     <h5>GST</h5>
     <div class="col-md-4">
-        <?= $form->field($gst_model, 'state', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->dropDownList(
+        <?= $form->field($gst_model, 'state')->dropDownList(
             GeneralModel::stateoption(),
             [
                 'prompt' => 'Select State',
@@ -53,9 +47,7 @@ $readOnly = false;
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($gst_model, 'gst_number', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
+        <?= $form->field($gst_model, 'gst_number')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter GST Number',
             'readonly' => $readOnly,
@@ -63,18 +55,14 @@ $readOnly = false;
     </div>
 
     <div class="col-md-4">
-        <?= $form->field($gst_model, 'filepath', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->fileInput([
+        <?= $form->field($gst_model, 'filepath')->fileInput([
             'class' => 'form-control',
             'disabled' => $readOnly,
         ]) ?>
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'billing_phone', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
+        <?= $form->field($model, 'billing_phone')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Billing Phone',
             'readonly' => $readOnly,
@@ -82,9 +70,7 @@ $readOnly = false;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'billing_mail', [
-            'template' => '<label class="form-label">{label}</label>{input}{error}',
-        ])->textInput([
+        <?= $form->field($model, 'billing_mail')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Billing Mail',
             'readonly' => $readOnly,
