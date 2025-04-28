@@ -167,7 +167,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -244,18 +244,18 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andwhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->uuid, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
-                $wishlist->item_id = $package->uuid;
+                $wishlist->item_id = $package->id;
                 $wishlist->item_type_id = UserWishlist::SAFARI_PACKAGE;
                 $wishlist->item_type = 'package';
                 $wishlist->status = 1;
@@ -274,7 +274,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->findBySlug($slug)->limit(1)->one();
+        $package = Package::find()->andwhere(['package_slug'=>$slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -300,7 +300,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionEnquiry($slug)
     {
-        $package = Package::find()->findBySlug($slug)->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }
@@ -342,7 +342,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionFlag($slug, $package_comment_id)
     {
-        $package = Package::find()->findBySlug($slug)->one();
+        $package = Package::find()->andwhere(['package_slug'=>$slug])->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }

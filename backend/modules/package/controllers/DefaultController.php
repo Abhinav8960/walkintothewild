@@ -4,6 +4,7 @@ namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageVersionForm;
+use common\models\package\Package;
 use common\models\package\PackageVersion;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
@@ -193,7 +194,7 @@ class DefaultController extends Controller
     public function actionSuspend($id)
     {
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
-        $model->status = Package::NOT_APPROVED_STATUS;
+        $model->status = Package::STATUS_ACTIVE;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -207,7 +208,7 @@ class DefaultController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -32,7 +32,6 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageVersionSearch();
-        // $searchModel->status = [Package::APPROVED_AND_LIVE_STATUS,Package::SEND_FOR_status];
         $searchModel->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 

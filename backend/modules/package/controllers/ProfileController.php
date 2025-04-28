@@ -9,6 +9,7 @@ use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageVersionForm;
 use common\models\package\form\PackageGalleryForm;
+use common\models\package\Package;
 use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
 use common\models\package\PackageEnquiry;
@@ -514,7 +515,7 @@ class ProfileController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -523,7 +524,7 @@ class ProfileController extends Controller
 
     protected function findModelfaq($id)
     {
-        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -532,7 +533,7 @@ class ProfileController extends Controller
 
     protected function findModelgallery($id)
     {
-        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
