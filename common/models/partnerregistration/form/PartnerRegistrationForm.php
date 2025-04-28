@@ -283,9 +283,9 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->form4_status = $this->form4_status;
         $this->partner_model->form5_status = $this->form5_status;
         $this->partner_model->is_sendforapproval = $this->is_sendforapproval;
-        $this->operator_model->status = $this->status;
-        $this->operator_model->final = $this->final;
-        $this->operator_model->updated_time_final = $this->updated_time_final;
+        $this->partner_model->status = $this->status;
+        $this->partner_model->final = $this->final;
+        $this->partner_model->updated_time_final = $this->updated_time_final;
     }
 
 
