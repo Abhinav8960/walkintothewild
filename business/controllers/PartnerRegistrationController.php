@@ -37,6 +37,9 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->current_step = 2;
                     if ($model->partner_model->save()) {
                         return $this->redirect(['step-2']);
+                    }else{
+                        Yii::$app->session->setFlash('error', 'Please fill all required fields.');
+                       
                     }
                 }
             }

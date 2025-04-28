@@ -167,7 +167,6 @@ class PartnerRegistration extends \yii\db\ActiveRecord
                 'registration_copy_upload',
                 'pan_number',
                 'pan_upload',
-                'operated_park',
                 'about_business',
                 // 'gst_upload',
                 'billing_mail',
