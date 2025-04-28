@@ -195,19 +195,19 @@ $this->registerJs($script);
 <?php
 $gst_script = <<< JS
     $(function() {
-        $('.field-PackageVersionForm-gst_percentage').hide();
-        var gst_type =$("#PackageVersionForm-type").val();
+        $('.field-packageversionform-gst_percentage').hide();
+        var gst_type =$("#packageversionform-type").val();
             
         if(gst_type == 1){
-            $('.field-PackageVersionForm-gst_percentage').show();
+            $('.field-packageversionform-gst_percentage').show();
         }
        
-        $('#PackageVersionForm-type').on('change', function() {
+        $('#packageversionform-type').on('change', function() {
             var selectValue = $(this).val();
             if (selectValue == 1) {
-                $('.field-PackageVersionForm-gst_percentage').show();
+                $('.field-packageversionform-gst_percentage').show();
             } else {
-                $('.field-PackageVersionForm-gst_percentage').hide();
+                $('.field-packageversionform-gst_percentage').hide();
             }
         });
     });
