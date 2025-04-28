@@ -5,6 +5,7 @@ namespace backend\modules\package\controllers;
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageDeleteForm;
 use common\models\package\form\PackageVersionForm;
+use common\models\package\Package;
 use common\models\package\PackageVersion;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
@@ -31,7 +32,7 @@ class PreviewController extends Controller
      */
     public function actionIndex($id)
     {
-        $package = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, Package::STATUS_SUSPEND, 'id' => $id])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -61,7 +62,7 @@ class PreviewController extends Controller
 
     public function actionUpdate($id)
     {
-        $package_version_model = Package::find()->where(['status' => Package::APPROVED_AND_LIVE_STATUS, 'id' => $id])->limit(1)->one();
+        $package_version_model = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
         if (empty($package_version_model)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -97,7 +98,7 @@ class PreviewController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

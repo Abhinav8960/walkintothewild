@@ -1,6 +1,6 @@
 <?php
 
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;
@@ -25,7 +25,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="row row-cols-1 row-cols-sm-2 pt-4 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
                                 <?php if ($wishlist_items) {
                                     foreach ($wishlist_items as $wishlist_item) {
-                                        $package_version_model = Package::find()->where(['uuid' => $wishlist_item->item_id, 'status' => Package::APPROVED_AND_LIVE_STATUS])->limit(1)->one();
+                                        $package_version_model = Package::find()->where(['id' => $wishlist_item->item_id, 'status' => Package::STATUS_ACTIVE])->limit(1)->one();
                                         if (!$package_version_model) {
                                             continue;
                                         }

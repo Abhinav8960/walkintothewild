@@ -28,7 +28,7 @@ class PartnerRegistrationController extends Controller
         }
         $model->user_id = Yii::$app->user->identity->id;
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
-        $model->form1_status = PartnerRegistration :: FORM_FILLED;
+        $model->form1_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->uploadFiles();
@@ -37,9 +37,8 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->current_step = 2;
                     if ($model->partner_model->save()) {
                         return $this->redirect(['step-2']);
-                    }else{
+                    } else {
                         Yii::$app->session->setFlash('error', 'Please fill all required fields.');
-                       
                     }
                 }
             }
@@ -65,7 +64,7 @@ class PartnerRegistrationController extends Controller
 
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP2);
-        $model->form2_status = PartnerRegistration :: FORM_FILLED;
+        $model->form2_status = PartnerRegistration::FORM_FILLED;
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -98,7 +97,7 @@ class PartnerRegistrationController extends Controller
         }
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
-        $model->form3_status = PartnerRegistration :: FORM_FILLED;
+        $model->form3_status = PartnerRegistration::FORM_FILLED;
         if ($partner_model->gst_id) {
             $gst_model = PartnerGstDetails::findOne($partner_model->gst_id);
             if (!$gst_model) {
@@ -145,7 +144,7 @@ class PartnerRegistrationController extends Controller
         }
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP4);
-        $model->form4_status = PartnerRegistration :: FORM_FILLED;
+        $model->form4_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->uploadFiles();
@@ -178,9 +177,17 @@ class PartnerRegistrationController extends Controller
         }
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP5);
-        $model->form5_status = PartnerRegistration :: FORM_FILLED;
+        $model->form5_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
+                if (Yii::$app->request->post('same_as_previous')) {
+                    if ($model->pan_number) {
+                        $model->kyc_pan = $model->pan_number;
+                    }
+                    if ($model->pan_upload) {
+                        $model->kyc_pan_upload = $model->pan_upload;
+                    }
+                }
                 $model->uploadFiles();
                 if ($model->validate()) {
                     $model->initializeForm();
@@ -226,7 +233,7 @@ class PartnerRegistrationController extends Controller
     {
         $model = $this->findModel($id);
         $model->is_sendforapproval = 1;
-        $model->status = 1 ;
+        $model->status = 1;
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
             return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);

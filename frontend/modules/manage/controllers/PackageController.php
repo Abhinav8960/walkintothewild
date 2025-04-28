@@ -7,7 +7,7 @@ use yii\web\UploadedFile;
 use common\models\MailLog;
 use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 use yii\web\NotFoundHttpException;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
@@ -74,7 +74,7 @@ class PackageController extends FrontendBaseController
             return $this->redirect('/manage');
         }
         $model = new PackageVersionForm();
-        $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
+        $model->status = PackageVersion::STATUS_ACTIVE;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -730,7 +730,7 @@ class PackageController extends FrontendBaseController
      */
     protected function findModel($slug, $owned_by_id)
     {
-        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -739,7 +739,7 @@ class PackageController extends FrontendBaseController
 
     protected function findModelfaq($id)
     {
-        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -757,7 +757,7 @@ class PackageController extends FrontendBaseController
 
     protected function findModelgallery($id)
     {
-        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::APPROVED_AND_LIVE_STATUS, Package::NOT_APPROVED_STATUS]])) !== null) {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
