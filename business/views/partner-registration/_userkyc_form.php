@@ -7,16 +7,14 @@ $readOnly = false;
 ?>
 
     <?php $form = ActiveForm::begin([
-        'options' => ['id' => 'user-kyc', 'action' => ['partner-registration/create'], 'enctype' => 'multipart/form-data']
+        'options' => ['id' => 'user-kyc', 'enctype' => 'multipart/form-data']
     ]); ?>
 
 
     <div class="row">
 
         <div class="col-md-3">
-            <?= $form->field($model, 'owner_name', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'owner_name')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Owner Name',
                 'readonly' => $readOnly,
@@ -24,9 +22,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-3">
-            <?= $form->field($model, 'kyc_phone', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'kyc_phone')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Phone Number',
                 'readonly' => $readOnly,
@@ -34,9 +30,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-3">
-            <?= $form->field($model, 'kyc_whatsapp', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'kyc_whatsapp')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Whatsapp Number',
                 'readonly' => $readOnly,
@@ -44,9 +38,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-3">
-            <?= $form->field($model, 'kyc_email', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'kyc_email')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Email',
                 'readonly' => $readOnly,
@@ -54,9 +46,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'kyc_pan', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'kyc_pan')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter PAN',
                 'readonly' => $readOnly,
@@ -64,9 +54,7 @@ $readOnly = false;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'kyc_pan_upload', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->fileInput([
+            <?= $form->field($model, 'kyc_pan_upload')->fileInput([
                 'class' => 'form-control',
                 'disabled' => $readOnly,
             ]) ?>
@@ -85,9 +73,7 @@ $readOnly = false;
 
 
         <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_number', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->textInput([
+            <?= $form->field($model, 'aadhar_number')->textInput([
                 'class' => 'form-control',
                 'placeholder' => 'Enter Aadhar',
                 'readonly' => $readOnly,
@@ -95,18 +81,14 @@ $readOnly = false;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_front_upload', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->fileInput([
+            <?= $form->field($model, 'aadhar_front_upload')->fileInput([
                 'class' => 'form-control',
                 'disabled' => $readOnly,
             ]) ?>
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_back_upload', [
-                'template' => '<label class="form-label">{label}</label>{input}{error}',
-            ])->fileInput([
+            <?= $form->field($model, 'aadhar_back_upload')->fileInput([
                 'class' => 'form-control',
                 'disabled' => $readOnly,
             ]) ?>
