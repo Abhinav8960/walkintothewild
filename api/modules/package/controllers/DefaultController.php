@@ -24,7 +24,7 @@ use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use common\models\package\PackageDaySearch;
-use common\models\package\PackageSearch;
+use api\models\package\PackageSearch;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
