@@ -6,102 +6,133 @@ use yii\helpers\Html;
 $readOnly = false;
 ?>
 
-    <?php $form = ActiveForm::begin([
-        'options' => ['id' => 'user-kyc', 'enctype' => 'multipart/form-data']
-    ]); ?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'id' => 'user-kyc',
+        'enableClientValidation' => true, // Enable JavaScript validation
+        'enctype' => 'multipart/form-data'
+    ]
+]); ?>
 
 
-    <div class="row">
+<div class="row">
 
-        <div class="col-md-3">
-            <?= $form->field($model, 'owner_name')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter Owner Name',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-3">
-            <?= $form->field($model, 'kyc_phone')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter Phone Number',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-3">
-            <?= $form->field($model, 'kyc_whatsapp')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter Whatsapp Number',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-3">
-            <?= $form->field($model, 'kyc_email')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter Email',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'kyc_pan')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter PAN',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'kyc_pan_upload')->fileInput([
-                'class' => 'form-control',
-                'disabled' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-4 mt-5">
-            <?= Html::checkbox('same_as_previous', false, [
-                'label' => 'Same as previous PAN details',
-                'id' => 'same-as-previous',
-            ]) ?>
-             <input type="hidden" id="prev-pan" value="<?= Html::encode($model->pan_number) ?>">
-             <input type="hidden" id="prev-pan-upload" value="<?= Html::encode($model->pan_upload) ?>">
-        </div>
-       
-
-
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_number')->textInput([
-                'class' => 'form-control',
-                'placeholder' => 'Enter Aadhar',
-                'readonly' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_front_upload')->fileInput([
-                'class' => 'form-control',
-                'disabled' => $readOnly,
-            ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'aadhar_back_upload')->fileInput([
-                'class' => 'form-control',
-                'disabled' => $readOnly,
-            ]) ?>
-        </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'owner_name')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter Owner Name',
+            'readonly' => $readOnly,
+        ]) ?>
     </div>
 
-    <div class="d-flex justify-content-end mt-3">
-        <?= Html::hiddenInput('step', $currentStep) ?>
-        <?= $form->field($model, 'form5_status')->hiddenInput(['value' => 1])->label(false) ?>
-        <?= Html::submitButton('Save', ['class' => 'btn btn-info']) ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'kyc_phone')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter Phone Number',
+            'readonly' => $readOnly,
+        ]) ?>
     </div>
 
-<?php ActiveForm::end();?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'kyc_whatsapp')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter Whatsapp Number',
+            'readonly' => $readOnly,
+        ]) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'kyc_email')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter Email',
+            'readonly' => $readOnly,
+        ]) ?>
+    </div>
+
+    <div class="col-md-4">
+        <?= $form->field($model, 'kyc_pan')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter PAN',
+            'readonly' => $readOnly,
+        ]) ?>
+    </div>
+
+
+    <?php
+    if (!empty($model->kyc_pan_upload)) {
+    ?>
+        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->kyc_pan_upload) ?>" alt="kyc_pan_upload" style="max-height:50px;max-width:100px;">
+        <?= $form->field($model, 'kyc_pan_upload')->hiddenInput(['id' => 'kyc_pan_upload'])->label(false); ?>
+    <?php
+    }
+    ?>
+    <div class="col-md-4">
+        <?= $form->field($model, 'kyc_pan_file_upload')->fileInput([
+            'class' => 'form-control',
+            'disabled' => $readOnly,
+        ]) ?>
+    </div>
+    <div class="col-md-4 mt-5">
+        <?= Html::checkbox('same_as_previous', false, [
+            'label' => 'Same as previous PAN details',
+            'id' => 'same-as-previous',
+        ]) ?>
+        <input type="hidden" id="prev-pan" value="<?= Html::encode($model->pan_number) ?>">
+        <input type="hidden" id="prev-pan-upload" value="<?= Html::encode($model->pan_upload) ?>">
+    </div>
+
+
+
+
+    <div class="col-md-4">
+        <?= $form->field($model, 'aadhar_number')->textInput([
+            'class' => 'form-control',
+            'placeholder' => 'Enter Aadhar',
+            'readonly' => $readOnly,
+        ]) ?>
+    </div>
+
+    <?php
+    if (!empty($model->aadhar_front_upload)) {
+    ?>
+        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_front_upload) ?>" alt="aadhar_front_upload" style="max-height:50px;max-width:100px;">
+        <?= $form->field($model, 'aadhar_front_upload')->hiddenInput(['id' => 'aadhar_front_upload'])->label(false); ?>
+    <?php
+    }
+    ?>
+
+    <div class="col-md-4">
+        <?= $form->field($model, 'aadhar_front_file_upload')->fileInput([
+            'class' => 'form-control',
+            'disabled' => $readOnly,
+        ]) ?>
+    </div>
+
+
+    <?php
+    if (!empty($model->aadhar_back_upload)) {
+    ?>
+        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_back_upload) ?>" alt="aadhar_back_upload" style="max-height:50px;max-width:100px;">
+        <?= $form->field($model, 'aadhar_back_upload')->hiddenInput(['id' => 'aadhar_back_upload'])->label(false); ?>
+    <?php
+    }
+    ?>
+
+    <div class="col-md-4">
+        <?= $form->field($model, 'aadhar_back_file_upload')->fileInput([
+            'class' => 'form-control',
+            'disabled' => $readOnly,
+        ]) ?>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end mt-3">
+    <?= Html::hiddenInput('step', $currentStep) ?>
+    <?= $form->field($model, 'form5_status')->hiddenInput(['value' => 1])->label(false) ?>
+    <?= Html::submitButton('Save', ['class' => 'btn btn-info']) ?>
+</div>
+
+<?php ActiveForm::end(); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

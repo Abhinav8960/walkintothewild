@@ -11,7 +11,11 @@ $readOnly = false;
 
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'business-details', 'enctype' => 'multipart/form-data']
+    'options' => [
+        'id' => 'business-details',
+        'enableClientValidation' => true,
+        'enctype' => 'multipart/form-data'
+    ]
 ]); ?>
 <div class="row">
     <div class="col-md-12">
@@ -54,8 +58,16 @@ $readOnly = false;
         ]) ?>
     </div>
 
-    <div class="col-md-4">
-        <?= $form->field($gst_model, 'filepath')->fileInput([
+    <div class="col-md-3">
+        <?php
+        if (!empty($gst_model->filepath)) {
+        ?>
+            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->partner_model->gstDetails->filepath ?? '') ?>" alt="Logo" style="max-height:50px;max-width:100px;">
+            <?= $form->field($gst_model, 'filepath')->hiddenInput(['id' => 'filepath'])->label(false); ?>
+        <?php
+        }
+        ?>
+        <?= $form->field($gst_model, 'filepath_upload')->fileInput([
             'class' => 'form-control',
             'disabled' => $readOnly,
         ]) ?>
