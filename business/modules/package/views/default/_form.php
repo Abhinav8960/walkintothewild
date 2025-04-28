@@ -185,8 +185,8 @@ use kartik\datetime\DateTimePicker;
 </style>
 <?php
 $script = <<< JS
-editor('PackageVersionForm-package_description');
-editor('PackageVersionForm-package_itinerary_overview');
+editor('packageversionform-package_description');
+editor('packageversionform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>

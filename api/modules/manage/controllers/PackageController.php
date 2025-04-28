@@ -17,6 +17,7 @@ use api\models\package\PackageGallery;
 use api\models\package\PackageGallerySearch;
 use api\models\package\PackageIncluded;
 use api\models\package\PackageSafariPark;
+use api\models\package\PackageVersion;
 use yii\web\NotFoundHttpException;
 use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
@@ -102,7 +103,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $model = new PackageVersionForm();
-        $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
+        $model->status = PackageVersion::EDIATBLE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 

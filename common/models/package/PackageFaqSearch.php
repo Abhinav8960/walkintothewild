@@ -19,7 +19,7 @@ class PackageFaqSearch extends PackageFaq
         return [
             [['package_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['answer'], 'string'],
-            [['question'], 'string', 'max' => 512],
+            [['question','version'], 'string', 'max' => 512],
         ];
     }
 
@@ -70,6 +70,7 @@ class PackageFaqSearch extends PackageFaq
             'status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'question', $this->question]);
+        $query->andFilterWhere(['like', 'version', $this->version]);
         $query->andFilterWhere(['like', 'answer', $this->answer]);
 
         return $dataProvider;

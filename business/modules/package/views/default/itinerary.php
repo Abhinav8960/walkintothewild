@@ -27,7 +27,6 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                 <div class="card-body">
                                     <?php $form = ActiveForm::begin(); ?>
 
-                                    <?= $form->field($model, 'package_id')->hiddenInput(['value' => $package_version_model->id])->label(false) ?>
 
                                     <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
                                     <div class="row">
