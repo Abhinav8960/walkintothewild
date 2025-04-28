@@ -9,16 +9,16 @@ use yii\helpers\Url;
     <div class="accordion" id="formAccordion">
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading1">
-                <button class="accordion-button d-flex align-items-center" type="button"
+                <button class="accordion-button collapsed" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapse1"
-                    aria-expanded="true" aria-controls="collapse1">
+                    aria-expanded="false" aria-controls="collapse1">
                     Legal Entity
                     <span class="ms-auto">
                         <a href="<?= Url::toRoute(['create']) ?>"><i class="bi bi-pencil text-black"></i></a>
                     </span>
                 </button>
             </h2>
-            <div id="collapse1" class="accordion-collapse collapse show"
+            <div id="collapse1" class="accordion-collapse collapse"
                 aria-labelledby="heading1" data-bs-parent="#formAccordion">
                 <div class="accordion-body">
                     <?= $this->render('legalentity-view', ['currentStep' => 1, 'model' => $model]) ?>
@@ -37,7 +37,7 @@ use yii\helpers\Url;
                     </span>
                 </button>
             </h2>
-            <div id="collapse2" class="accordion-collapse collapse show"
+            <div id="collapse2" class="accordion-collapse collapse"
                 aria-labelledby="heading2" data-bs-parent="#formAccordion">
                 <div class="accordion-body">
                     <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
