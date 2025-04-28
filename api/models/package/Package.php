@@ -147,7 +147,7 @@ class Package extends \common\models\package\Package
         return $arr;
     }
 
-   
+
 
     public function getLivePackage()
     {
@@ -199,7 +199,8 @@ class Package extends \common\models\package\Package
     {
         $image_path = '';
         if (isset($this->package_image)) {
-            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_image;
+            // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_image;
         } else {
 
             if (isset($this->singlepark)) {
@@ -221,17 +222,14 @@ class Package extends \common\models\package\Package
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
-            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
+            // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_banner_image;
         } else {
 
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;
-                } else {
-                    $image_path = '';
                 }
-            } else {
-                $image_path = '';
             }
         }
 
