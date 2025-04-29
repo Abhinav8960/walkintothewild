@@ -20,7 +20,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                 if ($model->form1_status == PartnerRegistration::FORM_APPROVED) {  ?>
                     ( Approved)
                 <?php } elseif ($model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    ( Reject)
+                    ( Rejected )
                 <?php } ?>
             </button>
         </h2>
@@ -77,7 +77,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                 if ($model->form2_status == PartnerRegistration::FORM_APPROVED) {  ?>
                     ( Approved)
                 <?php } elseif ($model->form2_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    ( Reject)
+                    ( Rejected )
                 <?php } ?>
             </button>
         </h2>
@@ -129,7 +129,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                 if ($model->form3_status == PartnerRegistration::FORM_APPROVED) {  ?>
                     ( Approved)
                 <?php } elseif ($model->form3_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    ( Reject)
+                    ( Rejected )
                 <?php } ?>
             </button>
         </h2>
@@ -183,7 +183,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                 if ($model->form4_status == PartnerRegistration::FORM_APPROVED) {  ?>
                     ( Approved)
                 <?php } elseif ($model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    ( Reject)
+                    ( Rejected )
                 <?php } ?>
             </button>
         </h2>
@@ -232,10 +232,10 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                 Personal Details
                 <?php
-                if ($model->form4_status == PartnerRegistration::FORM_APPROVED) {  ?>
-                    ( Approved)
-                <?php } elseif ($model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    ( Reject)
+                if ($model->form5_status == PartnerRegistration::FORM_APPROVED) {  ?>
+                    (Approved)
+                <?php } elseif ($model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
+                    (Rejected )
                 <?php } ?>
             </button>
         </h2>
