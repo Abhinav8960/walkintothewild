@@ -120,7 +120,7 @@ class PackageController extends RestController
 
                 $this->updatePackageStatus($model->package_id, $model->version, PackageVersion::EDIATBLE_STATUS);
 
-                $package_feature = $model->package_feature;
+                $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
                     PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
                     foreach ($package_feature as $feature) {
@@ -134,7 +134,7 @@ class PackageController extends RestController
                 }
 
 
-                $package_park = $model->package_park;
+                $package_park = explode(",", (string)$model->package_park);
                 if ($package_park) {
                     PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                     foreach ($package_park as $park) {
@@ -157,7 +157,7 @@ class PackageController extends RestController
                     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->package_slug], ['message' => "Package create successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => "Package create successfully"]);
             }
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not create successfully"]);
@@ -566,7 +566,7 @@ class PackageController extends RestController
 
     protected function findPackageVersionModel($package_id, $version)
     {
-        if (($model = Package::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
+        if (($model = PackageVersion::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
             return $model;
         }
 
@@ -770,6 +770,7 @@ class PackageController extends RestController
     {
         $model = Package::find()->where(['id' => $package_id])->one();
         $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+    
 
         if (empty($model)) {
             $model = new Package();
@@ -828,5 +829,16 @@ class PackageController extends RestController
         $newModel->status = Package::STATUS_SUSPEND;
         $newModel->save(false);
         return $newModel->id;
+    }
+
+    public function actionView($slug, $version) {
+        $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id == 2) {
+
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        }
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, $version);
+        return Yii::$app->api->sendResponse($data = $package_version_model);
     }
 }

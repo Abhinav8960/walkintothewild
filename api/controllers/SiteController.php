@@ -61,7 +61,7 @@ class SiteController extends RestController
                     'termofuse' => ['GET'],
                     'privacypolicy' => ['GET'],
                     'update-token' => ['POST'],
-                    'convergent-survey' => ['POST'],
+                    'convergent-survey' => ['GET'],
 
                 ],
             ],
@@ -293,12 +293,8 @@ class SiteController extends RestController
     }
 
 
-    public function actionConvergentSurvey()
+    public function actionConvergentSurvey($phone, $case_id)
     {
-        $request = Yii::$app->request;
-        $phone = $request->post('phone');
-        $case_id = $request->post('case_id');
-
         $response = WhatsappHelper::SendDataUsingWithTemplateSurvey($phone, $case_id);
 
         if ($response->isOk) {
