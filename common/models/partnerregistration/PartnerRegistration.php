@@ -2,6 +2,7 @@
 
 namespace common\models\partnerregistration;
 
+use common\models\park\SafariPark;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -296,5 +297,10 @@ class PartnerRegistration extends \yii\db\ActiveRecord
 
     public function getGstDetails(){
         return $this->hasOne(PartnerGstDetails :: class , ['id'=>'gst_id']);
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'operated_park']);
     }
 }

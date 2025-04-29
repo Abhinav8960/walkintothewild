@@ -141,13 +141,13 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p><strong>Park to Operate :</strong> <?= $model->operated_park ?></p>
+                                        <p><strong>Park to Operate :</strong> <?= $model->partner_model->park->title ?></p>
                                         <p><strong>About Business :</strong> <?= $model->about_business ?></p>
                                         <p><strong>Billing Mail :</strong> <?= $model->billing_mail ?></p>
                                         <p><strong>Billing Phone :</strong> <?= $model->billing_phone ?></p>
                                         <p><strong>State Name : </strong><?= $model->partner_model->gstDetails->stateRelation->state_name ?? '' ?></p>
                                         <p><strong>GST Number : </strong><?= $model->partner_model->gstDetails->gst_number ?? '' ?></p>
-                                        <p><strong>GST Image : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->partner_model->gstDetails->filepath) ?>" alt="PanCard" style="width:100px; height:auto;"></p>
+                                        <p><strong>GST Image : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->partner_model->gstDetails->filepath ?? '') ?>" alt="GSTfile" style="max-height:50px;max-width:100px;"></p>
                                     </div>
                                     <?php if ($model->form3_status == PartnerRegistration::FORM_REJECTED) { ?>
                                         <div class="col-md-6">
