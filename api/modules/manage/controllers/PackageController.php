@@ -452,9 +452,8 @@ class PackageController extends RestController
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
-        if(!$faq_model)
-        {
-            throw new NotFoundHttpException('Faq Not Found.'); 
+        if (!$faq_model) {
+            throw new NotFoundHttpException('Faq Not Found.');
         }
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
@@ -509,7 +508,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while sending for approval"]);
         }
         $transaction->commit();
-       
+
 
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package sent for approval successfully"]);
     }
@@ -586,7 +585,7 @@ class PackageController extends RestController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    
+
     protected function findPackageVersionModelWithStatus($package_id, $status)
     {
         if (($model = PackageVersion::findOne(['package_id' => $package_id, 'status' => $status])) !== null) {
@@ -796,7 +795,7 @@ class PackageController extends RestController
     {
         $model = Package::find()->where(['id' => $package_id])->one();
         $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
-    
+
 
         if (empty($model)) {
             $model = new Package();
@@ -805,6 +804,7 @@ class PackageController extends RestController
         if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
             // $model->editable_version = NULL;
+            $this->terminatePackage($package_id);
         }
         if ($status == PackageVersion::EDIATBLE_STATUS) {
 
