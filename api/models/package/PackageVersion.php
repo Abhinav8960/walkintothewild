@@ -129,7 +129,7 @@ class PackageVersion extends \common\models\package\PackageVersion
             [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
             [['package_name'], 'string', 'max' => 512],
-            [['package_id'],'integer'],
+            [['package_id'], 'integer'],
 
 
         ];
@@ -193,13 +193,13 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'package_id', 'version' => 'version'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'package_id', 'version' => 'version'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
     public function getPackage_features_name()
@@ -210,12 +210,12 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     // public function getPackageIncludeds()
     // {
-    //     return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+    //     return $this->hasMany(PackageIncluded::class, ['package_id' => 'package_id', 'version' => 'version']);
     // }
 
     public function getPackage_days()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getImage_path()
@@ -263,7 +263,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getComments()
     {
-        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageComment::class, ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getComment_count()
@@ -303,7 +303,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getSinglepark()
     {
-        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPrimary_park()
@@ -317,7 +317,7 @@ class PackageVersion extends \common\models\package\PackageVersion
      */
     public function getPackagesafaripark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPackage_park()
@@ -332,7 +332,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getPackagegallery()
     {
-        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPackage_day_night_labels()
@@ -420,7 +420,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getPackageFaqs()
     {
-        return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFaq::className(), ['package_id' => 'package_id', 'version' => 'version'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
     }
 
     public function getFaqs()
@@ -464,7 +464,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getSearchpackagepark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'package_id']);
     }
 
     public function getUrls()
