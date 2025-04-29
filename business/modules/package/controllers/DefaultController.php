@@ -113,7 +113,7 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
 
                                 $packagefeature = new PackageFeature();
@@ -189,7 +189,7 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
                                 $packagefeature->package_id = $model->package_version_model->package_id;
@@ -296,6 +296,8 @@ class DefaultController extends Controller
                                     $package_days = PackageDay::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version, 'status' => 1])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
+                                            $package_day->package_id = $package_version_model->package_id;
+                                            $package_day->version = $package_version_model->version;
                                             $package_day->meal_breakfast = 1;
                                             $package_day->meal_lunch = 1;
                                             $package_day->meal_dinner = 1;
