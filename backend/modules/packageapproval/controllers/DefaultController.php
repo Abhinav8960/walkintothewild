@@ -127,7 +127,7 @@ class DefaultController extends Controller
             $package->pending_for_approval_version = null;
             $package->live_version = $version;
             $package->status = Package::STATUS_ACTIVE;
-            $package->save();
+            $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
             $model->save(false);
