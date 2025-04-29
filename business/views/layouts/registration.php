@@ -30,26 +30,32 @@ NotifyAsset::register($this);
 
     <!-- <div class="page"> -->
 
-        <div>
-            <!-- /main-header -->
-            <?= \business\widgets\Registrationheader::widget() ?>
-            <!-- /main-header -->
-        </div>
-        <!-- START #content -->
+    <div>
+        <!-- /main-header -->
+        <?= \business\widgets\Registrationheader::widget() ?>
+        <!-- /main-header -->
+    </div>
+    <!-- START #content -->
 
-        <!-- main-content -->
-        <div class="container">
-            <!-- container -->
-            <!-- <div class="main-container"> -->
-                <?= $content ?>
-            <!-- </div> -->
-        </div>
+    <!-- main-content -->
+    <div class="container">
+        <!-- container -->
+        <!-- <div class="main-container"> -->
+        <?= $content ?>
+        <!-- </div> -->
+    </div>
+    
+    <div>
+        <!-- partner Reject Reason -->
+        <?= \business\widgets\PartnerRejectReason::widget() ?>
+        <!-- partner Reject Reason -->
+    </div>
 
 
-        <!-- END #content -->
-        <?= \common\widgets\NotifyAlert::widget() ?>
+    <!-- END #content -->
+    <?= \common\widgets\NotifyAlert::widget() ?>
 
-        <!-- END Setting -->
+    <!-- END Setting -->
     <!-- </div> -->
     <!-- END #app -->
     <?php $this->endBody() ?>

@@ -56,13 +56,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
             ],         
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => 'package_slug',
-                'ensureUnique' => true,
-                'slugAttribute' => 'package_name',
-                'immutable' => true,
-            ],
+            // [
+            //     'class' => SluggableBehavior::className(),
+            //     'attribute' => 'package_slug',
+            //     'ensureUnique' => true,
+            //     'slugAttribute' => 'package_name',
+            //     'immutable' => true,
+            // ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',

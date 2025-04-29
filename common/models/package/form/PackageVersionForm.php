@@ -315,6 +315,7 @@ class PackageVersionForm extends \yii\base\Model
     {
         $m = new Package();
         $m->package_name = $this->package_name;
+        $m->package_slug = Package::generateUnqiueSlug($this->package_name);
         $m->owned_by_id = $this->owned_by_id;
         $m->status = 0;
         $m->save(false);
