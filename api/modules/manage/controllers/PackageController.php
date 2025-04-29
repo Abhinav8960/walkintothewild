@@ -774,6 +774,7 @@ class PackageController extends RestController
         if (empty($model)) {
             $model = new Package();
             $model->package_name = $packageversion->package_name;
+            $model->package_slug = $model->generateUnqiueSlug($packageversion->package_name);
         }
         if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
