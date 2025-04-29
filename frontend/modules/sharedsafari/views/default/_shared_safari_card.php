@@ -223,7 +223,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
                                 echo '<a style="background-color:gray;" href="#">Seats Full</a>';
                             } else {
-                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
+                                ?>
+                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block <?= (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '') ?>" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                    '/sharedsafari/default/view',
+                                    'slug' => $share_safari->slug,
+                                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                ]) ?>" data-pjax="0"> Join Safari</a>
+                                <?php
                             }
                         }
 

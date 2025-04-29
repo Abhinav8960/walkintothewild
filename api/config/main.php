@@ -97,7 +97,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
-                ]
+                ],
             ],
         ],
 
@@ -110,6 +110,7 @@ return [
                 'site/error' => 'site/error',
                 'site/file' => 'site/file',
                 'master-meta-info' => 'site/master-meta-info',
+                'convergent-survey' => 'site/convergent-survey',
                 'social-login' => 'site/social-login',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',

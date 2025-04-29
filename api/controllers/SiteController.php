@@ -14,6 +14,7 @@ use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\User;
 use common\models\UserSession;
+use common\models\WhatsappHelper;
 use yii\httpclient\debug\SearchModel;
 
 /**
@@ -32,7 +33,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error'],
+                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -60,6 +61,7 @@ class SiteController extends RestController
                     'termofuse' => ['GET'],
                     'privacypolicy' => ['GET'],
                     'update-token' => ['POST'],
+                    'convergent-survey' => ['GET'],
 
                 ],
             ],
@@ -135,7 +137,6 @@ class SiteController extends RestController
                     /* @var User $user */
                     if ($auth->user->status != User::STATUS_ACTIVE) {
                         return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
-                        
                     }
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
@@ -146,7 +147,7 @@ class SiteController extends RestController
                     return \Yii::$app->api->sendResponse($data);
                     // $this->updateUserInfo($user);
                 } else {
-                    
+
                     if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
 
                         $user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one();
@@ -156,7 +157,6 @@ class SiteController extends RestController
                         if ($user) {
                             if ($user->status != User::STATUS_ACTIVE) {
                                 return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
-                                
                             }
 
                             $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
@@ -290,5 +290,17 @@ class SiteController extends RestController
             return Yii::$app->api->sendResponse([], "Not Found");
         }
         return Yii::$app->api->sendResponse([], "Invalid Request");
+    }
+
+
+    public function actionConvergentSurvey($phone, $case_id)
+    {
+        $response = WhatsappHelper::SendDataUsingWithTemplateSurvey($phone, $case_id);
+
+        if ($response->isOk) {
+            return Yii::$app->api->sendResponse(['status' => 1, 'response' => $response->getData()], ['message' => 'Message accepted Successfully, if contact number has whatsaapp account, it will deliver soon']);
+        }
+
+        return Yii::$app->api->sendResponse(['status' => 0, 'response' => $response->getData()], ['message' => 'Message Sending Failed']);
     }
 }
