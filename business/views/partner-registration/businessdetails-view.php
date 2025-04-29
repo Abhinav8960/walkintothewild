@@ -12,7 +12,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Operated Park:</strong>
-                <span><?= Html::encode($model->operated_park) ?></span>
+                <span><?= $model->partner_model->park->title ?></span>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="col-md-6">
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Gst State:</strong>
-                <span><?= Html::encode($model->partner_model->gstDetails->stateRelation->state_name ?? '') ?></span>
+                <span><?= $model->partner_model->gstDetails->stateRelation->state_name ?? '' ?></span>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="d-flex align-items-center">
                 <strong class="form-label me-2 text-danger">Gst Image:</strong>
                 <span>
-                    <img src="<?= $this->params['baseurl'] . '/storage/' . $model->partner_model->gstDetails->filepath ?? ''?>" alt="GST Image" style="max-height:100px;">
+                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->partner_model->gstDetails->filepath ?? '') ?>" alt="GSTfile" style="max-height:50px;max-width:100px;">
                 </span>
             </div>
         </div>

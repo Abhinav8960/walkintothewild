@@ -231,8 +231,15 @@ class PartnerRegistrationController extends Controller
     public function actionFinalView()
     {
         $this->layout = 'registration';
-        // $model = $this->findModel();
+
         $partner_model = $this->findModel();
+        if ($partner_model === null) {
+            throw new NotFoundHttpException('Partner not found.');
+        }
+        $partner_model->final_approved = 0;
+        if (!$partner_model->save(false)) {
+            Yii::error('Failed to save');
+        }
         $model = new PartnerRegistrationForm($partner_model);
         return $this->render('final-view', [
             'model' => $model,
