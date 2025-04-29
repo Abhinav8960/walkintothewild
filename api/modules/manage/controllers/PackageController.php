@@ -566,7 +566,7 @@ class PackageController extends RestController
 
     protected function findPackageVersionModel($package_id, $version)
     {
-        if (($model = Package::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
+        if (($model = PackageVersion::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
             return $model;
         }
 
@@ -829,5 +829,16 @@ class PackageController extends RestController
         $newModel->status = Package::STATUS_SUSPEND;
         $newModel->save(false);
         return $newModel->id;
+    }
+
+    public function actionView($slug, $version) {
+        $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id == 2) {
+
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        }
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_version_model = $this->findPackageVersionModel($package_model->id, $version);
+        return Yii::$app->api->sendResponse($data = $package_version_model);
     }
 }
