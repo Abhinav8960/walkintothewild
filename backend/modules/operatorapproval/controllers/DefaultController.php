@@ -5,6 +5,7 @@ namespace backend\modules\operatorapproval\controllers;
 use common\models\operator\SafariOperator;
 use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
+use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerRegistration;
 use common\models\partnerregistration\PartnerRegistrationSearch;
 use Yii;
@@ -36,10 +37,14 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
 
-        $model = $this->findModel($id);
+        // $model = $this->findModel($id);
+        $partner_model = $this->findModel($id);
+
+        $model = new PartnerRegistrationForm($partner_model);
 
         return $this->render('update', [
             'model' => $model,
+            'partner_model' => $partner_model,
         ]);
     }
 
