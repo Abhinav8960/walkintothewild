@@ -236,7 +236,7 @@ class PartnerRegistrationController extends Controller
         if ($partner_model === null) {
             throw new NotFoundHttpException('Partner not found.');
         }
-        $partner_model->final_approved = 0;
+        // $partner_model->final_approved = 0;
         if (!$partner_model->save(false)) {
             Yii::error('Failed to save');
         }
