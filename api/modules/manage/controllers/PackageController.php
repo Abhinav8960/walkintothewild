@@ -26,6 +26,7 @@ use common\models\package\form\PackageVersionForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageGalleryForm;
+use common\models\package\PackageComment;
 use yii\filters\AccessControl;
 
 /**
@@ -616,8 +617,11 @@ class PackageController extends RestController
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
-            $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
-            $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
+            if (!$isNewRecord) {
+
+                $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
+            }
+            // $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageDay($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);;
             $this->CopyPackageFeature($model->package_id, $model->version, $newModel->package_id);
@@ -650,25 +654,25 @@ class PackageController extends RestController
         return true;
     }
 
-    private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
-    {
-        // package_comment_report_approval;
+    // private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
+    // {
+    //     // package_comment_report_approval;
 
-        $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
-        if ($model) {
-            foreach ($model as $comment) {
-                $newModel = new PackageCommentReport();
-                $newModel->attributes = $comment->attributes;
-                $newModel->id = null; // Set the ID to null for the new record
-                $newModel->package_id = $new_package_id;
-                $newModel->version = $this->version;
+    //     $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+    //     if ($model) {
+    //         foreach ($model as $comment) {
+    //             $newModel = new PackageCommentReport();
+    //             $newModel->attributes = $comment->attributes;
+    //             $newModel->id = null; // Set the ID to null for the new record
+    //             $newModel->package_id = $new_package_id;
+    //             $newModel->version = $this->version;
 
-                $newModel->save(false);
-            }
-        }
+    //             $newModel->save(false);
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     private function CopyPackageDay($old_package_id, $old_version, $new_package_id)
     {
@@ -831,13 +835,18 @@ class PackageController extends RestController
         return $newModel->id;
     }
 
-    public function actionView($slug, $version) {
+    public function actionView($slug, $version = null)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL_WITH_VERSION;
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
+        if (!empty($version)) {
+            $version = $package_model->editable_version;
+        }
         $package_version_model = $this->findPackageVersionModel($package_model->id, $version);
         return Yii::$app->api->sendResponse($data = $package_version_model);
     }
