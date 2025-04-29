@@ -58,6 +58,7 @@ class PackageController extends RestController
                     'faqs',
                     'gallery',
                     'send-for-approval',
+                    'view',
                 ],
                 'rules' => [
                     [
@@ -73,6 +74,8 @@ class PackageController extends RestController
                             'faqs',
                             'gallery',
                             'send-for-approval',
+                            'view',
+
                         ],
                         'allow' => true,
                         'roles' => ['@'],
@@ -93,6 +96,7 @@ class PackageController extends RestController
                     'faqs' => ['GET'],
                     'gallery' => ['GET'],
                     'send-for-approval' => ['POST'],
+                    'view' => ['GET'],
                 ],
             ],
         ];
