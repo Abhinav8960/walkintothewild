@@ -463,4 +463,5 @@ class Package extends \common\models\package\Package
             'status' => self::TYPE_BOOLEAN,
         ];
     }
+    
 }
