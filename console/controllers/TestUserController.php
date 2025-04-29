@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\Auth;
 use common\models\operator\SafariOperator;
 use common\models\User;
 use Faker\Factory;
@@ -28,10 +29,16 @@ class TestUserController extends Controller
             $user->verification_token = Yii::$app->security->generateRandomString();
             $user->auth_key = Yii::$app->security->generateRandomString();
             $user->password_hash = Yii::$app->security->generatePasswordHash('password123');
-            $user->google_source_id = $this->generateGoogleSourceId();
+            $user->google_source_id = (int)('12345678901'.''.$i);
             $user->can_login = 1;
             $user->status = User::STATUS_ACTIVE;
             $user->save(false);
+            $auth = new Auth([
+                'user_id' => $user->id,
+                'source' => 'google',
+                'source_id' => $user->google_source_id,
+            ]);
+            $auth->save(false);
             if ($i < 3) {
                 $this->makeoperator($user);
             }
