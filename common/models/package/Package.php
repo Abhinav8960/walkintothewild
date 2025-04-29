@@ -56,13 +56,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
             ],         
-            [
-                'class' => SluggableBehavior::className(),
-                'attribute' => 'package_slug',
-                'ensureUnique' => true,
-                'slugAttribute' => 'package_name',
-                'immutable' => true,
-            ],
+            // [
+            //     'class' => SluggableBehavior::className(),
+            //     'attribute' => 'package_slug',
+            //     'ensureUnique' => true,
+            //     'slugAttribute' => 'package_name',
+            //     'immutable' => true,
+            // ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
@@ -400,13 +400,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return $this->hasMany(PackageVersion::className(), ['package_id' => 'id']);
     }
 
-    public function generateUnqiueSlug($package_name)
+    public static function generateUnqiueSlug($package_name)
     {
         $slug = \yii\helpers\Inflector::slug($package_name);
         $count = 0;
         while (self::find()->where(['package_slug' => $slug])->exists()) {
             $count++;
-            $slug = \yii\helpers\Inflector::slug($this->package_name) . '-' . $count;
+            $slug = \yii\helpers\Inflector::slug($package_name) . '-' . $count;
         }
         return $slug;
     }

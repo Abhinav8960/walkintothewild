@@ -157,7 +157,7 @@ class PackageController extends RestController
                     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->package_slug], ['message' => "Package create successfully"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => "Package create successfully"]);
             }
 
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not create successfully"]);
@@ -770,11 +770,11 @@ class PackageController extends RestController
     {
         $model = Package::find()->where(['id' => $package_id])->one();
         $packageversion = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
+    
 
         if (empty($model)) {
             $model = new Package();
             $model->package_name = $packageversion->package_name;
-            $model->package_slug = $model->generateUnqiueSlug($packageversion->package_name);
         }
         if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
@@ -784,7 +784,7 @@ class PackageController extends RestController
 
             $model->editable_version = $version;
         }
-        if ($model->save()) {
+        if ($model->save(false)) {
             $this->terminatePackage($package_id);
             return true;
         }

@@ -185,7 +185,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackage_slug()
     {
-        return $this->getPackage()->package_slug ?? NULL;
+        return $this->package->package_slug ?? NULL;
     }
 
 

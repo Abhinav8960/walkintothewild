@@ -147,32 +147,15 @@ class Package extends \common\models\package\Package
         return $arr;
     }
 
-
-
     public function getLivePackage()
     {
         return $this->hasOne(Package::class, ['id' => 'package_id', 'live_version' => 'version']);
     }
 
-    public function getPackage()
-    {
-        return $this->hasOne(Package::class, ['id' => 'package_id']);
-    }
-
-
-    public function getPackage_slug()
-    {
-        return $this->getPackage()->slug ?? NULL;
-    }
-
-
-
-
     public function getPackageincluded()
     {
         return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
     }
-
 
     public function getPackagefeatures()
     {
