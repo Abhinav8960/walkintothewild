@@ -5,12 +5,15 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 $readOnly = false;
+$webasset = Yii::$app->getUrlManager();
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <?php
 
 $form = ActiveForm::begin([
     'id' => 'legal-entity',
+    'enableClientValidation' => true, // Enable JavaScript validation
     'options' => ['enctype' => 'multipart/form-data']
 ]);
 ?>
@@ -45,9 +48,17 @@ $form = ActiveForm::begin([
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'logo')->fileInput([
+        <?php
+        if (!empty($model->logo)) {
+        ?>
+            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->logo) ?>" alt="Logo" style="max-height:50px; max-width:100px;">
+            <?= $form->field($model, 'logo')->hiddenInput(['id' => 'logo'])->label(false); ?>
+        <?php
+        }
+        ?>
+        <?= $form->field($model, 'logo_file_upload')->fileInput([
             'class' => 'form-control',
-            'disabled' => $readOnly, // can't use 'readonly' on file input
+            'disabled' => $readOnly,
         ]) ?>
     </div>
 

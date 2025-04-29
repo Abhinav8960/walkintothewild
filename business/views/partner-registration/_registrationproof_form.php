@@ -2,12 +2,15 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+
 $readOnly = false;
 ?>
 
 
 <?php $form = ActiveForm::begin([
-    'options' => ['id' => 'registration-proof', 'enctype' => 'multipart/form-data']
+    'options' => ['id' => 'registration-proof',
+    'enableClientValidation' => true, // Enable JavaScript validation
+    'enctype' => 'multipart/form-data']
 ]); ?>
 <div class="row">
     <div class="col-md-3">
@@ -19,7 +22,15 @@ $readOnly = false;
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'registration_copy_upload')->fileInput([
+        <?php
+        if (!empty($model->registration_copy_upload)) {
+        ?>
+            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->registration_copy_upload) ?>" alt="registration_copy_upload" style="max-height:50px; max-width:100px;">
+            <?= $form->field($model, 'registration_copy_upload')->hiddenInput(['id' => 'registration_copy_upload'])->label(false); ?>
+        <?php
+        }
+        ?>
+        <?= $form->field($model,'registration_copy_file_upload')->fileInput([
             'class' => 'form-control',
             'disabled' => $readOnly,
         ]) ?>
@@ -33,8 +44,16 @@ $readOnly = false;
         ]) ?>
     </div>
 
+    <?php
+    if (!empty($model->pan_upload)) {
+    ?>
+        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->logo) ?>" alt="Logo" style="max-height:100px;max-width:100px;">
+        <?= $form->field($model, 'pan_upload')->hiddenInput(['id' => 'pan_upload'])->label(false); ?>
+    <?php
+    }
+    ?>
     <div class="col-md-3">
-        <?= $form->field($model, 'pan_upload')->fileInput([
+        <?= $form->field($model, 'pan_file_upload')->fileInput([
             'class' => 'form-control',
             'disabled' => $readOnly,
         ]) ?>

@@ -2,6 +2,7 @@
 
 namespace business\controllers;
 
+use common\models\partnerregistration\form\PartnerGstDetailsForm;
 use common\models\partnerregistration\PartnerRegistration;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerGstDetails;
@@ -31,11 +32,13 @@ class PartnerRegistrationController extends Controller
         $model->form1_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                $model->uploadFiles();
+                $model->logo_file_upload = UploadedFile::getInstance($model, 'logo_file_upload');
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 2;
                     if ($model->partner_model->save()) {
+                        $model->uploadFiles();
                         return $this->redirect(['step-2']);
                     } else {
                         Yii::$app->session->setFlash('error', 'Please fill all required fields.');
@@ -68,11 +71,14 @@ class PartnerRegistrationController extends Controller
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                $model->uploadFiles();
+                $model->registration_copy_file_upload = UploadedFile::getInstance($model, 'registration_copy_file_upload');
+                $model->pan_file_upload = UploadedFile::getInstance($model, 'pan_file_upload');
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 3;
                     if ($model->partner_model->save(false)) {
+                        $model->uploadFiles();
                         return $this->redirect(['step-3']);
                     }
                 }
@@ -92,32 +98,42 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         $partner_model = $this->findModel();
+
         if ($partner_model->current_step < 3) {
             return $this->redirect(['step-2']);
         }
+
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $model->form3_status = PartnerRegistration::FORM_FILLED;
         if ($partner_model->gst_id) {
-            $gst_model = PartnerGstDetails::findOne($partner_model->gst_id);
-            if (!$gst_model) {
-                $gst_model = new PartnerGstDetails();
+            $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
+            if (!$gstDetail) {
+                $gstDetail = new PartnerGstDetails();
             }
         } else {
-            $gst_model = new PartnerGstDetails();
+            $gstDetail = new PartnerGstDetails();
         }
+        $gstForm = new PartnerGstDetailsForm($gstDetail);
+
         if (Yii::$app->request->isPost) {
             $isModelLoaded = $model->load(Yii::$app->request->post());
-            $isGstLoaded = $gst_model->load(Yii::$app->request->post());
+            $isGstLoaded = $gstForm->load(Yii::$app->request->post());
+
             if ($isModelLoaded) {
-                if ($model->validate() && (!$isGstLoaded || $gst_model->validate())) {
+                $gstForm->filepath_upload = UploadedFile::getInstance($gstForm, 'filepath_upload');
+                if ($model->validate() && (!$isGstLoaded || $gstForm->validate())) {
                     if ($isGstLoaded) {
-                        $gst_model->uploadFiles();
-                        $gst_model->save(false);
+                        $gstForm->initializeForm();
+                        if ($gstForm->gstdetail_model->save(false)) {
+                            $gstForm->uploadFiles();
+                        }
                     }
+
                     $model->initializeForm();
                     $model->partner_model->current_step = 4;
-                    $model->partner_model->gst_id = $gst_model->id;
+                    $model->partner_model->gst_id = $gstForm->gstdetail_model->id;
+
                     if ($model->partner_model->save(false)) {
                         return $this->redirect(['step-4']);
                     }
@@ -128,10 +144,11 @@ class PartnerRegistrationController extends Controller
         return $this->render('businessdetails', [
             'model' => $model,
             'partner_model' => $partner_model,
-            'gst_model' => $gst_model,
+            'gst_model' => $gstForm,
             'currentStep' => 3,
         ]);
     }
+
 
 
     public function actionStep4()
@@ -147,12 +164,13 @@ class PartnerRegistrationController extends Controller
         $model->form4_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                $model->uploadFiles();
+                $model->cancel_check_file_upload = UploadedFile::getInstance($model, 'cancel_check_file_upload');
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 5;
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
+                        $model->uploadFiles();
                         return $this->redirect(['step-5']);
                     }
                 }
@@ -188,11 +206,14 @@ class PartnerRegistrationController extends Controller
                         $model->kyc_pan_upload = $model->pan_upload;
                     }
                 }
-                $model->uploadFiles();
+                $model->kyc_pan_file_upload = UploadedFile::getInstance($model, 'kyc_pan_file_upload');
+                $model->aadhar_front_file_upload = UploadedFile::getInstance($model, 'aadhar_front_file_upload');
+                $model->aadhar_back_file_upload = UploadedFile::getInstance($model, 'aadhar_back_file_upload');
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
+                        $model->uploadFiles();
                         return $this->redirect(['final-view']);
                     }
                 }

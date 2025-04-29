@@ -5,6 +5,7 @@ namespace common\models\partnerregistration\form;
 use common\models\partnerregistration\PartnerRegistration;
 use Yii;
 use yii\base\Model;
+use yii\web\JsExpression;
 use yii\web\UploadedFile;
 
 
@@ -24,6 +25,7 @@ class PartnerRegistrationForm extends Model
     public $legal_entity_type;
     public $brand_name;
     public $logo;
+    public $logo_file_upload;
     public $legal_entity_phone;
     public $legal_entity_whatsapp;
     public $legal_entity_email;
@@ -32,8 +34,13 @@ class PartnerRegistrationForm extends Model
 
     public $registration_number;
     public $registration_copy_upload;
+    public $registration_copy_file_upload;
+
     public $pan_number;
     public $pan_upload;
+    public $pan_file_upload;
+
+
 
     public $operated_park;
     public $about_business;
@@ -50,6 +57,8 @@ class PartnerRegistrationForm extends Model
     public $account_number;
     public $ifsc_number;
     public $cancel_check_upload;
+    public $cancel_check_file_upload;
+
 
 
     public $owner_name;
@@ -58,10 +67,12 @@ class PartnerRegistrationForm extends Model
     public $kyc_email;
     public $kyc_pan;
     public $kyc_pan_upload;
+    public $kyc_pan_file_upload;
     public $aadhar_number;
     public $aadhar_front_upload;
     public $aadhar_back_upload;
-
+    public $aadhar_front_file_upload;
+    public $aadhar_back_file_upload;
 
     public $current_step;
     public $form1_status;
@@ -141,37 +152,112 @@ class PartnerRegistrationForm extends Model
     public function scenarios()
     {
         return [
-            self::SCENARIO_STEP1 => ['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'],
-            self::SCENARIO_STEP2 => ['registration_number', 'registration_copy_upload', 'pan_number', 'pan_upload'],
-            // self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'state', 'gst_number', 'gst_upload', 'billing_phone', 'billing_mail'],
+            self::SCENARIO_STEP1 => ['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo_file_upload', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'],
+            self::SCENARIO_STEP2 => ['registration_number', 'pan_number', 'registration_copy_file_upload', 'pan_file_upload'],
             self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'billing_phone', 'billing_mail'],
-            self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload'],
-            self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload', 'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'],
+            self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_file_upload'],
+            self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_file_upload', 'aadhar_number', 'aadhar_front_file_upload', 'aadhar_back_file_upload'],
         ];
     }
 
     public function rules()
     {
         return [
-            [['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
+            [['legal_entity_name', 'legal_entity_type', 'brand_name', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
+            [
+                'logo_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP1,
+                'when' => function ($model) {
+                    return empty($model->logo);
+                },
+                'whenClient' => 'function (attribute, value) {
+                    return $(\'#logo\').val() === \'\';
+                }',
+            ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
-            [['logo'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP1],
+            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => true,],
 
-            [['registration_number', 'pan_number', 'registration_copy_upload', 'pan_upload'], 'required', 'on' => self::SCENARIO_STEP2],
-            [['registration_copy_upload', 'pan_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
+
+            [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
+            [
+                'registration_copy_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP2,
+                'when' => function ($model) {
+                    return empty($model->registration_copy_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                return $(\'#registration_copy_upload\').val() === \'\';
+            }'
+            ],
+            [
+                'pan_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP2,
+                'when' => function ($model) {
+                    return empty($model->pan_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                return $(\'#pan_upload\').val() === \'\';
+            }'
+            ],
+            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
 
             [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
-            // [['gst_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP3],
+
+            [['bank_name', 'account_holder_name', 'account_number', 'ifsc_number'], 'required', 'on' => self::SCENARIO_STEP4],
+            [
+                'cancel_check_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP4,
+                'when' => function ($model) {
+                    return empty($model->cancel_check_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                    return $(\'#cancel_check_upload\').val() === \'\';
+                }',
+            ],
+            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
 
 
-            [['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload'], 'required', 'on' => self::SCENARIO_STEP4],
-            [['cancel_check_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
-
-
-            [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload', 'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'], 'required', 'on' => self::SCENARIO_STEP5],
+            [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
             ['kyc_email', 'email', 'on' => self::SCENARIO_STEP5],
-            [['kyc_pan_upload', 'aadhar_front_upload', 'aadhar_back_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
+            [
+                'kyc_pan_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP5,
+                'when' => function ($model) {
+                    return empty($model->kyc_pan_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                    return $(\'#kyc_pan_upload\').val() === \'\';
+                }',
+            ],
+            [
+                'aadhar_front_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP5,
+                'when' => function ($model) {
+                    return empty($model->aadhar_front_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                    return $(\'#aadhar_front_upload\').val() === \'\';
+                }',
+            ],
+            [
+                'aadhar_back_file_upload',
+                'required',
+                'on' => self::SCENARIO_STEP5,
+                'when' => function ($model) {
+                    return empty($model->aadhar_back_upload);
+                },
+                'whenClient' => 'function (attribute, value) {
+                    return $(\'#aadhar_back_upload\').val() === \'\';
+                }',
+            ],
+            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
@@ -288,7 +374,6 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->updated_time_final = $this->updated_time_final;
     }
 
-
     public function uploadFiles()
     {
         $basePath = Yii::$app->params['datapath'] . '/Uploads';
@@ -301,29 +386,88 @@ class PartnerRegistrationForm extends Model
             mkdir($userFolder, 0777, true);
         }
 
-        $fileFields = [
-            'logo',
-            'registration_copy_upload',
-            'pan_upload',
-            'cancel_check_upload',
-            'kyc_pan_upload',
-            'aadhar_front_upload',
-            'aadhar_back_upload',
-        ];
+        if ($this->logo_file_upload) {
+            $fileName = 'logo_file_upload' . '_' . time() . '.' . $this->logo_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
 
-        foreach ($fileFields as $field) {
-            $file = UploadedFile::getInstance($this, $field);
+            if ($this->logo_file_upload->saveAs($filePath)) {
+                $this->logo_file_upload = $filePath;
+                $this->partner_model->logo = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
 
-            if ($file) {
-                $fileName = $field . '_' . time() . '.' . $file->extension;
-                $filePath = $userFolder . '/' . $fileName;
 
-                if ($file->saveAs($filePath)) {
-                    $this->$field = $filePath;
-                    $this->partner_model->$field = $filePath;
-                } else {
-                    Yii::error("Failed to save file: $fileName", __METHOD__);
-                }
+        if ($this->registration_copy_file_upload) {
+            $fileName = 'registration_copy_file_upload' . '_' . time() . '.' . $this->registration_copy_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->registration_copy_file_upload->saveAs($filePath)) {
+                $this->registration_copy_file_upload = $filePath;
+                $this->partner_model->registration_copy_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
+
+        if ($this->pan_file_upload) {
+            $fileName = 'pan_file_upload' . '_' . time() . '.' . $this->pan_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->pan_file_upload->saveAs($filePath)) {
+                $this->pan_file_upload = $filePath;
+                $this->partner_model->pan_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
+
+        if ($this->cancel_check_file_upload) {
+            $fileName = 'cancel_check_file_upload' . '_' . time() . '.' . $this->cancel_check_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->cancel_check_file_upload->saveAs($filePath)) {
+                $this->cancel_check_file_upload = $filePath;
+                $this->partner_model->cancel_check_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
+
+        if ($this->kyc_pan_file_upload) {
+            $fileName = 'kyc_pan_file_upload' . '_' . time() . '.' . $this->kyc_pan_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->kyc_pan_file_upload->saveAs($filePath)) {
+                $this->kyc_pan_file_upload = $filePath;
+                $this->partner_model->kyc_pan_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
+
+        if ($this->aadhar_front_file_upload) {
+            $fileName = 'aadhar_front_file_upload' . '_' . time() . '.' . $this->aadhar_front_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->aadhar_front_file_upload->saveAs($filePath)) {
+                $this->aadhar_front_file_upload = $filePath;
+                $this->partner_model->aadhar_front_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
+            }
+        }
+
+        if ($this->aadhar_back_file_upload) {
+            $fileName = 'aadhar_back_file_upload' . '_' . time() . '.' . $this->aadhar_back_file_upload->extension;
+            $filePath = $userFolder . '/' . $fileName;
+
+            if ($this->aadhar_back_file_upload->saveAs($filePath)) {
+                $this->aadhar_back_file_upload = $filePath;
+                $this->partner_model->aadhar_back_upload = $filePath;
+            } else {
+                Yii::error("Failed to save file: $fileName", __METHOD__);
             }
         }
 
