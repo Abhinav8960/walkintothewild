@@ -223,7 +223,7 @@ class PackageApprovalController extends Controller
             $newModel->status = Package::EDIATBLE_STATUS;
             $newModel->save(false);
             $this->CopyPackageComment($model->id, $newModel->id);
-            $this->CopyPackageCommentReport($model->id, $newModel->id);
+            // $this->CopyPackageCommentReport($model->id, $newModel->id);
             $this->CopyPackageDay($model->id, $newModel->id);
             $this->CopyPackageIncluded($model->id, $newModel->id);
             $this->CopyPackageFeature($model->id, $newModel->id);
@@ -255,23 +255,23 @@ class PackageApprovalController extends Controller
         return true;
     }
 
-    private function CopyPackageCommentReport($old_package_id, $new_package_id)
-    {
-        // package_comment_report_approval;
+    // private function CopyPackageCommentReport($old_package_id, $new_package_id)
+    // {
+    //     // package_comment_report_approval;
 
-        $model = PackageCommentReport::find()->where(['package_id' => $old_package_id])->all();
-        if ($model) {
-            foreach ($model as $comment) {
-                $newModel = new PackageCommentReport();
-                $newModel->attributes = $comment->attributes;
-                $newModel->id = null; // Set the ID to null for the new record
-                $newModel->package_id = $new_package_id;
-                $newModel->save(false);
-            }
-        }
+    //     $model = PackageCommentReport::find()->where(['package_id' => $old_package_id])->all();
+    //     if ($model) {
+    //         foreach ($model as $comment) {
+    //             $newModel = new PackageCommentReport();
+    //             $newModel->attributes = $comment->attributes;
+    //             $newModel->id = null; // Set the ID to null for the new record
+    //             $newModel->package_id = $new_package_id;
+    //             $newModel->save(false);
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     private function CopyPackageDay($old_package_id, $new_package_id)
     {

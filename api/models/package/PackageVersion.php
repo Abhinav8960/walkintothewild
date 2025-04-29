@@ -66,7 +66,7 @@ class PackageVersion extends \common\models\package\PackageVersion
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
             $fields[] = 'package_itinerary_overview';
             $fields[] = 'master_package_with_included';
             $fields[] = 'package_inclusion';
@@ -93,6 +93,9 @@ class PackageVersion extends \common\models\package\PackageVersion
             $fields[] = 'package_agenda_id';
             $fields[] = 'stay_category_id';
             $fields[] = 'status';
+        }
+        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
+            $fields[] = 'package_versions';
         }
         return $fields;
     }
@@ -148,7 +151,7 @@ class PackageVersion extends \common\models\package\PackageVersion
         return $arr;
     }
 
-   
+
 
     public function getLivePackage()
     {
@@ -482,5 +485,25 @@ class PackageVersion extends \common\models\package\PackageVersion
         return [
             'status' => self::TYPE_BOOLEAN,
         ];
+    }
+
+    public function getVersions()
+    {
+        return $this->hasMany(self::className(), ['package_id' => 'package_id']);
+    }
+
+    public function getPackage_versions()
+    {
+        $arr = [];
+
+        foreach ($this->versions as $key => $version) {
+            $arr[$key]['id'] = $version->id;
+            $arr[$key]['package_name'] = $version->package_name;
+            $arr[$key]['package_slug'] = $version->package_slug;
+            $arr[$key]['package_display_name'] = $version->package_display_name;
+            $arr[$key]['status_label'] = $version->statusLabel;
+        }
+
+        return $arr = [];
     }
 }

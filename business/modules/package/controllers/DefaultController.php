@@ -617,8 +617,11 @@ class DefaultController extends Controller
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
-            $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
-            $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
+            if(!$isNewRecord){
+
+                $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
+            }
+            // $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageDay($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);;
             $this->CopyPackageFeature($model->package_id, $model->version, $newModel->package_id);
@@ -651,25 +654,25 @@ class DefaultController extends Controller
         return true;
     }
 
-    private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
-    {
-        // package_comment_report_approval;
+    // private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
+    // {
+    //     // package_comment_report_approval;
 
-        $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
-        if ($model) {
-            foreach ($model as $comment) {
-                $newModel = new PackageCommentReport();
-                $newModel->attributes = $comment->attributes;
-                $newModel->id = null; // Set the ID to null for the new record
-                $newModel->package_id = $new_package_id;
-                $newModel->version = $this->version;
+    //     $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
+    //     if ($model) {
+    //         foreach ($model as $comment) {
+    //             $newModel = new PackageCommentReport();
+    //             $newModel->attributes = $comment->attributes;
+    //             $newModel->id = null; // Set the ID to null for the new record
+    //             $newModel->package_id = $new_package_id;
+    //             $newModel->version = $this->version;
 
-                $newModel->save(false);
-            }
-        }
+    //             $newModel->save(false);
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     private function CopyPackageDay($old_package_id, $old_version, $new_package_id)
     {

@@ -96,7 +96,7 @@ class PackageToProductionController extends Controller
         $model = Package::find()->where(['id' => $old_package_id])->one();
         if ($model) {
             $copyModel = new \common\models\package\PackageVersion();
-           
+
             $copyModel->attributes = $model->attributes;
             $copyModel->id = null; // Set the ID to null for the new record
             $copyModel->package_id = $new_package_id;
