@@ -80,7 +80,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function getPackage_count()
     {
-        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::STATUS_ACTIVE])->count();
+        return Package::find()->where(['owned_by_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
     }
 
 

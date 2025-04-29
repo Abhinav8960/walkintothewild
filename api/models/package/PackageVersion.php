@@ -105,14 +105,33 @@ class PackageVersion extends \common\models\package\PackageVersion
      */
     public function rules()
     {
+        // return [
+        //     [['package_name'], 'required'],
+        //     [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
+        //     [['cost_per_person'], 'number'],
+        //     [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+        //     [['package_name'], 'string', 'max' => 512],
+        //     // [['package_slug'], 'string', 'max' => 720],
+        //     [['start_location', 'end_location'], 'string', 'max' => 255],
+        //     [['package_id'],'integer'],
+        // ];
+
         return [
-            [['package_name'], 'required'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
-            [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['owned_by_id', 'package_agenda_id', 'safari_type', 'start_location', 'end_location', 'start_date', 'end_date', 'package_image', 'package_banner_image', 'stay_category_id', 'type', 'gst_percentage', 'package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'master_vehicle_id', 'cancellation_reason', 'popular_package', 'delete_reason_id', 'delete_reason', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['version'], 'default', 'value' => 'v1'],
+            [['total_view'], 'default', 'value' => 0],
+            [['total_price'], 'default', 'value' => 0.00],
+            [['is_published_on_api'], 'default', 'value' => 1],
+            [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
+            [['start_date', 'end_date', 'status'], 'safe'],
+            [['cost_per_person', 'total_price'], 'number'],
+            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
+            [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
+            [['version'], 'string', 'max' => 10],
             [['package_name'], 'string', 'max' => 512],
-            // [['package_slug'], 'string', 'max' => 720],
-            [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['package_id'],'integer'],
+
+
         ];
     }
 
@@ -461,7 +480,7 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->package_slug . '/' . $this->package->package_slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->slug . '/' . $this->package->package_slug;
     }
 
     public function getCan_comment()
@@ -498,12 +517,12 @@ class PackageVersion extends \common\models\package\PackageVersion
 
         foreach ($this->versions as $key => $version) {
             $arr[$key]['id'] = $version->id;
+            $arr[$key]['version'] = $version->version;
             $arr[$key]['package_name'] = $version->package_name;
-            $arr[$key]['package_slug'] = $version->package_slug;
             $arr[$key]['package_display_name'] = $version->package_display_name;
             $arr[$key]['status_label'] = $version->statusLabel;
         }
 
-        return $arr = [];
+        return $arr;
     }
 }
