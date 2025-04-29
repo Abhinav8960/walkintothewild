@@ -32,6 +32,7 @@ use common\models\sharesafari\ShareSafariComment;
 use common\models\package\form\PackageGalleryForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageCommentActionForm;
+use common\models\package\PackageVersion;
 
 /**
  * Default controller for the `manage` module
@@ -74,7 +75,7 @@ class PackageController extends FrontendBaseController
             return $this->redirect('/manage');
         }
         $model = new PackageVersionForm();
-        $model->status = PackageVersion::STATUS_ACTIVE;
+        $model->status = PackageVersion::EDIATBLE_STATUS;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
