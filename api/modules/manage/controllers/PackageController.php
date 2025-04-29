@@ -34,6 +34,7 @@ use yii\filters\AccessControl;
  */
 class PackageController extends RestController
 {
+    public $version;
     public function behaviors()
     {
 
@@ -127,7 +128,7 @@ class PackageController extends RestController
 
                 $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                     foreach ($package_feature as $feature) {
 
                         $packagefeature = new PackageFeature();
@@ -180,7 +181,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
@@ -196,7 +197,7 @@ class PackageController extends RestController
 
                 $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
-                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                    PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
 
                     foreach ($package_feature as $feature) {
                         $packagefeature = new PackageFeature();
@@ -239,7 +240,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'policy_info';
 
@@ -266,7 +267,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'getting_there';
 
@@ -293,7 +294,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'inclusion';
 
@@ -310,7 +311,8 @@ class PackageController extends RestController
                         if (!$packageIncluded) {
                             $packageIncluded = new PackageIncluded();
                             $packageIncluded->include_id = $optionId;
-                            $packageIncluded->package_id = $package_version_model->id;
+                            $packageIncluded->package_id = $package_version_model->package_id;
+                            $packageIncluded->version = $package_version_model->version;
                         }
                         $packageIncluded->selection = $selection;
                         if (!$packageIncluded->save()) {
@@ -322,6 +324,8 @@ class PackageController extends RestController
 
                             if ($package_days) {
                                 foreach ($package_days as $package_day) {
+                                    $package_day->package_id = $package_version_model->package_id;
+                                    $package_day->version = $package_version_model->version;
                                     $package_day->meal_breakfast = 1;
                                     $package_day->meal_lunch = 1;
                                     $package_day->meal_dinner = 1;
@@ -353,7 +357,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
@@ -387,7 +391,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_version_model->package_id;
         $searchModel->version = $package_version_model->version;
@@ -407,7 +411,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $model = new PackageFaqForm();
         $model->package_id =  $package_version_model->package_id;
         $model->version =  $package_version_model->version;
@@ -446,8 +450,12 @@ class PackageController extends RestController
         }
 
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
+        if(!$faq_model)
+        {
+            throw new NotFoundHttpException('Faq Not Found.'); 
+        }
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
         $model->version = $package_version_model->version;
@@ -487,7 +495,7 @@ class PackageController extends RestController
         }
 
         $package_model = $this->findModel($slug, $safari_operator->id);
-        $package_version_model = $this->findPackageVersionModel($package_model->id, PackageVersion::EDIATBLE_STATUS);
+        $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $package_version_model->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
@@ -501,6 +509,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while sending for approval"]);
         }
         $transaction->commit();
+       
 
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package sent for approval successfully"]);
     }
@@ -572,6 +581,15 @@ class PackageController extends RestController
     protected function findPackageVersionModel($package_id, $version)
     {
         if (($model = PackageVersion::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    protected function findPackageVersionModelWithStatus($package_id, $status)
+    {
+        if (($model = PackageVersion::findOne(['package_id' => $package_id, 'status' => $status])) !== null) {
             return $model;
         }
 
@@ -848,7 +866,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
-        if (!empty($version)) {
+        if (empty($version)) {
             $version = $package_model->editable_version;
         }
         $package_version_model = $this->findPackageVersionModel($package_model->id, $version);
