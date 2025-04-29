@@ -65,8 +65,8 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
                                         'contentOptions' => ['style' => 'width: 15%;'],
                                         'template' => '{update}&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                                         'buttons' => [
-                                            'update' => function ($url, $model) {
-                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toRoute(['update-faq', 'id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn update-action btn-orange me-2', 'title' => 'Update FAQ']);
+                                            'update' => function ($url, $model) use($package_version_model) {
+                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toRoute(['update-faq','id' => $package_version_model->id, 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn update-action btn-orange me-2', 'title' => 'Update FAQ']);
                                             },
                                         ]
                                     ],

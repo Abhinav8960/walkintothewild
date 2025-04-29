@@ -231,7 +231,7 @@ class DefaultController extends Controller
     public function actionItinerary($id, $day = 1)
     {
         $package_version_model = $this->findModel($id);
-        
+
         $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
@@ -248,7 +248,7 @@ class DefaultController extends Controller
                 $model->day_image = UploadedFile::getInstance($model, 'day_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                   
+
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -447,9 +447,9 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
-    public function actionUpdateFaq($id, $faq_id)
+    public function actionUpdateFaq($id, $package_id, $faq_id)
     {
-        $package_version_model = $this->findModel($id);
+        $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
@@ -619,7 +619,7 @@ class DefaultController extends Controller
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
-            if(!$isNewRecord){
+            if (!$isNewRecord) {
 
                 $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
             }
@@ -817,7 +817,7 @@ class DefaultController extends Controller
         return true;
     }
 
-   
+
 
 
     private function newpackage($model)
