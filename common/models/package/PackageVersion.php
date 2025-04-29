@@ -191,18 +191,18 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=>'version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'package_id', 'version'=>'version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
     public function getPackageIncludeds()
     {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version' => 'version']);
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getPackagedays()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version' => 'version']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'package_id', 'version' => 'version']);
     }
 
     public function getImagepath()
