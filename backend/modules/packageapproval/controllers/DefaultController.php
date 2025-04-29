@@ -126,6 +126,7 @@ class DefaultController extends Controller
             $package->refund_policy = $model->refund_policy;
             $package->pending_for_approval_version = null;
             $package->live_version = $version;
+            $package->status = Package::STATUS_ACTIVE;
             $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
