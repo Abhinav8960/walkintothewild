@@ -17,7 +17,7 @@ use yii\helpers\Url;
             <?php } ?>
             <?php if (Yii::$app->user->identity && $operator = Yii::$app->user->identity->operator) { 
                 if($operator->category_id == 1) {?>
-                <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>"> <i class="fa-solid fa-gift me-2"></i> Packages</a>
+                <!-- <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>"> <i class="fa-solid fa-gift me-2"></i> Packages</a> -->
             <?php } }?>
             <a href="<?= Url::toRoute(['/account/privacy']) ?>" class="nav-link mb-2 <?= $active == 'privacy' ? 'active' : '' ?>"><i class="fa-solid fa-lock me-2"></i> Privacy</a>
             <a href="<?= Url::toRoute(['/account/blocked-member']) ?>" class="nav-link mb-2 <?= $active == 'blocked' ? 'active' : '' ?>"><i class="fa-solid fa-user-lock me-2"></i> Blocked Members</a>
