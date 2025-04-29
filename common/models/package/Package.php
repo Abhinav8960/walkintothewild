@@ -400,4 +400,15 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return $this->hasMany(PackageVersion::className(), ['package_id' => 'id']);
     }
 
+    public function generateUnqiueSlug($package_name)
+    {
+        $slug = \yii\helpers\Inflector::slug($package_name);
+        $count = 0;
+        while (self::find()->where(['package_slug' => $slug])->exists()) {
+            $count++;
+            $slug = \yii\helpers\Inflector::slug($this->package_name) . '-' . $count;
+        }
+        return $slug;
+    }
+
 }

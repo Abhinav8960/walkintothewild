@@ -812,6 +812,25 @@ class DefaultController extends Controller
         return true;
     }
 
+   
+
+
+    private function newpackage($model)
+    {
+        $newModel = new Package();
+        $newModel->package_name = $model->package_name;
+        // $newModel->package_agenda_id = $model->package_agenda_id;
+        // $newModel->no_of_day = $model->no_of_day;
+        // $newModel->no_of_night = $model->no_of_night;
+        // $newModel->safari_type = $model->safari_type;
+        // $newModel->safari_type = $model->safari_type;
+        $newModel->editable_version = 'v1';
+        $newModel->id = null; // Set the ID to null for the new record
+        $newModel->status = Package::STATUS_SUSPEND;
+        $newModel->save(false);
+        return $newModel->id;
+    }
+
     public function upsertEditablePackage($package_id, $version)
     {
 
@@ -831,22 +850,5 @@ class DefaultController extends Controller
             return $operator;
         }
         throw new ForbiddenHttpException('You are not Allowed to access this Page');
-    }
-
-
-    private function newpackage($model)
-    {
-        $newModel = new Package();
-        $newModel->package_name = $model->package_name;
-        // $newModel->package_agenda_id = $model->package_agenda_id;
-        // $newModel->no_of_day = $model->no_of_day;
-        // $newModel->no_of_night = $model->no_of_night;
-        // $newModel->safari_type = $model->safari_type;
-        // $newModel->safari_type = $model->safari_type;
-        $newModel->editable_version = 'v1';
-        $newModel->id = null; // Set the ID to null for the new record
-        $newModel->status = Package::STATUS_SUSPEND;
-        $newModel->save(false);
-        return $newModel->id;
     }
 }
