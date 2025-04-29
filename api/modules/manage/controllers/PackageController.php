@@ -120,7 +120,7 @@ class PackageController extends RestController
 
                 $this->updatePackageStatus($model->package_id, $model->version, PackageVersion::EDIATBLE_STATUS);
 
-                $package_feature = $model->package_feature;
+                $package_feature = explode(",", (string)$model->package_feature);
                 if ($package_feature) {
                     PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
                     foreach ($package_feature as $feature) {
@@ -134,7 +134,7 @@ class PackageController extends RestController
                 }
 
 
-                $package_park = $model->package_park;
+                $package_park = explode(",", (string)$model->package_park);
                 if ($package_park) {
                     PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                     foreach ($package_park as $park) {
@@ -783,7 +783,7 @@ class PackageController extends RestController
 
             $model->editable_version = $version;
         }
-        if ($model->save(false)) {
+        if ($model->save()) {
             $this->terminatePackage($package_id);
             return true;
         }
