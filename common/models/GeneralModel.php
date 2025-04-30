@@ -1406,7 +1406,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function operatorsIdOrNull($user_id)
     {
-        $safari_operator =  SafariOperator::find()->where(['user_id' => $user_id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-        return $safari_operator->id ?? null;
+        $safari_operator = SafariOperator::find()
+            ->where(['user_id' => $user_id, 'status' => SafariOperator::STATUS_ACTIVE])
+            ->limit(1)
+            ->one();
+
+        return $safari_operator ? $safari_operator->id : null;
     }
 }
