@@ -106,7 +106,6 @@ class UserPosts extends \common\models\UserPosts
     public function getThumbnails()
     {
         if(!empty($this->filepath)){
-
             return $arr = [
                 'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath,
                 'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath,
