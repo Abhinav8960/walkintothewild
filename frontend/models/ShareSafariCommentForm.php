@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
+use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
@@ -56,12 +57,7 @@ class ShareSafariCommentForm extends Model
         $comment->share_safari_id = $share_safari->id;
         $comment->park_id = $share_safari->park->id;
         $comment->user_id = Yii::$app->user->id;
-        if (Yii::$app->user->identity) {
-            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-            if ($safari_operator) {
-                $comment->safari_operator_id = $safari_operator->id;
-            }
-        }
+        $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->comment = $this->comment;
         // $comment->user_device = $agent->device();
         // $comment->user_agent = Yii::$app->request->userAgent;

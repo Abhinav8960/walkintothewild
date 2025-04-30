@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
+use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\package\PackageVersion;
 use common\models\package\Package;
@@ -57,12 +58,7 @@ class PackageReplyForm extends Model
         $reply->package_id = $package->id;
         $reply->version = $package->live_version;
         $reply->user_id = Yii::$app->user->id;
-        if (Yii::$app->user->identity) {
-            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-            if ($safari_operator) {
-                $reply->safari_operator_id = $safari_operator->id;
-            }
-        }
+        $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
         // $reply->user_device = $agent->device();
