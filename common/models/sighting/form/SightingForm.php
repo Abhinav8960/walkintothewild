@@ -33,6 +33,8 @@ class SightingForm extends Model
     public $post_datetime;
     public $zone_id;
 
+    public $safari_operator_id;
+
 
     public function __construct(Sighting $sighting_model = null)
     {
@@ -44,6 +46,7 @@ class SightingForm extends Model
 
             $this->description = $this->sighting_model->description;
             $this->user_id = $this->sighting_model->user_id;
+            $this->safari_operator_id = $this->sighting_model->safari_operator_id;
             $this->v_size = $this->sighting_model->v_size;
             $this->v_duration = $this->sighting_model->v_duration;
             $this->video_thumbnail = $this->sighting_model->video_thumbnail;
@@ -55,6 +58,7 @@ class SightingForm extends Model
             $this->safari_session_id = $this->sighting_model->safari_session_id;
             $this->post_datetime = $this->sighting_model->post_datetime;
             $this->zone_id = $this->sighting_model->zone_id;
+            
         }
     }
 
@@ -77,7 +81,7 @@ class SightingForm extends Model
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'maxSize' => 10 * 1024,
             ],
-            [['user_id', 'status'], 'integer'],
+            [['user_id', 'status','safari_operator_id'], 'integer'],
             [['description'], 'string'],
             [['v_size', 'v_duration', 'master_animal_id', 'safari_session_id', 'zone_id', 'location'], 'integer'],
             [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
@@ -102,6 +106,7 @@ class SightingForm extends Model
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'safari_operator_id' => 'Safari Operator ID',
             'file' => 'File',
             'filepath' => 'Filepath',
             'video_thumbnail' => 'Video Thumbnail',
@@ -125,6 +130,7 @@ class SightingForm extends Model
 
         $this->sighting_model->description = $this->description;
         $this->sighting_model->user_id = $this->user_id;
+        $this->sighting_model->safari_operator_id = $this->safari_operator_id;
         $this->sighting_model->v_size = $this->v_size;
         $this->sighting_model->v_duration = $this->v_duration;
         // $this->sighting_model->video_thumbnail = $this->video_thumbnail;

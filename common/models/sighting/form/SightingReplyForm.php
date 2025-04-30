@@ -2,6 +2,7 @@
 
 namespace common\models\sighting\form;
 
+use common\models\operator\SafariOperator;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use Yii;
@@ -40,6 +41,12 @@ class SightingReplyForm extends Model
         $reply->comment = $this->comment;
         $reply->dateTime = date('Y-m-d H:i:s');
         $reply->user_id = Yii::$app->user->id;
+        if (Yii::$app->user->identity) {
+            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+            if ($safari_operator) {
+                $reply->safari_operator_id = $safari_operator->id;
+            }
+        }
         $reply->sighting_id = $sighting->id;
         $reply->parent_id = $this->parent_id;
 

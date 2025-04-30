@@ -9,6 +9,7 @@ use api\models\sighting\Sighting;
 use api\models\sighting\SightingCommentLike;
 use api\models\sighting\SightingLike;
 use api\models\sighting\SightingSearch;
+use common\models\operator\SafariOperator;
 use common\models\sighting\form\SightingCommentForm;
 use common\models\sighting\form\SightingForm;
 use common\models\sighting\form\SightingReplyForm;
@@ -35,11 +36,16 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report','sighting-delete'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report','sighting-delete'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create'],
+                        'allow' => $this->isSafariOperator(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -77,6 +83,7 @@ class DefaultController extends RestController
     {
         $model = new SightingForm();
         $model->user_id = $this->userinfoId;
+        $model->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
         $model->status = Sighting::STATUS_ACTIVE;
 
         $model->load(\Yii::$app->request->post());
@@ -249,5 +256,18 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+    }
+
+
+    private function isSafariOperator()
+    {
+        if ($this->userinfo) {
+            $operator = SafariOperator::find()->where(['user_id' => $this->userinfoId, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+            if ($operator) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

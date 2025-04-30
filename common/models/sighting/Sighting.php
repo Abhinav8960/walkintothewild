@@ -58,7 +58,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['user_id', 'file', 'filepath', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag', 'etag', 'height', 'width', 'latitude', 'longitude', 'location', 'description', 'master_animal_id', 'safari_session_id', 'post_datetime', 'zone_id', 'v_size', 'v_duration', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['total_view'], 'default', 'value' => 0],
-            [['user_id', 'height', 'width', 'location', 'master_animal_id', 'safari_session_id', 'zone_id', 'v_size', 'v_duration', 'status', 'total_view', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'height', 'width', 'location', 'master_animal_id', 'safari_session_id', 'zone_id', 'v_size', 'v_duration', 'status', 'total_view', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['video_thumbnail', 'description'], 'string'],
             [['latitude', 'longitude'], 'number'],
             [['post_datetime'], 'safe'],
