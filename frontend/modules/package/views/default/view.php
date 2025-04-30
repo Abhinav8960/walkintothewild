@@ -76,7 +76,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
                                         <?php
-                                        $package_parks = $package->getPackagepark()->where(['status' => 1])->all();
+                                        $package_parks = $package->getPackagepark()->andWhere(['status' => 1])->all();
                                         if ($package_parks) {
                                             echo '<h6 class="titler_safari">';
                                             foreach ($package_parks as $package_park) {

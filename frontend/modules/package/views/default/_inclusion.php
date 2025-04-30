@@ -9,7 +9,7 @@
                 // Retrieve selected package inclusions
                 $package_included = PackageIncluded::find()
                     ->select(['include_id', 'selection'])
-                    ->where(['package_id' => $package->id, 'status' => 1])
+                    ->where(['package_id' => $package->id,'version' => $package->live_version, 'status' => 1])
                     ->asArray()
                     ->all();
 
