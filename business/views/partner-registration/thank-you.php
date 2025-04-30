@@ -12,10 +12,10 @@ use yii\bootstrap5\Html;
         </div>
         <h2 class="text-success fw-bold mb-2">Thank You!</h2>
         <p class="mb-4 text-muted" style="font-size: 1.1rem;">Your form has been successfully Sent!</p>
-        <?= Html::a('Go to Your Dashboard', ['/'], [
+        <!-- <?= Html::a('Go to Your Dashboard', ['/'], [
             'class' => 'btn btn-success fw-bold px-5 py-2',
             'style' => 'font-size: 16px; letter-spacing: 0.5px; color: white;',
-        ]) ?>
+        ]) ?> -->
     </div>
 </div>
 
