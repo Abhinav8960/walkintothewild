@@ -31,17 +31,6 @@ class UserPosts extends \common\models\UserPosts
     }
 
 
-    public function getFull_image_path()
-    {
-        // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
-
-        // return $this->filepath;
-        // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
-        if ($this->file) {
-            return  'https://d281t0xjcq032r.cloudfront.net/post/' . $this->user_id . '/media/' . $this->file;
-        }
-        return null;
-    }
 
     // public function getThumbnail()
     // {
@@ -98,5 +87,28 @@ class UserPosts extends \common\models\UserPosts
     public function getResource_uri()
     {
         return Yii::$app->params['frontend_url'] . '/posts/' . base64_encode($this->id);
+    }
+
+    public function getFull_image_path()
+    {
+        // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
+
+        // return $this->filepath;
+        // return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
+        if ($this->file) {
+            return  Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
+        }
+        return null;
+    }
+
+    public function getThumbnails()
+    {
+        // $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        $arr = [
+            'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath,
+            'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath,
+            'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath,
+            'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath,
+        ];
     }
 }

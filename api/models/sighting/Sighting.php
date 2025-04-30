@@ -24,8 +24,29 @@ class Sighting extends \common\models\sighting\Sighting
         $fields[] = 'sighting_user_detail';
         $fields[] = 'resource_uri';
         $fields[] = 'thumbnail';
-        $hold_fields = ['height', 'width', 'latitude', 'longitude', 'v_size', 'v_duration', 'etag', 'location', 'filepath', 'like_count', 'file', 'total_view', 'status',
-                        'created_by', 'updated_by', 'created_at', 'updated_at', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag'];
+        $fields[] = 'thumbnails';
+        $hold_fields = [
+            'height',
+            'width',
+            'latitude',
+            'longitude',
+            'v_size',
+            'v_duration',
+            'etag',
+            'location',
+            'filepath',
+            'like_count',
+            'file',
+            'total_view',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
+            'video_thumbnail',
+            'video_thumbnail_path',
+            'video_thumbnail_etag'
+        ];
 
 
         return array_diff($fields, $hold_fields);
@@ -42,7 +63,7 @@ class Sighting extends \common\models\sighting\Sighting
     public function getFull_file_path()
     {
         if ($this->file) {
-            return  'https://d281t0xjcq032r.cloudfront.net/watchpost/' . $this->user_id . '/media/' . $this->file;
+            return  Yii::$app->params['s3_endpoint'] . '/watchpost/' . $this->user_id . '/media/' . $this->file;
         }
         return null;
     }
@@ -116,8 +137,24 @@ class Sighting extends \common\models\sighting\Sighting
         return Yii::$app->params['frontend_url'] . '/sighting/' . base64_encode($this->id);
     }
 
+    // public function getThumbnail()
+    // {
+    //     return 'https://d26fop8cp5dhfy.cloudfront.net/thumbnail/' . $this->filepath . '.jpg';
+    // }
     public function getThumbnail()
     {
-        return 'https://d26fop8cp5dhfy.cloudfront.net/thumbnail/' . $this->filepath . '.jpg';
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg';
+    }
+
+    public function getThumbnails()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        $arr = [
+            'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg',
+            'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg',
+            'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg',
+            'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg',
+        ];
     }
 }
