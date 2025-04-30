@@ -15,10 +15,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
     <div class="row g-4 info-section">
-        <div class="col-md-6">
+    <div class="col-md-6">
             <div class="info-line">
                 <strong>Operated Park:</strong>
-                <span><?= $model->partner_model->park->title ?></span>
+                <span><?= $model->partner_model->park->title ?? ''?></span>
             </div>
         </div>
 
