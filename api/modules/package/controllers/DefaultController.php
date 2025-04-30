@@ -210,6 +210,13 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
+
+        if ($this->userinfo) {
+            if ($this->userinfo->partner) {
+                return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
+            }
+        }
+
         if ($package) {
             $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
             if (!$wishlist) {
@@ -233,6 +240,13 @@ class DefaultController extends RestController
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
+
+        if ($this->userinfo) {
+            if ($this->userinfo->partner) {
+                return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
+            }
+        }
+
         if ($package) {
             $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
             if ($wishlist) {
