@@ -18,6 +18,8 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'comments_count';
         $fields[] = 'post_user_detail';
         $fields[] = 'resource_uri';
+        $fields[] = 'thumbnails';
+        
         $hold_fields = ['etag', 'size', 'height', 'width', 'filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
         return array_diff($fields, $hold_fields);
