@@ -41,7 +41,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                     </ul>
                 </li>
 
-                <li class="slide <?= in_array($active_url, array(
+                <!-- <li class="slide <?= in_array($active_url, array(
                                         "/sharesafari/default/index",
                                         "/sharesafari/default/create",
                                     )) ? "is-expanded" : "" ?>">
@@ -57,7 +57,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
                                                     )) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari (Fixed Departure)</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li><a class="slide-item <?= in_array($active_url, array(
                                                          "/partner-registration/create",

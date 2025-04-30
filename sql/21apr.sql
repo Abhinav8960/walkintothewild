@@ -1,3 +1,5 @@
+-- 29 apr 2025
+ALTER TABLE `user` ADD `apple_source_id` VARCHAR(255) NULL DEFAULT NULL AFTER `google_source_id`;
 -- 27apr 2025
 ALTER TABLE `package`  ADD `package_id` INT NOT NULL  AFTER `id`;
 ALTER TABLE `package_comment`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;

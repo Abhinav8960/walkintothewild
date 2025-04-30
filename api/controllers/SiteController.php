@@ -126,6 +126,9 @@ class SiteController extends RestController
             $user_form = new User();
             if ($user_form->hasAttribute($model->source . '_source_id')) {
 
+                if (!in_array($model->source, ['google', 'apple'])) {
+                    return Yii::$app->api->sendFailedStringResponse(['You are not register with us, check source']);
+                }
 
                 $auth = Auth::find()->where([
                     'source' => $model->source,
@@ -154,7 +157,7 @@ class SiteController extends RestController
                         // $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
 
 
-                        if ($user) {
+                        if ($user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one()) {
                             if ($user->status != User::STATUS_ACTIVE) {
                                 return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
                             }
@@ -164,14 +167,29 @@ class SiteController extends RestController
                             // $data['authorization_code'] = $auth_code;
                             $data['access_token'] = $accesstoken->token;
                             // $data['expires_at'] = $accesstoken->expires_at;
-
-
-
-
                             return \Yii::$app->api->sendResponse($data);
                         } else {
+                            $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
 
-                            return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
+                            $source_id_col = strtolower($model->source . '_source_id');
+                            $user->$source_id_col  = $model->source_id;
+                            if (!empty($user->$source_id_col)) {
+                                return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
+                            }
+
+                            $user->status = User::STATUS_ACTIVE;
+                            $user->save(false);
+                            $auth = new Auth([
+                                'user_id' => $user->id,
+                                'source' => $model->source,
+                                'source_id' => $model->source_id,
+                            ]);
+                            $auth->save();
+                            $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+                            $data = [];
+                            // $data['authorization_code'] = $auth_code;
+                            $data['access_token'] = $accesstoken->token;
+                            return \Yii::$app->api->sendResponse($data);
                         }
                     } else {
 

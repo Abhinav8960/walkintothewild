@@ -113,7 +113,7 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
 
                                 $packagefeature = new PackageFeature();
@@ -189,7 +189,7 @@ class DefaultController extends Controller
 
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->id, 'version' => $model->package_version_model->version]);
+                            PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
                                 $packagefeature->package_id = $model->package_version_model->package_id;
@@ -231,7 +231,7 @@ class DefaultController extends Controller
     public function actionItinerary($id, $day = 1)
     {
         $package_version_model = $this->findModel($id);
-        
+
         $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
@@ -248,7 +248,7 @@ class DefaultController extends Controller
                 $model->day_image = UploadedFile::getInstance($model, 'day_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                   
+
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -296,6 +296,8 @@ class DefaultController extends Controller
                                     $package_days = PackageDay::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version, 'status' => 1])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
+                                            $package_day->package_id = $package_version_model->package_id;
+                                            $package_day->version = $package_version_model->version;
                                             $package_day->meal_breakfast = 1;
                                             $package_day->meal_lunch = 1;
                                             $package_day->meal_dinner = 1;
@@ -445,9 +447,9 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
-    public function actionUpdateFaq($id, $faq_id)
+    public function actionUpdateFaq($id, $package_id, $faq_id)
     {
-        $package_version_model = $this->findModel($id);
+        $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
@@ -617,7 +619,7 @@ class DefaultController extends Controller
             $newModel->id = null; // Set the ID to null for the new record
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
-            if(!$isNewRecord){
+            if (!$isNewRecord) {
 
                 $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
             }
@@ -815,7 +817,7 @@ class DefaultController extends Controller
         return true;
     }
 
-   
+
 
 
     private function newpackage($model)
