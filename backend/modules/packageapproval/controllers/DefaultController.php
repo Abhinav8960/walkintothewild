@@ -486,7 +486,7 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
-    public function actionUpdateFaq($id, $package_id, $faq_id)
+    public function actionUpdateFaq($id, $faq_id)
     {
         $package_version_model = $this->findModel($id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
