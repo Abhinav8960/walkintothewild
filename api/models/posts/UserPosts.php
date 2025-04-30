@@ -104,7 +104,7 @@ class UserPosts extends \common\models\UserPosts
     public function getThumbnails()
     {
         // $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        $arr = [
+        return $arr = [
             'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath,
             'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath,
             'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath,
