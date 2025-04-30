@@ -70,6 +70,11 @@ use yii\helpers\Url;
                             <i class="bi bi-pencil text-black fs-5"></i>
                         </a>
                     </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
+                    </div>
+                </div>
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading2">
                         <button class="accordion-button collapsed flex-grow-1 text-start bg-success" type="button"
@@ -84,11 +89,7 @@ use yii\helpers\Url;
                     </h2>
                 <?php ;
                 } ?>
-                <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#formAccordion">
-                    <div class="accordion-body">
-                        <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
-                    </div>
-                </div>
+                
             </div>
 
 
@@ -113,6 +114,11 @@ use yii\helpers\Url;
                             <i class="bi bi-pencil text-black fs-5"></i>
                         </a>
                     </h2>
+                    <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('businessdetails-view', ['currentStep' => 3, 'model' => $model]) ?>
+                    </div>
+                </div>
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading3">
                         <button class="accordion-button collapsed flex-grow-1 text-start bg-success" type="button"
@@ -127,11 +133,7 @@ use yii\helpers\Url;
                     </h2>
                 <?php ;
                 } ?>
-                <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#formAccordion">
-                    <div class="accordion-body">
-                        <?= $this->render('businessdetails-view', ['currentStep' => 3, 'model' => $model]) ?>
-                    </div>
-                </div>
+            
             </div>
 
 
@@ -158,6 +160,11 @@ use yii\helpers\Url;
                             <i class="bi bi-pencil text-black fs-5"></i>
                         </a>
                     </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
+                    </div>
+                </div>
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading4">
                         <button class="accordion-button collapsed flex-grow-1 text-start bg-success" type="button"
@@ -172,11 +179,7 @@ use yii\helpers\Url;
                     </h2>
                 <?php ;
                 } ?>
-                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
-                    <div class="accordion-body">
-                        <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
-                    </div>
-                </div>
+                
             </div>
 
 
@@ -197,6 +200,11 @@ use yii\helpers\Url;
                             <i class="bi bi-pencil text-black fs-5"></i>
                         </a>
                     </h2>
+                    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
+                    </div>
+                </div>
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading5">
                         <button class="accordion-button collapsed flex-grow-1 text-start bg-success" type="button"
@@ -211,11 +219,7 @@ use yii\helpers\Url;
                     </h2>
                 <?php ;
                 } ?>
-                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
-                    <div class="accordion-body">
-                        <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
-                    </div>
-                </div>
+            
             </div>
 
     </div>
