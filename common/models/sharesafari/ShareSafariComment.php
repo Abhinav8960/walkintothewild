@@ -52,7 +52,7 @@ class ShareSafariComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['share_safari_id', 'park_id', 'parent_id', 'user_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['share_safari_id', 'park_id', 'parent_id', 'user_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'safari_operator_id'], 'integer'],
             [['comment'], 'string'],
             // [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
             // [['user_ip_address'], 'string', 'max' => 20],

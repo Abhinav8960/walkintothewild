@@ -1,3 +1,7 @@
+-- 30 April
+ALTER TABLE `package_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `share_safari_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+
 -- 29 apr 2025
 ALTER TABLE `user` ADD `apple_source_id` VARCHAR(255) NULL DEFAULT NULL AFTER `google_source_id`;
 -- 27apr 2025

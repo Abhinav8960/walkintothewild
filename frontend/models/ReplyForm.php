@@ -5,6 +5,7 @@ namespace frontend\models;
 use common\interfaces\NewStatusInterface;
 use common\models\cms\blog\Blog;
 use common\models\cms\blog\BlogComment;
+use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use Yii;
@@ -59,6 +60,12 @@ class ReplyForm extends Model
         $reply->share_safari_id = $share_safari->id;
         $reply->park_id = $share_safari->park->id;
         $reply->user_id = Yii::$app->user->id;
+        if (Yii::$app->user->identity) {
+            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+            if ($safari_operator) {
+                $reply->safari_operator_id = $safari_operator->id;
+            }
+        }
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
         // $reply->user_device = $agent->device();
