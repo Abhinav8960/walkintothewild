@@ -67,7 +67,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function rules()
     {
         return [
-            [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
             [['caption', 'filepath', 'etag'], 'string'],
             [['file'], 'string', 'max' => 512],
 
@@ -82,6 +82,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'safari_operator_id' => 'Safari Operator Id',
             'file' => 'File',
             'caption' => 'Caption',
             'status' => 'Status',

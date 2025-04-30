@@ -38,7 +38,7 @@ class UserPostComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'user_posts_id', 'parent_id','status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'user_posts_id', 'parent_id','status', 'created_by', 'created_at', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
             [['comment'], 'string'],
             [['dateTime'], 'safe'],
         ];

@@ -35,10 +35,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete','post-edit'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete','post-edit'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -78,6 +78,7 @@ class DefaultController extends RestController
     {
         $model = new UserPostsImageForm();
         $model->user_id = $this->userinfoId;
+        $model->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
         $model->status = UserPosts::STATUS_ACTIVE;
 
         $model->load(\Yii::$app->request->post());
@@ -189,6 +190,7 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new UserPostCommentLike();
             $like->user_id = $this->userinfoId;
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->user_post_comment_id = $user_post_comment_id;
             $like->status = UserPostCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
@@ -212,6 +214,7 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new UserPostLike();
             $like->user_id = $this->userinfoId;
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->user_post_id = $id;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {

@@ -168,12 +168,7 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new SightingCommentLike();
             $like->user_id = $this->userinfoId;
-            if ($this->userinfo) {
-                $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-                if ($safari_operator) {
-                    $like->safari_operator_id = $safari_operator->id;
-                }
-            }
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->sighting_comment_id = $sighting_comment_id;
             $like->status = SightingCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
@@ -197,12 +192,7 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new SightingLike();
             $like->user_id = $this->userinfoId;
-            if ($this->userinfo) {
-                $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-                if ($safari_operator) {
-                    $like->safari_operator_id = $safari_operator->id;
-                }
-            }
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->sighting_id = $id;
             $like->status = SightingLike::STATUS_ACTIVE;
             if ($like->save(false)) {
