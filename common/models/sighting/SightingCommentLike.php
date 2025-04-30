@@ -22,7 +22,7 @@ class SightingCommentLike extends \yii\db\ActiveRecord implements \common\interf
     public function rules()
     {
         return [
-            [['user_id', 'sighting_comment_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'sighting_comment_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
         ];
     }
 

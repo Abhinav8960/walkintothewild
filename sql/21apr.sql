@@ -1,4 +1,6 @@
 -- 30 April
+ALTER TABLE `sighting_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `sighting_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `sighting` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `package_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
