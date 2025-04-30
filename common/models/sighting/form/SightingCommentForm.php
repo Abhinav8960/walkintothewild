@@ -2,6 +2,7 @@
 
 namespace common\models\sighting\form;
 
+use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
@@ -38,12 +39,7 @@ class SightingCommentForm extends Model
         $comment->comment = $this->comment;
         $comment->dateTime = date('Y-m-d H:i:s');
         $comment->user_id = Yii::$app->user->id;
-        if (Yii::$app->user->identity) {
-            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-            if ($safari_operator) {
-                $comment->safari_operator_id = $safari_operator->id;
-            }
-        }
+        $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->sighting_id = $sighting->id;
         $comment->status = 1;
 

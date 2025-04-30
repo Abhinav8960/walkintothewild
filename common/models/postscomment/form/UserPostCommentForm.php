@@ -2,6 +2,7 @@
 
 namespace common\models\postscomment\form;
 
+use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
@@ -42,12 +43,7 @@ class UserPostCommentForm extends Model
         $comment->comment = $this->comment;
         $comment->dateTime = date('Y-m-d H:i:s');
         $comment->user_id = Yii::$app->user->id;
-        if (Yii::$app->user->identity) {
-            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-            if ($safari_operator) {
-                $comment->safari_operator_id = $safari_operator->id;
-            }
-        }
+        $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->user_posts_id = $userpost->id;
         $comment->status = 1;
 

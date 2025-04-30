@@ -2,7 +2,7 @@
 
 namespace common\models\postscomment\form;
 
-
+use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
 use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
@@ -42,12 +42,7 @@ class UserPostReplyForm extends Model
         $reply->comment = $this->comment;
         $reply->dateTime = date('Y-m-d H:i:s');
         $reply->user_id = Yii::$app->user->id;
-        if (Yii::$app->user->identity) {
-            $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-            if ($safari_operator) {
-                $reply->safari_operator_id = $safari_operator->id;
-            }
-        }
+        $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->user_posts_id = $userpost->id;
         $reply->parent_id = $this->parent_id;
 
