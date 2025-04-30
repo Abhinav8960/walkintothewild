@@ -23,6 +23,7 @@ class PartnerRegistrationController extends Controller
             $partner_model = PartnerRegistration::findOne(['user_id' => Yii::$app->user->identity->id]);
             if (!$partner_model) {
                 $model = new PartnerRegistrationForm();
+                
             } else {
                 $model = new PartnerRegistrationForm($partner_model);
             }
@@ -37,6 +38,10 @@ class PartnerRegistrationController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 2;
+                    if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+                        $model->partner_model->final_approved = 0;
+                        $model->form1_status = PartnerRegistration::FORM_FILLED;
+                    }
                     if ($model->partner_model->save()) {
                         $model->uploadFiles();
                         return $this->redirect(['step-2']);
@@ -77,6 +82,10 @@ class PartnerRegistrationController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     $model->partner_model->current_step = 3;
+                    if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+                        $model->partner_model->final_approved = 0;
+                        $model->form1_status = PartnerRegistration::FORM_FILLED;
+                    }
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
                         return $this->redirect(['step-3']);
@@ -133,7 +142,10 @@ class PartnerRegistrationController extends Controller
                     $model->initializeForm();
                     $model->partner_model->current_step = 4;
                     $model->partner_model->gst_id = $gstForm->gstdetail_model->id;
-
+                    if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+                        $model->partner_model->final_approved = 0;
+                        $model->form1_status = PartnerRegistration::FORM_FILLED;
+                    }
                     if ($model->partner_model->save(false)) {
                         return $this->redirect(['step-4']);
                     }
@@ -169,6 +181,10 @@ class PartnerRegistrationController extends Controller
                     $model->initializeForm();
                     $model->partner_model->current_step = 5;
                     $model->partner_model->loadDefaultValues();
+                    if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+                        $model->partner_model->final_approved = 0;
+                        $model->form1_status = PartnerRegistration::FORM_FILLED;
+                    }
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
                         return $this->redirect(['step-5']);
@@ -211,6 +227,10 @@ class PartnerRegistrationController extends Controller
                 $model->aadhar_back_file_upload = UploadedFile::getInstance($model, 'aadhar_back_file_upload');
                 if ($model->validate()) {
                     $model->initializeForm();
+                    if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+                        $model->partner_model->final_approved = 0;
+                        $model->form1_status = PartnerRegistration::FORM_FILLED;
+                    }
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
@@ -236,9 +256,11 @@ class PartnerRegistrationController extends Controller
         if ($partner_model === null) {
             throw new NotFoundHttpException('Partner not found.');
         }
-        // $partner_model->final_approved = 0;
-        if (!$partner_model->save(false)) {
-            Yii::error('Failed to save');
+        if ($partner_model != null && ($partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
+            $partner_model->final_approved = 0;
+            if (!$partner_model->save(false)) {
+                Yii::error('Failed to save');
+            }
         }
         $model = new PartnerRegistrationForm($partner_model);
         return $this->render('final-view', [
@@ -264,11 +286,17 @@ class PartnerRegistrationController extends Controller
         $model->status = 1;
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
-            return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
+            return $this->redirect('thank-you');
         } else {
             Yii::$app->session->setFlash('error', 'There was an error while sending for approval.');
 
             return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
         }
+    }
+
+    public function actionThankYou(){
+        $this->layout = 'registration';
+        return $this->render('thank-you', [
+        ]);
     }
 }

@@ -40,7 +40,8 @@ class PartnerGstDetailsForm extends Model
         return [
             [['gst_number', 'state'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
-            [['gst_number', 'status', 'state'], 'integer'],
+            [['status', 'state'], 'integer'],
+            [['gst_number'], 'string', 'max' => 50],
             [
                 'filepath_upload',
                 'required',
