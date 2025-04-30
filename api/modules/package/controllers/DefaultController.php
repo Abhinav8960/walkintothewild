@@ -111,7 +111,7 @@ class DefaultController extends RestController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -129,7 +129,7 @@ class DefaultController extends RestController
     public function actionComment($slug)
     {
 
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -164,9 +164,12 @@ class DefaultController extends RestController
 
     public function actionReply($slug, $parent_id)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        if ($this->userinfo && isset($package->partner) && $package->owned_by_id != $package->partner->id) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot Reply!!!"]);
         }
 
         $replymodel = new PackageReplyForm();
@@ -203,7 +206,7 @@ class DefaultController extends RestController
 
     public function actionWishlist($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -226,7 +229,7 @@ class DefaultController extends RestController
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -245,7 +248,7 @@ class DefaultController extends RestController
 
     public function actionPackageQuote($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -267,7 +270,7 @@ class DefaultController extends RestController
 
     public function actionFlag($slug, $package_comment_id)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -317,7 +320,7 @@ class DefaultController extends RestController
 
     public function actionCommentView($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -330,7 +333,7 @@ class DefaultController extends RestController
 
     public function actionPackagePark($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -356,7 +359,7 @@ class DefaultController extends RestController
 
     public function actionPackageDays($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -369,7 +372,7 @@ class DefaultController extends RestController
 
     public function actionPackageFaqs($slug)
     {
-        $package = Package::find()->where(['package_slug'=>$slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
@@ -424,6 +427,4 @@ class DefaultController extends RestController
 
         ];
     }
-
-    
 }
