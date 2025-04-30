@@ -45,13 +45,6 @@ NotifyAsset::register($this);
         <!-- </div> -->
     </div>
     
-    <div>
-        <!-- partner Reject Reason -->
-        <?= \business\widgets\PartnerRejectReason::widget() ?>
-        <!-- partner Reject Reason -->
-    </div>
-
-
     <!-- END #content -->
     <?= \common\widgets\NotifyAlert::widget() ?>
 
