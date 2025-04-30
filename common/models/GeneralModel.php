@@ -1396,5 +1396,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     
         return $dom->saveHTML();
     }
+
+    public static function extentionRemove($filename)
+    {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = preg_replace('/\.' . preg_quote($ext, '/') . '$/', '', $filename);
+        return $filename;
+    }
     
 }
