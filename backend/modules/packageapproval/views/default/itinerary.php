@@ -153,7 +153,7 @@ $(document).ready(function() {
         
         var dayNumber = $(this).data('day');
         var accordionId = 'collapse' + dayNumber;
-        var url = '/package/default/itinerary?id={$package_version_model->id}&day=' + dayNumber + '#' + accordionId;
+        var url = '/packageapproval/default/itinerary?id={$package_version_model->id}&day=' + dayNumber + '#' + accordionId;
 
         // Update URL
         window.history.pushState({ path: url }, '', url);

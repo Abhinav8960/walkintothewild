@@ -704,6 +704,7 @@ class DefaultController extends Controller
             foreach ($model as $included) {
                 $newModel = new PackageIncluded();
                 $newModel->attributes = $included->attributes;
+                $newModel->selection = $included->selection;
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
                 $newModel->version = $this->version;
