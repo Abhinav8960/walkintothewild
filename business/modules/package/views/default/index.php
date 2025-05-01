@@ -8,9 +8,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Package';
-$this->params['breadcrumbs_home_url'] = '/package';
-$this->params['breadcrumbs'][] =  ['label' => 'Package', 'url' => '#'];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs_home_url'] = '/';
+$this->params['breadcrumbs'][] =  ['label' => 'My Packages', 'url' => '/package'];
+// $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 ?>
