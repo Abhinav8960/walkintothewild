@@ -10,7 +10,6 @@ class NovaAppAsset extends AssetBundle
     public $sourcePath = '@business/themes/nova/assets/';
     public $css = [
         'css/icons.css',
-        // 'css/custom.css',
         'css/skin-modes.css',
         'css/style-dark.css',
         'css/style-transparent.css',
@@ -19,21 +18,13 @@ class NovaAppAsset extends AssetBundle
         'plugins/perfect-scrollbar/p-scrollbar.css',
         'plugins/sidebar/sidebar.css',
         'plugins/select2/css/select2.min.css',
-        'plugins/datatable/css/dataTables.bootstrap5.css',
-        'plugins/datatable/css/buttons.bootstrap5.min.css',
-        'plugins/datatable/responsive.bootstrap5.css',
-        'https://uicdn.toast.com/editor/latest/toastui-editor.min.css',
-        'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css',
-        'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
         'plugins/accordion/accordion.min.js',
         'plugins/bootstrap/js/popper.min.js',
-        'plugins/bootstrap/js/bootstrap.min.js',
-        'plugins/bootstrap/js/bootstrap.bundle.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
         'plugins/ionicons/ionicons.js',
         'plugins/moment/moment.js',

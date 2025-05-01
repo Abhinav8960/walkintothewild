@@ -634,11 +634,6 @@ color-fg-muted {
     background-color: transparent;
 }
 
-.text-box p span {
-
-    color: #6E7C87;
-}
-
 .old-title {
     color: #085b9b !important;
     background-color: transparent;
@@ -1298,7 +1293,7 @@ tr {
 
 
 .table a {
-    color: #fff !important;
+    color: #186299 !important;
 }
 
 .table th,
@@ -1631,14 +1626,4 @@ g
     width: 30px;
     margin-top: 3px;
     box-shadow: none;
-}
-
-.btn-orange {
-    color: #1E1E1E;
-    background-color: #F7BF39;
-    border-color: #F7BF39;
-}
-
-.change_css .select2-container .select2-selection--single {
-    height: 40px !important;
 }

@@ -62,7 +62,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{SentforApproval}&nbsp;{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
+                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -80,16 +80,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                 ]);
                             },
 
-                            'SentforApproval' => function ($url, $model) {
-                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
+                            // 'SentforApproval' => function ($url, $model) {
+                            //     if ($model->status == PackageVersion::EDIATBLE_STATUS) {
 
-                                    return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
-                                        'class' => 'btn btn-danger p-0 change-menuicon',
-                                        'title' => 'send-for-approval',
+                            //         return  Html::a('send-for-approval', ['send-for-approval', 'id' => $model->id], [
+                            //             'class' => 'btn btn-danger p-0 change-menuicon',
+                            //             'title' => 'send-for-approval',
 
-                                    ]);
-                                }
-                            },
+                            //         ]);
+                            //     }
+                            // },
                         ]
                     ],
                 ],

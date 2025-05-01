@@ -2,13 +2,13 @@
 
 use business\assets\AppAsset;
 use common\models\GeneralModel;
-use frontend\assets\FrontAppAsset;
+// use frontend\assets\FrontAppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-FrontAppAsset::register($this);
+// FrontAppAsset::register($this);
 AppAsset::register($this);
 
 ?>
@@ -17,6 +17,7 @@ AppAsset::register($this);
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
+        <?= Html::a('<i class="fa-solid fa-copy" style="font-size:15px; margin-right:5px"></i>Copy', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#7B8191', 'title' => 'Send For Approval']) ?>
         <?= Html::a('<i class="fa-solid fa-copy" style="font-size:15px; margin-right:5px"></i>Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#7B8191', 'title' => 'Copy']) ?>
         <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
     </div>

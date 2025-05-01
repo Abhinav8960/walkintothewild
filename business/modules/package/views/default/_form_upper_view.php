@@ -2,13 +2,11 @@
 
 use business\assets\AppAsset;
 use common\models\GeneralModel;
-use frontend\assets\FrontAppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-FrontAppAsset::register($this);
 AppAsset::register($this);
 
 ?>

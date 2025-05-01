@@ -25,7 +25,7 @@ $this->params['title'] = $this->title;
                 <div class="row py-4">
                     <div class="col-12 logindesign">
                         <div class="content_terms">
-                            <h5 class="text-center">Operator Login</h5>
+                            <h5 class="text-center">Partner Login</h5>
                             <div class="btnssss-g pt-3" style="border:none;">
                                 <?php if (!empty($_REQUEST['referrer'])) {
                                     $authAuthChoice = AuthChoice::begin([

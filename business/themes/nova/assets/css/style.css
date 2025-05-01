@@ -112647,3 +112647,8 @@ td {
 .stepper-line.filled {
     background: #041d0a;
 }
+
+.partner_heading
+{
+  margin-left: 65px;
+}
