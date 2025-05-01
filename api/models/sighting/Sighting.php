@@ -144,7 +144,7 @@ class Sighting extends \common\models\sighting\Sighting
     public function getThumbnail()
     {
         $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg';
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
     }
 
     public function getThumbnails()
