@@ -296,7 +296,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
     }
 
     public function getGstDetails(){
-        return $this->hasOne(PartnerGstDetails :: class , ['id'=>'gst_id']);
+        return $this->hasOne(PartnerGstDetails :: class , ['id'=>'gst_id'])->orderBy(['id'=>SORT_DESC]);
     }
 
     public function getPark()

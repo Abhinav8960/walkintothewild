@@ -2,6 +2,7 @@
 
 namespace common\models\partnerregistration\form;
 
+use common\Helper\FsHelper;
 use common\models\partnerregistration\PartnerRegistration;
 use Yii;
 use yii\base\Model;
@@ -176,7 +177,7 @@ class PartnerRegistrationForm extends Model
                 }',
             ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
-            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => true,],
+            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => true,],
 
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
@@ -202,7 +203,7 @@ class PartnerRegistrationForm extends Model
                 return $(\'#pan_upload\').val() === \'\';
             }'
             ],
-            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
+            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
 
             [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
@@ -219,7 +220,7 @@ class PartnerRegistrationForm extends Model
                     return $(\'#cancel_check_upload\').val() === \'\';
                 }',
             ],
-            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
+            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
 
 
             [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
@@ -257,7 +258,7 @@ class PartnerRegistrationForm extends Model
                     return $(\'#aadhar_back_upload\').val() === \'\';
                 }',
             ],
-            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 5 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
+            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
@@ -376,103 +377,358 @@ class PartnerRegistrationForm extends Model
 
     public function uploadFiles()
     {
-        $basePath = Yii::$app->params['datapath'] . '/Uploads';
-        if (!file_exists($basePath)) {
-            mkdir($basePath, 0777, true);
-        }
+        // $basePath = Yii::$app->params['datapath'] . '/Uploads';
+        // if (!file_exists($basePath)) {
+        //     mkdir($basePath, 0777, true);
+        // }
 
-        $userFolder = $basePath . '/' . $this->partner_model->id;
-        if (!file_exists($userFolder)) {
-            mkdir($userFolder, 0777, true);
-        }
+        // $userFolder = $basePath . '/' . $this->partner_model->id;
+        // if (!file_exists($userFolder)) {
+        //     mkdir($userFolder, 0777, true);
+        // }
+
+        // if ($this->logo_file_upload) {
+        //     $fileName = 'logo_file_upload' . '_' . time() . '.' . $this->logo_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->logo_file_upload->saveAs($filePath)) {
+        //         $this->logo_file_upload = $filePath;
+        //         $this->partner_model->logo = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
 
         if ($this->logo_file_upload) {
-            $fileName = 'logo_file_upload' . '_' . time() . '.' . $this->logo_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/logo';
 
-            if ($this->logo_file_upload->saveAs($filePath)) {
-                $this->logo_file_upload = $filePath;
-                $this->partner_model->logo = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_logo_' . time() . '.' . $this->logo_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->logo_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->logo = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->logo_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->logo_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                } catch (\Exception $e) {
+                    throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                }
             }
         }
 
+        // if ($this->registration_copy_file_upload) {
+        //     $fileName = 'registration_copy_file_upload' . '_' . time() . '.' . $this->registration_copy_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->registration_copy_file_upload->saveAs($filePath)) {
+        //         $this->registration_copy_file_upload = $filePath;
+        //         $this->partner_model->registration_copy_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
 
         if ($this->registration_copy_file_upload) {
-            $fileName = 'registration_copy_file_upload' . '_' . time() . '.' . $this->registration_copy_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/registrationcopy';
 
-            if ($this->registration_copy_file_upload->saveAs($filePath)) {
-                $this->registration_copy_file_upload = $filePath;
-                $this->partner_model->registration_copy_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_registrationcopy_' . time() . '.' . $this->registration_copy_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->registration_copy_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->registration_copy_upload = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->registration_copy_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->registration_copy_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                } catch (\Exception $e) {
+                    throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                }
             }
         }
+
+        // if ($this->pan_file_upload) {
+        //     $fileName = 'pan_file_upload' . '_' . time() . '.' . $this->pan_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->pan_file_upload->saveAs($filePath)) {
+        //         $this->pan_file_upload = $filePath;
+        //         $this->partner_model->pan_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
 
         if ($this->pan_file_upload) {
-            $fileName = 'pan_file_upload' . '_' . time() . '.' . $this->pan_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/pancard';
 
-            if ($this->pan_file_upload->saveAs($filePath)) {
-                $this->pan_file_upload = $filePath;
-                $this->partner_model->pan_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_pancard_' . time() . '.' . $this->pan_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->pan_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->pan_upload = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // // $this->partner_model->etag = $etag;
+
+                        $extension = $this->pan_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->pan_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                } catch (\Exception $e) {
+                    throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                }
             }
         }
+
+        // if ($this->cancel_check_file_upload) {
+        //     $fileName = 'cancel_check_file_upload' . '_' . time() . '.' . $this->cancel_check_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->cancel_check_file_upload->saveAs($filePath)) {
+        //         $this->cancel_check_file_upload = $filePath;
+        //         $this->partner_model->cancel_check_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
 
         if ($this->cancel_check_file_upload) {
-            $fileName = 'cancel_check_file_upload' . '_' . time() . '.' . $this->cancel_check_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/cancelcheck';
 
-            if ($this->cancel_check_file_upload->saveAs($filePath)) {
-                $this->cancel_check_file_upload = $filePath;
-                $this->partner_model->cancel_check_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_cancelcheck_' . time() . '.' . $this->cancel_check_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->cancel_check_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->cancel_check_upload = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->cancel_check_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->cancel_check_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                } catch (\Exception $e) {
+                    throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                }
             }
         }
+        // if ($this->kyc_pan_file_upload) {
+        //     $fileName = 'kyc_pan_file_upload' . '_' . time() . '.' . $this->kyc_pan_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->kyc_pan_file_upload->saveAs($filePath)) {
+        //         $this->kyc_pan_file_upload = $filePath;
+        //         $this->partner_model->kyc_pan_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
 
         if ($this->kyc_pan_file_upload) {
-            $fileName = 'kyc_pan_file_upload' . '_' . time() . '.' . $this->kyc_pan_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/kycpan';
 
-            if ($this->kyc_pan_file_upload->saveAs($filePath)) {
-                $this->kyc_pan_file_upload = $filePath;
-                $this->partner_model->kyc_pan_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_kycpan_' . time() . '.' . $this->kyc_pan_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->kyc_pan_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->kyc_pan_upload = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->kyc_pan_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->kyc_pan_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                } catch (\Exception $e) {
+                    throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                }
             }
         }
 
+        // if ($this->aadhar_front_file_upload) {
+        //     $fileName = 'aadhar_front_file_upload' . '_' . time() . '.' . $this->aadhar_front_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->aadhar_front_file_upload->saveAs($filePath)) {
+        //         $this->aadhar_front_file_upload = $filePath;
+        //         $this->partner_model->aadhar_front_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
+       
         if ($this->aadhar_front_file_upload) {
-            $fileName = 'aadhar_front_file_upload' . '_' . time() . '.' . $this->aadhar_front_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharfront';
 
-            if ($this->aadhar_front_file_upload->saveAs($filePath)) {
-                $this->aadhar_front_file_upload = $filePath;
-                $this->partner_model->aadhar_front_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_aadharfront_' . time() . '.' . $this->aadhar_front_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                // try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->aadhar_front_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->aadhar_front_upload = $filePath;
+                        // $this->aadhar_front_file_upload = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->aadhar_front_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->aadhar_front_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                // } catch (\Exception $e) {
+                //     throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                // }
             }
         }
 
+        // if ($this->aadhar_back_file_upload) {
+        //     $fileName = 'aadhar_back_file_upload' . '_' . time() . '.' . $this->aadhar_back_file_upload->extension;
+        //     $filePath = $userFolder . '/' . $fileName;
+
+        //     if ($this->aadhar_back_file_upload->saveAs($filePath)) {
+        //         $this->aadhar_back_file_upload = $filePath;
+        //         $this->partner_model->aadhar_back_upload = $filePath;
+        //     } else {
+        //         Yii::error("Failed to save file: $fileName", __METHOD__);
+        //     }
+        // }
+
+        // if (!$this->partner_model->save(false)) {
+        //     Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
+        // }
+       
         if ($this->aadhar_back_file_upload) {
-            $fileName = 'aadhar_back_file_upload' . '_' . time() . '.' . $this->aadhar_back_file_upload->extension;
-            $filePath = $userFolder . '/' . $fileName;
+            $storagePath = 'operator-registration';
+            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharback';
 
-            if ($this->aadhar_back_file_upload->saveAs($filePath)) {
-                $this->aadhar_back_file_upload = $filePath;
-                $this->partner_model->aadhar_back_upload = $filePath;
-            } else {
-                Yii::error("Failed to save file: $fileName", __METHOD__);
+            $fileName = $this->partner_model->user_id . '_aadharback_' . time() . '.' . $this->aadhar_back_file_upload->extension;
+            $filePath = $userPath . '/' . $fileName;
+
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            if ($fileName) {
+                // try {
+                    if ($etag =  FsHelper::saveUploadedFile($this->aadhar_back_file_upload, $filePath, $fileName, true)) {
+                        $this->partner_model->aadhar_back_upload = $filePath;
+                        // $this->partner_model->filepath = $filePath;
+                        // $this->partner_model->etag = $etag;
+
+                        $extension = $this->aadhar_back_file_upload->extension;
+                        if ($extension === 'svg') {
+                            $width = 0;
+                            $height = 0;
+                        } else {
+                            list($width, $height) = getimagesize($this->aadhar_back_file_upload->tempName);
+                        }
+                        // $this->partner_model->height =  $height;
+                        // $this->partner_model->width = $width;
+                        $this->partner_model->save(false);
+                    }
+                // } catch (\Exception $e) {
+                //     throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+                // }
             }
-        }
-
-        if (!$this->partner_model->save(false)) {
-            Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
         }
     }
 }
+
+
+// if ($this->file) {
+//     $storagePath = 'watchpost';
+//     $userPath = $storagePath . '/' . $this->user_photo_model->user_id . '/media';
+
+//     $fileName = $this->user_photo_model->user_id . '_media_' . time() . '.' . $this->file->extension;
+//     $filePath = $userPath . '/' . $fileName;
+
+//     // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+//     if ($fileName) {
+//         try {
+//             if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
+//                 $this->user_photo_model->file = $fileName;
+//                 $this->user_photo_model->filepath = $filePath;
+//                 $this->user_photo_model->etag = $etag;
+
+//                 $extension = $this->file->extension;
+//                 if ($extension === 'svg') {
+//                     $width = 0;
+//                     $height = 0;
+//                 } else {
+//                     list($width, $height) = getimagesize($this->file->tempName);
+//                 }
+//                 $this->user_photo_model->height =  $height;
+//                 $this->user_photo_model->width = $width;
+//                 $this->user_photo_model->save(false);
+//             }
+//         } catch (\Exception $e) {
+//             throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
+//         }
+//     }
+// }

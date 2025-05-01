@@ -23,11 +23,12 @@ class PartnerRegistrationController extends Controller
             $partner_model = PartnerRegistration::findOne(['user_id' => Yii::$app->user->identity->id]);
             if (!$partner_model) {
                 $model = new PartnerRegistrationForm();
-                
             } else {
                 $model = new PartnerRegistrationForm($partner_model);
             }
         }
+        $this->handleRedirect($partner_model,1);
+        
         $model->user_id = Yii::$app->user->identity->id;
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
         $model->form1_status = PartnerRegistration::FORM_FILLED;
@@ -63,12 +64,13 @@ class PartnerRegistrationController extends Controller
 
     public function actionStep2()
     {
+
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-
-        if ($partner_model->current_step < 2) {
-            return $this->redirect(['create']);
-        }
+        $this->handleRedirect($partner_model,2);
+        // if ($partner_model->current_step < 2) {
+        //     return $this->redirect(['create']);
+        // }
 
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP2);
@@ -107,10 +109,11 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         $partner_model = $this->findModel();
+        $this->handleRedirect($partner_model,3);
 
-        if ($partner_model->current_step < 3) {
-            return $this->redirect(['step-2']);
-        }
+        // if ($partner_model->current_step < 3) {
+        //     return $this->redirect(['step-2']);
+        // }
 
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
@@ -134,6 +137,8 @@ class PartnerRegistrationController extends Controller
                 if ($model->validate() && (!$isGstLoaded || $gstForm->validate())) {
                     if ($isGstLoaded) {
                         $gstForm->initializeForm();
+                        $gstForm->gstdetail_model->user_id = $model->partner_model->user_id;
+                        $gstForm->gstdetail_model->user_id = 1;
                         if ($gstForm->gstdetail_model->save(false)) {
                             $gstForm->uploadFiles();
                         }
@@ -168,9 +173,10 @@ class PartnerRegistrationController extends Controller
 
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        if ($partner_model->current_step < 4) {
-            return $this->redirect(['step-3']);
-        }
+        $this->handleRedirect($partner_model,4);
+        // if ($partner_model->current_step < 4) {
+        //     return $this->redirect(['step-3']);
+        // }
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP4);
         $model->form4_status = PartnerRegistration::FORM_FILLED;
@@ -206,22 +212,23 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        if ($partner_model->current_step < 5) {
-            return $this->redirect(['step-4']);
-        }
+        $this->handleRedirect($partner_model,5);
+        // if ($partner_model->current_step < 5) {
+        //     return $this->redirect(['step-4']);
+        // }
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP5);
         $model->form5_status = PartnerRegistration::FORM_FILLED;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
-                if (Yii::$app->request->post('same_as_previous')) {
-                    if ($model->pan_number) {
-                        $model->kyc_pan = $model->pan_number;
-                    }
-                    if ($model->pan_upload) {
-                        $model->kyc_pan_upload = $model->pan_upload;
-                    }
-                }
+                // if (Yii::$app->request->post('same_as_previous')) {
+                //     if ($model->pan_number) {
+                //         $model->kyc_pan = $model->pan_number;
+                //     }
+                //     if ($model->pan_upload) {
+                //         $model->kyc_pan_upload = $model->pan_upload;
+                //     }
+                // }
                 $model->kyc_pan_file_upload = UploadedFile::getInstance($model, 'kyc_pan_file_upload');
                 $model->aadhar_front_file_upload = UploadedFile::getInstance($model, 'aadhar_front_file_upload');
                 $model->aadhar_back_file_upload = UploadedFile::getInstance($model, 'aadhar_back_file_upload');
@@ -250,6 +257,9 @@ class PartnerRegistrationController extends Controller
 
     public function actionFinalView()
     {
+        if(!empty(\Yii::$app->user->identity->operator)){
+            return $this->redirect(['/']);
+        }
         $this->layout = 'registration';
 
         $partner_model = $this->findModel();
@@ -286,7 +296,7 @@ class PartnerRegistrationController extends Controller
         $model->status = 1;
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
-            return $this->redirect('thank-you');
+            return $this->redirect(['thank-you']);
         } else {
             Yii::$app->session->setFlash('error', 'There was an error while sending for approval.');
 
@@ -294,9 +304,41 @@ class PartnerRegistrationController extends Controller
         }
     }
 
-    public function actionThankYou(){
+    public function actionThankYou()
+    {
         $this->layout = 'registration';
-        return $this->render('thank-you', [
-        ]);
+
+        $model = PartnerRegistration::find()
+            ->where(['user_id' => Yii::$app->user->identity->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();;
+
+        if ($model === null) {
+            throw new NotFoundHttpException("Registration record not found.");
+        }
+
+        if ($model->final_approved == 1 && $model->is_sendforapproval == 1) {
+            return $this->redirect(['site/index']);
+        }
+        elseif($model->form1_status == PartnerRegistration::FORM_REJECTED || $model->form2_status == PartnerRegistration::FORM_REJECTED || $model->form3_status == PartnerRegistration::FORM_REJECTED || $model->form4_status == PartnerRegistration::FORM_REJECTED || $model->form5_status == PartnerRegistration::FORM_REJECTED)
+        {
+            return $this->redirect(['final-view']);
+        } else {
+            return $this->render('thank-you');
+        }
+    }
+
+    private function handleRedirect($model,$step){
+      
+        if(!empty(\Yii::$app->user->identity->operator)){
+            return $this->redirect(['/']);
+        }
+    
+        $col = 'form'.$step.'_status';
+        // if(in_array($model->$col,[PartnerRegistration::FORM_APPROVED])){
+      
+        if(isset($model->$col) && PartnerRegistration::FORM_APPROVED == $model->$col){
+            return $this->redirect(['final-view']);
+        }
     }
 }

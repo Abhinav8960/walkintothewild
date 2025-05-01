@@ -11,7 +11,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="container-fluid py-4">
 
     <div class="mb-4">
-        <h4 class="section-title text-secondary">Business Details</h4>
+        <h4 class="section-title text-secondary">Registration Proof</h4>
     </div>
 
     <div class="row g-4 info-section">
@@ -26,7 +26,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="info-line">
                 <strong>Registration Copy:</strong>
                 <span>
-                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->registration_copy_upload) ?>" alt="RegistrationFile" class="key-img">
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->registration_copy_upload  ?>" alt="RegistrationFile" class="key-img">
                 </span>
             </div>
         </div>
@@ -42,7 +42,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="info-line">
                 <strong>PAN Upload:</strong>
                 <span>
-                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->pan_upload) ?>" alt="PanCard" class="key-image">
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->pan_upload ?>" alt="PanCard" class="key-image">
                 </span>
             </div>
         </div>
