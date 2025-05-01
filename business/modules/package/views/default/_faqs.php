@@ -1,7 +1,7 @@
-<div class="accordion" id="accordionExample" style="background-color: #CED2E0;">
+<div class="accordion" id="accordionExample">
     <?php if ($faqs) {
         foreach ($faqs as $i => $faq) { ?>
-            <div class="accordion-item  m-2 p-2">
+            <div class="accordion-item faq_item mt-2 p-2">
                 <h2 class="accordion-header" id="heading<?= $i ?>">
                     <button class="accordion-button <?= $i === 0 ? '' : 'collapsed' ?>" type="button"
                         data-bs-toggle="collapse"
@@ -21,3 +21,9 @@
     <?php }
     } ?>
 </div>
+
+<style>
+   .faq_item .accordion-button {
+    background-color: #CED2E0 !important;
+}
+</style>
