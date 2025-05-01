@@ -462,18 +462,23 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getThumbnail()
     {
-        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        if ($this->filepath) {
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        }
+        return '';
     }
 
     public function getThumbnails()
     {
-        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        return $arr = [
-            'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg',
-            'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg',
-            'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg',
-            'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg',
-        ];
+
+        if ($this->filepath) {
+            return $arr = [
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg',
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg',
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg',
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg',
+            ];
+        }
+        return [];
     }
 }
