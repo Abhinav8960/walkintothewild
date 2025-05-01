@@ -86,6 +86,9 @@ class PartnerRegistrationForm extends Model
     public $final;
     public $updated_time_final;
     public $partner_model;
+    
+    public $action_url;
+    public $action_validate_url;
 
     public function __construct(PartnerRegistration $partner_model = null)
     {

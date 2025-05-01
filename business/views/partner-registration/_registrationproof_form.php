@@ -9,9 +9,13 @@ $readOnly = false;
 
 <?php $form = ActiveForm::begin([
     'options' => ['id' => 'registration-proof',
-    'enableClientValidation' => true, // Enable JavaScript validation
-    'enableAjaxValidation'=>true,
-    'enctype' => 'multipart/form-data']
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'enableClientScript' => true,
+    'action' => $model->action_url,
+    'validationUrl' => $model->action_validate_url,
+    'enctype' => 'multipart/form-data'],
+    
 ]); ?>
 <div class="row">
     <div class="col-md-3">

@@ -28,7 +28,9 @@ class PartnerRegistrationController extends Controller
             }
         }
         $this->handleRedirect($partner_model,1);
-        
+        $model->action_url = '/partner-registration/create';
+        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP1;
+
         $model->user_id = Yii::$app->user->identity->id;
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
         $model->form1_status = PartnerRegistration::FORM_FILLED;
@@ -75,6 +77,8 @@ class PartnerRegistrationController extends Controller
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP2);
         $model->form2_status = PartnerRegistration::FORM_FILLED;
+        $model->action_url = '/partner-registration/step-2';
+        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP2;
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -118,6 +122,8 @@ class PartnerRegistrationController extends Controller
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $model->form3_status = PartnerRegistration::FORM_FILLED;
+        $model->action_url = '/partner-registration/step-3';
+        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP3;
         if ($partner_model->gst_id) {
             $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
             if (!$gstDetail) {
@@ -180,6 +186,8 @@ class PartnerRegistrationController extends Controller
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP4);
         $model->form4_status = PartnerRegistration::FORM_FILLED;
+        $model->action_url = '/partner-registration/step-4';
+        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP4;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->cancel_check_file_upload = UploadedFile::getInstance($model, 'cancel_check_file_upload');
@@ -219,6 +227,8 @@ class PartnerRegistrationController extends Controller
         $model = new PartnerRegistrationForm($partner_model);
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP5);
         $model->form5_status = PartnerRegistration::FORM_FILLED;
+        $model->action_url = '/partner-registration/step-5';
+        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP5;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 // if (Yii::$app->request->post('same_as_previous')) {
@@ -341,4 +351,42 @@ class PartnerRegistrationController extends Controller
             return $this->redirect(['final-view']);
         }
     }
+
+    // public function actionValidateCreate($id = null)
+    // {
+    //     $model = new PartnerRegistrationForm();
+    //     $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
+    //     if ($id != null) {
+    //         $formmodel = $this->findModel($id);
+    //         $model = new PartnerRegistrationForm($formmodel);
+    //     }
+
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\bootstrap5\ActiveForm::validate($model);
+    //     }
+
+    // }
+
+
+    public function actionValidateCreate($scenario,$id = null)
+    {
+        $model = new PartnerRegistrationForm();
+        $model->setScenario($scenario);
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new PartnerRegistrationForm($formmodel);
+        }
+
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\bootstrap5\ActiveForm::validate($model);
+        }
+
+    }
+
+    
 }
+
+

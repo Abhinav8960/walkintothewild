@@ -13,9 +13,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $form = ActiveForm::begin([
     'id' => 'legal-entity',
-    'enableClientValidation' => true, // Enable JavaScript validation
-    'enableAjaxValidation'=>true,
-    'options' => ['enctype' => 'multipart/form-data']
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'enableClientScript' => true,
+    'options' => ['enctype' => 'multipart/form-data'],
+    // 'enableClientScript' => true,
+    'action' => $model->action_url,
+    'validationUrl' => $model->action_validate_url,
 ]);
 ?>
 

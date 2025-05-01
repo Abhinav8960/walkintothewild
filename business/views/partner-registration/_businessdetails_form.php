@@ -13,8 +13,11 @@ $readOnly = false;
 <?php $form = ActiveForm::begin([
     'options' => [
         'id' => 'business-details',
-        'enableClientValidation' => true,
-        'enableAjaxValidation'=>true,
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => false,
+        'enableClientScript' => true,
+        'action' => $model->action_url,
+        'validationUrl' => $model->action_validate_url,
         'enctype' => 'multipart/form-data'
     ]
 ]); ?>

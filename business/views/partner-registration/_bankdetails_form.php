@@ -8,8 +8,11 @@ $readOnly = false;
 
 <?php $form = ActiveForm::begin([
     'options' => ['id' => 'bank-details', 
-    'enableClientValidation' => true, // Enable JavaScript validation
-    'enableAjaxValidation'=>true,
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'enableClientScript' => true,
+    'action' => $model->action_url,
+    'validationUrl' => $model->action_validate_url,
      'enctype' => 'multipart/form-data']
 ]); ?>
 
