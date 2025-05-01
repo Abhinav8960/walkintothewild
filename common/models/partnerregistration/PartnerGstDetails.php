@@ -53,7 +53,7 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['state', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','user_id'], 'integer'],
+            [['state', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','partner_regestration_id'], 'integer'],
             [['gst_number'], 'string', 'max' => 50],
             [['filepath'], 'string', 'max' => 255],
             [['gst_number', 'state'], 'required'],
@@ -68,7 +68,7 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id'=>'User ID',
+            'partner_registration_id'=>'Partner Registration ID',
             'gst_number' => 'GST Number',
             'filepath' => 'GST File Upload',
             'status' => 'Status',

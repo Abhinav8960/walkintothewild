@@ -19,7 +19,7 @@ class PartnerGstDetailsForm extends Model
     public $status;
     public $gstdetail_model;
     public $isNew = true;
-    public $user_id;
+    public $partner_registration_id;
 
     public function __construct(PartnerGstDetails $gstdetail_model = null)
     {
@@ -35,7 +35,7 @@ class PartnerGstDetailsForm extends Model
             $this->gst_number = $gstdetail_model->gst_number;
             $this->filepath = $gstdetail_model->filepath;
             $this->status = $gstdetail_model->status;
-            $this->user_id = $gstdetail_model->user_id;
+            $this->partner_registration_id = $gstdetail_model->partner_registration_id;
         }
     }
 
@@ -44,7 +44,7 @@ class PartnerGstDetailsForm extends Model
         return [
             [['gst_number', 'state'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
-            [['status', 'state','user_id'], 'integer'],
+            [['status', 'state','partner_registration_id'], 'integer'],
             [['gst_number'], 'string', 'max' => 50],
             [
                 'filepath_upload',
@@ -64,7 +64,7 @@ class PartnerGstDetailsForm extends Model
     {
         return [
             'id' => 'ID',
-            'user_id'=>'User ID',
+            'partner_registration_id'=>'Partner Registration ID',
             'gst_number' => 'GST Number',
             'filepath' => 'File',
             'status' => 'Status',
@@ -74,7 +74,7 @@ class PartnerGstDetailsForm extends Model
 
     public function initializeForm()
     {
-        $this->gstdetail_model->user_id = $this->user_id;
+        $this->gstdetail_model->partner_registration_id = $this->partner_registration_id;
         $this->gstdetail_model->state = $this->state;
         $this->gstdetail_model->gst_number = $this->gst_number;
         $this->gstdetail_model->filepath = $this->filepath;

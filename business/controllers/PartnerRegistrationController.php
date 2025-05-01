@@ -137,8 +137,8 @@ class PartnerRegistrationController extends Controller
                 if ($model->validate() && (!$isGstLoaded || $gstForm->validate())) {
                     if ($isGstLoaded) {
                         $gstForm->initializeForm();
-                        $gstForm->gstdetail_model->user_id = $model->partner_model->user_id;
-                        $gstForm->gstdetail_model->user_id = 1;
+                        $gstForm->gstdetail_model->partner_registration_id = $model->partner_model->id;
+                        $gstForm->gstdetail_model->status = 1;
                         if ($gstForm->gstdetail_model->save(false)) {
                             $gstForm->uploadFiles();
                         }

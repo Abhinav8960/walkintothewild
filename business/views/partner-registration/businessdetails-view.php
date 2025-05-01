@@ -61,7 +61,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="info-line">
                 <strong>Gst Image:</strong><br>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetails->filepath ?>" alt="GSTfile" class="key-img">
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetail->filepath ?>" alt="GSTfile" class="key-img">
                 </span>
             </div>
         </div>

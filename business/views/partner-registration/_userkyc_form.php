@@ -10,6 +10,7 @@ $readOnly = false;
     'options' => [
         'id' => 'user-kyc',
         'enableClientValidation' => true, // Enable JavaScript validation
+        'enableAjaxValidation'=>true,
         'enctype' => 'multipart/form-data'
     ]
 ]); ?>

@@ -295,9 +295,14 @@ class PartnerRegistration extends \yii\db\ActiveRecord
         return [self::PROP_WRITER => "Prop Writer", self::PVT_LTD => "Pvt. Ltd", self::LLP => "LLP"];
     }
 
-    public function getGstDetails(){
-        return $this->hasOne(PartnerGstDetails :: class , ['id'=>'gst_id'])->orderBy(['id'=>SORT_DESC]);
+    public function getGstDetail(){
+        return $this->hasOne(PartnerGstDetails :: class , ['partner_registration_id'=>'id'])->orderBy(['id'=>SORT_DESC]);
     }
+
+    // public function getGstDetails(){
+    //     return $this->hasMany(PartnerGstDetails :: class , ['id'=>'gst_id','user_id'=>'user_id'])->orderBy(['id'=>SORT_DESC]);
+    // }
+
 
     public function getPark()
     {

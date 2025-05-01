@@ -10,6 +10,7 @@ $readOnly = false;
 <?php $form = ActiveForm::begin([
     'options' => ['id' => 'registration-proof',
     'enableClientValidation' => true, // Enable JavaScript validation
+    'enableAjaxValidation'=>true,
     'enctype' => 'multipart/form-data']
 ]); ?>
 <div class="row">

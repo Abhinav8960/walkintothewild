@@ -35,7 +35,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Name :</strong> <?= $model->legal_entity_name ?></p>
                                         <p><strong>Brand Name :</strong> <?= $model->brand_name ?></p>
                                         <p><strong>Email : </strong><?= $model->legal_entity_email ?></p>
-                                        <p><strong>Logo : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->logo) ?>" alt="Logo" style="width:100px; height:auto;"></p>
+                                        <p><strong>Logo : </strong><img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->logo ?>" alt="Logo" style="width:100px; height:auto;"<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->logo) ?>></p>
                                         <p><strong>Email : </strong><?= $model->legal_entity_whatsapp ?></p>
                                         <p><strong>Phone No :</strong><?= $model->legal_entity_phone ?></p>
                                         <p><strong>Address :</strong><?= $model->address ?></p>
@@ -90,9 +90,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p><strong>Registration Number :</strong> <?= $model->registration_number ?></p>
-                                        <p><strong>Registration File : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->registration_copy_upload) ?>" alt="Registration File" style="width:100px; height:auto;"></p>
+                                        <p><strong>Registration File : </strong><img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->registration_copy_upload ?>" alt="Registration File" style="width:100px; height:auto;"></p>
                                         <p><strong>PAN Number : </strong><?= $model->pan_number ?></p>
-                                        <p><strong>PAN Card : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->pan_upload) ?>" alt="PanCard" style="width:100px; height:auto;"></p>
+                                        <p><strong>PAN Card : </strong><img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->pan_upload  ?>" alt="PanCard" style="width:100px; height:auto;"></p>
                                     </div>
 
                                     <?php if ($model->form2_status == PartnerRegistration::FORM_REJECTED) { ?>
@@ -145,9 +145,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>About Business :</strong> <?= $model->about_business ?></p>
                                         <p><strong>Billing Mail :</strong> <?= $model->billing_mail ?></p>
                                         <p><strong>Billing Phone :</strong> <?= $model->billing_phone ?></p>
-                                        <p><strong>State Name : </strong><?= $model->partner_model->gstDetails->stateRelation->state_name ?? '' ?></p>
-                                        <p><strong>GST Number : </strong><?= $model->partner_model->gstDetails->gst_number ?? '' ?></p>
-                                        <p><strong>GST Image : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->partner_model->gstDetails->filepath ?? '') ?>" alt="GSTfile" style="max-height:50px;max-width:100px;"></p>
+                                        <p><strong>State Name : </strong><?= $model->partner_model->gstDetail->stateRelation->state_name ?? '' ?></p>
+                                        <p><strong>GST Number : </strong><?= $model->partner_model->gstDetail->gst_number ?? '' ?></p>
+                                        <p><strong>GST Image : </strong><img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetail->filepath  ?>" alt="GSTfile" style="max-height:50px;max-width:100px;"></p>
                                     </div>
                                     <?php if ($model->form3_status == PartnerRegistration::FORM_REJECTED) { ?>
                                         <div class="col-md-6">
@@ -199,7 +199,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Account Holder Name : </strong><?= $model->account_holder_name ?></p>
                                         <p><strong>Account No :</strong><?= $model->account_number ?></p>
                                         <p><strong>Ifsc Code :</strong><?= $model->ifsc_number ?></p>
-                                        <p><strong>Cancel Check : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->cancel_check_upload) ?>" alt="Cancel Check" style="width:100px; height:auto;"></p>
+                                        <p><strong>Cancel Check : </strong><img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->cancel_check_upload ?>" alt="Cancel Check" style="width:100px; height:auto;"></p>
                                     </div>
                                     <?php if ($model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
                                         <div class="col-md-6">
@@ -251,10 +251,10 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>WhatsApp Number :</strong> <?= $model->kyc_whatsapp ?></p>
                                         <p><strong> Email :</strong> <?= $model->kyc_email ?></p>
                                         <p><strong>Adhaar Number :</strong> <?= $model->aadhar_number ?></p>
-                                        <p><strong>Aadhar Front : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->aadhar_front_upload) ?>" alt="Aadhar Front" style="width:100px; height:auto;"></p>
-                                        <p><strong>Aadhar Back : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->aadhar_back_upload) ?>" alt="Aadhar Back" style="width:100px; height:auto;"></p>
+                                        <p><strong>Aadhar Front : </strong><img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_front_upload ?>" alt="Aadhar Front" style="width:100px; height:auto;"></p>
+                                        <p><strong>Aadhar Back : </strong><img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_back_upload ?>" alt="Aadhar Back" style="width:100px; height:auto;"></p>
                                         <p><strong>PAN Number : </strong><?= $model->kyc_pan ?></p>
-                                        <p><strong>PAN Card : </strong><img src="<?= $this->params['businessDomain'] . '/storage/Uploads/' . $model->id . '/' . basename($model->kyc_pan_upload) ?>" alt="Cancel Check" style="width:100px; height:auto;"></p>
+                                        <p><strong>PAN Card : </strong><img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->kyc_pan_upload ?>" alt="Cancel Check" style="width:100px; height:auto;"></p>
                                     </div>
                                     <?php if ($model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
                                         <div class="col-md-6">
