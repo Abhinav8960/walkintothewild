@@ -18,7 +18,7 @@ use api\models\park\SafariParkSearch;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\Helper\FirebaseNotificationHelper;
-use common\models\package\PackageSearch;
+use api\models\package\PackageSearch;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariParkReviewForm;
