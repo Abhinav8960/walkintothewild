@@ -303,10 +303,9 @@ class DefaultController extends Controller
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {
                 $this->makeoperator($model);
-                $_user = User :: findOne(['id'=>$model->user_id]);
-                $_user->is_safari_operator =1;
-                $_user->save(false);
-                // $this->changeuserstatus($model->user_id);
+                $model_user = User :: findOne(['id'=>$model->user_id]);
+                $model_user->is_safari_operator =1;
+                $model_user->save(false);
                 \Yii::$app->session->setFlash('success', 'Final Approved Successfully');
                 return $this->redirect(['update', 'id' => $model->id]);
             }

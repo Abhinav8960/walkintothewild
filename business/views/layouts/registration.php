@@ -53,6 +53,13 @@ NotifyAsset::register($this);
     <!-- END #app -->
     <?php $this->endBody() ?>
 </body>
-
+<style>
+    .background-success{
+        background-image: linear-gradient(to right, #198754, #ffffff);
+    }
+    .background-danger{
+        background-image: linear-gradient(to right,rgb(255, 0, 0), #ffffff);
+    }
+</style>
 </html>
 <?php $this->endPage();
