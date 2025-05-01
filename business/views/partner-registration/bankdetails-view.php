@@ -50,7 +50,7 @@ use yii\bootstrap5\Html;
             <div class="info-line">
                 <strong>Cancel Check Upload :</strong><br>
                 <span>
-                    <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->cancel_check_upload) ?>" alt="CancelCheck" class="kyc-img">
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->cancel_check_upload ?>" alt="CancelCheck" class="kyc-img">
                 </span>
             </div>
         </div>

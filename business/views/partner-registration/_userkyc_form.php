@@ -74,7 +74,7 @@ $readOnly = false;
         <?php
         if (!empty($model->kyc_pan_upload)) {
         ?>
-            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->kyc_pan_upload) ?>" alt="kyc_pan_upload" style="max-height:50px;max-width:100px;">
+            <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->kyc_pan_upload ?>" alt="kyc_pan_upload" style="max-height:50px;max-width:100px;">
             <?= $form->field($model, 'kyc_pan_upload')->hiddenInput(['id' => 'kyc_pan_upload'])->label(false); ?>
         <?php
         }
@@ -101,7 +101,7 @@ $readOnly = false;
         <?php
         if (!empty($model->aadhar_front_upload)) {
         ?>
-            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_front_upload) ?>" alt="aadhar_front_upload" style="max-height:50px;max-width:100px;">
+            <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_front_upload?>" alt="aadhar_front_upload" style="max-height:50px;max-width:100px;">
             <?= $form->field($model, 'aadhar_front_upload')->hiddenInput(['id' => 'aadhar_front_upload'])->label(false); ?>
         <?php
         }
@@ -118,7 +118,7 @@ $readOnly = false;
     <?php
     if (!empty($model->aadhar_back_upload)) {
     ?>
-        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_back_upload) ?>" alt="aadhar_back_upload" style="max-height:50px;max-width:100px;">
+        <img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_back_upload ?>" alt="aadhar_back_upload" style="max-height:50px;max-width:100px;">
         <?= $form->field($model, 'aadhar_back_upload')->hiddenInput(['id' => 'aadhar_back_upload'])->label(false); ?>
     <?php
     }

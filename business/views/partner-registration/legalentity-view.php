@@ -42,7 +42,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="info-line">
             <strong>Logo:</strong>
             <span>
-            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->logo) ?>" alt="Logo" class="key-img">
+            <img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->logo ?>" alt="Logo" class="key-img">
             </span>
         </div>
     </div>

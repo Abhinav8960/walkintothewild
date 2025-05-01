@@ -53,7 +53,7 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['state', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['state', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','user_id'], 'integer'],
             [['gst_number'], 'string', 'max' => 50],
             [['filepath'], 'string', 'max' => 255],
             [['gst_number', 'state'], 'required'],
@@ -68,6 +68,7 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id'=>'User ID',
             'gst_number' => 'GST Number',
             'filepath' => 'GST File Upload',
             'status' => 'Status',
@@ -82,36 +83,40 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     /**
      * Handles file upload and sets the path
      */
-    public function uploadFiles()
-    {
-        $file = UploadedFile::getInstance($this, 'filepath');
+    // public function uploadFiles()
+    // {
+    //     $file = UploadedFile::getInstance($this, 'filepath');
 
-        if ($file) {
-            $basePath = Yii::$app->params['datapath'] . '/Uploads';
+    //     if ($file) {
+    //         $basePath = Yii::$app->params['datapath'] . '/Uploads';
 
-            if (!is_dir($basePath)) {
-                mkdir($basePath, 0777, true);
-            }
+    //         if (!is_dir($basePath)) {
+    //             mkdir($basePath, 0777, true);
+    //         }
 
-            $folderName = Yii::$app->user->id;
-            $userFolder = $basePath . '/' . $folderName;
+    //         $folderName = Yii::$app->user->id;
+    //         $userFolder = $basePath . '/' . $folderName;
 
-            if (!is_dir($userFolder)) {
-                mkdir($userFolder, 0777, true);
-            }
+    //         if (!is_dir($userFolder)) {
+    //             mkdir($userFolder, 0777, true);
+    //         }
 
-            $fileName = 'gst_' . time() . '.' . $file->extension;
-            $filePath = $userFolder . '/' . $fileName;
+    //         $fileName = 'gst_' . time() . '.' . $file->extension;
+    //         $filePath = $userFolder . '/' . $fileName;
 
-            if ($file->saveAs($filePath)) {
-                $this->filepath = 'Uploads/' . $folderName . '/' . $fileName;
-            } else {
-                Yii::error("Failed to save GST file: $fileName", __METHOD__);
-            }
-        }
-    }
+    //         if ($file->saveAs($filePath)) {
+    //             $this->filepath = 'Uploads/' . $folderName . '/' . $fileName;
+    //         } else {
+    //             Yii::error("Failed to save GST file: $fileName", __METHOD__);
+    //         }
+    //     }
+    // }
 
     public function getStateRelation(){
         return $this->hasOne(MasterState :: class ,['id'=>'state']);
+    }
+
+    public function getUser(){
+        return $this->hasOne(PartnerRegistration::className(), ['gst_id' => 'id']);
     }
 }

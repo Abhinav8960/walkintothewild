@@ -32,17 +32,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>PAN Uploaded File:</strong><br>
-                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->kyc_pan_upload) ?>" alt="PAN" class="kyc-img">
+                <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->kyc_pan_upload ?>" alt="PAN" class="kyc-img">
             </div>
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>Aadhar Front:</strong><br>
-                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_front_upload) ?>" alt="Aadhar Front" class="kyc-img">
+                <img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_front_upload ?>" alt="Aadhar Front" class="kyc-img">
             </div>
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>Aadhar Back:</strong><br>
-                <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->aadhar_back_upload) ?>" alt="Aadhar Back" class="kyc-img">
+                <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_back_upload ?>" alt="Aadhar Back" class="kyc-img">
             </div>
         </div>
     </div>

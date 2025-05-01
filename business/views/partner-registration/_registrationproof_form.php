@@ -25,7 +25,7 @@ $readOnly = false;
         <?php
         if (!empty($model->registration_copy_upload)) {
         ?>
-            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->registration_copy_upload) ?>" alt="registration_copy_upload" style="max-height:50px; max-width:100px;">
+            <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->registration_copy_upload  ?>" alt="registration_copy_upload" style="max-height:50px; max-width:100px;">
             <?= $form->field($model, 'registration_copy_upload')->hiddenInput(['id' => 'registration_copy_upload'])->label(false); ?>
         <?php
         }
@@ -47,7 +47,7 @@ $readOnly = false;
     <?php
     if (!empty($model->pan_upload)) {
     ?>
-        <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->logo) ?>" alt="Logo" style="max-height:100px;max-width:100px;">
+        <img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->pan_upload ?>" alt="Logo" style="max-height:100px;max-width:100px;">
         <?= $form->field($model, 'pan_upload')->hiddenInput(['id' => 'pan_upload'])->label(false); ?>
     <?php
     }

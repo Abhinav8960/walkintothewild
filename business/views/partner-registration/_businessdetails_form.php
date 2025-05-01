@@ -62,7 +62,7 @@ $readOnly = false;
         <?php
         if (!empty($gst_model->filepath)) {
         ?>
-            <img src="<?= $this->params['baseurl'] . '/storage/Uploads/' . $model->partner_model->id . '/' . basename($model->partner_model->gstDetails->filepath ?? '') ?>" alt="GSTfile" style="max-height:50px;max-width:100px;">
+            <img src="<?=Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetails->filepath ?>" alt="GSTfile" style="max-height:50px;max-width:100px;">
             <?= $form->field($gst_model, 'filepath')->hiddenInput(['id' => 'filepath'])->label(false); ?>
         <?php
         }
