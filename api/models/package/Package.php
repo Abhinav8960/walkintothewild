@@ -64,6 +64,10 @@ class Package extends \common\models\package\Package
         $fields[] = 'resource_uri';
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
+        // $fields[] = 'image_thumbnail';
+        $fields[] = 'image_thumbnails';
+        // $fields[] = 'banner_thumbnail';
+        $fields[] = 'banner_thumbnails';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
@@ -463,5 +467,47 @@ class Package extends \common\models\package\Package
             'status' => self::TYPE_BOOLEAN,
         ];
     }
-    
+
+
+    public function getImage_thumbnail()
+    {
+        if ($this->package_image) {
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image;
+        }
+        return '';
+    }
+
+    public function getImage_thumbnails()
+    {
+        if ($this->package_image) {
+            return $arr = [
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image,
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_image,
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_image,
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_image,
+            ];
+        }
+        return [];
+    }
+
+    public function getBanner_thumbnail()
+    {
+        if ($this->package_banner_image) {
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image;
+        }
+        return '';
+    }
+
+    public function getBanner_thumbnails()
+    {
+        if ($this->package_banner_image) {
+            return $arr = [
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image,
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_banner_image,
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_banner_image,
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_banner_image,
+            ];
+        }
+        return [];
+    }
 }

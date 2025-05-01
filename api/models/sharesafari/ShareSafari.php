@@ -28,6 +28,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
         $fields[] = 'is_safari_operator';
+        // $fields[] = 'thumbnail';
+        // $fields[] = 'thumbnails';
 
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $fields['cost_per_person'] =  function () {
@@ -456,5 +458,27 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return true;
         }
+    }
+
+    public function getThumbnail()
+    {
+        if ($this->filepath) {
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        }
+        return '';
+    }
+
+    public function getThumbnails()
+    {
+
+        if ($this->filepath) {
+            return $arr = [
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg',
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg',
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg',
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg',
+            ];
+        }
+        return [];
     }
 }

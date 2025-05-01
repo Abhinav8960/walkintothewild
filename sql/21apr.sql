@@ -1,3 +1,6 @@
+-- 31 April
+ALTER TABLE `share_safari` ADD `filepath` VARCHAR(512) NULL DEFAULT NULL AFTER `image`;
+
 -- 30 April
 ALTER TABLE `user_post_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;

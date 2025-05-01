@@ -89,7 +89,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['start_date', 'end_date', 'slug','is_published_on_api', 'is_published_on_web'], 'safe'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],            
             [['safari_plan'], 'string'],
-            [['image'], 'string'],
+            [['image','filepath'], 'string'],
         ];
     }
 
