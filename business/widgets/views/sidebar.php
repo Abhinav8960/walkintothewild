@@ -59,10 +59,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
                     </ul>
                 </li> -->
 
-                <li><a class="slide-item <?= in_array($active_url, array(
-                                                         "/partner-registration/create",
-                                                    )) ? "active" : "" ?>" href="/partner-registration/create"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">New Registration</a></li>
-
                 <li class="slide">
                     <a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
                         <span class="side-menu__label">Logout</span></a>
