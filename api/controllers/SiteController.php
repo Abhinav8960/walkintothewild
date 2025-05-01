@@ -117,6 +117,9 @@ class SiteController extends RestController
     public function actionSocialLogin()
     {
 
+    //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
+
+
         $model = new SocialLoginForm();
 
         $model->attributes = $this->request;
