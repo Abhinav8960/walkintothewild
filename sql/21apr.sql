@@ -1,3 +1,5 @@
+-- 1 May
+ALTER TABLE `partner_gst_details` ADD `partner_registration_id` INT NULL DEFAULT NULL AFTER `id`;
 -- 31 April
 ALTER TABLE `share_safari` ADD `filepath` VARCHAR(512) NULL DEFAULT NULL AFTER `image`;
 
