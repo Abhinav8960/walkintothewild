@@ -135,9 +135,9 @@ class PackageVersionForm extends \yii\base\Model
 
             $this->status = $this->package_version_model->status;
 
-            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
-            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
-            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->package_id, 'version'=>$this->package_version_model->version, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
+            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
+            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
+            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
         }
     }
 
@@ -414,21 +414,14 @@ class PackageVersionForm extends \yii\base\Model
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
             $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_version_model->id;
+            $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
 
             $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-
-            // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
 
             if ($fileName) {
-                // try {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_image, $filePath, $fileName, true)) {
-                    // $this->package_version_model->file = $fileName;
                     $this->package_version_model->package_image = $filePath;
-                    // $this->package_version_model->etag = $etag;
-
                     $this->package_version_model->save(false);
                 }
             }
@@ -459,17 +452,14 @@ class PackageVersionForm extends \yii\base\Model
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
             $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_version_model->id;
+            $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
+
             $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
-            // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
             if ($fileName) {
                 // try {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_banner_image, $filePath, $fileName, true)) {
-                    // $this->package_version_model->file = $fileName;
                     $this->package_version_model->package_banner_image = $filePath;
-                    // $this->package_version_model->etag = $etag;
                     $this->package_version_model->save(false);
                 }
             }

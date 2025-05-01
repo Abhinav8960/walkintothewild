@@ -91,11 +91,9 @@ class DayItineraryForm  extends \yii\base\Model
                 ['day_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 940,
-                'maxWidth' => 940,
-                'maxHeight' => 430,
-                'minHeight' => 430,
-                'maxSize' => 250 * 1024,
+                // 'maxWidth' => 940,
+                // 'maxHeight' => 430,
+                // 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
         ];
@@ -141,24 +139,39 @@ class DayItineraryForm  extends \yii\base\Model
     public function UploadFile()
     {
         if ($this->day_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/package/day';
+            //     $storagePath = Yii::$app->params['datapath'] . '/package/day';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+            //     if (!file_exists($storagePath)) {
+            //         mkdir($storagePath);
+            //         chmod($storagePath, 0777);
+            //     }
+            //     $storagePath = $storagePath . '/' . $this->package_day_model->id;
+            //     if (!file_exists($storagePath)) {
+            //         mkdir($storagePath);
+            //         chmod($storagePath, 0777);
+            //     }
+
+            //     $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
+            //     $filePath = $storagePath . '/' . $fileName;
+
+            //     if ($this->day_image->saveAs($filePath)) {
+            //         $this->package_day_model->day_image = $fileName;
+            //         $this->package_day_model->save(false);
+            //     }
+            // }
+
+            // -----------------------------Move to S3-----------------------------------------
+            $storagePath = 'package/' . $this->package_id . '/' . $this->version . '/day';
             $storagePath = $storagePath . '/' . $this->package_day_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
 
             $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->day_image->saveAs($filePath)) {
-                $this->package_day_model->day_image = $fileName;
-                $this->package_day_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->day_image, $filePath, $fileName, true)) {
+                    $this->package_day_model->day_image = $filePath;
+                    $this->package_day_model->save(false);
+                }
             }
         }
     }

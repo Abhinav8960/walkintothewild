@@ -33,15 +33,31 @@ class PackageDay extends \common\models\package\PackageDay
     public function fields()
     {
         $fields = parent::fields();
-        $hold_fields = ['id', 'meal_lunch','meal_breakfast','meal_dinner','day_activity','day_accommodation','day_note','package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $fields[] = "image_path";
+        $fields[] = "image_thumbnails";
+        $hold_fields = ['id', 'meal_lunch', 'meal_breakfast', 'day_image', 'meal_dinner', 'day_activity', 'day_accommodation', 'day_note', 'package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
 
-    public function getImagepath()
+    public function getImage_path()
     {
-        if ($this->day_image != '') {
-            return '/storage/package/day/' . $this->id . '/' . $this->day_image;
+        if ($this->day_image) {
+            return \Yii::$app->params['endpoint'] . '/' . $this->day_image;
         }
+        return '';
+    }
+
+    public function getImage_thumbnails()
+    {
+        if ($this->day_image) {
+            return $arr = [
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->day_image,
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->day_image,
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->day_image,
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->day_image,
+            ];
+        }
+        return [];
     }
 }

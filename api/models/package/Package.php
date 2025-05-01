@@ -472,8 +472,7 @@ class Package extends \common\models\package\Package
     public function getImage_thumbnail()
     {
         if ($this->package_image) {
-            $this->package_image = \common\models\GeneralModel::extentionRemove($this->package_image);
-            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image . '.jpg';
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image;
         }
         return '';
     }
@@ -481,12 +480,11 @@ class Package extends \common\models\package\Package
     public function getImage_thumbnails()
     {
         if ($this->package_image) {
-            $this->package_image = \common\models\GeneralModel::extentionRemove($this->package_image);
             return $arr = [
-                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image . '.jpg',
-                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_image . '.jpg',
-                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_image . '.jpg',
-                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_image . '.jpg',
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_image,
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_image,
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_image,
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_image,
             ];
         }
         return [];
@@ -495,8 +493,7 @@ class Package extends \common\models\package\Package
     public function getBanner_thumbnail()
     {
         if ($this->package_banner_image) {
-            $this->package_banner_image = \common\models\GeneralModel::extentionRemove($this->package_banner_image);
-            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image . '.jpg';
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image;
         }
         return '';
     }
@@ -504,12 +501,11 @@ class Package extends \common\models\package\Package
     public function getBanner_thumbnails()
     {
         if ($this->package_banner_image) {
-            $this->package_banner_image = \common\models\GeneralModel::extentionRemove($this->package_banner_image);
             return $arr = [
-                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image . '.jpg',
-                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_banner_image . '.jpg',
-                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_banner_image . '.jpg',
-                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_banner_image . '.jpg',
+                'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->package_banner_image,
+                'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->package_banner_image,
+                'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->package_banner_image,
+                'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->package_banner_image,
             ];
         }
         return [];
