@@ -37,11 +37,9 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return "<div style='text-align: center;'>
-                                        <video width='320' height='240' controls>
-                                            <source src='" . $model->thumbnail . "' type='video/mp4'>
-                                        </video>
-                                    </div>";
+                            return Html::tag('div', Html::img($model->thumbnail, [
+                                'alt' => 'Uploaded Image',
+                            ]), ['style' => 'text-align: center;']);
                         }
                     ],
                     [
