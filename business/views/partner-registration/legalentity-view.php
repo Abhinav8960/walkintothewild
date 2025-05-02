@@ -68,7 +68,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
    
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="info-line">
                 <strong>Address:</strong>
                 <span><?= Html::encode($model->address) ?></span>

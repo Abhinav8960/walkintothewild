@@ -22,7 +22,8 @@ class Module extends \yii\base\Module
     public function init()
     {
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
-            return $this->redirect(['/partner-registration/create']);
+            \Yii::$app->getResponse()->redirect(['/partner-registration/create'])->send();
+            \Yii::$app->end();
         }
         
         parent::init();

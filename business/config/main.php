@@ -76,6 +76,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/partner-registration' => '/partner-registration/create',
                 '/chat/message/<user_handle>' => '/chat/default/message',
                 '/chat/message/<user_handle>/<chat_id>' => '/chat/default/message',
                 '/chat/quote/<user_handle>/<chat_id>' => '/chat/default/message',
