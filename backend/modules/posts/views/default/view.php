@@ -1,0 +1,1 @@
+<img class="card-img-top" src="<?= $model->full_image_path ?>" alt="Card image cap">

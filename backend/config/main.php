@@ -109,6 +109,9 @@ return [
         'sightings' => [
             'class' => 'backend\modules\sightings\Module',
         ],
+        'posts' => [
+            'class' => 'backend\modules\posts\Module',
+        ],
 
     ],
     'components' => [
