@@ -115,7 +115,7 @@ class PackageController extends RestController
         }
         $searchModel = new PackageVersionSearch();
         $searchModel->status = PackageVersion::EDIATBLE_STATUS;
-        $searchModel->owned_by_id = $this->operatormodel()->id;
+        $searchModel->owned_by_id = $safari_operator->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "partnersearch");
     }
 
