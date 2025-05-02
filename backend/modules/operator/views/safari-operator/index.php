@@ -123,6 +123,7 @@ $this->params['title'] = $this->title;
                                     [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'Update',
+                                        'target' => '_blank',
                                     ]
                                 );
                             },
