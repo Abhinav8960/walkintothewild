@@ -118,6 +118,7 @@ class SiteController extends RestController
     {
 
     //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
+      return  new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890');
 
 
         $model = new SocialLoginForm();
