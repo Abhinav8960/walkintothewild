@@ -124,7 +124,6 @@ class PartnerRegistrationController extends Controller
         $model->form3_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-3';
         $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP3;
-        if ($partner_model->gst_id) {
             // $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
             $gstDetail = PartnerGstDetails::find()->where(['partner_registration_id'=>$partner_model->id])->one();
             if (!$gstDetail) {
@@ -133,7 +132,6 @@ class PartnerRegistrationController extends Controller
                 $gstForm = new PartnerGstDetailsForm($gstDetail);
 
             }
-        } 
         $gstForm->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $gstForm->action_url = '/partner-registration/step-3';
         $gstForm->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerGstDetailsForm::SCENARIO_STEP3;
