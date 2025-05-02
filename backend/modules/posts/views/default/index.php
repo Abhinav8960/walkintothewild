@@ -149,7 +149,7 @@ $this->params['title'] = $this->title;
 
 
 <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header popHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
