@@ -124,4 +124,48 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     {
         return $this->hasOne(MetaSafariSession::class, ['id' => 'safari_session_id']);
     }
+
+    public function getThumbnail()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+    }
+
+    public function getLike()
+    {
+        return $this->hasMany(SightingLike::class, ['sighting_id' => 'id']);
+    }
+
+    public function getLikes_count()
+    {
+        return $this->getLike()->count();
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['parent_id' => null]);
+    }
+
+    public function getComments_count()
+    {
+        return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+
+    public function getReplies()
+    {
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['!=', 'parent_id', null]);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+    
+    public function getFull_file_path()
+    {
+        if ($this->file) {
+            return  Yii::$app->params['s3_endpoint'] . '/watchpost/' . $this->user_id . '/media/' . $this->file;
+        }
+        return null;
+    }
 }
