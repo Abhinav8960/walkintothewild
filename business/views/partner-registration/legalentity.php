@@ -18,7 +18,7 @@ use yii\helpers\Url;
             <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">
-                        <button id="form_1_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                        <button id="form_1_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse1"
                             aria-expanded="false" aria-controls="collapse1" data-bs-toggle="tooltip"
                             data-bs-placement="right"
@@ -56,7 +56,7 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model->form2_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading2">
-                    <button id="form_2_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                    <button id="form_2_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse2"
                         aria-expanded="false" aria-controls="collapse2" data-bs-toggle="tooltip"
                         data-bs-placement="right"
@@ -132,7 +132,7 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model != null && $partner_model->form3_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading3">
-                    <button id="form_3_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                    <button id="form_3_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse3"
                         aria-expanded="false" aria-controls="collapse3" data-bs-toggle="tooltip"
                         data-bs-placement="right"
@@ -210,7 +210,7 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
-                    <button id="form_4_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                    <button id="form_4_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse4"
                         aria-expanded="false" aria-controls="collapse4" data-bs-toggle="tooltip"
                         data-bs-placement="right"
@@ -279,7 +279,7 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
-                        <button id="form_5_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start  background-danger" type="button"
+                        <button id="form_5_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start  background-danger text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse5"
                             aria-expanded="false" aria-controls="collapse5" data-bs-toggle="tooltip"
                             data-bs-placement="right"
