@@ -164,8 +164,8 @@ class PartnerRegistrationForm extends Model
         $this->skiponemptystep1 = !$this->isNewRecord;
         $this->skiponemptystep2 = $this->form1_status == 0 ? false : true;
         $this->skiponemptystep3 = $this->form2_status == 0 ? false : true;;
-        $this->skiponemptystep4 = $this->form3_status == 0 ? false : true;;
-        $this->skiponemptystep5 = $this->form4_status == 0 ? false : true;;
+        $this->skiponemptystep4 = $this->form4_status == 0 ? false : true;;
+        $this->skiponemptystep5 = $this->form5_status == 0 ? false : true;;
     }
 
     public function scenarios()

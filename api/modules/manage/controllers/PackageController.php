@@ -870,6 +870,6 @@ class PackageController extends RestController
             $version = $package_model->editable_version;
         }
         $package_version_model = $this->findPackageVersionModel($package_model->id, $version);
-        return Yii::$app->api->sendResponse($data = $package_version_model);
+        return Yii::$app->api->sendResponse($data['data'] = $package_version_model);
     }
 }
