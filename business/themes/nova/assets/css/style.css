@@ -112956,3 +112956,49 @@ td {
   -ms-flex-align: center;
   align-items: center;
 }
+
+.logIn_btn {
+  padding-top: 20px;
+}
+
+.logIn_btn button {
+  padding: 8px 10px !important;
+  width: 100%;
+  background-color: #f7bf39;
+  border-color: #f7bf39;
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.logIn_btn button:hover {
+  background-color: #fabb27;
+  border-color: #fabb27;
+  color: #000000;
+}
+
+.modal-header {
+  background-color: var(--background-primary);
+  color: var(--colorwhite);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.container_login {
+  background: url("../img/bannerhome.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+}
