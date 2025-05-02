@@ -1,1 +1,1 @@
-<img class="card-img-top" src="<?= $model->full_image_path ?>" alt="Card image cap" width='320' height='240'>
+<img class="card-img-top" src="<?= $model->full_image_path ?>" alt="Card image cap" width='240' height='240'>
