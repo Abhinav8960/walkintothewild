@@ -134,7 +134,7 @@ class PartnerRegistrationController extends Controller
 
             }
         } 
-        $gstForm->scenario = PartnerGstDetailsForm::SCENARIO_STEP3;
+        $gstForm->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $gstForm->action_url = '/partner-registration/step-3';
         $gstForm->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerGstDetailsForm::SCENARIO_STEP3;
 
