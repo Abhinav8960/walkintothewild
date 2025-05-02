@@ -58,6 +58,7 @@ use yii\bootstrap5\Html;
 
 
 </div>
+</div>
 
 <style>
     .section-title {

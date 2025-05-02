@@ -236,7 +236,6 @@ use yii\bootstrap5\Html;
                             Bank Details
                         </button>
                     </h2>
-                </div>
 
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading2">

@@ -4,60 +4,51 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
 
-
+$webasset = Yii::$app->getUrlManager();
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container-fluid py-4">
+
     <div class="mb-4">
-        <h4 class="section-title text-secondary">Bank Details</h4>
+        <h4 class="section-title text-secondary">Registration Proof</h4>
     </div>
 
     <div class="row g-4 info-section">
         <div class="col-md-6">
             <div class="info-line">
-                <strong>Bank Name:</strong><span><?= Html::encode($model->bank_name) ?></span>
-            </div>
-        </div>
-
-
-
-        <div class="col-md-6">
-            <div class="info-line">
-                <strong>Account Holder's Name:</strong>
-                <span><?= Html::encode($model->account_holder_name) ?></span>
-            </div>
-        </div>
-
-
-
-        <div class="col-md-6">
-            <div class="info-line">
-                <strong>Account Number:</strong>
-                <span><?= Html::encode($model->account_number) ?></span>
-            </div>
-        </div>
-
-
-
-        <div class="col-md-6">
-            <div class="info-line">
-                <strong>IFSC :</strong>
-                <span><?= Html::encode($model->ifsc_number) ?></span>
+                <strong>Registration Number :</strong>
+                <span><?= Html::encode($model->registration_number) ?></span>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="info-line">
-                <strong>Cancel Check Upload :</strong><br>
+                <strong>Registration Copy:</strong>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->cancel_check_upload ?>" alt="CancelCheck" class="kyc-img">
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->registration_copy_upload  ?>" alt="RegistrationFile" class="key-img">
+                </span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-line">
+                <strong>PAN Number:</strong>
+                <span><?= Html::encode($model->pan_number) ?></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-line">
+                <strong>PAN Upload:</strong>
+                <span>
+                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->pan_upload ?>" alt="PanCard" class="key-image">
                 </span>
             </div>
         </div>
     </div>
-
-
 </div>
+
 
 <style>
     .section-title {

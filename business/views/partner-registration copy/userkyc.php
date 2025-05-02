@@ -237,7 +237,7 @@ use yii\bootstrap5\Html;
                             data-bs-placement="right"
                             title="<?= $partner_model->form4_reject_reason ?>">
                             Bank Details
-                            <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
+                            <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3 bg-danger">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
                         </button>
@@ -291,7 +291,7 @@ use yii\bootstrap5\Html;
                         </button>
                     </h2>
                 <?php ;} ?>
-            </div>
+            
 
 
 
