@@ -25,7 +25,9 @@ return [
         'sightings' => [ // Chating and Messaging Module
             'class' => 'business\modules\sightings\Module',
         ],
-
+        'posts' => [ // Chating and Messaging Module
+            'class' => 'business\modules\posts\Module',
+        ],
 
 
     ],

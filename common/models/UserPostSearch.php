@@ -16,7 +16,8 @@ class UserPostSearch extends UserPosts
         return [
             [['caption'], 'string'],
             [['file'], 'string', 'max' => 512],
-            [['safari_session_id', 'location', 'master_animal_id', 'status'], 'safe']
+            [['safari_session_id', 'location', 'master_animal_id', 'status'], 'safe'],
+
         ];
     }
 
@@ -59,8 +60,11 @@ class UserPostSearch extends UserPosts
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'safari_operator_id' => $this->safari_operator_id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'caption', $this->caption]);
 
 
         return $dataProvider;
