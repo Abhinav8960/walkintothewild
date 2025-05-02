@@ -3,6 +3,9 @@
 namespace common\models\sighting;
 
 use common\models\feeds\Feeds;
+use common\models\master\animal\MasterAnimal;
+use common\models\meta\MetaSafariSession;
+use common\models\park\SafariPark;
 use common\models\User;
 use common\traits\CommanRelationship;
 use Yii;
@@ -105,5 +108,20 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getLocationDetail()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'location']);
+    }
+
+    public function getAnimalDetail()
+    {
+        return $this->hasOne(MasterAnimal::class, ['id' => 'master_animal_id']);
+    }
+
+    public function getSafariSessionDetail()
+    {
+        return $this->hasOne(MetaSafariSession::class, ['id' => 'safari_session_id']);
     }
 }

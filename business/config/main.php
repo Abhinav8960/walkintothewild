@@ -22,7 +22,12 @@ return [
         'chat' => [ // Chating and Messaging Module
             'class' => 'business\modules\chat\Module',
         ],
-
+        'sightings' => [ // Chating and Messaging Module
+            'class' => 'business\modules\sightings\Module',
+        ],
+        'posts' => [ // Chating and Messaging Module
+            'class' => 'business\modules\posts\Module',
+        ],
 
 
     ],
