@@ -91,6 +91,12 @@ class PartnerRegistrationForm extends Model
     public $action_validate_url;
     public $isNewRecord = true;
 
+    public $skiponemptystep1 = true;
+    public $skiponemptystep2 = true;
+    public $skiponemptystep3 = true;
+    public $skiponemptystep4 = true;
+    public $skiponemptystep5 = true;
+
     public function __construct(PartnerRegistration $partner_model = null)
     {
         $this->partner_model = Yii::createObject([
@@ -154,6 +160,12 @@ class PartnerRegistrationForm extends Model
             $this->final = $this->partner_model->final;
             $this->updated_time_final = $this->partner_model->updated_time_final;
         }
+
+        $this->skiponemptystep1 = !$this->isNewRecord;
+        $this->skiponemptystep2 = $this->form1_status == 0 ? false : true;
+        $this->skiponemptystep3 = $this->form2_status == 0 ? false : true;;
+        $this->skiponemptystep4 = $this->form3_status == 0 ? false : true;;
+        $this->skiponemptystep5 = $this->form4_status == 0 ? false : true;;
     }
 
     public function scenarios()
@@ -181,21 +193,21 @@ class PartnerRegistrationForm extends Model
             //     },
             // ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
-            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => !$this->isNewRecord],
+            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => $this->skiponemptystep1],
 
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
-            [
-                'registration_copy_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP2,
-                'when' => function ($model) {
-                    return empty($model->registration_copy_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                return $(\'#registration_copy_upload\').val() === \'\';
-            }'
-            ],
+            // [
+            //     'registration_copy_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP2,
+            //     'when' => function ($model) {
+            //         return empty($model->registration_copy_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //     return $(\'#registration_copy_upload\').val() === \'\';
+            // }'
+            // ],
             // [
             //     'pan_file_upload',
             //     'required',
@@ -207,7 +219,7 @@ class PartnerRegistrationForm extends Model
             //     return $(\'#pan_upload\').val() === \'\';
             // }'
             // ],
-            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->form2_status == 0 ? false : true],
+            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->skiponemptystep2],
 
             [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
@@ -224,7 +236,7 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#cancel_check_upload\').val() === \'\';
             //     }',
             // ],
-            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4, 'skipOnEmpty' => $this->form4_status == 0 ? false : true],
+            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4, 'skipOnEmpty' => $this->skiponemptystep4],
 
 
             [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
@@ -262,7 +274,7 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#aadhar_back_upload\').val() === \'\';
             //     }',
             // ],
-            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->form5_status == 0 ? false : true],
+            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],

@@ -46,17 +46,17 @@ class PartnerGstDetailsForm extends Model
             [['status'], 'default', 'value' => 0],
             [['status', 'state','partner_registration_id'], 'integer'],
             [['gst_number'], 'string', 'max' => 50],
-            [
-                'filepath_upload',
-                'required',
-                'when' => function ($model) {
-                    return empty($model->filepath);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $("#filepath").val() === "";
-                }',
-            ],
-            [['filepath_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024],
+            // [
+            //     'filepath_upload',
+            //     'required',
+            //     'when' => function ($model) {
+            //         return empty($model->filepath);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $("#filepath").val() === "";
+            //     }',
+            // ],
+            [['filepath_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'skipOnEmpty' => !$this->isNew],
         ];
     }
 
