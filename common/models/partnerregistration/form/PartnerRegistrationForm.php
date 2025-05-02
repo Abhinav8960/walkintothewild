@@ -194,7 +194,7 @@ class PartnerRegistrationForm extends Model
             // ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
             [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => $this->skiponemptystep1],
-
+            ['address', 'string', 'max' => 255, 'tooLong' => 'Address should not exceed 255 characters'],
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
             // [
@@ -280,6 +280,7 @@ class PartnerRegistrationForm extends Model
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'safe'],
             [['legal_entity_phone', 'legal_entity_whatsapp','billing_phone','kyc_phone', 'kyc_whatsapp'],'match', 'pattern' =>'/^\d{10}$/', 'message' => 'Contact Number should have 10 digits.'],
+            [['kyc_pan','pan_number'], 'match', 'pattern' => '/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/', 'message' => 'PAN must be in format AAAAA9999A'],
 
         ];
     }

@@ -57,6 +57,7 @@ $readOnly = false;
     <div class="col-md-4">
         <?= $form->field($gst_model, 'gst_number')->textInput([
             'class' => 'form-control',
+            'oninput' => "this.value = this.value.toUpperCase();",
             'placeholder' => 'Enter GST Number',
             'readonly' => $readOnly,
         ]) ?>
@@ -80,6 +81,7 @@ $readOnly = false;
     <div class="col-md-3">
         <?= $form->field($model, 'billing_phone')->textInput([
             'class' => 'form-control',
+            'maxlength'=>10,
             'placeholder' => 'Enter Billing Phone',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',

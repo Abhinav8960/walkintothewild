@@ -46,6 +46,10 @@ $form = ActiveForm::begin([
     <div class="col-md-3">
         <?= $form->field($model, 'pan_number')->textInput([
             'class' => 'form-control',
+            'maxlength' => 10,
+            'pattern' => '[A-Z]{5}[0-9]{4}[A-Z]',
+            'title' => 'PAN must be in format AAAAA9999A',
+            'oninput' => "this.value = this.value.toUpperCase();",
             'placeholder' => 'Enter PAN number',
             'readonly' => $readOnly,
         ]) ?>

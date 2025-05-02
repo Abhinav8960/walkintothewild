@@ -75,6 +75,8 @@ class PartnerGstDetailsForm extends Model
             [['state', 'gst_number'], 'required', 'on'=> self::SCENARIO_STEP3],
             // [['filepath_upload'], 'required', 'on'=> self::SCENARIO_STEP3,'skipOnEmpty' =>!$this->isNew],
             [['filepath_upload'], 'file','extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP3, 'skipOnEmpty' =>!$this->isNew],
+            ['gst_number', 'match', 'pattern' => '/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/', 'message' => 'GST number must be in the format 11AAAAA9999A1Z1'],
+
 
 
         ];
