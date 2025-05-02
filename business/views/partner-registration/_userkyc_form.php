@@ -10,7 +10,7 @@ $readOnly = false;
     'options' => [
         'id' => 'user-kyc',
         'enableAjaxValidation' => true,
-        'enableClientValidation' => false,
+        'enableClientValidation' => true,
         'enableClientScript' => true,
         'action' => $model->action_url,
         'validationUrl' => $model->action_validate_url,
@@ -34,6 +34,7 @@ $readOnly = false;
             'class' => 'form-control',
             'placeholder' => 'Enter Phone Number',
             'readonly' => $readOnly,
+            'onkeypress' => 'return /[0-9]/i.test(event.key)',
         ]) ?>
     </div>
 
@@ -42,6 +43,7 @@ $readOnly = false;
             'class' => 'form-control',
             'placeholder' => 'Enter Whatsapp Number',
             'readonly' => $readOnly,
+            'onkeypress' => 'return /[0-9]/i.test(event.key)',
         ]) ?>
     </div>
 

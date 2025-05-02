@@ -7,16 +7,18 @@ $readOnly = false;
 ?>
 
 
-<?php $form = ActiveForm::begin([
-    'options' => ['id' => 'registration-proof',
+<?php 
+$form = ActiveForm::begin([
+    'id' => 'registration-proof',
     'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
     'enableClientScript' => true,
+    'options' => ['enctype' => 'multipart/form-data'],
     'action' => $model->action_url,
     'validationUrl' => $model->action_validate_url,
-    'enctype' => 'multipart/form-data'],
-    
-]); ?>
+]);
+?>
+
 <div class="row">
     <div class="col-md-3">
         <?= $form->field($model, 'registration_number')->textInput([

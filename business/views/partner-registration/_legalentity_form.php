@@ -17,7 +17,6 @@ $form = ActiveForm::begin([
     'enableClientValidation' => true,
     'enableClientScript' => true,
     'options' => ['enctype' => 'multipart/form-data'],
-    // 'enableClientScript' => true,
     'action' => $model->action_url,
     'validationUrl' => $model->action_validate_url,
 ]);
@@ -72,6 +71,7 @@ $form = ActiveForm::begin([
             'class' => 'form-control',
             'placeholder' => 'Enter Legal Entity Phone',
             'readonly' => $readOnly,
+            'onkeypress' => 'return /[0-9]/i.test(event.key)',
         ]) ?>
     </div>
 
@@ -80,6 +80,7 @@ $form = ActiveForm::begin([
             'class' => 'form-control',
             'placeholder' => 'Enter Legal Entity Whatsapp',
             'readonly' => $readOnly,
+            'onkeypress' => 'return /[0-9]/i.test(event.key)',
         ]) ?>
     </div>
 
