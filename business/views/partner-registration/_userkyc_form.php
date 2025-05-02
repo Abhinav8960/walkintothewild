@@ -58,6 +58,8 @@ $readOnly = false;
     <div class="col-md-6">
         <?= $form->field($model, 'kyc_pan')->textInput([
             'class' => 'form-control',
+            'maxlength' => 10,
+            'oninput' => "this.value = this.value.toUpperCase();",
             'placeholder' => 'Enter PAN',
             'readonly' => $readOnly,
         ]) ?>

@@ -57,6 +57,7 @@ $readOnly = false;
     <div class="col-md-4">
         <?= $form->field($gst_model, 'gst_number')->textInput([
             'class' => 'form-control',
+            'oninput' => "this.value = this.value.toUpperCase();",
             'placeholder' => 'Enter GST Number',
             'readonly' => $readOnly,
         ]) ?>

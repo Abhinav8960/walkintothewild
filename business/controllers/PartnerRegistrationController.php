@@ -49,6 +49,8 @@ class PartnerRegistrationController extends Controller
                         $model->uploadFiles();
                         return $this->redirect(['step-2']);
                     } else {
+                        print_r($model->partner_model->getErrors());
+                        die();
                         Yii::$app->session->setFlash('error', 'Please fill all required fields.');
                     }
                 }
