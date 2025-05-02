@@ -18,15 +18,13 @@ use yii\helpers\Url;
             <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">
-                        <button id="form_1_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
+                        <button class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse1"
-                            aria-expanded="false" aria-controls="collapse1" data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="<?= $partner_model->form1_reject_reason ?>">
+                            aria-expanded="false" aria-controls="collapse1">
                             Legal Entity
-                            <a href="<?= Url::toRoute(['create']) ?>" class="text-decoration-none px-3">
-                                <i class="bi bi-pencil text-white fs-5"></i>
-                            </a>
+                            <span id="form_1_rejectedTooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="<?= $partner_model->form1_reject_reason ?>">
+                                <i class="bi bi-info text-white fs-5"></i>
+                            </span>
                         </button>
                     </h2>
                 <?php ;} else { ?>
@@ -56,15 +54,16 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model->form2_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading2">
-                    <button id="form_2_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse2"
-                        aria-expanded="false" aria-controls="collapse2" data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        title="<?= $partner_model->form2_reject_reason ?>">
+                        aria-expanded="false" aria-controls="collapse2">
                         Registration Proof
                         <a href="<?= Url::toRoute(['step-2']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
+                        <span id="form_2_rejectedTooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="<?= $partner_model->form2_reject_reason ?>">
+                            <i class="bi bi-info text-white fs-5"></i>
+                        </span>
                     </button>
 
                 </h2>
@@ -132,15 +131,16 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model != null && $partner_model->form3_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading3">
-                    <button id="form_3_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse3"
-                        aria-expanded="false" aria-controls="collapse3" data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        title="<?= $partner_model->form3_reject_reason ?>">
+                        aria-expanded="false" aria-controls="collapse3">
                         Business Details
                         <a href="<?= Url::toRoute(['step-3']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
+                        <span id="form_3_rejectedTooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="<?= $partner_model->form3_reject_reason ?>">
+                            <i class="bi bi-info text-white fs-5"></i>
+                        </span>
                     </button>
 
                 </h2>
@@ -210,15 +210,16 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
             <?php if ($partner_model != null && $partner_model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
                 <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
-                    <button id="form_4_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-danger text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapse4"
-                        aria-expanded="false" aria-controls="collapse4" data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        title="<?= $partner_model->form4_reject_reason ?>">
+                        aria-expanded="false" aria-controls="collapse4">
                         Bank Details
                         <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
+                        <span id="form_4_rejectedTooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="<?= $partner_model->form4_reject_reason ?>">
+                            <i class="bi bi-info text-white fs-5"></i>
+                        </span>
                     </button>
 
                 </h2>
@@ -279,15 +280,16 @@ use yii\helpers\Url;
           <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
-                        <button id="form_5_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start  background-danger text-white" type="button"
+                        <button class="accordion-button collapsed flex-grow-1 text-start  background-danger text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse5"
-                            aria-expanded="false" aria-controls="collapse5" data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="<?= $partner_model->form5_reject_reason ?>">
+                            aria-expanded="false" aria-controls="collapse5">
                             User KYC
                             <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
+                        <span id="form_5_rejectedTooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="<?= $partner_model->form5_reject_reason ?>">
+                            <i class="bi bi-info text-white fs-5"></i>
+                        </span>
                         </button>
                       
                     </h2>
@@ -386,8 +388,8 @@ use yii\helpers\Url;
         /* dark red text */
         border: 1px solidrgb(161, 22, 36);
         padding: 15px 20px;
-        font-size: 16px;
-        border-radius: 8px;
+        font-size: 30px;
+        border-radius: 20px;
         min-width: 250px;
         max-width: 400px;
         text-align: left;
