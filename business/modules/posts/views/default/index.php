@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 use yii\widgets\Pjax;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 $this->title = 'Posts';
 $this->params['breadcrumbs'][] = $this->title;
@@ -57,6 +58,36 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Comment Count',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->comments_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Reply Count',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->replies_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Sighting Like Count',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->likes_count;
+                        }
+                    ],
+                    [
                         'label' => 'Date',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
@@ -85,6 +116,29 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'template' => '{view}&nbsp',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                if ($model->file) {
+                                    return Html::button(
+                                        Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                        [
+                                            'value' => Url::toRoute(['/posts/default/view', 'id' => $model->id]),
+                                            'class' => 'btn p-0 change-menuicon post-popup',
+                                            'title' => 'View',
+                                        ]
+                                    );
+                                }
+                                return '';
+                            },
+                        ]
+                    ],
+
                 ],
             ]); ?>
         </div>
@@ -92,3 +146,34 @@ $this->params['title'] = $this->title;
 </div>
 
 <?php Pjax::end(); ?>
+
+
+<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Details
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.post-popup').on('click', function () {
+        $('#modalAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+?>

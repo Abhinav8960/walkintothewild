@@ -2,6 +2,7 @@
 
 namespace business\modules\posts\controllers;
 
+use common\models\UserPosts;
 use common\models\UserPostSearch;
 use Yii;
 use yii\web\Controller;
@@ -26,6 +27,18 @@ class DefaultController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
+        if (!$userpost) {
+            \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
+            return $this->redirect(['index']);
+        }
+        return $this->renderAjax('view', [
+            'model' => $userpost,
         ]);
     }
 }
