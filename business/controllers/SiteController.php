@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use business\components\AuthHandler;
+use common\models\CustomLoginForm;
 use common\models\MailLog;
 use common\models\operator\SafariOperator;
 use yii\web\Response;
@@ -27,7 +28,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth'],
+                        'actions' => ['login', 'error', 'auth', 'custom-login'],
                         'allow' => true,
                     ],
                     [
@@ -124,5 +125,23 @@ class SiteController extends Controller
     public function onAuthSuccess($client)
     {
         (new AuthHandler($client))->handle();
+    }
+
+    public function actionCustomLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $this->layout = 'blank';
+
+        $model = new CustomLoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        return $this->render('custom_login', [
+            'model' => $model,
+        ]);
     }
 }
