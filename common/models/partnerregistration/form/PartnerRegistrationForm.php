@@ -76,19 +76,20 @@ class PartnerRegistrationForm extends Model
     public $aadhar_back_file_upload;
 
     public $current_step;
-    public $form1_status;
-    public $form2_status;
-    public $form3_status;
-    public $form4_status;
-    public $form5_status;
+    public $form1_status = 0;
+    public $form2_status = 0;
+    public $form3_status = 0;
+    public $form4_status = 0;
+    public $form5_status = 0;
     public $is_sendforapproval;
     public $status = 0;
     public $final;
     public $updated_time_final;
     public $partner_model;
-    
+
     public $action_url;
     public $action_validate_url;
+    public $isNewRecord = true;
 
     public function __construct(PartnerRegistration $partner_model = null)
     {
@@ -97,6 +98,8 @@ class PartnerRegistrationForm extends Model
         ]);
 
         if ($partner_model !== null) {
+            $this->isNewRecord = false;
+
             $this->partner_model = $partner_model;
             $this->id = $this->partner_model->id;
             $this->user_id = $this->partner_model->user_id;
@@ -161,6 +164,7 @@ class PartnerRegistrationForm extends Model
             self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'billing_phone', 'billing_mail'],
             self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_file_upload'],
             self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_file_upload', 'aadhar_number', 'aadhar_front_file_upload', 'aadhar_back_file_upload'],
+
         ];
     }
 
@@ -168,19 +172,16 @@ class PartnerRegistrationForm extends Model
     {
         return [
             [['legal_entity_name', 'legal_entity_type', 'brand_name', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'], 'required', 'on' => self::SCENARIO_STEP1],
-            [
-                'logo_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP1,
-                'when' => function ($model) {
-                    return empty($model->logo);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $(\'#logo\').val() === \'\';
-                }',
-            ],
+            // [
+            //     'logo_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP1,
+            //     'when' => function ($model) {
+            //         return empty($model->logo);
+            //     },
+            // ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
-            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => true,],
+            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => !$this->isNewRecord],
 
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
@@ -195,73 +196,73 @@ class PartnerRegistrationForm extends Model
                 return $(\'#registration_copy_upload\').val() === \'\';
             }'
             ],
-            [
-                'pan_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP2,
-                'when' => function ($model) {
-                    return empty($model->pan_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                return $(\'#pan_upload\').val() === \'\';
-            }'
-            ],
-            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2],
+            // [
+            //     'pan_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP2,
+            //     'when' => function ($model) {
+            //         return empty($model->pan_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //     return $(\'#pan_upload\').val() === \'\';
+            // }'
+            // ],
+            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->form2_status == 0 ? false : true],
 
             [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
 
             [['bank_name', 'account_holder_name', 'account_number', 'ifsc_number'], 'required', 'on' => self::SCENARIO_STEP4],
-            [
-                'cancel_check_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP4,
-                'when' => function ($model) {
-                    return empty($model->cancel_check_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $(\'#cancel_check_upload\').val() === \'\';
-                }',
-            ],
-            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4],
+            // [
+            //     'cancel_check_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP4,
+            //     'when' => function ($model) {
+            //         return empty($model->cancel_check_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $(\'#cancel_check_upload\').val() === \'\';
+            //     }',
+            // ],
+            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4, 'skipOnEmpty' => $this->form4_status == 0 ? false : true],
 
 
             [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
             ['kyc_email', 'email', 'on' => self::SCENARIO_STEP5],
-            [
-                'kyc_pan_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP5,
-                'when' => function ($model) {
-                    return empty($model->kyc_pan_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $(\'#kyc_pan_upload\').val() === \'\';
-                }',
-            ],
-            [
-                'aadhar_front_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP5,
-                'when' => function ($model) {
-                    return empty($model->aadhar_front_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $(\'#aadhar_front_upload\').val() === \'\';
-                }',
-            ],
-            [
-                'aadhar_back_file_upload',
-                'required',
-                'on' => self::SCENARIO_STEP5,
-                'when' => function ($model) {
-                    return empty($model->aadhar_back_upload);
-                },
-                'whenClient' => 'function (attribute, value) {
-                    return $(\'#aadhar_back_upload\').val() === \'\';
-                }',
-            ],
-            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5],
+            // [
+            //     'kyc_pan_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP5,
+            //     'when' => function ($model) {
+            //         return empty($model->kyc_pan_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $(\'#kyc_pan_upload\').val() === \'\';
+            //     }',
+            // ],
+            // [
+            //     'aadhar_front_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP5,
+            //     'when' => function ($model) {
+            //         return empty($model->aadhar_front_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $(\'#aadhar_front_upload\').val() === \'\';
+            //     }',
+            // ],
+            // [
+            //     'aadhar_back_file_upload',
+            //     'required',
+            //     'on' => self::SCENARIO_STEP5,
+            //     'when' => function ($model) {
+            //         return empty($model->aadhar_back_upload);
+            //     },
+            //     'whenClient' => 'function (attribute, value) {
+            //         return $(\'#aadhar_back_upload\').val() === \'\';
+            //     }',
+            // ],
+            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->form5_status == 0 ? false : true],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
@@ -620,7 +621,7 @@ class PartnerRegistrationForm extends Model
         //         Yii::error("Failed to save file: $fileName", __METHOD__);
         //     }
         // }
-       
+
         if ($this->aadhar_front_file_upload) {
             $storagePath = 'operator-registration';
             $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharfront';
@@ -631,22 +632,22 @@ class PartnerRegistrationForm extends Model
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 // try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->aadhar_front_file_upload, $filePath, $fileName, true)) {
-                        $this->partner_model->aadhar_front_upload = $filePath;
-                        // $this->aadhar_front_file_upload = $filePath;
-                        // $this->partner_model->etag = $etag;
+                if ($etag =  FsHelper::saveUploadedFile($this->aadhar_front_file_upload, $filePath, $fileName, true)) {
+                    $this->partner_model->aadhar_front_upload = $filePath;
+                    // $this->aadhar_front_file_upload = $filePath;
+                    // $this->partner_model->etag = $etag;
 
-                        $extension = $this->aadhar_front_file_upload->extension;
-                        if ($extension === 'svg') {
-                            $width = 0;
-                            $height = 0;
-                        } else {
-                            list($width, $height) = getimagesize($this->aadhar_front_file_upload->tempName);
-                        }
-                        // $this->partner_model->height =  $height;
-                        // $this->partner_model->width = $width;
-                        $this->partner_model->save(false);
+                    $extension = $this->aadhar_front_file_upload->extension;
+                    if ($extension === 'svg') {
+                        $width = 0;
+                        $height = 0;
+                    } else {
+                        list($width, $height) = getimagesize($this->aadhar_front_file_upload->tempName);
                     }
+                    // $this->partner_model->height =  $height;
+                    // $this->partner_model->width = $width;
+                    $this->partner_model->save(false);
+                }
                 // } catch (\Exception $e) {
                 //     throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
                 // }
@@ -668,7 +669,7 @@ class PartnerRegistrationForm extends Model
         // if (!$this->partner_model->save(false)) {
         //     Yii::error("Failed to save operator model with uploaded file paths.", __METHOD__);
         // }
-       
+
         if ($this->aadhar_back_file_upload) {
             $storagePath = 'operator-registration';
             $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharback';
@@ -679,22 +680,22 @@ class PartnerRegistrationForm extends Model
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 // try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->aadhar_back_file_upload, $filePath, $fileName, true)) {
-                        $this->partner_model->aadhar_back_upload = $filePath;
-                        // $this->partner_model->filepath = $filePath;
-                        // $this->partner_model->etag = $etag;
+                if ($etag =  FsHelper::saveUploadedFile($this->aadhar_back_file_upload, $filePath, $fileName, true)) {
+                    $this->partner_model->aadhar_back_upload = $filePath;
+                    // $this->partner_model->filepath = $filePath;
+                    // $this->partner_model->etag = $etag;
 
-                        $extension = $this->aadhar_back_file_upload->extension;
-                        if ($extension === 'svg') {
-                            $width = 0;
-                            $height = 0;
-                        } else {
-                            list($width, $height) = getimagesize($this->aadhar_back_file_upload->tempName);
-                        }
-                        // $this->partner_model->height =  $height;
-                        // $this->partner_model->width = $width;
-                        $this->partner_model->save(false);
+                    $extension = $this->aadhar_back_file_upload->extension;
+                    if ($extension === 'svg') {
+                        $width = 0;
+                        $height = 0;
+                    } else {
+                        list($width, $height) = getimagesize($this->aadhar_back_file_upload->tempName);
                     }
+                    // $this->partner_model->height =  $height;
+                    // $this->partner_model->width = $width;
+                    $this->partner_model->save(false);
+                }
                 // } catch (\Exception $e) {
                 //     throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
                 // }

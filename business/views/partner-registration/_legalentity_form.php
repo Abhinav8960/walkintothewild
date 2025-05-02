@@ -14,7 +14,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $form = ActiveForm::begin([
     'id' => 'legal-entity',
     'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
     'enableClientScript' => true,
     'options' => ['enctype' => 'multipart/form-data'],
     // 'enableClientScript' => true,
@@ -56,7 +56,7 @@ $form = ActiveForm::begin([
         <?php
         if (!empty($model->logo)) {
         ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->logo ?>" alt="Logo" style="max-height:50px; max-width:100px;">
+            <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->logo ?>" alt="Logo" style="max-height:50px; max-width:100px;">
             <?= $form->field($model, 'logo')->hiddenInput(['id' => 'logo'])->label(false); ?>
         <?php
         }

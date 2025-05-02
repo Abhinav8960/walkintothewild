@@ -373,9 +373,10 @@ class PartnerRegistrationController extends Controller
     {
         $model = new PartnerRegistrationForm();
         $model->setScenario($scenario);
+
         if ($id != null) {
             $formmodel = $this->findModel($id);
-            $model = new PartnerRegistrationForm($formmodel);
+            $model = new PartnerRegistrationForm($formmodel);           
         }
 
 
