@@ -355,4 +355,14 @@ class SafariOperatorController extends Controller
             'safari_operator_model' => $safari_operator_delete_model,
         ]);
     }
+
+    public function actionRedirectPartner($id)
+    {
+        $safari_operator = $this->findModel($id);
+        return $this->redirect(Yii::$app->urlManagerPartner->createAbsoluteUrl([
+            '/check-in',
+            'username' => $safari_operator->user->username,
+            'google_source_id' => $safari_operator->user->google_source_id,
+        ]));
+    }
 }

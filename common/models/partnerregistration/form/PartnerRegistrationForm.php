@@ -162,8 +162,13 @@ class PartnerRegistrationForm extends Model
         }
 
         $this->skiponemptystep1 = !$this->isNewRecord;
+<<<<<<< HEAD
         $this->skiponemptystep2 = $this->form2_status == 0 ? false : true;
         $this->skiponemptystep3 = $this->form3_status == 0 ? false : true;;
+=======
+        $this->skiponemptystep2 = $this->form1_status == 0 ? false : true;
+        $this->skiponemptystep3 = $this->form2_status == 0 ? false : true;;
+>>>>>>> 20be560127d30689a8f0c82431db82987dc80bcc
         $this->skiponemptystep4 = $this->form4_status == 0 ? false : true;;
         $this->skiponemptystep5 = $this->form5_status == 0 ? false : true;;
     }
