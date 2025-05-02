@@ -81,6 +81,7 @@ $readOnly = false;
     <div class="col-md-3">
         <?= $form->field($model, 'billing_phone')->textInput([
             'class' => 'form-control',
+            'maxlength'=>10,
             'placeholder' => 'Enter Billing Phone',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
