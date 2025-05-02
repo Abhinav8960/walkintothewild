@@ -1,12 +1,11 @@
 <?php
 
-namespace business\modules\sightings\controllers;
+namespace backend\modules\sightings\controllers;
 
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingSearch;
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController for the `sightings` module
@@ -19,9 +18,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $safari_operator = $this->module->operatormodel();
         $searchModel = new SightingSearch();
-        $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

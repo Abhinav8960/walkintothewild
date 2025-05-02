@@ -106,6 +106,9 @@ return [
         'operatorapproval' => [
             'class' => 'backend\modules\operatorapproval\Module',
         ],
+        'sightings' => [
+            'class' => 'backend\modules\sightings\Module',
+        ],
 
     ],
     'components' => [

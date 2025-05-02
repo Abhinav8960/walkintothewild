@@ -1014,6 +1014,26 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 				<?php endif; ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+
+					<li class="slide <?= in_array($active_url, array(
+											"/sightings/default/index",
+											"/sightings/default/create",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/sightings/default/index",
+														"/sightings/default/create",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sighting</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">sightingss</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sightings/default/index",
+															"/sightings/default/create",
+
+														)) ? "active" : "" ?>" href="/sightings/default/index">Sightings</a></li>
+						</ul>
+					</li>
+				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
