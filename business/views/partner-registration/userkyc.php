@@ -291,7 +291,7 @@ use yii\bootstrap5\Html;
                         </button>
                     </h2>
                 <?php ;} ?>
-            </div>
+            
 
 
 
@@ -306,7 +306,6 @@ use yii\bootstrap5\Html;
                             User KYC
                         </button>
                     </h2>
-                </div>
                 <?php ;} else { ?>
                     <h2 class="accordion-header" id="heading5">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"

@@ -12,7 +12,6 @@ use yii\helpers\Url;
 
 <div class="container mt-5">
     <div class="accordion" id="formAccordion">
-    <div class="accordion-item mb-3">
 
     <!-- Legal Entity -->
     <div class="accordion-item mb-3">
@@ -28,7 +27,6 @@ use yii\helpers\Url;
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
                         </button>
-                       
                     </h2>
                     <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
@@ -44,8 +42,7 @@ use yii\helpers\Url;
                             <a href="<?= Url::toRoute(['create']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
-                        </button>
-                       
+                        </button> 
                     </h2>
                     <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
@@ -104,8 +101,7 @@ use yii\helpers\Url;
                                 </a>
                             </span>
                         </button>
-                    </h2>
-                    
+                    </h2>     
                 <?php ;
                 } ?>
                     <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2" data-bs-parent="#formAccordion">
@@ -114,10 +110,6 @@ use yii\helpers\Url;
                         </div>
                     </div>
             </div>
-
-
-
-
 
             <!-- Business Details -->
 
@@ -260,9 +252,8 @@ use yii\helpers\Url;
                         </button>
                     </h2>
                 <?php ;} ?>
-            </div>
 
-
+                </div>
 
             <!-- User KYC -->
 

@@ -21,13 +21,20 @@ class PartnerGstDetailsForm extends Model
     public $isNew = true;
     public $partner_registration_id;
 
-    public function __construct(PartnerGstDetails $gstdetail_model = null)
+
+    public $action_url;
+    public $action_validate_url;
+
+    const SCENARIO_STEP3 = 'step3';
+
+
+    public function __construct($gstdetail_model = null)
     {
         $this->gstdetail_model = Yii::createObject([
             'class' => PartnerGstDetails::className()
         ]);
-
-        if ($gstdetail_model !== null) {
+        
+        if ($gstdetail_model != null) {
             $this->isNew = false;
             $this->gstdetail_model = $gstdetail_model;
             $this->id = $gstdetail_model->id;
@@ -36,7 +43,15 @@ class PartnerGstDetailsForm extends Model
             $this->filepath = $gstdetail_model->filepath;
             $this->status = $gstdetail_model->status;
             $this->partner_registration_id = $gstdetail_model->partner_registration_id;
+
         }
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_STEP3 => ['state', 'gst_number', 'filepath_upload'],
+        ];
     }
 
     public function rules()
@@ -56,7 +71,12 @@ class PartnerGstDetailsForm extends Model
             //         return $("#filepath").val() === "";
             //     }',
             // ],
-            [['filepath_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'skipOnEmpty' => !$this->isNew],
+            // [['filepath_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'skipOnEmpty' => !$this->isNew],
+            [['state', 'gst_number'], 'required', 'on'=> self::SCENARIO_STEP3],
+            // [['filepath_upload'], 'required', 'on'=> self::SCENARIO_STEP3,'skipOnEmpty' =>!$this->isNew],
+            [['filepath_upload'], 'file','extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP3, 'skipOnEmpty' =>!$this->isNew],
+
+
         ];
     }
 
@@ -109,9 +129,9 @@ class PartnerGstDetailsForm extends Model
         // }
         if ($this->filepath_upload) {
             $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->gstdetail_model->user->user_id . '/gstimage';
+            $userPath = $storagePath . '/' . $this->gstdetail_model->partner_registration_id. '/gstimage';
 
-            $fileName = $this->gstdetail_model->user->user_id . '_gstimage_' . time() . '.' . $this->filepath_upload->extension;
+            $fileName = $this->gstdetail_model->partner_registration_id . '_gstimage_' . time() . '.' . $this->filepath_upload->extension;
             $filePath = $userPath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);

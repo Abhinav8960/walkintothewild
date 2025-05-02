@@ -13,7 +13,7 @@ use yii\helpers\Url;
     <div class="container mt-5">
         <div class="accordion" id="formAccordion">
 
-  
+
             <!-- Legal Entity -->
             <div class="accordion-item mb-3">
                 <?php if ($partner_model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
@@ -25,34 +25,36 @@ use yii\helpers\Url;
                             title="<?= $partner_model->form1_reject_reason ?>">
                             Legal Entity
                             <a href="<?= Url::toRoute(['create']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
+                                <i class="bi bi-pencil text-white fs-5"></i>
+                            </a>
                         </button>
-                      
+
                     </h2>
                     <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
                             <?= $this->render('legalentity-view', ['currentStep' => 1, 'model' => $model]) ?>
                         </div>
                     </div>
-                <?php ; } elseif ($partner_model->form1_status == PartnerRegistration::FORM_FILLED) { ?>
+                <?php ;
+                } elseif ($partner_model->form1_status == PartnerRegistration::FORM_FILLED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse1"
                             aria-expanded="false" aria-controls="collapse1">
                             Legal Entity
                             <a href="<?= Url::toRoute(['create']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
+                                <i class="bi bi-pencil text-white fs-5"></i>
+                            </a>
                         </button>
-                      
+
                     </h2>
                     <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
                             <?= $this->render('legalentity-view', ['currentStep' => 1, 'model' => $model]) ?>
                         </div>
                     </div>
-                    <?php ; } elseif ($partner_model->form1_status == PartnerRegistration::FORM_APPROVED) { ?>
+                <?php ;
+                } elseif ($partner_model->form1_status == PartnerRegistration::FORM_APPROVED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse1"
@@ -65,7 +67,8 @@ use yii\helpers\Url;
                             <?= $this->render('legalentity-view', ['currentStep' => 1, 'model' => $model]) ?>
                         </div>
                     </div>
-                <?php ; } else { ?>
+                <?php ;
+                } else { ?>
                     <h2 class="accordion-header" id="heading1">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse1"
@@ -77,7 +80,8 @@ use yii\helpers\Url;
                             </span>
                         </button>
                     </h2>
-                <?php ; } ?>
+                <?php ;
+                } ?>
             </div>
 
             <!-- Registration Proof -->
@@ -93,34 +97,36 @@ use yii\helpers\Url;
                             title="<?= $partner_model->form2_reject_reason ?>">
                             Registration Proof
                             <a href="<?= Url::toRoute(['step-2']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
+                                <i class="bi bi-pencil text-white fs-5"></i>
+                            </a>
                         </button>
-                       
+
                     </h2>
                     <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
                             <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
                         </div>
                     </div>
-                <?php ;} elseif ($partner_model->form2_status == PartnerRegistration::FORM_FILLED) { ?>
+                <?php ;
+                } elseif ($partner_model->form2_status == PartnerRegistration::FORM_FILLED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading2">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse2"
                             aria-expanded="false" aria-controls="collapse2">
                             Registration Proof
                             <a href="<?= Url::toRoute(['step-2']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
+                                <i class="bi bi-pencil text-white fs-5"></i>
+                            </a>
                         </button>
-                      
+
                     </h2>
                     <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#formAccordion">
                         <div class="accordion-body">
                             <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
                         </div>
                     </div>
-                <?php ;} elseif ($partner_model->form2_status == PartnerRegistration::FORM_APPROVED) { ?>
+                <?php ;
+                } elseif ($partner_model->form2_status == PartnerRegistration::FORM_APPROVED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading2">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse2"
@@ -133,7 +139,8 @@ use yii\helpers\Url;
                             <?= $this->render('registrationproof-view', ['currentStep' => 2, 'model' => $model]) ?>
                         </div>
                     </div>
-                <?php ; } else { ?>
+                <?php ;
+                } else { ?>
                     <h2 class="accordion-header" id="heading2">
                         <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse2"
@@ -145,7 +152,8 @@ use yii\helpers\Url;
                             </span>
                         </button>
                     </h2>
-                <?php ;} ?>
+                <?php ;
+                } ?>
             </div>
 
 
@@ -153,7 +161,7 @@ use yii\helpers\Url;
 
 
 
-           
+
 
             <!-- Business Details -->
 
@@ -169,171 +177,180 @@ use yii\helpers\Url;
                             Business Details
                         </button>
                     </h2>
-                </div>
-                <?php ;} else { ?>
-                    <h2 class="accordion-header" id="heading3">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse3"
-                            aria-expanded="false" aria-controls="collapse3">
-                            Business Details
-                            <span class="ms-auto">
-                                <a href="<?= Url::toRoute(['step-3']) ?>" class="text-decoration-none">
-                                </a>
-                            </span>
-                        </button>
-                    </h2>
-                <?php ;
+            </div>
+        <?php ;
+                } else { ?>
+            <h2 class="accordion-header" id="heading3">
+                <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse3"
+                    aria-expanded="false" aria-controls="collapse3">
+                    Business Details
+                    <span class="ms-auto">
+                        <a href="<?= Url::toRoute(['step-3']) ?>" class="text-decoration-none">
+                        </a>
+                    </span>
+                </button>
+            </h2>
+        <?php ;
                 } ?>
-                <div id="collapse3" class="accordion-collapse collapse show" aria-labelledby="heading3" data-bs-parent="#formAccordion">
+        <div id="collapse3" class="accordion-collapse collapse show" aria-labelledby="heading3" data-bs-parent="#formAccordion">
+            <div class="accordion-body">
+                <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model]) ?>
+            </div>
+        </div>
+        </div>
+
+
+
+
+        <!-- Bank Details -->
+
+
+
+        <div class="accordion-item mb-3">
+            <?php if ($partner_model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
+                    <button id="form_4_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse4"
+                        aria-expanded="false" aria-controls="collapse4" data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="<?= $partner_model->form4_reject_reason ?>">
+                        Bank Details
+                        <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
+                            <i class="bi bi-pencil text-white fs-5"></i>
+                        </a>
+                    </button>
+
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
                     <div class="accordion-body">
-                        <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model,'gst_model'=> $gst_model]) ?>
+                        <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
                     </div>
                 </div>
-            </div>
-
-
-
-        
-            <!-- Bank Details -->
-
-
-
-            <div class="accordion-item mb-3">
-                <?php if ($partner_model->form4_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
-                        <button id="form_4_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse4"
-                            aria-expanded="false" aria-controls="collapse4" data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="<?= $partner_model->form4_reject_reason ?>">
-                            Bank Details
-                            <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
+            <?php ;
+            } elseif ($partner_model->form4_status == PartnerRegistration::FORM_FILLED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse4"
+                        aria-expanded="false" aria-controls="collapse4">
+                        Bank Details
+                        <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
                             <i class="bi bi-pencil text-white fs-5"></i>
                         </a>
-                        </button>
-                       
-                    </h2>
-                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
-                        </div>
-                    </div>
-                <?php ;} elseif ($partner_model->form4_status == PartnerRegistration::FORM_FILLED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse4"
-                            aria-expanded="false" aria-controls="collapse4">
-                            Bank Details
-                            <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
-                        </button>
-                      
-                    </h2>
-                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
-                        </div>
-                    </div>
-                <?php ;} elseif ($partner_model->form4_status == PartnerRegistration::FORM_APPROVED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse4"
-                            aria-expanded="false" aria-controls="collapse4">
-                            Bank Details
-                        </button>
-                    </h2>
-                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
-                        </div>
-                    </div>
-                <?php ;} else { ?>
-                    <h2 class="accordion-header" id="heading4">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse4"
-                            aria-expanded="false" aria-controls="collapse4">
-                            Bank Details
-                            <span class="ms-auto">
-                                <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none">
-                                </a>
-                            </span>
-                        </button>
-                    </h2>
-                <?php ;} ?>
-            </div>
+                    </button>
 
-
-
-            <!-- User KYC -->
-
-            <div class="accordion-item mb-3">
-                <?php if ($partner_model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
-                        <button id="form_5_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse5"
-                            aria-expanded="false" aria-controls="collapse5" data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="<?= $partner_model->form5_reject_reason ?>">
-                            User KYC
-                            <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
-                        </button>
-                       
-                    </h2>
-                    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
-                        </div>
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
                     </div>
-                <?php ;} elseif ($partner_model->form5_status == PartnerRegistration::FORM_FILLED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse5"
-                            aria-expanded="false" aria-controls="collapse5">
-                            User KYC
-                            <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none px-3">
-                            <i class="bi bi-pencil text-white fs-5"></i>
-                        </a>
-                        </button>
-                       
-                    </h2>
-                    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
-                        </div>
+                </div>
+            <?php ;
+            } elseif ($partner_model->form4_status == PartnerRegistration::FORM_APPROVED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading4">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse4"
+                        aria-expanded="false" aria-controls="collapse4">
+                        Bank Details
+                    </button>
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('bankdetails-view', ['currentStep' => 4, 'model' => $model]) ?>
                     </div>
-                <?php ;} elseif ($partner_model->form5_status == PartnerRegistration::FORM_APPROVED) { ?>
-                    <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse5"
-                            aria-expanded="false" aria-controls="collapse5">
-                           User KYC
-                        </button>
-                    </h2>
-                    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
-                        <div class="accordion-body">
-                            <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
-                        </div>
-                    </div>
-                <?php ;} else { ?>
-                    <h2 class="accordion-header" id="heading5">
-                        <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse5"
-                            aria-expanded="false" aria-controls="collapse5">
-                            User KYC
-                            <span class="ms-auto">
-                                <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none">
-                                </a>
-                            </span>
-                        </button>
-                    </h2>
-                <?php ;} ?>
-            </div>
-
-
+                </div>
+            <?php ;
+            } else { ?>
+                <h2 class="accordion-header" id="heading4">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse4"
+                        aria-expanded="false" aria-controls="collapse4">
+                        Bank Details
+                        <span class="ms-auto">
+                            <a href="<?= Url::toRoute(['step-4']) ?>" class="text-decoration-none">
+                            </a>
+                        </span>
+                    </button>
+                </h2>
+            <?php ;
+            } ?>
         </div>
+
+
+
+        <!-- User KYC -->
+
+        <div class="accordion-item mb-3">
+            <?php if ($partner_model->form5_status == PartnerRegistration::FORM_REJECTED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
+                    <button id="form_5_rejectedTooltip" class="accordion-button collapsed flex-grow-1 text-start background-danger" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse5"
+                        aria-expanded="false" aria-controls="collapse5" data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="<?= $partner_model->form5_reject_reason ?>">
+                        User KYC
+                        <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none px-3">
+                            <i class="bi bi-pencil text-white fs-5"></i>
+                        </a>
+                    </button>
+
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
+                    </div>
+                </div>
+            <?php ;
+            } elseif ($partner_model->form5_status == PartnerRegistration::FORM_FILLED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse5"
+                        aria-expanded="false" aria-controls="collapse5">
+                        User KYC
+                        <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none px-3">
+                            <i class="bi bi-pencil text-white fs-5"></i>
+                        </a>
+                    </button>
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
+                    </div>
+                </div>
+            <?php ;
+            } elseif ($partner_model->form5_status == PartnerRegistration::FORM_APPROVED) { ?>
+                <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading5">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse5"
+                        aria-expanded="false" aria-controls="collapse5">
+                        User KYC
+                    </button>
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#formAccordion">
+                    <div class="accordion-body">
+                        <?= $this->render('userkyc-view', ['currentStep' => 5, 'model' => $model]) ?>
+                    </div>
+                </div>
+        </div>
+            <?php ;
+            } else { ?>
+                <h2 class="accordion-header" id="heading5">
+                    <button class="accordion-button collapsed flex-grow-1 text-start background-success text-white" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapse5"
+                        aria-expanded="false" aria-controls="collapse5">
+                        User KYC
+                        <span class="ms-auto">
+                            <a href="<?= Url::toRoute(['step-5']) ?>" class="text-decoration-none">
+                            </a>
+                        </span>
+                    </button>
+                </h2>
+            <?php ;
+            } ?>
+        </div>
+
+
+    </div>
     </div>
 
 <?php ;
@@ -361,27 +378,26 @@ use yii\helpers\Url;
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    for (let i = 1; i <= 5; i++) {
-        let element = document.getElementById(`form_${i}_rejectedTooltip`);
-        if (element) {
-            new bootstrap.Tooltip(element, {
-                delay: {
-                    show: 700,
-                    hide: 300
-                },
-                customClass: 'custom-tooltip-box'
-            });
+    document.addEventListener('DOMContentLoaded', function() {
+        for (let i = 1; i <= 5; i++) {
+            let element = document.getElementById(`form_${i}_rejectedTooltip`);
+            if (element) {
+                new bootstrap.Tooltip(element, {
+                    delay: {
+                        show: 700,
+                        hide: 300
+                    },
+                    customClass: 'custom-tooltip-box'
+                });
+            }
         }
-    }
-});
-
+    });
 </script>
 <style>
     .custom-tooltip-box .tooltip-inner {
         background-color: #f8d7da;
         /* light red background */
-        color:rgb(12, 8, 9);
+        color: rgb(12, 8, 9);
         /* dark red text */
         border: 1px solidrgb(161, 22, 36);
         padding: 15px 20px;
