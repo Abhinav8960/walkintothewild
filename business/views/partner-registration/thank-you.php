@@ -20,9 +20,4 @@ use yii\bootstrap5\Html;
 </div>
 
 
-<div class="text-center mt-4">
-    <?= Html::a('Go to Your Dashboard', ['/'], [
-        'class' => 'btn btn-success fw-bold px-4 py-2',
-        'style' => 'font-size: 16px; letter-spacing: 0.5px; color: white;',
-    ]) ?>
-</div>
+

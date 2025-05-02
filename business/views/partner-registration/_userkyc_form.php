@@ -68,7 +68,12 @@ $readOnly = false;
     <div class="col-md-6">
         <?= $form->field($model, 'aadhar_number')->textInput([
             'class' => 'form-control',
-            'placeholder' => 'Enter Aadhar',
+            'maxlength' => 12,
+            'minlength' => 12,
+            'pattern' => '[2-9]{1}[0-9]{11}',
+            'title' => 'Aadhaar number must be 12 digits and start with 2–9',
+            'oninput' => "this.value = this.value.replace(/[^0-9]/g, '');",
+            'placeholder' => 'Enter Aadhaar',
             'readonly' => $readOnly,
         ]) ?>
     </div>
@@ -139,7 +144,7 @@ $readOnly = false;
 <div class="d-flex justify-content-end mt-3">
     <?= Html::hiddenInput('step', $currentStep) ?>
     <?= $form->field($model, 'form5_status')->hiddenInput(['value' => 1])->label(false) ?>
-    <?= Html::submitButton('Save', ['class' => 'btn btn-info']) ?>
+    <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

@@ -101,6 +101,7 @@ class DefaultController extends Controller
     public function actionStepReject($id, $step)
     {
         $model = $this->findModel($id);
+        $model->is_sendforapproval = 0;
         if ($step == 1) {
             $model->form1_status = PartnerRegistration :: FORM_REJECTED;
             // $model->is_step_1_submit = 0;
@@ -298,6 +299,7 @@ class DefaultController extends Controller
     public function actionFinalApproved($id)
     {
         $model = $this->findModel($id);
+
         if (($model->final_approved != 1) && ($model->form1_status == PartnerRegistration :: FORM_APPROVED) && ($model->form2_status == PartnerRegistration :: FORM_APPROVED) && ($model->form3_status == PartnerRegistration :: FORM_APPROVED) && ($model->form4_status == PartnerRegistration :: FORM_APPROVED) &&( $model->form5_status == PartnerRegistration :: FORM_APPROVED)) {
             $model->final_approved = 1;
             $model->updated_time_final_approved = date('Y-m-d H:i:s');

@@ -25,9 +25,10 @@ class PartnerRegistrationController extends Controller
                 $model = new PartnerRegistrationForm();
             } else {
                 $model = new PartnerRegistrationForm($partner_model);
+                $this->handleRedirect($partner_model,1);
+
             }
         }
-        $this->handleRedirect($partner_model,1);
         $model->action_url = '/partner-registration/create';
         $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP1;
 
@@ -43,11 +44,16 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->current_step = 2;
                     if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
                         $model->partner_model->final_approved = 0;
-                        $model->form1_status = PartnerRegistration::FORM_FILLED;
                     }
+                    $model->form1_status = PartnerRegistration::FORM_FILLED;
                     if ($model->partner_model->save()) {
                         $model->uploadFiles();
+                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                               return $this->redirect(['final-view']);
+                        }
+                        // else{
                         return $this->redirect(['step-2']);
+                        // }
                     } else {
                         // print_r($model->partner_model->getErrors());
                         // die();
@@ -92,10 +98,13 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->current_step = 3;
                     if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
                         $model->partner_model->final_approved = 0;
-                        $model->form1_status = PartnerRegistration::FORM_FILLED;
                     }
+                    $model->form2_status = PartnerRegistration::FORM_FILLED;
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
+                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                            return $this->redirect(['final-view']);
+                     }
                         return $this->redirect(['step-3']);
                     }
                 }
@@ -159,9 +168,12 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->gst_id = $gstForm->gstdetail_model->id;
                     if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
                         $model->partner_model->final_approved = 0;
-                        $model->form1_status = PartnerRegistration::FORM_FILLED;
                     }
+                    $model->form3_status = PartnerRegistration::FORM_FILLED;
                     if ($model->partner_model->save(false)) {
+                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                            return $this->redirect(['final-view']);
+                     }
                         return $this->redirect(['step-4']);
                     }
                 }
@@ -201,10 +213,14 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
                         $model->partner_model->final_approved = 0;
-                        $model->form1_status = PartnerRegistration::FORM_FILLED;
                     }
+                    $model->form4_status = PartnerRegistration::FORM_FILLED;
+
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
+                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                            return $this->redirect(['final-view']);
+                     }
                         return $this->redirect(['step-5']);
                     }
                 }
@@ -250,11 +266,14 @@ class PartnerRegistrationController extends Controller
                     $model->initializeForm();
                     if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form2_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form3_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form4_status == PartnerRegistration::FORM_REJECTED || $model->partner_model->form5_status == PartnerRegistration::FORM_REJECTED)) {
                         $model->partner_model->final_approved = 0;
-                        $model->form1_status = PartnerRegistration::FORM_FILLED;
                     }
+                    $model->form5_status = PartnerRegistration::FORM_FILLED;
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
+                    //     if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                    //         return $this->redirect(['final-view']);
+                    //  }
                         return $this->redirect(['final-view']);
                     }
                 }
@@ -351,7 +370,7 @@ class PartnerRegistrationController extends Controller
         $col = 'form'.$step.'_status';
         // if(in_array($model->$col,[PartnerRegistration::FORM_APPROVED])){
       
-        if(isset($model->$col) && PartnerRegistration::FORM_APPROVED == $model->$col){
+        if(isset($model->$col) && PartnerRegistration::FORM_APPROVED == $model->$col || (PartnerRegistration::FORM_FILLED == $model->$col && $model->is_sendforapproval != 0)){
             return $this->redirect(['final-view']);
         }
     }
