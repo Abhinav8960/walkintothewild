@@ -194,7 +194,7 @@ class PartnerRegistrationForm extends Model
             // ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
             [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => $this->skiponemptystep1],
-            [['address'],'max'=>255 , 'message' => 'Address should not exceed 255 characters'],
+            ['address', 'string', 'max' => 255, 'tooLong' => 'Address should not exceed 255 characters'],
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
             // [
