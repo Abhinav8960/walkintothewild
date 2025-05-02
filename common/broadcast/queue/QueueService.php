@@ -1,6 +1,6 @@
 <?php
 
-namespace common\queue;
+namespace common\broadcast\queue;
 
 class QueueService
 {
@@ -17,13 +17,16 @@ class QueueService
      */
     public function addToQueue($event)
     {
-        $this->db->createCommand()->insert('event_queue', [
-            'event_type' => get_class($event),
-            'event_data' => json_encode($event),
-            'created_at' => date('Y-m-d H:i:s'),
-        ])->execute();
-
-        echo "Event queued for user {$event->userId}\n";
+        $model = new \common\models\EventQueue();
+        $model->event_type = get_class($event);
+        $model->event_data = json_encode($event);
+        $model->created_at = date('Y-m-d H:i:s');
+        $model->processed_at = null;
+        if ($model->save()) {
+            echo "Event queued for user {$event->userId}\n";
+        } else {
+            echo "Failed to queue event: " . json_encode($model->getErrors()) . "\n";
+        }
     }
 
     /**
@@ -31,21 +34,22 @@ class QueueService
      */
     public function processQueue()
     {
-        $events = $this->db->createCommand("SELECT * FROM event_queue WHERE processed_at IS NULL")
-            ->queryAll();
 
-        foreach ($events as $row) {
-            $event = json_decode($row['event_data']); // Recreate the event object
+        $events = \common\models\EventQueue::find()
+            ->where(['processed_at' => null])
+            ->all();
+
+        foreach ($events as $event) {
+            $event = json_decode($event->event_data); // Recreate the event object
             echo "Processing queued event for user {$event->userId}\n";
 
             // Logic to send the event (e.g., call BroadcastService::sendImmediately)
             $broadcastService = new \common\broadcast\services\BroadcastService();
             $broadcastService->sendImmediately($event);
 
-            // Mark the event as processed
-            $this->db->createCommand()->update('event_queue', [
-                'processed_at' => date('Y-m-d H:i:s'),
-            ], ['id' => $row['id']])->execute();
+            $event->processed_at = date('Y-m-d H:i:s');
+            $event->save();
+            
         }
     }
 }
