@@ -58,7 +58,7 @@ NotifyAsset::register($this);
         background-image: linear-gradient(to right, #198754, #ffffff);
     }
     .background-danger{
-        background-image: linear-gradient(to right,rgb(255, 0, 0), #ffffff);
+        background-image: linear-gradient(to right, #fb5b5b, #ffffff);
     }
 </style>
 </html>

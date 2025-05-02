@@ -46,14 +46,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Gst State:</strong>
-                <span><?= $model->partner_model->gstDetails->stateRelation->state_name ?? '' ?></span>
+                <span><?= $model->partner_model->gstDetail->stateRelation->state_name ?? '' ?></span>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Gst Number:</strong>
-                <span><?= Html::encode($model->partner_model->gstDetails->gst_number ?? '') ?></span>
+                <span><?= Html::encode($model->partner_model->gstDetail->gst_number ?? '') ?></span>
             </div>
         </div>
 

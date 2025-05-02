@@ -660,7 +660,7 @@ class PackageController extends RestController
             }
             // $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageDay($model->package_id, $model->version, $newModel->package_id);
-            $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);;
+            $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageFeature($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageSafariPark($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageFaq($model->package_id, $model->version, $newModel->package_id);
@@ -742,7 +742,6 @@ class PackageController extends RestController
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
                 $newModel->version = $this->version;
-
                 $newModel->save(false);
             }
         }
@@ -761,11 +760,9 @@ class PackageController extends RestController
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
                 $newModel->version = $this->version;
-
                 $newModel->save(false);
             }
         }
-
         return true;
     }
 
@@ -797,12 +794,10 @@ class PackageController extends RestController
                 $newModel->id = null; // Set the ID to null for the new record
                 $newModel->package_id = $new_package_id;
                 $newModel->version = $this->version;
-
                 $newModel->save(false);
             }
         }
-
-        return true;;
+        return true;
     }
 
 

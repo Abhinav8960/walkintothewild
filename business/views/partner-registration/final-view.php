@@ -288,7 +288,6 @@ use yii\helpers\Url;
                         </button>
                     </h2>
                 <?php ;} ?>
-            </div>
 
 
 

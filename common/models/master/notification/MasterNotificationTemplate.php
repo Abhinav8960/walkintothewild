@@ -14,6 +14,8 @@ use Yii;
  */
 class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    const NEW_USER_REGISTRATION_TEMPLATE = 1;
+    
     use CommanRelationship;
     /**
      * {@inheritdoc}

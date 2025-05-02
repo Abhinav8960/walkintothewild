@@ -125,14 +125,18 @@ class PartnerRegistrationController extends Controller
         $model->action_url = '/partner-registration/step-3';
         $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP3;
         if ($partner_model->gst_id) {
-            $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
+            // $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
+            $gstDetail = PartnerGstDetails::find()->where(['partner_registration_id'=>$partner_model->id])->one();
             if (!$gstDetail) {
-                $gstDetail = new PartnerGstDetails();
+                $gstForm = new PartnerGstDetailsForm();
+            }else{
+                $gstForm = new PartnerGstDetailsForm($gstDetail);
+
             }
-        } else {
-            $gstDetail = new PartnerGstDetails();
-        }
-        $gstForm = new PartnerGstDetailsForm($gstDetail);
+        } 
+        $gstForm->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
+        $gstForm->action_url = '/partner-registration/step-3';
+        $gstForm->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerGstDetailsForm::SCENARIO_STEP3;
 
         if (Yii::$app->request->isPost) {
             $isModelLoaded = $model->load(Yii::$app->request->post());
