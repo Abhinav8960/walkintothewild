@@ -18,6 +18,7 @@ use api\models\package\PackageGallerySearch;
 use api\models\package\PackageIncluded;
 use api\models\package\PackageSafariPark;
 use api\models\package\PackageVersion;
+use api\models\package\PackageVersionSearch;
 use yii\web\NotFoundHttpException;
 use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
@@ -48,6 +49,7 @@ class PackageController extends RestController
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => [
+                    'index',
                     'create',
                     'update',
                     'policy-info',
@@ -64,6 +66,7 @@ class PackageController extends RestController
                 'rules' => [
                     [
                         'actions' => [
+                            'index',
                             'create',
                             'update',
                             'policy-info',
@@ -86,6 +89,7 @@ class PackageController extends RestController
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
+                    'index' => ['GET'],
                     'create' => ['POST'],
                     'update' => ['POST'],
                     'policy-info' => ['POST'],
@@ -101,6 +105,18 @@ class PackageController extends RestController
                 ],
             ],
         ];
+    }
+
+    public function actionIndex()
+    {
+        $safari_operator = $this->module->operatormodel();
+        if ($safari_operator->category_id == 2) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        }
+        $searchModel = new PackageVersionSearch();
+        $searchModel->status = PackageVersion::EDIATBLE_STATUS;
+        $searchModel->owned_by_id = $this->operatormodel()->id;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "partnersearch");
     }
 
     public function actionCreate()
