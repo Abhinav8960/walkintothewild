@@ -20,7 +20,9 @@ class PackageVersion extends \common\models\package\PackageVersion
             'id',
             'package_display_name',
             'package_name',
-            'package_slug',
+            'package_slug'=> function () {
+                return  $this->package->package_slug;
+            },
             'primary_park',
             'no_of_day',
             'no_of_night',
@@ -183,10 +185,10 @@ class PackageVersion extends \common\models\package\PackageVersion
     }
 
 
-    public function getPackage_slug()
-    {
-        return $this->package->package_slug ?? NULL;
-    }
+    // public function getPackage_slug()
+    // {
+    //     return $this->getPackage()->package_slug;
+    // }
 
 
 
