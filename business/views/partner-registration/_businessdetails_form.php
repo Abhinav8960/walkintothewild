@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use common\models\partnerregistration\PartnerRegistration;
+use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -23,14 +24,18 @@ $readOnly = false;
 ]); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= $form->field($model, 'operated_park')->dropDownList(
-            GeneralModel::safariparklist(),
+        <?= $form->field($model, 'park_list')->widget(Select2 :: class,
             [
-                'prompt' => 'Select Park',
+                'data' => GeneralModel::safariparklist(),
+                'options' => ['placeholder' => 'Select Park', 'multiple' => true],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+                // 'prompt' => 'Select Park',
                 'disabled' => $readOnly,
                 'class' => 'form-control',
             ]
-        ) ?>
+        )->label('Operated Park') ?>
     </div>
 
     <div class="col-md-12">

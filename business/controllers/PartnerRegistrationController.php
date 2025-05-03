@@ -3,18 +3,17 @@
 namespace business\controllers;
 
 use common\models\partnerregistration\form\PartnerGstDetailsForm;
-use common\models\partnerregistration\PartnerRegistration;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerGstDetails;
+use common\models\partnerregistration\PartnerParkList;
+use common\models\partnerregistration\PartnerRegistration;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-
 use Yii;
 
 class PartnerRegistrationController extends Controller
 {
-
     public function actionCreate()
     {
         $this->layout = 'registration';
@@ -25,12 +24,11 @@ class PartnerRegistrationController extends Controller
                 $model = new PartnerRegistrationForm();
             } else {
                 $model = new PartnerRegistrationForm($partner_model);
-                $this->handleRedirect($partner_model,1);
-
+                $this->handleRedirect($partner_model, 1);
             }
         }
         $model->action_url = '/partner-registration/create';
-        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP1;
+        $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP1;
 
         $model->user_id = Yii::$app->user->identity->id;
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
@@ -48,8 +46,8 @@ class PartnerRegistrationController extends Controller
                     $model->form1_status = PartnerRegistration::FORM_FILLED;
                     if ($model->partner_model->save()) {
                         $model->uploadFiles();
-                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
-                               return $this->redirect(['final-view']);
+                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
+                            return $this->redirect(['final-view']);
                         }
                         // else{
                         return $this->redirect(['step-2']);
@@ -74,10 +72,9 @@ class PartnerRegistrationController extends Controller
 
     public function actionStep2()
     {
-
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        $this->handleRedirect($partner_model,2);
+        $this->handleRedirect($partner_model, 2);
         // if ($partner_model->current_step < 2) {
         //     return $this->redirect(['create']);
         // }
@@ -86,7 +83,7 @@ class PartnerRegistrationController extends Controller
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP2);
         $model->form2_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-2';
-        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP2;
+        $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP2;
 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
@@ -102,9 +99,9 @@ class PartnerRegistrationController extends Controller
                     $model->form2_status = PartnerRegistration::FORM_FILLED;
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
-                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
                             return $this->redirect(['final-view']);
-                     }
+                        }
                         return $this->redirect(['step-3']);
                     }
                 }
@@ -124,7 +121,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        $this->handleRedirect($partner_model,3);
+        $this->handleRedirect($partner_model, 3);
 
         // if ($partner_model->current_step < 3) {
         //     return $this->redirect(['step-2']);
@@ -134,18 +131,17 @@ class PartnerRegistrationController extends Controller
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $model->form3_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-3';
-        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP3;
-            // $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
-            $gstDetail = PartnerGstDetails::find()->where(['partner_registration_id'=>$partner_model->id])->one();
-            if (!$gstDetail) {
-                $gstForm = new PartnerGstDetailsForm();
-            }else{
-                $gstForm = new PartnerGstDetailsForm($gstDetail);
-
-            }
+        $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP3;
+        // $gstDetail = PartnerGstDetails::findOne($partner_model->gst_id);
+        $gstDetail = PartnerGstDetails::find()->where(['partner_registration_id' => $partner_model->id])->one();
+        if (!$gstDetail) {
+            $gstForm = new PartnerGstDetailsForm();
+        } else {
+            $gstForm = new PartnerGstDetailsForm($gstDetail);
+        }
         $gstForm->setScenario(PartnerRegistrationForm::SCENARIO_STEP3);
         $gstForm->action_url = '/partner-registration/step-3';
-        $gstForm->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerGstDetailsForm::SCENARIO_STEP3;
+        $gstForm->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerGstDetailsForm::SCENARIO_STEP3;
 
         if (Yii::$app->request->isPost) {
             $isModelLoaded = $model->load(Yii::$app->request->post());
@@ -162,7 +158,8 @@ class PartnerRegistrationController extends Controller
                             $gstForm->uploadFiles();
                         }
                     }
-
+                    $selectedParkIds = $model->park_list ?? [];
+                    $this->PartnerParks($selectedParkIds,$model->partner_model->id);
                     $model->initializeForm();
                     $model->partner_model->current_step = 4;
                     $model->partner_model->gst_id = $gstForm->gstdetail_model->id;
@@ -170,10 +167,11 @@ class PartnerRegistrationController extends Controller
                         $model->partner_model->final_approved = 0;
                     }
                     $model->form3_status = PartnerRegistration::FORM_FILLED;
+
                     if ($model->partner_model->save(false)) {
-                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
                             return $this->redirect(['final-view']);
-                     }
+                        }
                         return $this->redirect(['step-4']);
                     }
                 }
@@ -188,14 +186,11 @@ class PartnerRegistrationController extends Controller
         ]);
     }
 
-
-
     public function actionStep4()
     {
-
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        $this->handleRedirect($partner_model,4);
+        $this->handleRedirect($partner_model, 4);
         // if ($partner_model->current_step < 4) {
         //     return $this->redirect(['step-3']);
         // }
@@ -203,7 +198,7 @@ class PartnerRegistrationController extends Controller
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP4);
         $model->form4_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-4';
-        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP4;
+        $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP4;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->cancel_check_file_upload = UploadedFile::getInstance($model, 'cancel_check_file_upload');
@@ -218,9 +213,9 @@ class PartnerRegistrationController extends Controller
 
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
-                        if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
                             return $this->redirect(['final-view']);
-                     }
+                        }
                         return $this->redirect(['step-5']);
                     }
                 }
@@ -240,7 +235,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         $partner_model = $this->findModel();
-        $this->handleRedirect($partner_model,5);
+        $this->handleRedirect($partner_model, 5);
         // if ($partner_model->current_step < 5) {
         //     return $this->redirect(['step-4']);
         // }
@@ -248,7 +243,7 @@ class PartnerRegistrationController extends Controller
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP5);
         $model->form5_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-5';
-        $model->action_validate_url = '/partner-registration/validate-create?scenario='.PartnerRegistrationForm::SCENARIO_STEP5;
+        $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP5;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 // if (Yii::$app->request->post('same_as_previous')) {
@@ -271,9 +266,9 @@ class PartnerRegistrationController extends Controller
                     $model->partner_model->loadDefaultValues();
                     if ($model->partner_model->save(false)) {
                         $model->uploadFiles();
-                    //     if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
-                    //         return $this->redirect(['final-view']);
-                    //  }
+                        //     if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
+                        //         return $this->redirect(['final-view']);
+                        //  }
                         return $this->redirect(['final-view']);
                     }
                 }
@@ -290,7 +285,7 @@ class PartnerRegistrationController extends Controller
 
     public function actionFinalView()
     {
-        if(!empty(\Yii::$app->user->identity->operator)){
+        if (!empty(\Yii::$app->user->identity->operator)) {
             return $this->redirect(['/']);
         }
         $this->layout = 'registration';
@@ -347,30 +342,28 @@ class PartnerRegistrationController extends Controller
             ->one();;
 
         if ($model === null) {
-            throw new NotFoundHttpException("Registration record not found.");
+            throw new NotFoundHttpException('Registration record not found.');
         }
 
         if ($model->final_approved == 1 && $model->is_sendforapproval == 1) {
             return $this->redirect(['site/index']);
-        }
-        elseif($model->form1_status == PartnerRegistration::FORM_REJECTED || $model->form2_status == PartnerRegistration::FORM_REJECTED || $model->form3_status == PartnerRegistration::FORM_REJECTED || $model->form4_status == PartnerRegistration::FORM_REJECTED || $model->form5_status == PartnerRegistration::FORM_REJECTED)
-        {
+        } elseif ($model->form1_status == PartnerRegistration::FORM_REJECTED || $model->form2_status == PartnerRegistration::FORM_REJECTED || $model->form3_status == PartnerRegistration::FORM_REJECTED || $model->form4_status == PartnerRegistration::FORM_REJECTED || $model->form5_status == PartnerRegistration::FORM_REJECTED) {
             return $this->redirect(['final-view']);
         } else {
             return $this->render('thank-you');
         }
     }
 
-    private function handleRedirect($model,$step){
-      
-        if(!empty(\Yii::$app->user->identity->operator)){
+    private function handleRedirect($model, $step)
+    {
+        if (!empty(\Yii::$app->user->identity->operator)) {
             return $this->redirect(['/']);
         }
-    
-        $col = 'form'.$step.'_status';
+
+        $col = 'form' . $step . '_status';
         // if(in_array($model->$col,[PartnerRegistration::FORM_APPROVED])){
-      
-        if(isset($model->$col) && PartnerRegistration::FORM_APPROVED == $model->$col || (PartnerRegistration::FORM_FILLED == $model->$col && $model->is_sendforapproval != 0)){
+
+        if (isset($model->$col) && PartnerRegistration::FORM_APPROVED == $model->$col || (PartnerRegistration::FORM_FILLED == $model->$col && $model->is_sendforapproval != 0)) {
             return $this->redirect(['final-view']);
         }
     }
@@ -391,26 +384,56 @@ class PartnerRegistrationController extends Controller
 
     // }
 
-
-    public function actionValidateCreate($scenario,$id = null)
+    public function actionValidateCreate($scenario, $id = null)
     {
         $model = new PartnerRegistrationForm();
         $model->setScenario($scenario);
 
         if ($id != null) {
             $formmodel = $this->findModel($id);
-            $model = new PartnerRegistrationForm($formmodel);           
+            $model = new PartnerRegistrationForm($formmodel);
         }
-
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\bootstrap5\ActiveForm::validate($model);
         }
-
     }
 
-    
+    private function PartnerParks($selectedParkIds,$id)
+    {
+        $existingParks = PartnerParkList::find()
+            ->where(['partner_registration_id' => $id])
+            ->indexBy('park_id')
+            ->all();
+
+        foreach ($existingParks as $parkId => $park) {
+            if (!in_array($parkId, $selectedParkIds)) {
+                $park->status = -1;
+                $park->save(false);
+            }
+        }
+
+        foreach ($selectedParkIds as $parkId) {
+            if (isset($existingParks[$parkId])) {
+                $existingParks[$parkId]->status = 1;
+                $existingParks[$parkId]->save(false);
+            } else {
+                $newPark = new PartnerParkList();
+                $newPark->partner_registration_id = $id;
+                $newPark->park_id = $parkId;
+                $newPark->status = 1;
+                $newPark->save(false);
+            }
+        }
+
+        $operated_parks = PartnerParkList::find()
+        ->select('park_id')
+        ->where([
+            'partner_registration_id' => $id,
+            'status' => 1
+        ])
+        ->column();
+        return $operated_parks;
+    }
 }
-
-

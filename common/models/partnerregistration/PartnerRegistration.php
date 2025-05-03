@@ -304,8 +304,12 @@ class PartnerRegistration extends \yii\db\ActiveRecord
     // }
 
 
-    public function getPark()
-    {
-        return $this->hasOne(SafariPark::className(), ['id' => 'operated_park']);
+    public function getParkList(){
+        return $this->hasMany(PartnerParkList :: class , ['partner_registration_id'=>'id']) ->where(['status' => 1])->orderBy(['id'=>SORT_DESC]);
     }
+
+    // public function getPark()
+    // {
+    //     return $this->hasOne(SafariPark::className(), ['id' => 'operated_park']);
+    // }
 }

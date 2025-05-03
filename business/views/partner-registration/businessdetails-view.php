@@ -18,7 +18,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="col-md-6">
             <div class="info-line">
                 <strong>Operated Park:</strong>
-                <span><?= $model->partner_model->park->title ?? ''?></span>
+                <span>
+                <?php
+                    $park_names = [];
+                    foreach ($model->partner_model->parkList as $parkList) {
+                    $park_names[] = $parkList->park->title;
+                    }
+                    echo implode(', ', $park_names);
+                ?>
+                </span>
             </div>
         </div>
 

@@ -3,6 +3,7 @@
 namespace common\models\partnerregistration\form;
 
 use common\Helper\FsHelper;
+use common\models\partnerregistration\PartnerParkList;
 use common\models\partnerregistration\PartnerRegistration;
 use Yii;
 use yii\base\Model;
@@ -97,6 +98,9 @@ class PartnerRegistrationForm extends Model
     public $skiponemptystep4 = true;
     public $skiponemptystep5 = true;
 
+    public $park_list;
+
+
     public function __construct(PartnerRegistration $partner_model = null)
     {
         $this->partner_model = Yii::createObject([
@@ -124,7 +128,7 @@ class PartnerRegistrationForm extends Model
             $this->pan_number = $this->partner_model->pan_number;
             $this->pan_upload = $this->partner_model->pan_upload;
 
-            $this->operated_park = $this->partner_model->operated_park;
+            // $this->operated_park = $this->partner_model->operated_park;
             $this->about_business = $this->partner_model->about_business;
             $this->gst_id = $this->partner_model->gst_id;
             // $this->state = $this->partner_model->state;
@@ -159,6 +163,9 @@ class PartnerRegistrationForm extends Model
             $this->status = $this->partner_model->status;
             $this->final = $this->partner_model->final;
             $this->updated_time_final = $this->partner_model->updated_time_final;
+
+            $this->park_list =  PartnerParkList::find()->select('park_id')->where(['partner_registration_id' => $this->partner_model->id,'status'=>1])->column(); 
+
         }
 
         $this->skiponemptystep1 = !$this->isNewRecord;
@@ -173,7 +180,7 @@ class PartnerRegistrationForm extends Model
         return [
             self::SCENARIO_STEP1 => ['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo_file_upload', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'],
             self::SCENARIO_STEP2 => ['registration_number', 'pan_number', 'registration_copy_file_upload', 'pan_file_upload'],
-            self::SCENARIO_STEP3 => ['operated_park', 'about_business', 'billing_phone', 'billing_mail'],
+            self::SCENARIO_STEP3 => ['park_list','about_business', 'billing_phone', 'billing_mail'],
             self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_file_upload'],
             self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_file_upload', 'aadhar_number', 'aadhar_front_file_upload', 'aadhar_back_file_upload'],
 
@@ -220,7 +227,7 @@ class PartnerRegistrationForm extends Model
             // ],
             [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->skiponemptystep2],
 
-            [['operated_park', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
+            [['park_list', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
 
             [['bank_name', 'account_holder_name', 'account_number', 'ifsc_number'], 'required', 'on' => self::SCENARIO_STEP4],
@@ -288,6 +295,7 @@ class PartnerRegistrationForm extends Model
             ['ifsc_number', 'match', 'pattern' => '/^[A-Z]{4}0[A-Z0-9]{6}$/', 'message' => 'Invalid IFSC format'],
             ['account_number', 'match', 'pattern' => '/^[0-9]{9,18}$/', 'message' => 'Account number must be 9 to 18 digits'],
 
+            [['park_list'], 'safe'],
 
 
         ];
@@ -364,7 +372,7 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->pan_number = $this->pan_number;
         $this->partner_model->pan_upload = $this->pan_upload;
 
-        $this->partner_model->operated_park = $this->operated_park;
+        // $this->partner_model->operated_park = $this->operated_park;
         $this->partner_model->about_business = $this->about_business;
         $this->partner_model->gst_id = $this->gst_id;
         // $this->partner_model->state = $this->state;
@@ -399,6 +407,12 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->status = $this->status;
         $this->partner_model->final = $this->final;
         $this->partner_model->updated_time_final = $this->updated_time_final;
+
+
+
+        if ($this->park_list) {
+            $this->partner_model->operated_park = $this->park_list[0];
+        }
     }
 
     public function uploadFiles()
