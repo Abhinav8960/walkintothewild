@@ -5,9 +5,8 @@ namespace common\events\user;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
-use yii\base\Event;
 
-class NewUserRegistration extends Event
+class NewSafariCreatedByUser
 {
     public $userId;
     public $email;
@@ -16,7 +15,7 @@ class NewUserRegistration extends Event
     public $channelName;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
     protected $mail_template_code = 'URNW'; // New User Registration
@@ -26,10 +25,10 @@ class NewUserRegistration extends Event
         $this->userId = $userId;
         $this->email = $email;
         $this->name = $name;
-        $this->broadcastHandle();
+        $this->broadcast();
     }
 
-    public function broadcastHandle()
+    public function broadcast()
     {
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;

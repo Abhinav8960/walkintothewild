@@ -39,7 +39,7 @@ class QueueService
         if (isset($event->template['bcc'])) {
             $bcc = $event->template['bcc'];
         }
-        $mail_to = $event->email;
+        $mail_to = $event->template['to_mail'] ?? $event->email;
         if ($log->save(false)) {
             if (!empty($mail_to)) {
                 $m = new MailLogRecipients();
