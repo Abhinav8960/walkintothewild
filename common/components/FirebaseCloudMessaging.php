@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use common\models\UserSession;
 use DateTimeImmutable;
 use Yii;
 use yii\base\Component;
@@ -74,26 +75,29 @@ class FirebaseCloudMessaging extends Component
 
         $report = $this->messaging->sendMulticast($message, $deviceTokens);
 
-        echo 'Successful sends: ' . $report->successes()->count() . PHP_EOL;
-        echo 'Failed sends: ' . $report->failures()->count() . PHP_EOL;
+        // echo 'Successful sends: ' . $report->successes()->count() . PHP_EOL;
+        // echo 'Failed sends: ' . $report->failures()->count() . PHP_EOL;
 
-        if ($report->hasFailures()) {
-            foreach ($report->failures()->getItems() as $failure) {
-                echo $failure->error()->getMessage() . PHP_EOL;
-            }
-        }
-
+        // if ($report->hasFailures()) {
+        //     foreach ($report->failures()->getItems() as $failure) {
+        //         echo $failure->error()->getMessage() . PHP_EOL;
+        //     }
+        // }
+        // print_r($deviceTokens);
+        // die();
         // The following methods return arrays with registration token strings
-        $successfulTargets = $report->validTokens(); // string[]
+        // $successfulTargets = $report->validTokens(); // string[]
 
         // Unknown tokens are tokens that are valid but not know to the currently
         // used Firebase project. This can, for example, happen when you are
         // sending from a project on a staging environment to tokens in a
         // production environment
         $unknownTargets = $report->unknownTokens(); // string[]
+        $this->tokendisabled($unknownTargets);
 
         // Invalid (=malformed) tokens
         $invalidTargets = $report->invalidTokens(); // string[]
+        $this->tokendisabled($invalidTargets);
     }
 
     public function sendNotificationSpecificDevice($title, $body, $token, $data = [], $topic = NULL, $condition = NULL)
@@ -126,5 +130,19 @@ class FirebaseCloudMessaging extends Component
             return  $result = $this->messaging->validateRegistrationTokens($tokens);
         }
         return false;
+    }
+
+    public function tokendisabled($tokens = [])
+    {
+        if (!empty($tokens)) {
+            foreach ($tokens as $token) {
+                $user = UserSession::find()->where(['firebase_token' => $token])->limit(1)->one();
+                if ($user) {
+                    $user->is_firebase_token_active = 0;
+                    $user->save(false);
+                }
+            }
+        }
+        return true;
     }
 }

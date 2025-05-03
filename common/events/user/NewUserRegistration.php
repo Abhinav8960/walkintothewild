@@ -12,9 +12,10 @@ class NewUserRegistration
     public $email;
     public $name;
     public $template;
+    public $channelName;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
     protected $mail_template_code = 'URNW'; // New User Registration
@@ -35,10 +36,11 @@ class NewUserRegistration
     public function broadcast()
     {
         foreach ($this->channels as $channel) {
+            $this->channelName = $channel;
             $this->template = $this->getTemplates()[$channel];
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
-            $broadcastService->send($this);
+            $broadcastService->send($this, true);
         }
     }
 
@@ -49,19 +51,23 @@ class NewUserRegistration
                 'subject' => 'Welcome to our platform',
                 'mail_template_id'  => $this->emailTemplateId(),
                 'params' => [
-                    'name' => $this->name,
+                    'username' => $this->name,
                     'email' => $this->email,
                 ],
+                'cc' => [],
+                'bcc' => [],
                 // 'viewPath' => '@common/mail/user/new_user_registration',
 
 
             ],
             'firebase' => [
+                'master_notification_template_id' => $this->firebaseTemplateId(),
                 'title' => 'Welcome!',
                 'message' => 'Hello ' . $this->name . ', welcome to our platform!',
-                'send_data' => json_encode([]),
-                'image_url' => '',
+                'sent_data' => NULL,
                 'user_id' => $this->userId,
+                'image_url' => NULL,
+                'action' => NULL,
             ],
             // Add more templates for other channels as needed
         ];

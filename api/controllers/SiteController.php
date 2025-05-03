@@ -118,7 +118,7 @@ class SiteController extends RestController
     {
 
         //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
-        return  new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890');
+        // return  new \common\events\user\NewUserRegistration(748, 'anurag@triline.co.in', 'Anurag Kumar Yadav');
 
 
         $model = new SocialLoginForm();
@@ -299,10 +299,10 @@ class SiteController extends RestController
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
-    public function actionUpdateToken($firebase_token,$old_firebase_token)
+    public function actionUpdateToken($firebase_token, $old_firebase_token)
     {
         if ($this->access_token) {
-            $model = UserSession::find()->where(['token' => $this->access_token, 'old_firebase_token'=>$old_firebase_token])->limit(1)->one();
+            $model = UserSession::find()->where(['token' => $this->access_token, 'old_firebase_token' => $old_firebase_token])->limit(1)->one();
             if ($model) {
                 $model->firebase_token = $firebase_token;
                 $model->is_firebase_token_active = true;
