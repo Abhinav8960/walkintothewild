@@ -195,7 +195,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord
                 ], 
                 'file', 
                 'extensions' => ['jpg', 'jpeg', 'png', 'pdf'], 
-                'maxSize' => 2 * 1024 * 1024, // 2 MB
+                'maxSize' => 10 * 1024 * 1024, 
                 'skipOnEmpty' => true
             ],
             

@@ -273,7 +273,9 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#aadhar_back_upload\').val() === \'\';
             //     }',
             // ],
-            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
+            [['kyc_pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
+            [['aadhar_front_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
+            [['aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
@@ -281,6 +283,13 @@ class PartnerRegistrationForm extends Model
             [['legal_entity_phone', 'legal_entity_whatsapp','billing_phone','kyc_phone', 'kyc_whatsapp'],'match', 'pattern' =>'/^\d{10}$/', 'message' => 'Contact Number should have 10 digits.'],
             [['kyc_pan','pan_number'], 'match', 'pattern' => '/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/', 'message' => 'PAN must be in format AAAAA9999A'],
             [['address','about_business', 'bank_name','account_holder_name', 'owner_name','kyc_email','kyc_pan','ifsc_number','legal_entity_name','brand_name',], 'string', 'max' => 255, 'tooLong' => 'should not exceed 255 characters'],
+            ['aadhaar_number', 'match', 'pattern' => '/^[2-9]{1}[0-9]{11}$/', 'message' => 'Aadhaar number must be 12 digits and not start with 0 or 1'],
+            ['aadhaar_number', 'string', 'length' => 12, 'tooShort' => 'Aadhaar must be 12 digits', 'tooLong' => 'Aadhaar must be 12 digits'],
+            ['ifsc_number', 'match', 'pattern' => '/^[A-Z]{4}0[A-Z0-9]{6}$/', 'message' => 'Invalid IFSC format'],
+            ['account_number', 'match', 'pattern' => '/^[0-9]{9,18}$/', 'message' => 'Account number must be 9 to 18 digits'],
+
+
+
         ];
     }
 

@@ -105,7 +105,13 @@ $form = ActiveForm::begin([
 
 <div class="d-flex justify-content-end mt-3">
     <?= Html::hiddenInput('step', 1) ?>
-    <?= Html::submitButton('Next', ['class' => 'btn btn-info']) ?>
+    <?php if($model->is_sendforapproval != 1 && ($model->form1_status == PartnerRegistration :: FORM_FILLED && $model->form2_status == PartnerRegistration :: FORM_FILLED && $model->form3_status == PartnerRegistration :: FORM_FILLED && $model->form4_status == PartnerRegistration :: FORM_FILLED && $model->form5_status == PartnerRegistration :: FORM_FILLED)){ ?>
+         <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
+    <?php }elseif ($model->form1_status == PartnerRegistration :: FORM_REJECTED || $model->form2_status == PartnerRegistration :: FORM_REJECTED || $model->form3_status == PartnerRegistration :: FORM_REJECTED || $model->form4_status == PartnerRegistration :: FORM_REJECTED || $model->form5_status == PartnerRegistration :: FORM_REJECTED){?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
+    <?php }else{?>
+    <?= Html::submitButton('Save & Next', ['class' => 'btn btn-orange']) ?>
+    <?php }?>
 </div>
 
 <?php ActiveForm::end();

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\partnerregistration\PartnerRegistration;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -35,6 +36,10 @@ $readOnly = false;
     <div class="col-md-4">
         <?= $form->field($model, 'account_number')->textInput([
             'class' => 'form-control',
+            'maxlength' => 18,
+            'pattern' => '[0-9]{9,18}',
+            'title' => 'Enter a valid account number (9–18 digits)',
+            'oninput' => "this.value = this.value.replace(/[^0-9]/g, '')",
             'placeholder' => 'Enter Account Number',
             'readonly' => $readOnly,
         ]) ?>
@@ -42,6 +47,10 @@ $readOnly = false;
     <div class="col-md-3">
         <?= $form->field($model, 'ifsc_number')->textInput([
             'class' => 'form-control',
+            'maxlength' => 11,
+            'pattern' => '[A-Z]{4}0[A-Z0-9]{6}',
+            'title' => 'IFSC should be 11 characters: 4 letters, 0, then 6 alphanumeric (e.g., HDFC0001234)',
+            'oninput' => "this.value = this.value.toUpperCase();",
             'placeholder' => 'Enter IFSC',
             'readonly' => $readOnly,
         ]) ?>
@@ -67,7 +76,14 @@ $readOnly = false;
 <div class="d-flex justify-content-end mt-3">
     <?= Html::hiddenInput('step', $currentStep) ?>
     <?= $form->field($model, 'form4_status')->hiddenInput(['value' => 1])->label(false) ?>
-    <?= Html::submitButton('Next', ['class' => 'btn btn-info']) ?>
+    <?php if($model->is_sendforapproval != 1 && ($model->form1_status == PartnerRegistration :: FORM_FILLED && $model->form2_status == PartnerRegistration :: FORM_FILLED && $model->form3_status == PartnerRegistration :: FORM_FILLED && $model->form4_status == PartnerRegistration :: FORM_FILLED && $model->form5_status == PartnerRegistration :: FORM_FILLED)){ ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
+    <?php }elseif($model->form1_status == PartnerRegistration :: FORM_REJECTED || $model->form2_status == PartnerRegistration :: FORM_REJECTED || $model->form3_status == PartnerRegistration :: FORM_REJECTED || $model->form4_status == PartnerRegistration :: FORM_REJECTED || $model->form5_status == PartnerRegistration :: FORM_REJECTED){?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
+    <?php }else{?>
+    <?= Html::submitButton('Save & Next', ['class' => 'btn btn-orange']) ?>
+    <?php }?>
+
 </div>
 
 <?php ActiveForm::end(); ?>
