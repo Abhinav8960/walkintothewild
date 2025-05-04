@@ -297,6 +297,7 @@ class DefaultController extends RestController
 
         $model = new PackageCommentReportForm();
         $model->package_id = $package->id;
+        $model->version = $package->live_version;
         $model->package_comment_id = $package_comment_id;
 
         $model->attributes = $this->request;
