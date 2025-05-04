@@ -42,7 +42,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="info-line">
             <strong>Logo:</strong>
             <span>
+            <?php if(isset($model->logo)){ ?>
             <img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->logo ?>" alt="Logo" class="key-img">
+            <?php }else{ 
+                echo '<span class="text-muted">No file uploaded</span>';
+            }?>
             </span>
         </div>
     </div>

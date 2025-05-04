@@ -17,6 +17,9 @@ class PartnerRegistrationController extends Controller
     public function actionCreate()
     {
         $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
 
         if (Yii::$app->user->identity) {
             $partner_model = PartnerRegistration::findOne(['user_id' => Yii::$app->user->identity->id]);
@@ -73,6 +76,9 @@ class PartnerRegistrationController extends Controller
     public function actionStep2()
     {
         $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 2);
         // if ($partner_model->current_step < 2) {
@@ -119,7 +125,11 @@ class PartnerRegistrationController extends Controller
 
     public function actionStep3()
     {
+        
         $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 3);
 
@@ -189,6 +199,9 @@ class PartnerRegistrationController extends Controller
     public function actionStep4()
     {
         $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 4);
         // if ($partner_model->current_step < 4) {
@@ -234,6 +247,9 @@ class PartnerRegistrationController extends Controller
     public function actionStep5()
     {
         $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 5);
         // if ($partner_model->current_step < 5) {
@@ -285,6 +301,9 @@ class PartnerRegistrationController extends Controller
 
     public function actionFinalView()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); 
+        }
         if (!empty(\Yii::$app->user->identity->operator)) {
             return $this->redirect(['/']);
         }
@@ -335,6 +354,10 @@ class PartnerRegistrationController extends Controller
     public function actionThankYou()
     {
         $this->layout = 'registration';
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
 
         $model = PartnerRegistration::find()
             ->where(['user_id' => Yii::$app->user->identity->id])

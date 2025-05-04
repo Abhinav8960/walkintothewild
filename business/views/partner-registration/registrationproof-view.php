@@ -3,9 +3,6 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-
-$webasset = Yii::$app->getUrlManager();
-$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container-fluid py-4">
@@ -23,13 +20,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
 
         <div class="col-md-6">
-            <div class="info-line">
-                <strong>Registration Copy:</strong>
+        <div class="info-line">
+            <strong>Registration Copy:</strong>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->registration_copy_upload  ?>" alt="RegistrationFile" class="key-img">
+                    <?php if (!empty($model->registration_copy_upload) && !empty($model->registration_copy_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->registration_copy_upload, '/') ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
                 </span>
             </div>
         </div>
+
+
 
         <div class="col-md-6">
             <div class="info-line">
@@ -40,10 +45,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         <div class="col-md-6">
             <div class="info-line">
-                <strong>PAN Upload:</strong>
+                <strong>PAN CARD :</strong>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->pan_upload ?>" alt="PanCard" class="key-image">
-                </span>
+                    <?php if (!empty($model->pan_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->pan_upload ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
+                 </span>
             </div>
         </div>
     </div>

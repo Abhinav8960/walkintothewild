@@ -78,20 +78,21 @@ $readOnly = false;
         ]) ?>
     </div>
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'kyc_pan_file_upload')->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
-
-        <?php
-        if (!empty($model->kyc_pan_upload)) {
-        ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->kyc_pan_upload ?>" alt="kyc_pan_upload" style="max-height:50px;max-width:100px;">
-            <?= $form->field($model, 'kyc_pan_upload')->hiddenInput(['id' => 'kyc_pan_upload'])->label(false); ?>
-        <?php
-        }
-        ?>
+    <div class="col-md-6">
+        <div class="d-flex align-items-center gap-3">
+            <div class="flex-grow-1">
+                <?= $form->field($model, 'kyc_pan_file_upload')->fileInput([
+                    'class' => 'form-control',
+                    'disabled' => $readOnly,
+                ]) ?>
+            </div>
+                <?php if (!empty($model->kyc_pan_upload)) { ?>
+                    <?= $form->field($model, 'kyc_pan_upload')->hiddenInput(['id' => 'kyc_pan_upload'])->label(false); ?>
+                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->kyc_pan_upload ?>" target="_blank">
+                        <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
+                    </a>
+                <?php } ?>
+        </div>
     </div>
 
 
@@ -104,38 +105,41 @@ $readOnly = false;
         <input type="hidden" id="prev-pan-upload" value="<?= Html::encode($model->pan_upload) ?>"> -->
     </div>
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'aadhar_front_file_upload')->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
+    <div class="col-md-6">
+        <div class="d-flex align-items-center gap-3">
+            <div class="flex-grow-1">
+                <?= $form->field($model, 'aadhar_front_file_upload')->fileInput([
+                    'class' => 'form-control',
+                    'disabled' => $readOnly,
+                ]) ?>
 
-
-        <?php
-        if (!empty($model->aadhar_front_upload)) {
-        ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_front_upload ?>" alt="aadhar_front_upload" style="max-height:50px;max-width:100px;">
-            <?= $form->field($model, 'aadhar_front_upload')->hiddenInput(['id' => 'aadhar_front_upload'])->label(false); ?>
-        <?php
-        }
-        ?>
+            </div>
+            <?php if (!empty($model->aadhar_front_upload)) { ?>
+                <?= $form->field($model, 'aadhar_front_upload')->hiddenInput(['id' => 'aadhar_front_upload'])->label(false); ?>
+                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->aadhar_front_upload ?>" target="_blank">
+                        <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
+                    </a>
+                <?php } ?>
+        </div>
     </div>
 
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'aadhar_back_file_upload')->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
+    <div class="col-md-6">
+        <div class="d-flex align-items-center gap-3">
+            <div class="flex-grow-1">
+                <?= $form->field($model, 'aadhar_back_file_upload')->fileInput([
+                    'class' => 'form-control',
+                    'disabled' => $readOnly,
+                ]) ?>
 
-        <?php
-        if (!empty($model->aadhar_back_upload)) {
-        ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_back_upload ?>" alt="aadhar_back_upload" style="max-height:50px;max-width:100px;">
-            <?= $form->field($model, 'aadhar_back_upload')->hiddenInput(['id' => 'aadhar_back_upload'])->label(false); ?>
-        <?php
-        }
-        ?>
+            </div>
+            <?php if (!empty($model->aadhar_back_upload)) { ?>
+                <?= $form->field($model, 'aadhar_back_upload')->hiddenInput(['id' => 'aadhar_back_upload'])->label(false); ?>
+                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->aadhar_back_upload ?>" target="_blank">
+                        <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
+                    </a>
+                <?php } ?>
+        </div>
     </div>
 
 

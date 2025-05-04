@@ -59,7 +59,7 @@ $readOnly = false;
         ) ?>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <?= $form->field($gst_model, 'gst_number')->textInput([
             'class' => 'form-control',
             'oninput' => "this.value = this.value.toUpperCase();",
@@ -68,19 +68,21 @@ $readOnly = false;
         ]) ?>
     </div>
 
-    <div class="col-md-3">
-        <?php
-        if (!empty($gst_model->filepath)) {
-        ?>
-            <img src="<?=Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetail->filepath ?>" alt="GSTfile" style="max-height:50px;max-width:100px;">
-            <?= $form->field($gst_model, 'filepath')->hiddenInput(['id' => 'filepath'])->label(false); ?>
-        <?php
-        }
-        ?>
-        <?= $form->field($gst_model, 'filepath_upload')->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
+    <div class="col-md-4">
+    <div class="d-flex align-items-center gap-3">
+    <div class="flex-grow-1">
+            <?= $form->field($gst_model, 'filepath_upload')->fileInput([
+                'class' => 'form-control',
+                'disabled' => $readOnly,
+            ]) ?>
+    </div>
+            <?php if (!empty($gst_model->filepath)) { ?>
+                <?= $form->field($gst_model, 'filepath')->hiddenInput(['id' => 'filepath'])->label(false); ?>
+                <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->partner_model->gstDetail->filepath ?>" target="_blank">
+                    <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
+                </a>
+            <?php } ?>
+    </div>
     </div>
 
     <div class="col-md-3">

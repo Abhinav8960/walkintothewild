@@ -67,9 +67,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         <div class="col-md-6">
             <div class="info-line">
-                <strong>Gst Image:</strong><br>
+                <strong>Gst Image:</strong>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->partner_model->gstDetail->filepath ?>" alt="GSTfile" class="key-img">
+                <?php if (!empty($model->partner_model->gstDetail->filepath)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->partner_model->gstDetail->filepath ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
                 </span>
             </div>
         </div>

@@ -31,18 +31,36 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="info-line"><strong>Aadhar Number:</strong> <?= Html::encode($model->aadhar_number) ?></div>
         </div>
         <div class="col-md-6">
-            <div class="info-line"><strong>PAN Uploaded File:</strong><br>
-                <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->kyc_pan_upload ?>" alt="PAN" class="kyc-img">
+            <div class="info-line"><strong>PAN Uploaded File:</strong>
+                <?php if (!empty($model->kyc_pan_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->kyc_pan_upload ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="info-line"><strong>Aadhar Front:</strong><br>
-                <img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_front_upload ?>" alt="Aadhar Front" class="kyc-img">
+            <div class="info-line"><strong>Aadhar Front:</strong>
+                <?php if (!empty($model->aadhar_front_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_front_upload ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="info-line"><strong>Aadhar Back:</strong><br>
-                <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->aadhar_back_upload ?>" alt="Aadhar Back" class="kyc-img">
+            <div class="info-line"><strong>Aadhar Back:</strong>
+                <?php if (!empty($model->aadhar_back_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_back_upload ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
             </div>
         </div>
     </div>

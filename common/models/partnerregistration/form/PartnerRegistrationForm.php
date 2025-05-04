@@ -200,7 +200,8 @@ class PartnerRegistrationForm extends Model
             //     },
             // ],
             ['legal_entity_email', 'email', 'on' => self::SCENARIO_STEP1],
-            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => $this->skiponemptystep1],
+            // [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP1, 'skipOnEmpty' => $this->skiponemptystep1],
+            [['logo_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024],
 
             [['registration_number', 'pan_number'], 'required', 'on' => self::SCENARIO_STEP2],
             // [
@@ -225,7 +226,7 @@ class PartnerRegistrationForm extends Model
             //     return $(\'#pan_upload\').val() === \'\';
             // }'
             // ],
-            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->skiponemptystep2],
+            [['registration_copy_file_upload', 'pan_file_upload'], 'file', 'extensions' => ['pdf', 'doc'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP2, 'skipOnEmpty' => $this->skiponemptystep2],
 
             [['park_list', 'about_business', 'billing_phone', 'billing_mail'], 'required', 'on' => self::SCENARIO_STEP3],
             ['billing_mail', 'email', 'on' => self::SCENARIO_STEP3],
@@ -242,7 +243,7 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#cancel_check_upload\').val() === \'\';
             //     }',
             // ],
-            [['cancel_check_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'pdf', 'doc', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4, 'skipOnEmpty' => $this->skiponemptystep4],
+            [['cancel_check_file_upload'], 'file', 'extensions' => ['pdf', 'doc'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP4, 'skipOnEmpty' => $this->skiponemptystep4],
 
 
             [['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'aadhar_number'], 'required', 'on' => self::SCENARIO_STEP5],
@@ -280,10 +281,8 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#aadhar_back_upload\').val() === \'\';
             //     }',
             // ],
-            [['kyc_pan_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
-            [['aadhar_front_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
-            [['aadhar_back_file_upload'], 'file', 'extensions' => ['jpg', 'jpeg', 'png', 'webp'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
-
+            [['kyc_pan_file_upload','aadhar_front_file_upload','aadhar_back_file_upload'], 'file', 'extensions' => ['pdf', 'doc'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
+           
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'safe'],

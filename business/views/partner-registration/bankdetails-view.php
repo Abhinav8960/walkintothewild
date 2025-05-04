@@ -48,9 +48,15 @@ use yii\bootstrap5\Html;
 
         <div class="col-md-6">
             <div class="info-line">
-                <strong>Cancel Check Upload :</strong><br>
+                <strong>Cancel Check Upload :</strong>
                 <span>
-                    <img src="<?=  Yii::$app->params['s3_endpoint'] .'/'.$model->cancel_check_upload ?>" alt="CancelCheck" class="kyc-img">
+                <?php if (!empty($model->cancel_check_upload)){?>
+                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->cancel_check_upload ?>" target="_blank">
+                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
+                        </a>
+                    <?php } else{ ?>
+                        <span class="text-muted">No file uploaded</span>
+                    <?php } ?>
                 </span>
             </div>
         </div>

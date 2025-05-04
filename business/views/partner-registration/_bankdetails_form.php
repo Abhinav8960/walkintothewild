@@ -57,19 +57,22 @@ $readOnly = false;
     </div>
 
 
-    <?php
-    if (!empty($model->cancel_check_upload)) {
-    ?>
-        <img src="<?= Yii::$app->params['s3_endpoint'] .'/'.$model->cancel_check_upload ?>" alt="CancelCheck" style="max-height:50px;max-width:100px;">
-        <?= $form->field($model, 'cancel_check_upload')->hiddenInput(['id' => 'cancel_check_upload'])->label(false); ?>
-    <?php
-    }
-    ?>
-    <div class="col-md-4">
-        <?= $form->field($model, 'cancel_check_file_upload')->fileInput([
-            'class' => 'form-control',
-            'disabled' => $readOnly,
-        ]) ?>
+    <div class="col-md-5">
+            <div class="d-flex align-items-center gap-3">
+                <div class="flex-grow-1">
+                    <?= $form->field($model, 'cancel_check_file_upload')->fileInput([
+                        'class' => 'form-control',
+                        'disabled' => $readOnly,
+                    ]) ?>
+                </div>
+
+                <?php if (!empty($model->cancel_check_upload)) { ?>
+                    <?= $form->field($model, 'cancel_check_upload')->hiddenInput(['id' => 'cancel_check_upload'])->label(false); ?>
+                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->cancel_check_upload, '/') ?>" target="_blank">
+                        <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
+                    </a>
+                <?php } ?>
+            </div>
     </div>
 </div>
 
