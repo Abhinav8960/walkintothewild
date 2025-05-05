@@ -4,21 +4,22 @@ namespace backend\modules\operatorapproval\controllers;
 
 use api\models\User;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
 use common\models\operatorregistration\OperatorRegistration;
 use common\models\operatorregistration\OperatorRegistrationSearch;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerRegistration;
 use common\models\partnerregistration\PartnerRegistrationSearch;
-use Yii;
+use PHPUnit\Framework\Constraint\Operator;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 /**
  * DefaultController.
  */
 class DefaultController extends Controller
 {
-
     /**
      * Renders the index view for the module
      * @return string
@@ -37,7 +38,6 @@ class DefaultController extends Controller
 
     public function actionUpdate($id)
     {
-
         // $model = $this->findModel($id);
         $partner_model = $this->findModel($id);
 
@@ -48,7 +48,6 @@ class DefaultController extends Controller
             'partner_model' => $partner_model,
         ]);
     }
-
 
     // public function actionStepApproved($id, $step)
     // {
@@ -76,20 +75,19 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         if ($step == 1) {
-            $model->form1_status = PartnerRegistration :: FORM_APPROVED;
+            $model->form1_status = PartnerRegistration::FORM_APPROVED;
             $model->updated_time_form_1 = date('Y-m-d H:i:s');
         } else if ($step == 2) {
-            $model->form2_status = PartnerRegistration :: FORM_APPROVED;
+            $model->form2_status = PartnerRegistration::FORM_APPROVED;
             $model->updated_time_form_2 = date('Y-m-d H:i:s');
         } else if ($step == 3) {
-            $model->form3_status = PartnerRegistration :: FORM_APPROVED;
+            $model->form3_status = PartnerRegistration::FORM_APPROVED;
             $model->updated_time_form_3 = date('Y-m-d H:i:s');
         } else if ($step == 4) {
-            $model->form4_status = PartnerRegistration :: FORM_APPROVED;
+            $model->form4_status = PartnerRegistration::FORM_APPROVED;
             $model->updated_time_form_4 = date('Y-m-d H:i:s');
-        }
-        else if ($step == 5) {
-            $model->form5_status = PartnerRegistration :: FORM_APPROVED;
+        } else if ($step == 5) {
+            $model->form5_status = PartnerRegistration::FORM_APPROVED;
             $model->updated_time_form_5 = date('Y-m-d H:i:s');
         }
         if ($model->save(false)) {
@@ -103,24 +101,23 @@ class DefaultController extends Controller
         $model = $this->findModel($id);
         $model->is_sendforapproval = 0;
         if ($step == 1) {
-            $model->form1_status = PartnerRegistration :: FORM_REJECTED;
+            $model->form1_status = PartnerRegistration::FORM_REJECTED;
             // $model->is_step_1_submit = 0;
             $model->updated_time_form_1 = date('Y-m-d H:i:s');
         } else if ($step == 2) {
-            $model->form2_status = PartnerRegistration :: FORM_REJECTED;
+            $model->form2_status = PartnerRegistration::FORM_REJECTED;
             // $model->is_step_2_submit = 0;
             $model->updated_time_form_2 = date('Y-m-d H:i:s');
         } else if ($step == 3) {
-            $model->form3_status = PartnerRegistration :: FORM_REJECTED;
+            $model->form3_status = PartnerRegistration::FORM_REJECTED;
             // $model->is_step_3_submit = 0;
             $model->updated_time_form_3 = date('Y-m-d H:i:s');
         } else if ($step == 4) {
-            $model->form4_status = PartnerRegistration :: FORM_REJECTED;
+            $model->form4_status = PartnerRegistration::FORM_REJECTED;
             // $model->is_step_4_submit = 0;
             $model->updated_time_form_4 = date('Y-m-d H:i:s');
-        }
-        else if ($step == 5) {
-            $model->form5_status = PartnerRegistration :: FORM_REJECTED;
+        } else if ($step == 5) {
+            $model->form5_status = PartnerRegistration::FORM_REJECTED;
             // $model->is_step_4_submit = 0;
             $model->updated_time_form_5 = date('Y-m-d H:i:s');
         }
@@ -129,7 +126,7 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 $reason = $model->reason;
                 // if ($model->validate()) {
-                if($reason){
+                if ($reason) {
                     if ($step == 1) {
                         $model->form1_reject_reason = $reason;
                     } else if ($step == 2) {
@@ -138,8 +135,7 @@ class DefaultController extends Controller
                         $model->form3_reject_reason = $reason;
                     } else if ($step == 4) {
                         $model->form4_reject_reason = $reason;
-                    }
-                    else if ($step == 5) {
+                    } else if ($step == 5) {
                         $model->form5_reject_reason = $reason;
                     }
                     if ($model->save(false)) {
@@ -148,8 +144,7 @@ class DefaultController extends Controller
                     }
                 }
             }
-        }
-         else {
+        } else {
             $model->loadDefaultValues();
         }
         return $this->renderAjax('_reject_reason', [
@@ -288,6 +283,23 @@ class DefaultController extends Controller
         }
     }
 
+    public function approvedparks($model)
+    {
+        if (!empty($model->parkList)) {
+            foreach ($model->parkList as $park_field) {
+                $operator_park = new SafariOperatorPark();
+                $operator_park->safari_operator_id = $park_field['partner_registration_id']; 
+                $operator_park->park_id = $park_field['park_id'];
+                $operator_park->status = $park_field['status'];
+                if (!$operator_park->save(false)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     protected function findModel($id)
     {
         if (($model = PartnerRegistration::findOne(['id' => $id])) !== null) {
@@ -300,13 +312,14 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (($model->final_approved != 1) && ($model->form1_status == PartnerRegistration :: FORM_APPROVED) && ($model->form2_status == PartnerRegistration :: FORM_APPROVED) && ($model->form3_status == PartnerRegistration :: FORM_APPROVED) && ($model->form4_status == PartnerRegistration :: FORM_APPROVED) &&( $model->form5_status == PartnerRegistration :: FORM_APPROVED)) {
+        if (($model->final_approved != 1) && ($model->form1_status == PartnerRegistration::FORM_APPROVED) && ($model->form2_status == PartnerRegistration::FORM_APPROVED) && ($model->form3_status == PartnerRegistration::FORM_APPROVED) && ($model->form4_status == PartnerRegistration::FORM_APPROVED) && ($model->form5_status == PartnerRegistration::FORM_APPROVED)) {
             $model->final_approved = 1;
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {
                 $this->makeoperator($model);
-                $model_user = User :: findOne(['id'=>$model->user_id]);
-                $model_user->is_safari_operator =1;
+                $this->approvedparks($model);
+                $model_user = User::findOne(['id' => $model->user_id]);
+                $model_user->is_safari_operator = 1;
                 $model_user->save(false);
                 \Yii::$app->session->setFlash('success', 'Final Approved Successfully');
                 return $this->redirect(['update', 'id' => $model->id]);
