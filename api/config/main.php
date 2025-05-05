@@ -112,6 +112,9 @@ return [
                 'master-meta-info' => 'site/master-meta-info',
                 'convergent-survey' => 'site/convergent-survey',
                 'social-login' => 'site/social-login',
+                'can-social-login' => 'site/can-social-login',
+                'otp-verification-social-login' => 'site/otp-verification-social-login',
+                'verify-social-login' => 'site/verify-social-login',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',
                 'termofuse' => 'site/termofuse',
@@ -189,9 +192,9 @@ return [
                 'chat/messages/<chat_hash>'   => 'chat/default/messages',
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
                 'chat/send-quote-message/<user_handle>'   => 'chat/default/send-quote-message',
-                
-                
-                
+
+
+
 
             ],
 

@@ -1,4 +1,32 @@
 -- 5 May
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SEVN', 'Social Email Verification', 'socialEmailVerification-html', '1', NULL, NULL, '1716971669', '1');
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+DROP TABLE IF EXISTS `social_login_verification`;
+CREATE TABLE `social_login_verification` (
+  `source` varchar(255) NOT NULL,
+  `id` int NOT NULL,
+  `source_id` varchar(255) NOT NULL,
+  `otp` int NOT NULL,
+  `expiry_datetime` int NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ALTER TABLE `social_login_verification`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `social_login_verification`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+
+
 ALTER TABLE `safari_operator` ADD `is_temporary_delete` INT NULL DEFAULT '0' AFTER `operator_email`;
 ALTER TABLE `package_comment_report` DROP `version`;
 -- 1 May
