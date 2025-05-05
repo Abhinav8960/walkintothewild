@@ -356,19 +356,19 @@ class SafariOperatorController extends Controller
         ]);
     }
 
-    // public function actionRedirectPartner($id)
-    // {
-    //     $safari_operator = $this->findModel($id);
-    //     return $this->redirect(Yii::$app->urlManagerPartner->createAbsoluteUrl([
-    //         '/check-in',
-    //         'username' => $safari_operator->user->username,
-    //         'google_source_id' => $safari_operator->user->google_source_id,
-    //     ]));
-    // }
-
     public function actionRedirectPartner($id)
     {
         $safari_operator = $this->findModel($id);
-        return $this->redirect('https://staging-partners.walkintothewild.in' . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
+        return $this->redirect(Yii::$app->urlManagerPartner->createAbsoluteUrl([
+            '/check-in',
+            'username' => $safari_operator->user->username,
+            'google_source_id' => $safari_operator->user->google_source_id,
+        ]));
     }
+
+    // public function actionRedirectPartner($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //     return $this->redirect('https://staging-partners.walkintothewild.in' . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
+    // }
 }
