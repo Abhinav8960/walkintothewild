@@ -151,10 +151,10 @@ class Package extends \common\models\package\Package
         return $arr;
     }
 
-    public function getLivePackage()
-    {
-        return $this->hasOne(Package::class, ['id' => 'package_id', 'live_version' => 'version']);
-    }
+    // public function getLivePackage()
+    // {
+    //     return $this->hasOne(Package::class, ['id' => 'package_id', 'live_version' => 'version']);
+    // }
 
     public function getPackageincluded()
     {
@@ -410,7 +410,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'package_id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 

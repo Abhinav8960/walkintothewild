@@ -1,3 +1,5 @@
+-- 5 May
+ALTER TABLE `package_comment_report` DROP `version`;
 -- 1 May
 ALTER TABLE `partner_gst_details` ADD `partner_registration_id` INT NULL DEFAULT NULL AFTER `id`;
 -- 31 April

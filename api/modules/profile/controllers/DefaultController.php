@@ -209,9 +209,9 @@ class DefaultController extends RestController
     public function actionUseractivity($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
-        }
+        // if ($user->partner) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        // }
         if ($user) {
             $searchModel = new FeedsSearch();
             $searchModel->created_by = $user->id;
