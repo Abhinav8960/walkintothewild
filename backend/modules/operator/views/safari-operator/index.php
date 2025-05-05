@@ -136,7 +136,7 @@ $this->params['title'] = $this->title;
                                     ['redirect-partner', 'id' => $model->id],
                                     [
                                         'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'Update',
+                                        'title' => 'Check-out',
                                         'target' => '_blank',
                                     ]
                                 );
