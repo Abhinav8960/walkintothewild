@@ -273,7 +273,7 @@ class DefaultController extends RestController
         $packagemodel->attributes = $this->request;
         if ($packagemodel->validate()) {
             if ($packagemodel->request($package->id)) {
-                FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
+                // FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
             }
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
