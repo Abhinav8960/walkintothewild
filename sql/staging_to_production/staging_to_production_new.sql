@@ -690,7 +690,7 @@ ALTER TABLE `package_quote` CHANGE `package_uuid` `version` VARCHAR(10) CHARACTE
 /////////////////////////////////////////////////////////////////////////////////////////
 
 ALTER TABLE `user` ADD `apple_source_id` VARCHAR(255) NULL DEFAULT NULL AFTER `google_source_id`;
-
+ALTER TABLE `user_posts` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
