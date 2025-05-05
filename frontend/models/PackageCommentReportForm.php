@@ -15,7 +15,6 @@ class PackageCommentReportForm extends Model
     public $package_comment_id;
     public $report_reason_id;
     public $report_detail;
-    public $version;
     public $status;
     public $action_url;
     public $action_validate_url;
@@ -75,7 +74,6 @@ class PackageCommentReportForm extends Model
         $this->flag_model->package_comment_id = $this->package_comment_id;
         $this->flag_model->report_reason_id = $this->report_reason_id;
         $this->flag_model->report_detail = $this->report_detail;
-        $this->flag_model->version = $this->version;
         // $this->flag_model->user_device  = $agent->device();
         // $this->flag_model->user_ip_address = Yii::$app->getRequest()->getUserIp();
         // $this->flag_model->user_agent =  Yii::$app->request->userAgent;
