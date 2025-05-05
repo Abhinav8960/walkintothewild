@@ -40,6 +40,8 @@ class UserSession extends \yii\db\ActiveRecord
         ];
     }
 
+    
+
     /**
      * {@inheritdoc}
      */

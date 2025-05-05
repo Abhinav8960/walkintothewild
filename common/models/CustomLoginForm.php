@@ -18,6 +18,7 @@ class CustomLoginForm extends Model
     /**
      * {@inheritdoc}
      */
+    
     public function rules()
     {
         return [
@@ -39,6 +40,7 @@ class CustomLoginForm extends Model
             ]);
 
             if ($user) {
+                
                 return Yii::$app->user->login($user);
             }
 

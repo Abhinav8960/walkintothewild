@@ -96,7 +96,7 @@ class User extends ActiveRecord implements IdentityInterface
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
         Yii::$app->db->createCommand()->insert('user_session', [
-            'id' => $sessionId,
+            'id' => $sessionId ?? $session->getId(),
             'user_id' => $userId,
             'last_activity' => new \yii\db\Expression('NOW()'),
             'token' => $token,
