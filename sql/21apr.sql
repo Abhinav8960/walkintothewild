@@ -1,4 +1,5 @@
 -- 5 May
+ALTER TABLE `safari_operator` ADD `is_temporary_delete` INT NULL DEFAULT '0' AFTER `operator_email`;
 ALTER TABLE `package_comment_report` DROP `version`;
 -- 1 May
 ALTER TABLE `partner_gst_details` ADD `partner_registration_id` INT NULL DEFAULT NULL AFTER `id`;
