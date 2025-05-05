@@ -16,7 +16,7 @@ class VerifySocialLoginForm extends Model
     public $source;
     public $email;
     public $name;
-    protected $otp;
+    public $otp;
 
     /**
      * {@inheritdoc}
