@@ -105,7 +105,7 @@ class DefaultController extends RestController
     {
         $searchModel = new ChatSearch();
         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->dataProviderSender($searchModel, $rootIndexName = "operator");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "operators");
     }
 
     public function actionUserList()
@@ -118,7 +118,7 @@ class DefaultController extends RestController
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
         if (!$chat) {
-            return Yii::$app->api->sendFailedResponse([], 'Chat not found', 400);
+            return Yii::$app->api->sendResponse([], ['message'=>'Chat not found'], 400);
         }
         // $dataProvider = new ActiveDataProvider([
         //     'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderby(['last_message_at' => SORT_DESC]),
@@ -142,7 +142,9 @@ class DefaultController extends RestController
     {
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
-            return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
+            // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
+            return Yii::$app->api->sendResponse([], ['message'=>'User not found'], 400);
+
         }
         $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->one();
         if (!$chat_model) {
@@ -164,7 +166,7 @@ class DefaultController extends RestController
 
         $message = Yii::$app->request->post('message');
         if ($message == '') {
-            return Yii::$app->api->sendFailedResponse([], 'Message is required', 400);
+            return Yii::$app->api->sendResponse([], ['message'=>'Message is required'], 400);
         }
 
         return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $data = NULL);

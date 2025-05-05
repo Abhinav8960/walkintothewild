@@ -28,7 +28,7 @@ class CheckInController extends Controller
         if ($google_source_id !== null) {
             $model->google_source_id = $google_source_id;
         }
-        $session->set('user_session_id', session_create_id('user-session'));
+        $session->set('user_session_id', session_create_id('user-session').'_'.time());
 
         if ($model->login()) {
             return $this->goBack();
