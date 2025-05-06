@@ -19,6 +19,7 @@ class RequestSanitization extends \yii\base\Component
 
         $excludedArrayForAuthentication = [
             'social-login',
+            'reset-social-login',
             'can-social-login',
             'otp-verification-social-login',
             'verify-social-login',

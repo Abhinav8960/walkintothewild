@@ -36,7 +36,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -48,7 +48,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'otp-verification-social-login', 'error'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login','reset-social-login', 'otp-verification-social-login', 'error'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -67,6 +67,7 @@ class SiteController extends RestController
                     'convergent-survey' => ['GET'],
                     'can-social-login' => ['POST'],
                     'verify-social-login' => ['POST'],
+                    'reset-social-login' => ['POST'],
 
                 ],
             ],
@@ -240,6 +241,25 @@ class SiteController extends RestController
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
+    }
+
+    public function actionResetSocialLogin()
+    {
+        $model = new CanSocialLoginForm();
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            if ($model->reset_login()) {
+                $data = ['is_reset'=>true,'can_login' => false];
+                return Yii::$app->api->sendResponse($data);
+
+            }
+            $data = ['is_reset'=>false,'can_login' => true];
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+        return Yii::$app->api->sendResponse($data);
     }
 
     public function actionCanSocialLogin()
