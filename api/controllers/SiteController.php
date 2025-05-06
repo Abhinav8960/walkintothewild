@@ -251,9 +251,11 @@ class SiteController extends RestController
 
         if ($model->validate()) {
             if ($model->reset_login()) {
-                $data = ['can_login' => false];
+                $data = ['is_reset'=>true,'can_login' => false];
+                return Yii::$app->api->sendResponse($data);
+
             }
-            $data = ['can_login' => true];
+            $data = ['is_reset'=>false,'can_login' => true];
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
