@@ -28,6 +28,7 @@ class SocialLoginForm extends Model
     public $browser;
     public $browser_version;
     public $firebase_token;
+    public $otp;
 
 
     /**
@@ -37,7 +38,7 @@ class SocialLoginForm extends Model
     {
         return [
             // username and password are both required
-            [['device', 'platform', 'platform_version', 'browser', 'browser_version', 'firebase_token', 'avatar'], 'safe'],
+            [['device', 'platform', 'platform_version', 'browser', 'browser_version', 'firebase_token', 'avatar', 'otp'], 'safe'],
             [['source', 'source_id', 'email', 'name'], 'required'],
             ['email', 'email'],
             // ['source_id', 'sourceIdvalidators'],
@@ -54,7 +55,7 @@ class SocialLoginForm extends Model
     }
 
 
-   
+
 
 
     public function apiLogin()
@@ -96,7 +97,7 @@ class SocialLoginForm extends Model
     //         // $ud->platform_version   = isset($this->platform_version) ? $this->platform_version : NULL;
     //         $ud->user_browser            = isset($this->browser) ? $this->browser : NULL;
     //         // $ud->browser_version    = isset($this->browser_version) ? $this->browser_version : NULL;
-            
+
     //         $ud->api                = Yii::$app->params['app_name'];
     //         return $ud->save(false);
     //     }

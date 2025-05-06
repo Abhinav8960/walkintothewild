@@ -7,9 +7,12 @@ use yii\filters\AccessControl;
 
 use api\behaviours\Verbcheck;
 use api\behaviours\Apiauth;
+use api\models\CanSocialLoginForm;
 use api\models\cms\contentmanagement\ContentManagement;
 use api\models\MasterMetaTableInfoSearch;
+use api\models\OtpVerificationSocialLoginForm;
 use api\models\SocialLoginForm;
+use api\models\VerifySocialLoginForm;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\User;
@@ -33,7 +36,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -45,7 +48,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'error'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'otp-verification-social-login', 'error'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -62,6 +65,8 @@ class SiteController extends RestController
                     'privacypolicy' => ['GET'],
                     'update-token' => ['POST'],
                     'convergent-survey' => ['GET'],
+                    'can-social-login' => ['POST'],
+                    'verify-social-login' => ['POST'],
 
                 ],
             ],
@@ -133,10 +138,13 @@ class SiteController extends RestController
                     return Yii::$app->api->sendFailedStringResponse(['You are not register with us, check source']);
                 }
 
+
+
                 $auth = Auth::find()->where([
                     'source' => $model->source,
                     'source_id' => $model->source_id,
                 ])->one();
+
 
 
                 if ($auth && $model->apiLogin()) { // login
@@ -175,11 +183,10 @@ class SiteController extends RestController
                             $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
 
                             $source_id_col = strtolower($model->source . '_source_id');
-                            $user->$source_id_col  = $model->source_id;
                             if (!empty($user->$source_id_col)) {
                                 return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
                             }
-
+                            $user->$source_id_col  = $model->source_id;
                             $user->status = User::STATUS_ACTIVE;
                             $user->save(false);
                             $auth = new Auth([
@@ -207,7 +214,8 @@ class SiteController extends RestController
                         $user->username = $model->email;
                         $user->email = $model->email;
                         $user->avatar = $model->avatar;
-                        $user->google_source_id = $model->source_id;
+                        $source_id_col = strtolower($model->source . '_source_id');
+                        $user->$source_id_col  = $model->source_id;
                         $user->status = User::STATUS_ACTIVE;
                         $user->save();
                         $auth = new Auth([
@@ -233,6 +241,87 @@ class SiteController extends RestController
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
+
+    public function actionCanSocialLogin()
+    {
+        $model = new CanSocialLoginForm();
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            if ($model->can_login()) {
+                $data = ['can_login' => true];
+            }
+            $data = ['can_login' => false];
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    public function actionVerifySocialLogin()
+    {
+        $model = new VerifySocialLoginForm();
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+
+            if (!$model->can_login()) {
+
+                if ($model->verify_login()) {
+                    $data = ['can_login' => false, 'is_otp_send' => true, 'otp'=>$model->otp];
+                    return Yii::$app->api->sendResponse($data);
+                }
+                $data = ['can_login' => false, 'is_otp_send' => false];
+                return Yii::$app->api->sendResponse($data);
+            }
+            $data = ['can_login' => true];
+            return Yii::$app->api->sendResponse($data);
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    public function actionOtpVerificationSocialLogin()
+    {
+        $model = new OtpVerificationSocialLoginForm();
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            if($model->validateOtp()){
+
+                $data = ['can_login' => true];
+                return Yii::$app->api->sendResponse($data);
+            }
+            $data = ['can_login' => false, "message"=>"Otp Not matched"];
+
+
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    // public function actionOtpVerificationSocialLogin()
+    // {
+    //     $model = new VerifySocialLoginForm();
+
+    //     $model->attributes = $this->request;
+
+    //     if ($model->validate()) {
+    //         if ($model->can_login()) {
+    //             $data = ['can_login' => true];
+    //         }
+
+    //         $data = ['can_login' => false, 'is_otp_send' => true];
+    //     } else {
+    //         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    //     }
+    //     return Yii::$app->api->sendResponse($data);
+    // }
 
 
     public function actionProfile()
