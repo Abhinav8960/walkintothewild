@@ -67,6 +67,7 @@ class SiteController extends RestController
                     'convergent-survey' => ['GET'],
                     'can-social-login' => ['POST'],
                     'verify-social-login' => ['POST'],
+                    'reset-social-login' => ['POST'],
 
                 ],
             ],
