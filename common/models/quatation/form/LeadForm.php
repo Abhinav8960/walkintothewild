@@ -2,7 +2,7 @@
 
 namespace common\models\quatation\form;
 
-use common\models\quatation\QuotationRequests;
+use common\models\quatation\Lead;
 use Yii;
 use yii\base\Model;
 
@@ -35,13 +35,9 @@ use yii\base\Model;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class QuotationRequestsForm extends Model
+class LeadForm extends Model
 {
-
     public $id;
-    public $objective;
-    public $collection;
-    public $collection_id;
     public $name;
     public $email;
     public $phone;
@@ -63,15 +59,12 @@ class QuotationRequestsForm extends Model
     public $updated_at;
     public $created_by;
     public $updated_by;
-
     public $form_model;
 
-
-    public function __construct(QuotationRequests $form_model = null)
+    public function __construct(Lead $form_model = null)
     {
-
         $this->form_model = Yii::createObject([
-            'class' => QuotationRequests::className()
+            'class' => Lead::className()
         ]);
 
         $this->travelers_nationality  =  "India";
@@ -85,12 +78,12 @@ class QuotationRequestsForm extends Model
     public function rules()
     {
         return [
-            [['collection', 'collection_id', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_date_flexible'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['name', 'email', 'phone', 'destination', 'from_date', 'to_date'], 'required'],
-            [['collection', 'collection_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'collection', 'collection_id', 'user_id'], 'safe'],
+            [['is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
             [['addional_notes'], 'string'],
             [['objective', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget', 'travelers_nationality'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -108,9 +101,6 @@ class QuotationRequestsForm extends Model
     {
         return [
             'id' => 'ID',
-            'objective' => 'Objective',
-            'collection' => 'Collection',
-            'collection_id' => 'Collection ID',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
@@ -137,10 +127,7 @@ class QuotationRequestsForm extends Model
 
     public function save()
     {
-        $model = new QuotationRequests();
-        $model->objective = $this->objective;
-        $model->collection = $this->collection;
-        $model->collection_id = $this->collection_id;
+        $model = new Lead();
         $model->name = $this->name;
         $model->email = $this->email;
         $model->phone = $this->phone;

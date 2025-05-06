@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "quotation_requests".
  *
  * @property int $id
- * @property string $objective
- * @property int|null $collection
- * @property int|null $collection_id
+ * @property int|null $package_id
+ * @property int|null $park_id
+ * @property int|null $operator_id
  * @property string $name
  * @property string $email
  * @property string $phone
@@ -33,9 +33,8 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class QuotationRequests extends \yii\db\ActiveRecord
+class Lead extends \yii\db\ActiveRecord
 {
-
     /**
      * {@inheritdoc}
      */
@@ -63,7 +62,7 @@ class QuotationRequests extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'quotation_requests';
+        return 'lead';
     }
 
     /**
@@ -72,12 +71,12 @@ class QuotationRequests extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['collection', 'collection_id', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['is_date_flexible','is_seen_by_admin'], 'default', 'value' => 0],
+            [['package_id', 'park_id', 'operator_id', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['is_date_flexible', 'is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['name', 'email', 'phone', 'destination', 'from_date', 'to_date'], 'required'],
-            [['collection', 'collection_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','is_seen_by_admin'], 'integer'],
-            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'collection', 'collection_id', 'user_id'], 'safe'],
+            [['is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_seen_by_admin'], 'integer'],
+            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
             [['addional_notes'], 'string'],
             [['objective', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget', 'travelers_nationality'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -92,9 +91,9 @@ class QuotationRequests extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'objective' => 'Objective',
-            'collection' => 'Collection',
-            'collection_id' => 'Collection ID',
+            'package' => 'Package',
+            'park' => 'Park',
+            'operator' => 'Name',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',

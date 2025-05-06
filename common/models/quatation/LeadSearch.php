@@ -4,12 +4,12 @@ namespace common\models\quatation;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\quatation\QuotationRequests;
+use common\models\quatation\Lead;
 
 /**
- * QuotationRequestsSearch represents the model behind the search form of `common\models\quatation\QuotationRequests`.
+ * LeadSearch represents the model behind the search form of `common\models\quatation\Lead`.
  */
-class QuotationRequestsSearch extends QuotationRequests
+class LeadSearch extends Lead
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class QuotationRequestsSearch extends QuotationRequests
     public function rules()
     {
         return [
-            [['id', 'collection', 'collection_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin',  'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin',  'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['objective', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes', 'travelers_nationality','is_seen_by_admin'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class QuotationRequestsSearch extends QuotationRequests
      */
     public function search($params, $formName = null)
     {
-        $query = QuotationRequests::find();
+        $query = Lead::find();
 
         // add conditions that should always apply here
 
@@ -64,9 +64,7 @@ class QuotationRequestsSearch extends QuotationRequests
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'collection' => $this->collection,
-            'collection_id' => $this->collection_id,
+            'id' => $this->id,            
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
             'is_date_flexible' => $this->is_date_flexible,
@@ -80,8 +78,7 @@ class QuotationRequestsSearch extends QuotationRequests
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'objective', $this->objective])
-            ->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'destination', $this->destination])
