@@ -21,6 +21,7 @@ class Package extends \common\models\package\Package
             'package_name',
             'package_slug',
             'primary_park',
+            'primary_park_slug',
             'no_of_day',
             'no_of_night',
             'no_of_night',
@@ -68,7 +69,6 @@ class Package extends \common\models\package\Package
         $fields[] = 'image_thumbnails';
         // $fields[] = 'banner_thumbnail';
         $fields[] = 'banner_thumbnails';
-        $fields[] = 'primary_park_slug';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
