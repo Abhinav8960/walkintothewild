@@ -1,3 +1,6 @@
+--6 May
+ALTER TABLE `feeds` ADD `date_time` DATETIME NULL DEFAULT NULL AFTER `collection`;
+
 -- 5 May
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SEVN', 'Social Email Verification', 'socialEmailVerification-html', '1', NULL, NULL, '1716971669', '1');
 

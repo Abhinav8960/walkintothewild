@@ -11,8 +11,9 @@ class FeedsBehavior extends Behavior
 {
     public $objective;
     public $collection;
+    public $date_time = null;
     public $do_feed = true;
-    
+
     public function events()
     {
         return [
@@ -23,6 +24,7 @@ class FeedsBehavior extends Behavior
 
     public function feeds($event)
     {
+       
         $model = Feeds::find()->where(['collection' => $this->collection, 'collection_id' => $this->owner->id])->one();
         if (empty($model)) {
 
@@ -44,11 +46,16 @@ class FeedsBehavior extends Behavior
         } else {
             $model->status = $this->owner->status == 1 ? 1 : 0;
         }
-        
+
         $model->created_by = $this->owner->created_by;
         $model->updated_by = $this->owner->updated_by;
         $model->created_at = $this->owner->created_at;
         $model->updated_at = $this->owner->updated_at;
+
+        if (!empty($this->date_time)) {
+            $date_time_col = $this->date_time;
+            $model->date_time = date('Y-m-d H:i:s', strtotime($this->owner->$date_time_col));
+        }
 
         $model->save(false);
     }
