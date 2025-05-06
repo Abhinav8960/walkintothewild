@@ -30,27 +30,27 @@ class FeedDateTimeController extends Controller
         echo "Successfully start date save!!!";
     }
 
-    public function actionPackage()
-    {
-        $feed_model = Feeds::find()->where(['collection' => 2])->all();
-        foreach ($feed_model as $feed) {
-            $package_model = Package::find()->where(['id' => $feed->collection_id])->limit(1)->one();
-            if ($package_model) {
-                if ($package_model->start_date != null) {
-                    $feed->date_time = date('Y-m-d H:i:s', strtotime($package_model->start_date));
-                    $feed->save(false);
-                }
-            }
-        }
+    // public function actionPackage()
+    // {
+    //     $feed_model = Feeds::find()->where(['collection' => 2])->all();
+    //     foreach ($feed_model as $feed) {
+    //         $package_model = Package::find()->where(['id' => $feed->collection_id])->limit(1)->one();
+    //         if ($package_model) {
+    //             if ($package_model->start_date != null) {
+    //                 $feed->date_time = date('Y-m-d H:i:s', strtotime($package_model->start_date));
+    //                 $feed->save(false);
+    //             }
+    //         }
+    //     }
 
-        echo "Successfully start date save!!!";
-    }
+    //     echo "Successfully start date save!!!";
+    // }
 
     public function actionDisable()
     {
         $currentDateTime = date('Y-m-d H:i:s');
         $feedModels = Feeds::find()
-            ->where(['collection' => 1])
+            ->where(['status' => 1])
             ->andWhere(['<=', 'date_time', $currentDateTime])
             ->all();
 

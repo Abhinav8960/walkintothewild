@@ -55,7 +55,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 'class' => \common\behaviors\FeedsBehavior::class,
                 'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
-                'date_time' => 'start_date',
 
             ],         
             // [
