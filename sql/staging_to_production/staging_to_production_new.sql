@@ -708,6 +708,61 @@ ALTER TABLE `partner_park_list`
 --
 ALTER TABLE `partner_park_list`
 MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+
+
+
+
+
+--
+-- Table structure for table `sales_quote`
+--
+
+DROP TABLE IF EXISTS `sales_quote`;
+CREATE TABLE `sales_quote` (
+  `id` int NOT NULL,
+  `hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `chat_id` int NOT NULL,
+  `is_package_quote` tinyint(1) NOT NULL DEFAULT '0',
+  `is_operator_quote` tinyint(1) NOT NULL DEFAULT '0',
+  `quotation_id` int NOT NULL,
+  `safari` int NOT NULL,
+  `travelers` int NOT NULL,
+  `stay_category_id` int NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `additional_notes` text NOT NULL,
+  `final_quote` int NOT NULL DEFAULT '1',
+  `payment_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `is_payment_done` tinyint(1) NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '1',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `sales_quote`
+--
+ALTER TABLE `sales_quote`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `hash` (`hash`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `sales_quote`
+--
+ALTER TABLE `sales_quote`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
