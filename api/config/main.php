@@ -112,6 +112,7 @@ return [
                 'master-meta-info' => 'site/master-meta-info',
                 'convergent-survey' => 'site/convergent-survey',
                 'social-login' => 'site/social-login',
+                'reset-social-login' => 'site/reset-social-login',
                 'can-social-login' => 'site/can-social-login',
                 'otp-verification-social-login' => 'site/otp-verification-social-login',
                 'verify-social-login' => 'site/verify-social-login',
