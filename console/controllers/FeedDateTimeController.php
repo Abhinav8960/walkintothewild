@@ -20,8 +20,10 @@ class FeedDateTimeController extends Controller
         foreach ($feed_model as $feed) {
             $share_safari_model = ShareSafari::find()->where(['id' => $feed->collection_id])->limit(1)->one();
             if ($share_safari_model) {
-                $feed->date_time = date('Y-m-d H:i:s', strtotime($share_safari_model->start_date));
-                $feed->save(false);
+                if ($share_safari_model->start_date != null) {
+                    $feed->date_time = date('Y-m-d H:i:s', strtotime($share_safari_model->start_date));
+                    $feed->save(false);
+                }
             }
         }
 
@@ -34,8 +36,10 @@ class FeedDateTimeController extends Controller
         foreach ($feed_model as $feed) {
             $package_model = Package::find()->where(['id' => $feed->collection_id])->limit(1)->one();
             if ($package_model) {
-                $feed->date_time = date('Y-m-d H:i:s', strtotime($package_model->start_date));
-                $feed->save(false);
+                if ($package_model->start_date != null) {
+                    $feed->date_time = date('Y-m-d H:i:s', strtotime($package_model->start_date));
+                    $feed->save(false);
+                }
             }
         }
 
