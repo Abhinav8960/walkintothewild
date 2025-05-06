@@ -45,4 +45,20 @@ class FeedDateTimeController extends Controller
 
         echo "Successfully start date save!!!";
     }
+
+    public function actionDisable()
+    {
+        $currentDateTime = date('Y-m-d H:i:s');
+        $feedModels = Feeds::find()
+            ->where(['collection' => 1])
+            ->andWhere(['<=', 'date_time', $currentDateTime])
+            ->all();
+
+        foreach ($feedModels as $feed) {
+            $feed->status = 0;
+            $feed->save(false);
+        }
+
+        echo "Successfully updated feeds based on start date!";
+    }
 }
