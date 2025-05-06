@@ -18,6 +18,7 @@ use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
 use common\models\MailLog;
+use yii\data\ActiveDataProvider;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -38,7 +39,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'organizedby', 'joinedby','useractivity'],
+                'exclude' => ['index', 'organizedby', 'joinedby', 'useractivity', 'followers-list', 'followings-list'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -58,7 +59,9 @@ class DefaultController extends RestController
                     'follow' => ['POST'],
                     'unfollow' => ['POST'],
                     'organizedby' => ['GET'],
-                    'useractivity' => ['GET']
+                    'useractivity' => ['GET'],
+                    'followers-list' => ['GET'],
+                    'followings-list' => ['GET'],
                 ],
             ],
         ];
@@ -218,5 +221,62 @@ class DefaultController extends RestController
             $searchModel->status = Feeds::STATUS_ACTIVE;
             return $this->dataProviderSender($searchModel, $rootIndexName = "user_activity");
         }
+    }
+
+
+    // public function actionFollowersList($user_handle)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
+    //     $user = $this->findUserbyHandle($user_handle);
+    //     if ($user->partner) {
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+    //     }
+
+    //     $followers_list = UserFollow::find()->where(['follow_user_id' => $user->id])->joinWith('user')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all();
+
+    //     $ids = array_column($followers_list, 'id');
+
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' => User::find()->where(['id' => $ids]),
+    //         // 'pagination' => false,
+    //     ]);
+
+    //     return $this->querySender($dataProvider, $rootIndexName = "user_follower_list");
+    // }
+
+    public function actionFollowingsList($user_handle)
+    {  
+        $user = $this->findUserbyHandle($user_handle);
+        if ($user->partner) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
+
+        $followers_list = UserFollow::find()->where(['user_id' => $user->id])->joinWith('follower')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all();
+
+        $ids = array_column($followers_list, 'follow_user_id');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->where(['id' => $ids]),
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "user_follower_list");
+    }
+
+    public function actionFollowersList($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+        if ($user->partner) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        }
+
+        $following_list = UserFollow::find()->where(['follow_user_id' => $user->id])->joinWith('user')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all();
+
+        $ids = array_column($following_list, 'user_id');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->where(['id' => $ids]),
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "user_following_list");
     }
 }

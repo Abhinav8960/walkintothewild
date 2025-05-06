@@ -91,7 +91,7 @@ $this->title = $user->name;
                     <div class="col-md-6">
                         <div class="d-flex align-items-center flowers-content">
                             <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/follower', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count(); ?> Followers</a></p>
-                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/following', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count(); ?> Following</a></p>
+                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/following', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowings()->joinWith('follower')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count(); ?> Following</a></p>
                         </div>
                     </div>
                     <div class="col-md-6">
