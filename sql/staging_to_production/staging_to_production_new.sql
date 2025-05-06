@@ -708,6 +708,91 @@ ALTER TABLE `partner_park_list`
 --
 ALTER TABLE `partner_park_list`
 MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+
+
+
+
+
+--
+-- Table structure for table `sales_quote`
+--
+
+DROP TABLE IF EXISTS `sales_quote`;
+CREATE TABLE `sales_quote` (
+  `id` int NOT NULL,
+  `hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `chat_id` int NOT NULL,
+  `is_package_quote` tinyint(1) NOT NULL DEFAULT '0',
+  `is_operator_quote` tinyint(1) NOT NULL DEFAULT '0',
+  `quotation_id` int NOT NULL,
+  `safari` int NOT NULL,
+  `travelers` int NOT NULL,
+  `stay_category_id` int NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `additional_notes` text NOT NULL,
+  `final_quote` int NOT NULL DEFAULT '1',
+  `payment_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `is_payment_done` tinyint(1) NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '1',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_by` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `sales_quote`
+--
+ALTER TABLE `sales_quote`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `hash` (`hash`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `sales_quote`
+--
+ALTER TABLE `sales_quote`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+--
+-- Table structure for table `social_login_verification`
+--
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+DROP TABLE IF EXISTS `social_login_verification`;
+CREATE TABLE `social_login_verification` (
+  `source` varchar(255) NOT NULL,
+  `id` int NOT NULL,
+  `source_id` varchar(255) NOT NULL,
+  `otp` int NOT NULL,
+  `expiry_datetime` int NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ALTER TABLE `social_login_verification`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `social_login_verification`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -718,8 +803,7 @@ COMMIT;
 
 
 
-
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ QUERIES $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+---------------------------------------- QUERIES  --------------------------------------------------
 
 ALTER TABLE `package` ADD `live_version` CHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL AFTER `total_view`;
 ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
@@ -774,6 +858,12 @@ ALTER TABLE `package_comment_report` DROP `version`;
 
 ALTER TABLE `witw_production_new`.`package_day` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `day`, `version`) USING BTREE;
 ALTER TABLE `package` ADD `cancellation_reason` TEXT NULL DEFAULT NULL AFTER `master_vehicle_id`;
+
+
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SEVN', 'Social Email Verification', 'socialEmailVerification-html', '1', NULL, NULL, '1716971669', '1');
+ALTER TABLE `feeds` ADD `date_time` DATETIME NULL DEFAULT NULL AFTER `collection`;
+
+
 
 
 //////////////////////////////Check for MODERATION DB///////////////////////////////////////////////////////
