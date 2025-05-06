@@ -324,7 +324,7 @@ CREATE TABLE `partner_registration` (
   `legal_entity_type` int DEFAULT NULL COMMENT '1= PROP_WRITER,\r\n2= PVT_LTD,\r\n3=LLP',
   `brand_name` varchar(255) DEFAULT NULL,
   `logo` varchar(255) DEFAULT NULL,
-  `legal_entity_phone` int DEFAULT NULL,
+  `legal_entity_phone`bigint DEFAULT NULL,
   `legal_entity_whatsapp` bigint DEFAULT NULL,
   `legal_entity_email` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -628,6 +628,86 @@ ALTER TABLE `url_shortner`
 --
 ALTER TABLE `url_shortner_log`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+
+
+--
+-- Table structure for table `partner_gst_details`
+--
+
+CREATE TABLE `partner_gst_details` (
+  `id` int NOT NULL,
+  `gst_number` varchar(255) DEFAULT NULL,
+  `filepath` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '0',
+  `state` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_at` int NOT NULL,
+  `updated_by` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `partner_gst_details`
+--
+ALTER TABLE `partner_gst_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `partner_gst_details`
+--
+ALTER TABLE `partner_gst_details`
+MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
+
+
+
+
+--
+-- Table structure for table `partner_park_list`
+--
+
+DROP TABLE IF EXISTS `partner_park_list`;
+CREATE TABLE `partner_park_list` (
+  `id` int NOT NULL,
+  `partner_registration_id` int DEFAULT NULL,
+  `park_id` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `created_at` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `partner_park_list`
+--
+ALTER TABLE `partner_park_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `partner_park_list`
+--
+ALTER TABLE `partner_park_list`
+MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -646,8 +726,22 @@ ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `pa
 ALTER TABLE `share_safari` ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `status`, ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_api`;
 ALTER TABLE `safari_park` ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `google_review_count`, ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_web`;
 ALTER TABLE `package` ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `updated_by`, ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_web`;
+ALTER TABLE `package_comment`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
+ALTER TABLE `package_quote` CHANGE `package_uuid` `version` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
+
+ALTER TABLE `package_comment_report`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_day`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_faq`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_feature`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
+ALTER TABLE `package_gallery`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_included` ADD `version` VARCHAR(10) NOT NULL AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
+ALTER TABLE `wildwalks`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
 
 
+ALTER TABLE `package` ADD `pending_for_approval_version` CHAR(10) NULL DEFAULT NULL AFTER `live_version`, ADD `editable_version` CHAR(10) NULL DEFAULT NULL AFTER `pending_for_approval_version`;
 ALTER TABLE `user_posts`
   DROP `type_of_post`,
   DROP `like_count`,
@@ -657,50 +751,29 @@ ALTER TABLE `user_posts`
   DROP `description`,
   DROP `v_size`,
   DROP `v_duration`;
-
-  ALTER TABLE `user_posts` ADD `size` INT NULL AFTER `etag`;
-
+ALTER TABLE `user_posts` ADD `size` INT NULL AFTER `etag`;
 ALTER TABLE `user_post_comment` CHANGE `message` `comment` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
 ALTER TABLE `user_post_comment` CHANGE `comment_datetime` `dateTime` DATETIME NOT NULL;
 ALTER TABLE `sighting_comment` CHANGE `comment_datetime` `dateTime` DATETIME NOT NULL;
 ALTER TABLE `sighting_comment` CHANGE `message` `comment` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
-
-
-//////////////////rename the table where mentioned  //////////////////////////////////////
-
-ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
-
-ALTER TABLE `package`  ADD `package_id` INT NOT NULL  AFTER `id`;
-ALTER TABLE `package_comment`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_comment_report`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_day`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_enquiry`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_faq`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_feature`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
-ALTER TABLE `package_gallery`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_included` ADD `version` VARCHAR(10) NOT NULL AFTER `package_id`;
-ALTER TABLE `package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
-ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
-ALTER TABLE `package_states` DROP `uuid`;
-ALTER TABLE `package_states` ADD `live_version_data` JSON NULL DEFAULT NULL AFTER `editable_version`;
-
-ALTER TABLE `package_quote` CHANGE `package_uuid` `version` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
-/////////////////////////////////////////////////////////////////////////////////////////
-
 ALTER TABLE `user` ADD `apple_source_id` VARCHAR(255) NULL DEFAULT NULL AFTER `google_source_id`;
 ALTER TABLE `user_posts` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `user_post_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `sighting_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `sighting_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `sighting_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
-ALTER TABLE `sighting` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `package_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
 ALTER TABLE `share_safari_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `share_safari` ADD `filepath` VARCHAR(512) NULL DEFAULT NULL AFTER `image`;
+ALTER TABLE `partner_gst_details` ADD `partner_registration_id` INT NULL DEFAULT NULL AFTER `id`;
+ALTER TABLE `safari_operator` ADD `is_temporary_delete` INT NULL DEFAULT '0' AFTER `operator_email`;
+ALTER TABLE `package_comment_report` DROP `version`;
 
+ALTER TABLE `witw_production_new`.`package_day` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `day`, `version`) USING BTREE;
+ALTER TABLE `package` ADD `cancellation_reason` TEXT NULL DEFAULT NULL AFTER `master_vehicle_id`;
 
 
 //////////////////////////////Check for MODERATION DB///////////////////////////////////////////////////////
