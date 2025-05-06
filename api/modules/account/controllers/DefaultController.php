@@ -282,7 +282,7 @@ class DefaultController extends RestController
             'query' => ShareSafari::find()->where(['id' => $saafariIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "shared_safari");
+        return $this->querySender($dataProvider, $rootIndexName = "share_safari");
     }
 
     public function actionProfileDelete()
