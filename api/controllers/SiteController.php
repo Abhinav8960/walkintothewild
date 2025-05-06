@@ -270,8 +270,8 @@ class SiteController extends RestController
             if (!$model->can_login()) {
 
                 if ($model->verify_login()) {
-                    // $data = ['can_login' => false, 'is_otp_send' => true, 'otp'=>$model->otp];
-                    $data = ['can_login' => false, 'is_otp_send' => true];
+                    $data = ['can_login' => false, 'is_otp_send' => true, 'otp'=>$model->otp];
+                    // $data = ['can_login' => false, 'is_otp_send' => true];
                     return Yii::$app->api->sendResponse($data);
                 }
                 $data = ['can_login' => false, 'is_otp_send' => false];
