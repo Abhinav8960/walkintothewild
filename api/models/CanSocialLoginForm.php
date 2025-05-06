@@ -38,14 +38,17 @@ class CanSocialLoginForm extends Model
     public function reset_login()
     {
         $auth = Auth::find()->where(['source' => $this->source, 'source_id' => $this->source_id])->one();
-        if (!empty($auth)) {
-            $user = User::find()->where(['id' => $auth->user_id])->one();
-            $col = $this->source . '_' . 'source_id';
-            $user->$col = NULL;
-            $user->save(false);
-            $auth->delete();
-            return true;
+        try {
+            if (!empty($auth)) {
+                $user = User::find()->where(['id' => $auth->user_id])->one();
+                $col = $this->source . '_' . 'source_id';
+                $user->$col = NULL;
+                $user->save(false);
+                $auth->delete();
+                return true;
+            }
+        } catch (\Throwable $th) {
+            return false;
         }
-        return false;
     }
 }
