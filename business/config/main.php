@@ -12,7 +12,25 @@ return [
     'controllerNamespace' => 'business\controllers',
     'bootstrap' => ['log', '\business\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
-    'modules' => [],
+    'modules' => [
+        'package' => [
+            'class' => 'business\modules\package\Module',
+        ],
+        'sharesafari' => [
+            'class' => 'business\modules\sharesafari\Module',
+        ],
+        'chat' => [ // Chating and Messaging Module
+            'class' => 'business\modules\chat\Module',
+        ],
+        'sightings' => [ // Chating and Messaging Module
+            'class' => 'business\modules\sightings\Module',
+        ],
+        'posts' => [ // Chating and Messaging Module
+            'class' => 'business\modules\posts\Module',
+        ],
+
+
+    ],
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
@@ -58,6 +76,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/partner-registration' => '/partner-registration/create',
+                '/chat/message/<user_handle>' => '/chat/default/message',
+                '/chat/message/<user_handle>/<chat_id>' => '/chat/default/message',
+                '/chat/quote/<user_handle>/<chat_id>' => '/chat/default/message',
             ],
         ],
 

@@ -53,9 +53,9 @@ class PackageFeature extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['package_id', 'feature_id'], 'required'],
+            [['package_id','version', 'feature_id'], 'required'],
             [['package_id', 'feature_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
-            [['feature_id', 'package_id'], 'unique', 'targetAttribute' => ['feature_id', 'package_id']],
+            [['feature_id','version', 'package_id'], 'unique', 'targetAttribute' => ['feature_id','version', 'package_id']],
         ];
     }
 

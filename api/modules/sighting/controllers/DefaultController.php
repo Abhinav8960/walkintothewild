@@ -9,6 +9,7 @@ use api\models\sighting\Sighting;
 use api\models\sighting\SightingCommentLike;
 use api\models\sighting\SightingLike;
 use api\models\sighting\SightingSearch;
+use common\models\operator\SafariOperator;
 use common\models\sighting\form\SightingCommentForm;
 use common\models\sighting\form\SightingForm;
 use common\models\sighting\form\SightingReplyForm;
@@ -35,11 +36,16 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like','sighting-report'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like','sighting-report'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create'],
+                        'allow' => $this->isSafariOperator(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -54,7 +60,8 @@ class DefaultController extends RestController
                     'reply' => ['POST'],
                     'sighting-like' => ['POST'],
                     'comment-like' => ['POST'],
-                    'sighting-report' => ['POST']
+                    'sighting-report' => ['POST'],
+                    'sighting-delete' => ['POST'],
                 ],
             ],
         ];
@@ -68,7 +75,7 @@ class DefaultController extends RestController
     {
         $searchModel = new SightingSearch();
         $searchModel->status = Sighting::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Sighting");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "sighting");
     }
 
 
@@ -76,12 +83,13 @@ class DefaultController extends RestController
     {
         $model = new SightingForm();
         $model->user_id = $this->userinfoId;
+        $model->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
         $model->status = Sighting::STATUS_ACTIVE;
 
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
+        // $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -160,14 +168,15 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new SightingCommentLike();
             $like->user_id = $this->userinfoId;
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->sighting_comment_id = $sighting_comment_id;
             $like->status = SightingCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike'=> true], ['message' => "Liked Comment or Reply"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Liked Comment or Reply"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike'=> false], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
         }
     }
 
@@ -183,14 +192,15 @@ class DefaultController extends RestController
         if (!$like) {
             $like = new SightingLike();
             $like->user_id = $this->userinfoId;
+            $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->sighting_id = $id;
             $like->status = SightingLike::STATUS_ACTIVE;
-            if ($like->save(false)) {  
-                return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike' => true], ['message' => "Sighting Liked Successfully"]);
+            if ($like->save(false)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Sighting Liked Successfully"]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1,'isLike' => false], ['message' => "Remove Liked Successfully"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
         }
     }
 
@@ -220,13 +230,46 @@ class DefaultController extends RestController
         $model->setAttributes(\Yii::$app->request->post());
         if ($model->validate()) {
             $model->initializeForm();
-           
-                if ($model->sighting_model->save()) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting Report Submitted"]);
-                }
+
+            if ($model->sighting_model->save()) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting Report Submitted"]);
+            }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionSightingDelete($id)
+    {
+        $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+        if ($this->userinfo) {
+            if ($this->userinfoId != $sighting->user_id) {
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot delete this sighting!!!"]);
+            }
+        }
+
+        $sighting->status = Sighting::STATUS_DELETE;
+        if ($sighting->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete Successfully!!!"]);
+        }
+
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+    }
+
+
+    private function isSafariOperator()
+    {
+        if ($this->userinfo) {
+            $operator = SafariOperator::find()->where(['user_id' => $this->userinfoId, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+            if ($operator) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

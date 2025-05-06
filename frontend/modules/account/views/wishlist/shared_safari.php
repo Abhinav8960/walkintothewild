@@ -1,6 +1,6 @@
 <?php
 
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;

@@ -2,7 +2,7 @@
 
 namespace api\models;
 
-use api\models\package\Package;
+use api\models\package\PackageVersion;
 use api\models\sharesafari\ShareSafari;
 use Yii;
 
@@ -30,6 +30,6 @@ class UserWishlist extends \common\models\UserWishlist
 
     public function getPackage()
     {
-        return $this->hasMany(Package::class, ['id' => 'item_id']);
+        return $this->hasMany(PackageVersion::class, ['id' => 'item_id']);
     }
 }

@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 
 <div class="right-select">
     <div class="input_check pb-0 mb-3">
-        <div class="form-group field-packagesearch-custom_sort_by">
+        <div class="form-group field-PackageVersionSearch-custom_sort_by">
             <?php
             $sort_option = [1 => 'Created Recently', 2 => 'Less Safaris', 3 => 'More Safaris', 4 => 'Cheapest'];
             ?>
-            <select id="packagesearch-custom_sort_by" class="form-control custom_sort_by_input" name="PackageSearch[custom_sort_by]">
+            <select id="PackageVersionSearch-custom_sort_by" class="form-control custom_sort_by_input" name="PackageVersionSearch[custom_sort_by]">
                 <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Popular' ?></option>
                 <option value="5" class="<?= $searchModel->custom_sort_by == 5 ? 'selected' : '' ?>">Popular</option>
                 <option value="1" class="<?= $searchModel->custom_sort_by == 1 ? 'selected' : '' ?>">Created Recently</option>

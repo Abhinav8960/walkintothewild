@@ -824,12 +824,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/operator/safari-operator/index/view",
 											"/operator/birding-operator/index",
 											"/operator/birding-operator/index/view",
+											"/operator/safari-operator/index",
+											"/operator/safari-operator/index/view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/operator/safari-operator/index",
 														"/operator/safari-operator/index/view",
 														"/operator/birding-operator/index",
 														"/operator/birding-operator/index/view",
+														"/operator/safari-operator/index",
+														"/operator/safari-operator/index/view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
@@ -837,6 +841,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operator/safari-operator/index",
 															"/operator/safari-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
+							<li class="side-menu__label1"><a href="javascript:void(0);">Operator approval List</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/operatorapproval/default/index",
+															"/operatorapproval/default/view",
+														)) ? "active" : "" ?>" href="/operatorapproval/default/index">Operator approval List</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 																"/operator/birding-operator/index",
 																"/operator/birding-operator/index/view",
@@ -844,6 +853,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li> -->
 						</ul>
 					</li>
+
+
 
 					<li class="slide <?= in_array($active_url, array(
 											"/pendingapproval/article-comment/index",
@@ -1003,6 +1014,46 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 				<?php endif; ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+
+					<li class="slide <?= in_array($active_url, array(
+											"/sightings/default/index",
+											"/sightings/default/create",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/sightings/default/index",
+														"/sightings/default/create",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sighting</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">sightingss</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sightings/default/index",
+															"/sightings/default/create",
+
+														)) ? "active" : "" ?>" href="/sightings/default/index">Sightings</a></li>
+						</ul>
+					</li>
+				<?php } ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+
+					<li class="slide <?= in_array($active_url, array(
+											"/posts/default/index",
+											"/posts/default/create",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/posts/default/index",
+														"/posts/default/create",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Posts</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/posts/default/index",
+															"/posts/default/create",
+
+														)) ? "active" : "" ?>" href="/posts/default/index">Posts</a></li>
+						</ul>
+					</li>
+				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
@@ -1021,6 +1072,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/package/quote/index",
 											"/package/quote",
 											"/package/preview/index",
+											"/packageapproval/default/index",
+											"/packageapproval/default/view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/package/default/index",
@@ -1038,6 +1091,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/package/quote/index",
 														"/package/quote",
 														"/package/preview/index",
+														"/packageapproval/default/index",
+														"/packageapproval/default/view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Package</a></li>
@@ -1059,10 +1114,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/package/quote/index",
 															"/package/quote",
 														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/packageapproval/default/index",
+															"/packageapproval/default/view",
+														)) ? "active" : "" ?>" href="/packageapproval/default/index">Package approval List</a></li>
 						</ul>
 					</li>
 
 				<?php endif; ?>
+
+
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 					<li class="slide <?= in_array($active_url, array(
@@ -1175,6 +1236,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 				<?php } ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/compliancedocuments",
+														"/compliancedocuments/default/index",
+													)) ? "active" : "" ?>" href="/compliancedocuments/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Compliance Documents</span></a>
+					</li>
+				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">

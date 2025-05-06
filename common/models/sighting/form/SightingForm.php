@@ -33,6 +33,8 @@ class SightingForm extends Model
     public $post_datetime;
     public $zone_id;
 
+    public $safari_operator_id;
+
 
     public function __construct(Sighting $sighting_model = null)
     {
@@ -44,6 +46,7 @@ class SightingForm extends Model
 
             $this->description = $this->sighting_model->description;
             $this->user_id = $this->sighting_model->user_id;
+            $this->safari_operator_id = $this->sighting_model->safari_operator_id;
             $this->v_size = $this->sighting_model->v_size;
             $this->v_duration = $this->sighting_model->v_duration;
             $this->video_thumbnail = $this->sighting_model->video_thumbnail;
@@ -55,6 +58,7 @@ class SightingForm extends Model
             $this->safari_session_id = $this->sighting_model->safari_session_id;
             $this->post_datetime = $this->sighting_model->post_datetime;
             $this->zone_id = $this->sighting_model->zone_id;
+            
         }
     }
 
@@ -77,7 +81,7 @@ class SightingForm extends Model
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'maxSize' => 10 * 1024,
             ],
-            [['user_id', 'status'], 'integer'],
+            [['user_id', 'status','safari_operator_id'], 'integer'],
             [['description'], 'string'],
             [['v_size', 'v_duration', 'master_animal_id', 'safari_session_id', 'zone_id', 'location'], 'integer'],
             [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
@@ -102,6 +106,7 @@ class SightingForm extends Model
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'safari_operator_id' => 'Safari Operator ID',
             'file' => 'File',
             'filepath' => 'Filepath',
             'video_thumbnail' => 'Video Thumbnail',
@@ -125,9 +130,10 @@ class SightingForm extends Model
 
         $this->sighting_model->description = $this->description;
         $this->sighting_model->user_id = $this->user_id;
+        $this->sighting_model->safari_operator_id = $this->safari_operator_id;
         $this->sighting_model->v_size = $this->v_size;
         $this->sighting_model->v_duration = $this->v_duration;
-        $this->sighting_model->video_thumbnail = $this->video_thumbnail;
+        // $this->sighting_model->video_thumbnail = $this->video_thumbnail;
         $this->sighting_model->location = $this->location;
         $this->sighting_model->status = $this->status;
 
@@ -141,15 +147,16 @@ class SightingForm extends Model
 
     public function uploadFile()
     {
-
         if ($this->file) {
             $storagePath = 'watchpost';
             $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/media';
 
             $fileName = $this->sighting_model->user_id . '_media_' . time() . '.' . $this->file->extension;
             $filePath = $userPath . '/' . $fileName;
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
 
-            $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
+            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
+
             if ($fileName) {
                 // try {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
@@ -169,14 +176,14 @@ class SightingForm extends Model
             $fileName = $this->sighting_model->user_id . '_thumbnail_' . time() . '.' . $this->video_thumbnail->extension;
             $filePath = $userPath . '/' . $fileName;
 
-            $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
+            // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
+            // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
             if ($fileName) {
                 // try {
                 if ($video_thumbnail_etag =  FsHelper::saveUploadedFile($this->video_thumbnail, $filePath, $fileName, true)) {
                     $this->sighting_model->video_thumbnail = $fileName;
                     $this->sighting_model->video_thumbnail_path = $filePath;
                     $this->sighting_model->video_thumbnail_etag = $video_thumbnail_etag;
-
                     $this->sighting_model->save(false);
                 }
             }

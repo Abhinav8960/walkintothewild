@@ -1,5 +1,13 @@
-
-
+-- 26 APRIL 
+ALTER TABLE `partner_registration` CHANGE `legal_entity_whatsapp` `legal_entity_whatsapp` BIGINT NULL DEFAULT NULL;
+ALTER TABLE `partner_registration` CHANGE `registration_number` `registration_number` BIGINT NULL DEFAULT NULL;
+ALTER TABLE `partner_gst_details` CHANGE `gst_number` `gst_number` VARCHAR(255) NULL DEFAULT NULL;
+ALTER TABLE `partner_registration` CHANGE `billing_phone` `billing_phone` BIGINT NULL DEFAULT NULL;
+ALTER TABLE `partner_registration` CHANGE `account_number` `account_number` BIGINT NULL DEFAULT NULL;
+ALTER TABLE `partner_registration` CHANGE `kyc_phone` `kyc_phone` BIGINT NULL DEFAULT NULL, CHANGE `kyc_whatsapp` `kyc_whatsapp` BIGINT NULL DEFAULT NULL, CHANGE `aadhar_number` `aadhar_number` BIGINT NULL DEFAULT NULL;
+ALTER TABLE `partner_registration` ADD `is_sendforapproval` TINYINT NOT NULL DEFAULT '0' AFTER `form5_status`;
+ALTER TABLE `partner_registration` CHANGE `is_sendforapproval` `is_sendforapproval` BOOLEAN NOT NULL DEFAULT FALSE;
+---
 -- 12 April Anurag
 ALTER TABLE `share_safari` ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `status`, ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_api`;
 ALTER TABLE `safari_park` ADD `is_published_on_web` BOOLEAN NOT NULL DEFAULT TRUE AFTER `google_review_count`, ADD `is_published_on_api` BOOLEAN NOT NULL DEFAULT TRUE AFTER `is_published_on_web`;

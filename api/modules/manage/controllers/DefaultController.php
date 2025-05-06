@@ -6,7 +6,7 @@ use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\sharesafari\ShareSafariSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\operator\form\SafariOperatorRequestForm;
@@ -64,7 +64,8 @@ class DefaultController extends RestController
     {
         $this->layout = \common\interfaces\NewStatusInterface::OPERATOR_API_LAYOUT_FULL;
         $safari_operator = $this->module->operatormodel();
-        return Yii::$app->api->sendResponse($data = $safari_operator);
+        $data['data'] = $safari_operator;
+        return Yii::$app->api->sendResponse($data);
     }
 
 
@@ -173,7 +174,7 @@ class DefaultController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
-        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "share_safari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
 
@@ -181,7 +182,7 @@ class DefaultController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 1) {
-            $searchModel = new PackageSearch();
+            $searchModel = new PackageVersionSearch();
             return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);

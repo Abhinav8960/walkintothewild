@@ -30,7 +30,24 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         // $hold_fields = parent::fields();
-        $fields = ['id', 'title', 'slug', 'featureimagepath', 'avg_safari_price_min', 'avg_safari_price_max', 'featureimagepath', 'city', 'state', 'location'];
+        $fields = [
+            'id',
+            'title',
+            'slug',
+            'feature_image_path',
+            'avg_safari_price_min' => function () {
+                return (int)$this->avg_safari_price_min;
+            },
+            'avg_safari_price_max' => function () {
+                return (int)$this->avg_safari_price_max;
+            },
+            'city',
+            'state',
+            'location',
+            'status' => function () {
+                return (bool)$this->status;
+            },
+        ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
@@ -46,7 +63,9 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'official_website';
             // $fields[] = 'short_description';
             $fields[] = 'country';
-            $fields[] = 'pincode';
+            $fields['pincode'] = function () {
+                return (int)$this->pincode;
+            };
             $fields[] = 'about_title';
             $fields[] = 'about_description';
             $fields[] = 'module_title';
@@ -60,25 +79,31 @@ class SafariPark extends \common\models\park\SafariPark
             // $fields[] = 'logo';
             $fields[] = 'long_description';
             $fields[] = 'months';
-            $fields[] = 'bufferzones';
-            $fields[] = 'corezones';
+            $fields[] = 'buffer_zones';
+            $fields[] = 'core_zones';
             $fields[] = 'nearest_bus_station';
             $fields[] = 'airport';
-            $fields[] = 'airportlist';
+            $fields[] = 'airport_list';
             $fields[] = 'vehicles';
-            $fields[] = 'safariVehicleslist';
+            $fields[] = 'safari_vehicles_list';
             $fields[] = 'sessions';
-            $fields[] = 'safariSessionslist';
-            $fields[] = 'lockedMonthslist';
+            $fields[] = 'safari_sessions_list';
+            $fields[] = 'locked_months_list';
             // $fields[] = 'railwaystation';
             // $fields[] = 'railwaystationtwo';
-            $fields[] = 'railwaystationlist';
-            $fields[] = 'lockedMonths';
+            $fields[] = 'railway_station_list';
+            $fields[] = 'locked_months';
             // $fields[] = 'animals';
-            $fields[] = 'averagerating';
+            // $fields['average_rating'] = function () {
+            //     return (string)$this->average_rating;
+            // };
             // $fields[] = 'countreview';
-            $fields[] = 'google_rating';
-            $fields[] = 'google_review_count';
+            $fields['google_rating'] = function () {
+                return (string)$this->google_rating;
+            };
+            $fields['google_review_count'] = function () {
+                return (int)$this->google_review_count;
+            };
             // $fields[] = 'total_view';
             // $fields[] = 'gallery';
             $fields[] = 'urls';
@@ -117,7 +142,7 @@ class SafariPark extends \common\models\park\SafariPark
     }
 
 
-    public function getAirportlist()
+    public function getAirport_list()
     {
         $text = '';
         $columns = ['nearest_airport', 'nearest_airport_two', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'];
@@ -150,7 +175,7 @@ class SafariPark extends \common\models\park\SafariPark
     }
 
 
-    public function getRailwaystationlist()
+    public function getRailway_station_list()
     {
         $text = '';
         $columns = ['nearest_railway_station', 'nearest_railway_station_two', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five'];
@@ -213,7 +238,7 @@ class SafariPark extends \common\models\park\SafariPark
     }
 
 
-    public function getSafariSessionslist()
+    public function getSafari_sessions_list()
     {
         $sessions = $this->getSessions()->all();
         $arr = [];
@@ -235,7 +260,7 @@ class SafariPark extends \common\models\park\SafariPark
         return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_vehicle.status' => 1]);
     }
 
-    public function getSafariVehicleslist()
+    public function getSafari_vehicles_list()
     {
         $vehicles = $this->getVehicles()->all();
         $arr = [];
@@ -252,12 +277,12 @@ class SafariPark extends \common\models\park\SafariPark
 
 
 
-    public function getBufferzones()
+    public function getBuffer_zones()
     {
         return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 2, 'safari_park_zone.status' => 1]);
     }
 
-    public function getCorezones()
+    public function getCore_zones()
     {
         return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 1, 'safari_park_zone.status' => 1]);
     }
@@ -300,7 +325,7 @@ class SafariPark extends \common\models\park\SafariPark
         return $this->hasMany(SafariParkBonusExperience::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_bonus_experience.status' => 1]);
     }
 
-    public function getFeatureimagepath()
+    public function getFeature_image_path()
     {
         if ($this->feature_image != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/safaripark/' . $this->id . '/' . $this->feature_image;
@@ -320,7 +345,7 @@ class SafariPark extends \common\models\park\SafariPark
         return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_month.status' => 1]);
     }
 
-    public function getLockedMonthslist()
+    public function getLocked_months_list()
     {
         $closed_months = $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariParkMonths')->all();
         $arr = [];
@@ -330,7 +355,7 @@ class SafariPark extends \common\models\park\SafariPark
         return implode(", ", $arr);
     }
 
-    public function getLockedMonths()
+    public function getLocked_months()
     {
         return $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariParkMonths');
     }
@@ -352,7 +377,7 @@ class SafariPark extends \common\models\park\SafariPark
         return $this->hasMany(Package::className(), ['id' => 'package_id'])->andwhere(['package.status' => 1])->via('packagepark');
     }
 
-    public function getAveragerating()
+    public function getAverage_rating()
     {
         $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $this->id])->average('rating');
         return round($avg, 1);

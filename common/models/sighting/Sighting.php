@@ -3,6 +3,9 @@
 namespace common\models\sighting;
 
 use common\models\feeds\Feeds;
+use common\models\master\animal\MasterAnimal;
+use common\models\meta\MetaSafariSession;
+use common\models\park\SafariPark;
 use common\models\User;
 use common\traits\CommanRelationship;
 use Yii;
@@ -30,7 +33,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Sighting',
+                'objective' => 'sighting',
                 'collection' => Feeds::MODEL_SIGHTING,
             ],
             [
@@ -58,7 +61,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['user_id', 'file', 'filepath', 'video_thumbnail', 'video_thumbnail_path', 'video_thumbnail_etag', 'etag', 'height', 'width', 'latitude', 'longitude', 'location', 'description', 'master_animal_id', 'safari_session_id', 'post_datetime', 'zone_id', 'v_size', 'v_duration', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['total_view'], 'default', 'value' => 0],
-            [['user_id', 'height', 'width', 'location', 'master_animal_id', 'safari_session_id', 'zone_id', 'v_size', 'v_duration', 'status', 'total_view', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'height', 'width', 'location', 'master_animal_id', 'safari_session_id', 'zone_id', 'v_size', 'v_duration', 'status', 'total_view', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['video_thumbnail', 'description'], 'string'],
             [['latitude', 'longitude'], 'number'],
             [['post_datetime'], 'safe'],
@@ -105,5 +108,64 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getLocationDetail()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'location']);
+    }
+
+    public function getAnimalDetail()
+    {
+        return $this->hasOne(MasterAnimal::class, ['id' => 'master_animal_id']);
+    }
+
+    public function getSafariSessionDetail()
+    {
+        return $this->hasOne(MetaSafariSession::class, ['id' => 'safari_session_id']);
+    }
+
+    public function getThumbnail()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+    }
+
+    public function getLike()
+    {
+        return $this->hasMany(SightingLike::class, ['sighting_id' => 'id']);
+    }
+
+    public function getLikes_count()
+    {
+        return $this->getLike()->count();
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['parent_id' => null]);
+    }
+
+    public function getComments_count()
+    {
+        return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+
+    public function getReplies()
+    {
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['!=', 'parent_id', null]);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+    
+    public function getFull_file_path()
+    {
+        if ($this->file) {
+            return  Yii::$app->params['s3_endpoint'] . '/watchpost/' . $this->user_id . '/media/' . $this->file;
+        }
+        return null;
     }
 }

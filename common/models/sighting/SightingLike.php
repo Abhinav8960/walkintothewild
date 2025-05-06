@@ -26,7 +26,7 @@ class SightingLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['user_id', 'sighting_id'], 'required'],
-            [['user_id', 'sighting_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'sighting_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
         ];
     }
 

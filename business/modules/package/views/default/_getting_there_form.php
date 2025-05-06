@@ -1,0 +1,52 @@
+<?php
+
+use common\models\GeneralModel;
+use yii\helpers\Html;
+use yii\bootstrap5\ActiveForm;
+
+/** @var yii\web\View $this */
+/** @var common\models\master\airport\MasterAirport $model */
+/** @var yii\widgets\ActiveForm $form */
+?>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+
+<?php $form = ActiveForm::begin([
+    'id' => 'author-form',
+    'method' => 'POST',
+    'fieldConfig' => [
+        'template' => '<div class="form-group">{label}{input}{error}</div>',
+    ],
+
+]); ?>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach'])->label('Package Getting There') ?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php ActiveForm::end(); ?>
+
+<style>
+    .ck-editor__editable {
+        min-height: 200px;
+    }
+</style>
+<?php
+$script = <<< JS
+bulleteditor('PackageVersionForm-getting_there');
+JS;
+$this->registerJs($script);
+?>

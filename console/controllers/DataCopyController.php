@@ -3,7 +3,7 @@
 namespace console\controllers;
 
 use common\models\feeds\Feeds;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
 use common\models\UserPosts;
 use yii\console\Controller;

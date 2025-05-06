@@ -83,7 +83,7 @@ class BirdingParkGallery extends \yii\db\ActiveRecord implements \common\interfa
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/birdingparkgallery/' . $this->id . '/' . $this->image;
+            return '/birdingparkgallery/' . $this->id . '/' . $this->image;
         }
     }
 }

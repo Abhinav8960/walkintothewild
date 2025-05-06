@@ -173,6 +173,8 @@ class SharedSafariForm extends \yii\base\Model
     {
         if ($this->shared_safari_image) {
             $storagePath = Yii::$app->params['datapath'] . '/share_safari';
+            
+            $withoutRootPath = 'share_safari';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
@@ -186,8 +188,11 @@ class SharedSafariForm extends \yii\base\Model
             $fileName = 'shared_safari_image' . time() . '.' . $this->shared_safari_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
+            $withoutRootPath = $withoutRootPath . '/' . $this->shared_safari_model->id . '/' . $fileName;
+
             if ($this->shared_safari_image->saveAs($filePath)) {
                 $this->shared_safari_model->image = $fileName;
+                $this->shared_safari_model->filepath = $withoutRootPath;
                 $this->shared_safari_model->save(false);
             }
         }

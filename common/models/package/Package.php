@@ -9,13 +9,13 @@ use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\master\vehicle\MasterVehicle;
 use yii\behaviors\SluggableBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "package".
  *
  * @property int $id
  * @property string $package_name
- * @property string $package_slug
  * @property int $no_of_day
  * @property int|null $no_of_night
  * @property int|null $no_of_safari
@@ -36,6 +36,9 @@ use yii\behaviors\SluggableBehavior;
  */
 class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+
+
+
     use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
@@ -50,14 +53,16 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return [
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Package',
+                'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
-            ],
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
+            ],         
+            // [
+            //     'class' => SluggableBehavior::className(),
+            //     'attribute' => 'package_slug',
+            //     'ensureUnique' => true,
+            //     'slugAttribute' => 'package_name',
+            //     'immutable' => true,
+            // ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
@@ -66,30 +71,51 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                     return time();
                 },
             ],
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'package_name',
-                'slugAttribute' => 'package_slug',
-                'ensureUnique' => true,
-            ],
+            
         ];
     }
+
+
 
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
+        // return [
+        //     [['package_name'], 'required'],
+        //     [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package','owned_by_id','package_agenda_id','safari_type'], 'integer'],
+        //     [['cost_per_person'], 'number'],
+        //     [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition', 'uuid', 'version', 'cancellation_reason'], 'string'],
+        //     [['package_name'], 'string', 'max' => 512],
+        //     [['start_location', 'end_location'], 'string', 'max' => 255],
+        //     [['version'], 'string', 'max' => 10],
+        //     [['is_published_on_web', 'is_published_on_api'], 'boolean'],
+        //     [['is_published_on_web', 'is_published_on_api', 'version', 'version'], 'safe'],
+        //     ['cancellation_reason', 'required', 'on' => 'reject'],
+
+
+
+        // ];
+
         return [
-            [['package_name', 'package_slug'], 'required'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
-            [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['owned_by_id', 'package_agenda_id', 'safari_type', 'start_location', 'end_location', 'start_date', 'end_date', 'package_image', 'package_banner_image', 'stay_category_id', 'type', 'gst_percentage', 'package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'master_vehicle_id', 'cancellation_reason', 'popular_package', 'delete_reason_id', 'delete_reason', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['version'], 'default', 'value' => 'v1'],
+            [['total_view'], 'default', 'value' => 0],
+            [['total_price'], 'default', 'value' => 0.00],
+            [['is_published_on_api'], 'default', 'value' => 1],
+            // [['status'], 'default', 'value' => 3],
+            [['version', 'package_name'], 'required'],
+            [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
+            [['start_date', 'end_date', 'status','package_slug'], 'safe'],
+            [['live_version', 'pending_for_approval_version', 'editable_version'], 'safe'],
+            [['cost_per_person', 'total_price'], 'number'],
+            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
+            [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
+            [['version'], 'string', 'max' => 10],
             [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
-            [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            ['cancellation_reason', 'required', 'on' => 'reject'],
+
         ];
     }
 
@@ -101,7 +127,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         return [
             'id' => 'ID',
             'package_name' => 'Package Name',
-            'package_slug' => 'Package Slug',
             'no_of_day' => 'No Of Day',
             'no_of_night' => 'No Of Night',
             'no_of_safari' => 'No Of Safari',
@@ -145,31 +170,33 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
     }
+
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
     public function getPackageIncludeds()
     {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version'=> 'live_version']);
     }
 
     public function getPackagedays()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version'=> 'live_version']);
     }
 
     public function getImagepath()
     {
         $image_path = '';
         if (isset($this->package_image)) {
-            $image_path = \Yii::$app->params['endpoint'] . '/storage/package/' . $this->id . '/' . $this->package_image;
+            // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_image;
         } else {
 
             if (isset($this->singlepark)) {
@@ -191,17 +218,14 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
-            $image_path = \Yii::$app->params['endpoint'] . '/storage/package/' . $this->id . '/' . $this->package_banner_image;
+            // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_banner_image;
         } else {
 
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;
-                } else {
-                    $image_path = '';
                 }
-            } else {
-                $image_path = '';
             }
         }
 
@@ -243,7 +267,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public function getSinglepark()
     {
-        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
 
     /**
@@ -251,7 +275,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public function getPackagepark()
     {
-        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
 
     public function getPackagerange()
@@ -261,7 +285,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackagegallery()
     {
-        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
 
     public function getPackagedaynightlabels()
@@ -290,7 +314,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->live_version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }
@@ -364,8 +388,27 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getAccomodationIncludes()
     {
-        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $accomodation_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->live_version,  'include_id' => 1, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($accomodation_includes) ? 'Included' : 'Not Included';
     }
+
+
+
+    public function getVersions()
+    {
+        return $this->hasMany(PackageVersion::className(), ['package_id' => 'id']);
+    }
+
+    public static function generateUnqiueSlug($package_name)
+    {
+        $slug = \yii\helpers\Inflector::slug($package_name);
+        $count = 0;
+        while (self::find()->where(['package_slug' => $slug])->exists()) {
+            $count++;
+            $slug = \yii\helpers\Inflector::slug($package_name) . '-' . $count;
+        }
+        return $slug;
+    }
+
 }

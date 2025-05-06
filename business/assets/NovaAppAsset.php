@@ -10,28 +10,22 @@ class NovaAppAsset extends AssetBundle
     public $sourcePath = '@business/themes/nova/assets/';
     public $css = [
         'css/icons.css',
-        // 'css/custom.css',
         'css/skin-modes.css',
-        'css/style-dark.css',
-        'css/style-transparent.css',
+        // 'css/style-dark.css',
+        // 'css/style-transparent.css',
         'css/style.css',
-        'plugins/bootstrap/css/bootstrap.min.css',
-        'plugins/perfect-scrollbar/p-scrollbar.css',
-        'plugins/sidebar/sidebar.css',
-        'plugins/select2/css/select2.min.css',
-        'plugins/datatable/css/dataTables.bootstrap5.css',
-        'plugins/datatable/css/buttons.bootstrap5.min.css',
-        'plugins/datatable/responsive.bootstrap5.css',
-        'https://uicdn.toast.com/editor/latest/toastui-editor.min.css',
-        'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css',
-        'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
+        // 'css/frontend_style.css',
+        // 'plugins/bootstrap/css/bootstrap.min.css',
+        // 'plugins/perfect-scrollbar/p-scrollbar.css',
+        // 'plugins/sidebar/sidebar.css',
+        // 'plugins/select2/css/select2.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $js = [
+        'plugins/accordion/accordion.min.js',
         'plugins/bootstrap/js/popper.min.js',
-        'plugins/bootstrap/js/bootstrap.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
         'plugins/ionicons/ionicons.js',
         'plugins/moment/moment.js',
@@ -63,7 +57,9 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js',
         'https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js',
         'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js',
-        'https://code.highcharts.com/highcharts.js'
+        'https://code.highcharts.com/highcharts.js',
+        
+
     ];
 
     public $depends = [

@@ -7,16 +7,20 @@ use api\controllers\RestController;
 use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\behaviours\Verbcheck;
+use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorSearch;
 use api\models\package\Package;
 use api\models\package\PackageSafariPark;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\park\SafariParkRating;
 use api\models\park\SafariParkRatingSearch;
 use api\models\park\SafariParkSearch;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
+use common\Helper\FirebaseNotificationHelper;
+use api\models\package\PackageSearch;
 use common\models\suggestions\form\SafariSuggestionsForm;
+use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariParkReviewForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -39,7 +43,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'quotesrequest'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -64,6 +68,7 @@ class DefaultController extends RestController
 
                     'park-shared-safari' => ['GET'],
                     'park-package' => ['GET'],
+                    'quotesrequest' => ['POST'],
 
                 ],
             ],
@@ -87,20 +92,34 @@ class DefaultController extends RestController
      * Renders the index view for the module
      * @return string
      */
+    // public function actionView($slug)
+    // {
+
+    //     $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
+    //     $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (!$model) {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    //     $searchModel = new SafariParkSearch();
+
+    //     $searchModel->id = $model->id; // for show Selected Park name in search
+    //     $searchModel->is_single = true; // for show Selected Park name in search
+
+    //     return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+    // }
+
     public function actionView($slug)
     {
-
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
-        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $model = SafariPark::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
-        $searchModel = new SafariParkSearch();
 
-        $searchModel->id = $model->id; // for show Selected Park name in search
-        $searchModel->is_single = true; // for show Selected Park name in search
-
-        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+        if ($model->status != SafariPark::STATUS_ACTIVE) {
+            return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => "Park Not in use!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['data' => $model]);
     }
 
 
@@ -192,13 +211,13 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
         $operatorsearchModel = new SafariOperatorSearch();
         $operatorsearchModel->status = 1;
-      
 
-        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$parl_id=$model->id]);
+
+        return $this->dataProviderSender($operatorsearchModel, $rootIndexName = "operators", $additionalSearchQueryParams = [$park_id = $model->id]);
     }
 
     public function actionParkSharedSafari($slug)
@@ -227,5 +246,34 @@ class DefaultController extends RestController
         $searchModel->id = $packageIds;
         $searchModel->status = Package::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, "packages");
+    }
+
+    public function actionQuotesrequest($slug)
+    {
+        $sf = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$sf) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+        foreach ($sf->operator as $oprt) {
+            $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $oprt->id])->limit(1)->one();
+            if (!$operator) {
+                continue;
+            }
+
+            $model = new OperatorQuoteForm();
+            if ($this->userinfo) {
+                $model->email = $this->userinfo->email;
+                $model->full_name = $this->userinfo->name;
+                $model->phone_no = $this->userinfo->mobile_no;
+            }
+            $model->attributes = $this->request;
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
+                }
+            }
+            // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
     }
 }

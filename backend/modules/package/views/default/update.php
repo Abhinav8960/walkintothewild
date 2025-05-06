@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 
-$this->title = 'Package : ' . $model->package_model->package_name . '';
+$this->title = 'Package : ' . $model->package_version_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/package/default/index'];
 $this->params['breadcrumbs'][] = "Update";

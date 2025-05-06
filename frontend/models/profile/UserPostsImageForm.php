@@ -19,6 +19,7 @@ class UserPostsImageForm extends Model
 
     public $user_image_model;
     public $status;
+    public $safari_operator_id;
 
     public function __construct(UserPosts $user_image_model = null)
     {
@@ -30,6 +31,7 @@ class UserPostsImageForm extends Model
 
             $this->caption = $this->user_image_model->caption;
             $this->user_id = $this->user_image_model->user_id;
+            $this->safari_operator_id = $this->user_image_model->safari_operator_id;
 
             $this->status = $this->user_image_model->status;
         }
@@ -46,7 +48,7 @@ class UserPostsImageForm extends Model
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
             ],
-            [['user_id', 'status'], 'integer'],
+            [['user_id', 'status','safari_operator_id'], 'integer'],
             [['caption'], 'string'],
             [
                 ['file'],
@@ -76,6 +78,7 @@ class UserPostsImageForm extends Model
     {
         return [
             'user_id' => 'User',
+            'safari_operator_id' => 'Safari Operator Id',
             'caption' => 'Caption',
             'status' => 'Status',
         ];
@@ -86,6 +89,7 @@ class UserPostsImageForm extends Model
 
         $this->user_image_model->caption = $this->caption;
         $this->user_image_model->user_id = $this->user_id;
+        $this->user_image_model->safari_operator_id = $this->safari_operator_id;
         $this->user_image_model->status = $this->status;
     }
 
@@ -101,7 +105,7 @@ class UserPostsImageForm extends Model
             $fileName = $this->user_image_model->user_id . '_media_' . time() . '.' . $this->file->extension;
             $filePath = $userPath . '/' . $fileName;
 
-            $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+            // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
                     $this->user_image_model->file = $fileName;

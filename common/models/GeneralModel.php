@@ -45,7 +45,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
@@ -64,6 +64,7 @@ use common\models\MailLogRecipients;
 use common\models\master\userflag\MasterUserFlag;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 
 class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStatusInterface
 {
@@ -1290,6 +1291,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [self::STATUS_ACTIVE => "Active", self::STATUS_SUSPEND => "Inactive"];
     }
 
+    public static function livestatusoption()
+    {
+        return ['1' => 'Live', '0' => 'Dead'];
+    }
+
     public static function newrecentstatusoption()
     {
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Inactive', self::STATUS_DELETE => 'Deleted'];
@@ -1634,5 +1640,20 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             "Zambia" => "Zambia",
             "Zimbabwe" => "Zimbabwe"
         );
+    public static function extentionRemove($filename)
+    {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $filename = preg_replace('/\.' . preg_quote($ext, '/') . '$/', '', $filename);
+        return $filename;
+    }
+
+    public static function operatorsIdOrNull($user_id)
+    {
+        $safari_operator = SafariOperator::find()
+            ->where(['user_id' => $user_id])
+            ->limit(1)
+            ->one();
+
+        return $safari_operator ? $safari_operator->id : null;
     }
 }

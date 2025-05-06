@@ -1,0 +1,203 @@
+-- 5 May
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SEVN', 'Social Email Verification', 'socialEmailVerification-html', '1', NULL, NULL, '1716971669', '1');
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+DROP TABLE IF EXISTS `social_login_verification`;
+CREATE TABLE `social_login_verification` (
+  `source` varchar(255) NOT NULL,
+  `id` int NOT NULL,
+  `source_id` varchar(255) NOT NULL,
+  `otp` int NOT NULL,
+  `expiry_datetime` int NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ALTER TABLE `social_login_verification`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `social_login_verification`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+
+
+ALTER TABLE `safari_operator` ADD `is_temporary_delete` INT NULL DEFAULT '0' AFTER `operator_email`;
+ALTER TABLE `package_comment_report` DROP `version`;
+-- 1 May
+ALTER TABLE `partner_gst_details` ADD `partner_registration_id` INT NULL DEFAULT NULL AFTER `id`;
+-- 31 April
+ALTER TABLE `share_safari` ADD `filepath` VARCHAR(512) NULL DEFAULT NULL AFTER `image`;
+
+-- 30 April
+ALTER TABLE `user_post_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `user_post_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `user_post_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting_comment_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting_like` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `package_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `share_safari_comment` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `user_id`;
+
+-- 29 apr 2025
+ALTER TABLE `user` ADD `apple_source_id` VARCHAR(255) NULL DEFAULT NULL AFTER `google_source_id`;
+-- 27apr 2025
+ALTER TABLE `package`  ADD `package_id` INT NOT NULL  AFTER `id`;
+ALTER TABLE `package_comment`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_comment_report`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_day`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_enquiry`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_faq`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_feature`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
+ALTER TABLE `package_gallery`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `package_included` ADD `version` VARCHAR(10) NOT NULL AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
+ALTER TABLE `package_safari_park`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
+ALTER TABLE `wildwalks`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
+ALTER TABLE `package_states` DROP `uuid`;
+ALTER TABLE `package_states` ADD `live_version_data` JSON NULL DEFAULT NULL AFTER `editable_version`;
+RENAME TABLE `wildwalks_package_staging`.`package`
+                  TO `wildwalks_package_staging`.`package_version`;
+
+RENAME TABLE `wildwalks_package_staging`.`package_states` TO `wildwalks_package_staging`.`package`;
+
+ALTER TABLE `package_quote` CHANGE `package_uuid` `version` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL;
+-- 24 apr 2025
+ALTER TABLE `package_quote` ADD `package_uuid` VARCHAR(255) NOT NULL AFTER `package_id`;
+
+
+
+
+
+
+
+ALTER TABLE `user_wishlist` CHANGE `item_id` `item_id` VARCHAR(255) NULL DEFAULT NULL;
+ALTER TABLE `package_safari_park`  ADD `package_uuid` VARCHAR(255) NOT NULL  AFTER `package_id`;
+
+-- phpMyAdmin SQL Dump
+-- version 5.1.1deb5ubuntu1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Apr 23, 2025 at 01:44 PM
+-- Server version: 8.0.41-0ubuntu0.22.04.1
+-- PHP Version: 8.1.2-1ubuntu2.21
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `walkintothewild`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `operator_registration_form`
+--
+
+DROP TABLE IF EXISTS `operator_registration_form`;
+CREATE TABLE `operator_registration_form` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone_no` varchar(15) DEFAULT NULL,
+  `whatsap_no` varchar(15) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `kyc_detail` longblob,
+  `business_registration_name` varchar(150) DEFAULT NULL,
+  `business_brand_name` varchar(150) DEFAULT NULL,
+  `business_full_name` varchar(150) DEFAULT NULL,
+  `business_phone_no` varchar(20) DEFAULT NULL,
+  `business_whatsap_no` varchar(20) DEFAULT NULL,
+  `business_email_id` varchar(150) DEFAULT NULL,
+  `business_logo_upload` varchar(255) DEFAULT NULL,
+  `type_of_business` varchar(100) DEFAULT NULL,
+  `business_doc_reg_no` varchar(100) DEFAULT NULL,
+  `business_kyc_detail` varchar(255) DEFAULT NULL,
+  `business_operated_park` varchar(255) DEFAULT NULL,
+  `business_detail` text,
+  `gst` varchar(30) DEFAULT NULL,
+  `bank_name` varchar(100) DEFAULT NULL,
+  `account_holder_name` varchar(100) DEFAULT NULL,
+  `account_no` varchar(50) DEFAULT NULL,
+  `ifsc_code` varchar(20) DEFAULT NULL,
+  `cancle_check` varchar(255) DEFAULT NULL,
+  `upload_adhar_no` varchar(20) DEFAULT NULL,
+  `upload_aadhar_front` varchar(255) DEFAULT NULL,
+  `upload_aadhar_back` varchar(255) DEFAULT NULL,
+  `pan_no` varchar(20) DEFAULT NULL,
+  `pan_upload` varchar(255) DEFAULT NULL,
+  `upload_registration_number` varchar(100) DEFAULT NULL,
+  `upload_registration_cert` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `upload_document` varchar(255) DEFAULT NULL,
+  `current_step` int DEFAULT '1',
+  `is_step_1_submit` tinyint(1) DEFAULT '0',
+  `is_step_2_submit` tinyint(1) DEFAULT '0',
+  `is_step_3_submit` tinyint(1) DEFAULT '0',
+  `is_step_4_submit` tinyint(1) DEFAULT '0',
+  `is_step_1_approved` int DEFAULT '0',
+  `is_step_2_approved` int DEFAULT '0',
+  `is_step_3_approved` int DEFAULT '0',
+  `is_step_4_approved` int DEFAULT '0',
+  `is_step_5_approved` int DEFAULT '0',
+  `step_1_reject_reason` varchar(512) DEFAULT NULL,
+  `step_2_reject_reason` varchar(512) DEFAULT NULL,
+  `step_3_reject_reason` varchar(512) DEFAULT NULL,
+  `step_4_reject_reason` varchar(512) DEFAULT NULL,
+  `updated_time_step_1` datetime DEFAULT NULL,
+  `updated_time_step_2` datetime DEFAULT NULL,
+  `updated_time_step_3` datetime DEFAULT NULL,
+  `updated_time_step_4` datetime DEFAULT NULL,
+  `updated_time_step_5` datetime DEFAULT NULL,
+  `final` int DEFAULT NULL,
+  `final_approved` int DEFAULT '0',
+  `updated_time_final_approved` datetime DEFAULT NULL,
+  `updated_time_final` datetime DEFAULT NULL,
+  `status` int DEFAULT '0',
+  `created_at` int DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL,
+  `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `operator_registration_form`
+--
+ALTER TABLE `operator_registration_form`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `operator_registration_form`
+--
+ALTER TABLE `operator_registration_form`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

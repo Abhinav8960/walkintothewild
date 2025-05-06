@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
+use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
 use common\models\package\Package;
 use common\models\package\PackageComment;
 use Yii;
@@ -52,7 +54,9 @@ class PackageCommentForm extends Model
         $comment = new PackageComment();
 
         $comment->package_id = $package->id;
+        $comment->version = $package->live_version;
         $comment->user_id = Yii::$app->user->id;
+        $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->comment = $this->comment;
         // $comment->user_device = $agent->device();
         // $comment->user_agent = Yii::$app->request->userAgent;

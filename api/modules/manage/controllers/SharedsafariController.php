@@ -358,7 +358,7 @@ class SharedsafariController extends RestController
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Faqs");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "faqs");
     }
 
     /**
@@ -406,7 +406,7 @@ class SharedsafariController extends RestController
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariGallerySearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "Gallery");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "gallery");
     }
 
     public function actionCreateGallery($slug, $id = null)

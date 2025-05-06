@@ -95,7 +95,23 @@ return [
         ],
         'home' => [
             'class' => 'backend\modules\home\Module'
-        ]
+        ],
+        'packageapproval' => [
+            'class' => 'backend\modules\packageapproval\Module',
+        ],
+        
+        'compliancedocuments' => [
+            'class' => 'backend\modules\compliancedocuments\Module',
+        ],
+        'operatorapproval' => [
+            'class' => 'backend\modules\operatorapproval\Module',
+        ],
+        'sightings' => [
+            'class' => 'backend\modules\sightings\Module',
+        ],
+        'posts' => [
+            'class' => 'backend\modules\posts\Module',
+        ],
 
     ],
     'components' => [

@@ -72,13 +72,14 @@ class DefaultController extends RestController
 
         $data = [];
         if ($dataProvider->pagination) {
-            $pageSize = $this->query_params['pageSize'] ?? 5;
+            $pageSize = 5;
+            // $pageSize = $this->query_params['pageSize'] ?? 5;
             $dataProvider->pagination->pageSize = $pageSize;
             $dataProvider->pagination->validatePage = false;
 
             $data['data']['summary']['total'] = $dataProvider->getTotalCount();
             $data['data']['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
-            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize + 1;
+            $data['data']['summary']['pageSize'] = $dataProvider->pagination->pageSize;
             $data['data']['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
@@ -87,7 +88,7 @@ class DefaultController extends RestController
 
 
         //Horizontal Feeds
-        $types = ['Sighting' => Feeds::MODEL_SIGHTING, 'Package' => Feeds::MODEL_PACKAGE];
+        $types = ['sighting' => Feeds::MODEL_SIGHTING, 'package' => Feeds::MODEL_PACKAGE];
         $randomType = $this->getRandomArrayElement(array_keys($types));
         $horizontalModel = new FeedsSearch();
         $horizontalModel->status = Feeds::STATUS_ACTIVE;
@@ -101,8 +102,10 @@ class DefaultController extends RestController
         if (!empty($data['data']['feeds'])) {
             $hr = [
                 "objective" => $randomType,
-                $randomType . "feeds" => $this->serializeData($horizontalProvider->getModels()),
+                $randomType . "_feeds" => $this->serializeData($horizontalProvider->getModels()),
             ];
+            $data['data']['summary']['additional_feed'] = 1;
+
             array_push($data['data']['feeds'], $hr);
         }
 

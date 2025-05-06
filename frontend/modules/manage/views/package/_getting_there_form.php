@@ -45,7 +45,7 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-getting_there');
+bulleteditor('PackageVersionForm-getting_there');
 JS;
 $this->registerJs($script);
 ?>

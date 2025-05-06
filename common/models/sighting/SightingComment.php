@@ -37,7 +37,7 @@ class SightingComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'sighting_id', 'parent_id', 'status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'sighting_id', 'parent_id', 'status', 'created_by', 'created_at', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['comment'], 'string'],
             [['dateTime'], 'safe'],
         ];

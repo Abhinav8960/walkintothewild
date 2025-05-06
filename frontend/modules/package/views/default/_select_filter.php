@@ -43,8 +43,8 @@ use yii\helpers\ArrayHelper;
         <div class="title_filter mb-3">
             <h6 class="">Tour Duration</h6>
             <div class="multi-range">
-                <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="PackageVersionSearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="PackageVersionSearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
                 <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
@@ -54,8 +54,8 @@ use yii\helpers\ArrayHelper;
         <div class="title_filter mb-3">
             <h6 class="">Total Safaris</h6>
             <div class="multi-range">
-                <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="PackageVersionSearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="PackageVersionSearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
                 <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
@@ -65,8 +65,8 @@ use yii\helpers\ArrayHelper;
         <div class="title_filter mb-3">
             <h6 class="">Cost (Per Person)</h6>
             <div class="multi-range">
-                <input type="range" name="PackageSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="PackageVersionSearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageVersionSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="PackageVersionSearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
                 <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
@@ -187,8 +187,8 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="col-7">
                     <div class="multi-range">
-                        <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="PackageVersionSearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="PackageVersionSearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
                     </div>
                     <div class="range-label">
                         <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
@@ -207,8 +207,8 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="col-7">
                     <div class="multi-range">
-                        <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="PackageVersionSearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="PackageVersionSearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
                     </div>
                     <div class="range-label">
                         <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
@@ -227,8 +227,8 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="col-7">
                     <div class="multi-range">
-                        <input type="range" name="PackageSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        <input type="range" name="PackageSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="PackageVersionSearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageVersionSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="PackageVersionSearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
                     </div>
                     <div class="range-label">
                         <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
@@ -300,8 +300,8 @@ $script = <<< JS
 
     $('.remove_dropdown_filter').click(function(){
         data_attribute = $(this).attr('data-attribute');
-        $("#packagesearch-"+data_attribute+" option:selected").remove();
-        $("#packagesearch-"+data_attribute+"").trigger('change');
+        $("#PackageVersionSearch-"+data_attribute+" option:selected").remove();
+        $("#PackageVersionSearch-"+data_attribute+"").trigger('change');
         // $("#side-search-form").attr("data-pjax", "true");    
         // $('#side-search-form').submit();
     });
@@ -309,12 +309,12 @@ $script = <<< JS
     $('.remove_checkbox_filter').click(function(){
         data_id = $(this).attr('data-id');
         data_attribute = $(this).attr('data-attribute');
-        $.each($('input[name="PackageSearch['+data_attribute+'][]"]:checked'), function(){ 
+        $.each($('input[name="PackageVersionSearch['+data_attribute+'][]"]:checked'), function(){ 
             if($(this).val()===data_id){
                 $(this).prop('checked', false);
                 // $("#side-search-form").attr("data-pjax", "true");    
                 // $('#side-search-form').submit();
-                $("#packagesearch-"+data_attribute+"").trigger('change');
+                $("#PackageVersionSearch-"+data_attribute+"").trigger('change');
             }
         });
     });
@@ -352,9 +352,9 @@ $script = <<< JS
     // }
 
 
-    initializeDualrange('packagesearch-no_of_night_min','packagesearch-no_of_night_max');
-    initializeDualrange('packagesearch-no_of_safari_min','packagesearch-no_of_safari_max');
-    initializeDualrange('packagesearch-estimated_price_filter_min','packagesearch-estimated_price_filter_max');
+    initializeDualrange('PackageVersionSearch-no_of_night_min','PackageVersionSearch-no_of_night_max');
+    initializeDualrange('PackageVersionSearch-no_of_safari_min','PackageVersionSearch-no_of_safari_max');
+    initializeDualrange('PackageVersionSearch-estimated_price_filter_min','PackageVersionSearch-estimated_price_filter_max');
 
 JS;
 $this->registerJs($script);

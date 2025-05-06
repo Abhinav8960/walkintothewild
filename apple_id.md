@@ -223,7 +223,7 @@ Add a route for the `auth` action in your `urlManager` configuration:
 ---
 
 ### 5. **Test the Login**
-- For Google, ensure your redirect URI matches the one configured in the Google Cloud Console.
+- For Google, ensure your redirect URI matches the one configured in the .
 - For Apple, ensure your redirect URI matches the one configured in your Apple Developer account.
 
 ---

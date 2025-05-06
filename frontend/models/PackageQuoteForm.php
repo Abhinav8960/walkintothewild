@@ -8,6 +8,7 @@ use common\models\User;
 use common\models\MailLog;
 use common\models\chat\Chat;
 use common\models\GeneralModel;
+use common\models\package\PackageVersion;
 use common\models\package\Package;
 use common\models\chat\ChatMessage;
 use common\models\package\PackageQuote;
@@ -39,7 +40,12 @@ class PackageQuoteForm extends Model
     public function rules()
     {
         return [
-            [['travelers', 'pack_start_date'], 'required', 'message' => 'Required'],
+            [['travelers', 'pack_start_date'], 'required', 'message' => '{attribute} is Required'],
+            [['pack_start_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['travelers'], 'integer', 'min' => 1, 'max' => 100, 'tooSmall' => 'Minimum 1 traveler', 'tooBig' => 'Maximum 100 travelers'],
+            [['pack_start_date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>=', 'type' => 'date', 'message' => '{attribute} must be today or a future date.'],
+
+
         ];
     }
 
@@ -64,8 +70,11 @@ class PackageQuoteForm extends Model
     {
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
+        $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+
         $package_quote = new PackageQuote();
         $package_quote->package_id = $package_id;
+        $package_quote->version = $package->live_version;
         $package_quote->travelers = $this->travelers;
         $package_quote->start_date = $this->pack_start_date;
         $package_quote->ip_address = Yii::$app->getRequest()->getUserIp();
@@ -78,7 +87,7 @@ class PackageQuoteForm extends Model
         if ($package_quote->save(false)) {
             //save quote chat 
             $login_user = Yii::$app->user->identity;
-            $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+            // $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
 
             $package_data = Package::find()->where(['id' => $package_quote->package_id])->asArray()->one();
             $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
@@ -98,7 +107,7 @@ class PackageQuoteForm extends Model
             $chat->package_id = $package_quote->package_id;
             $chat->quote_id = $package_quote->id;
             $chat->is_seen = 0;
-            
+
 
             if ($chat->save(false)) {
                 $chat_message = new ChatMessage();
@@ -118,11 +127,11 @@ class PackageQuoteForm extends Model
                         $chat_url = "/chat/message/" . Yii::$app->user->identity->user_handle . "/" . base64_encode($chat->id);
                         $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'chat_url' => $chat_url, 'is_email_sending' => true];
 
-                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                            FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity, $chat_url);
-                        }
+                        // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                        //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        //     FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity, $chat_url);
+                        // }
                     }
                 }
             }

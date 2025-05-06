@@ -3,7 +3,7 @@
 namespace common\models\package;
 
 use common\models\User;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use Yii;
 
 /**
@@ -63,7 +63,7 @@ class PackageQuote extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         return [
             [['package_id', 'travelers', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['start_date', 'user_agent', 'os', 'browser', 'device_type'], 'string', 'max' => 255],
-            [['ip_address'], 'string', 'max' => 45],
+            [['ip_address','package_uuid'], 'string', 'max' => 45],
         ];
     }
 
@@ -75,6 +75,7 @@ class PackageQuote extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         return [
             'id' => 'ID',
             'package_id' => 'Package ID',
+            'package_uuid' => 'Package UUID',
             'travelers' => 'Travelers',
             'start_date' => 'Start Date',
             'user_agent' => 'User Agent',

@@ -16,7 +16,8 @@ class SightingSearch extends Sighting
     {
         return [
             [['status'], 'integer'],
-            [['safari_session_id', 'location', 'master_animal_id'], 'safe']
+            [['safari_session_id', 'location', 'master_animal_id'], 'safe'],
+            ['description','string'],
         ];
     }
 
@@ -60,10 +61,14 @@ class SightingSearch extends Sighting
         $query->andFilterWhere([
             'id' => $this->id,
             'location' => $this->location,
+            'safari_operator_id' => $this->safari_operator_id,
             'master_animal_id' => $this->master_animal_id,
             'safari_session_id' => $this->safari_session_id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'description', $this->description]);
+
 
 
         return $dataProvider;

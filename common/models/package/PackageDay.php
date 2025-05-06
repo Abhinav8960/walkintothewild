@@ -67,7 +67,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['package_id', 'day'], 'required'],
             [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['day_description', 'day_activity', 'day_accommodation', 'day_note'], 'string'],
-            [['day_title'], 'string', 'max' => 512],
+            [['day_title','version'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
         ];
@@ -105,7 +105,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     public function getImagepath()
     {
         if ($this->day_image != '') {
-            return '/storage/package/day/' . $this->id . '/' . $this->day_image;
+            return '/package/day/' . $this->id . '/' . $this->day_image;
         }
     }
 }

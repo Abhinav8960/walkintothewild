@@ -455,7 +455,7 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         if ($this->profile_image != '') {
-            return \Yii::$app->params['endpoint'] . '/storage/user/' . $this->id . '/' . $this->profile_image;
+            return \Yii::$app->params['endpoint'] . '/user/' . $this->id . '/' . $this->profile_image;
         }
 
         if ($this->avatar != '') {
@@ -466,7 +466,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function getCoverimage()
     {
         if ($this->cover_image != '') {
-            return \Yii::$app->params['endpoint'] . '/storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
+            return \Yii::$app->params['endpoint'] . '/user_cover_image/' . $this->id . '/' . $this->cover_image;
         }
     }
 
@@ -534,4 +534,5 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return implode(', ', $roles);
     }
+    
 }

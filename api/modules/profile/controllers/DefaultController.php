@@ -65,11 +65,22 @@ class DefaultController extends RestController
     }
 
 
+    // public function actionIndex($user_handle)
+    // {
+    //     $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
+    //     $user = $this->findUser($user_handle);
+    //     if ($user->partner) {
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+    //     }
+
+    //     return Yii::$app->api->sendResponse($data = $user);
+    // }
+
     public function actionIndex($user_handle)
     {
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
 
@@ -79,22 +90,22 @@ class DefaultController extends RestController
     public function actionOrganizedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($user->id == $this->userinfoId) {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $organized_by]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
         } else {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $organized_by]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
         }
     }
 
     public function actionJoinedby($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($user->id == $this->userinfoId) {
@@ -106,7 +117,7 @@ class DefaultController extends RestController
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
                 ->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $shared_safari]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
         } else {
             $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
             $safariIds = array_map(function ($item) {
@@ -116,14 +127,14 @@ class DefaultController extends RestController
                 ->where(['id' => $safariIds])
                 ->andWhere(['>=', 'start_date', date("Y-m-d")])
                 ->all();
-            return Yii::$app->api->sendResponse($data = ['sharesafari' => $shared_safari]);
+            return Yii::$app->api->sendResponse($data = ['share_safari' => $shared_safari]);
         }
     }
 
     public function actionFollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($this->userinfo) {
@@ -159,7 +170,7 @@ class DefaultController extends RestController
     public function actionUnfollow($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
+        if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
         if ($this->userinfo) {
@@ -186,17 +197,26 @@ class DefaultController extends RestController
         throw new ForbiddenHttpException('User Not Found / User Account may be Blocked');
     }
 
+    public function findUser($user_handle)
+    {
+        if ($user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one()) {
+            return $user;
+        }
+
+        throw new ForbiddenHttpException('User Not Found');
+    }
+
     public function actionUseractivity($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if ($user->operator) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
-        }
+        // if ($user->partner) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
+        // }
         if ($user) {
             $searchModel = new FeedsSearch();
             $searchModel->created_by = $user->id;
             $searchModel->status = Feeds::STATUS_ACTIVE;
-            return $this->dataProviderSender($searchModel, $rootIndexName = "User Activity");
+            return $this->dataProviderSender($searchModel, $rootIndexName = "user_activity");
         }
     }
 }

@@ -3,6 +3,8 @@
 namespace common\models;
 
 use common\models\feeds\Feeds;
+use common\models\postscomment\UserPostComment;
+use common\models\postscomment\UserPostLike;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -42,7 +44,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             // ],
             [
                 'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'Posts',
+                'objective' => 'posts',
                 'collection' => Feeds::MODEL_POSTS,
             ],
             [
@@ -67,7 +69,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function rules()
     {
         return [
-            [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['caption', 'filepath', 'etag'], 'string'],
             [['file'], 'string', 'max' => 512],
 
@@ -82,6 +84,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            'safari_operator_id' => 'Safari Operator Id',
             'file' => 'File',
             'caption' => 'Caption',
             'status' => 'Status',
@@ -92,14 +95,49 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         ];
     }
 
-    // public function getImagepath()
-    // {
-    //     if ($this->file != '') {
-    //         return '/storage/userpost/' . $this->user_id . '/' . $this->file;
-    //     }
-    // }
+
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+
+    public function getLike()
+    {
+        return $this->hasMany(UserPostLike::class, ['user_post_id' => 'id']);
+    }
+
+    public function getLikes_count()
+    {
+        return $this->getLike()->count();
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['parent_id' => null]);
+    }
+
+    public function getComments_count()
+    {
+        return $this->getComments()->andWhere(['user_post_comment.status' => 1])->count();
+    }
+
+
+    public function getReplies()
+    {
+        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['!=', 'parent_id', null]);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['user_post_comment.status' => 1])->count();
+    }
+
+    public function getFull_image_path()
+    {
+        if ($this->file) {
+            return  Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
+        }
+        return null;
     }
 }

@@ -9,7 +9,7 @@ class Feeds extends \common\models\feeds\Feeds
 {
     public function fields()
     {
-        $fields = ['objective'];
+        $fields = ['id','objective'];
         $fields[] = 'feed';
         return $fields;
     }

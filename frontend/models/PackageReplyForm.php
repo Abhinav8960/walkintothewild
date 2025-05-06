@@ -3,6 +3,9 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
+use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
+use common\models\package\PackageVersion;
 use common\models\package\Package;
 use common\models\package\PackageComment;
 use Yii;
@@ -53,7 +56,9 @@ class PackageReplyForm extends Model
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $reply = new PackageComment();
         $reply->package_id = $package->id;
+        $reply->version = $package->live_version;
         $reply->user_id = Yii::$app->user->id;
+        $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
         // $reply->user_device = $agent->device();

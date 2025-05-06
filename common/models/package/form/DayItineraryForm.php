@@ -3,7 +3,7 @@
 namespace common\models\package\form;
 
 use Yii;
-use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\package\PackageDay;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
@@ -14,6 +14,7 @@ class DayItineraryForm  extends \yii\base\Model
 
 {
     public $package_id;
+    public $version;
     public $no_of_day;
     public $day;
     public $day_title;
@@ -45,6 +46,7 @@ class DayItineraryForm  extends \yii\base\Model
         if ($package_day_model != null) {
             $this->package_day_model = $package_day_model;
             $this->package_id = $this->package_day_model->package_id;
+            $this->version = $this->package_day_model->version;
             $this->day = $this->package_day_model->day;
             $this->day_title = $this->package_day_model->day_title;
             $this->meal_breakfast = $this->package_day_model->meal_breakfast;
@@ -67,7 +69,7 @@ class DayItineraryForm  extends \yii\base\Model
     public function rules()
     {
         return [
-            [['package_id', 'day', 'day_title'], 'required'],
+            [['package_id', 'version', 'day', 'day_title'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
@@ -89,11 +91,9 @@ class DayItineraryForm  extends \yii\base\Model
                 ['day_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 940,
-                'maxWidth' => 940,
-                'maxHeight' => 430,
-                'minHeight' => 430,
-                'maxSize' => 250 * 1024,
+                // 'maxWidth' => 940,
+                // 'maxHeight' => 430,
+                // 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
         ];
@@ -107,10 +107,11 @@ class DayItineraryForm  extends \yii\base\Model
     public function initializeForm()
     {
         $this->package_day_model->package_id = $this->package_id;
+        $this->package_day_model->version = $this->version;
         $this->package_day_model->day = $this->day;
         $this->package_day_model->day_title = $this->day_title;
         if ($this->package_id) {
-            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'include_id' => 2, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'version' => $this->version, 'include_id' => 2, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
             if ($package_includes) {
                 $this->package_day_model->meal_breakfast = 1;
                 $this->package_day_model->meal_lunch = 1;
@@ -138,24 +139,39 @@ class DayItineraryForm  extends \yii\base\Model
     public function UploadFile()
     {
         if ($this->day_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/package/day';
+            //     $storagePath = Yii::$app->params['datapath'] . '/package/day';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+            //     if (!file_exists($storagePath)) {
+            //         mkdir($storagePath);
+            //         chmod($storagePath, 0777);
+            //     }
+            //     $storagePath = $storagePath . '/' . $this->package_day_model->id;
+            //     if (!file_exists($storagePath)) {
+            //         mkdir($storagePath);
+            //         chmod($storagePath, 0777);
+            //     }
+
+            //     $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
+            //     $filePath = $storagePath . '/' . $fileName;
+
+            //     if ($this->day_image->saveAs($filePath)) {
+            //         $this->package_day_model->day_image = $fileName;
+            //         $this->package_day_model->save(false);
+            //     }
+            // }
+
+            // -----------------------------Move to S3-----------------------------------------
+            $storagePath = 'package/' . $this->package_id . '/' . $this->version . '/day';
             $storagePath = $storagePath . '/' . $this->package_day_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
 
             $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->day_image->saveAs($filePath)) {
-                $this->package_day_model->day_image = $fileName;
-                $this->package_day_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->day_image, $filePath, $fileName, true)) {
+                    $this->package_day_model->day_image = $filePath;
+                    $this->package_day_model->save(false);
+                }
             }
         }
     }

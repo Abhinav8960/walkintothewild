@@ -32,6 +32,13 @@ class Module extends \yii\base\Module
         if (Yii::$app->user->identity->is_safari_operator != 1) {
             return Yii::$app->getResponse()->redirect('/')->send();
         }
+        $request_array = explode('/', Yii::$app->request->getPathInfo());
+       
+        if(in_array('package', $request_array) && Yii::$app->user->identity->status == 0){
+            return Yii::$app->redirect(\Yii::$app->request->referrer)->send();
+            exit;
+
+        }
     }
 
     /**

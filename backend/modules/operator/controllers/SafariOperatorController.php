@@ -3,6 +3,7 @@
 namespace backend\modules\operator\controllers;
 
 use common\interfaces\NewStatusInterface;
+use common\models\Auth;
 use Yii;
 use yii\web\UploadedFile;
 use yii\web\Controller;
@@ -354,5 +355,56 @@ class SafariOperatorController extends Controller
             'model' => $model,
             'safari_operator_model' => $safari_operator_delete_model,
         ]);
+    }
+
+    // public function actionRedirectPartner($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //     return $this->redirect(Yii::$app->urlManagerPartner->createAbsoluteUrl([
+    //         '/check-in',
+    //         'username' => $safari_operator->user->username,
+    //         'google_source_id' => $safari_operator->user->google_source_id,
+    //     ]));
+    // }
+
+    public function actionRedirectPartner($id)
+    {
+        $safari_operator = $this->findModel($id);
+        return $this->redirect('https://staging-partners.walkintothewild.in' . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
+    }
+
+    public function actionTemporaryDelete($id)
+    {
+        $safari_operator = $this->findModel($id);
+        if ($safari_operator) {
+            $user_model = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+            $auth_model = Auth::find()->where(['user_id' => $user_model->id])->limit(1)->all();
+
+            $safari_operator->is_temporary_delete = 1;
+            $safari_operator->email = time() . '_' . $safari_operator->email;
+            $safari_operator->operator_email = time() . '_' . $safari_operator->operator_email;
+
+            if ($safari_operator->save(false)) {
+
+                $user_model->username = time() . '_' . $user_model->username;
+                $user_model->email = time() . '_' . $user_model->email;
+                if ($user_model->google_source_id != null) {
+                    $user_model->google_source_id = time() . '_' . $user_model->google_source_id;
+                }
+                if ($user_model->apple_source_id != null) {
+                    $user_model->apple_source_id = time() . '_' . $user_model->apple_source_id;
+                }
+
+                if ($user_model->save(false)) {
+
+                    foreach ($auth_model as $auth) {
+                        $auth->source_id = time() . '_' . $auth->source_id;
+                        $auth->save(false);
+                    }
+                    \Yii::$app->session->setFlash('success', 'Successfully Temporary Deleted');
+                    return $this->redirect(['index']);
+                }
+            }
+        }
     }
 }

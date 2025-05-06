@@ -206,7 +206,7 @@ class PackageSearch extends Package
 
     public function managesearch($params, $safari_operator_id)
     {
-        $query =  Package::find()->where([
+        $query =  PackageVersion::find()->where([
             'owned_by_id' => $safari_operator_id
         ]);
 

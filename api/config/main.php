@@ -56,6 +56,9 @@ return [
         'sighting' => [
             'class' => 'api\modules\sighting\Module',
         ],
+        'chat' => [
+            'class' => 'api\modules\chat\Module',
+        ],
 
     ],
     'components' => [
@@ -94,7 +97,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
-                ]
+                ],
             ],
         ],
 
@@ -107,7 +110,11 @@ return [
                 'site/error' => 'site/error',
                 'site/file' => 'site/file',
                 'master-meta-info' => 'site/master-meta-info',
+                'convergent-survey' => 'site/convergent-survey',
                 'social-login' => 'site/social-login',
+                'can-social-login' => 'site/can-social-login',
+                'otp-verification-social-login' => 'site/otp-verification-social-login',
+                'verify-social-login' => 'site/verify-social-login',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',
                 'termofuse' => 'site/termofuse',
@@ -162,11 +169,13 @@ return [
 
                 'manage' => 'manage/default/index',
                 'manage/<action>' => 'manage/default/<action>',
+
                 'manage/sharedsafari/create-fixed-departure' => 'manage/sharedsafari/create-fixed-departure',
                 'manage/sharedsafari/<action>/<slug>' => 'manage/sharedsafari/<action>',
                 'manage/sharedsafari/<action>/<slug>/<day>' => 'manage/sharedsafari/<action>',
 
                 /**Manage Package */
+                'manage/package/list' => 'manage/package/index',
                 'manage/package/create' => 'manage/package/create',
                 'manage/package/<action>/<slug>' => 'manage/package/<action>',
                 'manage/package/<action>/<slug>/<day>' => 'manage/package/<action>',
@@ -174,7 +183,16 @@ return [
                 /** feeds */
                 'feeds' => 'feeds/default/index',
                 'feeds/sighting-home' => 'feeds/default/sighting-home',
-                
+
+                // ** Chat */
+                'chat/direct-user-chat'      => 'chat/default/direct-user-chat',
+                'chat/quatation-chat'   => 'chat/default/quatation-chat',
+                'chat/operator-list'   => 'chat/default/operator-list',
+                'chat/user-list'   => 'chat/default/user-list',
+                'chat/messages/<chat_hash>'   => 'chat/default/messages',
+                'chat/send-message/<user_handle>'   => 'chat/default/send-message',
+                'chat/send-quote-message/<user_handle>'   => 'chat/default/send-quote-message',
+
 
 
 

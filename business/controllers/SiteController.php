@@ -8,7 +8,9 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use business\components\AuthHandler;
+use common\models\CustomLoginForm;
 use common\models\MailLog;
+use common\models\operator\SafariOperator;
 use yii\web\Response;
 
 /**
@@ -26,7 +28,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'redirect'],
+                        'actions' => ['login', 'error', 'auth', 'custom-login'],
                         'allow' => true,
                     ],
                     [
@@ -68,6 +70,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
+            return $this->redirect(['/partner-registration/create']);
+        }
         return $this->render('index');
     }
 
@@ -86,14 +91,6 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-            /**Email for login user */
-            $user = $model->user;
-            $to_mail = $user->email;
-            $subject = 'User Login';
-            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_LOGIN;
-            $req = ['username' => $user->name, 'is_email_sending' => true];
-            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             return $this->goBack();
         }
 
@@ -130,23 +127,21 @@ class SiteController extends Controller
         (new AuthHandler($client))->handle();
     }
 
-
-
-    /**
-     * Redirect Url to another link
-     */
-    public function actionRedirect()
+    public function actionCustomLogin()
     {
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
-        if (strpos($userAgent, 'Instagram')) {
-            header('Content-type: application/pdf');
-            header('Content-Disposition: inline; filename=tmp');
-            header('Content-Transfer-Encoding: binary');
-            header('Accept-Ranges: bytes');
-            @readfile('tmp');
-        } else {
-            $this->redirect(Yii::$app->request->referrer);
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
-    }
 
+        $this->layout = 'blank';
+
+        $model = new CustomLoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        return $this->render('custom_login', [
+            'model' => $model,
+        ]);
+    }
 }

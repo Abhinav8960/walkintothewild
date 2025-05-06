@@ -10,7 +10,7 @@ use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorRequestActivities;
 use api\models\operator\SafariOperatorRequestPark;
 use api\models\package\Package;
-use api\models\package\PackageSearch;
+use api\models\package\PackageVersionSearch;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use api\models\User;
@@ -75,7 +75,7 @@ class DefaultController extends RestController
     public function actionIndex()
     {
         $user_model = $this->userinfo;
-        if ($user_model && $user_model->operator) {
+        if ($user_model && $user_model->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
         }
         $model = new UserForm($user_model);
@@ -94,7 +94,7 @@ class DefaultController extends RestController
     public function actionProfilePhoto()
     {
         $user_model = $this->userinfo;
-        if ($user_model && $user_model->operator) {
+        if ($user_model && $user_model->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
         }
 
@@ -116,7 +116,7 @@ class DefaultController extends RestController
     public function actionCoverPhoto()
     {
         $user_model = $this->userinfo;
-        if ($user_model && $user_model->operator) {
+        if ($user_model && $user_model->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
         }
         $model = new UserForm($user_model);
@@ -219,6 +219,9 @@ class DefaultController extends RestController
     public function actionPrivacy()
     {
         $user_model = $this->userinfo;
+        if ($user_model && $user_model->partner) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+        }
         $model = new PrivacyForm($user_model);
 
         $model->attributes = $this->request;
@@ -258,7 +261,7 @@ class DefaultController extends RestController
         $packageIds =  array_column($wishlist_items, 'item_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Package::find()->where(['id' => $packageIds]),
+            'query' => Package::find()->where(['id' => $packageIds, 'status'=> Package::STATUS_ACTIVE]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "packages");
@@ -279,13 +282,13 @@ class DefaultController extends RestController
             'query' => ShareSafari::find()->where(['id' => $saafariIds]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "sharedsafari");
+        return $this->querySender($dataProvider, $rootIndexName = "shared_safari");
     }
 
     public function actionProfileDelete()
     {
         $user_model = $this->userinfo;
-        if ($user_model && $user_model->operator) {
+        if ($user_model && $user_model->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
         }
         $model = User::find()->where(['id' => $user_model->id])->limit(1)->one();

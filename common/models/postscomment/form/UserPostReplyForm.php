@@ -2,7 +2,9 @@
 
 namespace common\models\postscomment\form;
 
-use api\models\posts\UserPostComment;
+use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
+use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
 use Yii;
 use yii\base\Model;
@@ -40,6 +42,7 @@ class UserPostReplyForm extends Model
         $reply->comment = $this->comment;
         $reply->dateTime = date('Y-m-d H:i:s');
         $reply->user_id = Yii::$app->user->id;
+        $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->user_posts_id = $userpost->id;
         $reply->parent_id = $this->parent_id;
 

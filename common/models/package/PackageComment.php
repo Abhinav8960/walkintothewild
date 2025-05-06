@@ -61,8 +61,8 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['package_id', 'parent_id', 'user_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['comment'], 'string'],
+            [['package_id', 'parent_id', 'user_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'safari_operator_id'], 'integer'],
+            [['comment', 'version'], 'string'],
 
         ];
     }

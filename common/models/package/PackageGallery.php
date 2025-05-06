@@ -54,9 +54,9 @@ class PackageGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['package_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['package_id','version', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['package_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['image'], 'string', 'max' => 255],
+            [['image','version',], 'string', 'max' => 255],
             [['image_caption'], 'string', 'max' => 512],
         ];
     }
@@ -83,7 +83,7 @@ class PackageGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/package_gallery/' . $this->id . '/' . $this->image;
+            return '/package_gallery/' . $this->id . '/' . $this->image;
         }
     }
 }
