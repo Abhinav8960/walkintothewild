@@ -68,6 +68,7 @@ class Package extends \common\models\package\Package
         $fields[] = 'image_thumbnails';
         // $fields[] = 'banner_thumbnail';
         $fields[] = 'banner_thumbnails';
+        $fields[] = 'primary_park_slug';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
@@ -273,6 +274,11 @@ class Package extends \common\models\package\Package
         return $this->singlepark ? $this->singlepark->park->title : null;
     }
 
+
+    public function getPrimary_park_slug()
+    {
+        return $this->singlepark ? $this->singlepark->park->slug : null;
+    }
 
     /**
      * Parks List
