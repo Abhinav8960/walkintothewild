@@ -2,6 +2,7 @@
 
 namespace api\components;
 
+use api\models\User;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
@@ -42,9 +43,8 @@ class Api extends Component
         if (isset($_GET['callback'])) {
             /* this is required for angularjs1.0 client factory API calls to work */
             $response = $_GET['callback'] . "(" . $response . ")";
-            
-        } 
-       
+        }
+
         return $response;
     }
 
@@ -175,13 +175,19 @@ class Api extends Component
         $model->app_name                    = Yii::$app->params['app_name'];
         $model->created_at                  =  date('Y-m-d H:i:s');
         // $model->updated_at = date('Y-m-d H:i:s');
-
+        $this->updateAvtar($user, $params);
         $model->save(false);
 
         return ($model);
     }
 
-
-
-    
+    private function updateAvtar($user, $params)
+    {
+        if (!empty($params->avatar) && $user->avatar != $params->avatar) {
+            $u = User::findOne(['id' => $user->id]);
+            $u->avatar = $params->avatar;
+            $u->save(false);
+        }
+        return true;
+    }
 }
