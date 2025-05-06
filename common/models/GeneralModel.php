@@ -1640,6 +1640,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             "Zambia" => "Zambia",
             "Zimbabwe" => "Zimbabwe"
         );
+    }
     public static function extentionRemove($filename)
     {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
