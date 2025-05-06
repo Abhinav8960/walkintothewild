@@ -261,8 +261,8 @@ class DefaultController extends Controller
         $safari_operator_model->facebook_url = null;
         $safari_operator_model->instagram_url = null;
         $safari_operator_model->youtube_link = null;
-        $safari_operator_model->phone_no = $model->legal_entity_phone;
-        $safari_operator_model->email = $model->legal_entity_email;
+        $safari_operator_model->phone_no = null;
+        $safari_operator_model->email = $model->user->email;
         $safari_operator_model->website = null;
         $safari_operator_model->is_register_company = 0;
         $safari_operator_model->has_a_website = 0;
