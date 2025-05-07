@@ -59,6 +59,7 @@ class User extends \common\models\User
             "avatar",
             "gmail",
             "google_source_id",
+            "apple_source_id",
             "blocked_at",
             "password_updated_at",
             "photo_privacy",
@@ -99,6 +100,7 @@ class User extends \common\models\User
                 "avatar",
                 "gmail",
                 "google_source_id",
+                "apple_source_id",
                 "blocked_at",
                 "password_updated_at",
 
