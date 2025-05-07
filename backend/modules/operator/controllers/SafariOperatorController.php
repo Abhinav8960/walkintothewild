@@ -380,6 +380,9 @@ class SafariOperatorController extends Controller
             $user_model = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
             $auth_model = Auth::find()->where(['user_id' => $user_model->id])->limit(1)->all();
 
+            $user_model->status = User::STATUS_DELETED;
+            $safari_operator->status =  SafariOperator::STATUS_DELETE;
+
             $safari_operator->is_temporary_delete = 1;
             $safari_operator->email = time() . '_' . $safari_operator->email;
             $safari_operator->operator_email = time() . '_' . $safari_operator->operator_email;
