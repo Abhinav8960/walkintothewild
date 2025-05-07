@@ -57,7 +57,7 @@ class RequestSanitization extends \yii\base\Component
 
                 $this->user =  \common\models\User::findIdentityByAccessToken($accessToken);
                 if (empty($this->user)) {
-                    return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 401);
+                    return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 419);
                 }
                 \Yii::$app->params['active_user_id'] = $this->user->id;
             } else {

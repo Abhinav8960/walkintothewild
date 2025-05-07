@@ -110,13 +110,13 @@ class Apiauth extends AuthMethod
             if ($identity !== null) {
                 return $identity;
             } else {
-                return \Yii::$app->api->sendFailedStringResponse(['Access token is not valid']);
+                return \Yii::$app->api->sendFailedStringResponse(['Access token is not valid'], 419);
             }
         }
 
         if ($accessToken !== null) {
 
-            return \Yii::$app->api->sendFailedStringResponse(['Access token not found']);
+            return \Yii::$app->api->sendFailedStringResponse(['Access token not found'],400);
 
             // $this->handleFailure($response);
         }
