@@ -75,14 +75,14 @@ class FirebaseCloudMessaging extends Component
 
         $report = $this->messaging->sendMulticast($message, $deviceTokens);
 
-        echo 'Successful sends: ' . $report->successes()->count() . PHP_EOL;
-        echo 'Failed sends: ' . $report->failures()->count() . PHP_EOL;
-        // die();
-        if ($report->hasFailures()) {
-            foreach ($report->failures()->getItems() as $failure) {
-                echo $failure->error()->getMessage() . PHP_EOL;
-            }
-        }
+        // echo 'Successful sends: ' . $report->successes()->count() . PHP_EOL;
+        // echo 'Failed sends: ' . $report->failures()->count() . PHP_EOL;
+        // // die();
+        // if ($report->hasFailures()) {
+        //     foreach ($report->failures()->getItems() as $failure) {
+        //         echo $failure->error()->getMessage() . PHP_EOL;
+        //     }
+        // }
         // print_r($deviceTokens);
         // die();
         // The following methods return arrays with registration token strings
