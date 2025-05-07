@@ -18,7 +18,7 @@ class LeadSearch extends Lead
     {
         return [
             [['id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin',  'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['objective', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes', 'travelers_nationality','is_seen_by_admin'], 'safe'],
+            [['type', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes', 'is_seen_by_admin'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class LeadSearch extends Lead
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,            
+            'id' => $this->id,
+            'type' => $this->type,            
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
             'is_date_flexible' => $this->is_date_flexible,
@@ -87,7 +88,6 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'meals', $this->meals])
             ->andFilterWhere(['like', 'budget', $this->budget])
             ->andFilterWhere(['like', 'is_seen_by_admin', $this->is_seen_by_admin])
-            ->andFilterWhere(['like', 'travelers_nationality', $this->travelers_nationality])
             ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
 
         return $dataProvider;

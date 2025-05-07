@@ -10,9 +10,9 @@ use yii\base\Model;
  * This is the model class for table "quotation_requests".
  *
  * @property int $id
- * @property string $objective
- * @property int|null $collection
- * @property int|null $collection_id
+ * @property int|null $package_id
+ * @property int|null $park_id
+ * @property int|null $operator_id
  * @property string $name
  * @property string $email
  * @property string $phone
@@ -37,7 +37,16 @@ use yii\base\Model;
  */
 class LeadForm extends Model
 {
-    public $id;
+    const SCENARIO_PACKAGE_LEAD = "package";
+    const SCENARIO_PARK_LEAD = "park";
+    const SCENARIO_OPERATOR_LEAD = "operator";
+
+    
+
+    public $type;
+    public $package_id;
+    public $park_id;
+    public $operator_id;
     public $name;
     public $email;
     public $phone;
@@ -53,7 +62,6 @@ class LeadForm extends Model
     public $addional_notes;
     public $user_id;
     public $is_booking_for_login_user;
-    public $travelers_nationality;
     public $status;
     public $created_at;
     public $updated_at;
@@ -67,7 +75,6 @@ class LeadForm extends Model
             'class' => Lead::className()
         ]);
 
-        $this->travelers_nationality  =  "India";
         $this->travelers              =  1;
     }
 
@@ -82,10 +89,10 @@ class LeadForm extends Model
             [['is_date_flexible'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['name', 'email', 'phone', 'destination', 'from_date', 'to_date'], 'required'],
-            [['is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
+            [['type','is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
             [['addional_notes'], 'string'],
-            [['objective', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget', 'travelers_nationality'], 'string', 'max' => 255],
+            [['name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
             ['email', 'email'],
             ['from_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>'],
@@ -101,6 +108,7 @@ class LeadForm extends Model
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
@@ -116,7 +124,6 @@ class LeadForm extends Model
             'addional_notes' => 'Addional Notes',
             'user_id' => 'User ID',
             'is_booking_for_login_user' => 'Is Booking For Login User',
-            'travelers_nationality' => 'Travelers Nationality',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -128,6 +135,9 @@ class LeadForm extends Model
     public function save()
     {
         $model = new Lead();
+        $model->package_id = $this->package_id;
+        $model->park_id = $this->park_id;
+        $model->operator_id = $this->operator_id;
         $model->name = $this->name;
         $model->email = $this->email;
         $model->phone = $this->phone;
@@ -143,7 +153,6 @@ class LeadForm extends Model
         $model->addional_notes = $this->addional_notes;
         $model->user_id = $this->user_id;
         $model->is_booking_for_login_user = $this->is_booking_for_login_user;
-        $model->travelers_nationality = $this->travelers_nationality;
         $model->status = 1;
         $model->user_id = \Yii::$app->user->identity->id;
         return $model->save(false);

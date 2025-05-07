@@ -35,6 +35,10 @@ use Yii;
  */
 class Lead extends \yii\db\ActiveRecord
 {
+    const LEAD_TYPE_PACKAGE  = 1;
+    const LEAD_TYPE_PARK  = 2;
+    const LEAD_TYPE_OPERATOR  = 3;
+    
     /**
      * {@inheritdoc}
      */
@@ -76,9 +80,9 @@ class Lead extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => 1],
             [['name', 'email', 'phone', 'destination', 'from_date', 'to_date'], 'required'],
             [['is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_seen_by_admin'], 'integer'],
-            [['objective', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
+            [['type', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
             [['addional_notes'], 'string'],
-            [['objective', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget', 'travelers_nationality'], 'string', 'max' => 255],
+            [['type', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
             ['email', 'email'],
         ];
@@ -91,6 +95,7 @@ class Lead extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'type' => 'type',
             'package' => 'Package',
             'park' => 'Park',
             'operator' => 'Name',
@@ -109,7 +114,6 @@ class Lead extends \yii\db\ActiveRecord
             'addional_notes' => 'Addional Notes',
             'user_id' => 'User ID',
             'is_booking_for_login_user' => 'Is Booking For Login User',
-            'travelers_nationality' => 'Travelers Nationality',
             'is_seen_by_admin' => 'Is Seen By Admin',
             'status' => 'Status',
             'created_at' => 'Created At',
