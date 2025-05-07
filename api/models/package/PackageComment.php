@@ -31,11 +31,11 @@ class PackageComment extends \common\models\package\PackageComment
     public function fields()
     {
         $fields = parent::fields();
+        $fields[] = 'safari_operator';
         $fields[] = 'user';
         $fields[] = 'date_time';
         $fields[] = 'replies';
         $fields[] = 'will_flag';
-        $fields[] = 'safari_operator';
         $hold_fields = ['user_id', 'safari_operator_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
