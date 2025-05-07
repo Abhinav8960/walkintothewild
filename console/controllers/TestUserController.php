@@ -19,17 +19,28 @@ class TestUserController extends Controller
     {
         $faker = Factory::create();
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 1; $i <= $count; $i++) {
             $user = new User();
-            $user->username = $faker->unique()->safeEmail;
-            $user->name = $faker->name;
-            $user->email = $user->username;
-            $user->mobile_no = $faker->unique()->phoneNumber;
+            if ($i < 3) {
+                $user->username = "op" . $i . "@gmail.com";
+                $user->name = "op" . $i;
+                $user->email = "op" . $i . "@gmail.com";
+                $user->is_safari_operator = 1;
+
+            } else {
+                $user->username = "u" . $i . "@gmail.com";
+                $user->name = "u" . $i;
+                $user->email = "u" . $i . "@gmail.com";
+            }
+
+
+            // $user->mobile_no = $faker->unique()->phoneNumber;
+            $user->mobile_no = rand(8888888888,9999999999);
             $user->token_key = Yii::$app->security->generateRandomString();
             $user->verification_token = Yii::$app->security->generateRandomString();
             $user->auth_key = Yii::$app->security->generateRandomString();
             $user->password_hash = Yii::$app->security->generatePasswordHash('password123');
-            $user->google_source_id = (int)('12345678901'.''.$i);
+            $user->google_source_id = (int)('1' . '' . $i);
             $user->can_login = 1;
             $user->status = User::STATUS_ACTIVE;
             $user->save(false);
@@ -59,15 +70,15 @@ class TestUserController extends Controller
     public function makeoperator($user)
     {
         $safari_operator_model = new SafariOperator();
-        $safari_operator_model->operator_name = 'Sudhir Shivram' . '_' . $user->id;
+        $safari_operator_model->operator_name =  $user->name . " operator";
         $safari_operator_model->operator_email = $user->email;
         $safari_operator_model->operator_phone_no = $user->mobile_no;
         $safari_operator_model->user_id = $user->id;
         $safari_operator_model->is_approved = 1;
         $safari_operator_model->safari_operator_request_id = NULL;
         $safari_operator_model->category_id = 1;
-        $safari_operator_model->business_name = 'Sudhir Shivram' . '_' . $user->id . '_business';
-        $safari_operator_model->register_comapany_name = 'Sudhir Shivram' . '_' . $user->id . '_business';
+        $safari_operator_model->business_name =  $user->name . ' operator business';
+        $safari_operator_model->register_comapany_name =  $user->name . ' register comapany name';
         $safari_operator_model->is_highlighted = 0;
         $safari_operator_model->google_rating = 0;
         $safari_operator_model->google_review_count = 0;
