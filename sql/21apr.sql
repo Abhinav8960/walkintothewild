@@ -1,3 +1,33 @@
+--7 may 
+
+
+ALTER TABLE `safari_operator` ADD `legal_entity_type` INT NULL DEFAULT NULL COMMENT '1= PROP_WRITER, 2= PVT_LTD, 3=LLP' AFTER `total_view`, 
+ADD `legal_entity_whatsapp` BIGINT NULL DEFAULT NULL AFTER `legal_entity_type`,
+ADD `registration_number` BIGINT NULL DEFAULT NULL AFTER `legal_entity_whatsapp`, 
+ADD `registration_copy_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `registration_number`, 
+ADD `pan_number` VARCHAR(255) NULL DEFAULT NULL AFTER `registration_copy_upload`, 
+ADD `pan_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `pan_number`,
+ADD `operated_park` INT NULL DEFAULT NULL AFTER `pan_upload`, 
+ADD `billing_mail` VARCHAR(255) NULL DEFAULT NULL AFTER `operated_park`, 
+ADD `billing_phone` BIGINT NULL DEFAULT NULL AFTER `billing_mail`,
+ADD `bank_name` VARCHAR(255) NULL DEFAULT NULL AFTER `billing_phone`,
+ADD `account_holder_name` VARCHAR(255) NULL DEFAULT NULL AFTER `bank_name`, 
+ADD `account_number` BIGINT NULL DEFAULT NULL AFTER `account_holder_name`, 
+ADD `ifsc_number` VARCHAR(255) NULL DEFAULT NULL AFTER `account_number`, 
+ADD `cancel_check_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `ifsc_number`,
+ADD `owner_name` VARCHAR(255) NULL DEFAULT NULL AFTER `cancel_check_upload`,
+ADD `kyc_phone` BIGINT NULL DEFAULT NULL AFTER `owner_name`, 
+ADD `kyc_whatsapp` BIGINT NULL DEFAULT NULL AFTER `kyc_phone`, 
+ADD `kyc_email` VARCHAR(255) NULL DEFAULT NULL AFTER `kyc_whatsapp`, 
+ADD `kyc_pan` VARCHAR(255) NULL DEFAULT NULL AFTER `kyc_email`,
+ADD `kyc_pan_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `kyc_pan`, 
+ADD `aadhar_number` BIGINT NULL DEFAULT NULL AFTER `kyc_pan_upload`,
+ADD `aadhar_front_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `aadhar_number`, 
+ADD `aadhar_back_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `aadhar_front_upload`;
+
+--6 May
+ALTER TABLE `feeds` ADD `date_time` DATETIME NULL DEFAULT NULL AFTER `collection`;
+
 -- 5 May
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SEVN', 'Social Email Verification', 'socialEmailVerification-html', '1', NULL, NULL, '1716971669', '1');
 

@@ -21,6 +21,7 @@ class Package extends \common\models\package\Package
             'package_name',
             'package_slug',
             'primary_park',
+            'primary_park_slug',
             'no_of_day',
             'no_of_night',
             'no_of_night',
@@ -273,6 +274,11 @@ class Package extends \common\models\package\Package
         return $this->singlepark ? $this->singlepark->park->title : null;
     }
 
+
+    public function getPrimary_park_slug()
+    {
+        return $this->singlepark ? $this->singlepark->park->slug : null;
+    }
 
     /**
      * Parks List

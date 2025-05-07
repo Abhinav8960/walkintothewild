@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                                         <div class="tab-pane fade show active mt-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
 
                                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                                                <?php if ($userfollowers = $user->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
+                                                <?php if ($userfollowers = $user->getUserfollowings()->joinWith('follower')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
                                                     foreach ($userfollowers as $userfollower) { ?>
                                                         <div class="col mb-3">
 
