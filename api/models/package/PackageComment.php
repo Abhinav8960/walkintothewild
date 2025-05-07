@@ -2,6 +2,7 @@
 
 namespace api\models\package;
 
+use api\models\operator\SafariOperator;
 use api\models\User;
 use Yii;
 
@@ -30,11 +31,12 @@ class PackageComment extends \common\models\package\PackageComment
     public function fields()
     {
         $fields = parent::fields();
+        $fields[] = 'safari_operator';
         $fields[] = 'user';
         $fields[] = 'date_time';
         $fields[] = 'replies';
         $fields[] = 'will_flag';
-        $hold_fields = [ 'user_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['user_id', 'safari_operator_id', 'package_id', 'comment_id', 'flaged', 'is_deleted', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
@@ -72,5 +74,10 @@ class PackageComment extends \common\models\package\PackageComment
     public function getDate_time()
     {
         return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
+    }
+
+    public function getSafari_operator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id']);
     }
 }
