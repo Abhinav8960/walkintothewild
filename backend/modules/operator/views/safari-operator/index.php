@@ -124,7 +124,7 @@ $this->params['title'] = $this->title;
                                         [
                                             'class' => 'btn p-0 change-menuicon',
                                             'title' => 'Temporary Delete',
-                                            'target' => '_blank',
+                                            // 'target' => '_blank',
                                         ]
                                     );
                                 }
