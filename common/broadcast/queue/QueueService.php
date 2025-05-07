@@ -13,33 +13,33 @@ class QueueService
     /**
      * Add an event to the queue.
      */
-    public function addToQueue($event)
+    public function addToQueue($channelName,$template)
     {
-        if ($event->channelName == 'email') {
-            $log =  $this->emailLog($event);
-        } elseif ($event->channelName == 'firebase') {
-           $log = $this->firebaseLog($event);
+        if ($channelName == 'email') {           
+            $log =  $this->emailLog($template);
+        } elseif ($channelName == 'firebase') {
+           $log = $this->firebaseLog($template);
         }
         return $log;
     }
 
-    private function emailLog($event)
+    private function emailLog($template)
     {
 
         // $mail_from = 'no-reply@walkintothewild.in';
         $log = new \common\models\MailLog();
-        $log->subject = $event->template['subject'];
-        $log->mail_template_id = $event->template['mail_template_id'];
-        $log->params = json_encode($event->template['params'], true);
+        $log->subject = $template['subject'];
+        $log->mail_template_id = $template['mail_template_id'];
+        $log->params = json_encode($template['params'], true);
         $log->status = 2; // Mail Not Send
 
-        if (isset($event->template['cc'])) {
-            $cc = $event->template['cc'];
+        if (isset($template['cc'])) {
+            $cc = $template['cc'];
         }
-        if (isset($event->template['bcc'])) {
-            $bcc = $event->template['bcc'];
+        if (isset($template['bcc'])) {
+            $bcc = $template['bcc'];
         }
-        $mail_to = $event->template['to_mail'] ?? $event->email;
+        $mail_to = $template['to_mail'];
         if ($log->save(false)) {
             if (!empty($mail_to)) {
                 $m = new MailLogRecipients();
@@ -75,17 +75,17 @@ class QueueService
         return $log;
     }
 
-    private function firebaseLog($event)
+    private function firebaseLog($template)
     {
-        // print_r($event->template);
+        // print_r($template);
         // die();
-        $user_id = $event->userId;
-        $master_notification_template_id = $event->template['master_notification_template_id'];
-        $title = $event->template['title'] ?? NULL;
-        $message = $event->template['message'] ?? NULL;
-        $sent_data =  !empty($event->template['sent_data']) ?  json_encode($event->template['sent_data']) : NULL;
-        $image_url = $event->template['image_url'] ?? NULL;
-        $action = $event->template['action'] ?? NULL;
+        $user_id = $template['user_id'];
+        $master_notification_template_id = $template['master_notification_template_id'];
+        $title = $template['title'] ?? NULL;
+        $message = $template['message'] ?? NULL;
+        $sent_data =  !empty($template['sent_data']) ?  json_encode($template['sent_data']) : NULL;
+        $image_url = $template['image_url'] ?? NULL;
+        $action = $template['action'] ?? NULL;
         $model = new FirebaseNotificationLog();
         $model->master_notification_template_id = $master_notification_template_id;
         $model->title = ($title !== null) ? $title :  NULL;
