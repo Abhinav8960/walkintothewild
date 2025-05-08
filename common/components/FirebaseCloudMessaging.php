@@ -77,7 +77,7 @@ class FirebaseCloudMessaging extends Component
 
         // echo 'Successful sends: ' . $report->successes()->count() . PHP_EOL;
         // echo 'Failed sends: ' . $report->failures()->count() . PHP_EOL;
-
+        // // die();
         // if ($report->hasFailures()) {
         //     foreach ($report->failures()->getItems() as $failure) {
         //         echo $failure->error()->getMessage() . PHP_EOL;

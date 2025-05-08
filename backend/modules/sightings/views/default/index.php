@@ -88,17 +88,10 @@ $this->params['title'] = $this->title;
 
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->comments_count;
-                        }
-                    ],
-                    [
-                        'label' => 'Reply Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->replies_count;
+                            return Html::button($model->comments_count, [
+                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                                'class' => 'comment-popup btn btn-info',
+                            ]);
                         }
                     ],
                     [
@@ -145,7 +138,7 @@ $this->params['title'] = $this->title;
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width:50px; text-align:center;'],
                         'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp',
+                        'template' => '{view}&nbsp{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::button(
@@ -153,6 +146,18 @@ $this->params['title'] = $this->title;
                                     [
                                         'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
                                         'class' => 'btn p-0 change-menuicon sighting-popup',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]
                                 );
@@ -186,6 +191,24 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+
+<div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Comments
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='commentContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
@@ -194,6 +217,13 @@ $script = <<< JS
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
+
+    $('.comment-popup').on('click', function () {
+        $('#commentAction').modal('show')
+		.find('#commentContent')
+		.load($(this).attr('value'));
+	});
+
 
 JS;
 $this->registerJs($script);

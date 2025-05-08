@@ -24,16 +24,10 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
      */
     public static function tableName()
     {
-        return 'package_included';
+        return 'pp_package_included';
     }
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
     public function behaviors()
     {

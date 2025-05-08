@@ -261,23 +261,48 @@ class DefaultController extends Controller
         $safari_operator_model->facebook_url = null;
         $safari_operator_model->instagram_url = null;
         $safari_operator_model->youtube_link = null;
-        $safari_operator_model->phone_no = $model->legal_entity_phone;
-        $safari_operator_model->email = $model->legal_entity_email;
+        $safari_operator_model->phone_no = null;
+        $safari_operator_model->email = $model->user->email;
         $safari_operator_model->website = null;
         $safari_operator_model->is_register_company = 0;
         $safari_operator_model->has_a_website = 0;
         $safari_operator_model->has_cancellation_policy = 0;
         $safari_operator_model->wildlife_photographer = 0;
         $safari_operator_model->wildlife_influencer = 0;
-        $safari_operator_model->is_offer_premium_budget = 1;
+        $safari_operator_model->is_offer_premium_budget = 0;
         $safari_operator_model->is_offer_standard_budget = 0;
         $safari_operator_model->is_offer_economical_budget = 0;
         $safari_operator_model->is_wildlife_trekking = 0;
         $safari_operator_model->is_wildlife_non_safari_drive = 0;
         $safari_operator_model->is_bird_watching = 0;
         $safari_operator_model->is_camping = 0;
-        $safari_operator_model->starting_price = 2000;
+        $safari_operator_model->starting_price = 0;
         $safari_operator_model->is_approved = 1;
+
+        $safari_operator_model->legal_entity_type  = $model->legal_entity_type;
+        $safari_operator_model->legal_entity_whatsapp  = $model->legal_entity_whatsapp;
+        $safari_operator_model->registration_number  = $model->registration_number;
+        $safari_operator_model->registration_copy_upload  = $model->registration_copy_upload;
+        $safari_operator_model->pan_number  = $model->pan_number;
+        $safari_operator_model->pan_upload  = $model->pan_upload;
+        $safari_operator_model->operated_park  = $model->operated_park;
+        $safari_operator_model->billing_mail  = $model->billing_mail;
+        $safari_operator_model->billing_phone  = $model->billing_phone;
+        $safari_operator_model->bank_name  = $model->bank_name;
+        $safari_operator_model->account_holder_name  = $model->account_holder_name;
+        $safari_operator_model->account_number = $model->account_number;
+        $safari_operator_model->ifsc_number  = $model->ifsc_number;
+        $safari_operator_model->cancel_check_upload  = $model->cancel_check_upload;
+        $safari_operator_model->owner_name  = $model->owner_name;
+        $safari_operator_model->kyc_phone  = $model->kyc_phone;
+        $safari_operator_model->kyc_whatsapp = $model->kyc_whatsapp;
+        $safari_operator_model->kyc_email = $model->kyc_email;
+        $safari_operator_model->kyc_pan = $model->kyc_pan;
+        $safari_operator_model->kyc_pan_upload = $model->kyc_pan_upload;
+        $safari_operator_model->aadhar_number = $model->aadhar_number;
+        $safari_operator_model->aadhar_front_upload = $model->aadhar_front_upload;
+        $safari_operator_model->aadhar_back_upload = $model->aadhar_back_upload;
+        
         if ($safari_operator_model->save(false)) {
             return true;
         }

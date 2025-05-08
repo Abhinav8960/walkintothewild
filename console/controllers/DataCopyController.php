@@ -23,7 +23,7 @@ class DataCopyController extends Controller
             if (empty($model)) {
                 $model = new Feeds();
             }
-            $model->objective = 'ShareSafari';
+            $model->objective = 'share_safari';
             $model->collection = Feeds::MODEL_SHARESFARI;
             $model->collection_id = $dsafari->id;
             $model->created_at = $dsafari->created_at;
@@ -42,53 +42,50 @@ class DataCopyController extends Controller
 
     public function actionPackage()
     {
-        $dpackages = Package::find()->all();
+        $dpackages = \common\models\package\Package::find()->where(['live_version' => 'v1'])->all();
         foreach ($dpackages as $dpackage) {
             $model = Feeds::find()->where(['collection' => Feeds::MODEL_PACKAGE, 'collection_id' => $dpackage->id])->one();
             if (empty($model)) {
                 $model = new Feeds();
             }
-            $model->objective = 'Package';
+            $model->objective = 'package';
             $model->collection = Feeds::MODEL_PACKAGE;
             $model->collection_id = $dpackage->id;
             $model->created_at = $dpackage->created_at;
             $model->updated_at = $dpackage->updated_at;
             $model->created_by = $dpackage->created_by;
             $model->updated_by = $dpackage->updated_by;
-            if ($dpackage->status == NULL) {
-                $model->status = Feeds::STATUS_ACTIVE;
-            } else {
-                $model->status = $dpackage->status;
-            }
+            $model->status = Feeds::STATUS_ACTIVE;
+            
             $model->save(false);
         }
         return true;
     }
 
-    public function actionPost()
-    {
-        $dposts = UserPosts::find()->all();
-        foreach ($dposts as $dpost) {
-            $model = Feeds::find()->where(['collection' => Feeds::MODEL_POSTS, 'collection_id' => $dpost->id])->one();
-            if (empty($model)) {
-                $model = new Feeds();
-            }
-            $model->objective = 'Posts';
-            $model->collection = Feeds::MODEL_POSTS;
-            $model->collection_id = $dpost->id;
-            $model->created_at = $dpost->created_at;
-            $model->updated_at = $dpost->updated_at;
-            $model->created_by = $dpost->created_by;
-            $model->updated_by = $dpost->updated_by;
-            if ($dpost->status == NULL) {
-                $model->status = Feeds::STATUS_ACTIVE;
-            } else {
-                $model->status = $dpost->status;
-            }
-            $model->save(false);
-        }
-        return true;
-    }
+    // public function actionPost()
+    // {
+    //     $dposts = UserPosts::find()->all();
+    //     foreach ($dposts as $dpost) {
+    //         $model = Feeds::find()->where(['collection' => Feeds::MODEL_POSTS, 'collection_id' => $dpost->id])->one();
+    //         if (empty($model)) {
+    //             $model = new Feeds();
+    //         }
+    //         $model->objective = 'user_posts';
+    //         $model->collection = Feeds::MODEL_POSTS;
+    //         $model->collection_id = $dpost->id;
+    //         $model->created_at = $dpost->created_at;
+    //         $model->updated_at = $dpost->updated_at;
+    //         $model->created_by = $dpost->created_by;
+    //         $model->updated_by = $dpost->updated_by;
+    //         if ($dpost->status == NULL) {
+    //             $model->status = Feeds::STATUS_ACTIVE;
+    //         } else {
+    //             $model->status = $dpost->status;
+    //         }
+    //         $model->save(false);
+    //     }
+    //     return true;
+    // }
 
     public function actionDelete()
     {

@@ -62,6 +62,7 @@ class PackageToProductionController extends Controller
                 $copyModel = new \common\models\package\Package();
                 $copyModel->attributes = $model->attributes;
                 $copyModel->package_slug = $model->package_slug;
+                $copyModel->status = 1;
                 $copyModel->id = null; // Set the ID to null for the new record
                 $this->version =   $copyModel->live_version = 'v1';
             } else {
@@ -269,4 +270,13 @@ class PackageToProductionController extends Controller
     //     }
     //     return true;
     // }
+
+    public function actionMakeLive(){
+        $model = \common\models\package\Package::find()->where(['status'=>0])->all();
+        foreach($model as $m){
+            $m->status = 1;
+            $m->save();
+        }
+        echo "done";
+    }
 }

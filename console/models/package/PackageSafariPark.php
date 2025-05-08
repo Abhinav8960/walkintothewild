@@ -25,16 +25,10 @@ class PackageSafariPark extends \yii\db\ActiveRecord implements \common\interfac
      */
     public static function tableName()
     {
-        return 'package_safari_park';
+        return 'pp_package_safari_park';
     }
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
     public function behaviors()
     {

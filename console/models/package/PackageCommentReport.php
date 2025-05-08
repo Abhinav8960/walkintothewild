@@ -35,16 +35,10 @@ class PackageCommentReport extends \yii\db\ActiveRecord implements \common\inter
      */
     public static function tableName()
     {
-        return 'package_comment_report';
+        return 'pp_package_comment_report';
     }
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
     public function behaviors()
     {

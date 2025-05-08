@@ -24,19 +24,19 @@ class BroadcastService
     /**
      * Send the event immediately.
      */
-    private function sendImmediately($event, $log)
+    private function sendImmediately($channelName, $template, $log)
     {
-        $channel = self::getChannel($event->channelName);
-        return $channel->send($event, $log);
+        $channel = self::getChannel($channelName);
+        return $channel->send($template, $log);
     }
 
     /**
      * Queue the event for later processing.
      */
-    private function queue($event)
+    private function queue($channelName, $template)
     {
         $queueService = new QueueService();
-        return $queueService->addToQueue($event);
+        return $queueService->addToQueue($channelName, $template);
     }
 
     /**
@@ -44,14 +44,16 @@ class BroadcastService
      */
     public function send($event, $immediate = false)
     {
-        $log = $this->queue($event);
-        if ($immediate) {
-            $this->sendImmediately($event, $log);
+        foreach ($event->templates as $template) {
+            $log = $this->queue($event->channelName, $template);
+            if ($immediate) {
+                $this->sendImmediately($event->channelName, $template, $log);
+            }
         }
         return true;
     }
 
-   
+
 
     public static function getChannel($channelName)
     {
@@ -65,7 +67,7 @@ class BroadcastService
         return $channels[$channelName] ?? null;
     }
 
-    
+
 
 
     public static function className($namespace)

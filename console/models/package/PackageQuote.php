@@ -32,17 +32,11 @@ class PackageQuote extends \yii\db\ActiveRecord implements \common\interfaces\Ne
      */
     public static function tableName()
     {
-        return 'package_quote';
+        return 'pp_package_quote';
     }
 
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
 
     public function behaviors()

@@ -164,6 +164,8 @@ return [
                 'useractivity' => 'profile/default/useractivity',
                 'profile/follow' => 'profile/default/follow',
                 'profile/unfollow' => 'profile/default/unfollow',
+                'profile/<user_handle>/followers-list' => 'profile/default/followers-list',
+                'profile/<user_handle>/followings-list' => 'profile/default/followings-list',
 
                 'account' => 'account/default/index',
                 'account/<action>' => 'account/default/<action>',

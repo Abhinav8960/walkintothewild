@@ -14,9 +14,11 @@ use Yii;
  */
 class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
-    const NEW_USER_REGISTRATION_TEMPLATE = 1;
-    
     use CommanRelationship;
+
+    const NEW_USER_REGISTRATION_TEMPLATE = 1;
+    const CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE = 8;
+
     /**
      * {@inheritdoc}
      */
@@ -41,7 +43,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
                     return time();
                 },
             ],
-            
+
         ];
     }
 
@@ -52,9 +54,10 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     public function rules()
     {
         return [
-            [['id', 'message','title'], 'required'],
+            [['id', 'message', 'title'], 'required'],
             [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
+            [['message', 'type'], 'string'],
+            [['type'], 'safe'],
         ];
     }
 

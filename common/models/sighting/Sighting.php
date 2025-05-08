@@ -153,7 +153,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
 
     public function getReplies()
     {
-        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['!=', 'parent_id', null]);
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['IS NOT', 'parent_id', null]);;
     }
 
     public function getReplies_count()

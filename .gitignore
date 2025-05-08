@@ -503,7 +503,7 @@ phpunit.phar
 /tinyurl/web/assets
 /tinyurl/web/storage
 /tinyurl/web/robots.txt
-/csv
+/csvionide
 
 /business/web/index.php
 /business/web/index-test.php

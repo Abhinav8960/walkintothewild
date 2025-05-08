@@ -28,6 +28,7 @@ class User extends \common\models\User
         $fields[] = 'display_name';
         $fields[] = 'is_followed';
         $fields[] = 'user_activity_count';
+        $fields[] = 'operator_slug';
 
         $hold_fields = [
             'id',
@@ -59,6 +60,7 @@ class User extends \common\models\User
             "avatar",
             "gmail",
             "google_source_id",
+            "apple_source_id",
             "blocked_at",
             "password_updated_at",
             "photo_privacy",
@@ -80,6 +82,7 @@ class User extends \common\models\User
             $fields[] = 'operator_type';
             $fields[] = 'operator_slug';
             $fields[] = 'operator_status';
+            $fields[] = 'urls';
 
             $hold_fields = [
                 'id',
@@ -98,6 +101,7 @@ class User extends \common\models\User
                 "avatar",
                 "gmail",
                 "google_source_id",
+                "apple_source_id",
                 "blocked_at",
                 "password_updated_at",
 
@@ -195,7 +199,7 @@ class User extends \common\models\User
 
     public function getUser_followings_count()
     {
-        return $this->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+        return $this->getUserfollowings()->joinWith('follower')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
     }
 
 
@@ -326,5 +330,13 @@ class User extends \common\models\User
             return $count;
         }
         return 0;
+    }
+
+    public function getUrls()
+    {
+        return [
+            'followers_list' => Yii::$app->params['api_url'] . '/profile/' . $this->user_handle . '/followers-list',
+            'followings_list' => Yii::$app->params['api_url'] . '/profile/' . $this->user_handle . '/followings-list',
+        ];
     }
 }

@@ -26,16 +26,10 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
      */
     public static function tableName()
     {
-        return 'package_faq';
+        return 'pp_package_faq';
     }
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
     public function behaviors()
     {

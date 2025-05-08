@@ -21,7 +21,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class SightingComment extends \yii\db\ActiveRecord
+class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}
@@ -96,5 +96,15 @@ class SightingComment extends \yii\db\ActiveRecord
     public function getSighting()
     {
         return $this->hasOne(Sighting::className(), ['id' => 'sighting_id']);
+    }
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
     }
 }

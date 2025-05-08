@@ -99,6 +99,16 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
+            [
+                [
+                    'legal_entity_type', 'legal_entity_whatsapp', 'registration_number', 'registration_copy_upload',
+                    'pan_number', 'pan_upload', 'operated_park', 'billing_mail', 'billing_phone', 'bank_name',
+                    'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload', 'owner_name',
+                    'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload',
+                    'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'
+                ],
+                'safe'
+            ],
         ];
     }
 
@@ -151,6 +161,30 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+
+            'legal_entity_type' => 'Legal Entity Type',
+            'legal_entity_whatsapp' => 'Legal Entity WhatsApp',
+            'registration_number' => 'Registration Number',
+            'registration_copy_upload' => 'Registration Copy Upload',
+            'pan_number' => 'PAN Number',
+            'pan_upload' => 'PAN Upload',
+            'operated_park' => 'Operated Park',
+            'billing_mail' => 'Billing Email',
+            'billing_phone' => 'Billing Phone',
+            'bank_name' => 'Bank Name',
+            'account_holder_name' => 'Account Holder Name',
+            'account_number' => 'Account Number',
+            'ifsc_number' => 'IFSC Number',
+            'cancel_check_upload' => 'Cancelled Cheque Upload',
+            'owner_name' => 'Owner Name',
+            'kyc_phone' => 'KYC Phone',
+            'kyc_whatsapp' => 'KYC WhatsApp',
+            'kyc_email' => 'KYC Email',
+            'kyc_pan' => 'KYC PAN',
+            'kyc_pan_upload' => 'KYC PAN Upload',
+            'aadhar_number' => 'Aadhar Number',
+            'aadhar_front_upload' => 'Aadhar Front Upload',
+            'aadhar_back_upload' => 'Aadhar Back Upload',
         ];
     }
 

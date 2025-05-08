@@ -12,7 +12,7 @@ class NewUserRegistration extends Event
     public $userId;
     public $email;
     public $name;
-    public $template;
+    public $templates;
     public $channelName;
 
     protected $channels = [
@@ -33,7 +33,7 @@ class NewUserRegistration extends Event
     {
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
-            $this->template = $this->getTemplates()[$channel];
+            $this->templates = $this->getTemplates()[$channel];
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
             $broadcastService->send($this, true);
@@ -44,24 +44,47 @@ class NewUserRegistration extends Event
     {
         $arr = [
             'email' => [
-                'subject' => 'Welcome to our platform',
-                'mail_template_id'  => $this->emailTemplateId(),
-                'params' => [
-                    'username' => $this->name,
-                    'email' => $this->email,
+                [
+                    'subject' => 'Welcome to our platform',
+                    'mail_template_id'  => $this->emailTemplateId(),
+                    'params' => [
+                        'username' => $this->name,
+                    ],
+                    'to_mail' => $this->email,
+                    'cc' => [],
+                    'bcc' => [],
                 ],
-                'to_mail' => $this->email,
-                'cc' => [],
-                'bcc' => [],
+                [
+                    'subject' => 'Welcome to our platform for admin',
+                    'mail_template_id'  => $this->emailTemplateId(),
+                    'params' => [
+                        'username' => $this->name,
+                    ],
+                    'to_mail' => $this->email,
+                    'cc' => [],
+                    'bcc' => [],
+                ]
             ],
+
             'firebase' => [
-                'master_notification_template_id' => $this->firebaseTemplateId(),
-                'title' => 'Welcome!',
-                'message' => 'Hello ' . $this->name . ', welcome to our platform!',
-                'sent_data' => NULL,
-                'user_id' => $this->userId,
-                'image_url' => NULL,
-                'action' => NULL,
+                [
+                    'master_notification_template_id' => $this->firebaseTemplateId(),
+                    'title' => 'Welcome!',
+                    'message' => 'Hello ' . $this->name . ', welcome to our platform!',
+                    'sent_data' => NULL,
+                    'user_id' => $this->userId,
+                    'image_url' => NULL,
+                    'action' => NULL,
+                ],
+                [
+                    'master_notification_template_id' => $this->firebaseTemplateId(),
+                    'title' => 'Welcome!',
+                    'message' => 'Hello ' . $this->name . ', welcome to our platform!',
+                    'sent_data' => NULL,
+                    'user_id' => $this->userId,
+                    'image_url' => NULL,
+                    'action' => NULL,
+                ]
             ],
             // Add more templates for other channels as needed
         ];

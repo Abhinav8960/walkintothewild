@@ -119,12 +119,12 @@ $this->params['title'] = $this->title;
                             'temporary' => function ($url, $model) {
                                 if ($model->is_temporary_delete != 1) {
                                     return Html::a(
-                                        '<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">',
+                                        '<img src="' . $this->params['baseurl'] . '/img/temp_delete.png" alt="" width="25" height="25">',
                                         ['temporary-delete', 'id' => $model->id],
                                         [
                                             'class' => 'btn p-0 change-menuicon',
-                                            'title' => 'Update',
-                                            'target' => '_blank',
+                                            'title' => 'Temporary Delete',
+                                            // 'target' => '_blank',
                                         ]
                                     );
                                 }

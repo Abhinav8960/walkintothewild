@@ -36,18 +36,12 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
      */
     public static function tableName()
     {
-        return 'package_day';
+        return 'pp_package_day';
     }
 
     
 
-     /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_package');
-    }
+     
 
     public function behaviors()
     {

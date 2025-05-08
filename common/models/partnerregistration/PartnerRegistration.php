@@ -3,6 +3,7 @@
 namespace common\models\partnerregistration;
 
 use common\models\park\SafariPark;
+use common\models\User;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -303,6 +304,9 @@ class PartnerRegistration extends \yii\db\ActiveRecord
     //     return $this->hasMany(PartnerGstDetails :: class , ['id'=>'gst_id','user_id'=>'user_id'])->orderBy(['id'=>SORT_DESC]);
     // }
 
+    public function getUser(){
+        return $this->hasOne(User :: class ,['id'=>'user_id'])->where(['status' => User :: STATUS_ACTIVE])->orderBy(['id'=>SORT_DESC]);
+    }
 
     public function getParkList(){
         return $this->hasMany(PartnerParkList :: class , ['partner_registration_id'=>'id']) ->where(['status' => 1])->orderBy(['id'=>SORT_DESC]);
