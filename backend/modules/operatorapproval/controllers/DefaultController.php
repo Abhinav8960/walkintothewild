@@ -269,14 +269,14 @@ class DefaultController extends Controller
         $safari_operator_model->has_cancellation_policy = 0;
         $safari_operator_model->wildlife_photographer = 0;
         $safari_operator_model->wildlife_influencer = 0;
-        $safari_operator_model->is_offer_premium_budget = 1;
+        $safari_operator_model->is_offer_premium_budget = 0;
         $safari_operator_model->is_offer_standard_budget = 0;
         $safari_operator_model->is_offer_economical_budget = 0;
         $safari_operator_model->is_wildlife_trekking = 0;
         $safari_operator_model->is_wildlife_non_safari_drive = 0;
         $safari_operator_model->is_bird_watching = 0;
         $safari_operator_model->is_camping = 0;
-        $safari_operator_model->starting_price = 2000;
+        $safari_operator_model->starting_price = 0;
         $safari_operator_model->is_approved = 1;
 
         $safari_operator_model->legal_entity_type  = $model->legal_entity_type;

@@ -38,7 +38,7 @@ class UserPostComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'user_posts_id', 'parent_id','status', 'created_by', 'created_at', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
+            [['user_id', 'user_posts_id', 'parent_id', 'status', 'created_by', 'created_at', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['comment'], 'string'],
             [['dateTime'], 'safe'],
         ];
@@ -97,5 +97,15 @@ class UserPostComment extends \yii\db\ActiveRecord
     public function getPost()
     {
         return $this->hasOne(UserPosts::className(), ['id' => 'user_posts_id']);
+    }
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['user_post_comment.status' => 1])->count();
     }
 }
