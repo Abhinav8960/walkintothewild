@@ -58,7 +58,7 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
-                                'value' => Url::toRoute(['reply-list', 'parent_id' => $model->id]),
+                                'value' => Url::toRoute(['reply-listing', 'parent_id' => $model->id]),
                                 'class' => 'btn btn-warning replies-list mb-2',
                                 'title' => 'View'
                             ]);

@@ -125,7 +125,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
 
     public function getReplies()
     {
-        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['!=', 'parent_id', null]);
+        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['IS NOT', 'parent_id', null]);
     }
 
     public function getReplies_count()
