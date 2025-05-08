@@ -17,6 +17,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     use CommanRelationship;
 
     const NEW_USER_REGISTRATION_TEMPLATE = 1;
+    const SAFARI_JOIN_TEMPLATE = 1;
     const CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE = 8;
 
     /**

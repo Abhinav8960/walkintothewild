@@ -2,6 +2,7 @@
 
 namespace common\events\sharesafari;
 
+use api\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -15,29 +16,31 @@ class SafariJoinedByuser extends Event
     public $name;
     public $templates;
     public $channelName;
-
-
     public $interested_user;
     public $admin_mail;
-    public $shared_safari;
+    public $shared_safari_id;
+    public $shared_safari_name;
     public $shared_safari_url;
-
+    protected $shared_safari;
+    protected $engine;
+    protected $master_notification_template;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
 
     protected $mail_template_code = 'THJS';  // To Host Join Safari
 
-    public function __construct($userId, $email, $name, $interested_user,$shared_safari , $shared_safari_url)
+    public function __construct($userId, $email, $name, $interested_user, $shared_safari_id)
     {
         $this->userId = $userId;
         $this->email = $email;
         $this->name = $name;
         $this->interested_user = $interested_user;
-        $this->shared_safari = $shared_safari;
-        $this->shared_safari_url = $shared_safari_url;
+        $this->shared_safari_id = $shared_safari_id;
+        $this->engine = \Yii::$app->engine;
+        $this->prepareData();
         $this->broadcastHandle();
     }
 
@@ -69,7 +72,7 @@ class SafariJoinedByuser extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name ."'s" . ' Shared Safari',
+                    'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
@@ -82,20 +85,20 @@ class SafariJoinedByuser extends Event
                 ]
             ],
             'firebase' => [
+                // [
+                //     'master_notification_template_id' => $this->firebaseTemplateId(),
+                //     'title' => 'Welcome!',
+                //     'message' => 'Hello ' . $this->interested_user . ', welcome to our Safari!',
+                //     'sent_data' => NULL,
+                //     'user_id' => $this->userId,
+                //     'image_url' => NULL,
+                //     'action' => NULL,
+                // ],
                 [
                     'master_notification_template_id' => $this->firebaseTemplateId(),
-                    'title' => 'Welcome!',
-                    'message' => 'Hello ' . $this->interested_user . ', welcome to our Safari!',
-                    'sent_data' => NULL,
-                    'user_id' => $this->userId,
-                    'image_url' => NULL,
-                    'action' => NULL,
-                ],
-                [
-                    'master_notification_template_id' => $this->firebaseTemplateId(),
-                    'title' => 'New Update',
-                    'message' => $this->interested_user . ' has joined ' . $this->name . ' Shared Safari',
-                    'sent_data' => NULL,
+                    'title' => $this->title(),
+                    'message' => $this->message(),
+                    'sent_data' => $this->shared_safari,
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
@@ -117,9 +120,9 @@ class SafariJoinedByuser extends Event
 
     protected function firebaseTemplateId()
     {
-        $template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::NEW_USER_REGISTRATION_TEMPLATE, 'status' => 1])->limit(1)->one();
-        if ($template) {
-            return $template->id;
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_JOIN_TEMPLATE, 'status' => 1])->limit(1)->one();
+        if ($this->master_notification_template) {
+            return $this->master_notification_template->id;
         }
         return null;
     }
@@ -128,8 +131,25 @@ class SafariJoinedByuser extends Event
     {
         $admin = User::find()->where(['id' => $this->userId])->andWhere(['is_admin' => 1])->one();
         if ($admin) {
-            $to_mail = 'abhinav@triline.co.in'; 
+            $to_mail = 'abhinav@triline.co.in';
             return $to_mail;
         }
+    }
+
+    private function title()
+    {
+        return $this->engine->render($this->master_notification_template->title, []);
+    }
+
+    private function message()
+    {
+        return $this->engine->render($this->master_notification_template->message, ['var1' => $this->interested_user, 'var2' => $this->shared_safari_name]);
+    }
+
+    public function prepareData()
+    {
+        $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
+        $this->shared_safari_name = $this->shared_safari->share_safari_title;
+        $this->shared_safari_url = 'http://walkintothewild.ion/' . $this->shared_safari->slug;
     }
 }

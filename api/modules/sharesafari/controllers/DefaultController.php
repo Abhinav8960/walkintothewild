@@ -215,8 +215,7 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-
-        return  new \common\events\sharesafari\SafariJoinedByuser(2279, 'abhinavpal8960@gmail.com', 'Abhinav Kumar Pal','Akash','','');
+        return  new \common\events\sharesafari\SafariJoinedByuser(2279, 'abhinavpal8960@gmail.com', 'Abhinav Kumar Pal','Akash',190);
    
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {

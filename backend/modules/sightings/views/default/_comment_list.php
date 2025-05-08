@@ -64,16 +64,32 @@ $this->params['title'] = $this->title;
                     ],
 
                     [
-                        'label' => 'Replies',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
-                                'value' => Url::toRoute(['reply-listing', 'parent_id' => $model->id]),
-                                'class' => 'btn btn-warning replies-list mb-2',
-                                'title' => 'View'
-                            ]);
-                        }
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'template' => '{view}&nbsp{delete}&nbsp',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                    'value' => Url::toRoute(['reply-listing', 'parent_id' => $model->id]),
+                                    'class' => 'btn btn-warning replies-list mb-2',
+                                    'title' => 'View'
+                                ]);
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['comment-delete', 'id' => $model->id]),
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+                        ]
                     ],
 
                 ],
