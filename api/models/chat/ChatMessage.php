@@ -102,6 +102,6 @@ class ChatMessage extends \common\models\chat\ChatMessage
 
     public function getReciverId()
     {
-        return $this->chat->user_id == $this->created_by ? $this->recipient_user_id : $this->created_by;
+        return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->created_by;
     }
 }
