@@ -86,7 +86,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $data['name'] = $this->createduser->name;
         $data['user_handle'] = $this->createduser->user_handle;
         $data['profile_image'] = $this->createduser->profile_image;
-        $data['is_safari_operator'] = $this->createduser->is_safari_operator;
+        $data['is_safari_operator'] = $this->createduser->is_safari_operator == 1 ? true : false;
+        $data['operator_slug'] = $this->createduser->operator->slug ?? NULL;
         $data['display_name'] = $this->createduser->display_name;
         return $data;
     }
