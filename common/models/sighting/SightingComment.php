@@ -97,4 +97,14 @@ class SightingComment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Sighting::className(), ['id' => 'sighting_id']);
     }
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
+
+    public function getReplies_count()
+    {
+        return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
+    }
 }
