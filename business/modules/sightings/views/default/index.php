@@ -85,12 +85,11 @@ $this->params['title'] = $this->title;
                         'label' => 'Comment Count',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::button($model->comments_count, [
                                 'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup',
+                                'class' => 'comment-popup btn btn-info',
                             ]);
                         }
                     ],

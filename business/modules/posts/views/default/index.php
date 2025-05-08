@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return Html::button($model->comments_count, [
                                 'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup',
+                                'class' => 'comment-popup btn btn-info',
                             ]);
                         }
                     ],
