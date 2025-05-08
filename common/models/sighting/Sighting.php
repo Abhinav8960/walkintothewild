@@ -66,7 +66,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['latitude', 'longitude'], 'number'],
             [['post_datetime'], 'safe'],
             [['file', 'filepath', 'etag'], 'string', 'max' => 255],
-            [['video_thumbnail_path', 'video_thumbnail_etag'], 'string', 'max' => 512],
+            [['video_thumbnail_path', 'video_thumbnail_etag', 'delete_reason'], 'string', 'max' => 512],
         ];
     }
 
@@ -160,7 +160,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     {
         return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
     }
-    
+
     public function getFull_file_path()
     {
         if ($this->file) {

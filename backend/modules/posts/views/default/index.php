@@ -130,13 +130,11 @@ $this->params['title'] = $this->title;
                                 return '';
                             },
                             'delete' => function ($url, $model) {
-                                return Html::a(
+                                return Html::button(
                                     Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                     [
-                                        Url::toRoute(['post-delete', 'id' => $model->id]),
-                                    ],
-                                    [
-                                        'class' => 'btn p-0 change-menuicon',
+                                        'value' => Url::toRoute(['post-delete', 'id' => $model->id]),
+                                        'class' => 'btn p-0 change-menuicon delete-popup',
                                         'title' => 'View',
                                     ]
                                 );
@@ -188,6 +186,24 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+<div class="modal fade" id="deleteAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Delete
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='deleteContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <?php
 $script = <<< JS
@@ -201,6 +217,12 @@ $script = <<< JS
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')
 		.find('#commentContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.delete-popup').on('click', function () {
+        $('#deleteAction').modal('show')
+		.find('#deleteContent')
 		.load($(this).attr('value'));
 	});
 
