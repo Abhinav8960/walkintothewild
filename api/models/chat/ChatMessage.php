@@ -70,6 +70,11 @@ class ChatMessage extends \common\models\chat\ChatMessage
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
+    public function getChat()
+    {
+        return $this->hasOne(Chat::className(), ['id' => 'chat_id']);
+    }
+
     public function getMessage_datetime()
     {
         return date('Y-m-d H:i:s', $this->created_at);
@@ -84,5 +89,17 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $data['is_safari_operator'] = $this->createduser->is_safari_operator;
         $data['display_name'] = $this->createduser->display_name;
         return $data;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+        return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+    }
+
+    public function getReciverId()
+    {
+        return $this->chat->user_id == $this->created_by ? $this->recipient_user_id : $this->created_by;
     }
 }

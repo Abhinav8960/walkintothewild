@@ -77,8 +77,7 @@ class QueueService
 
     private function firebaseLog($template)
     {
-        // print_r($template);
-        // die();
+        
 
 
         $user_id = $template['user_id'];
@@ -99,7 +98,8 @@ class QueueService
         $model->is_send = 0;
         $model->is_cron_run = 0;
         $model->status = 1;
-        $model->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity : \Yii::$app->params['active_user_id'];
+        $model->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
+       
         $model->save(false);
         return $model;
     }
