@@ -1,34 +1,35 @@
 <?php
 
-namespace common\events\user;
+namespace common\events\chat;
 
 use common\broadcast\services\BroadcastService;
 use common\models\master\notification\MasterNotificationTemplate;
 use yii\base\Event;
 
-class NewChatMessageReceived extends Event
+class NewChatMessageSend extends Event
 {
-    public $receiverUserId;
+    public $receiverUserIds = [];
     public $sender;
     public $message;
     public $chat_hash;
     public $templates;
     public $sent_data;
     public $channelName;
+    protected $engine;
     protected $master_notification_template;
 
     protected $channels = [
         'firebase',
     ];
 
-    public function __construct($receiverUserId, $sender, $message, $chat_hash, $sent_data)
+    public function __construct(array $receiverUserIds, $sender, $message, $chat_hash, $sent_data)
     {
-        $this->userId       = $receiverUserId;
-        $this->sender       = $sender;
-        $this->message      = $message;
-        $this->chat_hash    = $chat_hash;
-        $this->sent_data    = $sent_data;
-        $this->engine       = \Yii::$app->engine;
+        $this->receiverUserIds       = $receiverUserIds;
+        $this->sender               = $sender;
+        $this->message              = $message;
+        $this->chat_hash            = $chat_hash;
+        $this->sent_data            = $sent_data;
+        $this->engine               = \Yii::$app->engine;
         $this->broadcastHandle();
     }
 
@@ -46,17 +47,7 @@ class NewChatMessageReceived extends Event
     public function getTemplates()
     {
         $arr = [
-            'firebase' => [
-                [
-                    'master_notification_template_id' => $this->firebaseTemplateId(),
-                    'title' => $this->title(),
-                    'message' => $this->message(),
-                    'sent_data' => $this->sent_data,
-                    'user_id' => $this->userId,
-                    'image_url' => NULL,
-                    'action' => NULL,
-                ]
-            ],
+            'firebase' => $this->prepareFirebaseTemplate()
             // Add more templates for other channels as needed
         ];
         return $arr;
@@ -81,24 +72,23 @@ class NewChatMessageReceived extends Event
         return $this->engine->render($this->master_notification_template->message, ['message' => $this->message]);
     }
 
+    private function prepareFirebaseTemplate()
+    {
+        foreach ($this->receiverUserIds as $userId) {
+            $arr[] =  [
+                'master_notification_template_id'   => $this->firebaseTemplateId(),
+                'title'                             => $this->title(),
+                'message'                           => $this->message(),
+                'sent_data'                         => [
+                                                            'chat_hash' =>   $this->chat_hash,
+                                                            'addtional_data' =>   $this->sent_data
+                                                        ],
+                'user_id'                           => $userId,
+                'image_url'                         => NULL,
+                'action'                            => NULL,
+            ];
+        }
 
-
-    // $engine = \Yii::$app->engine;
-    // $template = MasterNotificationTemplate::find()->where(['id' => 1])->limit(1)->one();
-    // $master_notification_template_id = $template->id;
-    // /**Firebase Notification start */
-    // $user_ids = [$share_safari->organizedId];
-    // $title = $template->title;
-    // $message = $template->message;
-    // $message_values = [
-    //     'var1' => $user->name,
-    //     'var2' => $share_safari->share_safari_title
-    // ];
-    // $message_values = [
-    //     'var1' => $user->name,
-    //     'var2' => $share_safari->share_safari_title
-    // ];
-
-    // $message = $engine->render($message, $message_values);
-    // $title = $engine->render($title, $title_values);
+        return $arr;
+    }
 }
