@@ -84,7 +84,11 @@ class QueueService
         $master_notification_template_id = $template['master_notification_template_id'];
         $title = $template['title'] ?? NULL;
         $message = $template['message'] ?? NULL;
-        $sent_data =  !empty($template['sent_data']) ?  json_encode($template['sent_data']) : NULL;
+        if(is_array($template['sent_data'])){
+            $sent_data =  !empty($template['sent_data'])  ?  json_encode($template['sent_data']) : NULL;
+        }else{
+            $sent_data =  !empty($template['sent_data'])  ?  $template['sent_data'] : NULL;
+        }
         $image_url = $template['image_url'] ?? NULL;
         $action = $template['action'] ?? NULL;
         $model = new FirebaseNotificationLog();
