@@ -95,13 +95,41 @@ class DefaultController extends Controller
         }
 
         $userpost->status = UserPosts::STATUS_DELETE;
-        
+
         if ($userpost->save(false)) {
             Yii::$app->session->setFlash('success', 'Post has been deleted successfully.');
         } else {
             Yii::$app->session->setFlash('error', 'Failed to delete the post. Please try again.');
         }
 
+        return $this->redirect(['index']);
+    }
+
+
+    public function actionCommentDelete($id)
+    {
+        $comment = UserPostComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+
+        if (!$comment) {
+            Yii::$app->session->setFlash('error', 'Comment not found');
+            return $this->redirect(['index']);
+        }
+
+        $replies = UserPostComment::find()->where(['parent_id' => $id, 'status' => 1])->all();
+        $comment->status = UserPostComment::STATUS_DELETE;
+
+        if ($comment->save(false)) {
+            if ($replies) {
+                foreach ($replies as $rep) {
+                    $rep->status = UserPostComment::STATUS_DELETE;
+                    $rep->save(false);
+                }
+            }
+            Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
+            return $this->redirect(['index']);
+        }
+
+        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
         return $this->redirect(['index']);
     }
 }
