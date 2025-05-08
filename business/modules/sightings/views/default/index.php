@@ -94,16 +94,6 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Reply Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->replies_count;
-                        }
-                    ],
-                    [
                         'label' => 'Sighting Like Count',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],

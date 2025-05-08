@@ -302,6 +302,8 @@ class DefaultController extends Controller
         $safari_operator_model->aadhar_number = $model->aadhar_number;
         $safari_operator_model->aadhar_front_upload = $model->aadhar_front_upload;
         $safari_operator_model->aadhar_back_upload = $model->aadhar_back_upload;
+
+        $safari_operator_model->status = SafariOperator :: STATUS_ACTIVE;
         
         if ($safari_operator_model->save(false)) {
             return true;

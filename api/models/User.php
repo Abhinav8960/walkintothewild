@@ -48,7 +48,6 @@ class User extends \common\models\User
             "auth_key",
             "user_bio",
             "date_of_birth",
-            "gender",
             "token_key",
             "is_adminstrator",
             "is_admin",
@@ -89,7 +88,6 @@ class User extends \common\models\User
                 "password_hash",
                 "auth_key",
 
-                "gender",
                 "token_key",
                 "is_adminstrator",
                 "is_admin",

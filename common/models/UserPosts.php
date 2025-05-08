@@ -71,7 +71,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['caption', 'filepath', 'etag'], 'string'],
-            [['file'], 'string', 'max' => 512],
+            [['file','delete_reason'], 'string', 'max' => 512],
 
         ];
     }

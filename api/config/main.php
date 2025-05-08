@@ -116,6 +116,7 @@ return [
                 'can-social-login' => 'site/can-social-login',
                 'otp-verification-social-login' => 'site/otp-verification-social-login',
                 'verify-social-login' => 'site/verify-social-login',
+                'deactivate' => 'site/deactivate',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',
                 'termofuse' => 'site/termofuse',

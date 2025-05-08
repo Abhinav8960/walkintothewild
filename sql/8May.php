@@ -7,3 +7,14 @@ UPDATE `master_notification_template` SET `type` = 'Package Intrest' WHERE `mast
 UPDATE `master_notification_template` SET `type` = 'Quote Request' WHERE `master_notification_template`.`id` = 6;
 UPDATE `master_notification_template` SET `type` = 'New Review' WHERE `master_notification_template`.`id` = 7;
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'chat message received', '{{sender}}', '{{message}}', '1', '1735806556', '30', '1735806556', '30');
+
+
+
+
+
+ALTER TABLE `sighting` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `v_duration`;
+ALTER TABLE `user_posts` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `width`;
+
+
+ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
+ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
