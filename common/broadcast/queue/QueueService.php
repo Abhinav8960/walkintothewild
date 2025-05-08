@@ -79,6 +79,8 @@ class QueueService
     {
         // print_r($template);
         // die();
+
+
         $user_id = $template['user_id'];
         $master_notification_template_id = $template['master_notification_template_id'];
         $title = $template['title'] ?? NULL;

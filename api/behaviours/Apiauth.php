@@ -110,7 +110,7 @@ class Apiauth extends AuthMethod
             if ($identity !== null) {
                 return $identity;
             } else {
-                return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 407);
+                return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 401);
             }
         }
 
