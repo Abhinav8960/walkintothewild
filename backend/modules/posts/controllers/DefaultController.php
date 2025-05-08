@@ -86,4 +86,22 @@ class DefaultController extends Controller
 
         return $this->renderAjax('_reply_list', ['dataProvider' => $dataProvider]);
     }
+
+    public function actionPostDelete($id)
+    {
+        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$userpost) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        $userpost->status = UserPosts::STATUS_DELETE;
+        
+        if ($userpost->save(false)) {
+            Yii::$app->session->setFlash('success', 'Post has been deleted successfully.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Failed to delete the post. Please try again.');
+        }
+
+        return $this->redirect(['index']);
+    }
 }

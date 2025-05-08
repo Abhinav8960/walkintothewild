@@ -66,7 +66,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return Html::button($model->comments_count, [
                                 'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup',
+                                'class' => 'comment-popup btn btn-info',
                             ]);
                         }
                     ],
@@ -124,7 +124,7 @@ $this->params['title'] = $this->title;
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width:50px; text-align:center;'],
                         'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp',
+                        'template' => '{view}&nbsp{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 if ($model->file) {
@@ -138,6 +138,18 @@ $this->params['title'] = $this->title;
                                     );
                                 }
                                 return '';
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['post-delete', 'id' => $model->id]),
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]
+                                );
                             },
                         ]
                     ],

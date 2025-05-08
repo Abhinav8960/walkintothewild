@@ -61,10 +61,12 @@ $this->params['title'] = $this->title;
                         'label' => 'Comment Count',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->comments_count;
+                            return Html::button($model->comments_count, [
+                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                                'class' => 'comment-popup btn btn-info',
+                            ]);
                         }
                     ],
                     [
@@ -165,12 +167,37 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+
+<div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Comments
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='commentContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <?php
 $script = <<< JS
 
     $('.post-popup').on('click', function () {
         $('#modalAction').modal('show')
 		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.comment-popup').on('click', function () {
+        $('#commentAction').modal('show')
+		.find('#commentContent')
 		.load($(this).attr('value'));
 	});
 
