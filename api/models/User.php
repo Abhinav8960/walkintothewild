@@ -28,6 +28,7 @@ class User extends \common\models\User
         $fields[] = 'display_name';
         $fields[] = 'is_followed';
         $fields[] = 'user_activity_count';
+        // $fields[] = 'operator_slug';
 
         $hold_fields = [
             'id',
