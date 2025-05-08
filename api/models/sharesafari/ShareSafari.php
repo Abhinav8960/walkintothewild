@@ -23,7 +23,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
 
 
-        $fields = ['id', 'have_you_joined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organized_by_name', 'organized_by_image', 'organized_slug', 'shared_image_path', 'seat_full_status', 'is_wishlist', 'is_followed', 'interseted_user_count', 'park_title', 'status'];
+        $fields = ['id', 'have_you_joined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organized_by_name', 'organized_by_image', 'organized_slug', 'shared_image_path', 'seat_full_status', 'is_wishlist', 'is_followed', 'interseted_user_count', 'park_title', 'park_slug', 'status'];
         $fields[] = 'resource_uri';
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
@@ -107,6 +107,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         foreach ($this->parks as $park) {
             return $park->title ?? NULL;
+        }
+    }
+
+    public function getPark_slug()
+    {
+        foreach ($this->parks as $park) {
+            return $park->slug ?? NULL;
         }
     }
 
