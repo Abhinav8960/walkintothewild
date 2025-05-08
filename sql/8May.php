@@ -7,3 +7,7 @@ UPDATE `master_notification_template` SET `type` = 'Package Intrest' WHERE `mast
 UPDATE `master_notification_template` SET `type` = 'Quote Request' WHERE `master_notification_template`.`id` = 6;
 UPDATE `master_notification_template` SET `type` = 'New Review' WHERE `master_notification_template`.`id` = 7;
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'chat message received', '{{sender}}', '{{message}}', '1', '1735806556', '30', '1735806556', '30');
+
+
+CREATE TABLE `wildwalks`.`lead_partners` ( `id` INT NOT NULL AUTO_INCREMENT , `lead_id` INT NOT NULL , `partner_id` INT NOT NULL COMMENT 'safari_operator' , `status` BOOLEAN NOT NULL DEFAULT TRUE , `created_by` INT NOT NULL , `updated_by` INT NOT NULL , `created_at` INT NOT NULL , `updated_at` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `wildwalks`.`lead_partners` ADD UNIQUE (`lead_id`, `partner_id`);
