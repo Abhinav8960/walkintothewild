@@ -13,12 +13,12 @@ class QueueService
     /**
      * Add an event to the queue.
      */
-    public function addToQueue($channelName,$template)
+    public function addToQueue($channelName, $template)
     {
-        if ($channelName == 'email') {           
+        if ($channelName == 'email') {
             $log =  $this->emailLog($template);
         } elseif ($channelName == 'firebase') {
-           $log = $this->firebaseLog($template);
+            $log = $this->firebaseLog($template);
         }
         return $log;
     }
@@ -30,7 +30,12 @@ class QueueService
         $log = new \common\models\MailLog();
         $log->subject = $template['subject'];
         $log->mail_template_id = $template['mail_template_id'];
-        $log->params = json_encode($template['params'], true);
+        $log->params = NULL;
+        if (is_array($template['params'])) {
+            $log->params = json_encode($template['params'], true);
+        } else {
+            $log->params = $template['params'];
+        }
         $log->status = 2; // Mail Not Send
 
         if (isset($template['cc'])) {
@@ -77,14 +82,19 @@ class QueueService
 
     private function firebaseLog($template)
     {
-        
+
 
 
         $user_id = $template['user_id'];
         $master_notification_template_id = $template['master_notification_template_id'];
         $title = $template['title'] ?? NULL;
         $message = $template['message'] ?? NULL;
-        $sent_data =  !empty($template['sent_data']) ?  json_encode($template['sent_data']) : NULL;
+        $sent_data = NULL;
+        if (is_array($template['sent_data'])) {
+            $sent_data =  !empty($template['sent_data'])  ?  json_encode($template['sent_data']) : NULL;
+        } else {
+            $sent_data =  !empty($template['sent_data'])  ?  $template['sent_data'] : NULL;
+        }
         $image_url = $template['image_url'] ?? NULL;
         $action = $template['action'] ?? NULL;
         $model = new FirebaseNotificationLog();
@@ -99,7 +109,7 @@ class QueueService
         $model->is_cron_run = 0;
         $model->status = 1;
         $model->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
-       
+
         $model->save(false);
         return $model;
     }
