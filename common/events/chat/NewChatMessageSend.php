@@ -81,7 +81,7 @@ class NewChatMessageSend extends Event
                 'message'                           => $this->message(),
                 'sent_data'                         => [
                                                             'chat_hash' =>   $this->chat_hash,
-                                                            'addtional_data' =>   json_decode($this->sent_data)
+                                                            'addtional_data' =>   $this->sent_data
                                                         ],
                 'user_id'                           => $userId,
                 'image_url'                         => NULL,
