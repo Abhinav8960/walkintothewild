@@ -215,7 +215,8 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-        return  new \common\events\sharesafari\SafariJoinedByuser(2279, 'abhinavpal8960@gmail.com', 'Abhinav Kumar Pal','Akash',190);
+        return  new \common\events\sharesafari\SafariJoinedByuser('Akash',190);
+
    
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
@@ -247,24 +248,27 @@ class DefaultController extends SafariController
                 $user = $this->userinfo;
                 $username = $user->name;
                 /*Creator Info*/
-                if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
-                    $to_mail = $share_safari->user->username;
-                } else {
-                    $to_mail = $share_safari->partner->user->username;
-                }
-                $creator_name = $share_safari->organizedbyname;
-                $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
-                $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-                $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
+                // if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                //     $to_mail = $share_safari->user->username;
+                // } else {
+                //     $to_mail = $share_safari->partner->user->username;
+                // }
+                // $creator_name = $share_safari->organizedbyname;
+                // $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;
+                // $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                // $req = ['username' => $username, 'creator_name' => $creator_name, 'shared_safari' => $share_safari->attributes, 'shared_safari_url' => $shared_safari_url];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
 
-                FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
-                FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
+                // FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
+                // FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
+                return  new \common\events\sharesafari\SafariJoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->user->id);
+
+
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Joined!"]);
         }

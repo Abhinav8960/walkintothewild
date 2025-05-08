@@ -21,22 +21,21 @@ class SafariJoinedByuser extends Event
     public $shared_safari_id;
     public $shared_safari_name;
     public $shared_safari_url;
+    protected $sent_data = [];
     protected $shared_safari;
     protected $engine;
     protected $master_notification_template;
 
     protected $channels = [
-        // 'email',
+        'email',
         'firebase',
     ];
 
     protected $mail_template_code = 'THJS';  // To Host Join Safari
 
-    public function __construct($userId, $email, $name, $interested_user, $shared_safari_id)
+    public function __construct($interested_user, $shared_safari_id)
     {
-        $this->userId = $userId;
-        $this->email = $email;
-        $this->name = $name;
+        
         $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
         $this->engine = \Yii::$app->engine;
@@ -51,7 +50,7 @@ class SafariJoinedByuser extends Event
             $this->templates = $this->getTemplates()[$channel];
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
-            $broadcastService->send($this, true);
+            $broadcastService->send($this);
         }
     }
 
@@ -64,7 +63,7 @@ class SafariJoinedByuser extends Event
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
-                        'shared_safari' => $this->shared_safari,
+                        'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
                     'to_mail' => $this->email,
@@ -76,10 +75,10 @@ class SafariJoinedByuser extends Event
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
-                        'shared_safari' => $this->shared_safari,
+                        'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
-                    'to_mail' => $this->adminMail(),
+                    'to_mail' => \Yii::$app->params['localAdminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -87,7 +86,6 @@ class SafariJoinedByuser extends Event
             'firebase' => [
                 // [
                 //     'master_notification_template_id' => $this->firebaseTemplateId(),
-                //     'title' => 'Welcome!',
                 //     'message' => 'Hello ' . $this->interested_user . ', welcome to our Safari!',
                 //     'sent_data' => NULL,
                 //     'user_id' => $this->userId,
@@ -98,7 +96,7 @@ class SafariJoinedByuser extends Event
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title' => $this->title(),
                     'message' => $this->message(),
-                    'sent_data' => $this->shared_safari,
+                    'sent_data' => $this->sent_data,
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
@@ -127,14 +125,14 @@ class SafariJoinedByuser extends Event
         return null;
     }
 
-    protected function adminMail()
-    {
-        $admin = User::find()->where(['id' => $this->userId])->andWhere(['is_admin' => 1])->one();
-        if ($admin) {
-            $to_mail = 'abhinav@triline.co.in';
-            return $to_mail;
-        }
-    }
+    // protected function adminMail()
+    // {
+    //     $admin = User::find()->where(['id' => $this->userId])->andWhere(['is_admin' => 1])->one();
+    //     if ($admin) {
+    //         $to_mail = 'abhinav@triline.co.in';
+    //         return $to_mail;
+    //     }
+    // }
 
     private function title()
     {
@@ -149,7 +147,15 @@ class SafariJoinedByuser extends Event
     public function prepareData()
     {
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_name = $this->shared_safari->share_safari_title;
-        $this->shared_safari_url = 'http://walkintothewild.ion/' . $this->shared_safari->slug;
+        $this->shared_safari_name = $this->shared_safari['share_safari_title'];
+        $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari['slug'], 'organized_slug' => $this->shared_safari['organizedslug'] ? $this->shared_safari['organizedslug'] : '']));
+        $this->userId = $this->shared_safari->host_user_id;
+        $this->email = $this->shared_safari->user->email;
+        $this->name =  $this->shared_safari->user->name;
+        // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
+        $this->sent_data = [
+            'share_safari_title' => $this->shared_safari['share_safari_title'],
+            'slug' => $this->shared_safari['slug']
+        ];
     }
 }
