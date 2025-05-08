@@ -148,7 +148,7 @@ $this->params['title'] = $this->title;
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width:50px; text-align:center;'],
                         'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp',
+                        'template' => '{view}&nbsp{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::button(
@@ -156,6 +156,18 @@ $this->params['title'] = $this->title;
                                     [
                                         'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
                                         'class' => 'btn p-0 change-menuicon sighting-popup',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]
                                 );
