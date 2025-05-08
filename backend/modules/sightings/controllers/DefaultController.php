@@ -2,6 +2,7 @@
 
 namespace backend\modules\sightings\controllers;
 
+use common\models\sighting\form\SightingDeleteForm;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
@@ -86,22 +87,34 @@ class DefaultController extends Controller
         return $this->renderAjax('_reply_list', ['dataProvider' => $dataProvider]);
     }
 
+
     public function actionSightingDelete($id)
     {
-        $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
-        if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        $sighting_delete_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_delete_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
         }
 
-        $sighting->status = Sighting::STATUS_DELETE;
+        $model = new SightingDeleteForm($sighting_delete_model);
+        $model->status = Sighting::STATUS_DELETE;
 
-        if ($sighting->save(false)) {
-            Yii::$app->session->setFlash('success', 'Sighting has been deleted successfully.');
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->sighting_delete_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
         } else {
-            Yii::$app->session->setFlash('error', 'Failed to delete the post. Please try again.');
+            $model->sighting_delete_model->loadDefaultValues();
         }
 
-        return $this->redirect(['index']);
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
+        ]);
     }
 
     public function actionCommentDelete($id)
