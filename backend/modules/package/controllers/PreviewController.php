@@ -32,7 +32,7 @@ class PreviewController extends Controller
      */
     public function actionIndex($id)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, Package::STATUS_SUSPEND, 'id' => $id])->limit(1)->one();
+        $package = Package::find()->where(['id' => $id, 'status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
