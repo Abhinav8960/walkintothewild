@@ -21,7 +21,7 @@ class NovaAppAsset extends AssetBundle
         // 'plugins/select2/css/select2.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
         'plugins/accordion/accordion.min.js',
