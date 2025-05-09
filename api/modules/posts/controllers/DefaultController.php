@@ -5,11 +5,13 @@ namespace api\modules\posts\controllers;
 use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
+use api\models\posts\UserPostComment;
 use api\models\posts\UserPostCommentLike;
 use api\models\posts\UserPostLike;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
 use common\models\PostReportForm;
+use common\models\postscomment\form\UserPostCommentFlagForm;
 use common\models\postscomment\form\UserPostCommentForm;
 use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsImageForm;
@@ -35,10 +37,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit','flag'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit','flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -58,6 +60,7 @@ class DefaultController extends RestController
                     'user-post-report' => ['POST'],
                     'post-delete' => ['POST'],
                     'post-edit' => ['POST'],
+                    'flag' => ['POST'],
                 ],
             ],
         ];
@@ -287,6 +290,41 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not edit successfully"]);
         }
 
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionFlag($id, $user_post_comment_id)
+    {
+        $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$user_post_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        $flag_comment = UserPostComment::find()->where(['id' => $user_post_comment_id])->limit(1)->one();
+
+        if (!$flag_comment) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Comment Not Found!!!"]);
+        }
+
+        if ($flag_comment->user_id == $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+        }
+
+        $model = new UserPostCommentFlagForm();
+        $model->user_posts_id = $user_post_model->id;
+        $model->user_post_comment_id = $flag_comment->id;
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->user_post_flag_model->save(false)) {
+                $flag_comment->flaged = 1;
+                $flag_comment->save(false);
+
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Flaged successfully!"]);
+            }
+        }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }

@@ -10,13 +10,18 @@ class SightingComment extends \common\models\sighting\SightingComment
 {
     public function fields()
     {
-        $fields = parent::fields();
-        $fields[] = 'user';
-        $fields[] = 'replies';
-        $fields[] = 'is_liked';
-        $fields[] = 'liked_count';
-        $hold_fields = ['sighting_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        return array_diff($fields, $hold_fields);
+        // $fields = parent::fields();
+        // $fields[] = 'user';
+        // $fields[] = 'replies';
+        // $fields[] = 'is_liked';
+        // $fields[] = 'liked_count';
+        // $hold_fields = ['sighting_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        // return array_diff($fields, $hold_fields);
+        // return $fields;
+        $fields = ['id', 'safari_operator_id', 'comment', 'dateTime', 'flaged' => function () {
+            return (bool) $this->flaged;
+        }, 'user', 'replies', 'is_liked', 'liked_count'];
+
         return $fields;
     }
 

@@ -1,20 +1,20 @@
 <?php
 
-namespace business\modules\posts;
+namespace business\modules\settings;
 
 use common\models\operator\SafariOperator;
 use Yii;
 use yii\web\ForbiddenHttpException;
 
 /**
- * Sighting module definition class
+ * sharesafari module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'business\modules\posts\controllers';
+    public $controllerNamespace = 'business\modules\settings\controllers';
 
     /**
      * {@inheritdoc}
@@ -25,7 +25,6 @@ class Module extends \yii\base\Module
             \Yii::$app->getResponse()->redirect(['/partner-registration/create'])->send();
             \Yii::$app->end();
         }
-        
         parent::init();
     }
 

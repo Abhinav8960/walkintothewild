@@ -9,6 +9,7 @@ use common\models\package\PackageVersion;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
+use common\models\package\PackageSearch;
 use common\models\package\PackageVersionSearch;
 use Yii;
 use yii\web\Controller;
@@ -26,8 +27,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageVersionSearch();
-        $searchModel->report_days = 'all';
+        $searchModel = new PackageSearch();
         $searchModel->status = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

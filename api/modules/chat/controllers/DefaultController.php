@@ -118,7 +118,7 @@ class DefaultController extends RestController
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
         if (!$chat) {
-            return Yii::$app->api->sendResponse([], ['message'=>'Chat not found'], 400);
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
         }
         // $dataProvider = new ActiveDataProvider([
         //     'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderby(['last_message_at' => SORT_DESC]),
@@ -138,15 +138,25 @@ class DefaultController extends RestController
 
 
 
-    public function actionSendMessage($user_handle)
+    public function actionSendMessage($user_handle, $chat_hash = NULL)
     {
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-            return Yii::$app->api->sendResponse([], ['message'=>'User not found'], 400);
-
+            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
         }
-        $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->one();
+
+        if (!empty($chat_hash)) {
+
+            // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            $chat_model = Chat::find()->andWhere(['or',['user_id'=>$this->userinfo->id,'recipient_user_id'=>$individual_user->id],['user_id'=>$individual_user->id,'recipient_user_id'=>$this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            if (empty($chat_model)) {
+                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+            }
+        } else {
+            $chat_model = Chat::find()->andWhere(['or',['user_id'=>$this->userinfo->id,'recipient_user_id'=>$individual_user->id],['user_id'=>$individual_user->id,'recipient_user_id'=>$this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        }
+       
         if (!$chat_model) {
             $chat_model = new Chat();
             $chat_model->generateChatHash();
@@ -166,7 +176,7 @@ class DefaultController extends RestController
 
         $message = Yii::$app->request->post('message');
         if ($message == '') {
-            return Yii::$app->api->sendResponse([], ['message'=>'Message is required'], 400);
+            return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
 
         return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $data = NULL);
@@ -279,7 +289,7 @@ class DefaultController extends RestController
                     ModelsGeneralModel::sendmailfromlog($maillog_data['log_id']);
                 }
 
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "message sent successfully"]);
+                // return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "message sent successfully"]);
             }
 
 
@@ -291,6 +301,7 @@ class DefaultController extends RestController
                 $chat->status = 1;
                 $chat->is_seen = 0;
                 $chat->created_at = time();
+                $chat->save(false);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "message sent successfully"]);
             } else {
                 return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);

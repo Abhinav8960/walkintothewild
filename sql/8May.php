@@ -11,3 +11,12 @@ INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `s
 
 CREATE TABLE `wildwalks`.`lead_partners` ( `id` INT NOT NULL AUTO_INCREMENT , `lead_id` INT NOT NULL , `partner_id` INT NOT NULL COMMENT 'safari_operator' , `status` BOOLEAN NOT NULL DEFAULT TRUE , `created_by` INT NOT NULL , `updated_by` INT NOT NULL , `created_at` INT NOT NULL , `updated_at` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 ALTER TABLE `wildwalks`.`lead_partners` ADD UNIQUE (`lead_id`, `partner_id`);
+
+
+
+ALTER TABLE `sighting` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `v_duration`;
+ALTER TABLE `user_posts` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `width`;
+
+
+ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
+ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;

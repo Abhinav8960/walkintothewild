@@ -2,6 +2,7 @@
 
 namespace backend\modules\posts\controllers;
 
+use common\models\postscomment\form\UserPostDeleteForm;
 use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
 use common\models\UserPostSearch;
@@ -89,21 +90,33 @@ class DefaultController extends Controller
 
     public function actionPostDelete($id)
     {
-        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
-        if (!$userpost) {
+        $user_posts_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$user_posts_model) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
         }
 
-        $userpost->status = UserPosts::STATUS_DELETE;
+        $model = new UserPostDeleteForm($user_posts_model);
+        $model->status = UserPosts::STATUS_DELETE;
 
-        if ($userpost->save(false)) {
-            Yii::$app->session->setFlash('success', 'Post has been deleted successfully.');
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_posts_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
         } else {
-            Yii::$app->session->setFlash('error', 'Failed to delete the post. Please try again.');
+            $model->user_posts_model->loadDefaultValues();
         }
-
-        return $this->redirect(['index']);
+        
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
+        ]);
     }
+
 
 
     public function actionCommentDelete($id)

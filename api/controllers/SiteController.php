@@ -10,6 +10,7 @@ use api\behaviours\Apiauth;
 use api\models\CanSocialLoginForm;
 use api\models\cms\contentmanagement\ContentManagement;
 use api\models\MasterMetaTableInfoSearch;
+use api\models\operator\SafariOperator;
 use api\models\OtpVerificationSocialLoginForm;
 use api\models\SocialLoginForm;
 use api\models\VerifySocialLoginForm;
@@ -43,12 +44,12 @@ class SiteController extends RestController
                 'only' => ['logout', 'profile', 'update-token'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'profile', 'update-token'],
+                        'actions' => ['logout', 'profile', 'update-token', 'deactivate'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login','reset-social-login', 'otp-verification-social-login', 'error'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -68,6 +69,7 @@ class SiteController extends RestController
                     'can-social-login' => ['POST'],
                     'verify-social-login' => ['POST'],
                     'reset-social-login' => ['POST'],
+                    'deactivate' => ['POST'],
 
                 ],
             ],
@@ -139,7 +141,7 @@ class SiteController extends RestController
                     return Yii::$app->api->sendFailedStringResponse(['You are not register with us, check source']);
                 }
 
-                
+
 
                 $auth = Auth::find()->where([
                     'source' => $model->source,
@@ -251,11 +253,10 @@ class SiteController extends RestController
 
         if ($model->validate()) {
             if ($model->reset_login()) {
-                $data = ['is_reset'=>true,'can_login' => false];
+                $data = ['is_reset' => true, 'can_login' => false];
                 return Yii::$app->api->sendResponse($data);
-
             }
-            $data = ['is_reset'=>false,'can_login' => true];
+            $data = ['is_reset' => false, 'can_login' => true];
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
@@ -290,7 +291,7 @@ class SiteController extends RestController
             if (!$model->can_login()) {
 
                 if ($model->verify_login()) {
-                    $data = ['can_login' => false, 'is_otp_send' => true, 'otp'=>$model->otp];
+                    $data = ['can_login' => false, 'is_otp_send' => true, 'otp' => $model->otp];
                     // $data = ['can_login' => false, 'is_otp_send' => true];
                     return Yii::$app->api->sendResponse($data);
                 }
@@ -312,14 +313,12 @@ class SiteController extends RestController
         $model->attributes = $this->request;
 
         if ($model->validate()) {
-            if($model->validateOtp()){
+            if ($model->validateOtp()) {
 
                 $data = ['can_login' => true];
                 return Yii::$app->api->sendResponse($data);
             }
-            $data = ['can_login' => false, "message"=>"Otp Not matched"];
-
-
+            $data = ['can_login' => false, "message" => "Otp Not matched"];
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
@@ -433,5 +432,23 @@ class SiteController extends RestController
         }
 
         return Yii::$app->api->sendResponse(['status' => 0, 'response' => $response->getData()], ['message' => 'Message Sending Failed']);
+    }
+
+
+    public function actionDeactivate()
+    {
+        $user_model = $this->userinfo;
+        if ($user_model) {
+            $user_model->status = User::STATUS_DELETED;
+            if ($user_model->save(false)) {
+                $safari_operator = SafariOperator::find()->where(['user_id' => $user_model->id])->limit(1)->one();
+                if ($safari_operator) {
+                    $safari_operator->status = SafariOperator::STATUS_DELETE;
+                    $safari_operator->save(false);
+                }
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Deactivated Successfully"]);
+            }
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Deactivated Successfully"]);
     }
 }

@@ -6,10 +6,12 @@ use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\sighting\Sighting;
+use api\models\sighting\SightingComment;
 use api\models\sighting\SightingCommentLike;
 use api\models\sighting\SightingLike;
 use api\models\sighting\SightingSearch;
 use common\models\operator\SafariOperator;
+use common\models\sighting\form\SightingCommentFlagForm;
 use common\models\sighting\form\SightingCommentForm;
 use common\models\sighting\form\SightingForm;
 use common\models\sighting\form\SightingReplyForm;
@@ -36,10 +38,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete','flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete','flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -62,6 +64,7 @@ class DefaultController extends RestController
                     'comment-like' => ['POST'],
                     'sighting-report' => ['POST'],
                     'sighting-delete' => ['POST'],
+                    'flag' => ['POST']
                 ],
             ],
         ];
@@ -258,6 +261,41 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+    }
+
+    public function actionFlag($id, $sighting_comment_id)
+    {
+        $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $flag_comment = SightingComment::find()->where(['id' => $sighting_comment_id])->limit(1)->one();
+
+        if (!$flag_comment) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Comment Not Found!!!"]);
+        }
+
+        if ($flag_comment->user_id == $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+        }
+
+        $model = new SightingCommentFlagForm();
+        $model->sighting_id = $sighting_model->id;
+        $model->sighting_comment_id = $flag_comment->id;
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->sighting_flag_model->save(false)) {
+                $flag_comment->flaged = 1;
+                $flag_comment->save(false);
+
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Flaged successfully!"]);
+            }
+        }
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
 
