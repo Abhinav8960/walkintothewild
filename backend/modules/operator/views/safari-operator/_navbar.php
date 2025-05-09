@@ -81,6 +81,11 @@
                 <!-- <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li> -->
                 <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
                 <!-- <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li> -->
+                <li><a href="/operator/safari-operator/registration-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'registration-details' ? 'active' : '' ?>">Registration Details</a></li>
+                <li><a href="/operator/safari-operator/business-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'business-details' ? 'active' : '' ?>">Business Details</a></li>
+                <li><a href="/operator/safari-operator/bank-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'bank-details' ? 'active' : '' ?>">Bank Details</a></li>
+                <li><a href="/operator/safari-operator/userkyc-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'userkyc-details' ? 'active' : '' ?>">User Kyc Details</a></li>
+
             </ul>
         </div>
     </div>

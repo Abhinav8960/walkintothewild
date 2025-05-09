@@ -60,6 +60,38 @@ class SafariOperatorController extends Controller
         return $this->render('view', ['model' => $model]);
     }
 
+     /**
+     * View Partner Registration Details
+     */
+    public function actionRegistrationDetails($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('registration_details', ['model' => $model]);
+    }
+
+    public function actionBusinessDetails($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('business_details', ['model' => $model]);
+    }
+
+    public function actionBankDetails($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('bank_details', ['model' => $model]);
+    }
+
+    public function actionUserkycDetails($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('userkyc_details', ['model' => $model]);
+    }
+
+
     /**
      * View Operator
      */
