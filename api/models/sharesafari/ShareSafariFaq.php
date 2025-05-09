@@ -13,9 +13,9 @@ class ShareSafariFaq extends \common\models\sharesafari\ShareSafariFaq
             'id',
             'question',
             'answer',
-            'status' => function () {
-                return (bool)$this->status;
-            },
+            // 'status' => function () {
+            //     return (bool)$this->status;
+            // },
         ];
         // $hold_fields, = ['share_safari_id','faq_id','position', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         // return array_diff($fields, $hold_fields);
