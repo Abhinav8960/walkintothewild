@@ -6,6 +6,8 @@ use common\Helper\FsHelper;
 use common\models\master\animal\MasterAnimal;
 use common\models\meta\MetaSafariSession;
 use common\models\meta\MetaZoneType;
+use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
 use common\models\sighting\Sighting;
 use Yii;
@@ -58,7 +60,6 @@ class SightingForm extends Model
             $this->safari_session_id = $this->sighting_model->safari_session_id;
             $this->post_datetime = $this->sighting_model->post_datetime;
             $this->zone_id = $this->sighting_model->zone_id;
-            
         }
     }
 
@@ -81,7 +82,7 @@ class SightingForm extends Model
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'maxSize' => 10 * 1024,
             ],
-            [['user_id', 'status','safari_operator_id'], 'integer'],
+            [['user_id', 'status', 'safari_operator_id'], 'integer'],
             [['description'], 'string'],
             [['v_size', 'v_duration', 'master_animal_id', 'safari_session_id', 'zone_id', 'location'], 'integer'],
             [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
@@ -96,7 +97,8 @@ class SightingForm extends Model
             ['master_animal_id', 'exist', 'targetClass' => MasterAnimal::class, 'targetAttribute' => ['master_animal_id' => 'id']],
             ['safari_session_id', 'exist', 'targetClass' => MetaSafariSession::class, 'targetAttribute' => ['safari_session_id' => 'id']],
             ['zone_id', 'exist', 'targetClass' => MetaZoneType::class, 'targetAttribute' => ['zone_id' => 'id']],
-            ['location', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['location' => 'id']],
+            // ['location', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['location' => 'id']],
+            ['location', 'validateOperatorPark'],
         ];
     }
 
@@ -185,6 +187,24 @@ class SightingForm extends Model
                     $this->sighting_model->video_thumbnail_path = $filePath;
                     $this->sighting_model->video_thumbnail_etag = $video_thumbnail_etag;
                     $this->sighting_model->save(false);
+                }
+            }
+        }
+    }
+
+    public function validateOperatorPark($attribute, $params)
+    {
+        $user = Yii::$app->user->identity;
+        if ($user) {
+            $operator = SafariOperator::find()->where(['user_id' => $user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
+            if ($operator) {
+                $exists = SafariOperatorPark::find()
+                    ->where(['safari_operator_id' => $operator->id, 'park_id' => $this->$attribute])
+                    ->andWhere(['status' => 1])
+                    ->exists();
+
+                if (!$exists) {
+                    $this->addError($attribute, 'You are not assigned to this park.');
                 }
             }
         }

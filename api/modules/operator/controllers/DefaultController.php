@@ -48,7 +48,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari', 'operator-packages'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari', 'operator-packages','operator-park-dropdown'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -77,7 +77,8 @@ class DefaultController extends RestController
                     'operator-shared-safari' => ['GET'],
                     'operator-packages' => ['GET'],
                     'reviewupdate' => ['POST'],
-                    'flag' => ['POST']
+                    'flag' => ['POST'],
+                    'operator-park-dropdown' => ['GET'],
                 ],
             ],
         ];
@@ -426,5 +427,27 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Review reported successfully!']);
             }
         }
+    }
+
+    public function actionOperatorParkDropdown($slug)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FOR_FILTER_PARK;
+        $operator = SafariOperator::find()
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])
+            ->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+        $safariOperatorPark =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator->id])->all();
+
+        $ids = array_column($safariOperatorPark, 'park_id');
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => SafariPark::find()->where(['id' => $ids]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->querySender($dataProvider, $rootIndexName = "parks");
     }
 }
