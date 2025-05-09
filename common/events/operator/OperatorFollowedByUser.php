@@ -79,7 +79,7 @@ class OperatorFollowedByUser extends Event
                         'username' =>$this->safari_operator,
                         'name' => $this->user_name
                     ],
-                    'to_mail' => \Yii::$app->params['localAdminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
+                    'to_mail' => \Yii::$app->params['adminEmail'] ,
                     'cc' => [],
                     'bcc' => [],
                 ]

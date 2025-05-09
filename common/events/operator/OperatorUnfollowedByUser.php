@@ -78,7 +78,7 @@ class OperatorUnfollowedByUser extends Event
                         'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
-                    'to_mail' => \Yii::$app->params['localAdminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
+                    'to_mail' => \Yii::$app->params['adminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
                     'cc' => [],
                     'bcc' => [],
                 ]

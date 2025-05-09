@@ -18,10 +18,6 @@ return [
     'frontend_url' => 'https://www.walkintothewild.in',
     'endpoint' => 'https://www.walkintothewild.in',
     'comment_threshold' => 60, //user can not post same comment within 60 seconds of their comment
-    'businessDomain' => 'http://business.walkintothewild.io',
-
-    'localAdminEmail' => 'abhinavpal8960@gmail.com',
-    'stagingAdminEmail' => 'no-reply@walkintothewild.in',
-    
+    'businessDomain' => 'http://business.walkintothewild.io',    
 
 ];
