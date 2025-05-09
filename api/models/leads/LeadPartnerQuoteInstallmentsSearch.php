@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\quotations\chat;
+namespace api\models\leads;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\quotations\chat\QuotationsChat;
+use api\models\leads\LeadPartnerQuoteInstallments;
 
 /**
- * QuotationsChatSearch represents the model behind the search form of `common\models\quotations\chat\QuotationsChat`.
+ * LeadPartnerQuoteInstallmentsSearch represents the model behind the search form of `common\models\leads\LeadPartnerQuoteInstallments`.
  */
-class QuotationsChatSearch extends QuotationsChat
+class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class QuotationsChatSearch extends QuotationsChat
     public function rules()
     {
         return [
-            [['id', 'quotations_id', 'sender_id', 'receiver_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
-            [['message', 'sent_at', 'read_at', 'attachment'], 'safe'],
+            [['id', 'lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['amount'], 'number'],
+            [['payment_link', 'payment_hash', 'before_datetime'], 'safe'],
         ];
     }
 
@@ -41,7 +42,7 @@ class QuotationsChatSearch extends QuotationsChat
      */
     public function search($params, $formName = null)
     {
-        $query = QuotationsChat::find();
+        $query = LeadPartnerQuoteInstallments::find();
 
         // add conditions that should always apply here
 
@@ -60,20 +61,20 @@ class QuotationsChatSearch extends QuotationsChat
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'quotations_id' => $this->quotations_id,
-            'sender_id' => $this->sender_id,
-            'receiver_id' => $this->receiver_id,
-            'sent_at' => $this->sent_at,
-            'read_at' => $this->read_at,
+            'lead_partner_quote_id' => $this->lead_partner_quote_id,
+            'lead_id' => $this->lead_id,
+            'partner_id' => $this->partner_id,
+            'amount' => $this->amount,
+            'before_datetime' => $this->before_datetime,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'message', $this->message])
-            ->andFilterWhere(['like', 'attachment', $this->attachment]);
+        $query->andFilterWhere(['like', 'payment_link', $this->payment_link])
+            ->andFilterWhere(['like', 'payment_hash', $this->payment_hash]);
 
         return $dataProvider;
     }

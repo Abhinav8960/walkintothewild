@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\quotations;
+namespace common\models\leads;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\quotations\Quotation;
+use common\models\leads\LeadPartners;
 
 /**
- * QuotationSearch represents the model behind the search form of `common\models\quotations\Quotation`.
+ * LeadPartnersSearch represents the model behind the search form of `common\models\leads\LeadPartners`.
  */
-class QuotationSearch extends Quotation
+class LeadPartnersSearch extends LeadPartners
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class QuotationSearch extends Quotation
     public function rules()
     {
         return [
-            [['id', 'collection', 'collection_id', 'travelers', 'user_id', 'operator_id', 'stay_category_id', 'is_closed', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['objective', 'collection_uuid', 'start_date', 'name', 'phone', 'email', 'submit_datetime'], 'safe'],
+            [['id', 'lead_id', 'partner_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ class QuotationSearch extends Quotation
      */
     public function search($params, $formName = null)
     {
-        $query = Quotation::find();
+        $query = LeadPartners::find();
 
         // add conditions that should always apply here
 
@@ -60,27 +59,14 @@ class QuotationSearch extends Quotation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'collection' => $this->collection,
-            'collection_id' => $this->collection_id,
-            'travelers' => $this->travelers,
-            'start_date' => $this->start_date,
-            'user_id' => $this->user_id,
-            'submit_datetime' => $this->submit_datetime,
-            'operator_id' => $this->operator_id,
-            'stay_category_id' => $this->stay_category_id,
-            'is_closed' => $this->is_closed,
+            'lead_id' => $this->lead_id,
+            'partner_id' => $this->partner_id,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
-
-        $query->andFilterWhere(['like', 'objective', $this->objective])
-            ->andFilterWhere(['like', 'collection_uuid', $this->collection_uuid])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }

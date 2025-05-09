@@ -18,6 +18,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
 
     const NEW_USER_REGISTRATION_TEMPLATE = 1;
     const CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE = 8;
+    const PACKAGE_QUOTATION_RECEIVED = 11;
 
     /**
      * {@inheritdoc}

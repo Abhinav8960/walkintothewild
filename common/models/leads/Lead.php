@@ -1,14 +1,16 @@
 <?php
 
-namespace common\models\quatation;
+namespace common\models\leads;
 
 use Yii;
 
 /**
- * This is the model class for table "quotation_requests".
+ * This is the model class for table "lead".
  *
  * @property int $id
+ * @property int $source 1=>package,2=>park,3=>operator 
  * @property int|null $package_id
+ * @property string $package_version
  * @property int|null $park_id
  * @property int|null $operator_id
  * @property string $name
@@ -19,14 +21,14 @@ use Yii;
  * @property string $to_date
  * @property int $is_date_flexible
  * @property int $travelers
- * @property string $accommodation
- * @property string $transport
- * @property string $meals
+ * @property string|null $accommodation
+ * @property string|null $transport
+ * @property string|null $meals
  * @property string|null $budget
  * @property string|null $addional_notes
  * @property int $user_id
  * @property int $is_booking_for_login_user
- * @property int $travelers_nationality
+ * @property int $is_seen_by_admin
  * @property int $status
  * @property int|null $created_at
  * @property int|null $updated_at
@@ -35,29 +37,16 @@ use Yii;
  */
 class Lead extends \yii\db\ActiveRecord
 {
-    const LEAD_TYPE_PACKAGE  = 1;
-    const LEAD_TYPE_PARK  = 2;
-    const LEAD_TYPE_OPERATOR  = 3;
-    
-    /**
-     * {@inheritdoc}
-     */
+
+    const SOURCE_PACKAGE = 1;
+    const SOURCE_PARK = 2;
+    const SOURCE_OPERATOR = 3;
+
+
     public function behaviors()
     {
         return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
+            \yii\behaviors\TimestampBehavior::className(),
         ];
     }
 
@@ -75,16 +64,15 @@ class Lead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['package_id', 'park_id', 'operator_id', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['is_date_flexible', 'is_seen_by_admin'], 'default', 'value' => 0],
+            [['package_id', 'package_version', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['name', 'email', 'phone', 'destination', 'from_date', 'to_date'], 'required'],
-            [['is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_seen_by_admin'], 'integer'],
-            [['type', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'user_id'], 'safe'],
+            [['source', 'package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
+            [['source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['from_date', 'to_date'], 'safe'],
             [['addional_notes'], 'string'],
-            [['type', 'name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
+            [['name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
-            ['email', 'email'],
         ];
     }
 
@@ -95,10 +83,11 @@ class Lead extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'type',
-            'package' => 'Package',
-            'park' => 'Park',
-            'operator' => 'Name',
+            'source' => 'Source',
+            'package_id' => 'Package ID',
+            'package_version' => 'Package Version',
+            'park_id' => 'Park ID',
+            'operator_id' => 'Operator ID',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
@@ -121,10 +110,5 @@ class Lead extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getUser()
-    {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'user_id']);
     }
 }

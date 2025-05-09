@@ -26,6 +26,8 @@ class QueueService
     private function emailLog($template)
     {
 
+        print_r($template);
+        die();
         // $mail_from = 'no-reply@walkintothewild.in';
         $log = new \common\models\MailLog();
         $log->subject = $template['subject'];

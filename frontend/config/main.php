@@ -109,9 +109,7 @@ return [
         'posts' => [
             'class' => 'frontend\modules\posts\Module',
         ],
-        'quatation' => [
-            'class' => 'frontend\modules\quatation\Module',
-        ],
+        
     ],
     'container' => [
         'definitions' => [
