@@ -64,6 +64,7 @@ class FirebaseCloudMessaging extends Component
                 'image' => $imageUrl,
             ]));
         if (!empty($data)) {
+           
             $message = $message->withData($data);
         }
         if (!empty($topic)) {

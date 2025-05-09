@@ -74,7 +74,27 @@ use yii\helpers\Url;
         </div>
     </div>
 
+<<<<<<< HEAD
+    <div class=" tab-menu-heading">
+        <div class="tabs-menu1">
+            <!-- Tabs -->
+            <ul class="nav panel-tabs main-nav-line">
+                <li><a href="/operator/safari-operator/view?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'overview' ? 'active' : '' ?>">Overview</a></li>
+                <li><a href="/operator/safari-operator/quote?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'quote' ? 'active' : '' ?>">Get a Free Quote</a></li>
+                <!-- <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li> -->
+                <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
+                <!-- <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li> -->
+                <li><a href="/operator/safari-operator/registration-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'registration-details' ? 'active' : '' ?>">Registration Details</a></li>
+                <li><a href="/operator/safari-operator/business-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'business-details' ? 'active' : '' ?>">Business Details</a></li>
+                <li><a href="/operator/safari-operator/bank-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'bank-details' ? 'active' : '' ?>">Bank Details</a></li>
+                <li><a href="/operator/safari-operator/userkyc-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'userkyc-details' ? 'active' : '' ?>">User Kyc Details</a></li>
+
+            </ul>
+        </div>
+    </div>
+=======
 </div>
+>>>>>>> 95aaf9bf03bc24b3681c496ec69560895be8b97c
 
 <div class=" tab-menu-heading">
     <div class="tabs-menu1">
