@@ -28,6 +28,9 @@ return [
         'posts' => [ // Chating and Messaging Module
             'class' => 'business\modules\posts\Module',
         ],
+        'settings' => [
+            'class' => 'business\modules\settings\Module',
+        ],
 
 
     ],
