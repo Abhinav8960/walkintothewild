@@ -9,7 +9,7 @@ use common\models\master\notification\MasterNotificationTemplate;
 use common\models\User;
 use yii\base\Event;
 
-class SafariJoinedByuser extends Event
+class SafariUnjoinedByuser extends Event
 {
     public $userId;
     public $email;
@@ -31,11 +31,10 @@ class SafariJoinedByuser extends Event
         'firebase',
     ];
 
-    protected $mail_template_code = 'THJS';  // To Host Join Safari
+    protected $mail_template_code = 'THUS';  // To Host Unjoin Safari
 
     public function __construct($interested_user, $shared_safari_id)
-    {
-        
+    {    
         $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
         $this->engine = \Yii::$app->engine;
@@ -61,7 +60,7 @@ class SafariJoinedByuser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->interested_user . ' joined your Shared Safari! Connect to plan the adventure.',
+                    'subject' => $this->interested_user . ' unjoined your Shared Safari!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
@@ -73,7 +72,7 @@ class SafariJoinedByuser extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
+                    'subject' => 'New Update !! ' . $this->interested_user . ' has unjoined ' . $this->name . "'s" . ' Shared Safari',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
@@ -94,6 +93,7 @@ class SafariJoinedByuser extends Event
                 //     'image_url' => NULL,
                 //     'action' => NULL,
                 // ],
+              
                 [
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title' => $this->title(),
@@ -120,7 +120,7 @@ class SafariJoinedByuser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_JOIN_TEMPLATE, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_UNJOIN_TEMPLATE, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }

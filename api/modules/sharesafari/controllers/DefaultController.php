@@ -215,8 +215,6 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-        return  new \common\events\sharesafari\SafariJoinedByuser('Akash',190);
-
    
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
@@ -231,6 +229,8 @@ class DefaultController extends SafariController
             if (!$share_safari_intrested) {
                 $share_safari_intrested = new ShareSafariIntrested();
             }
+            // return  new \common\events\sharesafari\SafariJoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->sharesafari->id);
+
             $agent = new \Jenssegers\Agent\Agent();
             $agent->setUserAgent(Yii::$app->request->userAgent);
             $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
@@ -266,9 +266,6 @@ class DefaultController extends SafariController
                 // FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                 // FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
-                return  new \common\events\sharesafari\SafariJoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->user->id);
-
-
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Joined!"]);
         }
@@ -277,6 +274,9 @@ class DefaultController extends SafariController
 
     public function actionUnjoin($slug)
     {
+
+       
+
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
@@ -286,6 +286,11 @@ class DefaultController extends SafariController
         if ($this->userinfo->partner) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to unjoin a shared safari. Tour operators cannot participate in shared safaris."]);
         }
+
+     
+       
+        // return  new \common\events\sharesafari\SafariUnjoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->sharesafari->id);
+
         if ($share_safari_intrested) {
             $agent = new \Jenssegers\Agent\Agent();
             $agent->setUserAgent(Yii::$app->request->userAgent);
@@ -302,9 +307,10 @@ class DefaultController extends SafariController
             if ($share_safari_intrested->save(false)) {
                 FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                 return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
+
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
-        }
+        } 
     }
 
 

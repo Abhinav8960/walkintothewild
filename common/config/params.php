@@ -20,7 +20,7 @@ return [
     'comment_threshold' => 60, //user can not post same comment within 60 seconds of their comment
     'businessDomain' => 'http://business.walkintothewild.io',
 
-    'localAdminEmail' => 'abhinav@triline.co.in',
+    'localAdminEmail' => 'abhinavpal8960@gmail.com',
     'stagingAdminEmail' => 'no-reply@walkintothewild.in',
     
 
