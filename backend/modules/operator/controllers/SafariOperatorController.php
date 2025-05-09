@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorDeleteForm;
 use common\models\operator\form\SafariOperatorForm;
+use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
 use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
@@ -26,6 +27,7 @@ use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
 use common\models\User;
 use common\models\UserFollow;
+use yii\data\ActiveDataProvider;
 
 /**
  * SafariOperatorController.
@@ -409,5 +411,68 @@ class SafariOperatorController extends Controller
                 }
             }
         }
+    }
+
+    public function actionOperatorParks($id)
+    {
+        $operator_model = $this->findModel($id);
+
+        $query =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator_model->id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('operator_parks_list', ['dataProvider' => $dataProvider, 'operator_model' => $operator_model]);
+    }
+
+    public function actionRemovePark($id, $park_id)
+    {
+        $operator_model = $this->findModel($id);
+
+        $operator_park =  SafariOperatorPark::find()->where(['id' => $park_id, 'status' => SafariOperatorPark::STATUS_ACTIVE])->limit(1)->one();
+        if ($operator_park) {
+            $operator_park->status = SafariOperatorPark::STATUS_SUSPEND;
+            if ($operator_park->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Successfully Removed');
+                return $this->redirect(['operator-parks', 'id' => $operator_model->id]);
+            }
+        }
+    }
+
+
+    public function actionAddPark($id)
+    {
+        $operator_model = $this->findModel($id);
+
+        $model = new SafariOperatorParkForm();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    if ($model->parks) {
+                        foreach ($model->parks as $park) {
+                            $park_model = new SafariOperatorPark();
+                            $park_model->safari_operator_id = $id;
+                            $park_model->park_id = $park;
+                            $park_model->status = SafariOperatorPark::STATUS_ACTIVE;
+                            $park_model->save(false);
+                        }
+                    }
+                    \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                    return $this->redirect(['operator-parks', 'id' => $id]);
+                }
+            }
+        } else {
+            $model->safari_operator_park_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('_add_park_form', [
+            'operator_model' => $operator_model,
+            'model' => $model,
+        ]);
     }
 }
