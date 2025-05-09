@@ -418,14 +418,23 @@ class DefaultController extends SafariController
             }
 
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-                if ($this->userinfo->partner && $this->userinfo->partner->id != $share_safari->host_user_id) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't comment on this safari!!!"]);
+                if ($this->userinfo->partner) {
+                    if ($this->userinfo->partner->id != $share_safari->host_user_id) {
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't comment on this safari!!!"]);
+                    }
+                } else {
+                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                    if (!$share_safari_intrested) {
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                    }
                 }
             }
 
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-            if (!$share_safari_intrested) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+            if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->host_user_id != $this->userinfoId) {
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                if (!$share_safari_intrested) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                }
             }
         }
 
@@ -460,14 +469,23 @@ class DefaultController extends SafariController
             }
 
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-                if ($this->userinfo->partner && $this->userinfo->partner->id != $share_safari->host_user_id) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't reply on this safari!!!"]);
+                if ($this->userinfo->partner) {
+                    if ($this->userinfo->partner->id != $share_safari->host_user_id) {
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't reply on this safari!!!"]);
+                    }
+                } else {
+                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                    if (!$share_safari_intrested) {
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                    }
                 }
             }
 
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-            if (!$share_safari_intrested) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+            if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->host_user_id != $this->userinfoId) {
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                if (!$share_safari_intrested) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                }
             }
         }
 
