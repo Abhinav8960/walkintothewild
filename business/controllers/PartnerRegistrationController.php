@@ -2,6 +2,7 @@
 
 namespace business\controllers;
 
+use common\models\operator\SafariOperator;
 use common\models\partnerregistration\form\PartnerGstDetailsForm;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerGstDetails;
@@ -47,6 +48,7 @@ class PartnerRegistrationController extends Controller
                         $model->partner_model->final_approved = 0;
                     }
                     $model->form1_status = PartnerRegistration::FORM_FILLED;
+
                     if ($model->partner_model->save()) {
                         $model->uploadFiles();
                         if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
@@ -364,11 +366,12 @@ class PartnerRegistrationController extends Controller
             ->orderBy(['id' => SORT_DESC])
             ->one();;
 
+        $safari_operator = SafariOperator :: find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one();
         if ($model === null) {
             throw new NotFoundHttpException('Registration record not found.');
         }
 
-        if ($model->final_approved == 1 && $model->is_sendforapproval == 1) {
+        if ($model->final_approved == 1 && $model->is_sendforapproval == 1 && $safari_operator->status = SafariOperator :: STATUS_ACTIVE) {
             return $this->redirect(['site/index']);
         } elseif ($model->form1_status == PartnerRegistration::FORM_REJECTED || $model->form2_status == PartnerRegistration::FORM_REJECTED || $model->form3_status == PartnerRegistration::FORM_REJECTED || $model->form4_status == PartnerRegistration::FORM_REJECTED || $model->form5_status == PartnerRegistration::FORM_REJECTED) {
             return $this->redirect(['final-view']);
@@ -458,5 +461,15 @@ class PartnerRegistrationController extends Controller
         ])
         ->column();
         return $operated_parks;
+    }
+
+    public function actionDeactivate()
+    {
+        $this->layout = 'registration';
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
+        return $this->render('deactivate');
+        
     }
 }

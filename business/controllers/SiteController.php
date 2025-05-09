@@ -73,6 +73,9 @@ class SiteController extends Controller
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
             return $this->redirect(['/partner-registration/create']);
         }
+        if(!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id,'status'=>SafariOperator :: STATUS_ACTIVE])->limit(1)->exists()) {
+            return $this->redirect(['/partner-registration/deactivate']);
+        }  
         return $this->render('index');
     }
 
