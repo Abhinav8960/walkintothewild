@@ -1668,4 +1668,25 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $safariparkList =  SafariPark::find()->where(['not in', 'id', $ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE]);
         return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
+
+    public static function number_format_indian($number) {
+        $decimal = '';
+        if (strpos($number, '.') !== false) {
+            list($number, $decimal) = explode('.', $number);
+            $decimal = '.' . $decimal;
+        }
+        $length = strlen($number);
+        $result = '';
+        if ($length > 3) {
+            $result = substr($number, -3);
+            $number = substr($number, 0, $length - 3);
+            while (strlen($number) > 0) {
+                $result = substr($number, -2) . ',' . $result;
+                $number = substr($number, 0, -2);
+            }
+        } else {
+            $result = $number;
+        }
+        return $result . $decimal;
+    }
 }
