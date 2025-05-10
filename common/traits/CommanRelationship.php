@@ -87,17 +87,33 @@ trait CommanRelationship
      *
      * @return void
      */
+    // public function getNewstatuslabel()
+    // {
+    //     $statuses = GeneralModel::newrecentstatusoption();
+
+    //     if (isset($statuses[$this->status])) {
+    //         if ($this->status == 1) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         } else if ($this->status == 0) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         } else if ($this->status == -1) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         }
+    //     }
+    //     return $this->status;
+    // }
+
     public function getNewstatuslabel()
     {
         $statuses = GeneralModel::newrecentstatusoption();
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<span class="badge rounded-pill" style="background-color:#EBF9F1; color:#1F9254; font-size: 14px; padding: 8px 16px; font-weight: 500;">Active</span>';
             } else if ($this->status == 0) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<span class="badge rounded-pill" style="background-color:rgb(230, 178, 178); color:rgb(233, 83, 83); font-size: 14px; padding: 8px 16px; font-weight: 500;">Inactive</span>';
             } else if ($this->status == -1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<span class="badge rounded-pill" style="background-color:rgba(235, 249, 241, 0.18); color:rgb(230, 237, 233); font-size: 14px; padding: 8px 16px; font-weight: 500;">Delete</span>';
             }
         }
         return $this->status;
@@ -113,5 +129,4 @@ trait CommanRelationship
     {
         return base64_encode(convert_uuencode($this->id));
     }
-  
 }
