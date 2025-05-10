@@ -43,20 +43,20 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         }
                     ],
                     [
+                        'label' => 'Stay Category',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
+                        }
+                    ],
+                    [
                         'label' => 'Cost Per Person',
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return GeneralModel::number_format_indian($model->cost_per_person);
-                        }
-                    ],
-                    [
-                        'label' => 'Stay Category',
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
                         }
                     ],
                     [

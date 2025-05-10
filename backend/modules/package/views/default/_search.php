@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Operator Name'])->label(false) ?>
+        <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Partner Name'])->label(false) ?>
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Stay Category'])->label(false) ?>

@@ -6,7 +6,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 <!-- main-sidebar -->
 <div class="sticky">
     <aside class="app-sidebar ">
-        <div class="main-sidebar-header active" style="background: #09422D !important;">
+        <div class="main-sidebar-header active" style="background: #F7BF39 !important;">
             <a class="header-logo active" href="/">
                 <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-logo" alt="logo">
                 <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-dark" alt="logo">
@@ -16,9 +16,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
         </div>
         <div class="main-sidemenu">
             <div class="slide-left disabled" id="slide-left"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
-            <div class="partner_heading">
-                <h4>Partner</h4>
-            </div>
             <ul class="side-menu">
 
                 <li class="slide">

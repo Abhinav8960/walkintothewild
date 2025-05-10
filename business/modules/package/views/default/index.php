@@ -1,18 +1,13 @@
 <?php
 
-
 use common\models\GeneralModel;
-use common\models\package\PackageVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Package';
-$this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] =  ['label' => 'My Packages', 'url' => '/package'];
-// $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange float-end', 'title' => 'Create']);
 ?>
 
 
@@ -27,27 +22,63 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
                         'label' => 'Package Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->package_name;
                         }
                     ],
                     [
-                        'label' => 'Cost Per Person',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'label' => 'Stay Category',
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->cost_per_person;
+                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Cost Per Person',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->cost_per_person);
+                        }
+                    ],
+                    [
+                        'label' => 'Feature',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $html = '';
+                            $features = $model->packagefeatures;
+                            foreach ($features as $key => $feature) {
+                                if (isset(GeneralModel::packagefeatureoption()[$feature->feature_id])) {
+                                    $html .= GeneralModel::packagefeatureoption()[$feature->feature_id] . ', ';
+                                }
+                            }
+                            return $html;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Included',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $html = '';
+                            $included = $model->packageincluded;
+                            foreach ($included as $key => $data) {
+                                if (isset(GeneralModel::packageincludeoption()[$data->include_id])) {
+                                    $html .= GeneralModel::packageincludeoption()[$data->include_id] . ', ';
+                                }
+                            }
+                            return $html;
                         }
                     ],
                     [
                         'label' => 'Live Version',
-                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->live_version) {
@@ -61,7 +92,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
                             'update' => function ($url, $model) {
