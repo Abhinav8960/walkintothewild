@@ -30,6 +30,7 @@ use common\models\MailLog;
 use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageStates;
+use common\models\quatation\form\LeadForm;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -139,8 +140,8 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        $packagemodel = new PackageQuoteForm();
-
+        $packagemodel = new LeadForm();
+        $packagemodel->scenario = LeadForm::
         $packagemodel->action_validate_url = '/package/default/validate';
         if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
             // Send Notification for Package Quote
@@ -484,4 +485,6 @@ class DefaultController extends FrontendBaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+   
 }

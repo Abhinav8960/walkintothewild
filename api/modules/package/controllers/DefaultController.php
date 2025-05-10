@@ -25,6 +25,7 @@ use common\models\GeneralModel;
 use common\models\MailLog;
 use common\models\package\PackageDaySearch;
 use api\models\package\PackageSearch;
+use common\models\leads\form\PackageLeadForm;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageCommentReportForm;
 use frontend\models\PackageQuoteForm;
@@ -52,10 +53,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag', 'quotation'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist', 'package-quote', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -77,8 +78,7 @@ class DefaultController extends RestController
                     'comment-view' => ['GET'],
                     'package-park' => ['GET'],
                     'package-days'  => ['GET'],
-                    'package-faqs' => ['GET'],
-                    'quotation' => ['POST'],
+                    'package-faqs' => ['GET']
                 ],
             ],
         ];
@@ -269,10 +269,10 @@ class DefaultController extends RestController
         if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
-        $packagemodel = new PackageQuoteForm();
+        $packagemodel = new PackageLeadForm();
         $packagemodel->attributes = $this->request;
         if ($packagemodel->validate()) {
-            if ($packagemodel->request($package->id)) {
+            if ($packagemodel->request($package->id, $this->userinfo)) {
                 // FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
             }

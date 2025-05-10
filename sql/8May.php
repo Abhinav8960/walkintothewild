@@ -1,3 +1,6 @@
+INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (11, 'Package Quotation Received', 'Package Quotation Received', 'Quotation Received on package: {{package_name}} by {{user_name}}!', '1', '1746790635', '30', '1746790635', '30');
+
+
 ALTER TABLE `master_notification_template` ADD `type` VARCHAR(255) NULL DEFAULT NULL AFTER `id`;
 UPDATE `master_notification_template` SET `type` = 'Joined Safari' WHERE `master_notification_template`.`id` = 1;
 UPDATE `master_notification_template` SET `type` = 'New Comment' WHERE `master_notification_template`.`id` = 2;
@@ -9,6 +12,8 @@ UPDATE `master_notification_template` SET `type` = 'New Review' WHERE `master_no
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'chat message received', '{{sender}}', '{{message}}', '1', '1735806556', '30', '1735806556', '30');
 
 
+CREATE TABLE `wildwalks`.`lead_partners` ( `id` INT NOT NULL AUTO_INCREMENT , `lead_id` INT NOT NULL , `partner_id` INT NOT NULL COMMENT 'safari_operator' , `status` BOOLEAN NOT NULL DEFAULT TRUE , `created_by` INT NOT NULL , `updated_by` INT NOT NULL , `created_at` INT NOT NULL , `updated_at` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `wildwalks`.`lead_partners` ADD UNIQUE (`lead_id`, `partner_id`);
 
 
 
@@ -18,3 +23,5 @@ ALTER TABLE `user_posts` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTE
 
 ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
 ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
+
+
