@@ -81,6 +81,7 @@ class PackageLeadForm extends Model
                 $this->assignToPartner($lead, $package, $login_user);
                 $this->prepareChat($lead, $package, $login_user);
             }
+            
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -99,7 +100,7 @@ class PackageLeadForm extends Model
         $assign_to_partner->status = $package->owned_by_id;
         $assign_to_partner->created_by = $login_user->id;
         $assign_to_partner->updated_by = $login_user->id;
-        return $assign_to_partner->save();
+        return $assign_to_partner->save(false);
     }
 
     private function prepareChat($lead, $package, $login_user)
@@ -122,7 +123,6 @@ class PackageLeadForm extends Model
         $chat->package_id = $lead->package_id;
         $chat->quote_id = $lead->id;
         $chat->is_seen = 0;
-
 
         if ($chat->save(false)) {
             $chat_message = new ChatMessage();

@@ -19,7 +19,7 @@ class PackageLeadReceived extends Event
     protected $engine;
     protected $chat_url;
 
-    public $template;
+    public $templates;
     public $channelName;
 
     protected $channels = [
@@ -44,7 +44,7 @@ class PackageLeadReceived extends Event
     {
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
-            $this->template = $this->getTemplates()[$channel];
+            $this->templates = $this->getTemplates()[$channel];
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
             $broadcastService->send($this, true);
