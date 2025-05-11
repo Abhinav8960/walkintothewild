@@ -7,7 +7,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 ?>
-<div class="commentCount mb-4">
+<div class="commentCount">
     <h6> Comments</h6>
 </div>
 <div class="card">
