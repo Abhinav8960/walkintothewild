@@ -3,6 +3,7 @@
 namespace console\controllers;
 
 use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use Yii;
 use yii\console\Controller;
@@ -34,7 +35,7 @@ class OperatorRemovalController extends Controller
 
 
         User::updateAll(['is_safari_operator' => 0, 'account_type' => 1]);
-        
+
         foreach ($userIdsToUpdate as $user) {
             $users = User::find()->where(['id' => $user->user_id])->all();
             foreach ($users as $user) {
@@ -47,4 +48,17 @@ class OperatorRemovalController extends Controller
         echo "Removed SafariOperators and updated " . count($userIdsToUpdate) . " users.\n";
     }
 
+
+    public function actionFixedAssign()
+    {
+        $ids = [76, 23, 4, 3, 95, 94];
+        $fixed_departures = ShareSafari::find()->where(['type' => 2])->all();
+
+        foreach ($fixed_departures as $fd) {
+            $randomKey = array_rand($ids);
+            $fd->host_user_id = $ids[$randomKey];
+            $fd->save(false);
+        }
+        echo "Successfully Updated";
+    }
 }
