@@ -156,7 +156,7 @@ class RestController extends Controller
                 $dataProvider->pagination = false;
             }
         }
-        
+
         // print_r($dataProvider->pagination);
 
         // die();
@@ -165,13 +165,13 @@ class RestController extends Controller
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
-           
+
             $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
             $data[$rootIndexName]['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
             $data[$rootIndexName]['summary']['pageSize'] = (int) $dataProvider->pagination->pageSize;
             $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
-        
+
         return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
     }
 
@@ -185,7 +185,7 @@ class RestController extends Controller
     }
 
 
-    protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false)
+    protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false,  $in_reverse = false)
     {
         $data = [];
         if ($dataProvider->pagination && $singleRecord == false) {
@@ -199,10 +199,31 @@ class RestController extends Controller
             $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
         }
 
-        return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
+        return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord, $in_reverse);
     }
 
-    private function reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false)
+    protected function reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false, $in_reverse = false)
+    {
+
+        // $data[$rootIndexName]['values'] = $dataProvider->join(['clients', 'projectphase'])->getModels();
+        if ($singleRecord == true) {
+            $data['summary']['query_params'] = $this->query_params;
+
+            $data['data'] = $this->serializeData($dataProvider->query->one());
+        } else {
+            $data[$rootIndexName]['summary']['query_params'] = $this->query_params;
+
+            if ($in_reverse == true) {
+                $reverseprovider =  array_reverse($dataProvider->getModels());
+                $data[$rootIndexName]['data'] = $this->serializeData($reverseprovider);
+            } else {
+                $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->getModels());
+            }
+        }
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    protected function reverseReponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false)
     {
 
         // $data[$rootIndexName]['values'] = $dataProvider->join(['clients', 'projectphase'])->getModels();

@@ -127,13 +127,13 @@ class DefaultController extends RestController
 
         $dataProvider = new ActiveDataProvider([
             'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
-            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             // 'pagination' => [
             //     'pageSize' => 5, // Adjust the page size as needed
             //     'page' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->count() / 10 - 1, // Calculate the last page
             // ],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "chat_messages");
+        return $this->querySender($dataProvider, $rootIndexName = "chat_messages", $singleRecord = false,  $in_reverse = true);
     }
 
 
