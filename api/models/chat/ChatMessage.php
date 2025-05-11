@@ -25,8 +25,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
             'id',
             'message',
             'message_datetime' => function () {
-                // return strtotime($this->message_datetime);
-                return $this->message_datetime;
+                return strtotime($this->message_datetime);
+                // return $this->message_datetime;
             },
             // 'recipient_user_id',           
             'sender',
