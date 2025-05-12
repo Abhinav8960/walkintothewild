@@ -138,7 +138,7 @@ class DefaultController extends  Controller
     private function prepareChat($quotation)
     {
 
-        $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
+        $chat_model = Chat::find()->andWhere(['lead_id'=>$quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
         if (!$chat_model) {
             return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
         }

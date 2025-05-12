@@ -17,6 +17,7 @@ use yii\filters\AccessControl;
 use api\behaviours\Verbcheck;
 use api\models\leads\Lead;
 use api\models\leads\LeadPartners;
+use api\models\operator\SafariOperator;
 use api\models\sales\SalesQuote;
 use common\models\GeneralModel as ModelsGeneralModel;
 use common\models\leads\form\LeadPartnerQuotationForm;
@@ -430,8 +431,10 @@ class DefaultController extends RestController
 
     public function actionSendQuoteMessage($lead_id)
     {
-        $m = $this->findLeadModel($lead_id);
-        $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $this->userinfo->id])->one();
+        $partner = SafariOperator::find()->where(['user_id'=>$this->userinfo->id])->one();
+
+        $m = $this->findLeadModel($lead_id,$partner);
+        $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $partner->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
         $model->attributes = $this->request;
@@ -445,14 +448,16 @@ class DefaultController extends RestController
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
             }
         }
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
 
-        return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
+        // return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not Send"]);
     }
 
-    protected function findLeadModel($id)
+    protected function findLeadModel($id,$partner)
     {
-        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) {
-            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $this->userinfo->operator->id]);
+
+        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use($partner){
+            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
             // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
         }])->one()) !== null) {
             return $model;

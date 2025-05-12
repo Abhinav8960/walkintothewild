@@ -71,7 +71,7 @@ class LeadPartnerQuotationForm extends Model
             'lead_partner_id' => 'Lead Partner ID',
             'lead_id' => 'Lead ID',
             'partner_id' => 'Partner ID',
-            'safariss' => 'safariss',
+            'safaris' => 'safaris',
             'travelers' => 'travelers',
             'stay_category_id' => 'Accomodation',
             'name' => 'Name',
@@ -106,7 +106,7 @@ class LeadPartnerQuotationForm extends Model
             $lpq->lead_partner_id = $this->lead_partner_id;
             $lpq->lead_id = $this->lead_id;
             $lpq->partner_id = $this->partner_id;
-            $lpq->safariss = $this->safariss;
+            $lpq->safaris = $this->safaris;
             $lpq->travelers = $this->travelers;
             $lpq->stay_category_id = $this->stay_category_id;
             $lpq->name = $this->name;
