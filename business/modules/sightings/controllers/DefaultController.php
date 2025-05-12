@@ -7,6 +7,7 @@ use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -15,6 +16,33 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends Controller
 {
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+
+        return $behaviors + [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'comment-listing', 'reply-listing'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'comment-listing', 'reply-listing'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => $this->isOwner(),
+                        'roles' => ['@'],
+                    ],
+
+                ],
+
+            ],
+        ];
+    }
     /**
      * Renders the index view for the module
      * @return string
@@ -88,5 +116,16 @@ class DefaultController extends Controller
         ]);
 
         return $this->renderAjax('_reply_list', ['dataProvider' => $dataProvider]);
+    }
+
+    private function isOwner()
+    {
+        $id = Yii::$app->request->get('id');
+        $operator = $this->module->operatormodel();
+        $model = Sighting::findOne(['id' => $id]);
+        if ($model && $model->safari_operator_id == $operator->id) {
+            return true;
+        }
+        return false;
     }
 }
