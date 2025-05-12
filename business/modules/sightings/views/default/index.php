@@ -32,9 +32,9 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Sighting Thumbnail',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        // 'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::tag('div', Html::img($model->thumbnail, [
@@ -43,19 +43,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Sighting Details',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->description;
-                        }
-                    ],
-                    [
                         'label' => 'Location',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->locationDetail->title;
@@ -63,38 +51,32 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Animal',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->animalDetail->name;
                         }
                     ],
                     [
-                        'label' => 'Safari Session',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Session',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->safariSessionDetail->title;
                         }
                     ],
+                    // [
+                    //     'label' => 'Comment Count',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return Html::button($model->comments_count, [
+                    //             'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                    //             'class' => 'comment-popup btn btn-info',
+                    //         ]);
+                    //     }
+                    // ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
-                        }
-                    ],
-                    [
-                        'label' => 'Sighting Like Count',
+                        'label' => 'Like Count',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
 
@@ -109,23 +91,13 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->post_datetime;
-                        }
-                    ],
-                    [
-                        'label' => 'Last Updated Time',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
-                        }
-                    ],
+                            return date("F j, Y", strtotime($model->post_datetime));
 
+                        }
+                    ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -135,8 +107,7 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{view}&nbsp',
                         'buttons' => [
                             'view' => function ($url, $model) {

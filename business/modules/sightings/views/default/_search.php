@@ -20,14 +20,14 @@ use common\models\park\SafariPark;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
         <?php echo $form->field($model, 'description')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <?= $form->field($model, 'location')->dropDownList(
             \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
             [
-                'prompt' => 'Select Park',
+                'prompt' => 'Select Location',
             ]
         ) ?>
     </div>
