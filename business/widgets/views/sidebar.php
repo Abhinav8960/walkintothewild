@@ -8,10 +8,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
     <aside class="app-sidebar ">
         <div class="main-sidebar-header active" style="background: #F7BF39 !important;">
             <a class="header-logo active" href="/">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-dark" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/sidebar_logo.png" class="main-logo  mobile-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  mobile-dark" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-logo" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-dark" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-logo" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-dark" alt="logo">
             </a>
         </div>
         <div class="main-sidemenu">
