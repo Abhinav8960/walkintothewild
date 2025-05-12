@@ -26,28 +26,30 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Package Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->package_name;
                         }
                     ],
                     [
-                        'label' => 'Stay Category',
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
-                        }
-                    ],
-                    [
                         'label' => 'Cost Per Person',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return GeneralModel::number_format_indian($model->cost_per_person);
                         }
                     ],
+                    [
+                        'label' => 'Stay Category',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
+                        }
+                    ],
+
                     [
                         'label' => 'Feature',
                         'format' => 'raw',
@@ -79,6 +81,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Live Version',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->live_version) {
@@ -89,6 +92,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return '';
                         }
                     ],
+
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->newstatuslabel;
+                    //     }
+                    // ],
+
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
