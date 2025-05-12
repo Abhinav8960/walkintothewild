@@ -119,15 +119,15 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                    [
-                        'label' => 'Last Updated',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date("F j, Y, g:i a", $model->updated_at);
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Last Updated',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return date("F j, Y, g:i a", $model->updated_at);
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Status',
