@@ -41,7 +41,7 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $sighting,
         ]);
     }

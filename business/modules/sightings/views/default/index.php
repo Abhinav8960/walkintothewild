@@ -123,10 +123,12 @@ $this->params['title'] = $this->title;
                         'template' => '{view}&nbsp',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::button(
+                                return Html::a(
                                     Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                     [
-                                        'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
+                                        Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
+                                    ],
+                                    [
                                         'class' => 'btn p-0 change-menuicon sighting-popup',
                                         'title' => 'View',
                                     ]
@@ -143,7 +145,7 @@ $this->params['title'] = $this->title;
 
 <?php Pjax::end(); ?>
 
-
+<!-- 
 <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
@@ -159,7 +161,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -183,11 +185,11 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
 
-    $('.sighting-popup').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+    // $('.sighting-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
 
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')
