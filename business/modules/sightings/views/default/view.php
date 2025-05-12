@@ -67,9 +67,9 @@ $this->params['title'] = $this->title;
                                                     $replies = $comments->getReplies()->joinWith('user')->andWhere(['user.status' => 10, 'sighting_comment.status' => 1])->all();
 
                                             ?>
-                                                    <div class="d-flex gap-3">
+                                                    <div class="d-flex gap-3 mb-4">
                                                         <img src="<?= $comments->user->profileimage ?>" alt="User Avatar" class="user-avatar">
-                                                        <div class="flex-grow-1">
+                                                        <div class="flex-grow-1 p-3" style="background-color: #F5F5F5; border-radius: 15px 30px 30px; ">
                                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                                 <h6 class="mb-0"><?= $comments->user->name ?></h6>
                                                                 <span class="comment-time"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
@@ -86,9 +86,9 @@ $this->params['title'] = $this->title;
                                                     <?php if ($replies) { ?>
                                                         <div class="reply-section mt-3" id="replies-<?= $comments->id ?>" style="display: none;">
                                                             <?php foreach ($replies as $reply) { ?>
-                                                                <div class="d-flex gap-3 mb-3">
+                                                                <div class="d-flex gap-3 mb-4">
                                                                     <img src="<?= $reply->user->profileimage ?>" alt="User Avatar" class="user-avatar">
-                                                                    <div class="flex-grow-1">
+                                                                    <div class="flex-grow-1 p-2" style="background-color: #F5F5F5; border-radius: 15px 20px 20px;">
                                                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                                                             <h6 class="mb-0"><?= $reply->user->name ?></h6>
                                                                             <span class="comment-time"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i:s A", $reply->created_at) ?></span>
