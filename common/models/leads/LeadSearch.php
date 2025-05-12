@@ -18,7 +18,7 @@ class LeadSearch extends Lead
     {
         return [
             [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'package_version', 'email', 'phone', 'destination', 'from_date', 'to_date', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes'], 'safe'],
+            [['name', 'package_version', 'email', 'phone', 'destination', 'from_date', 'to_date', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class LeadSearch extends Lead
             'source' => $this->source,
             'package_id' => $this->package_id,
             'park_id' => $this->park_id,
+            'stay_category_id' => $this->stay_category_id,
             'operator_id' => $this->operator_id,
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
@@ -83,7 +84,66 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'destination', $this->destination])
-            ->andFilterWhere(['like', 'accommodation', $this->accommodation])
+            ->andFilterWhere(['like', 'transport', $this->transport])
+            ->andFilterWhere(['like', 'meals', $this->meals])
+            ->andFilterWhere(['like', 'budget', $this->budget])
+            ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
+
+        return $dataProvider;
+    }
+
+    public function partnersearch($params, $operator_id)
+    {
+        $query = Lead::find();
+
+        // add conditions that should always apply here
+
+        $query->joinWith(['assignOperator' => function ($q) use ($operator_id) {
+            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => $operator_id]);
+        }]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'source' => $this->source,
+            'package_id' => $this->package_id,
+            'park_id' => $this->park_id,
+            'operator_id' => $this->operator_id,
+            'stay_category_id' => $this->stay_category_id,
+
+            'from_date' => $this->from_date,
+            'to_date' => $this->to_date,
+            'is_date_flexible' => $this->is_date_flexible,
+            'travelers' => $this->travelers,
+            'user_id' => $this->user_id,
+            'is_booking_for_login_user' => $this->is_booking_for_login_user,
+            'is_seen_by_admin' => $this->is_seen_by_admin,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'package_version', $this->package_version])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'destination', $this->destination])
             ->andFilterWhere(['like', 'transport', $this->transport])
             ->andFilterWhere(['like', 'meals', $this->meals])
             ->andFilterWhere(['like', 'budget', $this->budget])

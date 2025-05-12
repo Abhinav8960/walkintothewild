@@ -31,6 +31,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
                 <li class="slide">
                     <a class="side-menu__item <?= in_array($active_url, array(
+                                                    "/leads/default/index",
+                                                    "/leads/default/create",
+                                                )) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item <?= in_array($active_url, array(
                                                     "/sightings/default/index",
                                                     "/sightings/default/create",
                                                 )) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>

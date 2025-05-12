@@ -39,7 +39,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Lead extends \yii\db\ActiveRecord
+class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
 
     const SOURCE_PACKAGE = 1;
@@ -136,4 +136,26 @@ class Lead extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+
+    public function getAssignOperator()
+    {
+        return $this->hasMany(LeadPartners::className(), ['lead_id' => 'id']);
+    }
+
+    public function getSources()
+    {
+        return $arr = [
+            SELF::SOURCE_PACKAGE => 'Package',
+            SELF::SOURCE_PARK => 'Park',
+            SELF::SOURCE_PARTNER => 'Partner',
+        ];
+    }
+
+    public function getSourceLabel()
+    {
+        return $this->getSources()[$this->source] ?? 'uncategorized';
+    }
+
+
+    
 }
