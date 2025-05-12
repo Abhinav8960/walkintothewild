@@ -23,14 +23,7 @@ use common\models\park\SafariPark;
     <!-- <div class="col-md-2">
         <?php echo $form->field($model, 'description')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
     </div> -->
-    <div class="col-md-2">
-        <?= $form->field($model, 'location')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
-            [
-                'prompt' => 'Select Location',
-            ]
-        ) ?>
-    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'master_animal_id')->dropDownList(
             GeneralModel::animalfilteroption(),
@@ -44,6 +37,14 @@ use common\models\park\SafariPark;
             GeneralModel::safarisessionoption(),
             [
                 'prompt' => 'Select Session',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'location')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
+            [
+                'prompt' => 'Select Park',
             ]
         ) ?>
     </div>

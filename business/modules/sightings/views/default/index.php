@@ -43,10 +43,11 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Location',
+                        'label' => 'Sighting Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->locationDetail->title;
+                            return date("F j, Y", strtotime($model->post_datetime));
                         }
                     ],
                     [
@@ -63,36 +64,47 @@ $this->params['title'] = $this->title;
                             return $model->safariSessionDetail->title;
                         }
                     ],
-                    // [
-                    //     'label' => 'Comment Count',
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return Html::button($model->comments_count, [
-                    //             'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                    //             'class' => 'comment-popup btn btn-info',
-                    //         ]);
-                    //     }
-                    // ],
                     [
-                        'label' => 'Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Park',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->locationDetail->title;
+                        }
+                    ],
 
+                    [
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => '10%; text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Duration',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date("F j, Y", strtotime($model->post_datetime));
-
+                            return $model->v_duration . ' seconds';
+                        }
+                    ],
+                    [
+                        'label' => 'Last Updated Time',
+                        'headerOptions' => ['style' => 'width: 15%'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y, g:i a", $model->updated_at);
                         }
                     ],
                     [
