@@ -23,6 +23,7 @@ class PackageLeadForm extends Model
     public $name;
     public $email;
     public $phone;
+    public $action_url;
     public $action_validate_url;
 
 
@@ -32,7 +33,7 @@ class PackageLeadForm extends Model
     public function rules()
     {
         return [
-            [['name', 'email', 'phone', 'action_validate_url'], 'safe'],
+            [['name', 'email', 'phone', 'action_validate_url', 'action_url'], 'safe'],
             [['travelers', 'pack_start_date'], 'required', 'message' => '{attribute} is Required'],
             [['pack_start_date'], 'date', 'format' => 'php:Y-m-d'],
             [['travelers'], 'integer', 'min' => 1, 'max' => 100, 'tooSmall' => 'Minimum 1 traveler', 'tooBig' => 'Maximum 100 travelers'],
@@ -98,7 +99,7 @@ class PackageLeadForm extends Model
         $assign_to_partner = new LeadPartners();
         $assign_to_partner->lead_id = $lead->id;
         $assign_to_partner->partner_id = $package->owned_by_id;
-        $assign_to_partner->status = $package->owned_by_id;
+        $assign_to_partner->status = true;
         $assign_to_partner->created_by = $login_user->id;
         $assign_to_partner->updated_by = $login_user->id;
         return $assign_to_partner->save(false);
