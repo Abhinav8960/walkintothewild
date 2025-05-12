@@ -109,11 +109,11 @@ trait CommanRelationship
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<span class="badge rounded-pill" style="background-color:#EBF9F1; color:#1F9254; font-size: 14px; padding: 8px 16px; font-weight: 500;">Active</span>';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" >';
             } else if ($this->status == 0) {
-                return '<span class="badge rounded-pill" style="background-color:rgb(230, 178, 178); color:rgb(233, 83, 83); font-size: 14px; padding: 8px 16px; font-weight: 500;">Inactive</span>';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" >';
             } else if ($this->status == -1) {
-                return '<span class="badge rounded-pill" style="background-color:rgba(235, 249, 241, 0.18); color:rgb(230, 237, 233); font-size: 14px; padding: 8px 16px; font-weight: 500;">Delete</span>';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" >';
             }
         }
         return $this->status;

@@ -45,6 +45,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Partner Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
@@ -117,7 +118,7 @@ $this->params['title'] = $this->title;
                             return $model->v_duration . ' seconds';
                         }
                     ],
-                   
+
                     [
                         'label' => 'Last Updated',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
@@ -130,8 +131,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -141,29 +141,33 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp{delete}',
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::button(
+                                return Html::a(
                                     Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                     [
-                                        'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon sighting-popup',
+                                        Url::toRoute(['/sightings/default/view', 'id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]
                                 );
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::button(
-                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                                    [
-                                        'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon delete-popup',
-                                        'title' => 'View',
-                                    ]
-                                );
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'View',
+                            //         ]
+                            //     );
+                            // },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title'=>'Inactive' , 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],
@@ -177,7 +181,7 @@ $this->params['title'] = $this->title;
 <?php Pjax::end(); ?>
 
 
-<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header popHeader">
@@ -192,7 +196,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -232,11 +236,11 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
 
-    $('.sighting-popup').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+    // $('.sighting-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
 
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')

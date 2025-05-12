@@ -7,9 +7,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = 'Posts';
-$this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-// $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
 <?php Pjax::begin([
     'id' => 'grid-data',
@@ -32,7 +30,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'File',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -40,69 +38,72 @@ $this->params['title'] = $this->title;
                             if ($model->filepath) {
                                 return Html::tag('div', Html::img(Yii::$app->params['cloud_front_url'] . $model->filepath, [
                                     'alt' => 'Uploaded Image',
-                                    'height' => '240px',
-                                    'width' => '320px'
                                 ]), ['style' => 'text-align: center;']);
                             }
                             return '';
                         }
                     ],
                     [
-                        'label' => 'Caption',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $imageUrl = isset($model->user) ? $model->user->profileImage : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->user) ? $model->user->name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
+                    ],
 
+                    [
+                        'label' => 'Partner Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : '';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
+                    ],
+                    [
+                        'label' => 'Caption',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->caption;
                         }
                     ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
                         }
                     ],
                     [
-                        'label' => 'Sighting Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
+                        'label' => 'Last Updated',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->created_at);
-                        }
-                    ],
-                    [
-                        'label' => 'Last Updated Time',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
+                            return date("F j, Y, g:i a", $model->updated_at);
                         }
                     ],
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -112,32 +113,36 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp{delete}',
+                        'contentOptions' => ['style' => 'width:15%; text-align:left;'],
+                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 if ($model->file) {
-                                    return Html::button(
+                                    return Html::a(
                                         Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                         [
-                                            'value' => Url::toRoute(['/posts/default/view', 'id' => $model->id]),
-                                            'class' => 'btn p-0 change-menuicon post-popup',
+                                            Url::toRoute(['/posts/default/view', 'id' => $model->id])
+                                        ],
+                                        [
+                                            'class' => 'btn p-0 change-menuicon',
                                             'title' => 'View',
                                         ]
                                     );
                                 }
                                 return '';
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::button(
-                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                                    [
-                                        'value' => Url::toRoute(['post-delete', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon delete-popup',
-                                        'title' => 'View',
-                                    ]
-                                );
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' => Url::toRoute(['post-delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'View',
+                            //         ]
+                            //     );
+                            // },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title' => 'Inactive', 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],
@@ -151,7 +156,7 @@ $this->params['title'] = $this->title;
 <?php Pjax::end(); ?>
 
 
-<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header popHeader">
@@ -166,7 +171,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -208,11 +213,11 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
 
-    $('.post-popup').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+    // $('.post-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
 
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')

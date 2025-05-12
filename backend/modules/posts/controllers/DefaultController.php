@@ -24,6 +24,7 @@ class DefaultController extends Controller
     {
 
         $searchModel = new UserPostSearch();
+        $searchModel->status = UserPosts::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -39,7 +40,7 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $userpost,
         ]);
     }
@@ -111,7 +112,7 @@ class DefaultController extends Controller
         } else {
             $model->user_posts_model->loadDefaultValues();
         }
-        
+
         return $this->renderAjax('_delete_form', [
             'model' => $model,
         ]);
@@ -139,10 +140,45 @@ class DefaultController extends Controller
                 }
             }
             Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $comment->user_posts_id]);
         }
 
         Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
         return $this->redirect(['index']);
+    }
+
+    public function actionReplyDelete($id)
+    {
+        $reply = UserPostComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        if (!$reply) {
+            Yii::$app->session->setFlash('error', 'Reply not found');
+            return $this->redirect(['index']);
+        }
+        $reply->status = UserPostComment::STATUS_DELETE;
+
+        if ($reply->save(false)) {
+            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            return $this->redirect(['view', 'id' => $reply->user_posts_id]);
+        }
+
+        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        return $this->redirect(['index']);
+    }
+
+    public function actionSuspend($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = UserPosts::STATUS_SUSPEND;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = UserPosts::findOne(['id' => $id, 'status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
