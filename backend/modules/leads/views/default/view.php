@@ -65,25 +65,16 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
             </tbody>
         </table>
 
-        <div class="card">
-            <div class="card-body">
-                <h4>Assign To</h4>
-                <?php
-                foreach ($model->assignOperator as $assignOperator) {
-                ?>
-                    <li>
-                        <a target="_blank" href="/operator/safari-operator/index?SafariOperatorSearch[business_name]=<?= $assignOperator->partner->business_name ?>"><?= $assignOperator->partner->business_name ?> </a>
 
-                    <?php
-                }
-                    ?>
-                    </ul>
-            </div>
-        </div>
+    </div>
+
+    <div class="col-md-12">
+
 
         <div class="card">
             <div class="card-body">
                 <h4>Quatations</h4>
+
                 <table class="table table-responsive table-bordered">
                     <thead>
                         <th>Operator</th>
@@ -166,15 +157,15 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                     </td>
                                     <td>
                                         <?php
-                                        if($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING){
-                                            ?>
+                                        if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING) {
+                                        ?>
                                             <button class="btn btn-success btn-sm approve-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
                                             <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button>
 
-                                            <?php
+                                        <?php
                                         }
                                         ?>
-                                        
+
                                     </td>
                                 </tr>
                             <?php
@@ -189,11 +180,25 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                     </tbody>
                 </table>
 
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Assign To</h4>
+                        <?php
+                        foreach ($model->assignOperator as $assignOperator) {
+                        ?>
+                            <li>
+                                <a target="_blank" href="/operator/safari-operator/index?SafariOperatorSearch[business_name]=<?= $assignOperator->partner->business_name ?>"><?= $assignOperator->partner->business_name ?> </a>
 
+                            <?php
+                        }
+                            ?>
+                            </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
+
 
 
     <!-- Approve Modal -->
