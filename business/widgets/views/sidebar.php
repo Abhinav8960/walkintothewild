@@ -33,7 +33,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                     <a class="side-menu__item <?= in_array($active_url, array(
                                                     "/sightings/default/index",
                                                     "/sightings/default/create",
-                                                )) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
+                                                )) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
                 </li>
 
 
@@ -41,7 +41,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                                                                 "/posts/default/index",
                                                                 "/posts/default/create",
 
-                                                            )) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
+                                                            )) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
                 </li>
 
                 <li class="slide <?= in_array($active_url, array(

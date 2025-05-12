@@ -100,7 +100,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Last Updated Time',
+                        'label' => 'Last Updated',
                         'headerOptions' => ['style' => 'width: 15%'],
                         'format' => 'raw',
                         'value' => function ($model) {
