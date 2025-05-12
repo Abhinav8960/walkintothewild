@@ -80,7 +80,7 @@ class ParkLeadForm extends Model
         try {
             $park = SafariPark::find()->where(['id' => $this->safari_park_id])->one();
             $lead = new Lead();
-            $lead->source = Lead::SOURCE_PARTNER;
+            $lead->source = Lead::SOURCE_PARK;
             $lead->park_id = $this->safari_park_id;
             $lead->safaris = $this->safaris;
             $lead->travelers = $this->travelers;
