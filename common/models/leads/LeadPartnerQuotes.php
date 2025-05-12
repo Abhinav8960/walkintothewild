@@ -2,6 +2,8 @@
 
 namespace common\models\leads;
 
+use common\models\meta\MetaStayCategory;
+use common\models\operator\SafariOperator;
 use Yii;
 
 /**
@@ -12,7 +14,7 @@ use Yii;
  * @property int $lead_id
  * @property int $partner_id
  * @property int $safari
- * @property int $travellers
+ * @property int $travelers
  * @property int $stay_category_id
  * @property string $name
  * @property string $email
@@ -36,7 +38,9 @@ use Yii;
  */
 class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
-
+    const IS_APPROVED_BY_ADMIN_PENDING = 0;
+    const IS_APPROVED_BY_ADMIN_APPROVED = 1;
+    const IS_APPROVED_BY_ADMIN_REJECT = 2;
 
     public function behaviors()
     {
@@ -44,7 +48,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             \yii\behaviors\TimestampBehavior::className(),
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -59,12 +63,12 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     public function rules()
     {
         return [
-            [['addtional_data', 'datetime_of_approval_by_admin','created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['received_amount','is_approved_by_admin'], 'default', 'value' => 0],
+            [['addtional_data', 'datetime_of_approval_by_admin', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['received_amount', 'is_approved_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data'], 'safe'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'travelers', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'travelers', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['start_date', 'end_date', 'addtional_data','rejection_reason'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -81,8 +85,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'lead_partner_id' => 'Lead Partner ID',
             'lead_id' => 'Lead ID',
             'partner_id' => 'Partner ID',
-            'safari' => 'Safari',
-            'travellers' => 'Travellers',
+            'travelers' => 'Travelers',
             'stay_category_id' => 'Stay Category ID',
             'name' => 'Name',
             'email' => 'Email',
@@ -99,7 +102,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'end_date' => 'End Date',
             'addtional_data' => 'Addtional Data',
             'is_approved_by_admin' => 'is approved by admin',
-            'datetime_of_approval_by_admin'=> 'Datetime of Approval by admin',
+            'datetime_of_approval_by_admin' => 'Datetime of Approval by admin',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -108,5 +111,14 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         ];
     }
 
-    
+    public function getPartner()
+    {
+       return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
+    }
 }

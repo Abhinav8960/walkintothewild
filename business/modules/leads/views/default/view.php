@@ -80,16 +80,16 @@ AppAsset::register($this);
 
                 if (count($quotations) > 0) {
                 ?>
-                    <ul class="list-group list-group-flush border-1">
+                    <ol class="list-group list-group-flush border-1">
                         <?php
                         foreach ($quotations as $quotation) {
                         ?>
-                            <li class="list-group-item border-1 <?= $quotation->is_approved_by_admin == 1 ? 'text-success':'' ?>">Net Price: <?= $quotation->net_payment_price ?>, Raise: <?= date('d M, Y h:i A',$quotation->created_at) ?></li>
+                            <li class="list-group-item border-1 <?= $quotation->is_approved_by_admin == $quotation::IS_APPROVED_BY_ADMIN_APPROVED ? 'text-success' : '' ?>  <?= $quotation->is_approved_by_admin == $quotation::IS_APPROVED_BY_ADMIN_REJECT ? 'text-danger' : '' ?>" <?= $quotation->is_approved_by_admin == $quotation::IS_APPROVED_BY_ADMIN_REJECT ? 'title=' . $quotation->rejection_reason : '' ?>>Net Price: <?= $quotation->net_payment_price ?>, Raise: <?= date('d M, Y h:i A', $quotation->created_at) ?></li>
 
                         <?php
                         }
                         ?>
-                    </ul>
+                    </ol>
 
                 <?php
                 }

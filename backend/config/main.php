@@ -112,6 +112,9 @@ return [
         'posts' => [
             'class' => 'backend\modules\posts\Module',
         ],
+        'leads' => [
+            'class' => 'backend\modules\leads\Module',
+        ],
 
     ],
     'components' => [

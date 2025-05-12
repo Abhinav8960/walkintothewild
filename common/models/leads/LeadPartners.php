@@ -2,6 +2,7 @@
 
 namespace common\models\leads;
 
+use common\models\operator\SafariOperator;
 use Yii;
 
 /**
@@ -64,4 +65,9 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\St
         ];
     }
 
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+
+    }
 }
