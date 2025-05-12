@@ -23,6 +23,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     const SAFARI_UNJOIN_TEMPLATE = 9;
     const UNFOLLOW_OPERATOR = 10;
     const PACKAGE_QUOTATION_RECEIVED = 11;
+    const PARTNER_QUOTATION_RECEIVED = 12;
 
 
 

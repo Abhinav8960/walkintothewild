@@ -25,6 +25,7 @@ use common\Helper\FirebaseNotificationHelper;
 use common\Helper\FrontendNotificationHelper;
 use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
+use common\models\leads\form\PartnerLeadForm;
 use common\models\MailLog;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorRatingReportForm;
@@ -48,7 +49,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari', 'operator-packages','operator-park-dropdown'],
+                'exclude' => ['index', 'view', 'reviewlist', 'operator-park', 'user-rating-parklist', 'operator-shared-safari', 'operator-packages', 'operator-park-dropdown'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -121,7 +122,7 @@ class DefaultController extends RestController
         if ($this->userinfo && $this->userinfoId == $operator->user_id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if ($this->userinfo) {
             $model->email = $this->userinfo->email;
             $model->full_name = $this->userinfo->name;
@@ -129,8 +130,8 @@ class DefaultController extends RestController
         }
         $model->attributes = $this->request;
         if ($model->validate()) {
-            if ($operator_quote = $model->request($operator)) {
-                FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
+            if ($operator_quote = $model->request($operator, $this->userinfo)) {
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
             }
         }

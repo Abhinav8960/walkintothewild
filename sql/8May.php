@@ -1,3 +1,4 @@
+INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES ('12', 'Partner Quotation Received', 'Partner Quotation Received', 'Quotation Received: {{park_name}} by {{user_name}}!', '1', '1746790635', '30', '1746790635', '30')
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (11, 'Package Quotation Received', 'Package Quotation Received', 'Quotation Received on package: {{package_name}} by {{user_name}}!', '1', '1746790635', '30', '1746790635', '30');
 
 
