@@ -38,7 +38,7 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $sighting,
         ]);
     }
@@ -137,7 +137,25 @@ class DefaultController extends Controller
                 }
             }
             Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
+            return $this->redirect(['view', 'id' => $comment->sighting_id]);
+        }
+
+        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        return $this->redirect(['index']);
+    }
+
+    public function actionReplyDelete($id)
+    {
+        $reply = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        if (!$reply) {
+            Yii::$app->session->setFlash('error', 'Reply not found');
             return $this->redirect(['index']);
+        }
+        $reply->status = SightingComment::STATUS_DELETE;
+
+        if ($reply->save(false)) {
+            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            return $this->redirect(['view', 'id' => $reply->sighting_id]);
         }
 
         Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
