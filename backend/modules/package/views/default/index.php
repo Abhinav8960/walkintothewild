@@ -36,11 +36,12 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                     [
                         'label' => 'Partner Name',
-                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->safarioperator) ? $model->safarioperator->business_name : '';
-                        }
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
                     ],
                     [
                         'label' => 'Stay Category',
