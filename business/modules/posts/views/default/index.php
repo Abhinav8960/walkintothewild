@@ -7,9 +7,8 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = 'Posts';
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-// $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
 <?php Pjax::begin([
     'id' => 'grid-data',
@@ -32,7 +31,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'File',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -40,8 +39,6 @@ $this->params['title'] = $this->title;
                             if ($model->filepath) {
                                 return Html::tag('div', Html::img(Yii::$app->params['cloud_front_url'] . $model->filepath, [
                                     'alt' => 'Uploaded Image',
-                                    'height' => '240px',
-                                    'width' => '320px'
                                 ]), ['style' => 'text-align: center;']);
                             }
                             return '';
@@ -49,59 +46,44 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Caption',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->caption;
                         }
                     ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
                         }
                     ],
                     [
-                        'label' => 'Sighting Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
+                        'label' => 'Last Updated',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->created_at);
-                        }
-                    ],
-                    [
-                        'label' => 'Last Updated Time',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
+                            return date("F j, Y, g:i a", $model->updated_at);
                         }
                     ],
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -117,11 +99,13 @@ $this->params['title'] = $this->title;
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 if ($model->file) {
-                                    return Html::button(
+                                    return Html::a(
                                         Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                         [
-                                            'value' => Url::toRoute(['/posts/default/view', 'id' => $model->id]),
-                                            'class' => 'btn p-0 change-menuicon post-popup',
+                                            Url::toRoute(['/posts/default/view', 'id' => $model->id])
+                                        ],
+                                        [
+                                            'class' => 'btn p-0 change-menuicon',
                                             'title' => 'View',
                                         ]
                                     );

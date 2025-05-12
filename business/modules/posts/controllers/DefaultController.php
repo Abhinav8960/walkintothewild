@@ -23,6 +23,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new UserPostSearch();
+        $searchModel->status = UserPosts::STATUS_ACTIVE;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -39,7 +40,7 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $userpost,
         ]);
     }
