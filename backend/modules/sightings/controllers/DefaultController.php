@@ -9,6 +9,7 @@ use common\models\sighting\SightingSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController for the `sightings` module
@@ -22,6 +23,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new SightingSearch();
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -160,5 +162,22 @@ class DefaultController extends Controller
 
         Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
         return $this->redirect(['index']);
+    }
+
+    public function actionSuspend($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Sighting::STATUS_SUSPEND;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
