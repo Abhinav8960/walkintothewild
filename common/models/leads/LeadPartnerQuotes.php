@@ -25,7 +25,7 @@ use Yii;
  * @property float $plateform_customer_discount
  * @property float $net_payment_price
  * @property int $installment
- * @property float $recived_amount
+ * @property float $received_amount
  * @property string $end_date
  * @property string|null $addtional_data
  * @property int|null $status
@@ -59,13 +59,13 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     public function rules()
     {
         return [
-            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['recived_amount'], 'default', 'value' => 0],
+            [['addtional_data', 'datetime_of_approval_by_admin','created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['received_amount','is_approved_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['start_date', 'end_date', 'addtional_data'], 'safe'],
-            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'recived_amount'], 'number'],
+            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
         ];
@@ -95,9 +95,11 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'plateform_customer_discount' => 'Plateform Customer Discount',
             'net_payment_price' => 'Net Payment Price',
             'installment' => 'Installment',
-            'recived_amount' => 'Recived Amount',
+            'received_amount' => 'Recived Amount',
             'end_date' => 'End Date',
             'addtional_data' => 'Addtional Data',
+            'is_approved_by_admin' => 'is approved by admin',
+            'datetime_of_approval_by_admin'=> 'Datetime of Approval by admin',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -105,4 +107,6 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'updated_by' => 'Updated By',
         ];
     }
+
+    
 }

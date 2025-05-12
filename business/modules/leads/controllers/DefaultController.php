@@ -52,8 +52,8 @@ class DefaultController extends  Controller
     public function actionIndex()
     {
         $searchModel = new LeadSearch();
-        // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams,\Yii::$app->user->identity->operator->id);
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams,\Yii::$app->user->identity->operator->id);
+        // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
 
         return $this->render(
             'index',
@@ -67,16 +67,18 @@ class DefaultController extends  Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $quotations = $model->getQuotation()->where(['partner_id'=>\Yii::$app->user->identity->operator->id])->all();
         return $this->render('view', [
             'model' => $model,
+            'quotations' => $quotations,
         ]);
     }
 
     public function actionQuotation($id)
     {
         $m = $this->findModel($id);
-        // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
-        $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
+        $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
+        // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
         $model->lead_id = $m->id;
         $model->lead_partner_id = $lead_partner->id;
@@ -87,17 +89,25 @@ class DefaultController extends  Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->request()) {
+
+                    if ($model->request(\Yii::$app->user->identity)) {
                         \Yii::$app->session->setFlash('success', 'Quotation Submitted Successfully');
                         return  $this->redirect(Yii::$app->request->referrer);
                     }
+                } else {
+                    return  $this->redirect(Yii::$app->request->referrer);
+
+                    // print_r($model->getErrors());
+                    // die();
                 }
             }
+            return  $this->redirect(Yii::$app->request->referrer);
         }
-        return $this->renderAjax('_quotation_form', [
-            'model' => $model
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_quotation_form', [
+                'model' => $model
+            ]);
+        }
     }
 
     public function actionQuotationValidate($id)
@@ -107,15 +117,15 @@ class DefaultController extends  Controller
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
+            return \yii\bootstrap5\ActiveForm::validate($model);
         }
     }
 
     protected function findModel($id)
     {
         if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) {
-            // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => \Yii::$app->user->identity->operator->id]);
-            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
+            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => \Yii::$app->user->identity->operator->id]);
+            // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
         }])->one()) !== null) {
             return $model;
         }
@@ -128,8 +138,8 @@ class DefaultController extends  Controller
         $id = \Yii::$app->request->get('id');
         if (!empty($id)) {
             return Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) {
-                // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => \Yii::$app->user->identity->operator->id]);
-                $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
+                $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => \Yii::$app->user->identity->operator->id]);
+                // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
             }])->exists();
         }
         return false;

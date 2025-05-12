@@ -19,7 +19,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
         return [
             [['id', 'lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'email', 'phone', 'start_date', 'end_date', 'addtional_data'], 'safe'],
-            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'recived_amount'], 'number'],
+            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
         ];
     }
 
@@ -75,7 +75,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
             'installment' => $this->installment,
-            'recived_amount' => $this->recived_amount,
+            'received_amount' => $this->received_amount,
             'end_date' => $this->end_date,
             'status' => $this->status,
             'created_at' => $this->created_at,
