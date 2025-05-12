@@ -1641,7 +1641,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             "Zimbabwe" => "Zimbabwe"
         );
     }
-    
+
     public static function extentionRemove($filename)
     {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -1669,7 +1669,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function number_format_indian($number) {
+    public static function number_format_indian($number)
+    {
         $decimal = '';
         if (strpos($number, '.') !== false) {
             list($number, $decimal) = explode('.', $number);
@@ -1688,5 +1689,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             $result = $number;
         }
         return $result . $decimal;
+    }
+
+    public static function operatorslist()
+    {
+        $safari_operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE]);
+        return ArrayHelper::map($safari_operator->all(), 'id', 'business_name');
     }
 }
