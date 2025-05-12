@@ -157,5 +157,10 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     }
 
 
-    
+    public function getQuotation()
+    {
+       return $this->hasMany(LeadPartnerQuotes::className(), ['lead_id' => 'id']);
+    }
+
+   
 }

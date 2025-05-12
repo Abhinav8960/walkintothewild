@@ -3,6 +3,7 @@
 namespace common\models\leads\form;
 
 use common\models\leads\Lead;
+use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use Yii;
 use yii\base\Model;
@@ -28,10 +29,10 @@ class LeadPartnerQuotationForm extends Model
     public $plateform_partner_fees_percentage = 10;
     public $plateform_partner_fees;
     public $partner_net_selling_price;
-    public $plateform_customer_discount;
+    public $plateform_customer_discount = 0;
     public $net_payment_price;
     public $installment = 1;
-    public $recived_amount;
+    public $received_amount =0;
     public $end_date;
     public $addtional_data;
     public $status;
@@ -47,13 +48,13 @@ class LeadPartnerQuotationForm extends Model
     public function rules()
     {
         return [
-            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['recived_amount'], 'default', 'value' => 0],
+            [['addtional_data'], 'default', 'value' => null],
+            [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status'], 'integer'],
             [['start_date', 'end_date', 'addtional_data', 'action_url', 'action_validate_url'], 'safe'],
-            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'recived_amount'], 'number'],
+            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
         ];
@@ -72,7 +73,7 @@ class LeadPartnerQuotationForm extends Model
             'partner_id' => 'Partner ID',
             'safari' => 'Safari',
             'travellers' => 'Travellers',
-            'stay_category_id' => 'Stay Category ID',
+            'stay_category_id' => 'Accomodation',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
@@ -84,7 +85,7 @@ class LeadPartnerQuotationForm extends Model
             'plateform_customer_discount' => 'Plateform Customer Discount',
             'net_payment_price' => 'Net Payment Price',
             'installment' => 'Installment',
-            'recived_amount' => 'Recived Amount',
+            'received_amount' => 'Recived Amount',
             'end_date' => 'End Date',
             'addtional_data' => 'Addtional Data',
             'status' => 'Status',
@@ -95,7 +96,7 @@ class LeadPartnerQuotationForm extends Model
         ];
     }
 
-    public function request()
+    public function request($login_user)
     {
 
         $transaction = \Yii::$app->db->beginTransaction();
@@ -114,18 +115,27 @@ class LeadPartnerQuotationForm extends Model
             $lpq->start_date = $this->start_date;
             $lpq->partner_selling_price = $this->partner_selling_price;
             $lpq->plateform_partner_fees_percentage = $this->plateform_partner_fees_percentage;
-            $lpq->plateform_partner_fees = $this->plateform_partner_fees;
-            $lpq->partner_net_selling_price = $this->partner_net_selling_price;
+            $lpq->plateform_partner_fees = $this->calculate_plateform_partner_fees();
+            $lpq->partner_net_selling_price = $this->calculate_partner_net_selling_price();
             $lpq->plateform_customer_discount = $this->plateform_customer_discount;
-            $lpq->net_payment_price = $this->net_payment_price;
+            $lpq->net_payment_price = $this->calculate_net_payment_price();
             $lpq->installment = $this->installment;
-            $lpq->recived_amount = $this->recived_amount;
+            $lpq->received_amount = $this->received_amount;
             $lpq->end_date = $this->end_date;
             $lpq->addtional_data = $this->addtional_data;
             $lpq->status = 1;
             $lpq->save(false);
 
-
+            $installment = new LeadPartnerQuoteInstallments();
+            $installment->lead_partner_quote_id = $lpq->id;
+            $installment->lead_id = $lpq->lead_id;
+            $installment->partner_id = $lpq->partner_id;
+            $installment->amount = $lpq->net_payment_price;
+            $installment->payment_hash = Yii::$app->security->generateRandomString(10) . time() . Yii::$app->security->generateRandomString(5);
+            $installment->before_datetime = $this->start_date;
+            $installment->created_by = $login_user->id;
+            $installment->updated_by = $login_user->id;
+            $installment->save(false);
 
             $transaction->commit();
             return true;
@@ -135,4 +145,19 @@ class LeadPartnerQuotationForm extends Model
             throw $e; // Re-throw the exception to handle it higher up
         }
     }
+
+    private function calculate_plateform_partner_fees()
+    {
+        return round($this->partner_selling_price * $this->plateform_partner_fees_percentage / 100, 2);
+    }
+    private function calculate_partner_net_selling_price()
+    {
+        return $this->partner_selling_price + $this->calculate_plateform_partner_fees();
+    }
+
+    private function calculate_net_payment_price()
+    {
+        return $this->partner_selling_price + $this->calculate_plateform_partner_fees();
+    }
+
 }
