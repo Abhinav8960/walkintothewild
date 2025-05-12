@@ -45,6 +45,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Partner Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
@@ -141,7 +142,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'template' => '{view}&nbsp{delete}',
+                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a(
@@ -155,15 +156,18 @@ $this->params['title'] = $this->title;
                                     ]
                                 );
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::button(
-                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                                    [
-                                        'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon delete-popup',
-                                        'title' => 'View',
-                                    ]
-                                );
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'View',
+                            //         ]
+                            //     );
+                            // },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title'=>'Inactive' , 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],
