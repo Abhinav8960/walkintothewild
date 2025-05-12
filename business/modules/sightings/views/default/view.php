@@ -9,7 +9,7 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Sightings';
+$this->title = 'Sighting';
 $this->params['title'] = $this->title;
 ?>
 
@@ -34,9 +34,12 @@ $this->params['title'] = $this->title;
             <div class="col-lg-8 col-md-8">
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
-                        <div>
-                            <h5><?= isset($model->safarioperator) ? $model->safarioperator->business_name : ''; ?></h5>
-                            <p><?= $model->description; ?></p>
+                        <div class="d-flex mb-2">
+                            <div>
+                                <h5><?= isset($model->safarioperator) ? $model->safarioperator->business_name : ''; ?></h5>
+                                <p><?= '@' . $model->user->user_handle; ?></p>
+                                <p><?= $model->description; ?></p>
+                            </div>
                         </div>
                         <div class="d-flex mb-2">
                             <strong>Sighting Date :</strong>
