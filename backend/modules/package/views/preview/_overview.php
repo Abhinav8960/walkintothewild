@@ -35,12 +35,12 @@
                                                         <p><?= $packageday->end_location ?></p>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 mb-3">
+                                                <!-- <div class="col-lg-4 mb-3">
                                                     <div class="titles_locations">
                                                         <h6 class="fs-5">Hotel Stay Home</h6>
                                                         <p><?= $packageday->hotel_name ?></p>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!-- <div class="col-12">
                                                     <div class="titles_locations">
                                                         <h6 class="fs-5">Meal</h6>
