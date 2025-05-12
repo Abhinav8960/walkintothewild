@@ -168,7 +168,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 m-3">
+                <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
                         <div class="pakageCost mb-xxl-0 mb-2">
                             <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
