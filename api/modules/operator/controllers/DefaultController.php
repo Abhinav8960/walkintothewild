@@ -447,6 +447,7 @@ class DefaultController extends RestController
         $dataProvider = new ActiveDataProvider([
             'query' => SafariPark::find()->where(['id' => $ids]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => false
         ]);
 
         return $this->querySender($dataProvider, $rootIndexName = "parks");

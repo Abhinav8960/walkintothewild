@@ -48,7 +48,7 @@ $this->params['title'] = $this->title;
                         'label' => 'Caption',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->caption;
+                            return mb_strimwidth($model->caption, 0, 19, "...");
                         }
                     ],
                     [
