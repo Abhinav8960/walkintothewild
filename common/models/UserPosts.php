@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\feeds\Feeds;
+use common\models\operator\SafariOperator;
 use common\models\postscomment\UserPostComment;
 use common\models\postscomment\UserPostLike;
 use common\traits\CommanRelationship;
@@ -139,5 +140,10 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             return  Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
         }
         return null;
+    }
+
+    public function getSafarioperator()
+    {
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 }
