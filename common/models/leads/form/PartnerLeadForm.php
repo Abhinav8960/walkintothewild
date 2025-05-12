@@ -66,9 +66,7 @@ class PartnerLeadForm extends Model
             'email' => 'Email',
             'phone_no' => 'Phone No',
             'start_date' => 'Start Date',
-            'end_date' => 'End Date',
-            'user_agent' => 'User Agent',
-            'ip_address' => 'Ip Address',
+            'end_date' => 'End Date',           
             'status' => 'Status',
         ];
     }
