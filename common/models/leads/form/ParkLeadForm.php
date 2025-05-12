@@ -73,7 +73,7 @@ class ParkLeadForm extends Model
         ];
     }
 
-    public function request($operator, $login_user)
+    public function request($login_user)
     {
 
         $transaction = \Yii::$app->db->beginTransaction();
@@ -91,15 +91,17 @@ class ParkLeadForm extends Model
             $lead->to_date = $this->end_date;
             $lead->phone = $this->phone_no;
             $lead->user_id = $login_user->id;
-            $lead->operator_id = $operator->id;
             $lead->status = 1;
 
 
             if ($lead->save(false)) {
                 foreach ($park->safarioperatorlist as $op) {
 
-                    $this->assignToPartner($lead, $op->operator, $login_user);
-                    $this->prepareChat($lead, $park, $op->operator, $login_user);
+                    if (!empty($op->operator)) {
+
+                        $this->assignToPartner($lead, $op->operator, $login_user);
+                        $this->prepareChat($lead, $park, $op->operator, $login_user);
+                    }
                 }
             }
 
