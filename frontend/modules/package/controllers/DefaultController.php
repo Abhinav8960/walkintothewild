@@ -26,6 +26,7 @@ use frontend\models\PackageCommentReportForm;
 use common\Helper\FrontendNotificationHelper;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\GeneralModel;
+use common\models\leads\form\PackageLeadForm;
 use common\models\MailLog;
 use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
@@ -88,7 +89,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $package = Package::find()->andWhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->andWhere(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -140,10 +141,9 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        $packagemodel = new LeadForm();
-        $packagemodel->scenario = LeadForm::
+        $packagemodel = new PackageLeadForm();
         $packagemodel->action_validate_url = '/package/default/validate';
-        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
+        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id, \Yii::$app->user->identity)) {
             // Send Notification for Package Quote
             // FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity);
 
@@ -168,7 +168,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -245,7 +245,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
-        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -275,7 +275,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->andwhere(['package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->andwhere(['package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
         }
@@ -301,7 +301,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionEnquiry($slug)
     {
-        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE,'package_slug'=>$slug])->limit(1)->one();
+        $package = Package::find()->andwhere(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }
@@ -343,7 +343,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionFlag($slug, $package_comment_id)
     {
-        $package = Package::find()->andwhere(['package_slug'=>$slug])->one();
+        $package = Package::find()->andwhere(['package_slug' => $slug])->one();
         if (!$package) {
             return $this->redirect(['/package']);
         }
@@ -485,6 +485,4 @@ class DefaultController extends FrontendBaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-   
 }
