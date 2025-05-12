@@ -132,6 +132,7 @@ class PartnerLeadForm extends Model
         $message .= "<b>End Date: </b>" . date('M j, Y', strtotime($this->end_date)) . "<br/>";
 
         $chat->generateChatHash();
+        $chat->lead_id = $lead->id;
         $chat->user_id = $login_user->id;
         $chat->recipient_user_id = $individual_user->id;
         $chat->last_message = $short_msg;
