@@ -23,6 +23,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new SightingSearch();
+        $searchModel->status = Sighting::STATUS_ACTIVE;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 

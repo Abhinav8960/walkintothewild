@@ -3,10 +3,8 @@
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
+use kartik\daterange\DateRangePicker;
 
-/** @var yii\web\View $this */
-/** @var common\models\master\animal\MasterAnimalSearch $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -24,6 +22,15 @@ use common\models\park\SafariPark;
         <?php echo $form->field($model, 'description')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
     </div> -->
 
+    <div class="col-md-2">
+        <?= $form->field($model, 'date_range', [
+            // 'addon' => ['prepend' => ['content' => '<i class="fas fa-calendar-alt"></i>']],
+            'options' => ['class' => 'drp-container mb-2']
+        ])->widget(DateRangePicker::classname(), [
+            'options' => ['placeholder' => 'Select Sighting Date'],
+        ]);
+        ?>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'master_animal_id')->dropDownList(
             GeneralModel::animalfilteroption(),
