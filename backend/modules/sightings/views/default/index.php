@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Sighting Thumbnail',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -42,84 +42,89 @@ $this->params['title'] = $this->title;
                             ]), ['style' => 'text-align: center;']);
                         }
                     ],
-                    [
-                        'label' => 'Sighting Details',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->description;
-                        }
-                    ],
-                    [
-                        'label' => 'Location',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
 
+                    [
+                        'label' => 'Partner Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->locationDetail->title;
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
+                    ],
+                    [
+                        'label' => 'Sighting Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y", strtotime($model->post_datetime));
                         }
                     ],
+                    // [
+                    //     'label' => 'Sighting Details',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->description;
+                    //     }
+                    // ],
                     [
                         'label' => 'Animal',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->animalDetail->name;
                         }
                     ],
                     [
-                        'label' => 'Safari Session',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Session',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->safariSessionDetail->title;
                         }
                     ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Park',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
+                            return $model->locationDetail->title;
                         }
                     ],
                     [
-                        'label' => 'Sighting Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => '10%; text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Duration',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->post_datetime;
+                            return $model->v_duration . ' seconds';
                         }
                     ],
+                   
                     [
-                        'label' => 'Last Updated Time',
+                        'label' => 'Last Updated',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
+                            return date("F j, Y, g:i a", $model->updated_at);
                         }
                     ],
 

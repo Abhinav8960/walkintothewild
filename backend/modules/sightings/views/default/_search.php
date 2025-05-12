@@ -3,6 +3,7 @@
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
+use kartik\daterange\DateRangePicker;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\animal\MasterAnimalSearch $model */
@@ -20,17 +21,26 @@ use common\models\park\SafariPark;
     ],
 ]); ?>
 <div class="row">
+
     <div class="col-md-2">
-        <?php echo $form->field($model, 'description')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'location')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
+        <?= $form->field($model, 'safari_operator_id')->dropDownList(
+            GeneralModel::operatorslist(),
             [
-                'prompt' => 'Select Park',
+                'prompt' => 'Select Partner Name',
             ]
         ) ?>
     </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'date_range', [
+            // 'addon' => ['prepend' => ['content' => '<i class="fas fa-calendar-alt"></i>']],
+            'options' => ['class' => 'drp-container mb-2']
+        ])->widget(DateRangePicker::classname(), [
+            'options' => ['placeholder' => 'Select Sighting Date'],
+        ]);
+        ?>
+    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'master_animal_id')->dropDownList(
             GeneralModel::animalfilteroption(),
@@ -39,6 +49,16 @@ use common\models\park\SafariPark;
             ]
         ) ?>
     </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'location')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
+            [
+                'prompt' => 'Select Park',
+            ]
+        ) ?>
+    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'safari_session_id')->dropDownList(
             GeneralModel::safarisessionoption(),

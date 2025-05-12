@@ -5,6 +5,7 @@ namespace common\models\sighting;
 use common\models\feeds\Feeds;
 use common\models\master\animal\MasterAnimal;
 use common\models\meta\MetaSafariSession;
+use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use common\models\User;
 use common\traits\CommanRelationship;
@@ -167,5 +168,10 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             return  Yii::$app->params['s3_endpoint'] . '/watchpost/' . $this->user_id . '/media/' . $this->file;
         }
         return null;
+    }
+
+    public function getSafarioperator()
+    {
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 }
