@@ -372,7 +372,7 @@ class DefaultController extends RestController
                 $message .= "<br>";
                 $message .= "Travelers: " . $model->travelers;
                 $message .= "<br>";
-                $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$model->travelers];
+                $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$model->stay_category_id];
                 $message .= "<br>";
                 $message .= "Start Date: " . date('M d, Y', strtotime($model->start_date));
                 $message .= "<br>";

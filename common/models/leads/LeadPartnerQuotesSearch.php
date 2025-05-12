@@ -17,7 +17,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
     public function rules()
     {
         return [
-            [['id', 'lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'email', 'phone', 'start_date', 'end_date', 'addtional_data'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
         ];
@@ -64,8 +64,8 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
             'lead_partner_id' => $this->lead_partner_id,
             'lead_id' => $this->lead_id,
             'partner_id' => $this->partner_id,
-            'safari' => $this->safari,
-            'travellers' => $this->travellers,
+            'safaris' => $this->safaris,
+            'travelers' => $this->travelers,
             'stay_category_id' => $this->stay_category_id,
             'start_date' => $this->start_date,
             'partner_selling_price' => $this->partner_selling_price,

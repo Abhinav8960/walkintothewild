@@ -66,8 +66,8 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             [['addtional_data', 'datetime_of_approval_by_admin', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['received_amount', 'is_approved_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'travelers', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'travelers', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['start_date', 'end_date', 'addtional_data','rejection_reason'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
@@ -109,6 +109,12 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getLead()
+    {
+       return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+
     }
 
     public function getPartner()
