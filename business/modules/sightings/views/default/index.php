@@ -99,14 +99,14 @@ $this->params['title'] = $this->title;
                             return $model->v_duration . ' seconds';
                         }
                     ],
-                    [
-                        'label' => 'Last Updated',
-                        'headerOptions' => ['style' => 'width: 15%'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date("F j, Y, g:i a", $model->updated_at);
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Last Updated',
+                    //     'headerOptions' => ['style' => 'width: 15%'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return date("F j, Y, g:i a", $model->updated_at);
+                    //     }
+                    // ],
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],

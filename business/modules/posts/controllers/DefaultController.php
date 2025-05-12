@@ -7,6 +7,7 @@ use common\models\UserPosts;
 use common\models\UserPostSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -15,6 +16,33 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends Controller
 {
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+
+        return $behaviors + [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'quotation', 'quotation-validate'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['view', 'quotation', 'quotation-validate'],
+                        'allow' => $this->isOwner(),
+                        'roles' => ['@'],
+                    ],
+
+                ],
+
+            ],
+        ];
+    }
     /**
      * Renders the index view for the module
      * @return string
@@ -87,5 +115,16 @@ class DefaultController extends Controller
         ]);
 
         return $this->renderAjax('_reply_list', ['dataProvider' => $dataProvider]);
+    }
+
+    private function isOwner()
+    {
+        $id = Yii::$app->request->get('id');
+        $operator = $this->module->operatormodel();
+        $model = UserPosts::findOne(['id' => $id]);
+        if ($model && $model->safari_operator_id == $operator->id) {
+            return true;
+        }
+        return false;
     }
 }

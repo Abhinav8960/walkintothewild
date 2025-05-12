@@ -8,15 +8,17 @@ use yii\data\ActiveDataProvider;
 
 class UserPostSearch extends UserPosts
 {
+    public $user_name;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['caption'], 'string'],
+            [['caption','user_name'], 'string'],
             [['file'], 'string', 'max' => 512],
             [['safari_session_id', 'location', 'master_animal_id', 'status'], 'safe'],
+            [['safari_operator_id'], 'integer']
 
         ];
     }
@@ -39,7 +41,7 @@ class UserPostSearch extends UserPosts
      */
     public function search($params)
     {
-        $query = UserPosts::find()->where(['status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]]);
+        $query = UserPosts::find()->where(['user_posts.status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -59,12 +61,19 @@ class UserPostSearch extends UserPosts
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'safari_operator_id' => $this->safari_operator_id,
-            'status' => $this->status,
+            'user_posts.id' => $this->id,
+            'user_posts.safari_operator_id' => $this->safari_operator_id,
+            'user_posts.status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'caption', $this->caption]);
+        $query->andFilterWhere(['like', 'user_posts.caption', $this->caption]);
+
+        if(!empty($this->user_name))
+        {
+            $query->joinwith(['user' => function ($query) {
+                $query->andFilterWhere(['like', 'user.name', $this->user_name]);
+            }]);
+        }
 
 
         return $dataProvider;

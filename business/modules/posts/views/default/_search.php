@@ -16,9 +16,9 @@ use common\models\GeneralModel;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
         <?php echo $form->field($model, 'caption')->textInput(['placeholder' => 'Search by Caption'])->label(false) ?>
-    </div>
+    </div> -->
 
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
