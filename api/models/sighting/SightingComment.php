@@ -43,7 +43,7 @@ class SightingComment extends \common\models\sighting\SightingComment
 
     public function getReplies()
     {
-        return $this->hasMany(self::class, ['parent_id' => 'id']);
+        return $this->hasMany(self::class, ['parent_id' => 'id'])->andWhere(['sighting_comment.status' => 1]);
     }
 
     public function getIs_liked()
