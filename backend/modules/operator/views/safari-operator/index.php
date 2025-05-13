@@ -144,23 +144,23 @@ $this->params['title'] = $this->title;
                                 }
                             },
 
-                            'update' => function ($url, $model) {
-                                if ($model->is_temporary_delete != 1) {
-                                    return Html::a(
-                                        '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
-                                        ['update', 'id' => $model->id],
-                                        [
-                                            'class' => 'btn p-0 change-menuicon',
-                                            'title' => 'Update',
-                                        ]
-                                    );
-                                }
-                            },
-                            'suspend' => function ($url, $model) {
-                                if ($model->is_temporary_delete != 1) {
-                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
-                                }
-                            },
+                            // 'update' => function ($url, $model) {
+                            //     if ($model->is_temporary_delete != 1) {
+                            //         return Html::a(
+                            //             '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
+                            //             ['update', 'id' => $model->id],
+                            //             [
+                            //                 'class' => 'btn p-0 change-menuicon',
+                            //                 'title' => 'Update',
+                            //             ]
+                            //         );
+                            //     }
+                            // },
+                            // 'suspend' => function ($url, $model) {
+                            //     if ($model->is_temporary_delete != 1) {
+                            //         return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
+                            //     }
+                            // },
 
                         ]
                     ],

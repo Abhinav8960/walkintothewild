@@ -127,8 +127,8 @@ class PackageVersionForm extends \yii\base\Model
             $this->dinner_included = $this->package_version_model->dinner_included;
             $this->meal_not_included = $this->package_version_model->meal_not_included;
 
-            $this->type = $this->package_version_model->type;
-            $this->gst_percentage = $this->package_version_model->gst_percentage;
+            // $this->type = $this->package_version_model->type;
+            // $this->gst_percentage = $this->package_version_model->gst_percentage;
             $this->popular_package = $this->package_version_model->popular_package;
 
 
@@ -360,14 +360,16 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->dinner_included = $this->dinner_included;
         $this->package_version_model->meal_not_included = $this->meal_not_included;
 
-        $this->package_version_model->type = $this->type;
-        if ($this->type == 1) { // With GST
-            $this->package_version_model->gst_percentage = $this->gst_percentage;
-            $gst_amount = (float)(0.01 * $this->gst_percentage) * (float)$this->cost_per_person;
-            $this->package_version_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
-        } else { // Without GST
-            $this->package_version_model->total_price = (float)$this->cost_per_person;
-        }
+        // $this->package_version_model->type = $this->type;
+        // if ($this->type == 1) { // With GST
+        //     $this->package_version_model->gst_percentage = $this->gst_percentage;
+        //     $gst_amount = (float)(0.01 * $this->gst_percentage) * (float)$this->cost_per_person;
+        //     $this->package_version_model->total_price = (float)$this->cost_per_person + (float)$gst_amount;
+        // } else { // Without GST
+        //     $this->package_version_model->total_price = (float)$this->cost_per_person;
+        // }
+        $this->package_version_model->total_price = (float)$this->cost_per_person;
+
 
         $this->package_version_model->status = $this->status;
 

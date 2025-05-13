@@ -23,7 +23,33 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
 
 
-        $fields = ['id', 'have_you_joined', 'share_safari_title', 'slug', 'no_of_safari', 'start_date', 'end_date', 'cut_off_date', 'total_seat', 'share_seat', 'types', 'organized_by_name', 'organized_by_image', 'organized_slug', 'shared_image_path', 'seat_full_status', 'is_wishlist', 'is_followed', 'interseted_user_count', 'park_title', 'park_slug', 'status'];
+        $fields = [
+            'id',
+            'have_you_joined',
+            'share_safari_title',
+            'slug',
+            'no_of_safari',
+            'start_date',
+            'end_date',
+            'cut_off_date',
+            'total_seat',
+            'share_seat',
+            'types',
+            'organized_by_name',
+            'organized_by_image',
+            'organized_slug',
+            'shared_image_path',
+            'seat_full_status',
+            'is_wishlist',
+            'is_followed',
+            'interseted_user_count',
+            'park_title',
+            'park_slug',
+            'interested_users' => function () {
+                return $this->intrestedUserLimited;
+            },
+            'status'
+        ];
         $fields[] = 'resource_uri';
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
@@ -45,7 +71,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
-
+            if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $fields[] = 'partner';
+            }
             $fields[] = 'website_url';
             $fields[] = 'witw_average_rating';
             $fields[] = 'witw_review_count';
@@ -155,6 +183,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested');
     }
 
+    public function getIntrestedUserLimited()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested')->limit(3);
+    }
+
     public function getInterseted_user_count()
     {
         return $this->getIntrestedUser()->count();
@@ -170,12 +203,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getComments()
     {
-        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id'])->andWhere(['share_safari_comment.status' => 1]);
     }
 
     public function getComments_count()
     {
-        return $this->getComments()->where(['parent_id' => null])->count();
+        return $this->getComments()->andWhere(['parent_id' => null])->count();
     }
 
     /**
