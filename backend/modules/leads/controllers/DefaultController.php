@@ -159,8 +159,8 @@ class DefaultController extends  Controller
         $message .= "<br>";
         $message .= "<b>Note</b>";
         $message .= "<br>";
-        $data = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->asArray()->one();
-
+        $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
