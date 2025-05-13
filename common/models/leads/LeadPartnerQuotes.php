@@ -130,6 +130,6 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
 
     public function getDue_quatation()
     {
-        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['id' => 'stay_category_id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
     }
 }
