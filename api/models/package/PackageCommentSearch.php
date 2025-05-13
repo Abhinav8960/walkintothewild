@@ -44,7 +44,7 @@ class PackageCommentSearch extends PackageComment
      */
     public function search($params, $pagination = true)
     {
-        $query = PackageComment::find()->where(['parent_id' => null, 'is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10]);
+        $query = PackageComment::find()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10]);
 
         // add conditions that should always apply here
 
