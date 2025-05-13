@@ -152,7 +152,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
         return $arr = [
             'safaris' => $this->safaris,
             'travelers' => $this->travelers,
-            'staycatgory' => $this->staycatgory,
+            'staycatgory' => $this->staycatgory ? $this->staycatgory->attributes : null, // Ensure related data is fetched
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
@@ -164,10 +164,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'partner_net_selling_price' => $this->partner_net_selling_price,
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
-            // 'installment' => $this->installment,
-            // 'received_amount' => $this->received_amount,
-            // 'addtional_data' => $this->addtional_data,
-            'due_quatation' => $this->due_quatation
+            'due_quatation' => $this->due_quatation ? $this->due_quatation->attributes : null, // Ensure related data is fetched
         ];
     }
 }
