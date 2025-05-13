@@ -2,6 +2,7 @@
 
 namespace api\models\chat;
 
+use api\models\leads\Lead;
 use Yii;
 use api\models\User;
 use api\models\operator\SafariOperator;
@@ -32,7 +33,6 @@ class Chat extends \common\models\chat\Chat
         $fields = [
             'id',
             'chat_hash',
-            // 'recipient_user_id',
             'last_message',
             'last_message_datetime'  => function () {
                 return strtotime($this->last_message_datetime);
@@ -53,6 +53,8 @@ class Chat extends \common\models\chat\Chat
             'status' => function () {
                 return (bool)$this->status;
             },
+            'lead',
+            
             // 'sender',
             // 'recipient',
             // 'created_at',
@@ -163,5 +165,10 @@ class Chat extends \common\models\chat\Chat
     public function getPark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
+
+    public function getLead()
+    {
+        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
     }
 }

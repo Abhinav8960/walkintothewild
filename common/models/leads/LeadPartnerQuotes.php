@@ -2,7 +2,7 @@
 
 namespace common\models\leads;
 
-use common\models\meta\MetaStayCategory;
+use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use Yii;
 
@@ -125,6 +125,11 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
 
     public function getStaycatgory()
     {
-        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
+        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+    }
+
+    public function getDue_quatation()
+    {
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
     }
 }
