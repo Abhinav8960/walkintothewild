@@ -3,7 +3,7 @@
 namespace backend\modules\leads\controllers;
 
 use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
+use api\models\chat\ChatMessage;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuoteInstallments;
@@ -164,6 +164,7 @@ class DefaultController extends  Controller
             'lead', // Relation to the Lead model
             'lead.park', // Nested relation to the Park model (if applicable)
             'staycatgory', // Relation to the MetaStayCategory model
+            'due_quatation'
         ])
             ->asArray()->one();
 
@@ -174,6 +175,7 @@ class DefaultController extends  Controller
         $chat_message->data = json_encode($data);
         $chat_message->status = 1;
         $chat_message->created_by = $quotation->partner_id;
+        $chat_message->updated_by = $quotation->partner_id;
 
         if ($chat_message->save(false)) {
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();

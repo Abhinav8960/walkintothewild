@@ -127,4 +127,9 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     {
         return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
     }
+
+    public function getDue_quatation()
+    {
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['id' => 'stay_category_id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
+    }
 }
