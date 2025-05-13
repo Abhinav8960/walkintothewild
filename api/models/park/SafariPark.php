@@ -47,6 +47,7 @@ class SafariPark extends \common\models\park\SafariPark
             'status' => function () {
                 return (bool)$this->status;
             },
+            'animal_text',
         ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
