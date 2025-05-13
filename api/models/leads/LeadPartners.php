@@ -2,6 +2,7 @@
 
 namespace api\models\leads;
 
+use api\models\operator\SafariOperator;
 use Yii;
 
 /**
@@ -56,6 +57,12 @@ class LeadPartners extends \common\models\leads\LeadPartners
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+
     }
 
 }

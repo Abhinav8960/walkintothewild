@@ -2,6 +2,10 @@
 
 namespace api\models\leads;
 
+use api\models\meta\MetaPackageRange;
+use api\models\operator\SafariOperator;
+use api\models\park\SafariPark;
+use api\models\User;
 use Yii;
 
 /**
@@ -38,7 +42,27 @@ class Lead extends \common\models\leads\Lead
 {
 
 
-    
+    public function fields()
+    {
+        $fields = [
+            'source_label',
+            'name',
+            'email',
+            'phone',
+            'destination',
+            'from_date',
+            'to_date',
+            'is_date_flexible',
+            'travelers',
+            'accommodation',
+            'transport',
+            'meals',
+            'budget',
+            'addional_notes',
+        ];
+        return $fields;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -93,4 +117,48 @@ class Lead extends \common\models\leads\Lead
         ];
     }
 
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+    }
+
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'operator_id']);
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function getAssignOperator()
+    {
+        return $this->hasMany(LeadPartners::className(), ['lead_id' => 'id']);
+    }
+
+    public function getSources()
+    {
+        return $arr = [
+            SELF::SOURCE_PACKAGE => 'Package',
+            SELF::SOURCE_PARK => 'Park',
+            SELF::SOURCE_PARTNER => 'Partner',
+        ];
+    }
+
+    public function getSource_label()
+    {
+        return $this->getSources()[$this->source] ?? 'uncategorized';
+    }
+
+
+    public function getQuotation()
+    {
+        return $this->hasMany(LeadPartnerQuotes::className(), ['lead_id' => 'id']);
+    }
 }

@@ -112,7 +112,6 @@ class DefaultController extends  Controller
             $transaction->rollBack();
             return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.']);
         }
-       
     }
 
     public function actionDisapprove()
@@ -138,7 +137,7 @@ class DefaultController extends  Controller
     private function prepareChat($quotation)
     {
 
-        $chat_model = Chat::find()->andWhere(['lead_id'=>$quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
+        $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
         if (!$chat_model) {
             return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
         }
@@ -160,13 +159,7 @@ class DefaultController extends  Controller
         $message .= "<br>";
         $message .= "<b>Note</b>";
         $message .= "<br>";
-        $data = LeadPartnerQuotes::find()->where(['id' => $quotation->id])->with([
-            'lead', // Relation to the Lead model
-            'lead.park', // Nested relation to the Park model (if applicable)
-            'staycatgory', // Relation to the MetaStayCategory model
-            'due_quatation'
-        ])
-            ->asArray()->one();
+        $data = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->asArray()->one();
 
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
         $chat_message = new ChatMessage();

@@ -24,6 +24,16 @@ use Yii;
 class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuoteInstallments
 {
 
+    public function fields()
+    {
+        $fields = [
+            'amount',
+            'payment_initiate_link',
+            'payment_hash',
+            'before_datetime',
+        ];
+        return $fields;
+    }
 
     /**
      * {@inheritdoc}
@@ -69,5 +79,10 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getPayment_initiate_link()
+    {
+        return \Yii::$app->params['frontend_url'] . '/payment/' . $this->payment_hash;
     }
 }

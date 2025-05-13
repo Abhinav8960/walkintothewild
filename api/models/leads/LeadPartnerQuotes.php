@@ -2,6 +2,8 @@
 
 namespace api\models\leads;
 
+use api\models\meta\MetaPackageRange;
+use api\models\operator\SafariOperator;
 use Yii;
 
 /**
@@ -37,6 +39,30 @@ use Yii;
 class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 {
 
+    public function fields()
+    {
+        $fields = [
+            'safari',
+            'travellers',
+            'staycatgory',
+            'name',
+            'email',
+            'phone',
+            'start_date',
+            'partner_selling_price',
+            'plateform_partner_fees_percentage',
+            'plateform_partner_fees',
+            'partner_net_selling_price',
+            'plateform_customer_discount',
+            'net_payment_price',
+            'installment',
+            'received_amount',
+            'end_date',
+            'addtional_data',
+            'due_quatation'
+        ];
+        return $fields;
+    }
 
     /**
      * {@inheritdoc}
@@ -97,5 +123,27 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getLead()
+    {
+       return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+
+    }
+
+    public function getPartner()
+    {
+       return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+    }
+
+    public function getDue_quatation()
+    {
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
     }
 }
