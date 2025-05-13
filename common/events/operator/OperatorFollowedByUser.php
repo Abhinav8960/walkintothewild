@@ -62,7 +62,7 @@ class OperatorFollowedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->user_name . 'followed you',
+                    'subject' => $this->user_name.' '.'followed you',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->safari_operator,
@@ -73,7 +73,7 @@ class OperatorFollowedByUser extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->user_name . ' has joined ' . $this->safari_operator . "'s" . ' Shared Safari',
+                    'subject' => 'New Update !! ' . $this->user_name . ' has followed ' . $this->safari_operator,
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' =>$this->safari_operator,

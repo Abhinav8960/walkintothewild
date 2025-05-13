@@ -2,10 +2,10 @@
 
 namespace common\events\operator;
 
-use api\models\operator\SafariOperator;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
+use common\models\User;
 use yii\base\Event;
 
 class OperatorUnfollowedByUser extends Event
@@ -15,29 +15,31 @@ class OperatorUnfollowedByUser extends Event
     public $name;
     public $templates;
     public $channelName;
-    public $interested_user;
+    public $user_name;
     public $admin_mail;
-    public $shared_safari_id;
+    public $safari_operator_id;
     public $shared_safari_name;
+    public $safari_operator_email;
     public $shared_safari_url;
     protected $sent_data = [];
-    protected $shared_safari;
+    protected $safari_operator;
     protected $engine;
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
 
-    protected $mail_template_code = 'SOUR';  // To Host Unjoin Safari
+    protected $mail_template_code = 'SOFR';  // To Follow OPERATOR
 
-    public function __construct($interested_user, $shared_safari_id)
-    {    
-        $this->interested_user = $interested_user;
-        $this->shared_safari_id = $shared_safari_id;
+    public function __construct($user_name, $safari_operator,$safari_operator_email)
+    {
+        
+        $this->user_name = $user_name;
+        $this->safari_operator = $safari_operator;
+        $this->safari_operator_email = $safari_operator_email;
         $this->engine = \Yii::$app->engine;
-        $this->prepareData();
         $this->broadcastHandle();
     }
 
@@ -59,31 +61,37 @@ class OperatorUnfollowedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->interested_user . ' unjoined your Shared Safari!',
+                    'subject' => $this->user_name.' '.'followed you',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->interested_user,
-                        'shared_safari' => $this->shared_safari_name,
-                        'shared_safari_url' => $this->shared_safari_url,
+                        'username' => $this->safari_operator,
+                        'name' => $this->user_name
                     ],
-                    'to_mail' => $this->email,
+                    'to_mail' => $this->safari_operator_email,
                     'cc' => [],
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->interested_user . ' has unjoined ' . $this->name . "'s" . ' Shared Safari',
+                    'subject' => 'New Update !! ' . $this->user_name . ' has followed ' . $this->safari_operator,
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->interested_user,
-                        'shared_safari' => $this->shared_safari_name,
-                        'shared_safari_url' => $this->shared_safari_url,
+                        'username' =>$this->safari_operator,
+                        'name' => $this->user_name
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
+                    'to_mail' => \Yii::$app->params['adminEmail'] ,
                     'cc' => [],
                     'bcc' => [],
                 ]
             ],
             'firebase' => [
+                // [
+                //     'master_notification_template_id' => $this->firebaseTemplateId(),
+                //     'message' => 'Hello ' . $this->interested_user . ', welcome to our Safari!',
+                //     'sent_data' => NULL,
+                //     'user_id' => $this->userId,
+                //     'image_url' => NULL,
+                //     'action' => NULL,
+                // ],
                 [
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title' => $this->title(),
@@ -110,7 +118,7 @@ class OperatorUnfollowedByUser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_UNJOIN_TEMPLATE, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate:: FOLLOW_OPERATOR, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }
@@ -124,21 +132,6 @@ class OperatorUnfollowedByUser extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['var1' => $this->interested_user, 'var2' => $this->shared_safari_name]);
-    }
-
-    public function prepareData()
-    {
-        $this->shared_safari = SafariOperator::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_name = $this->shared_safari['share_safari_title'];
-        $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari['slug'], 'organized_slug' => $this->shared_safari['organizedslug'] ? $this->shared_safari['organizedslug'] : '']));
-        $this->userId = $this->shared_safari->host_user_id;
-        $this->email = $this->shared_safari->user->email;
-        $this->name =  $this->shared_safari->user->name;
-        // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
-        $this->sent_data = [
-            'share_safari_title' => $this->shared_safari['share_safari_title'],
-            'slug' => $this->shared_safari['slug']
-        ];
+        return $this->engine->render($this->master_notification_template->message, ['var1' => $this->user_name]);
     }
 }
