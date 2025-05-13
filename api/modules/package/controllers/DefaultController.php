@@ -111,7 +111,7 @@ class DefaultController extends RestController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['IS NOT','live_version',NULL])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
