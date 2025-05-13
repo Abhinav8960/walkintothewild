@@ -45,7 +45,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'interseted_user_count',
             'park_title',
             'park_slug',
-            'interested_users'=>function(){
+            'interested_users' => function () {
                 return $this->intrestedUserLimited;
             },
             'status'
@@ -71,7 +71,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
-
+            if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $fields[] = 'partner';
+            }
             $fields[] = 'website_url';
             $fields[] = 'witw_average_rating';
             $fields[] = 'witw_review_count';

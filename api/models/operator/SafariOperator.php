@@ -26,6 +26,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         }, 'about_business', 'image_path', 'park_count', 'package_count', 'shared_safari_count', 'follower_list_count', 'category_title', 'is_followed', 'status' => function () {
             return (bool)$this->status;
         },];
+        $fields[] = 'review_url';
 
         if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'park';
@@ -56,6 +57,14 @@ class SafariOperator extends \common\models\operator\SafariOperator
             'parks' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-park',
             'sharedsafari' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-shared-safari',
             'packages' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/operator-packages',
+            'reviews' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/reviewlist?sort_by=highest',
+
+        ];
+    }
+
+    public function getReview_url()
+    {
+        return [
             'reviews' => Yii::$app->params['api_url'] . '/operator/' . $this->slug . '/reviewlist?sort_by=highest',
 
         ];
