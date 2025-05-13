@@ -35,6 +35,7 @@ class SafariPark extends \common\models\park\SafariPark
             'title',
             'slug',
             'feature_image_path',
+            'animal_text',
             'avg_safari_price_min' => function () {
                 return (int)$this->avg_safari_price_min;
             },
@@ -47,7 +48,6 @@ class SafariPark extends \common\models\park\SafariPark
             'status' => function () {
                 return (bool)$this->status;
             },
-            'animal_text',
         ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
