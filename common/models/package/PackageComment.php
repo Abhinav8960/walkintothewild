@@ -29,6 +29,9 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
 {
     use \common\traits\CommanRelationship;
 
+    const DELETED_BY_ADMIN = 1;
+    const PARENT_DELETED = 2;
+
     public function behaviors()
     {
         return [

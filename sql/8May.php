@@ -1,5 +1,5 @@
 <!-- 13 May 2025 -->
-
+ALTER TABLE `package_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 ALTER TABLE `share_safari_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 
 
