@@ -108,4 +108,9 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
     {
         return $this->getReplies()->andWhere(['user_post_comment.status' => 1])->count();
     }
+
+    public function getReports()
+    {
+        return $this->hasMany(UserPostCommentFlag::className(), ['user_post_comment_id' => 'id']);
+    }
 }
