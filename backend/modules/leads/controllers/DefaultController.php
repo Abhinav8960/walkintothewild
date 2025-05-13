@@ -174,10 +174,13 @@ class DefaultController extends  Controller
         $chat_message->message = $message;
         $chat_message->data = json_encode($data);
         $chat_message->status = 1;
-        $chat_message->created_by = $quotation->partner_id;
-        $chat_message->updated_by = $quotation->partner_id;
+        $chat_message->created_by = $quotation->partner->user_id;
+        $chat_message->updated_by = $quotation->partner->user_id;
 
         if ($chat_message->save(false)) {
+            $chat_message->created_by = $quotation->partner->user_id;
+            $chat_message->updated_by = $quotation->partner->user_id;
+            $chat_message->save(false);
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = $message;
             $chat->last_message_at = time();
