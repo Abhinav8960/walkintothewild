@@ -70,14 +70,14 @@ class Lead extends \common\models\leads\Lead
     public function rules()
     {
         return [
-            [['package_id', 'park_id', 'operator_id', 'accommodation', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['package_id', 'package_version', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['source', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
-            [['source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['source', 'package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
+            [['source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'safaris', 'stay_category_id'], 'integer'],
             [['from_date', 'to_date'], 'safe'],
             [['addional_notes'], 'string'],
-            [['name', 'email', 'destination', 'accommodation', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
+            [['name', 'email', 'destination', 'transport', 'meals', 'budget'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
         ];
     }
