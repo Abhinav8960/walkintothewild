@@ -1,11 +1,10 @@
 <!-- 13 May 2025 -->
-ALTER TABLE `sighting_comment` CHANGE `is_deleted` `deleted_admin` INT NULL DEFAULT '0';
+ALTER TABLE `user_post_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 
 ALTER TABLE `sighting_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
 ALTER TABLE `sighting_comment_flag` ADD `reason` VARCHAR(512) NULL DEFAULT NULL AFTER `user_id`;
+ALTER TABLE `sighting_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 
-ALTER TABLE `user_post_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
-ALTER TABLE `user_post_comment_flag` ADD `reason` VARCHAR(512) NULL DEFAULT NULL AFTER `user_id`;
 
 
 
