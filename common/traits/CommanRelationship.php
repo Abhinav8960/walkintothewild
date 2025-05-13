@@ -109,11 +109,11 @@ trait CommanRelationship
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" >';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             } else if ($this->status == 0) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" >';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             } else if ($this->status == -1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" >';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             }
         }
         return $this->status;
