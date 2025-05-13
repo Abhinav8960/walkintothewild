@@ -142,7 +142,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 
     public function getDue_quatation()
     {
-        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
     }
 
     public function getPreparedata()
@@ -165,7 +165,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'installment' => $this->installment,
             'received_amount' => $this->received_amount,
             'end_date' => $this->end_date,
-            'addtional_data' => $this->addtional_data,
+            // 'addtional_data' => $this->addtional_data,
             'due_quatation' => $this->due_quatation
         ];
     }
