@@ -142,7 +142,8 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 
     public function getDue_quatation()
     {
-        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        // return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 
     public function getPreparedata()
@@ -151,22 +152,19 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
         return $arr = [
             'safaris' => $this->safaris,
             'travelers' => $this->travelers,
-            'staycatgory' => $this->staycatgory,
+            'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
             'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'partner_selling_price' => $this->partner_selling_price,
             'plateform_partner_fees_percentage' => $this->plateform_partner_fees_percentage,
             'plateform_partner_fees' => $this->plateform_partner_fees,
             'partner_net_selling_price' => $this->partner_net_selling_price,
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
-            'installment' => $this->installment,
-            'received_amount' => $this->received_amount,
-            'end_date' => $this->end_date,
-            'addtional_data' => $this->addtional_data,
-            'due_quatation' => $this->due_quatation
+            'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
         ];
     }
 }
