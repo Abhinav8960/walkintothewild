@@ -44,7 +44,7 @@ class PackageCommentSearch extends PackageComment
      */
     public function search($params, $pagination = true)
     {
-        $query = PackageComment::find()->where(['flaged' => 1])->andWhere(['is_deleted' => 0]);
+        $query = PackageComment::find()->where(['flaged' => 1])->andWhere(['deleted_by' => 0]);
 
         // add conditions that should always apply here
 

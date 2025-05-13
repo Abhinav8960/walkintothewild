@@ -11,9 +11,9 @@ use yii\helpers\Url;
 <div class="bg-white pb-3 px-3 rounded-3 mb-4">
     <div class="comments_safari border-0 ">
         <div class="commentsOther comment_hightfixed position-relative ps-3 ">
-            <?php if ($parent_comments = $package->getComments()->where(['parent_id' => null, 'is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
+            <?php if ($parent_comments = $package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
                 foreach ($parent_comments as $comments) {
-                    $replies = $comments->getReplies()->andWhere(['is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all(); ?>
+                    $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all(); ?>
                     <div class="one_box position-relative">
                         <div class="objec-flgs">
 
