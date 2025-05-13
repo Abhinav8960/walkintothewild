@@ -23,6 +23,8 @@ use Yii;
  */
 class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    const DELETED_BY_ADMIN = 1;
+    const PARENT_DELETED = 2;
     /**
      * {@inheritdoc}
      */
@@ -106,5 +108,10 @@ class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces
     public function getReplies_count()
     {
         return $this->getReplies()->andWhere(['sighting_comment.status' => 1])->count();
+    }
+
+    public function getReports()
+    {
+        return $this->hasMany(SightingCommentFlag::className(), ['sighting_comment_id' => 'id']);
     }
 }
