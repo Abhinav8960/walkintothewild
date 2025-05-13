@@ -170,12 +170,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getComments()
     {
-        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id'])->andWhere(['share_safari_comment.status' => 1]);
     }
 
     public function getComments_count()
     {
-        return $this->getComments()->where(['parent_id' => null])->count();
+        return $this->getComments()->andWhere(['parent_id' => null])->count();
     }
 
     /**
