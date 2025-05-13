@@ -1,3 +1,9 @@
+<!-- 13 May 2025 -->
+ALTER TABLE `user_post_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
+ALTER TABLE `user_post_comment_flag` ADD `reason` VARCHAR(512) NULL DEFAULT NULL AFTER `user_id`;
+
+
+
 ALTER TABLE `chat` ADD `lead_id` INT NULL DEFAULT NULL AFTER `id`; // need to run on server
 ALTER TABLE `lead_partner_quotes` ADD `is_approved_by_admin` BOOLEAN NOT NULL DEFAULT FALSE AFTER `addtional_data`;
 ALTER TABLE `lead_partner_quotes` ADD `datetime_of_approval_by_admin` DATETIME NULL DEFAULT NULL AFTER `is_approved_by_admin`;

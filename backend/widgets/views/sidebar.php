@@ -911,6 +911,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/flag/share-safari/index",
 														)) ? "active" : "" ?>" href="/flag/share-safari/index">Share Safari</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/user-post/index",
+														)) ? "active" : "" ?>" href="/flag/user-post/index">Post Comments</a></li>
+
 
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/flag/blog/index",
