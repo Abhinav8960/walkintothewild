@@ -445,7 +445,7 @@ class DefaultController extends RestController
         if ($model->validate()) {
 
             if ($model->request($this->userinfo)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quatation Send for approval to admin"]);
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
