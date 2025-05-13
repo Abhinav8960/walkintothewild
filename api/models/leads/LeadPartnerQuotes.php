@@ -48,7 +48,12 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'name',
             'email',
             'phone',
-            'start_date',
+            'start_date' => function () {
+                return date('Y-m-d', strtotime($this->start_date));
+            },
+            'end_date' => function () {
+                return date('Y-m-d', strtotime($this->end_date));
+            },
             'partner_selling_price',
             'plateform_partner_fees_percentage',
             'plateform_partner_fees',
@@ -57,7 +62,6 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'net_payment_price',
             'installment',
             'received_amount',
-            'end_date',
             'addtional_data',
             'due_quatation'
         ];
