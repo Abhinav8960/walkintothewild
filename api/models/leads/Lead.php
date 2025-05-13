@@ -54,7 +54,7 @@ class Lead extends \common\models\leads\Lead
             'to_date',
             'is_date_flexible',
             'travelers',
-            'accommodation',
+            'staycatgory',
             'transport',
             'meals',
             'budget',
