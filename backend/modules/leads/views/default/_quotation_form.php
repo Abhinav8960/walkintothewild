@@ -44,7 +44,7 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'safaris')->textInput([
+        <?= $form->field($model, 'safari')->textInput([
             'maxlength' => true,
             'placeholder' => 'Enter Number of Safaris',
         ])->label('Number of Safaris') ?>
@@ -53,10 +53,10 @@ use yii\bootstrap5\ActiveForm;
 
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'travelers')->textInput([
+        <?= $form->field($model, 'travellers')->textInput([
             'maxlength' => true,
-            'placeholder' => 'Enter Number of travelers',
-        ])->label('Number of travelers') ?>
+            'placeholder' => 'Enter Number of travellers',
+        ])->label('Number of Travellers') ?>
     </div>
 
     <div class="col-md-6 col-lg-3">

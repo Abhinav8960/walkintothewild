@@ -1235,12 +1235,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
-					<!-- <li class="slide">
+					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/business",
-														"/business/default/index",
-													)) ? "active" : "" ?>" href="/business/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Business Request</span></a>
-					</li> -->
+														"/leads",
+														"/leads/default/index",
+													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
+					</li>
 				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>

@@ -7,7 +7,7 @@ use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use Yii;
 use yii\base\Model;
-use common\models\park\SafariPark;
+use common\models\park\safarisPark;
 
 /**
  * OperatorQuoteForm is the model behind the contact form.
@@ -18,8 +18,8 @@ class LeadPartnerQuotationForm extends Model
     public $lead_partner_id;
     public $lead_id;
     public $partner_id;
-    public $safari;
-    public $travellers;
+    public $safaris;
+    public $travelers;
     public $stay_category_id;
     public $name;
     public $email;
@@ -51,8 +51,8 @@ class LeadPartnerQuotationForm extends Model
             [['addtional_data'], 'default', 'value' => null],
             [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status'], 'integer'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status'], 'integer'],
             [['start_date', 'end_date', 'addtional_data', 'action_url', 'action_validate_url'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
@@ -71,8 +71,8 @@ class LeadPartnerQuotationForm extends Model
             'lead_partner_id' => 'Lead Partner ID',
             'lead_id' => 'Lead ID',
             'partner_id' => 'Partner ID',
-            'safari' => 'Safari',
-            'travellers' => 'Travellers',
+            'safaris' => 'safaris',
+            'travelers' => 'travelers',
             'stay_category_id' => 'Accomodation',
             'name' => 'Name',
             'email' => 'Email',
@@ -106,8 +106,8 @@ class LeadPartnerQuotationForm extends Model
             $lpq->lead_partner_id = $this->lead_partner_id;
             $lpq->lead_id = $this->lead_id;
             $lpq->partner_id = $this->partner_id;
-            $lpq->safari = $this->safari;
-            $lpq->travellers = $this->travellers;
+            $lpq->safaris = $this->safaris;
+            $lpq->travelers = $this->travelers;
             $lpq->stay_category_id = $this->stay_category_id;
             $lpq->name = $this->name;
             $lpq->email = $this->email;
