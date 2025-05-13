@@ -29,7 +29,7 @@ class UserPosts extends \common\models\UserPosts
 
     public function getComments()
     {
-        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['parent_id' => null]);
+        return $this->hasMany(UserPostComment::class, ['user_posts_id' => 'id'])->andWhere(['parent_id' => null])->andWhere(['user_post_comment.status' => 1]);
     }
 
 
@@ -83,7 +83,7 @@ class UserPosts extends \common\models\UserPosts
 
     public function getComments_count()
     {
-        return $this->getComments()->andWhere(['user_post_comment.status' => 1])->count();
+        return $this->getComments()->count();
     }
 
     public function getResource_uri()
