@@ -6,78 +6,49 @@ $active_url = "/" . Yii::$app->requestedRoute;
 <!-- main-sidebar -->
 <div class="sticky">
     <aside class="app-sidebar ">
-        <div class="main-sidebar-header active" style="background: #09422D !important;">
+        <div class="main-sidebar-header active" style="background: #F7BF39 !important;">
             <a class="header-logo active" href="/">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-dark" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/sidebar_logo.png" class="main-logo  mobile-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  mobile-dark" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-logo" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-dark" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-logo" alt="logo">
+                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-dark" alt="logo">
             </a>
         </div>
         <div class="main-sidemenu">
             <div class="slide-left disabled" id="slide-left"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
-            <div class="partner_heading">
-                <h4>Partner</h4>
-            </div>
             <ul class="side-menu">
 
                 <li class="slide">
                     <a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
                 </li>
 
-
-                <li class="slide <?= in_array($active_url, array(
-                                        "/package/default/index",
-                                        "/package/default/create",
-                                    )) ? "is-expanded" : "" ?>">
+                <li class="slide">
                     <a class="side-menu__item <?= in_array($active_url, array(
                                                     "/package/default/index",
                                                     "/package/default/create",
-                                                )) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">My Packages</span><i class="angle fe fe-chevron-right"></i></a>
-                    <ul class="slide-menu">
-                        <li class="side-menu__label1"><a href="javascript:void(0);">Packages</a></li>
-                        <li><a class="slide-item <?= in_array($active_url, array(
-                                                        "/package/default/index",
-                                                        "/package/default/create",
-
-                                                    )) ? "active" : "" ?>" href="/package/default/index">Packages</a></li>
-                    </ul>
+                                                )) ? "active" : "" ?>" href="/package/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">My Packages</span></a>
                 </li>
 
-                <li class="slide <?= in_array($active_url, array(
-                                        "/sightings/default/index",
-                                        "/sightings/default/create",
-                                    )) ? "is-expanded" : "" ?>">
+                <li class="slide">
+                    <a class="side-menu__item <?= in_array($active_url, array(
+                                                    "/leads/default/index",
+                                                    "/leads/default/create",
+                                                )) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
+                </li>
+
+                <li class="slide">
                     <a class="side-menu__item <?= in_array($active_url, array(
                                                     "/sightings/default/index",
                                                     "/sightings/default/create",
-                                                )) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sighting</span><i class="angle fe fe-chevron-right"></i></a>
-                    <ul class="slide-menu">
-                        <li class="side-menu__label1"><a href="javascript:void(0);">sightingss</a></li>
-                        <li><a class="slide-item <?= in_array($active_url, array(
-                                                        "/sightings/default/index",
-                                                        "/sightings/default/create",
-
-                                                    )) ? "active" : "" ?>" href="/sightings/default/index">Sightings</a></li>
-                    </ul>
+                                                )) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
                 </li>
 
-                <li class="slide <?= in_array($active_url, array(
-                                        "/posts/default/index",
-                                        "/posts/default/create",
-                                    )) ? "is-expanded" : "" ?>">
-                    <a class="side-menu__item <?= in_array($active_url, array(
-                                                    "/posts/default/index",
-                                                    "/posts/default/create",
-                                                )) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span><i class="angle fe fe-chevron-right"></i></a>
-                    <ul class="slide-menu">
-                        <li class="side-menu__label1"><a href="javascript:void(0);">Posts</a></li>
-                        <li><a class="slide-item <?= in_array($active_url, array(
-                                                        "/posts/default/index",
-                                                        "/posts/default/create",
 
-                                                    )) ? "active" : "" ?>" href="/posts/default/index">Posts</a></li>
-                    </ul>
+                <li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
+                                                                "/posts/default/index",
+                                                                "/posts/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
                 </li>
 
                 <li class="slide <?= in_array($active_url, array(

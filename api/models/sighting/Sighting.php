@@ -56,7 +56,7 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getComments()
     {
-        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['parent_id' => null]);
+        return $this->hasMany(SightingComment::class, ['sighting_id' => 'id'])->andWhere(['parent_id' => null])->andWhere(['sighting_comment.status' => 1]);
     }
 
 
@@ -116,7 +116,7 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getComments_count()
     {
-        return $this->getComments()->andWhere(['sighting_comment.status' => 1])->count();
+        return $this->getComments()->count();
     }
 
     public function getSafaripark()

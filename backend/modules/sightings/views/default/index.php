@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 
 use yii\widgets\Pjax;
@@ -32,7 +33,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Sighting Thumbnail',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -42,91 +43,104 @@ $this->params['title'] = $this->title;
                             ]), ['style' => 'text-align: center;']);
                         }
                     ],
-                    [
-                        'label' => 'Sighting Details',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->description;
-                        }
-                    ],
-                    [
-                        'label' => 'Location',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
 
+                    [
+                        'label' => 'Partner Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->locationDetail->title;
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
+                    ],
+                    [
+                        'label' => 'Sighting Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y", strtotime($model->post_datetime));
                         }
                     ],
+                    // [
+                    //     'label' => 'Sighting Details',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->description;
+                    //     }
+                    // ],
                     [
                         'label' => 'Animal',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->animalDetail->name;
                         }
                     ],
                     [
-                        'label' => 'Safari Session',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Session',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->safariSessionDetail->title;
                         }
                     ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Park',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
+                            return $model->locationDetail->title;
                         }
                     ],
                     [
-                        'label' => 'Sighting Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => '10%; text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Duration',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->post_datetime;
-                        }
-                    ],
-                    [
-                        'label' => 'Last Updated Time',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
+                            return $model->v_duration . ' seconds';
                         }
                     ],
 
                     [
+                        'label' => 'Size',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::formatSizeUnits($model->v_size);
+                        }
+                    ],
+
+                    // [
+                    //     'label' => 'Last Updated',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return date("F j, Y, g:i a", $model->updated_at);
+                    //     }
+                    // ],
+
+                    [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -136,29 +150,33 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'template' => '{view}&nbsp{delete}',
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::button(
+                                return Html::a(
                                     Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                     [
-                                        'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon sighting-popup',
+                                        Url::toRoute(['/sightings/default/view', 'id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]
                                 );
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::button(
-                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                                    [
-                                        'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
-                                        'class' => 'btn p-0 change-menuicon delete-popup',
-                                        'title' => 'View',
-                                    ]
-                                );
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'View',
+                            //         ]
+                            //     );
+                            // },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title'=>'Inactive' , 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],
@@ -172,7 +190,7 @@ $this->params['title'] = $this->title;
 <?php Pjax::end(); ?>
 
 
-<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header popHeader">
@@ -187,7 +205,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -227,11 +245,11 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
 
-    $('.sighting-popup').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+    // $('.sighting-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
 
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')

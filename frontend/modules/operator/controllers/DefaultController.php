@@ -12,11 +12,11 @@ use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
-use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\Helper\FrontendNotificationHelper;
+use common\models\leads\form\PartnerLeadForm;
 use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
@@ -87,11 +87,9 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
             ]);
         }
-
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->limit(6)->all();
         $count_operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->count();
-        $model = new OperatorQuoteForm();
-
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -100,11 +98,11 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator, \Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                    Yii::$app->session->setFlash('success', 'Quote request sent!');
+                    return $this->redirect(['/operator/default/view',  'slug' => $slug]);
                 }
-                Yii::$app->session->setFlash('success', 'Quote request sent!');
-                return $this->redirect(['/operator/default/view',  'slug' => $slug]);
             }
         }
 
@@ -140,7 +138,7 @@ class DefaultController extends FrontendBaseController
         }
 
         $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE])->limit(6)->all();
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -149,7 +147,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -175,7 +173,7 @@ class DefaultController extends FrontendBaseController
     public function actionReviewlist($slug, $sort_by = null)
     {
         // $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        
+
         // if (empty($operator)) {
         //     return $this->redirect(['/operator']);
         //     throw new NotFoundHttpException('The requested page does not exist.');
@@ -205,7 +203,7 @@ class DefaultController extends FrontendBaseController
         $reviews = $ratingdataProvider->getModels();
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -214,7 +212,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -297,7 +295,7 @@ class DefaultController extends FrontendBaseController
 
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -306,7 +304,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -334,10 +332,10 @@ class DefaultController extends FrontendBaseController
      */
     public function actionValidate($id = null)
     {
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if ($id != null) {
             $formmodel = $this->findModel($id);
-            $model = new OperatorQuoteForm($formmodel);
+            $model = new PartnerLeadForm($formmodel);
         }
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -677,7 +675,7 @@ class DefaultController extends FrontendBaseController
     //     }
 
 
-    //     $model = new OperatorQuoteForm();
+    //     $model = new PartnerLeadForm();
     //     if (Yii::$app->user->identity) {
     //         $model->email = Yii::$app->user->identity->email;
     //         $model->full_name = Yii::$app->user->identity->name;
@@ -686,7 +684,7 @@ class DefaultController extends FrontendBaseController
     //     $model->action_validate_url = '/operator/default/validate';
     //     if ($model->load(Yii::$app->request->post())) {
     //         if ($model->validate()) {
-    //             if ($operator_quote = $model->request($operator)) {
+    //             if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
     //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
     //                 Yii::$app->session->setFlash('success', 'Quote request sent!');
     //                 return $this->redirect(['/operator/default/article',  'slug' => $slug]);
@@ -742,7 +740,7 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -751,7 +749,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -786,7 +784,7 @@ class DefaultController extends FrontendBaseController
         //     throw new NotFoundHttpException('The requested page does not exist.');
         // }
         $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
-        
+
         if (!$operator) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -846,7 +844,7 @@ class DefaultController extends FrontendBaseController
             ]);
         }
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -855,7 +853,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -906,7 +904,7 @@ class DefaultController extends FrontendBaseController
             ]);
         }
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -915,7 +913,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -968,7 +966,7 @@ class DefaultController extends FrontendBaseController
             // ],
         ]);
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
 
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
@@ -978,7 +976,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -1005,7 +1003,7 @@ class DefaultController extends FrontendBaseController
     //     }
 
 
-    //     $model = new OperatorQuoteForm();
+    //     $model = new PartnerLeadForm();
     //     if (Yii::$app->user->identity) {
     //         $model->email = Yii::$app->user->identity->email;
     //         $model->full_name = Yii::$app->user->identity->name;
@@ -1014,7 +1012,7 @@ class DefaultController extends FrontendBaseController
     //     $model->action_validate_url = '/operator/default/validate';
     //     if ($model->load(Yii::$app->request->post())) {
     //         if ($model->validate()) {
-    //             if ($operator_quote = $model->request($operator)) {
+    //             if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
     //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
     //             }
     //             Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -1072,7 +1070,7 @@ class DefaultController extends FrontendBaseController
             ]);
         }
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -1081,7 +1079,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -1116,14 +1114,14 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        
+
         if ($operator->status != SafariOperator::STATUS_ACTIVE) {
             return $this->render('_blocked_view', [
                 'operator' => $operator,
             ]);
         }
 
-        $model = new OperatorQuoteForm();
+        $model = new PartnerLeadForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
             $model->full_name = Yii::$app->user->identity->name;
@@ -1132,7 +1130,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
+                if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
                     // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
                 Yii::$app->session->setFlash('success', 'Quote request sent!');
@@ -1159,7 +1157,7 @@ class DefaultController extends FrontendBaseController
     //     }
 
 
-    //     $model = new OperatorQuoteForm();
+    //     $model = new PartnerLeadForm();
     //     if (Yii::$app->user->identity) {
     //         $model->email = Yii::$app->user->identity->email;
     //         $model->full_name = Yii::$app->user->identity->name;
@@ -1168,7 +1166,7 @@ class DefaultController extends FrontendBaseController
     //     $model->action_validate_url = '/operator/default/validate';
     //     if ($model->load(Yii::$app->request->post())) {
     //         if ($model->validate()) {
-    //             if ($operator_quote = $model->request($operator)) {
+    //             if ($operator_quote = $model->request($operator,\Yii::$app->user->identity)) {
     //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
     //             }
     //             Yii::$app->session->setFlash('success', 'Quote request sent!');

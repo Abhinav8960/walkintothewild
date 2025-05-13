@@ -26,6 +26,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             'message',
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
+                // return $this->message_datetime;
             },
             // 'recipient_user_id',           
             'sender',
@@ -103,6 +104,6 @@ class ChatMessage extends \common\models\chat\ChatMessage
 
     public function getReciverId()
     {
-        return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->created_by;
+        return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }
 }

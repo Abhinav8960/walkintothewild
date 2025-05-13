@@ -514,5 +514,4 @@ phpunit.phar
 /csv
 /common/config/service.json
 *.sql
-
 # End of https://www.toptal.com/developers/gitignore/api/yii2,linux,visualstudiocode,composer,compressedarchive,compression,images,docz,node,database,ssh

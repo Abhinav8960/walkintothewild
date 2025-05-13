@@ -36,6 +36,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                 'value' => $i,
                                                 'placeholder' => 'Enter Day',
                                                 'id' => 'dayitineraryform-day' . $i,
+                                                'readOnly' => true,
                                             ])->label('DAY'); ?>
                                         </div>
                                         <div class="col-md-8">

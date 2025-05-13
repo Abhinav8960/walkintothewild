@@ -124,16 +124,16 @@ use kartik\datetime\DateTimePicker;
     </div>
 
 
-    <div class="col-md-6 col-lg-3">
+    <!-- <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'type')->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion'], ['prompt' => 'Select']) ?>
-    </div>
+    </div> -->
 
 
-    <div class="col-lg-3 col-md-6">
+    <!-- <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'gst_percentage')->textInput([
             'placeholder' => 'GST (%)',
         ]) ?>
-    </div>
+    </div> -->
 
 
     <div class="col-md-6 col-lg-3">
@@ -194,23 +194,23 @@ $this->registerJs($script);
 
 <?php
 $gst_script = <<< JS
-    $(function() {
-        $('.field-packageversionform-gst_percentage').hide();
-        var gst_type =$("#packageversionform-type").val();
+    // $(function() {
+    //     $('.field-packageversionform-gst_percentage').hide();
+    //     var gst_type =$("#packageversionform-type").val();
             
-        if(gst_type == 1){
-            $('.field-packageversionform-gst_percentage').show();
-        }
+    //     if(gst_type == 1){
+    //         $('.field-packageversionform-gst_percentage').show();
+    //     }
        
-        $('#packageversionform-type').on('change', function() {
-            var selectValue = $(this).val();
-            if (selectValue == 1) {
-                $('.field-packageversionform-gst_percentage').show();
-            } else {
-                $('.field-packageversionform-gst_percentage').hide();
-            }
-        });
-    });
+    //     $('#packageversionform-type').on('change', function() {
+    //         var selectValue = $(this).val();
+    //         if (selectValue == 1) {
+    //             $('.field-packageversionform-gst_percentage').show();
+    //         } else {
+    //             $('.field-packageversionform-gst_percentage').hide();
+    //         }
+    //     });
+    // });
 JS;
 $this->registerJs($gst_script);
 ?>

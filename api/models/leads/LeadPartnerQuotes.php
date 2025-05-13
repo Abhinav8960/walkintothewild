@@ -1,0 +1,174 @@
+<?php
+
+namespace api\models\leads;
+
+use api\models\meta\MetaPackageRange;
+use api\models\operator\SafariOperator;
+use Yii;
+
+/**
+ * This is the model class for table "lead_partner_quotes".
+ *
+ * @property int $id
+ * @property int $lead_partner_id
+ * @property int $lead_id
+ * @property int $partner_id
+ * @property int $safari
+ * @property int $travellers
+ * @property int $stay_category_id
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property string $start_date
+ * @property float $partner_selling_price
+ * @property int $plateform_partner_fees_percentage %
+ * @property float $plateform_partner_fees
+ * @property float $partner_net_selling_price
+ * @property float $plateform_customer_discount
+ * @property float $net_payment_price
+ * @property int $installment
+ * @property float $received_amount
+ * @property string $end_date
+ * @property string|null $addtional_data
+ * @property int|null $status
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ */
+class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
+{
+
+    public function fields()
+    {
+        $fields = [
+            'safari',
+            'travellers',
+            'staycatgory',
+            'name',
+            'email',
+            'phone',
+            'start_date' => function () {
+                return date('Y-m-d', strtotime($this->start_date));
+            },
+            'end_date' => function () {
+                return date('Y-m-d', strtotime($this->end_date));
+            },
+            'partner_selling_price',
+            'plateform_partner_fees_percentage',
+            'plateform_partner_fees',
+            'partner_net_selling_price',
+            'plateform_customer_discount',
+            'net_payment_price',
+            'installment',
+            'received_amount',
+            'addtional_data',
+            'due_quatation'
+        ];
+        return $fields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'lead_partner_quotes';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['received_amount'], 'default', 'value' => 0],
+            [['status'], 'default', 'value' => 1],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['start_date', 'end_date', 'addtional_data'], 'safe'],
+            [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
+            [['name', 'email'], 'string', 'max' => 255],
+            [['phone'], 'string', 'max' => 50],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'lead_partner_id' => 'Lead Partner ID',
+            'lead_id' => 'Lead ID',
+            'partner_id' => 'Partner ID',
+            'safaris' => 'Safaris',
+            'travelers' => 'Travelers',
+            'stay_category_id' => 'Stay Category ID',
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'start_date' => 'Start Date',
+            'partner_selling_price' => 'Partner Selling Price',
+            'plateform_partner_fees_percentage' => 'Plateform Partner Fees Percentage',
+            'plateform_partner_fees' => 'Plateform Partner Fees',
+            'partner_net_selling_price' => 'Partner Net Selling Price',
+            'plateform_customer_discount' => 'Plateform Customer Discount',
+            'net_payment_price' => 'Net Payment Price',
+            'installment' => 'Installment',
+            'received_amount' => 'Recived Amount',
+            'end_date' => 'End Date',
+            'addtional_data' => 'Addtional Data',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
+        ];
+    }
+
+    public function getLead()
+    {
+        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+    }
+
+    public function getDue_quatation()
+    {
+        return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        // return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
+    public function getPreparedata()
+    {
+
+        return $arr = [
+            'safaris' => $this->safaris,
+            'travelers' => $this->travelers,
+            'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'partner_selling_price' => $this->partner_selling_price,
+            'plateform_partner_fees_percentage' => $this->plateform_partner_fees_percentage,
+            'plateform_partner_fees' => $this->plateform_partner_fees,
+            'partner_net_selling_price' => $this->partner_net_selling_price,
+            'plateform_customer_discount' => $this->plateform_customer_discount,
+            'net_payment_price' => $this->net_payment_price,
+            'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
+        ];
+    }
+}

@@ -2,6 +2,8 @@
 
 namespace common\models\sighting;
 
+use common\models\cms\flagreason\Flagreason;
+use common\models\User;
 use Yii;
 
 /**
@@ -70,6 +72,26 @@ class SightingCommentFlag extends \yii\db\ActiveRecord implements \common\interf
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getFlagreason()
+    {
+        return $this->hasOne(Flagreason::className(), ['id' => 'flag_reason_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getSighting()
+    {
+        return $this->hasOne(Sighting::className(), ['id' => 'sighting_id']);
+    }
+
+    public function getComment()
+    {
+        return $this->hasOne(SightingComment::className(), ['id' => 'sighting_comment_id']);
     }
 
 }

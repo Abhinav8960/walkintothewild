@@ -35,6 +35,8 @@ class SafariPark extends \common\models\park\SafariPark
             'title',
             'slug',
             'feature_image_path',
+            'animal_text',
+            'short_description',
             'avg_safari_price_min' => function () {
                 return (int)$this->avg_safari_price_min;
             },

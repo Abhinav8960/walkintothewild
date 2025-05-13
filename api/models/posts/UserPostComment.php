@@ -43,7 +43,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
 
     public function getReplies()
     {
-        return $this->hasMany(self::class, ['parent_id' => 'id']);
+        return $this->hasMany(self::class, ['parent_id' => 'id'])->andWhere(['user_post_comment.status' => 1]);
     }
 
     public function getIs_liked()

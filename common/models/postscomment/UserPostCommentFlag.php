@@ -2,6 +2,9 @@
 
 namespace common\models\postscomment;
 
+use common\models\cms\flagreason\Flagreason;
+use common\models\User;
+use common\models\UserPosts;
 use Yii;
 
 /**
@@ -72,4 +75,23 @@ class UserPostCommentFlag extends \yii\db\ActiveRecord implements \common\interf
         ];
     }
 
+    public function getFlagreason()
+    {
+        return $this->hasOne(Flagreason::className(), ['id' => 'flag_reason_id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getUserpost()
+    {
+        return $this->hasOne(UserPosts::className(), ['id' => 'user_posts_id']);
+    }
+
+    public function getComment()
+    {
+        return $this->hasOne(UserPostComment::className(), ['id' => 'user_post_comment_id']);
+    }
 }

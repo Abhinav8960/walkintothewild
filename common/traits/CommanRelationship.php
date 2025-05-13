@@ -87,17 +87,33 @@ trait CommanRelationship
      *
      * @return void
      */
+    // public function getNewstatuslabel()
+    // {
+    //     $statuses = GeneralModel::newrecentstatusoption();
+
+    //     if (isset($statuses[$this->status])) {
+    //         if ($this->status == 1) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         } else if ($this->status == 0) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         } else if ($this->status == -1) {
+    //             return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+    //         }
+    //     }
+    //     return $this->status;
+    // }
+
     public function getNewstatuslabel()
     {
         $statuses = GeneralModel::newrecentstatusoption();
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             } else if ($this->status == 0) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             } else if ($this->status == -1) {
-                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
             }
         }
         return $this->status;
@@ -113,5 +129,4 @@ trait CommanRelationship
     {
         return base64_encode(convert_uuencode($this->id));
     }
-  
 }

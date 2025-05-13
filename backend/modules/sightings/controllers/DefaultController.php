@@ -9,6 +9,7 @@ use common\models\sighting\SightingSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController for the `sightings` module
@@ -22,6 +23,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new SightingSearch();
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -38,7 +40,7 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
             return $this->redirect(['index']);
         }
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $sighting,
         ]);
     }
@@ -137,10 +139,45 @@ class DefaultController extends Controller
                 }
             }
             Yii::$app->session->setFlash('success', 'Comment and Replies related to it has been deleted successfully.');
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $comment->sighting_id]);
         }
 
         Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
         return $this->redirect(['index']);
+    }
+
+    public function actionReplyDelete($id)
+    {
+        $reply = SightingComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        if (!$reply) {
+            Yii::$app->session->setFlash('error', 'Reply not found');
+            return $this->redirect(['index']);
+        }
+        $reply->status = SightingComment::STATUS_DELETE;
+
+        if ($reply->save(false)) {
+            Yii::$app->session->setFlash('success', 'Reply has been deleted successfully.');
+            return $this->redirect(['view', 'id' => $reply->sighting_id]);
+        }
+
+        Yii::$app->session->setFlash('danger', 'Not deleted successfully.');
+        return $this->redirect(['index']);
+    }
+
+    public function actionSuspend($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Sighting::STATUS_SUSPEND;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

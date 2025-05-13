@@ -19,7 +19,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         // $fields[] = 'parent';
         $fields[] = 'will_flag';
         $fields[] = 'replies';
-        $hold_fields = ['user_id','flaged', 'is_deleted', 'share_safari_id', 'park_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['user_id','flaged', 'deleted_by', 'share_safari_id', 'park_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

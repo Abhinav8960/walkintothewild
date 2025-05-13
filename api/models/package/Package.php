@@ -226,12 +226,12 @@ class Package extends \common\models\package\Package
 
     public function getComments()
     {
-        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+        return $this->hasMany(PackageComment::class, ['package_id' => 'id'])->andWhere(['package_comment.status' => 1]);
     }
 
     public function getComment_count()
     {
-        return $this->getComments()->where(['parent_id' => null])->count();
+        return $this->getComments()->andWhere(['parent_id' => null])->count();
     }
 
 

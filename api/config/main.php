@@ -195,7 +195,7 @@ return [
                 'chat/user-list'   => 'chat/default/user-list',
                 'chat/messages/<chat_hash>'   => 'chat/default/messages',
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
-                'chat/send-quote-message/<user_handle>'   => 'chat/default/send-quote-message',
+                'chat/send-quote-message/<lead_id>'   => 'chat/default/send-quote-message',
 
 
 

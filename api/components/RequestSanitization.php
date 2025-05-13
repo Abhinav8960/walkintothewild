@@ -14,7 +14,7 @@ class RequestSanitization extends \yii\base\Component
 
     public function init()
     {
-        \Yii::$app->params['active_user_id']  = 2;
+        \Yii::$app->params['active_user_id']  = NULL;
 
 
         $excludedArrayForAuthentication = [

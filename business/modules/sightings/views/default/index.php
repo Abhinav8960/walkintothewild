@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 
 use yii\widgets\Pjax;
@@ -32,9 +33,9 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Sighting Thumbnail',
+                        'label' => 'Thumbnail',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        // 'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::tag('div', Html::img($model->thumbnail, [
@@ -43,89 +44,81 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Sighting Details',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Sighting Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->description;
-                        }
-                    ],
-                    [
-                        'label' => 'Location',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->locationDetail->title;
+                            return date("F j, Y", strtotime($model->post_datetime));
                         }
                     ],
                     [
                         'label' => 'Animal',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->animalDetail->name;
                         }
                     ],
                     [
-                        'label' => 'Safari Session',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Session',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->safariSessionDetail->title;
                         }
                     ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Park',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button($model->comments_count, [
-                                'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
-                                'class' => 'comment-popup btn btn-info',
-                            ]);
+                            return $model->locationDetail->title;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comments_count;
                         }
                     ],
                     [
-                        'label' => 'Sighting Like Count',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => '10%; text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->likes_count;
                         }
                     ],
                     [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Duration',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->post_datetime;
-                        }
-                    ],
-                    [
-                        'label' => 'Last Updated Time',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('Y-m-d H:i:s', $model->updated_at);
+                            return $model->v_duration . ' seconds';
                         }
                     ],
 
                     [
+                        'label' => 'Size',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::formatSizeUnits($model->v_size);
+                        }
+                    ],
+                    // [
+                    //     'label' => 'Last Updated',
+                    //     'headerOptions' => ['style' => 'width: 15%'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return date("F j, Y, g:i a", $model->updated_at);
+                    //     }
+                    // ],
+                    [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -135,15 +128,16 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width:50px; text-align:center;'],
-                        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{view}&nbsp',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::button(
+                                return Html::a(
                                     Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                     [
-                                        'value' => Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
+                                        Url::toRoute(['/sightings/default/view', 'id' => $model->id]),
+                                    ],
+                                    [
                                         'class' => 'btn p-0 change-menuicon sighting-popup',
                                         'title' => 'View',
                                     ]
@@ -160,7 +154,7 @@ $this->params['title'] = $this->title;
 
 <?php Pjax::end(); ?>
 
-
+<!-- 
 <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
@@ -176,7 +170,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -200,11 +194,11 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
 
-    $('.sighting-popup').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
+    // $('.sighting-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
 
     $('.comment-popup').on('click', function () {
         $('#commentAction').modal('show')

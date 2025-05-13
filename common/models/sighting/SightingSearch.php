@@ -9,15 +9,17 @@ use yii\data\ActiveDataProvider;
 
 class SightingSearch extends Sighting
 {
+    public $date_range;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['status', 'safari_operator_id'], 'integer'],
             [['safari_session_id', 'location', 'master_animal_id'], 'safe'],
-            ['description','string'],
+            ['description', 'string'],
+            [['date_range'], 'safe'],
         ];
     }
 
@@ -68,6 +70,12 @@ class SightingSearch extends Sighting
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description]);
+
+        if (!is_null($this->date_range) && strpos($this->date_range, ' - ') !== false) {
+            list($start_date, $end_date) = explode(' - ', $this->date_range);
+            $query->andFilterWhere(['between', 'post_datetime', $start_date, $end_date]);
+            $this->date_range = null;
+        }
 
 
 

@@ -31,6 +31,9 @@ return [
         'settings' => [
             'class' => 'business\modules\settings\Module',
         ],
+        'leads' => [
+            'class' => 'business\modules\leads\Module',
+        ],
 
 
     ],

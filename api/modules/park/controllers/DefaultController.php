@@ -19,6 +19,7 @@ use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\Helper\FirebaseNotificationHelper;
 use api\models\package\PackageSearch;
+use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariParkReviewForm;
@@ -254,26 +255,21 @@ class DefaultController extends RestController
         if (!$sf) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
-        foreach ($sf->operator as $oprt) {
-            $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $oprt->id])->limit(1)->one();
-            if (!$operator) {
-                continue;
-            }
 
-            $model = new OperatorQuoteForm();
-            if ($this->userinfo) {
-                $model->email = $this->userinfo->email;
-                $model->full_name = $this->userinfo->name;
-                $model->phone_no = $this->userinfo->mobile_no;
-            }
-            $model->attributes = $this->request;
-            if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
-                    FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
-                }
-            }
-            // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+
+        $model = new ParkLeadForm();
+        if ($this->userinfo) {
+            $model->email = $this->userinfo->email;
+            $model->full_name = $this->userinfo->name;
+            $model->phone_no = $this->userinfo->mobile_no;
         }
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            if ($park_quote = $model->request($this->userinfo)) {
+                // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
+            }
+        }
+        // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
     }
 }

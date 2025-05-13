@@ -24,6 +24,8 @@ use Yii;
  */
 class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    const DELETED_BY_ADMIN = 1;
+    const PARENT_DELETED = 2;
     /**
      * {@inheritdoc}
      */
@@ -107,5 +109,10 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
     public function getReplies_count()
     {
         return $this->getReplies()->andWhere(['user_post_comment.status' => 1])->count();
+    }
+
+    public function getReports()
+    {
+        return $this->hasMany(UserPostCommentFlag::className(), ['user_post_comment_id' => 'id']);
     }
 }

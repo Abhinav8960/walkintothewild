@@ -1,24 +1,18 @@
 <?php
 
 
-/* @var $this yii\web\View */
-/* @var $model common\models\corporate\Corporate */
-
 use common\models\GeneralModel;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Package';
-$this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
-// $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 ?>
 
 
 <div class="card">
-
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
@@ -26,72 +20,48 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                // 'layout' => "{items}\n{summary}\n{pager}",
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 5%;'],
                     ],
-                    // [
-                    //     'label' => 'Package Name',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->package_name;
-                    //     }
-                    // ],
                     [
                         'label' => 'Package Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->package_name, ['/package/preview/index', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
-                                'title' => 'View',
-                            ]);
+                            return $model->package_name;
                         }
                     ],
 
                     [
-                        'label' => 'Operator Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Partner Name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->safarioperator) ? $model->safarioperator->business_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'Info',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $html = '';
-                            $html .= 'Number Of Day    : ' . GeneralModel::packagedayoption()[$model->no_of_day]  . '<br>';
-                            $html .= 'Number Of Night  : ' . $model->no_of_night . '<br>';
-                            $html .= 'Number Of Safari : ' . $model->no_of_safari . '<br>';
-                            $html .= 'Start Location   : ' . $model->start_location . '<br>';
-                            $html .= 'End Location     : ' . $model->end_location . '<br>';
-                            return $html;
-                        }
-                    ],
-                    [
-                        'label' => 'Cost Per Person',
-                        'contentOptions' => ['style' => 'width: 5%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->cost_per_person;
-                        }
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
                     ],
                     [
                         'label' => 'Stay Category',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
                         }
                     ],
                     [
+                        'label' => 'Cost Per Person',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->cost_per_person);
+                        }
+                    ],
+                    [
                         'label' => 'Feature',
-                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';
@@ -107,7 +77,6 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                     [
                         'label' => 'Included',
-                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';
@@ -120,51 +89,52 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             return $html;
                         }
                     ],
+
                     [
-                        'label' => 'Is Publish on Web/App',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'label' => 'Updated Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = $model->is_published_on_web == 1 ? '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
-                            $str .= '/';
-                            $str .= $model->is_published_on_api == 1 ? '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
-                            return $str;
+                            return date("F j, Y, g:i a", $model->updated_at);
                         }
                     ],
+                    // [
+                    //     'label' => 'Is Publish on Web/App',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $str = $model->is_published_on_web == 1 ? '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                    //         $str .= '/';
+                    //         $str .= $model->is_published_on_api == 1 ? '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/package/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                    //         return $str;
+                    //     }
+                    // ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
                         }
                     ],
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'template' => '&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                    //     'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-                    //             return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                    //             ', ['/package/profile/index', 'package_id' => $model->id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'View',
 
-                    //             ]);
-                    //         },
-                    //         'delete' => function ($url, $model) {
-                    //             if ($model->status != -1) {
-                    //             } else {
-                    //                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                    //             }
-                    //         },
-                    //         'suspend' => function ($url, $model) {
-                    //             return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                    //         },
-                    //     ]
-                    // ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['/package/preview/index', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+
+                                ]);
+                            },
+                        ]
+                    ],
+
                 ],
             ]); ?>
         </div>
