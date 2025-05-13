@@ -45,8 +45,17 @@ class ShareSafariController extends Controller
                     if ($model->comment_action_model->save(false)) {
                         if ($model->comment_action_model->status == -1) {
                             if ($share_safari_comment = $comment_action_model->comment) {
-                                $share_safari_comment->is_deleted = 1;
+                                $share_safari_comment->deleted_by = ShareSafariComment::DELETED_BY_ADMIN;
+                                $share_safari_comment->status = ShareSafariComment::STATUS_DELETE;
                                 if ($share_safari_comment->save()) {
+                                    $replies = ShareSafariComment::find()->where(['parent_id' => $share_safari_comment->id, 'status' => 1])->all();
+                                    if ($replies) {
+                                        foreach ($replies as $rep) {
+                                            $rep->deleted_by = ShareSafariComment::PARENT_DELETED;
+                                            $rep->status = ShareSafariComment::STATUS_DELETE;
+                                            $rep->save(false);
+                                        }
+                                    }
                                     ShareSafariCommentReport::updateAll(['status' => 3], ['share_safari_comment_id' => $share_safari_comment->id, 'status' => 1]);
                                     \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                                     return $this->redirect(['index']);

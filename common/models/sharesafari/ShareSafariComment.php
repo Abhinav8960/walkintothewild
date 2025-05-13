@@ -26,9 +26,12 @@ use common\models\park\SafariPark;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafariComment extends \yii\db\ActiveRecord
+class ShareSafariComment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
+
+    const DELETED_BY_ADMIN = 1;
+    const PARENT_DELETED = 2;
     /**
      * {@inheritdoc}
      */

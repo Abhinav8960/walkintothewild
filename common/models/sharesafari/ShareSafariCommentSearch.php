@@ -24,7 +24,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
     public function rules()
     {
         return [
-            [['share_safari_id', 'flaged', 'is_deleted'], 'integer'],
+            [['share_safari_id', 'flaged', 'deleted_by'], 'integer'],
             [['share_safari_title'],'string'],
             [['start_date','end_date'],'safe'],
         ];
@@ -48,7 +48,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafariComment::find()->where(['flaged' => 1, 'is_deleted' => 0]);
+        $query = ShareSafariComment::find()->where(['flaged' => 1, 'deleted_by' => 0]);
 
         // add conditions that should always apply here
 
@@ -83,7 +83,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
 
     public function listingsearch($params, $pagination = true)
     {
-        $query = ShareSafariComment::find()->where(['is_deleted' => 0]);
+        $query = ShareSafariComment::find()->where(['deleted_by' => 0]);
 
         // add conditions that should always apply here
 
