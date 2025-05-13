@@ -100,8 +100,8 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'lead_partner_id' => 'Lead Partner ID',
             'lead_id' => 'Lead ID',
             'partner_id' => 'Partner ID',
-            'safari' => 'Safari',
-            'travellers' => 'Travellers',
+            'safaris' => 'Safaris',
+            'travelers' => 'Travelers',
             'stay_category_id' => 'Stay Category ID',
             'name' => 'Name',
             'email' => 'Email',
@@ -149,8 +149,8 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     {
 
         return $arr = [
-            'safari' => $this->safari,
-            'travellers' => $this->travellers,
+            'safaris' => $this->safaris,
+            'travelers' => $this->travelers,
             'staycatgory' => $this->staycatgory,
             'name' => $this->name,
             'email' => $this->email,
