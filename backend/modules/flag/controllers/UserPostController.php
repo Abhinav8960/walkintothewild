@@ -43,12 +43,13 @@ class UserPostController extends Controller
                     if ($model->user_post_flag_action_model->save(false)) {
                         if ($model->user_post_flag_action_model->status == -1) {
                             if ($user_post_comment = $user_post_flag_action_model->comment) {
-                                $user_post_comment->is_deleted = 1;  //Main Comment Model it will be set to status also
+                                $user_post_comment->deleted_by = UserPostComment::DELETED_BY_ADMIN;  //Main Comment Model it will be set to status also
                                 $user_post_comment->status = UserPostComment::STATUS_DELETE;
                                 if ($user_post_comment->save()) {
                                     $replies = UserPostComment::find()->where(['parent_id' => $user_post_comment->id, 'status' => 1])->all();
                                     if ($replies) {
                                         foreach ($replies as $rep) {
+                                            $rep->deleted_by = UserPostComment::PARENT_DELETED;
                                             $rep->status = UserPostComment::STATUS_DELETE;
                                             $rep->save(false);
                                         }

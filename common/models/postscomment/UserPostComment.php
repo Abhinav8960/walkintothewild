@@ -24,6 +24,8 @@ use Yii;
  */
 class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+    const DELETED_BY_ADMIN = 1;
+    const PARENT_DELETED = 2;
     /**
      * {@inheritdoc}
      */

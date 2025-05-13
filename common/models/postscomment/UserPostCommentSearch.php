@@ -78,7 +78,7 @@ class UserPostCommentSearch extends UserPostComment
 
     public function flagedsearch($params, $pagination = true)
     {
-        $query =  UserPostComment::find()->where(['flaged' => 1, 'is_deleted' => 0]);
+        $query =  UserPostComment::find()->where(['flaged' => 1, 'deleted_by' => 0]);
 
 
         // add conditions that should always apply here
