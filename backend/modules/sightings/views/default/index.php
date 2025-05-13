@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 
 use yii\widgets\Pjax;
@@ -116,6 +117,14 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->v_duration . ' seconds';
+                        }
+                    ],
+
+                    [
+                        'label' => 'Size',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::formatSizeUnits($model->v_size);
                         }
                     ],
 
