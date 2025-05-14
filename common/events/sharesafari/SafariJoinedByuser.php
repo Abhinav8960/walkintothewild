@@ -143,8 +143,8 @@ class SafariJoinedByuser extends Event
         $this->shared_safari_name = $this->shared_safari->share_safari_title;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
         $this->userId = $this->shared_safari->host_user_id;
-        $this->email = $this->shared_safari->user->email;
-        $this->name =  $this->shared_safari->user->name;
+        $this->email = $this->shared_safari->safarioperator->email;
+        $this->name =  $this->shared_safari->safarioperator->business_name;
         // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
         $this->sent_data = [
             'share_safari_title' => $this->shared_safari->share_safari_title,
