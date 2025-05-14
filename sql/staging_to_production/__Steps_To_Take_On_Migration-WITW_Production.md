@@ -25,11 +25,9 @@ TRUNCATE package_safari_park;
 TRUNCATE package_version;
 TRUNCATE TABLE feeds;
 
-1. Read file stegaing_to_production, and find "wildwalks" and replace with your database name,and run queries, 
+10. Read file stegaing_to_production, and find "wildwalks" and replace with your database name,and run queries, 
 
-
-
-10 :: Run Command ------------  
+11 :: Run Command ------------  
 php yii package-to-production/prepare-data
 php yii data-copy/safari
 php yii data-copy/package
@@ -39,7 +37,7 @@ php yii package-assign/package
 php yii operator-removal/remove
 php yii operator-removal/fixed-assign
 
-13 :: run query below -------------
+12 :: run query below -------------
 DROP TABLE `pp_package`, `pp_package_comment`, `pp_package_comment_report`, `pp_package_day`, `pp_package_enquiry`, `pp_package_faq`, `pp_package_feature`, `pp_package_gallery`, `pp_package_included`, `pp_package_quote`, `pp_package_safari_park`;
 
 
