@@ -84,10 +84,11 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->live_version) {
-                                return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
-                                    'class' => 'btn btn-sm btn-primary',
-                                ]);
+                            if (!empty($model->live_version->final_approved_at)) {
+                                // return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
+                                //     'class' => 'btn btn-sm btn-primary',
+                                // ]);
+                                return date("F j, Y, g:i a", $model->live_version->final_approved_at);
                             }
                             return '';
                         }

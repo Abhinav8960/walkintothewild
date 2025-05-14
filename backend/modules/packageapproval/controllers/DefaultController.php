@@ -130,6 +130,8 @@ class DefaultController extends Controller
             $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
+            $model->final_approved_at = time();
+
             $model->save(false);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());

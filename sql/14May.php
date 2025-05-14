@@ -1,0 +1,1 @@
+ALTER TABLE `package_version` ADD `final_approved_at` INT NULL DEFAULT NULL AFTER `is_published_on_api`;
