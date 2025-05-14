@@ -41,6 +41,7 @@ php yii feed-date-time/disable
 php yii package-assign/package
 php yii operator-removal/remove
 php yii operator-removal/fixed-assign
+php yii  package-assign/approval-time
 
 
 14. run query below -------------
