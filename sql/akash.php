@@ -3,8 +3,8 @@ ALTER TABLE `share_safari_history` ADD `version` INT NOT NULL DEFAULT '1' AFTER 
 ALTER TABLE `share_safari_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
 ALTER TABLE `user_posts` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
-ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL AFTER `id`;
-ALTER TABLE `user_post_like` ADD `version` INT NOT NULL AFTER `id`;
+ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `user_post_like` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
 ALTER TABLE `package_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 ALTER TABLE `share_safari_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
