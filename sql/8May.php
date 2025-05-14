@@ -1,9 +1,13 @@
-<!-- 14 May 2025 -->
-ALTER TABLE `user_posts` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
-ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL AFTER `id`;
-ALTER TABLE `user_post_like` ADD `version` INT NOT NULL AFTER `id`;
+--<!-- 14 May 2025 -->
+ALTER TABLE `share_safari` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `share_safari_history` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `share_safari_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
-<!-- 13 May 2025 -->
+ALTER TABLE `user_posts` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `user_post_like` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+
+-- <!-- 13 May 2025 -->
 ALTER TABLE `package_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 ALTER TABLE `share_safari_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 
