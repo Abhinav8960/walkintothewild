@@ -45,6 +45,7 @@ class Lead extends \common\models\leads\Lead
     public function fields()
     {
         $fields = [
+            'id',
             'source_label',
             'name',
             'email',
