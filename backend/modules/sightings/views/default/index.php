@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
                             $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
-                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                            return '<a href="' . Url::toRoute(['/operator/safari-operator/view', 'id' => isset($model->safarioperator) ? $model->safarioperator->id : '']) . '" ><img src="' . $imageUrl . '" alt="" style="max-height:30px;"> <span style="color: black !important;">' . Html::encode($name) . '</span></a>';
                         },
                     ],
                     [
@@ -175,7 +175,7 @@ $this->params['title'] = $this->title;
                             //     );
                             // },
                             'suspend' => function ($url, $model) {
-                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title'=>'Inactive' , 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title' => 'Inactive', 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],
