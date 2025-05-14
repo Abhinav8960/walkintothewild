@@ -28,6 +28,7 @@ use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 use yii\web\UploadedFile;
 
 /**
@@ -48,7 +49,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user', 'might-intrested'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -87,6 +88,7 @@ class DefaultController extends SafariController
                     'fixed-departure-days' => ['GET'],
                     'fixed-departure-gallery' => ['GET'],
                     'fixed-departure-faqs' => ["GET"],
+                    'might-intrested' => ['GET'],
 
                 ],
             ],
@@ -739,5 +741,24 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+
+    public function actionMightIntrested()
+    {
+        $searchModel = new ShareSafariSearch();
+        $queryParams = Yii::$app->request->queryParams;
+        $searchModel->load($queryParams);
+
+        $dataProvider = $searchModel->search($queryParams);
+        $dataProvider->pagination = false;
+        $dataProvider->query->orderBy(new \yii\db\Expression('RAND()'))->limit(4);
+        $data = [
+            'share_safari' => [
+                'data' => $this->serializeData($dataProvider->getModels()),
+            ],
+        ];
+
+        return Yii::$app->api->sendResponse($data);
     }
 }
