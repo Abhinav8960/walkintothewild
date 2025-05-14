@@ -924,3 +924,4 @@ ALTER TABLE `user_posts` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 ALTER TABLE `user_post_like` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
+ALTER TABLE `sighting_comment` CHANGE `flaged` `flaged` INT NULL DEFAULT '0';
