@@ -25,7 +25,7 @@ TRUNCATE package_safari_park;
 TRUNCATE package_version;
 TRUNCATE TABLE feeds;
 
-9. Read file stegaing_to_production, and find "wildwalks" and replace with your database name,insert tables names in queries, 
+1. Read file stegaing_to_production, and find "wildwalks" and replace with your database name,and run queries, 
 
 
 
