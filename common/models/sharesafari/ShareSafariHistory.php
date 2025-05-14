@@ -77,6 +77,7 @@ class ShareSafariHistory extends \yii\db\ActiveRecord implements \common\interfa
             [['share_safari_title'], 'string', 'max' => 255],
             [['slug', 'image'], 'string', 'max' => 512],
             [['slug'], 'unique'],
+            [['version'], 'integer'],
         ];
     }
 

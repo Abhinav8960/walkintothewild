@@ -72,7 +72,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             [['user_id', 'height', 'width', 'status', 'size', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
             [['caption', 'filepath', 'etag'], 'string'],
-            [['file','delete_reason'], 'string', 'max' => 512],
+            [['file', 'delete_reason'], 'string', 'max' => 512],
+            [['version'], 'integer'],
 
         ];
     }
@@ -86,6 +87,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             'id' => 'ID',
             'user_id' => 'User ID',
             'safari_operator_id' => 'Safari Operator Id',
+            'version' => 'Version',
             'file' => 'File',
             'caption' => 'Caption',
             'status' => 'Status',
@@ -146,4 +148,30 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
+
+
+    public function savehistory()
+    {
+
+        $historyModel = new UserPostsHistory();
+        $historyModel->attributes = $this->attributes;
+        $historyModel->parent_id = $this->id;
+
+        if (!$historyModel->save(false)) {
+            Yii::error('Failed to save User Post History: ' . print_r($historyModel->errors, true), __METHOD__);
+        }
+    }
+
+      // public function afterSave($insert, $changedAttributes)
+    // {
+    //     parent::afterSave($insert, $changedAttributes);
+
+
+    //     $relatedModel = new UserPostsHistory();
+    //     $relatedModel->attributes = $this->attributes;
+    //     $relatedModel->parent_id = $this->id;
+    //     $relatedModel->save(false);
+
+    //     return true;
+    // }
 }

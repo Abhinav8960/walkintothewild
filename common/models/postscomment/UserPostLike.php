@@ -36,7 +36,7 @@ class UserPostLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         return [
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['user_id', 'user_post_id'], 'required'],
+            [['user_id', 'user_post_id','version'], 'required'],
             [['user_id', 'user_post_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
         ];
     }

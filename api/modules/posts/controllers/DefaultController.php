@@ -37,10 +37,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit','flag'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit','flag'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -88,6 +88,8 @@ class DefaultController extends RestController
         $model->setAttributes(\Yii::$app->request->post());
 
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->version = 1;
+
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -102,6 +104,7 @@ class DefaultController extends RestController
                 }
 
                 if ($model->user_image_model->save()) {
+                    $model->user_image_model->savehistory();
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
                 }
             }
@@ -136,6 +139,7 @@ class DefaultController extends RestController
 
         $model = new UserPostCommentForm();
         $model->attributes = $this->request;
+        $model->version = $userpost->version;
         if ($model->validate() && $model->comment($userpost)) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
@@ -175,6 +179,7 @@ class DefaultController extends RestController
         $replymodel->parent_id = $parent_id;
 
         $replymodel->attributes = $this->request;
+        $replymodel->version = $userpost->version;
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($userpost)) {
@@ -219,6 +224,7 @@ class DefaultController extends RestController
             $like->user_id = $this->userinfoId;
             $like->safari_operator_id = $this->userinfo->partner ? $this->userinfo->partner->id : null;
             $like->user_post_id = $id;
+            $like->version = $userpost->version;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
                 return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Post Liked Successfully"]);
@@ -270,6 +276,7 @@ class DefaultController extends RestController
         $model = new UserPostsImageForm($user_image_model);
         $model->attributes = $this->request;
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->version = $user_image_model->version + 1;
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -284,6 +291,7 @@ class DefaultController extends RestController
                 }
 
                 if ($model->user_image_model->save()) {
+                    $model->user_image_model->savehistory();
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post edit successfully"]);
                 }
             }

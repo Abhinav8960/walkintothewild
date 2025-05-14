@@ -56,7 +56,7 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL])) {
-            $fields = ['id', 'title', 'slug'];
+            $fields = ['id', 'title', 'slug','feature_image_path'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
