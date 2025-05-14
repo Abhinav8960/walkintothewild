@@ -32,18 +32,27 @@ class DataCopyController extends Controller
             'package_safari_park'
         ];
 
-        $db = \Yii::$app->db; // Assuming the default DB connection is used
+        $db = \Yii::$app->db;
 
         foreach ($tables as $table) {
             $newTable = 'pp_' . $table;
 
-            // Drop the new table if it already exists
             $db->createCommand("DROP TABLE IF EXISTS {$newTable}")->execute();
 
-            // Copy the table structure and data
-            $db->createCommand("CREATE TABLE {$newTable} AS SELECT * FROM {$table}")->execute();
+            $createTableSql = $db->createCommand("SHOW CREATE TABLE {$table}")->queryOne();
+            if ($createTableSql && isset($createTableSql['Create Table'])) {
+                $createTableStatement = $createTableSql['Create Table'];
 
-            echo "Table {$table} copied to {$newTable}\n";
+                $createTableStatement = str_replace("`{$table}`", "`{$newTable}`", $createTableStatement);
+
+                $db->createCommand($createTableStatement)->execute();
+
+                $db->createCommand("INSERT INTO {$newTable} SELECT * FROM {$table}")->execute();
+
+                echo "Table {$table} copied to {$newTable} with structure and data\n";
+            } else {
+                echo "Failed to retrieve CREATE TABLE statement for {$table}\n";
+            }
         }
     }
 
