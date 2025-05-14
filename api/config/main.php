@@ -131,6 +131,7 @@ return [
                 'park/<slug>/<action>' => 'park/default/<action>',
                 'cms/<action>' => 'cms/default/<action>',
                 'sharesafari' => 'sharesafari/default/index',
+                'sharesafari/might-intrested' => 'sharesafari/default/might-intrested',
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/flagreason' => 'sharesafari/default/flagreason',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
