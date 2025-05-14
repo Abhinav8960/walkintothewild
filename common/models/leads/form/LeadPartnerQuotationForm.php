@@ -16,6 +16,8 @@ class LeadPartnerQuotationForm extends Model
 {
 
     public $lead_partner_id;
+    public $park_id;
+    public $addional_notes;
     public $lead_id;
     public $partner_id;
     public $safaris;
@@ -32,7 +34,7 @@ class LeadPartnerQuotationForm extends Model
     public $plateform_customer_discount = 0;
     public $net_payment_price;
     public $installment = 1;
-    public $received_amount =0;
+    public $received_amount = 0;
     public $end_date;
     public $addtional_data;
     public $status;
@@ -48,15 +50,20 @@ class LeadPartnerQuotationForm extends Model
     public function rules()
     {
         return [
-            [['addtional_data'], 'default', 'value' => null],
+            [['addtional_data', 'addional_notes'], 'default', 'value' => null],
             [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
+            [['park_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status'], 'integer'],
             [['start_date', 'end_date', 'addtional_data', 'action_url', 'action_validate_url'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
+            ['start_date', 'date', 'format' => 'php:Y-m-d'],
+            ['end_date', 'date', 'format' => 'php:Y-m-d'],
+            ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<='],
+
+
         ];
     }
 
@@ -102,16 +109,20 @@ class LeadPartnerQuotationForm extends Model
         $transaction = \Yii::$app->db->beginTransaction();
         try {
 
+            $lead = Lead::find()->where(['id' => $this->lead_id])->one();
+
             $lpq = new LeadPartnerQuotes();
             $lpq->lead_partner_id = $this->lead_partner_id;
+            $lpq->park_id = $this->park_id;
+            $lpq->addional_notes = $this->addional_notes;
             $lpq->lead_id = $this->lead_id;
             $lpq->partner_id = $this->partner_id;
             $lpq->safaris = $this->safaris;
             $lpq->travelers = $this->travelers;
             $lpq->stay_category_id = $this->stay_category_id;
-            $lpq->name = $this->name;
-            $lpq->email = $this->email;
-            $lpq->phone = $this->phone;
+            $lpq->name = $lead->name ?? $this->name;
+            $lpq->email = $lead->email ?? $this->email;
+            $lpq->phone = $lead->phone ?? $this->phone;
             $lpq->start_date = $this->start_date;
             $lpq->partner_selling_price = $this->partner_selling_price;
             $lpq->plateform_partner_fees_percentage = $this->plateform_partner_fees_percentage;
@@ -159,5 +170,4 @@ class LeadPartnerQuotationForm extends Model
     {
         return $this->partner_selling_price + $this->calculate_plateform_partner_fees();
     }
-
 }
