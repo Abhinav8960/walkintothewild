@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 14, 2025 at 01:19 PM
+-- Generation Time: May 14, 2025 at 02:42 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -89,12 +89,14 @@ CREATE TABLE `lead_partner_quotes` (
   `lead_partner_id` int NOT NULL,
   `lead_id` int NOT NULL,
   `partner_id` int NOT NULL,
+  `park_id` int DEFAULT NULL,
+  `addional_notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `safaris` int NOT NULL,
   `travelers` int NOT NULL,
   `stay_category_id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(50) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `partner_selling_price` double(10,2) NOT NULL,
@@ -200,5 +202,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `lead_partner_quotes` ADD `park_id` INT NULL DEFAULT NULL AFTER `partner_id`, ADD `notes` TEXT NULL DEFAULT NULL AFTER `park_id`;

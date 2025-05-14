@@ -3,7 +3,12 @@ Take Backup For production and staging both
 
 And create new table of related to packages add prefix of "pp_" in all related tables 
 
-
+1. run sql from leads.md
+2. run sql from master_notification_template.md
+3. run sql from moderation.md
+4. run sql from sighting_comment_flag.php
+5. run sql from user_post_comment_flag.md
+6. 
 1 :: Read file stegaing_to_production, and find "wildwalks" and replace with your database name,insert tables names in queries, 
 2 :: Add moderation Table
 3 :: Add Site Api Request Table 

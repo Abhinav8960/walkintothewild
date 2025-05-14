@@ -904,14 +904,6 @@ ALTER TABLE `chat` ADD `lead_id` INT NULL DEFAULT NULL AFTER `id`;
 
 
 
-
-
-
-
-
-
-
-
 ALTER TABLE `sighting` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `v_duration`;
 ALTER TABLE `user_posts` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `width`;
 
@@ -923,4 +915,12 @@ ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTim
 ALTER TABLE `prod_witw`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `version`, `package_id`) USING BTREE;
 ALTER TABLE `prod_witw`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
 ALTER TABLE `prod_witw`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
+
+ALTER TABLE `share_safari` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `share_safari_history` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `share_safari_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+
+ALTER TABLE `user_posts` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
+ALTER TABLE `user_post_like` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
