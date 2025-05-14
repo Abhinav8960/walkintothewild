@@ -53,15 +53,15 @@ class LeadPartnerQuotationForm extends Model
             [['addtional_data', 'addional_notes'], 'default', 'value' => null],
             [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['park_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
+            [['park_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data', 'action_url', 'action_validate_url'], 'safe'],
+            [['start_date', 'end_date', 'addtional_data', 'action_url', 'action_validate_url', 'name', 'email', 'phone'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
             ['start_date', 'date', 'format' => 'php:Y-m-d'],
             ['end_date', 'date', 'format' => 'php:Y-m-d'],
-            ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<='],
+            ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>='],
 
 
         ];
