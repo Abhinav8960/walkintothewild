@@ -30,7 +30,7 @@ class SharedSafariForm extends \yii\base\Model
     public $website_url;
     public $type;
     public $tour_duration;
-
+    public $version;
 
     public $action_url;
     public $action_validate_url;
@@ -62,6 +62,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->share_seat =  $this->shared_safari_model->share_seat;
             $this->website_url =  $this->shared_safari_model->website_url;
             $this->tour_duration =  $this->shared_safari_model->tour_duration;
+            $this->version =  $this->shared_safari_model->version;
             $this->status =  $this->shared_safari_model->status;
         }
     }
@@ -87,6 +88,7 @@ class SharedSafariForm extends \yii\base\Model
             [['safari_plan'], 'validateContent'],
             [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000],
             // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
+            [['version'], 'integer'],
 
         ];
     }
@@ -158,6 +160,7 @@ class SharedSafariForm extends \yii\base\Model
 
         $this->shared_safari_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
         $this->shared_safari_model->status = $this->status;
+        $this->shared_safari_model->version = $this->version;
 
         // if ($this->shared_safari_model->slug == '') {
         //     $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_model->user->name));
@@ -173,7 +176,7 @@ class SharedSafariForm extends \yii\base\Model
     {
         if ($this->shared_safari_image) {
             $storagePath = Yii::$app->params['datapath'] . '/share_safari';
-            
+
             $withoutRootPath = 'share_safari';
 
             if (!file_exists($storagePath)) {

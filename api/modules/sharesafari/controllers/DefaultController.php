@@ -138,14 +138,19 @@ class DefaultController extends SafariController
     {
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
-        if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+        if ($operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator can not create Shared safari!"]);
         }
+
+        // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+        // }
         $model = new SharedSafariForm();
         $model->host_user_id = $this->userinfoId;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = ShareSafari::TYPE_SAFARI;
         $model->host_type = 1;
+        $model->version = 1;
 
         if ($login_user = $this->userinfo) {
             if ($login_user->x_url <> '') {
@@ -215,7 +220,7 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-   
+
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
@@ -275,7 +280,7 @@ class DefaultController extends SafariController
     public function actionUnjoin($slug)
     {
 
-       
+
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
@@ -287,8 +292,8 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to unjoin a shared safari. Tour operators cannot participate in shared safaris."]);
         }
 
-     
-       
+
+
         // return  new \common\events\sharesafari\SafariUnjoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->sharesafari->id);
 
         if ($share_safari_intrested) {
@@ -307,10 +312,9 @@ class DefaultController extends SafariController
             if ($share_safari_intrested->save(false)) {
                 FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                 return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
-
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
-        } 
+        }
     }
 
 
@@ -451,6 +455,7 @@ class DefaultController extends SafariController
         }
 
         $model = new ShareSafariCommentForm();
+        $model->version = $share_safari->version;
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($share_safari)) {
             /**To Creator */
@@ -503,6 +508,7 @@ class DefaultController extends SafariController
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
+        $replymodel->version = $share_safari->version;
 
         $replymodel->attributes = $this->request;
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
@@ -699,6 +705,7 @@ class DefaultController extends SafariController
         }
         $model = new SharedSafariForm($shared_safari_model);
         $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->version = $shared_safari_model->version + 1;
         $model->attributes = $this->request;
         $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
 

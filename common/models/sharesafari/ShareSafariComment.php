@@ -59,6 +59,7 @@ class ShareSafariComment extends \yii\db\ActiveRecord implements \common\interfa
             [['comment'], 'string'],
             // [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
             // [['user_ip_address'], 'string', 'max' => 20],
+            [['version'],'integer'],
         ];
     }
 
