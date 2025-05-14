@@ -15,6 +15,39 @@ use yii\console\Controller;
  */
 class DataCopyController extends Controller
 {
+
+    public function actionPackageTableCopy()
+    {
+        $tables = [
+            'package',
+            'package_comment',
+            'package_comment_report',
+            'package_day',
+            'package_enquiry',
+            'package_faq',
+            'package_feature',
+            'package_gallery',
+            'package_included',
+            'package_quote',
+            'package_safari_park'
+        ];
+
+        $db = \Yii::$app->db; // Assuming the default DB connection is used
+
+        foreach ($tables as $table) {
+            $newTable = 'pp_' . $table;
+
+            // Drop the new table if it already exists
+            $db->createCommand("DROP TABLE IF EXISTS {$newTable}")->execute();
+
+            // Copy the table structure and data
+            $db->createCommand("CREATE TABLE {$newTable} AS SELECT * FROM {$table}")->execute();
+
+            echo "Table {$table} copied to {$newTable}\n";
+        }
+    }
+
+
     public function actionSafari()
     {
         $dsafaris = ShareSafari::find()->all();
@@ -56,7 +89,7 @@ class DataCopyController extends Controller
             $model->created_by = $dpackage->created_by;
             $model->updated_by = $dpackage->updated_by;
             $model->status = Feeds::STATUS_ACTIVE;
-            
+
             $model->save(false);
         }
         return true;
