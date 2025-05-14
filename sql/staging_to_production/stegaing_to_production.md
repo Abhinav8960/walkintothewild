@@ -927,3 +927,5 @@ ALTER TABLE `user_post_comment` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id
 ALTER TABLE `user_post_like` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 
 ALTER TABLE `sighting_comment` CHANGE `flaged` `flaged` INT NULL DEFAULT '0';
+
+ALTER TABLE `package_version` ADD `final_approved_at` INT NULL DEFAULT NULL AFTER `is_published_on_api`;
