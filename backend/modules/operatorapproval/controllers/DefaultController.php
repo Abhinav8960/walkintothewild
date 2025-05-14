@@ -248,7 +248,7 @@ class DefaultController extends Controller
         $safari_operator_model->user_id = $model->user_id;
         $safari_operator_model->is_approved = 1;
         $safari_operator_model->safari_operator_request_id = $model->id;
-        $safari_operator_model->category_id = 2;
+        $safari_operator_model->category_id = 1;
         $safari_operator_model->business_name = $model->brand_name;
         $safari_operator_model->register_comapany_name = $model->brand_name;
         $safari_operator_model->address = $model->address;

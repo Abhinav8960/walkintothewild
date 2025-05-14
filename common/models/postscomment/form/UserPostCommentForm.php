@@ -15,6 +15,7 @@ use yii\base\Model;
 class UserPostCommentForm extends Model
 {
     public $comment;
+    public $version;
     public $action_url;
     public $action_validate_url;
 
@@ -25,7 +26,7 @@ class UserPostCommentForm extends Model
     public function rules()
     {
         return [
-            [['comment'], 'required'],
+            [['comment','version'], 'required'],
             ['comment', 'validateContent'],
             ['comment', function () {
                 if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
@@ -46,6 +47,7 @@ class UserPostCommentForm extends Model
         $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->user_posts_id = $userpost->id;
         $comment->status = 1;
+        $comment->version = $this->version;
 
         if ($comment->save(false)) {
             return $comment;

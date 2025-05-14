@@ -20,6 +20,7 @@ class UserPostsImageForm extends Model
     public $user_image_model;
     public $status;
     public $safari_operator_id;
+    public $version;
 
     public function __construct(UserPosts $user_image_model = null)
     {
@@ -32,6 +33,7 @@ class UserPostsImageForm extends Model
             $this->caption = $this->user_image_model->caption;
             $this->user_id = $this->user_image_model->user_id;
             $this->safari_operator_id = $this->user_image_model->safari_operator_id;
+            $this->version = $this->user_image_model->version;
 
             $this->status = $this->user_image_model->status;
         }
@@ -70,6 +72,7 @@ class UserPostsImageForm extends Model
                     return empty($model->caption);
                 },
             ],
+            [['version'],'integer'],
         ];
     }
 
@@ -78,6 +81,7 @@ class UserPostsImageForm extends Model
     {
         return [
             'user_id' => 'User',
+            'version' => 'Version',
             'safari_operator_id' => 'Safari Operator Id',
             'caption' => 'Caption',
             'status' => 'Status',
@@ -90,6 +94,7 @@ class UserPostsImageForm extends Model
         $this->user_image_model->caption = $this->caption;
         $this->user_image_model->user_id = $this->user_id;
         $this->user_image_model->safari_operator_id = $this->safari_operator_id;
+        $this->user_image_model->version = $this->version;
         $this->user_image_model->status = $this->status;
     }
 

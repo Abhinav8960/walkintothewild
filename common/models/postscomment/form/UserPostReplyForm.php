@@ -17,7 +17,7 @@ class UserPostReplyForm extends Model
 {
     public $comment;
     public $parent_id;
-
+    public $version;
 
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class UserPostReplyForm extends Model
     public function rules()
     {
         return [
-            [['comment', 'parent_id'], 'required'],
+            [['comment', 'parent_id', 'version'], 'required'],
             ['comment', 'validateContent'],
             ['comment', function () {
                 if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
@@ -45,6 +45,7 @@ class UserPostReplyForm extends Model
         $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->user_posts_id = $userpost->id;
         $reply->parent_id = $this->parent_id;
+        $reply->version = $this->version;
 
         if ($reply->save(false)) {
             return $reply;
