@@ -4,7 +4,7 @@ Take Backup For production and staging both
 And create new table of related to packages add prefix of "pp_" in all related tables 
 
 
-1 :: insert tables names in queries
+1 :: Read file stegaing_to_production, and find "wildwalks" and replace with your database name,insert tables names in queries, 
 2 :: Add moderation Table
 3 :: Add Site Api Request Table 
 
@@ -23,13 +23,12 @@ TRUNCATE package_included;
 TRUNCATE package_quote;
 TRUNCATE package_safari_park;
 TRUNCATE package_version;
-
+TRUNCATE TABLE feeds;
 
 Change in the code for tables 
 
 5 :: Run Command ------  php yii package-to-production/prepare-data
 
-6 :: Run command ------- TRUNCATE TABLE witw_staging.feeds
 
 7 :: Run Console Command ----   php yii data-copy/safari
                                 php yii data-copy/package
@@ -37,20 +36,8 @@ Change in the code for tables
 
 8 :: Run Command ------------   php yii feed-date-time/share-safari
 
-9 :: run query below -------------  TRUNCATE pp_package;
-
-
-
-TRUNCATE pp_package_comment;
-TRUNCATE pp_package_comment_report;
-TRUNCATE pp_package_day;
-TRUNCATE pp_package_enquiry;
-TRUNCATE pp_package_faq;
-TRUNCATE pp_package_feature;
-TRUNCATE pp_package_gallery;
-TRUNCATE pp_package_included;
-TRUNCATE pp_package_quote;
-TRUNCATE pp_package_safari_park;
+9 :: run query below -------------
+DROP TABLE `pp_package`, `pp_package_comment`, `pp_package_comment_report`, `pp_package_day`, `pp_package_enquiry`, `pp_package_faq`, `pp_package_feature`, `pp_package_gallery`, `pp_package_included`, `pp_package_quote`, `pp_package_safari_park`;
 
 
 
