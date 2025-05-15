@@ -43,6 +43,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     public function fields()
     {
         $fields = [
+            'park',
             'safari',
             'travellers',
             'staycatgory',
@@ -161,7 +162,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     {
 
         return $arr = [
-            'park' => $this->park->title ?? NULL,
+            'park' => $this->park->toArray()  ?? NULL,
             'safaris' => $this->safaris,
             'travelers' => $this->travelers,
             'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
