@@ -69,7 +69,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['day_description', 'day_activity', 'day_accommodation', 'day_note'], 'string'],
             [['day_title','version'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
-            [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
+            [['package_id', 'day','version'], 'unique', 'targetAttribute' => ['package_id', 'day','version']],
         ];
     }
 

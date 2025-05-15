@@ -53,9 +53,9 @@ class PackageSafariPark extends \yii\db\ActiveRecord implements \common\interfac
     public function rules()
     {
         return [
-            [['package_id','version', 'package_uuid', 'park_id'], 'required'],
+            [['package_id', 'version', 'park_id'], 'required'],
             [['package_id', 'park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['package_uuid','version', 'park_id'], 'unique', 'targetAttribute' => ['package_id', 'park_id']],
+            [['package_id', 'version', 'park_id'], 'unique', 'targetAttribute' => ['package_id', 'park_id', 'version']],
         ];
     }
 
