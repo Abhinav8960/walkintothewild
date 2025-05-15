@@ -30,7 +30,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             },
             // 'recipient_user_id',           
             'sender',
-            'additional_data ' => function () {
+            'additional_data' => function () {
                 return json_decode($this->data);
             },
         ];
