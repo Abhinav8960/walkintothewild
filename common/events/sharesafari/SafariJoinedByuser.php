@@ -35,7 +35,7 @@ class SafariJoinedByuser extends Event
 
     public function __construct($interested_user, $shared_safari_id)
     {
-        
+
         $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
         $this->engine = \Yii::$app->engine;
@@ -51,8 +51,7 @@ class SafariJoinedByuser extends Event
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
             // $broadcastService->send($this);
-            $broadcastService->send($this,true);
-
+            $broadcastService->send($this, true);
         }
     }
 
@@ -80,7 +79,7 @@ class SafariJoinedByuser extends Event
                         'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'] ,  // Can Add as "localAdminEmail" or "stagingAdminEmail"
+                    'to_mail' => \Yii::$app->params['adminEmail'],  // Can Add as "localAdminEmail" or "stagingAdminEmail"
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -143,8 +142,14 @@ class SafariJoinedByuser extends Event
         $this->shared_safari_name = $this->shared_safari->share_safari_title;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
         $this->userId = $this->shared_safari->host_user_id;
-        $this->email = $this->shared_safari->safarioperator->email;
-        $this->name =  $this->shared_safari->safarioperator->business_name;
+        if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+
+            $this->email = $this->shared_safari->safarioperator->email;
+            $this->name =  $this->shared_safari->safarioperator->business_name;
+        } else {
+            $this->email = $this->shared_safari->user->email;
+            $this->name =  $this->shared_safari->user->name;
+        }
         // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
         $this->sent_data = [
             'share_safari_title' => $this->shared_safari->share_safari_title,
