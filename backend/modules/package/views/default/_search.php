@@ -29,6 +29,22 @@ use yii\widgets\ActiveForm;
     <div class="col-md-2">
         <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Stay Category'])->label(false) ?>
     </div>
+    <div class="col-md-5">
+        <div class="d-flex align-items-center">
+            <div class="col-md-5">
+                <?= $form->field($model, 'cost_per_person_min')->textInput([
+                    'placeholder' => 'Enter Minimum Price'
+                ])->label(false) ?>
+            </div>
+
+            <p>to</p>
+            <div class="col-md-5">
+                <?= $form->field($model, 'cost_per_person_max')->textInput([
+                    'placeholder' => 'Enter Maximum Price'
+                ])->label(false) ?>
+            </div>
+        </div>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>
