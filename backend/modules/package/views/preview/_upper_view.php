@@ -65,10 +65,10 @@ use common\models\GeneralModel;
 </div>
 
 
-<div class="row">
+<div class="row mt-2">
     <div class="col-12">
         <div class="wrapper-skybgsafri pb-0" style="background-color: #F5F5F5 !important;">
-            <div class="row border_bottom2 pb-4">
+            <div class="row border-bottom border-dark pb-4">
                 <div class="col-lg-7 col-md-8 border-right">
                     <div class="row">
 
@@ -87,7 +87,7 @@ use common\models\GeneralModel;
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 pt-lg-0 pt-4">
+                <div class="col-lg-4 pt-lg-0 pt-4 border-start border-dark">
                     <div class="row ps-1">
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 ">
@@ -218,3 +218,10 @@ use common\models\GeneralModel;
         </div>
     </div>
 </div>
+
+<style>
+.banner_image{
+    height: 220px !important;
+    object-fit: cover !important;
+}
+</style>

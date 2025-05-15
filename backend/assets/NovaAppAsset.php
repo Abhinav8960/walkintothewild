@@ -27,11 +27,12 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
+        'js/script.js',
         'plugins/bootstrap/js/popper.min.js',
-        'plugins/bootstrap/js/bootstrap.min.js',
+        // 'plugins/bootstrap/js/bootstrap.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
         'plugins/ionicons/ionicons.js',
         'plugins/moment/moment.js',
