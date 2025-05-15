@@ -29,6 +29,9 @@ class PackageVersionSearch extends PackageVersion
     public $report_days;
     public $package_start_date;
     public $package_end_date;
+    public $cost_per_person_min;
+    public $cost_per_person_max;
+
 
 
     public $report_days_option = [
@@ -54,6 +57,7 @@ class PackageVersionSearch extends PackageVersion
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
+            [['cost_per_person_min','cost_per_person_max'],'safe'],
         ];
     }
 
@@ -391,13 +395,11 @@ class PackageVersionSearch extends PackageVersion
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
 
-        // if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
-        //     if ($this->estimated_price_filter_max >= 50000) {
-        //         $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
-        //     } else {
-        //         $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
-        //     }
-        // }
+
+        if ($this->cost_per_person_min && $this->cost_per_person_max) {
+            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->cost_per_person_min, $this->cost_per_person_max]);
+        }
+
 
         if ($this->no_of_night_min && $this->no_of_night_max) {
             if ($this->no_of_night_max >= 10) {
