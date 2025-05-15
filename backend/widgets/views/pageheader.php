@@ -8,7 +8,7 @@ use yii\bootstrap5\Breadcrumbs;
     </div>
 
     <div class="d">
-        <?= Breadcrumbs::widget([
+        <!-- <?= Breadcrumbs::widget([
             'itemTemplate' => "<li class='breadcrumb-item'>{link} </li>",
             'homeLink' => [
                 'label' => '<i class="fa fa-home"></i> Home' . Yii::t('yii', ' '),
@@ -16,7 +16,7 @@ use yii\bootstrap5\Breadcrumbs;
                 'encode' => false
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        ]) ?> -->
     </div>
 </div>
 <div class="ms-auto mb-3 btn_create">
