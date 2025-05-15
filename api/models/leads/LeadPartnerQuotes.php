@@ -4,6 +4,7 @@ namespace api\models\leads;
 
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
+use api\models\park\SafariPark;
 use Yii;
 
 /**
@@ -83,7 +84,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     public function rules()
     {
         return [
-            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by','park_id'], 'default', 'value' => null],
             [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
@@ -130,6 +131,11 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
         ];
     }
 
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
+
     public function getLead()
     {
         return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
@@ -155,7 +161,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     {
 
         return $arr = [
-            'park' => $this->lead->park->title ?? NULL,
+            'park' => $this->park->title ?? NULL,
             'safaris' => $this->safaris,
             'travelers' => $this->travelers,
             'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
