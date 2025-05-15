@@ -28,10 +28,11 @@ $this->params['title'] = $this->title;
                         'attribute' => 'business_name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->business_name, ['view', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
-                                'title' => 'View',
-                            ]);
+                            // return Html::a($model->business_name, ['view', 'id' => $model->id], [
+                            //     'style' => 'color: black !important;',
+                            //     'title' => 'View',
+                            // ]);
+                            return $model->business_name;
                         },
                         'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
                     ],
@@ -95,16 +96,16 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{temporary}&nbsp{checkin}&nbsp{update}&nbsp{suspend}',
+                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{update}&nbsp{suspend}',
                         'buttons' => [
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['view', 'id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'View',
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
 
-                            //     ]);
-                            // },
+                                ]);
+                            },
                             // 'checkin' => function ($url, $model) {
                             //     $partnerUrl = Yii::$app->urlManagerPartner->createAbsoluteUrl(['/check-in', 'username' => $model->user->username, 'google_source_id' => $model->user->google_source_id]);
                             //     return Html::a(

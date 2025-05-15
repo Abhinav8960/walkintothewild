@@ -29,17 +29,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 //'layout' => '{items}',
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn', 'contentOptions' => ['style' => 'text-align: center;']],
+                    ['class' => 'yii\grid\SerialColumn', 'headerOptions' => ['style' => 'width: 5%;']],
                     [
                         'attribute' => 'name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->name, ['view', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
-                                'title' => 'View',
-                            ]);
+                            return $model->name;
                         },
-                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
                     ],/*
                     [
                         'label' => 'Know As',
@@ -51,7 +47,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],*/
                     [
                         'label' => 'Is Searchable',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset(GeneralModel::yesnooption()[$model->is_searchable]) ? GeneralModel::yesnooption()[$model->is_searchable] : '';
@@ -70,7 +66,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -79,17 +75,17 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'template' => '{view}&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['view', 'id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'View',
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
 
-                            //     ]);
-                            // },
+                                ]);
+                            },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
