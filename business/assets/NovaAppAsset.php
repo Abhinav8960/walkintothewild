@@ -24,6 +24,7 @@ class NovaAppAsset extends AssetBundle
         'forceCopy' => true,
     ];
     public $js = [
+        'js/script.js',
         'plugins/accordion/accordion.min.js',
         'plugins/bootstrap/js/popper.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
