@@ -171,7 +171,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'partner_net_selling_price' => $this->partner_net_selling_price,
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
-            'due_quatation' => $this->addional_notes, // Ensure related data is fetched
+            'addional_notes' => $this->addional_notes, // Ensure related data is fetched
             'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
         ];
     }
