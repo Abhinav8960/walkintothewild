@@ -6,7 +6,7 @@
                     <?php if ($package->packagedays) {
                         $packagedays = $package->packagedays;
                         foreach ($packagedays as $packageday) { ?>
-                            <div class="accordion-item">
+                            <div class="accordion-item itinerary_item mt-2">
                                 <h2 class="accordion-header" id="flush-heading<?= $packageday->day ?>">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $packageday->day ?>" aria-expanded="false" aria-controls="flush-collapse<?= $packageday->day ?>">
                                         DAY <?= $packageday->day ?> - <?= $packageday->day_title ?>
@@ -110,3 +110,9 @@
         </div>
     </div>
 </div>
+
+<style>
+   .itinerary_item .accordion-button {
+    background-color: #CED2E0 !important;
+}
+</style>
