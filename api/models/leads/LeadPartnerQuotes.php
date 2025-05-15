@@ -63,7 +63,8 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'installment',
             'received_amount',
             'addtional_data',
-            'due_quatation'
+            'due_quatation',
+            'addional_notes'
         ];
         return $fields;
     }
@@ -87,7 +88,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             [['status'], 'default', 'value' => 1],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data'], 'safe'],
+            [['start_date', 'end_date', 'addtional_data','addional_notes'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -154,11 +155,13 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     {
 
         return $arr = [
+            'park' => $this->lead->park->title ?? NULL,
             'safaris' => $this->safaris,
             'travelers' => $this->travelers,
             'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
             'name' => $this->name,
             'email' => $this->email,
+            'phone' => $this->phone,
             'phone' => $this->phone,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
@@ -168,6 +171,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'partner_net_selling_price' => $this->partner_net_selling_price,
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
+            'due_quatation' => $this->addional_notes, // Ensure related data is fetched
             'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
         ];
     }

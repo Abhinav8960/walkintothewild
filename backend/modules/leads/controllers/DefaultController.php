@@ -102,7 +102,7 @@ class DefaultController extends  Controller
                 $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED; // Update status to approved
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s'); // Update status to approved
                 $installment->payment_link = $paymentUrl; // Save the payment URL
-                $quotation->save();
+                $quotation->save(false);
                 $installment->save(false);
                 $this->prepareChat($quotation);
             }
@@ -159,6 +159,8 @@ class DefaultController extends  Controller
         $message .= "<br>";
         $message .= "<b>Note</b>";
         $message .= "<br>";
+        $message .= $quotation->addional_notes;
+        
         $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
