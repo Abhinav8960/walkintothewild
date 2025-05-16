@@ -20,6 +20,34 @@ use api\models\User;
  */
 class ChatMessage extends \common\models\chat\ChatMessage
 {
+
+
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+                'value' => function () {
+                    return $this->getActiveUserId();
+                },
+            ],
+        ];
+    }
+
+    /**
+     * Get the active user ID from application parameters.
+     *
+     * @return int|null
+     */
+    protected function getActiveUserId()
+    {
+        return \Yii::$app->params['active_user_id'];
+    }
+
+
     public function fields()
     {
         $fields = [
@@ -131,7 +159,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
         }
-          return  $fields;
+        return  $fields;
     }
 
     public function getReciverId()

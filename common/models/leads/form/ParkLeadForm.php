@@ -2,8 +2,8 @@
 
 namespace common\models\leads\form;
 
-use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use common\models\leads\Lead;
 use Yii;
 use yii\base\Model;
@@ -162,7 +162,7 @@ class ParkLeadForm extends Model
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;
         $chat->is_seen = 0;
-        $chat->create_by = $login_user->id;
+        $chat->created_by = $login_user->id;
         $chat->updated_by = $login_user->id;
 
         if ($chat->save(false)) {
@@ -172,9 +172,9 @@ class ParkLeadForm extends Model
             // $chat_message->data = json_encode($package_data);
             $chat_message->data = NULL;
             $chat_message->status = 1;
-            $chat_message->create_by = $login_user->id;
-            $chat_message->updated_by = $login_user->id;
-            $chat_message->save();
+            $chat_message->created_by = $login_user->id;
+            $chat_message->updated_at = $login_user->id;
+            $chat_message->save(false);
 
             if ($chat_message->save(false)) {
                 $this->PrepapareNotification($park, $operator, $login_user, $chat);

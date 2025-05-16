@@ -5,9 +5,9 @@ namespace common\models\leads\form;;
 use Yii;
 use yii\base\Model;
 use common\models\User;
-use common\models\chat\Chat;
+use api\models\chat\Chat;
 use api\models\package\Package;
-use common\models\chat\ChatMessage;
+use api\models\chat\ChatMessage;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartners;
 
@@ -132,7 +132,7 @@ class PackageLeadForm extends Model
             $chat_message->message = $message;
             $chat_message->data = json_encode($package_data);
             $chat_message->status = 1;
-            $chat_message->create_by = $login_user->id;
+            $chat_message->created_by = $login_user->id;
             $chat_message->updated_by = $login_user->id;
             $chat_message->save();
 
