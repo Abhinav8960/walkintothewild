@@ -95,16 +95,23 @@ class ParkLeadForm extends Model
 
 
             if ($lead->save(false)) {
-                $distinctSafariOperators = array_filter($park->safarioperatorlist, function ($op) use (&$uniqueOperators) {
-                    if (!empty($op->safari_operator_id) && !in_array($op->safari_operator_id, $uniqueOperators)) {
-                        $uniqueOperators[] = $op->safari_operator_id;
-                        return true;
-                    }
-                    return false;
-                });
 
-                foreach ($distinctSafariOperators as $op) {
+                $safarioperatorlist = [];
+                foreach ($park->safarioperatorlist as $op) {
+
                     if (!empty($op->operator)) {
+
+                        $safarioperatorlist[$op->safari_operator_id] = $op;
+                        // $this->assignToPartner($lead, $op->operator, $login_user);
+                        // $this->prepareChat($lead, $park, $op->operator, $login_user);
+                    }
+                }
+
+
+                foreach ($safarioperatorlist as $op) {
+
+                    if (!empty($op->operator)) {
+
                         $this->assignToPartner($lead, $op->operator, $login_user);
                         $this->prepareChat($lead, $park, $op->operator, $login_user);
                     }
