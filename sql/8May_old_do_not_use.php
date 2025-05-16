@@ -1,3 +1,6 @@
+<!-- 16 may -->
+ALTER TABLE `chat_message` ADD `is_quotation_message` BOOLEAN NOT NULL DEFAULT FALSE AFTER `message`, ADD `quotation_id` INT NULL DEFAULT NULL AFTER `is_quotation_message`, ADD `is_quotation_active` BOOLEAN NOT NULL DEFAULT FALSE AFTER `quotation_id`;
+
 --<!-- 14 May 2025 -->
 ALTER TABLE `share_safari` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 ALTER TABLE `share_safari_history` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;

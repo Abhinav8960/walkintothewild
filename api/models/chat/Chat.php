@@ -3,6 +3,7 @@
 namespace api\models\chat;
 
 use api\models\leads\Lead;
+use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use api\models\User;
 use api\models\operator\SafariOperator;
@@ -64,6 +65,14 @@ class Chat extends \common\models\chat\Chat
         ];
         if ($this->chat_type == 2) {
             $fields[] = 'lead';
+            if ($this->quote_id > 0) {
+                $fields['quote'] = function () {
+                    return $this->quote;
+                };
+                $fields['payment_details'] = function () {
+                    return $this->payment_details;
+                };
+            }
         }
         return $fields;
     }
@@ -90,7 +99,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -173,5 +182,17 @@ class Chat extends \common\models\chat\Chat
     public function getLead()
     {
         return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+    }
+
+    public function getQuote()
+    {
+        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quote_id']);
+    }
+
+    public function getPayment_details()
+    {
+        if (!empty($this->quote)) {
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quote_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace api\models\leads;
 
 use api\models\meta\MetaPackageRange;
 use api\models\operator\SafariOperator;
+use api\models\package\Package;
 use api\models\park\SafariPark;
 use api\models\User;
 use Yii;
@@ -46,6 +47,7 @@ class Lead extends \common\models\leads\Lead
     {
         $fields = [
             'id',
+            'source',
             'source_label',
             'name',
             'email',
@@ -53,14 +55,24 @@ class Lead extends \common\models\leads\Lead
             'destination',
             'from_date',
             'to_date',
-            'is_date_flexible',
+            // 'is_date_flexible',
             'travelers',
             'staycatgory',
             'transport',
-            'meals',
-            'budget',
+            // 'meals',
+            // 'budget',
             'addional_notes',
         ];
+        if ($this->source == self::SOURCE_PACKAGE) {
+            $fields[] = 'package';
+        }
+        if ($this->source == self::SOURCE_PARTNER) {
+            $fields[] = 'operator';
+        }
+        if ($this->source == self::SOURCE_PARK) {
+            $fields[] = 'park';
+        }
+       
         return $fields;
     }
 
@@ -71,7 +83,7 @@ class Lead extends \common\models\leads\Lead
     public function rules()
     {
         return [
-            [['package_id', 'package_version','park_id','addional_notes', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['package_id', 'package_version', 'park_id', 'addional_notes', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['source', 'package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
@@ -118,9 +130,14 @@ class Lead extends \common\models\leads\Lead
         ];
     }
 
+    public function getPackage()
+    {
+        return $this->hasOne(Package::className(), ['id' => 'package_id']);
+    }
+
     public function getPark()
     {
-        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
     public function getOperator()
@@ -148,7 +165,7 @@ class Lead extends \common\models\leads\Lead
         return $arr = [
             SELF::SOURCE_PACKAGE => 'Package',
             SELF::SOURCE_PARK => 'Park',
-            SELF::SOURCE_PARTNER => 'Partner',
+            SELF::SOURCE_PARTNER => 'Operator',
         ];
     }
 
