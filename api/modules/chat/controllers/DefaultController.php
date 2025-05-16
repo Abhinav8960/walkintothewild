@@ -46,10 +46,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list', 'send'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list', 'send'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -67,6 +67,8 @@ class DefaultController extends RestController
                     'operator-list' => ['GET'],
                     'user-list' => ['GET'],
                     'send' => ['POST'],
+                    'send-message' => ['POST'],
+                    'messages' => ['GET'],
                 ],
             ],
         ];
@@ -196,7 +198,7 @@ class DefaultController extends RestController
         }
         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
 
-        
+
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
@@ -215,7 +217,7 @@ class DefaultController extends RestController
             return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
         } else {
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
-            }
+        }
     }
 
 
@@ -316,9 +318,9 @@ class DefaultController extends RestController
 
     public function actionSendQuoteMessage($lead_id)
     {
-        $partner = SafariOperator::find()->where(['user_id'=>$this->userinfo->id])->one();
+        $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();
 
-        $m = $this->findLeadModel($lead_id,$partner);
+        $m = $this->findLeadModel($lead_id, $partner);
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $partner->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
@@ -338,10 +340,10 @@ class DefaultController extends RestController
         // return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not Send"]);
     }
 
-    protected function findLeadModel($id,$partner)
+    protected function findLeadModel($id, $partner)
     {
 
-        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use($partner){
+        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use ($partner) {
             $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
             // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
         }])->one()) !== null) {
