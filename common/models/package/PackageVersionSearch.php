@@ -32,7 +32,7 @@ class PackageVersionSearch extends PackageVersion
     public $cost_per_person_min;
     public $cost_per_person_max;
 
-
+    public $business_name;
 
     public $report_days_option = [
         'all' => 'All',
@@ -57,7 +57,9 @@ class PackageVersionSearch extends PackageVersion
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
-            [['cost_per_person_min','cost_per_person_max'],'safe'],
+            [['cost_per_person_min', 'cost_per_person_max'], 'safe'],
+            [['business_name'],'string'],
+            
         ];
     }
 
@@ -468,6 +470,12 @@ class PackageVersionSearch extends PackageVersion
                     'defaultOrder' => ['popular_package' => SORT_DESC]
                 ];
             }
+        }
+
+        if ($this->business_name) {
+            $query->joinwith(['safarioperator' => function ($safari_operator_query) {
+                $safari_operator_query->andFilterWhere(['like', 'safari_operator.business_name', $this->business_name]);
+            }]);
         }
 
         if ($this->report_days) {

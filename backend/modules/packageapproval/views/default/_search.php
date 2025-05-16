@@ -20,8 +20,30 @@ use yii\widgets\ActiveForm;
     <div class="col-md-2">
         <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
     </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Partner Name'])->label(false) ?>
+    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Stay Category'])->label(false) ?>
+    </div>
+
+    <div class="col-md-5">
+        <div class="d-flex align-items-center">
+            <div class="col-md-5">
+                <?= $form->field($model, 'cost_per_person_min')->textInput([
+                    'placeholder' => 'Enter Minimum Price'
+                ])->label(false) ?>
+            </div>
+
+            <p>to</p>
+            <div class="col-md-5">
+                <?= $form->field($model, 'cost_per_person_max')->textInput([
+                    'placeholder' => 'Enter Maximum Price'
+                ])->label(false) ?>
+            </div>
+        </div>
     </div>
     <div class="col-md-2">
         <!-- <?= $form->field($model, 'cost_per_person')->textInput(['placeholder' => 'Cost Per Person'])->label(false) ?> -->

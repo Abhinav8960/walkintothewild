@@ -3,13 +3,16 @@
 use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Safari Park';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park/safari/default/index'];
 $this->params['breadcrumbs'][] = "Safari Park View";
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Edit Profile', ['/park/safari/profile', 'safari_park_id' => $model->id], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Edit Profile', ['/park/safari/profile', 'safari_park_id' => $model->id], ['class' => 'btn btn-orange me-2', 'title' => 'Create']);
+$this->params['buttons'][] = Html::button('Operator List', ['value' => Url::toRoute(['operator-list', 'safari_park_id' => $model->id]), 'class' => 'btn btn-orange operator-popup', 'title' => 'Create']);
+
 ?>
 
 <div class="card">
@@ -94,6 +97,36 @@ $this->params['buttons'][] = Html::a('Edit Profile', ['/park/safari/profile', 's
     </div>
 
 </div>
+
+<div class="modal fade" id="operatorAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Operator List
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='operatorContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.operator-popup').on('click', function () {
+        $('#operatorAction').modal('show')
+		.find('#operatorContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+?>
 
 <style>
     .text-box p span {

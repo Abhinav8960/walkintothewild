@@ -4,11 +4,14 @@
 use common\models\GeneralModel;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Package';
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
+
+$this->params['buttons'][] = Html::a('Package Approval List', [Url::toRoute(['/packageapproval/default/index'])], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
 
 

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Package';
+$this->title = 'Package Approval List';
 $this->params['breadcrumbs_home_url'] = '/package';
 $this->params['breadcrumbs'][] =  ['label' => 'Package', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
@@ -125,16 +125,9 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{view}{approved}{reject}',
+                        'template' => '{approved}{view}{reject}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/packageapproval/default/view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-
-                                ]);
-                            },
+                           
                             'approved' => function ($url, $model) {
                                 if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::a(
@@ -145,24 +138,32 @@ $this->params['title'] = $this->title;
                                                 'confirm' => 'Are you sure you want to approve this package?',
                                                 'method' => 'post',
                                             ],
-                                            'class' => 'btn btn-success  m-2',
+                                            'class' => 'btn btn-orange  m-2',
                                             'title' => 'Approve'
                                         ]
                                     );
                                 }
                             },
-                            'reject' => function ($url, $model) {
-                                if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
-                                    return Html::button(
-                                        'Reject',
-                                        [
-                                            'value' => Url::toRoute(['reject', 'package_id' => $model->package_id, 'version' => $model->version]),
-                                            'class' => 'btn btn-danger reasonpopup m-2',
-                                            'title' => 'Reject'
-                                        ]
-                                    );
-                                }
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['/packageapproval/default/view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+
+                                ]);
                             },
+                            // 'reject' => function ($url, $model) {
+                            //     if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+                            //         return Html::button(
+                            //             'Reject',
+                            //             [
+                            //                 'value' => Url::toRoute(['reject', 'package_id' => $model->package_id, 'version' => $model->version]),
+                            //                 'class' => 'btn btn-danger reasonpopup m-2',
+                            //                 'title' => 'Reject'
+                            //             ]
+                            //         );
+                            //     }
+                            // },
                         ]
                     ],
                 ],
