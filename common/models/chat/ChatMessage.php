@@ -2,6 +2,7 @@
 
 namespace common\models\chat;
 
+use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use common\models\User;
 
@@ -112,5 +113,17 @@ class ChatMessage extends \yii\db\ActiveRecord
     public function getMessage_datetime()
     {
         return date('Y-m-d H:i:s', $this->created_at);
+    }
+
+    public function getQuote()
+    {
+        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quotation_id']);
+    }
+
+    public function getPayment_details()
+    {
+        if (!empty($this->quote)) {
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        }
     }
 }
