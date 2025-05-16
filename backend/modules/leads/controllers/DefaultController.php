@@ -138,7 +138,23 @@ class DefaultController extends  Controller
     {
 
         // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
-        $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => $quotation->partner->user_id, 'recipient_user_id' => $quotation->lead->user_id], ['user_id' => $quotation->lead->user_id, 'recipient_user_id' => $quotation->partner->user_id]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
         if (!$chat_model) {
             return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
         }
