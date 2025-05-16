@@ -29,6 +29,8 @@ class User extends \common\models\User
         $fields[] = 'is_followed';
         $fields[] = 'user_activity_count';
         $fields[] = 'operator_slug';
+        $fields[] = 'user_followers_count';
+        $fields[] = 'user_followings_count';
 
         $hold_fields = [
             'id',
@@ -73,8 +75,8 @@ class User extends \common\models\User
             'updated_at'
         ];
         if (in_array(\Yii::$app->controller->layout, [\common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL])) {
-            $fields[] = 'user_followers_count';
-            $fields[] = 'user_followings_count';
+            // $fields[] = 'user_followers_count';
+            // $fields[] = 'user_followings_count';
             $fields[] = 'organized_safari_count';
             $fields[] = 'joined_safari_count';
             $fields[] = 'park_visited';
