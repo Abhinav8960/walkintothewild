@@ -1,0 +1,118 @@
+{
+    "chat_messages": {
+        "summary": {
+            "total": 16,
+            "page": 1,
+            "pageSize": 2,
+            "total_page": 8,
+            "query_params": []
+        },
+        "data": [
+            {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "sender": {
+                    "name": "Eagle Safaris | Operator",
+                    "user_handle": "eagle_safaris_by_banzaara",
+                    "profile_image": null,
+                    "is_safari_operator": true,
+                    "operator_slug": "eagle-safaris",
+                    "display_name": "The Eagle Safaris"
+                },
+                "additional_data": {
+                    "park": null,
+                    "safaris": 12,
+                    "travelers": 3,
+                    "staycatgory": {
+                        "id": 2,
+                        "title": "Standard",
+                        "min_range": 10000,
+                        "max_range": 50000
+                    },
+                    "name": "Avneesh Kumar",
+                    "email": "avneeshgupta1@gmail.com",
+                    "phone": null,
+                    "start_date": "2025-12-12 00:00:00",
+                    "end_date": "2025-12-13 00:00:00",
+                    "partner_selling_price": 12345,
+                    "plateform_partner_fees_percentage": 10,
+                    "plateform_partner_fees": 1234.5,
+                    "partner_net_selling_price": 13579.5,
+                    "plateform_customer_discount": 0,
+                    "net_payment_price": 13579.5,
+                    "addional_notes": "dfsdgsdgsg",
+                    "due_quatation": {
+                        "amount": 13579.5,
+                        "payment_initiate_link": "https://staging.walkintothewild.in/payment/SnOo2BisBP1747295485WEEKl",
+                        "before_datetime": "2025-12-12 00:00:00"
+                    }
+                }
+            },
+            {
+                "id": 1152,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747296138,
+                "sender": {
+                    "name": "Eagle Safaris | Operator",
+                    "user_handle": "eagle_safaris_by_banzaara",
+                    "profile_image": null,
+                    "is_safari_operator": true,
+                    "operator_slug": "eagle-safaris",
+                    "display_name": "The Eagle Safaris"
+                },
+                "additional_data": {
+                    "park": {
+                        "id": 6,
+                        "title": "Bandhavgarh Tiger Reserve",
+                        "slug": "bandhavgarh-tiger-reserve",
+                        "feature_image_path": "https://staging.walkintothewild.in/storage/safaripark/6/park_feature_image1718179247.jpg",
+                        "animal_text": "Tiger, Leopard, Wild dog, Wild cat, Hyena, Wolf, Elephant",
+                        "short_description": "Situated in Madhya Pradesh, Bandhavgarh Tiger Reserve is famous for its high tiger density and historical significance. The reserve features diverse terrains, including grasslands, forests, and ancient ruins. Jeep safaris offer thrilling tiger sightings and views of leopards, deer, and exotic birds. Bandhavgarh also boasts the ancient Bandhavgarh Fort, adding a cultural dimension to the wildlife experience.",
+                        "avg_safari_price_min": 7000,
+                        "avg_safari_price_max": 9000,
+                        "city": {
+                            "id": 509,
+                            "city_name": "Umaria"
+                        },
+                        "state": {
+                            "id": 16,
+                            "state_name": "Madhya Pradesh"
+                        },
+                        "location": {
+                            "id": 7,
+                            "title": "Central India ",
+                            "slug": "central-india"
+                        },
+                        "status": true
+                    },
+                    "safaris": 12,
+                    "travelers": 3,
+                    "staycatgory": {
+                        "id": 2,
+                        "title": "Standard",
+                        "min_range": 10000,
+                        "max_range": 50000
+                    },
+                    "name": "Avneesh Kumar",
+                    "email": "avneeshgupta1@gmail.com",
+                    "phone": null,
+                    "start_date": "2025-12-12 00:00:00",
+                    "end_date": "2025-12-13 00:00:00",
+                    "partner_selling_price": 12345,
+                    "plateform_partner_fees_percentage": 10,
+                    "plateform_partner_fees": 1234.5,
+                    "partner_net_selling_price": 13579.5,
+                    "plateform_customer_discount": 0,
+                    "net_payment_price": 13579.5,
+                    "addional_notes": "dfsdgsdgsg",
+                    "due_quatation": {
+                        "amount": 13579.5,
+                        "payment_initiate_link": "https://staging.walkintothewild.in/payment/95k9CKRlOl174729595859bGz",
+                        "before_datetime": "2025-12-12 00:00:00"
+                    }
+                }
+            }
+        ]
+    }
+}

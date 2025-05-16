@@ -29,10 +29,13 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 // return $this->message_datetime;
             },
             // 'recipient_user_id',           
-            'sender',
-            'additional_data ' => function () {
-                return json_decode($this->data);
+            // 'sender',
+            'is_message_sent_by_you' => function () {
+                return $this->created_by == \Yii::$app->params['active_user_id'];
             },
+            // 'additional_data ' => function () {
+            //     return json_decode($this->data);
+            // },
         ];
         return $fields;
     }
