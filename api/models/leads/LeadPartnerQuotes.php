@@ -43,10 +43,11 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     public function fields()
     {
         $fields = [
-            'park',
-            'safari',
-            'travellers',
-            'staycatgory',
+            // 'park',
+            'park_label',
+            'safaris',
+            'travelers',
+            'staycatgory_lable',
             'name',
             'email',
             'phone',
@@ -56,16 +57,16 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'end_date' => function () {
                 return date('Y-m-d', strtotime($this->end_date));
             },
-            'partner_selling_price',
-            'plateform_partner_fees_percentage',
-            'plateform_partner_fees',
-            'partner_net_selling_price',
-            'plateform_customer_discount',
+            // 'partner_selling_price',
+            // 'plateform_partner_fees_percentage',
+            // 'plateform_partner_fees',
+            // 'partner_net_selling_price',
+            // 'plateform_customer_discount',
             'net_payment_price',
-            'installment',
-            'received_amount',
-            'addtional_data',
-            'due_quatation',
+            // 'installment',
+            // 'received_amount',
+            // 'addtional_data',
+            // 'due_quatation',
             'addional_notes'
         ];
         return $fields;
@@ -85,12 +86,12 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     public function rules()
     {
         return [
-            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by','park_id'], 'default', 'value' => null],
+            [['addtional_data', 'created_at', 'updated_at', 'created_by', 'updated_by', 'park_id'], 'default', 'value' => null],
             [['received_amount'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'name', 'email', 'phone', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safari', 'travellers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data','addional_notes'], 'safe'],
+            [['start_date', 'end_date', 'addtional_data', 'addional_notes'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -137,6 +138,11 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
+    public function getPark_label()
+    {
+        return $this->park->title ?? NULL;
+    }
+
     public function getLead()
     {
         return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
@@ -156,6 +162,11 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
     {
         return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
         // return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
+    public function getStaycatgory_lable()
+    {
+        return $this->staycatgory->title ?? NULL;
     }
 
     public function getPreparedata()
@@ -179,7 +190,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'plateform_customer_discount' => $this->plateform_customer_discount,
             'net_payment_price' => $this->net_payment_price,
             'addional_notes' => $this->addional_notes, // Ensure related data is fetched
-            'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
+            // 'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
         ];
     }
 }

@@ -262,8 +262,10 @@ class DefaultController extends RestController
             $model->email = $this->userinfo->email;
             $model->full_name = $this->userinfo->name;
             $model->phone_no = $this->userinfo->mobile_no;
+
         }
         $model->attributes = $this->request;
+        $model->safari_park_id = $sf->id;
         if ($model->validate()) {
             if ($park_quote = $model->request($this->userinfo)) {
                 // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);

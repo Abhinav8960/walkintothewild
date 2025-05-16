@@ -1,0 +1,48 @@
+{
+    "quotations": {
+        "summary": {
+            "total": 170,
+            "page": 1,
+            "pageSize": 2,
+            "total_page": 85,
+            "query_params": []
+        },
+        "data": [
+            {
+                "id": 609,
+                "chat_hash": "hOIYoE1747310231ZUy-K",
+                "last_message";"ads",
+                "last_message_datetime": 1747310231,
+                "contact": {
+                    "username": "akashprajapatiak05@gmail.com",
+                    "name": "Akash Kumar",
+                    "email": "akashprajapatiak05@gmail.com",
+                    "is_safari_operator": false,
+                    "user_handle": "akash_kumar_2",
+                    "gender": null,
+                    "account_type": 1,
+                    "gender_privacy": 1,
+                    "email_privacy": 1,
+                    "status": 10,
+                    "profile_display_image": "https://lh3.googleusercontent.com/a/ACg8ocKT2UtT9aB-vxcEqK0rOIO-ckcwifTbQ9ADspmIgnWubMOBQg=s96-c",
+                    "cover_display_image": null,
+                    "display_name": "Akash Kumar",
+                    "is_followed": false,
+                    "user_activity_count": 0,
+                    "operator_slug": ""
+                },
+                "status": true,
+                "lead": {
+                  "source":"11",
+                    "id": 12,
+                    "source_label": "Package",
+                    "pack":{},
+                    "park":{},
+                    "operator":{}
+                }
+                "quote":{}
+                "payment_detail":{}
+            }
+        ]
+    }
+}
