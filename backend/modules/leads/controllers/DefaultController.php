@@ -163,7 +163,7 @@ class DefaultController extends  Controller
 
         if (isset($quotation->park->title)) {
             $message = "Park: " . $quotation->park->title;
-            $message .= "Safaris: " . $quotation->safari;
+            $message .= "Safaris: " . $quotation->safaris;
         }
         $message .= "<br>";
         $message .= "Travelers: " . $quotation->travelers;
