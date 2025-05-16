@@ -10,7 +10,7 @@ $this->params['breadcrumbs_home_url'] = '/cms/frontend-banner';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create', 'style' => 'margin-right:2px !important;']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange me-2', 'title' => 'Create', 'style' => 'margin-right:2px !important;']);
 $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/frontend-banner/setsequence", 'class' => 'btn popupButton btn-primary', 'title' => 'Set Sequence']);
 
 ?>
@@ -30,7 +30,6 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/fron
                     ],
                     [
                         'label' => 'Type',
-                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->name) ? $model->name : '';
@@ -39,7 +38,6 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/fron
 
                     [
                         'label' => 'Image',
-                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::img($model->imagepath, ['alt' => 'Banner Photograph', 'style' => 'max-width:60px;']);
@@ -48,7 +46,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/fron
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -57,7 +55,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/fron
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

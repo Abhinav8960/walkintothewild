@@ -26,7 +26,7 @@ class OperatorParkRemovalController extends Controller
 
 
         $safari_operator_parks = SafariOperatorPark::find()
-            ->where(['not in', 'safari_operator_id', $excludedIds])
+            ->where(['not in', 'id', $excludedIds])
             ->all();
 
         foreach ($safari_operator_parks as $safari_operator_park) {

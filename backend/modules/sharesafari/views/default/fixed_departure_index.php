@@ -36,19 +36,16 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a(($model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled'), ['fixed-view', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
-                                'title' => 'View',
-                            ]);
+                        
+                            return $model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled';
                         }
 
                     ],
                     [
                         'label' => 'Start Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
@@ -56,7 +53,8 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'End Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
@@ -64,31 +62,30 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Cut Off Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->cut_off_date) ? date('Y-m-d', strtotime($model->cut_off_date)) : '';
                         }
                     ],
                     [
-                        'label' => 'Number Of Safari',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'label' => 'Safaris',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->no_of_safari;
                         }
                     ],
                     [
-                        'label' => 'Number Of Seat',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'label' => 'Seats',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->total_seat;
                         }
                     ],
                     [
-                        'label' => 'Organized By',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Organizer',
+
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->user->name) ? $model->user->name : '';
@@ -96,7 +93,6 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Joined',
-                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
@@ -110,7 +106,6 @@ if (Yii::$app->user->identity) {
 
                     [
                         'label' => 'Leaved',
-                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
@@ -123,7 +118,8 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Is Publish on Web/App',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 20%;'],
+
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
@@ -134,26 +130,33 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
                         }
                     ],
 
-                    // [
-                    //     'header' => 'Pin',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-
-                    //         return Html::a(($model->pined_safari == 1 ? 'UnPin' : 'Pin Safari'), ['pinsafari', 'id' => $model->id], [
-                    //             'style' => 'color: white !important; text-decoration:none;',
-                    //             'title' => 'Pinned Safar',
-                    //             'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success'),
-                    //         ]);
-                    //     }
-                    // ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['fixed-view', 'id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+                        ]
+                    ],
                 ],
             ]); ?>
         </div>
