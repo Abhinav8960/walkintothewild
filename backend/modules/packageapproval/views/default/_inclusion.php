@@ -9,7 +9,6 @@ $package_included = PackageIncluded::find()
     ->where(['package_id' => $package->package_id, 'version'=>$package->version,'status' => 1])
     ->asArray()
     ->all();
-
 ?>
 
 <div class="row">
