@@ -35,7 +35,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'reason',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -44,7 +44,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
