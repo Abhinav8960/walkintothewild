@@ -682,23 +682,67 @@ class DefaultController extends SafariController
 
     public function actionIntrestedUser($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
 
-        // return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
+        $query = User::find()
+            ->alias('u')
+            ->innerJoin('share_safari_intrested ssi', 'ssi.user_id = u.id')
+            ->where(['ssi.share_safari_id' => $share_safari->id, 'ssi.status' => 1, 'u.status' => User::STATUS_ACTIVE])
+            ->select(['u.*', 'ssi.intrested_at'])
+            ->orderBy(['ssi.intrested_at' => SORT_DESC]);
 
-        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+        $pageSize = Yii::$app->request->get('pageSize', 10);
+        $page = Yii::$app->request->get('page', 1);
 
-        // return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
-
-        $ids = array_column($ShareSafariIntrested, 'user_id');
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
-            // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => $pageSize,
+                'page' => $page - 1,
+            ],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
+
+        $users = [];
+        foreach ($dataProvider->getModels() as $user) {
+            $users[] = [
+                'username' => $user->username,
+                'name' => $user->name,
+                'is_mobile_no_verified' => $user->is_mobile_no_verified,
+                'email' => $user->email,
+                'is_safari_operator' => $user->is_safari_operator,
+                'user_handle' => $user->user_handle,
+                'gender' => $user->gender,
+                'account_type' => $user->account_type,
+                'gender_privacy' => $user->gender_privacy,
+                'email_privacy' => $user->email_privacy,
+                'status' => $user->status,
+                'profile_display_image' => $user->profile_display_image,
+                'cover_display_image' => $user->cover_display_image,
+                'display_name' => $user->display_name,
+                'is_followed' => $user->is_followed,
+                'user_activity_count' => $user->user_activity_count,
+                'operator_slug' => $user->operator_slug,
+                'intrested_at' => date('Y-m-d', $user->getAttribute('intrested_at')),
+            ];
+        }
+
+        $pagination = $dataProvider->getPagination();
+
+        return Yii::$app->api->sendResponse([
+            'intrested_users' => [
+                'summary' => [
+                    'total' => $dataProvider->getTotalCount(),
+                    'page' => $pagination->getPage() + 1,
+                    'pageSize' => $pagination->getPageSize(),
+                    'total_page' => $pagination->getPageCount(),
+                    'query_params' => Yii::$app->request->queryParams,
+                ],
+                'data' => $users,
+            ],
+        ]);
     }
 
     public function actionUpdate($slug)
