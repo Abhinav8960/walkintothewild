@@ -107,7 +107,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
@@ -115,7 +115,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
 
     public function prepareData()
     {
-        // $fields['chat_hash'] = $this->chat->chat_hash;
+        $fields = [];
+        $fields['chat_hash'] = $this->chat->chat_hash;
+
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
             if ($this->is_quotation_message == true) {
                 $fields['quote'] = function () {
