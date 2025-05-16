@@ -96,7 +96,7 @@ class ChatMessage extends \yii\db\ActiveRecord
                 };
             }
         }
-        return  json_encode($fields);
+        return  $fields;
     }
 
     public function getReciverId()
@@ -117,13 +117,13 @@ class ChatMessage extends \yii\db\ActiveRecord
 
     public function getQuote()
     {
-        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quotation_id']);
+        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quotation_id'])->asArray();
     }
 
     public function getPayment_details()
     {
         if (!empty($this->quote)) {
-            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->asArray()->orderBy(['id' => SORT_DESC]);
         }
     }
 }

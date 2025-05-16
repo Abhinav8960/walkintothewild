@@ -79,7 +79,9 @@ class NewChatMessageSend extends Event
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
+                'sent_data'                         => [
+                    $this->sent_data
+                ],
                 'user_id'                           => $userId,
                 'image_url'                         => NULL,
                 'action'                            => NULL,
