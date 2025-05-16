@@ -69,4 +69,48 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+
+        // anurag's testing line
+        // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+    }
+
+    public function prepareData()
+    {
+        $fields['chat_hash'] = $this->chat->chat_hash;
+        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+            if ($this->is_quotation_message == true) {
+                $fields['quote'] = function () {
+                    return $this->quote;
+                };
+            }
+
+            if ($this->is_quotation_active == true) {
+                $fields['payment_details'] = function () {
+                    return $this->payment_details;
+                };
+            }
+        }
+        return  json_encode($fields);
+    }
+
+    public function getReciverId()
+    {
+        return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
+    }
+
+
+    public function getChat()
+    {
+        return $this->hasOne(Chat::className(), ['id' => 'chat_id']);
+    }
+
+    public function getMessage_datetime()
+    {
+        return date('Y-m-d H:i:s', $this->created_at);
+    }
 }
