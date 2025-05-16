@@ -2,6 +2,7 @@
 
 namespace common\models\chat;
 
+use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use common\models\User;
 
@@ -73,7 +74,7 @@ class ChatMessage extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
@@ -81,6 +82,7 @@ class ChatMessage extends \yii\db\ActiveRecord
 
     public function prepareData()
     {
+        $fields = [];
         $fields['chat_hash'] = $this->chat->chat_hash;
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
             if ($this->is_quotation_message == true) {
@@ -95,7 +97,8 @@ class ChatMessage extends \yii\db\ActiveRecord
                 };
             }
         }
-        return  json_encode($fields);
+        return  $fields;
+
     }
 
     public function getReciverId()
@@ -112,5 +115,17 @@ class ChatMessage extends \yii\db\ActiveRecord
     public function getMessage_datetime()
     {
         return date('Y-m-d H:i:s', $this->created_at);
+    }
+
+    public function getQuote()
+    {
+        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quotation_id'])->asArray();
+    }
+
+    public function getPayment_details()
+    {
+        if (!empty($this->quote)) {
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->asArray()->orderBy(['id' => SORT_DESC]);
+        }
     }
 }
