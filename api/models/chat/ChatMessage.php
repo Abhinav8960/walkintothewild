@@ -115,7 +115,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
 
     public function prepareData()
     {
-        $fields['chat_hash'] = $this->chat->chat_hash;
+        // $fields['chat_hash'] = $this->chat->chat_hash;
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
             if ($this->is_quotation_message == true) {
                 $fields['quote'] = function () {
