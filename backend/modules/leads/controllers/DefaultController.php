@@ -137,16 +137,33 @@ class DefaultController extends  Controller
     private function prepareChat($quotation)
     {
 
-        $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
+        // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
         if (!$chat_model) {
             return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
         }
 
         $message = "Safaris: " . $quotation->safaris;
 
-        if (isset($quotation->lead->park->title)) {
-            $message = "Park: " . $quotation->lead->park->title;
-            $message .= "Safaris: " . $quotation->safari;
+        if (isset($quotation->park->title)) {
+            $message = "Park: " . $quotation->park->title;
+            $message .= "Safaris: " . $quotation->safaris;
         }
         $message .= "<br>";
         $message .= "Travelers: " . $quotation->travelers;

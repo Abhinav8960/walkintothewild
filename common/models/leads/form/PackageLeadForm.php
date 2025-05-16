@@ -124,7 +124,6 @@ class PackageLeadForm extends Model
         $chat->status = 1;
         $chat->chat_type = 2;
         $chat->package_id = $lead->package_id;
-        $chat->quote_id = $lead->id;
         $chat->is_seen = 0;
 
         if ($chat->save(false)) {
