@@ -286,7 +286,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
 
     public function getSafarioperatorlist()
     {
-        return $this->hasMany(SafariOperatorPark::className(), ['park_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+        return $this->hasMany(SafariOperatorPark::className(), ['park_id1' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
     }
 
     public function getGalleryimag()

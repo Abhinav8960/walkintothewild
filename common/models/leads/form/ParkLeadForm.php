@@ -95,10 +95,16 @@ class ParkLeadForm extends Model
 
 
             if ($lead->save(false)) {
-                foreach ($park->safarioperatorlist as $op) {
+                $distinctSafariOperators = array_filter($park->safarioperatorlist, function ($op) use (&$uniqueOperators) {
+                    if (!empty($op->safari_operator_id) && !in_array($op->safari_operator_id, $uniqueOperators)) {
+                        $uniqueOperators[] = $op->safari_operator_id;
+                        return true;
+                    }
+                    return false;
+                });
 
+                foreach ($distinctSafariOperators as $op) {
                     if (!empty($op->operator)) {
-
                         $this->assignToPartner($lead, $op->operator, $login_user);
                         $this->prepareChat($lead, $park, $op->operator, $login_user);
                     }
@@ -148,7 +154,6 @@ class ParkLeadForm extends Model
         $chat->status = 1;
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;
-        $chat->quote_id = $lead->id;
         $chat->is_seen = 0;
 
         if ($chat->save(false)) {
