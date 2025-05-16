@@ -132,6 +132,8 @@ class PackageLeadForm extends Model
             $chat_message->message = $message;
             $chat_message->data = json_encode($package_data);
             $chat_message->status = 1;
+            $chat_message->create_by = $login_user->id;
+            $chat_message->updated_by = $login_user->id;
             $chat_message->save();
 
             if ($chat_message->save(false)) {

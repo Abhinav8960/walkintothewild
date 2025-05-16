@@ -162,6 +162,8 @@ class ParkLeadForm extends Model
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;
         $chat->is_seen = 0;
+        $chat->create_by = $login_user->id;
+        $chat->updated_by = $login_user->id;
 
         if ($chat->save(false)) {
             $chat_message = new ChatMessage();
@@ -170,6 +172,8 @@ class ParkLeadForm extends Model
             // $chat_message->data = json_encode($package_data);
             $chat_message->data = NULL;
             $chat_message->status = 1;
+            $chat_message->create_by = $login_user->id;
+            $chat_message->updated_by = $login_user->id;
             $chat_message->save();
 
             if ($chat_message->save(false)) {
