@@ -95,7 +95,7 @@ class ChatMessage extends \yii\db\ActiveRecord
                 };
             }
         }
-        return  $fields;
+        return  json_encode($fields);
     }
 
     public function getReciverId()

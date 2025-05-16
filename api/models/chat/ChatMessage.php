@@ -129,7 +129,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
         }
-        return  $fields;
+        return  json_encode($fields);
     }
 
     public function getReciverId()
