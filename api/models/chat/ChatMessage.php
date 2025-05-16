@@ -113,6 +113,25 @@ class ChatMessage extends \common\models\chat\ChatMessage
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
     }
 
+    public function prepareData()
+    {
+        $fields['chat_hash'] = $this->chat->chat_hash;
+        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+            if ($this->is_quotation_message == true) {
+                $fields['quote'] = function () {
+                    return $this->quote;
+                };
+            }
+
+            if ($this->is_quotation_active == true) {
+                $fields['payment_details'] = function () {
+                    return $this->payment_details;
+                };
+            }
+        }
+        return  $fields;
+    }
+
     public function getReciverId()
     {
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
