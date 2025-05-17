@@ -63,7 +63,11 @@ $this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::t
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <img class="card-img-top" src="<?= $model->Custom_thumbnail_path ?>" alt="Card image cap" width='300px' height='300px'>
+                            <?php if ($model->custom_thumbnail_path) { ?>
+                                <img class="card-img-top" src="<?= $model->custom_thumbnail_path ?>" alt="Card image cap" width='300px' height='300px'>
+                            <?php } else { ?>
+                                <img class="card-img-top" src="<?= $model->thumbnail ?>" alt="Card image cap" width='300px' height='300px'>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">
