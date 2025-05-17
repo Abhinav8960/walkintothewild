@@ -3,6 +3,7 @@
 namespace backend\modules\sightings\controllers;
 
 use common\models\sighting\form\SightingDeleteForm;
+use common\models\sighting\form\SightingThumbnailForm;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
@@ -10,6 +11,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController for the `sightings` module
@@ -186,6 +188,32 @@ class DefaultController extends Controller
         }
 
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUpdateThumbnail($id)
+    {
+        $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_thumbnail_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $model = new SightingThumbnailForm($sighting_thumbnail_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->video_thumbnail = UploadedFile::getInstance($model, 'video_thumbnail');
+                if ($model->validate()) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);                   
+                }
+            }
+        } else {
+            $model->sighting_thumbnail_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('_update_thumbnail_form', [
+            'model' => $model,
+        ]);
     }
 
     protected function findModel($id)
