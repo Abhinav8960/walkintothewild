@@ -32,9 +32,27 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         return [
             \yii\behaviors\TimestampBehavior::className(),
-            \yii\behaviors\BlameableBehavior::className(),
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+                'value' => function () {
+                    return $this->getActiveUserId();
+                },
+            ],
         ];
     }
+
+    /**
+     * Get the active user ID from application parameters.
+     *
+     * @return int|null
+     */
+    protected function getActiveUserId()
+    {
+        return \Yii::$app->user->id ?? \Yii::$app->params['active_user_id'];
+    }
+
 
     /**
      * {@inheritdoc}
@@ -98,7 +116,6 @@ class ChatMessage extends \yii\db\ActiveRecord
             }
         }
         return  $fields;
-
     }
 
     public function getReciverId()
