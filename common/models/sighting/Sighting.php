@@ -175,4 +175,12 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
+
+    public function getCustom_thumbnail_path()
+    {
+        if ($this->video_thumbnail_path) {
+            return  Yii::$app->params['s3_endpoint'] .'/'. $this->video_thumbnail_path;
+        }
+        return null;
+    }
 }

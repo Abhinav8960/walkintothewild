@@ -35,29 +35,35 @@ $this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::t
             </div>
             <div class="col-lg-8 col-md-8">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="d-flex mb-2">
-                            <div>
-                                <h5><?= isset($model->safarioperator) ? $model->safarioperator->business_name : ''; ?></h5>
-                                <p><?= '@' . $model->user->user_handle; ?></p>
-                                <p><?= $model->description; ?></p>
+                    <div class="d-flex col-lg-12 col-md-12">
+                        <div class="col-lg-6 col-md-6">
+
+                            <div class="d-flex mb-2">
+                                <div>
+                                    <h5><?= isset($model->safarioperator) ? $model->safarioperator->business_name : ''; ?></h5>
+                                    <p><?= '@' . $model->user->user_handle; ?></p>
+                                    <p><?= $model->description; ?></p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <strong>Sighting Date :</strong>
+                                <p class="ms-1"><?= date("F j, Y", strtotime($model->post_datetime)); ?></p>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <strong>Animal :</strong>
+                                <p class="ms-1"><?= isset($model->animalDetail) ? $model->animalDetail->name : ''; ?></p>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <strong>Session :</strong>
+                                <p class="ms-1"><?= isset($model->safariSessionDetail) ? $model->safariSessionDetail->title : ''; ?></p>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <img src="<?= $this->params['baseurl'] ?>/img/location.svg" alt="Location">
+                                <p class="ms-1 mt-2 pt-2"><?= isset($model->locationDetail) ? $model->locationDetail->title : ''; ?></p>
                             </div>
                         </div>
-                        <div class="d-flex mb-2">
-                            <strong>Sighting Date :</strong>
-                            <p class="ms-1"><?= date("F j, Y", strtotime($model->post_datetime)); ?></p>
-                        </div>
-                        <div class="d-flex mb-2">
-                            <strong>Animal :</strong>
-                            <p class="ms-1"><?= isset($model->animalDetail) ? $model->animalDetail->name : ''; ?></p>
-                        </div>
-                        <div class="d-flex mb-2">
-                            <strong>Session :</strong>
-                            <p class="ms-1"><?= isset($model->safariSessionDetail) ? $model->safariSessionDetail->title : ''; ?></p>
-                        </div>
-                        <div class="d-flex mb-2">
-                            <img src="<?= $this->params['baseurl'] ?>/img/location.svg" alt="Location">
-                            <p class="ms-1 mt-2 pt-2"><?= isset($model->locationDetail) ? $model->locationDetail->title : ''; ?></p>
+                        <div class="col-lg-6 col-md-6">
+                            <img class="card-img-top" src="<?= $model->Custom_thumbnail_path ?>" alt="Card image cap" width='300px' height='300px'>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">
