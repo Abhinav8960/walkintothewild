@@ -172,6 +172,22 @@ class DefaultController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+    public function actionMarkAsDaily($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->show_in_front == 1) {
+            $model->show_in_front = 0;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Sighting Remove from Daily Update !!!');
+        } else {
+            $model->show_in_front = 1;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Sighting Add to Daily Update !!!');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     protected function findModel($id)
     {
         if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {

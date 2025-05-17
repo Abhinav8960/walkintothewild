@@ -18,6 +18,7 @@ use common\models\sighting\form\SightingReplyForm;
 use common\models\sighting\form\SightingReportForm;
 use getID3;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 class DefaultController extends RestController
@@ -34,14 +35,14 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view'],
+                'exclude' => ['index', 'view','daily-update'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete','flag'],
+                'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete','flag'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,7 +65,8 @@ class DefaultController extends RestController
                     'comment-like' => ['POST'],
                     'sighting-report' => ['POST'],
                     'sighting-delete' => ['POST'],
-                    'flag' => ['POST']
+                    'flag' => ['POST'],
+                    'daily-update' => ['GET'],
                 ],
             ],
         ];
@@ -309,5 +311,17 @@ class DefaultController extends RestController
             return false;
         }
         return false;
+    }
+
+    public function actionDailyUpdate()
+    {
+        $query = Sighting::find()->where(['show_in_front' => 1, 'status' => Sighting::STATUS_ACTIVE])->limit(9);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => false, 
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "sighting");
     }
 }
