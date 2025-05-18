@@ -70,6 +70,8 @@ ALTER TABLE `witw_staging_1705`.`chat` ADD INDEX (`status`);
 
 ALTER TABLE `witw_staging_1705`.`chat` DROP INDEX `chat_hash_2`, ADD INDEX `chat_hash_2` (`chat_hash`, `user_id`, `recipient_user_id`) USING BTREE;
 ALTER TABLE `witw_staging_1705`.`chat_message` ADD INDEX (`chat_id`);
+<!-- 17 May -->
+ALTER TABLE `sighting` ADD `show_in_front` INT NULL DEFAULT '0' AFTER `delete_reason`;
 
 <!-- 16 may -->
 ALTER TABLE `chat_message` ADD `is_quotation_message` BOOLEAN NOT NULL DEFAULT FALSE AFTER `message`, ADD `quotation_id` INT NULL DEFAULT NULL AFTER `is_quotation_message`, ADD `is_quotation_active` BOOLEAN NOT NULL DEFAULT FALSE AFTER `quotation_id`;

@@ -55,7 +55,7 @@ $this->params['title'] = $this->title;
                         },
                     ],
                     [
-                        'label' => 'Sighting Date',
+                        'label' => 'Date',
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -149,8 +149,8 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
+                        'contentOptions' => ['style' => 'width: 25%; text-align: left;'],
+                        'template' => '{view}&nbsp{check}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a(
@@ -174,6 +174,25 @@ $this->params['title'] = $this->title;
                             //         ]
                             //     );
                             // },
+                            'check' => function ($url, $model) {
+                                if ($model->show_in_front == 1) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['mark-as-daily', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-success',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to remove this sighting from Daily Update?',
+                                        'title' => 'Remove ',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                } else {
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['mark-as-daily', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-warning',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to show this sighting in Daily Update?',
+                                        'title' => 'Show in Front',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                }
+                            },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title' => 'Inactive', 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },

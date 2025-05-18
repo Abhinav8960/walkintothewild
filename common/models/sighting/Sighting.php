@@ -68,6 +68,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['post_datetime'], 'safe'],
             [['file', 'filepath', 'etag'], 'string', 'max' => 255],
             [['video_thumbnail_path', 'video_thumbnail_etag', 'delete_reason'], 'string', 'max' => 512],
+            [['show_in_front'],'integer']
         ];
     }
 
@@ -173,5 +174,13 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function getSafarioperator()
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
+    }
+
+    public function getCustom_thumbnail_path()
+    {
+        if ($this->video_thumbnail_path) {
+            return  Yii::$app->params['s3_endpoint'] .'/'. $this->video_thumbnail_path;
+        }
+        return null;
     }
 }

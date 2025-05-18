@@ -410,7 +410,7 @@ class SiteController extends RestController
     public function actionUpdateToken($firebase_token, $old_firebase_token)
     {
         if ($this->access_token) {
-            $model = UserSession::find()->where(['token' => $this->access_token, 'old_firebase_token' => $old_firebase_token])->limit(1)->one();
+            $model = UserSession::find()->where(['old_firebase_token' => $old_firebase_token])->limit(1)->one();
             if ($model) {
                 $model->firebase_token = $firebase_token;
                 $model->is_firebase_token_active = true;
