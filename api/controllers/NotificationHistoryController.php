@@ -56,8 +56,13 @@ class NotificationHistoryController extends RestController
                     'status' => 1,
                 ]),
                 'pagination' => false,
+                'sort' => [
+                    'defaultOrder' => [
+                        'created_at' => SORT_DESC,
+                    ]
+                ],
             ]);
-            
+
             return $this->querySender($dataProvider, $rootIndexName = "notification_history");
         }
 
