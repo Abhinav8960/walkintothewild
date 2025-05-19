@@ -31,7 +31,12 @@ class User extends \common\models\User
         $fields[] = 'operator_slug';
         $fields[] = 'user_followers_count';
         $fields[] = 'user_followings_count';
-
+        // if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followers-list'])) {
+        //     $fields[] = 'followed_at';
+        // }
+        // if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followings-list'])) {
+        //     $fields[] = 'following_at';
+        // }
         $hold_fields = [
             'id',
             'profile_image',
@@ -339,4 +344,22 @@ class User extends \common\models\User
             'followings_list' => Yii::$app->params['api_url'] . '/profile/' . $this->user_handle . '/followings-list',
         ];
     }
+
+    // public function getFollowed_at()
+    // {
+    //     $followed_at = UserFollow::find()->where(['user_id' => $this->id, 'status' => 1])->limit(1)->one();
+    //     if ($followed_at) {
+    //         return $followed_at->updated_at;
+    //     }
+    //     return null;
+    // }
+
+    // public function getFollowing_at()
+    // {
+    //     $following_at = UserFollow::find()->where(['follow_user_id' => $this->id,  'status' => 1])->limit(1)->one();
+    //     if ($following_at) {
+    //         return $following_at->updated_at;
+    //     }
+    //     return null;
+    // }
 }
