@@ -165,17 +165,17 @@ class DefaultController extends  Controller
             $message = "Park: " . $quotation->park->title;
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "<b>Note</b>";
-        $message .= "<br>";
+        $message .= "; ";
         $message .= $quotation->addional_notes;
 
         $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();

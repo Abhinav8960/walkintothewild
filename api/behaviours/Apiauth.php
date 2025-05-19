@@ -76,7 +76,7 @@ class Apiauth extends AuthMethod
             $this->challenge($response);
             $this->handleFailure($response);
 
-           return \Yii::$app->api->sendFailedStringResponse(['Invalid Request']);
+            return \Yii::$app->api->sendFailedStringResponse(['Invalid Request']);
             //return false;
         }
     }
@@ -90,21 +90,18 @@ class Apiauth extends AuthMethod
         $headers = Yii::$app->getRequest()->getHeaders();
 
         $accessToken = NULL;
-        if (isset($_GET['access_token'])) {
+        if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
+            $accessToken = $matches[1];
+        } elseif (isset($_GET['access_token'])) {
             $accessToken = $_GET['access_token'];
+        } elseif (isset($_GET['access-token'])) {
+            $accessToken = $_GET['access-token'];
+        } elseif (!empty($headers->get('x-access-token'))) {
+            $accessToken = $headers->get('x-access-token');
         } else {
             $accessToken = $headers->get('x-access_token');
         }
-
-        if (empty($accessToken)) {
-
-            if (isset($_GET['access-token'])) {
-                $accessToken = $_GET['access-token'];
-            } else {
-                $accessToken = $headers->get('x-access-token');
-            }
-        }
-
+        
         if (is_string($accessToken)) {
             $identity = $user->loginByAccessToken($accessToken, get_class($this));
             if ($identity !== null) {
@@ -116,7 +113,7 @@ class Apiauth extends AuthMethod
 
         if ($accessToken !== null) {
 
-            return \Yii::$app->api->sendFailedStringResponse(['Access token not found'],400);
+            return \Yii::$app->api->sendFailedStringResponse(['Access token not found'], 400);
 
             // $this->handleFailure($response);
         }

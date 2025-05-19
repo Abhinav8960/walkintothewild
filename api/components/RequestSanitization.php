@@ -48,9 +48,6 @@ class RequestSanitization extends \yii\base\Component
             if (!empty($authorizationHeader) && preg_match('/Bearer\s(\S+)/', $authorizationHeader, $matches)) {
                 $accessToken = $matches[1];
             } 
-            // else {
-            //     return \Yii::$app->api->sendFailedStringResponse(['Authorization Bearer token not found'], 401);
-            // }
             elseif (isset($_GET['access_token'])) {
                 $accessToken = $_GET['access_token'];
             } elseif (isset($_GET['access-token'])) {
@@ -60,6 +57,9 @@ class RequestSanitization extends \yii\base\Component
             } else {
                 $accessToken = $headers->get('x-access_token');
             }
+            // else {
+            //     return \Yii::$app->api->sendFailedStringResponse(['Authorization Bearer token not found'], 401);
+            // }
 
             if (!empty($accessToken)) {
 
