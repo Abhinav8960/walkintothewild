@@ -234,7 +234,7 @@ class DefaultController extends RestController
         $searchModel = new ShareSafariSearch();
         $searchModel->park_id = $model->id;
         $searchModel->status = ShareSafari::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "sharedsafari");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "shared_safari");
     }
 
     public function actionParkPackage($slug)
