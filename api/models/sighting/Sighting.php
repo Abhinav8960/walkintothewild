@@ -63,7 +63,7 @@ class Sighting extends \common\models\sighting\Sighting
     public function getFull_file_path()
     {
         if ($this->filepath) {
-            return  Yii::$app->params['s3_endpoint'] .'/'. $this->filepath;
+            return  Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
         }
         return null;
     }
@@ -143,8 +143,12 @@ class Sighting extends \common\models\sighting\Sighting
     // }
     public function getThumbnail()
     {
-        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        if ($this->video_thumbnail) {
+            return Yii::$app->params['s3_endpoint'] . '/' . $this->video_thumbnail_path;
+        } else {
+            $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        }
     }
 
     public function getThumbnails()
