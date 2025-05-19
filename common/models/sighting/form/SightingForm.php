@@ -85,13 +85,13 @@ class SightingForm extends Model
             [['user_id', 'status', 'safari_operator_id'], 'integer'],
             [['description'], 'string'],
             [['v_size', 'v_duration', 'master_animal_id', 'safari_session_id', 'zone_id', 'location'], 'integer'],
-            [['post_datetime'], 'date', 'format' => 'php:Y-m-d H:i:s'],
-            ['post_datetime', 'compare', 'compareValue' => date("Y-m-d H:i:s"), 'operator' => '<='],
+            [['post_datetime'], 'date', 'format' => 'php:Y-m-d'],
+            ['post_datetime', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '<='],
             [
                 'post_datetime',
                 'default',
                 'value' => function () {
-                    return date("Y-m-d H:i:s");
+                    return date("Y-m-d");
                 }
             ],
             ['master_animal_id', 'exist', 'targetClass' => MasterAnimal::class, 'targetAttribute' => ['master_animal_id' => 'id']],

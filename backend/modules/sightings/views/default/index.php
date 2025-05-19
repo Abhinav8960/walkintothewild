@@ -51,11 +51,11 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
                             $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
-                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                            return '<a href="' . Url::toRoute(['/operator/safari-operator/view', 'id' => isset($model->safarioperator) ? $model->safarioperator->id : '']) . '" ><img src="' . $imageUrl . '" alt="" style="max-height:30px;"> <span style="color: black !important;">' . Html::encode($name) . '</span></a>';
                         },
                     ],
                     [
-                        'label' => 'Sighting Date',
+                        'label' => 'Date',
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -128,15 +128,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                    // [
-                    //     'label' => 'Last Updated',
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return date("F j, Y, g:i a", $model->updated_at);
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Uploaded At',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y, g:i a", $model->created_at);
+                        }
+                    ],
 
                     [
                         'label' => 'Status',
@@ -150,8 +149,8 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'template' => '{view}&nbsp{delete}&nbsp{suspend}',
+                        'contentOptions' => ['style' => 'width: 25%; text-align: left;'],
+                        'template' => '{view}&nbsp{check}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return Html::a(
@@ -175,8 +174,27 @@ $this->params['title'] = $this->title;
                             //         ]
                             //     );
                             // },
+                            'check' => function ($url, $model) {
+                                if ($model->show_in_front == 1) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['mark-as-daily', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-success',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to remove this sighting from Daily Update?',
+                                        'title' => 'Remove ',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                } else {
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['mark-as-daily', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-warning',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to show this sighting in Daily Update?',
+                                        'title' => 'Show in Front',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                }
+                            },
                             'suspend' => function ($url, $model) {
-                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title'=>'Inactive' , 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title' => 'Inactive', 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
                             },
                         ]
                     ],

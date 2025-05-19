@@ -17,7 +17,7 @@ $this->params['breadcrumbs_home_url'] = '/cms/faqs';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange me-2', 'title' => 'Create']);
 $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs/setsequence", 'class' => 'btn popupButton btn-primary', 'title' => 'Set Sequence']);
 ?>
 <div class="card">
@@ -36,7 +36,6 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                     ],
                     [
                         'label' => 'Category',
-                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->category_id) ? $model->category->name : '';
@@ -44,7 +43,6 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                     ],
                     [
                         'label' => 'question',
-                        'contentOptions' => ['style' => 'width: 30%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return strip_tags($model->question);
@@ -52,7 +50,6 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                     ],
                     [
                         'label' => 'answer',
-                        'contentOptions' => ['style' => 'width: 40%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return strip_tags($model->answer);
@@ -60,7 +57,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;
@@ -69,7 +66,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
 

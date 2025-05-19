@@ -111,6 +111,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['version'], 'string', 'max' => 10],
             [['package_name'], 'string', 'max' => 512],
             ['cancellation_reason', 'required', 'on' => 'reject'],
+            [['final_approved_at'],'integer']
 
         ];
     }

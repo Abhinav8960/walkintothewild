@@ -4,6 +4,7 @@ namespace backend\modules\park\modules\safari\controllers;
 
 
 use common\models\GeneralModel;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\form\SafariParkForm;
 use common\models\park\ParkAnimal;
 use common\models\park\ParkVehicle;
@@ -17,6 +18,7 @@ use common\models\park\SafariParkSearch;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\FileHelper;
@@ -439,5 +441,20 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionOperatorList($safari_park_id)
+    {
+        $query = SafariOperatorPark::find()->where(['park_id' => $safari_park_id, 'status' => SafariOperatorPark::STATUS_ACTIVE]);
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->renderAjax('_operator_list', [
+            'provider' => $provider,
+        ]);
     }
 }

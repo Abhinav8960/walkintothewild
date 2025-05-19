@@ -32,4 +32,14 @@ class PackageAssignController extends Controller
             }
         }
     }
+
+
+    public function actionApprovalTime()
+    {
+        $package_versions = PackageVersion::find()->where(['status' => 1])->all();
+        foreach ($package_versions as $pack) {
+            $pack->final_approved_at = $pack->updated_at;
+            $pack->save(false);
+        }
+    }
 }

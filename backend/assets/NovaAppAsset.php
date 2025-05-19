@@ -30,8 +30,9 @@ class NovaAppAsset extends AssetBundle
         'forceCopy' => false,
     ];
     public $js = [
+        'js/script.js',
         'plugins/bootstrap/js/popper.min.js',
-        'plugins/bootstrap/js/bootstrap.min.js',
+        // 'plugins/bootstrap/js/bootstrap.min.js',
         'plugins/chart.js/Chart.bundle.min.js',
         'plugins/ionicons/ionicons.js',
         'plugins/moment/moment.js',

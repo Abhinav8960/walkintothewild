@@ -13,6 +13,7 @@ use frontend\models\AuthTemp;
 use frontend\models\LoginForm;
 use yii\filters\AccessControl;
 use common\models\GeneralModel;
+use common\models\leads\LeadPartnerQuoteInstallments;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\RenderedContent;

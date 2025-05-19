@@ -21,6 +21,7 @@ class ReplyForm extends Model
     public $comment;
     public $parent_id;
     public $action_validate_url;
+    public $version;
 
 
     /**
@@ -29,7 +30,7 @@ class ReplyForm extends Model
     public function rules()
     {
         return [
-            [['comment', 'parent_id'], 'required'],
+            [['comment', 'parent_id','version'], 'required'],
             ['comment', 'validateContent'],
             // ['comment', function () {
             //     // if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
@@ -37,6 +38,7 @@ class ReplyForm extends Model
             //         $this->addError('comment', 'Invalid Characters!!!');
             //     }
             // }],
+            [['version'],'integer'],
         ];
     }
 
@@ -64,6 +66,7 @@ class ReplyForm extends Model
         $reply->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
+        $reply->version = $this->version;
         // $reply->user_device = $agent->device();
         // $reply->user_agent = Yii::$app->request->userAgent;
         // $reply->user_platform =  $agent->platform();

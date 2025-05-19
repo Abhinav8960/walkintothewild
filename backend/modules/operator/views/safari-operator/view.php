@@ -1,12 +1,15 @@
 <?php
 
 use common\models\GeneralModel;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Safari Tour Operator : ' . $model->business_name;
 $this->params['breadcrumbs_home_url'] = '/operator/safari-operator';
 $this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
 $this->params['breadcrumbs'][] = 'View';
 $this->params['title'] = $this->title;
+// $this->params['buttons'][] = Html::button('Change Logo', ['value' => Url::toRoute(['change-logo', 'id' => $model->id]), 'class' => 'btn btn-orange change-logo-popup', 'title' => 'Change Logo']);
 
 $budget = [];
 if ($model->is_offer_premium_budget == 1) {
@@ -179,3 +182,31 @@ foreach ($park as $key => $role) {
         color: brown !important;
     }
 </style>
+
+<div class="modal fade _standard-text" id="logo-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Logo</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='logoContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+function organizefunction() {
+    $('.change-logo-popup').on('click', function () {
+        $('#logo-modal').modal('show')
+		.find('#logoContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+JS;
+$this->registerJs($script);
+?>

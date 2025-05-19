@@ -15,6 +15,48 @@ use yii\console\Controller;
  */
 class DataCopyController extends Controller
 {
+
+    public function actionPackageTableCopy()
+    {
+        $tables = [
+            'package',
+            'package_comment',
+            'package_comment_report',
+            'package_day',
+            'package_enquiry',
+            'package_faq',
+            'package_feature',
+            'package_gallery',
+            'package_included',
+            'package_quote',
+            'package_safari_park'
+        ];
+
+        $db = \Yii::$app->db;
+
+        foreach ($tables as $table) {
+            $newTable = 'pp_' . $table;
+
+            $db->createCommand("DROP TABLE IF EXISTS {$newTable}")->execute();
+
+            $createTableSql = $db->createCommand("SHOW CREATE TABLE {$table}")->queryOne();
+            if ($createTableSql && isset($createTableSql['Create Table'])) {
+                $createTableStatement = $createTableSql['Create Table'];
+
+                $createTableStatement = str_replace("`{$table}`", "`{$newTable}`", $createTableStatement);
+
+                $db->createCommand($createTableStatement)->execute();
+
+                $db->createCommand("INSERT INTO {$newTable} SELECT * FROM {$table}")->execute();
+
+                echo "Table {$table} copied to {$newTable} with structure and data\n";
+            } else {
+                echo "Failed to retrieve CREATE TABLE statement for {$table}\n";
+            }
+        }
+    }
+
+
     public function actionSafari()
     {
         $dsafaris = ShareSafari::find()->all();
@@ -56,7 +98,7 @@ class DataCopyController extends Controller
             $model->created_by = $dpackage->created_by;
             $model->updated_by = $dpackage->updated_by;
             $model->status = Feeds::STATUS_ACTIVE;
-            
+
             $model->save(false);
         }
         return true;

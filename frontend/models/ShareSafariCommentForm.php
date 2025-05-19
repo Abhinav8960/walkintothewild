@@ -19,6 +19,8 @@ class ShareSafariCommentForm extends Model
     public $action_url;
     public $action_validate_url;
 
+    public $version;
+
 
     /**
      * {@inheritdoc}
@@ -26,13 +28,14 @@ class ShareSafariCommentForm extends Model
     public function rules()
     {
         return [
-            [['comment'], 'required'],
+            [['comment','version'], 'required'],
             ['comment', 'validateContent'],
             // ['comment', function () {
             //     if (!preg_match('/^[a-zA-Z0-9%#*@.,;\'"\-?!:()&\n\r ]*$/', $this->comment)) {
             //         $this->addError('comment', 'Invalid Characters!!!');
             //     }
             // }],
+            [['version'],'integer']
         ];
     }
 
@@ -59,6 +62,7 @@ class ShareSafariCommentForm extends Model
         $comment->user_id = Yii::$app->user->id;
         $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
         $comment->comment = $this->comment;
+        $comment->version = $this->version;
         // $comment->user_device = $agent->device();
         // $comment->user_agent = Yii::$app->request->userAgent;
         // $comment->user_platform =  $agent->platform();

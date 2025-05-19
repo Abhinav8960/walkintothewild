@@ -31,6 +31,8 @@ class PackageSearch extends PackageVersion
     public $package_end_date;
 
     public $business_name;
+    public $cost_per_person_min;
+    public $cost_per_person_max;
 
     public $report_days_option = [
         'all' => 'All',
@@ -56,6 +58,7 @@ class PackageSearch extends PackageVersion
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
             [['business_name'], 'string'],
+            [['cost_per_person_min','cost_per_person_max'],'safe'],
         ];
     }
 
@@ -204,6 +207,10 @@ class PackageSearch extends PackageVersion
             $query->joinwith(['safarioperator' => function ($safari_operator_query) {
                 $safari_operator_query->andFilterWhere(['like', 'safari_operator.business_name', $this->business_name]);
             }]);
+        }
+
+        if ($this->cost_per_person_min && $this->cost_per_person_max) {
+            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->cost_per_person_min, $this->cost_per_person_max]);
         }
 
         if ($this->report_days) {

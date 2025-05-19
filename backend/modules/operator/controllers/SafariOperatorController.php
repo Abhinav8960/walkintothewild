@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorDeleteForm;
 use common\models\operator\form\SafariOperatorForm;
+use common\models\operator\form\SafariOperatorLogoForm;
 use common\models\operator\form\SafariOperatorParkForm;
 use common\models\operator\form\SafariOperatorRequestForm;
 use common\models\operator\OperatorQuoteSearch;
@@ -62,7 +63,7 @@ class SafariOperatorController extends Controller
         return $this->render('view', ['model' => $model]);
     }
 
-     /**
+    /**
      * View Partner Registration Details
      */
     public function actionRegistrationDetails($id)
@@ -390,6 +391,28 @@ class SafariOperatorController extends Controller
             'safari_operator_model' => $safari_operator_delete_model,
         ]);
     }
+
+    // public function actionChangeLogo($id)
+    // {
+    //     $safari_operator_logo_model = $this->findModel($id);
+    //     $model = new SafariOperatorLogoForm($safari_operator_logo_model);
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 if ($model->safari_operator_logo_model->save(false)) {
+    //                     \Yii::$app->session->setFlash('success', 'Successfully Changed');
+    //                     return $this->redirect(['index']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->safari_operator_logo_model->loadDefaultValues();
+    //     }
+    //     return $this->renderAjax('_logo_form', [
+    //         'model' => $model,
+    //         'safari_operator_logo_model' => $safari_operator_logo_model,
+    //     ]);
+    // }
 
     // public function actionRedirectPartner($id)
     // {

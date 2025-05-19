@@ -68,7 +68,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     public function rules()
     {
         return [
-            [['package_id', 'package_version', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['package_id', 'package_version','park_id','addional_notes', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['source', 'package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
@@ -105,7 +105,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
             'transport' => 'Transport',
             'meals' => 'Meals',
             'budget' => 'Budget',
-            'addional_notes' => 'Addional Notes',
+            'notes' => 'Addional Notes',
             'user_id' => 'User ID',
             'is_booking_for_login_user' => 'Is Booking For Login User',
             'is_seen_by_admin' => 'Is Seen By Admin',

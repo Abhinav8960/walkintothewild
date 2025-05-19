@@ -257,7 +257,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPickdrop()
     {
-        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->live_version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
         return ($package_includes) ? 'Included' : 'Not Included';
     }
 

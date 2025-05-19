@@ -35,7 +35,7 @@ class PackageDay extends \common\models\package\PackageDay
         $fields = parent::fields();
         $fields[] = "image_path";
         $fields[] = "image_thumbnails";
-        $hold_fields = ['id', 'meal_lunch', 'meal_breakfast', 'day_image', 'meal_dinner', 'day_activity', 'day_accommodation', 'day_note', 'package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['id', 'version', 'meal_lunch', 'meal_breakfast', 'day_image', 'meal_dinner', 'day_activity', 'day_accommodation', 'day_note', 'package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

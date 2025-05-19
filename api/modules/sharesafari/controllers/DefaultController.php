@@ -18,6 +18,7 @@ use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
 use api\models\sharesafari\form\SharedSafariForm;
 use api\models\sharesafari\ShareSafariComment;
+use api\models\sharesafari\ShareSafariHistory;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
@@ -28,6 +29,7 @@ use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 use yii\web\UploadedFile;
 
 /**
@@ -48,7 +50,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user', 'might-intrested', 'share-safari-history'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -87,6 +89,8 @@ class DefaultController extends SafariController
                     'fixed-departure-days' => ['GET'],
                     'fixed-departure-gallery' => ['GET'],
                     'fixed-departure-faqs' => ["GET"],
+                    'might-intrested' => ['GET'],
+                    'share-safari-history' => ['GET']
 
                 ],
             ],
@@ -138,14 +142,19 @@ class DefaultController extends SafariController
     {
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
-        if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+        if ($operator) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator can not create Shared safari!"]);
         }
+
+        // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+        // }
         $model = new SharedSafariForm();
         $model->host_user_id = $this->userinfoId;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = ShareSafari::TYPE_SAFARI;
         $model->host_type = 1;
+        $model->version = 1;
 
         if ($login_user = $this->userinfo) {
             if ($login_user->x_url <> '') {
@@ -215,7 +224,7 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-   
+
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
@@ -275,7 +284,7 @@ class DefaultController extends SafariController
     public function actionUnjoin($slug)
     {
 
-       
+
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
@@ -287,8 +296,8 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to unjoin a shared safari. Tour operators cannot participate in shared safaris."]);
         }
 
-     
-       
+
+
         // return  new \common\events\sharesafari\SafariUnjoinedByuser($share_safari_intrested->user->name,$share_safari_intrested->sharesafari->id);
 
         if ($share_safari_intrested) {
@@ -307,10 +316,9 @@ class DefaultController extends SafariController
             if ($share_safari_intrested->save(false)) {
                 FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                 return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
-
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
-        } 
+        }
     }
 
 
@@ -451,6 +459,7 @@ class DefaultController extends SafariController
         }
 
         $model = new ShareSafariCommentForm();
+        $model->version = $share_safari->version;
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($share_safari)) {
             /**To Creator */
@@ -503,6 +512,7 @@ class DefaultController extends SafariController
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
+        $replymodel->version = $share_safari->version;
 
         $replymodel->attributes = $this->request;
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
@@ -670,26 +680,70 @@ class DefaultController extends SafariController
     }
 
 
-    public function actionIntrestedUser($slug)
-    {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
-        }
+    // public function actionIntrestedUser($slug)
+    // {
+    //     $share_safari = ShareSafari::find()->where(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->limit(1)->one();
+    //     if (!$share_safari) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+    //     }
 
-        // return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
+    //     $query = User::find()
+    //         ->alias('u')
+    //         ->innerJoin('share_safari_intrested ssi', 'ssi.user_id = u.id')
+    //         ->where(['ssi.share_safari_id' => $share_safari->id, 'ssi.status' => 1, 'u.status' => User::STATUS_ACTIVE])
+    //         ->select(['u.*', 'ssi.intrested_at'])
+    //         ->orderBy(['ssi.intrested_at' => SORT_DESC]);
 
-        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+    //     $pageSize = Yii::$app->request->get('pageSize', 10);
+    //     $page = Yii::$app->request->get('page', 1);
 
-        // return Yii::$app->api->sendResponse($data = ['intrested-users' => $this->serializeData($share_safari->intrestedUser)]);
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' => $query,
+    //         'pagination' => [
+    //             'pageSize' => $pageSize,
+    //             'page' => $page - 1,
+    //         ],
+    //     ]);
 
-        $ids = array_column($ShareSafariIntrested, 'user_id');
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
-            // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
-        ]);
-        return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
-    }
+    //     $users = [];
+    //     foreach ($dataProvider->getModels() as $user) {
+    //         $users[] = [
+    //             // 'username' => $user->username,
+    //             'name' => $user->name,
+    //             // 'is_mobile_no_verified' => $user->is_mobile_no_verified,
+    //             // 'email' => $user->email,
+    //             // 'is_safari_operator' => $user->is_safari_operator,
+    //             // 'user_handle' => $user->user_handle,
+    //             // 'gender' => $user->gender,
+    //             // 'account_type' => $user->account_type,
+    //             // 'gender_privacy' => $user->gender_privacy,
+    //             // 'email_privacy' => $user->email_privacy,
+    //             // 'status' => $user->status,
+    //             // 'profile_display_image' => $user->profile_display_image,
+    //             // 'cover_display_image' => $user->cover_display_image,
+    //             'display_name' => $user->display_name,
+    //             // 'is_followed' => $user->is_followed,
+    //             // 'user_activity_count' => $user->user_activity_count,
+    //             'operator_slug' => $user->operator_slug,
+    //             'intrested_at' => date('Y-m-d', $user->getAttribute('intrested_at')),
+    //         ];
+    //     }
+
+    //     $pagination = $dataProvider->getPagination();
+
+    //     return Yii::$app->api->sendResponse([
+    //         'intrested_users' => [
+    //             'summary' => [
+    //                 'total' => $dataProvider->getTotalCount(),
+    //                 'page' => $pagination->getPage() + 1,
+    //                 'pageSize' => $pagination->getPageSize(),
+    //                 'total_page' => $pagination->getPageCount(),
+    //                 'query_params' => Yii::$app->request->queryParams,
+    //             ],
+    //             'data' => $users,
+    //         ],
+    //     ]);
+    // }
 
     public function actionUpdate($slug)
     {
@@ -699,6 +753,7 @@ class DefaultController extends SafariController
         }
         $model = new SharedSafariForm($shared_safari_model);
         $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->version = $shared_safari_model->version + 1;
         $model->attributes = $this->request;
         $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
 
@@ -732,5 +787,349 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+
+    public function actionMightIntrested()
+    {
+        $searchModel = new ShareSafariSearch();
+        $queryParams = Yii::$app->request->queryParams;
+        $searchModel->load($queryParams);
+
+        $dataProvider = $searchModel->search($queryParams);
+        $dataProvider->pagination = false;
+        $dataProvider->query->orderBy(new \yii\db\Expression('RAND()'))->limit(4);
+        $data = [
+            'share_safari' => [
+                'data' => $this->serializeData($dataProvider->getModels()),
+            ],
+        ];
+
+        return Yii::$app->api->sendResponse($data);
+    }
+
+    public function actionShareSafariHistory($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug, 'type' => 1])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari History Not found!"]);
+        }
+
+        $columns = $this->sharedsafaricolumn();
+
+        $query = "SELECT id as current_id, updated_at as date, ";
+        foreach ($columns as $column_data) {
+            $query .= "
+        " . $column_data['actual_column'] . " as " . $column_data['current_column'] . ", 
+        lead(" . $column_data['actual_column'] . ") over() as " . $column_data['previous_column'] . ",
+        ";
+        }
+
+        $query .= " row_number() over() as `row_number`
+            FROM `share_safari_history` 
+            WHERE `slug` = :slug AND `status` = 1 AND `type` = 1 
+            ORDER BY `id` DESC;";
+
+        $history_model = Yii::$app->db->createCommand($query)
+            ->bindValue(':slug', $slug)
+            ->queryAll();
+
+        $filtered_history = [];
+        $totalRows = count($history_model);
+
+        foreach ($history_model as $index => $row) {
+            $changes = [];
+            $isLastRow = ($index === $totalRows - 1);
+            $rowAction = null;
+
+            foreach ($columns as $column_data) {
+                $currentKey = $column_data['current_column'];
+                $previousKey = $column_data['previous_column'];
+                $currentValue = $row[$currentKey];
+                $previousValue = $row[$previousKey];
+
+                if ($isLastRow) {
+                    if ($currentValue !== null) {
+                        $changes[$currentKey] = [
+                            'new' => $currentValue
+                        ];
+                        $rowAction = 'Created';
+                    }
+                } else {
+                    if ($currentValue !== $previousValue) {
+                        if ($previousValue === null) {
+                            $changes[$currentKey] = [
+                                'new' => $currentValue
+                            ];
+                            $rowAction = 'Created';
+                        } else {
+                            $changes[$currentKey] = [
+                                'new' => $currentValue,
+                                'old' => $previousValue
+                            ];
+                            $rowAction = 'Updated';
+                        }
+                    }
+                }
+            }
+
+            if (!empty($changes)) {
+                $filtered_history[] = [
+                    'current_id' => $row['current_id'],
+                    'date' => $row['date'],
+                    'action' => $rowAction,
+                    'changes' => $changes,
+                ];
+            }
+        }
+
+        return Yii::$app->api->sendResponse([
+            'share_safari_history' => $filtered_history
+        ]);
+    }
+
+
+    public function actionFixedHistory($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug, 'type' => 2, 'mail_sent' => 1])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Fixed History Not found!"]);
+        }
+
+        $columns = $this->fixeddeparturecolumn();
+        $query = "SELECT id as current_id, updated_at as date, ";
+        foreach ($columns as $column_data) {
+            $query .= "
+            " . $column_data['actual_column'] . " as " . $column_data['current_column'] . ", 
+            lead(" . $column_data['actual_column'] . ") over() as " . $column_data['previous_column'] . ",
+            ";
+        }
+
+        $query .= " row_number() over() as `row_number`
+                    FROM `share_safari_history` WHERE `slug` = '$slug' AND `status` = 1 AND `type` = 2 AND `mail_sent` = 1 ORDER BY `id` DESC;";
+
+        $history_model = Yii::$app->db->createCommand($query)
+            ->queryAll();
+
+        $filtered_history = [];
+        $totalRows = count($history_model);
+
+        foreach ($history_model as $index => $row) {
+            $changes = [];
+            $isLastRow = ($index === $totalRows - 1);
+            $rowAction = null;
+
+            foreach ($columns as $column_data) {
+                $currentKey = $column_data['current_column'];
+                $previousKey = $column_data['previous_column'];
+                $currentValue = $row[$currentKey];
+                $previousValue = $row[$previousKey];
+
+                if ($isLastRow) {
+                    if ($currentValue !== null) {
+                        $changes[$currentKey] = [
+                            'new' => $currentValue
+                        ];
+                        $rowAction = 'Created';
+                    }
+                } else {
+                    if ($currentValue !== $previousValue) {
+                        if ($previousValue === null) {
+                            $changes[$currentKey] = [
+                                'new' => $currentValue
+                            ];
+                            $rowAction = 'Created';
+                        } else {
+                            $changes[$currentKey] = [
+                                'new' => $currentValue,
+                                'old' => $previousValue
+                            ];
+                            $rowAction = 'Updated';
+                        }
+                    }
+                }
+            }
+
+            if (!empty($changes)) {
+                $filtered_history[] = [
+                    'current_id' => $row['current_id'],
+                    'date' => $row['date'],
+                    'action' => $rowAction,
+                    'changes' => $changes,
+                ];
+            }
+        }
+
+        return Yii::$app->api->sendResponse([
+            'share_safari_history' => $filtered_history
+        ]);
+    }
+
+
+
+    public function sharedsafaricolumn()
+    {
+        return [
+            [
+                'actual_column' => 'no_of_safari',
+                'previous_column' => 'previous_no_of_safari',
+                'current_column' => 'current_no_of_safari',
+            ],
+            [
+                'actual_column' => 'share_seat',
+                'previous_column' => 'previous_share_seat',
+                'current_column' => 'current_share_seat',
+            ],
+            [
+                'actual_column' => 'total_seat',
+                'previous_column' => 'previous_total_seat',
+                'current_column' => 'current_total_seat',
+            ],
+            [
+                'actual_column' => 'estimate_price_min',
+                'previous_column' => 'previous_estimate_price_min',
+                'current_column' => 'current_estimate_price_min',
+            ],
+            [
+                'actual_column' => 'estimate_price_max',
+                'previous_column' => 'previous_estimate_price_max',
+                'current_column' => 'current_estimate_price_max',
+            ],
+            [
+                'actual_column' => 'start_date',
+                'previous_column' => 'previous_start_date',
+                'current_column' => 'current_start_date',
+            ],
+            [
+                'actual_column' => 'end_date',
+                'previous_column' => 'previous_end_date',
+                'current_column' => 'current_end_date',
+            ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+            ],
+
+        ];
+    }
+
+    public function fixeddeparturecolumn()
+    {
+        return [
+            [
+                'actual_column' => 'no_of_safari',
+                'previous_column' => 'previous_no_of_safari',
+                'current_column' => 'current_no_of_safari',
+                'label' => 'Safari'
+            ],
+            [
+                'actual_column' => 'share_seat',
+                'previous_column' => 'previous_share_seat',
+                'current_column' => 'current_share_seat',
+                'label' => 'Share Seat'
+            ],
+            [
+                'actual_column' => 'total_seat',
+                'previous_column' => 'previous_total_seat',
+                'current_column' => 'current_total_seat',
+                'label' => 'Total Seat'
+            ],
+            [
+                'actual_column' => 'cost_per_person',
+                'previous_column' => 'previous_cost_per_person',
+                'current_column' => 'current_cost_per_person',
+                'label' => 'Estimate Price Min'
+            ],
+            [
+                'actual_column' => 'start_date',
+                'previous_column' => 'previous_start_date',
+                'current_column' => 'current_start_date',
+                'label' => 'Start Date'
+            ],
+            [
+                'actual_column' => 'end_date',
+                'previous_column' => 'previous_end_date',
+                'current_column' => 'current_end_date',
+                'label' => 'End Date'
+            ],
+            [
+                'actual_column' => 'cut_off_date',
+                'previous_column' => 'previous_cut_off_date',
+                'current_column' => 'current_cut_off_date',
+                'label' => 'Cut Off Date'
+            ],
+            // [
+            //     'actual_column' => 'safari_plan',
+            //     'previous_column' => 'previous_safari_plan',
+            //     'current_column' => 'current_safari_plan',
+            //     'label' => 'Safari Plan'
+            // ],
+            [
+                'actual_column' => 'share_safari_terms_condtition',
+                'previous_column' => 'previous_share_safari_terms_condtition',
+                'current_column' => 'current_share_safari_terms_condtition',
+                'label' => 'T & C'
+            ],
+            [
+                'actual_column' => 'privacy_policy',
+                'previous_column' => 'previous_privacy_policy',
+                'current_column' => 'current_privacy_policy',
+                'label' => 'Privacy Policy'
+            ],
+            [
+                'actual_column' => 'change_policy',
+                'previous_column' => 'previous_change_policy',
+                'current_column' => 'current_change_policy',
+                'label' => 'Change Policy'
+            ],
+            [
+                'actual_column' => 'what_you_must_carry',
+                'previous_column' => 'previous_what_you_must_carry',
+                'current_column' => 'current_what_you_must_carry',
+                'label' => 'Must Carry'
+            ],
+            [
+                'actual_column' => 'date_change_policy',
+                'previous_column' => 'previous_date_change_policy',
+                'current_column' => 'current_date_change_policy',
+                'label' => 'Date Change Policy'
+            ],
+            [
+                'actual_column' => 'refund_policy',
+                'previous_column' => 'previous_refund_policy',
+                'current_column' => 'current_refund_policy',
+                'label' => 'Refund Policy'
+            ],
+            [
+                'actual_column' => 'getting_there',
+                'previous_column' => 'previous_getting_there',
+                'current_column' => 'current_getting_there',
+                'label' => 'Getting There'
+            ],
+            [
+                'actual_column' => 'share_safari_title',
+                'previous_column' => 'previous_share_safari_title',
+                'current_column' => 'current_share_safari_title',
+                'label' => 'Safari Title'
+            ],
+        ];
+    }
+
+    public function actionIntrestedUser($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+   
+        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+
+        $ids = array_column($ShareSafariIntrested, 'user_id');
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
+            // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
     }
 }

@@ -19,6 +19,7 @@ use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\Helper\FirebaseNotificationHelper;
 use api\models\package\PackageSearch;
+use api\models\park\SafariParkFollower;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\OperatorQuoteForm;
@@ -48,10 +49,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['suggestion'],
+                'only' => ['suggestion','park-follow','park-unfollow'],
                 'rules' => [
                     [
-                        'actions' => ['suggestion'],
+                        'actions' => ['suggestion','park-follow','park-unfollow'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -70,6 +71,8 @@ class DefaultController extends RestController
                     'park-shared-safari' => ['GET'],
                     'park-package' => ['GET'],
                     'quotesrequest' => ['POST'],
+                    'park-follow' => ['POST'],
+                    'park-unfollow' => ['POST']
 
                 ],
             ],
@@ -262,8 +265,10 @@ class DefaultController extends RestController
             $model->email = $this->userinfo->email;
             $model->full_name = $this->userinfo->name;
             $model->phone_no = $this->userinfo->mobile_no;
+
         }
         $model->attributes = $this->request;
+        $model->safari_park_id = $sf->id;
         if ($model->validate()) {
             if ($park_quote = $model->request($this->userinfo)) {
                 // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
@@ -271,5 +276,51 @@ class DefaultController extends RestController
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
+    }
+
+    public function actionParkFollow($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+
+        if ($this->userinfo) {
+            $park_follower = SafariParkFollower::find()->where(['user_id' => $this->userinfoId, 'safari_park_id' => $model->id])->limit(1)->one();
+            if (!$park_follower) {
+                $park_follower = new SafariParkFollower();
+            }
+            $park_follower->user_id = $this->userinfoId;
+            $park_follower->safari_park_id = $model->id;
+            $park_follower->follow_datetime = time();
+            $park_follower->status = 1;
+            if ($park_follower->save(false)) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Follow Successfully!!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Follow Successfully!!"]);
+
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+    }
+
+    public function actionParkUnfollow($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+
+        if ($this->userinfo) {
+            $park_follower = SafariParkFollower::find()->where(['user_id' => $this->userinfoId, 'safari_park_id' => $model->id])->limit(1)->one();
+            if ($park_follower) {
+                $park_follower->unfollow_datetime = time();
+                $park_follower->status = 0;
+                if ($park_follower->save(false)) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Unfollow Successfully!!"]);
+                }
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Unfollow Successfully!!"]);
+            }
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
     }
 }

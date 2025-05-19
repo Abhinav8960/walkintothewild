@@ -102,7 +102,7 @@ class DefaultController extends  Controller
                 $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED; // Update status to approved
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s'); // Update status to approved
                 $installment->payment_link = $paymentUrl; // Save the payment URL
-                $quotation->save();
+                $quotation->save(false);
                 $installment->save(false);
                 $this->prepareChat($quotation);
             }
@@ -137,16 +137,33 @@ class DefaultController extends  Controller
     private function prepareChat($quotation)
     {
 
-        $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner_id]]])->andWhere(['chat_type' => 2])->one();
+        // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
         if (!$chat_model) {
             return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
         }
 
         $message = "Safaris: " . $quotation->safaris;
 
-        if (isset($quotation->lead->park->title)) {
-            $message = "Park: " . $quotation->lead->park->title;
-            $message .= "Safaris: " . $quotation->safari;
+        if (isset($quotation->park->title)) {
+            $message = "Park: " . $quotation->park->title;
+            $message .= "Safaris: " . $quotation->safaris;
         }
         $message .= "<br>";
         $message .= "Travelers: " . $quotation->travelers;
@@ -159,13 +176,19 @@ class DefaultController extends  Controller
         $message .= "<br>";
         $message .= "<b>Note</b>";
         $message .= "<br>";
+        $message .= $quotation->addional_notes;
+
         $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
-        $data = $x->preparedata;
+        // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
+        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
         $chat_message->message = $message;
-        $chat_message->data = json_encode($data);
+        $chat_message->is_quotation_message = true;
+        $chat_message->quotation_id = $quotation->id;
+        $chat_message->is_quotation_active = true;
+        // $chat_message->data = json_encode($data);
         $chat_message->status = 1;
         $chat_message->created_by = $quotation->partner->user_id;
         $chat_message->updated_by = $quotation->partner->user_id;
@@ -177,6 +200,7 @@ class DefaultController extends  Controller
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = $message;
             $chat->last_message_at = time();
+            $chat->quote_id = $quotation->id;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();

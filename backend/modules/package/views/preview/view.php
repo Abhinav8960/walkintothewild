@@ -6,7 +6,7 @@ use frontend\assets\FrontAppAsset;
 
 $webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-FrontAppAsset::register($this);
+// FrontAppAsset::register($this);
 AppAsset::register($this);
 
 $this->title = 'Package : ' . $package->package_name;

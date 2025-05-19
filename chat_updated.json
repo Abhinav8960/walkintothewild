@@ -1,0 +1,79 @@
+{
+    "chat_messages": {
+        "summary": {
+            "total": 16,
+            "page": 1,
+            "pageSize": 2,
+            "total_page": 8,
+            "query_params": []
+        },
+        "data": [
+            {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                
+            },
+          {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 1,
+                "quote":{}
+                
+            },
+            {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                
+            },
+             {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                
+            },
+             {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                
+            },
+            {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 1,
+                "quote":{},
+                
+            },
+             {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                "attachment":
+                
+                
+            },
+            {
+                "id": 1151,
+                "call": ,
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+            },
+             {
+                "id": 1151,
+                "message": "Safaris: 12<br>Travelers: 3<br>Stay Category: <br>Start Date: Dec 12, 2025<br>End Date: Dec 13, 2025<br><b>Note</b><br>dfsdgsdgsg",
+                "message_datetime": 1747295585,
+                "is_message_sent_by_you": 0,
+                
+            },
+        ]
+    }
+}

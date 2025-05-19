@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
-        <div class="safri_tour sticky-top">
+        <div class="safri_tour safariChanges">
             <div class="topics_listing">
                 <ul id="tabList">
                     <li><a class="tab-items active_safri" data-tab="tab21">

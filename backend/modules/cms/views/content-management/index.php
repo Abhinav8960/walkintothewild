@@ -35,7 +35,6 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'attribute' => 'name',
-                        'contentOptions' => ['style' => 'max-width: 900px !important; width: 700px !important; word-wrap: break-word; text-align: left; padding: 0; margin: 0;'],
                     ],
                     // [
                     //     'label' => 'content',
@@ -52,7 +51,6 @@ $this->params['title'] = $this->title;
                             $typeLabels = ContentManagement::getTypeLabels(); // Adjust the model namespace and class name as needed
                             return isset($typeLabels[$model->type]) ? $typeLabels[$model->type] : $model->type;
                         },
-                        'contentOptions' => ['style' => 'max-width: 300px !important; width: 700px !important; word-wrap: break-word; text-align: left; padding: 0; margin: 0;'],
                     ],
                     [
                         'label' => 'remark',
@@ -60,7 +58,6 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return isset($model->remark) ? $model->remark : '';
                         },
-                        'contentOptions' => ['style' => 'max-width: 500px !important; width: 700px !important; word-wrap: break-word; text-align: left; padding: 0; margin: 0;'],
                     ],
                     
                     // [
@@ -75,7 +72,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
 
-                        'contentOptions' => ['style' => 'max-width: 200px !important; width: 700px !important; word-wrap: break-word; text-align: center; padding: 0; margin: 0;'],
+                        'contentOptions' => ['style' => 'width: 10%;text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

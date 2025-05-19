@@ -46,10 +46,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list', 'send'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct', 'quatation-chat', 'operator-list', 'user-list', 'send'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -67,6 +67,8 @@ class DefaultController extends RestController
                     'operator-list' => ['GET'],
                     'user-list' => ['GET'],
                     'send' => ['POST'],
+                    'send-message' => ['POST'],
+                    'messages' => ['GET'],
                 ],
             ],
         ];
@@ -196,140 +198,25 @@ class DefaultController extends RestController
         }
         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
 
-        if ($chat) {
-            $chat_message = new ChatMessage();
-            $chat_message->chat_id = $chat_id;
-            $chat_message->message = $message;
-            $chat_message->data = $data;
-            $chat_message->status = 1;
-            $chat_message->created_by = $this->userinfo->id;
 
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_id;
+        $chat_message->message = $message;
+        $chat_message->data = $data;
+        $chat_message->status = 1;
+        $chat_message->created_by = $this->userinfo->id;
 
-            $park_package_name = $to_mail = $chat_url = '';
-            $operator_info = $user_info  = [];
-
-            $chatuser = User::find()->where(['id' => $chat->user_id])->limit(1)->one();
-            $user_info = [
-                'name' => $chatuser->name,
-                'email' => $chatuser->email,
-                'user_handle' => $chatuser->user_handle,
-            ];
-
-            if ($chat->package_id) {
-                $park_package = Package::find()->where(['id' => $chat->package_id])->asArray()->one();
-                $chat_message->data = json_encode($park_package);
-                $park_package_name = $park_package['package_name'];
-
-                $operator_info = [
-                    'name' => $chat->recipient->operator->business_name,
-                    'email' => $chat->recipient->operator->email,
-                    'user_handle' => $chat->recipient->user_handle,
-                ];
-            } else if ($chat->park_id) {
-                $park_package = SafariPark::find()->where(['id' => $chat->park_id])->asArray()->one();
-                $park_package_name = $park_package['title'];
-
-                $operator_info = [
-                    'name' => $chat->recipient->operator->business_name,
-                    'email' => $chat->recipient->operator->email,
-                    'user_handle' => $chat->recipient->user_handle,
-                ];
-
-                // Quote Request Price Set if Message is Second
-                if ($chat->is_quote_accept != 1) {
-                    // Set Price is Message is Second
-                    if ($chat->created_by <> $this->userinfo->id) { // Message Send by Operator
-                        if ($chat->quote_price == '') {
-                            $chat->quote_price = $chat_message->message;
-                            $chat_message_text = 'Rs. ' . $chat_message->message;
-                            if (isset($chat_model['quote_price_max'])) {
-                                $chat->quote_price_max = $chat_model['quote_price_max'];
-                                $chat_message_text = 'Rs. ' . $chat_message->message . ' - ' . $chat->quote_price_max;
-                            }
-                            if (isset($chat_model['quote_more_detail']) && $chat_model['quote_more_detail'] == 1) {
-                                $chat->quote_more_detail = 1;
-                                $chat_message_more_detail = new ChatMessage();
-                                $chat_message_more_detail->chat_id = $chat->id;
-                                $chat_message_more_detail->message = $chat_message_text;
-                                $chat_message_more_detail->status = 1;
-                                $chat_message_more_detail->message = 'More details needed; this may affect the quoted price.';
-                            }
-                            $chat_message->message = $chat_message_text;
-                            $chat->save(false);
-                        }
-                    } else {
-                        // Message Send by User to accpect the Quote Request
-                        $chat->is_quote_accept = 1;
-                        $chat->save(false);
-                    }
-                }
-
-                if (isset($chat_message_more_detail)) {
-                    $chat_message_more_detail->save(); // Save for More Details Message show to User 
-                }
-                if ($chat_message->created_by == $chat->recipient_user_id) {
-                    //its end operator
-                    $reply_by = $operator_info['name'];
-                    $reply_to = $user_info['name'];
-                    $to_mail = $user_info['email'];
-                    $chat_url = "/chat/message/" . $user_info['user_handle'] . "/" . base64_encode($chat->id);
-                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => true];
-                    $subject = 'New Response to Your Quote Request for “' . $park_package_name . '”';
-                } else {
-                    //its end user
-                    $reply_by = $user_info['name'];
-                    $reply_to = $operator_info['name'];
-                    $to_mail = $operator_info['email'];
-                    $chat_url = "/chat/message/" . $operator_info['user_handle'] . "/" . base64_encode($chat->id);
-                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => false];
-                    $subject = 'Quote Request : New Response from ' . $reply_by . ' for “' . $park_package_name . '”';
-                }
-
-                //send mail to other user
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_USER_RECEIVED_REPLY_FREE_QUOTE;
-                $maillog_data = ModelsMailLog::createMailLog($to_mail, $subject, $template, $req, []);
-
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    ModelsGeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
-
-                // return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "message sent successfully"]);
-            }
-
-
-
-            if ($chat_message->save(false)) {
-                $chat = Chat::find()->where(['id' => $chat_id])->one();
-                $chat->last_message = $message;
-                $chat->last_message_at = time();
-                $chat->status = 1;
-                $chat->is_seen = 0;
-                $chat->created_at = time();
-                $chat->save(false);
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "message sent successfully"]);
-            } else {
-                return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
-            }
+        if ($chat_message->save(false)) {
+            $chat = Chat::find()->where(['id' => $chat_id])->one();
+            $chat->last_message = $message;
+            $chat->last_message_at = time();
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            $chat->save(false);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
         } else {
-            $chat_message = new ChatMessage();
-            $chat_message->chat_id = $chat_id;
-            $chat_message->message = $message;
-            $chat_message->data = $data;
-            $chat_message->status = 1;
-            $chat_message->created_by = $this->userinfo->id;
-
-            if ($chat_message->save(false)) {
-                $chat = Chat::find()->where(['id' => $chat_id])->one();
-                $chat->last_message = $message;
-                $chat->last_message_at = time();
-                $chat->status = 1;
-                $chat->is_seen = 0;
-                $chat->created_at = time();
-                $chat->save(false);
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
-            } else {
-                return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
-            }
+            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
         }
     }
 
@@ -431,9 +318,9 @@ class DefaultController extends RestController
 
     public function actionSendQuoteMessage($lead_id)
     {
-        $partner = SafariOperator::find()->where(['user_id'=>$this->userinfo->id])->one();
+        $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();
 
-        $m = $this->findLeadModel($lead_id,$partner);
+        $m = $this->findLeadModel($lead_id, $partner);
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $partner->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
@@ -453,10 +340,10 @@ class DefaultController extends RestController
         // return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not Send"]);
     }
 
-    protected function findLeadModel($id,$partner)
+    protected function findLeadModel($id, $partner)
     {
 
-        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use($partner){
+        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use ($partner) {
             $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
             // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
         }])->one()) !== null) {

@@ -27,7 +27,7 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
         return 'pp_package_included';
     }
 
-     
+
 
     public function behaviors()
     {
@@ -55,8 +55,8 @@ class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces
     {
         return [
             [['package_id', 'include_id'], 'required'],
-            [['package_id', 'include_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
-            [['package_id', 'include_id'], 'unique', 'targetAttribute' => ['package_id', 'include_id']],
+            [['package_id', 'include_id', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at', 'selection'], 'integer'],
+            [['package_id', 'include_id', 'version'], 'unique', 'targetAttribute' => ['package_id', 'include_id', 'version']],
         ];
     }
 

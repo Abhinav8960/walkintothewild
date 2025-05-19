@@ -46,7 +46,7 @@ class DefaultController extends Controller
         $model = $this->findModel($id);
 
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $model->id;
+        $searchModel->package_id = $model->package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
@@ -130,6 +130,8 @@ class DefaultController extends Controller
             $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
+            $model->final_approved_at = time();
+
             $model->save(false);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -233,7 +235,7 @@ class DefaultController extends Controller
                             PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_feature as $feature) {
                                 $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_version_model->id;
+                                $packagefeature->package_id = $model->package_version_model->package_id;
                                 $packagefeature->version = $model->package_version_model->version;
                                 $packagefeature->feature_id = $feature;
                                 $packagefeature->save(false);
@@ -323,7 +325,7 @@ class DefaultController extends Controller
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_version_model->id;
+                                    $packageIncluded->package_id = $package_version_model->package_id;
                                     $packageIncluded->version = $package_version_model->version;
                                 }
                                 $packageIncluded->selection = $selection;

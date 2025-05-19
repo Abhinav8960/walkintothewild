@@ -112925,6 +112925,14 @@ td {
   color: var(--background-orange);
 }
 
+.tab-content_tour {
+  display: none;
+}
+
+.tab-content_tour.active {
+  display: block;
+}
+
 .numparks span {
   background-color: #c5c5c5;
   display: -webkit-inline-box;

@@ -3,6 +3,7 @@
 namespace backend\modules\sightings\controllers;
 
 use common\models\sighting\form\SightingDeleteForm;
+use common\models\sighting\form\SightingThumbnailForm;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
@@ -10,6 +11,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController for the `sightings` module
@@ -170,6 +172,48 @@ class DefaultController extends Controller
         $model->status = Sighting::STATUS_SUSPEND;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionMarkAsDaily($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->show_in_front == 1) {
+            $model->show_in_front = 0;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Sighting Remove from Daily Update !!!');
+        } else {
+            $model->show_in_front = 1;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Sighting Add to Daily Update !!!');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUpdateThumbnail($id)
+    {
+        $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_thumbnail_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $model = new SightingThumbnailForm($sighting_thumbnail_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->video_thumbnail = UploadedFile::getInstance($model, 'video_thumbnail');
+                if ($model->validate()) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);                   
+                }
+            }
+        } else {
+            $model->sighting_thumbnail_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('_update_thumbnail_form', [
+            'model' => $model,
+        ]);
     }
 
     protected function findModel($id)
