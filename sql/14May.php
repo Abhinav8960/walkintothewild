@@ -1,3 +1,11 @@
+ALTER TABLE `package_version` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
+ALTER TABLE `package` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
+ALTER TABLE `package_day` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `day_image`;
+
+ALTER TABLE `user_posts` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `safari_operator_id`;
+ALTER TABLE `sighting` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `safari_operator_id`;
+ALTER TABLE `sighting` ADD `original_thumbnail` VARCHAR(512) NULL DEFAULT NULL AFTER `filepath`;
+
 ALTER TABLE `user` ADD `mobile_no_verified_at` INT NULL DEFAULT NULL AFTER `is_mobile_no_verified`;
 ALTER TABLE `user_session` ADD `verification_mobile_no` VARCHAR(50) NOT NULL AFTER `is_firebase_token_active`, ADD `verification_mobile_no_otp` VARCHAR(10) NOT NULL AFTER `verification_mobile_no`, ADD `verification_mobile_no_otp_expiry_datetime` DATETIME NULL DEFAULT NULL AFTER `verification_mobile_no_otp`;
 ALTER TABLE `user_session` CHANGE `verification_mobile_no` `verification_mobile_no` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `verification_mobile_no_otp` `verification_mobile_no_otp` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;

@@ -36,6 +36,7 @@ class SightingForm extends Model
     public $zone_id;
 
     public $safari_operator_id;
+    public $created_at;
 
 
     public function __construct(Sighting $sighting_model = null)
@@ -60,6 +61,7 @@ class SightingForm extends Model
             $this->safari_session_id = $this->sighting_model->safari_session_id;
             $this->post_datetime = $this->sighting_model->post_datetime;
             $this->zone_id = $this->sighting_model->zone_id;
+            $this->created_at = $this->sighting_model->created_at;
         }
     }
 
@@ -99,6 +101,7 @@ class SightingForm extends Model
             ['zone_id', 'exist', 'targetClass' => MetaZoneType::class, 'targetAttribute' => ['zone_id' => 'id']],
             // ['location', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['location' => 'id']],
             ['location', 'validateOperatorPark'],
+            ['created_at','safe'],
         ];
     }
 
@@ -150,20 +153,25 @@ class SightingForm extends Model
     public function uploadFile()
     {
         if ($this->file) {
-            $storagePath = 'watchpost';
-            $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/media';
+            // $storagePath = 'watchpost';
+            // $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/media';
 
-            $fileName = $this->sighting_model->user_id . '_media_' . time() . '.' . $this->file->extension;
-            $filePath = $userPath . '/' . $fileName;
+            // $fileName = $this->sighting_model->user_id . '_media_' . time() . '.' . $this->file->extension;
+            // $filePath = $userPath . '/' . $fileName;
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $caption = NULL, $this->user_id);
 
-            file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
+            // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
+
+            $storagePath = 'watchpost' . '/' . date('ym', $this->created_at);
+            $fileName = $this->sighting_model->user_id . '_' . time() . '.' . $this->file->extension;
+            $filePath = $storagePath . '/' . $fileName;
 
             if ($fileName) {
                 // try {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
                     $this->sighting_model->file = $fileName;
                     $this->sighting_model->filepath = $filePath;
+                    $this->sighting_model->original_filename = $this->file->name;
                     $this->sighting_model->etag = $etag;
 
                     $this->sighting_model->save(false);
@@ -172,14 +180,19 @@ class SightingForm extends Model
         }
 
         if ($this->video_thumbnail) {
-            $storagePath = 'watchpost';
-            $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/thumbnail';
+            // $storagePath = 'watchpost';
+            // $userPath = $storagePath . '/' . $this->sighting_model->user_id . '/thumbnail';
 
-            $fileName = $this->sighting_model->user_id . '_thumbnail_' . time() . '.' . $this->video_thumbnail->extension;
-            $filePath = $userPath . '/' . $fileName;
+            // $fileName = $this->sighting_model->user_id . '_thumbnail_' . time() . '.' . $this->video_thumbnail->extension;
+            // $filePath = $userPath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
             // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
+
+            $storagePath = 'watchpost' . '/' . date('ym', $this->created_at);
+            $fileName = 'thumbnail_' . $this->sighting_model->user_id . '_' . time() . '.' . $this->file->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
             if ($fileName) {
                 // try {
                 if ($video_thumbnail_etag =  FsHelper::saveUploadedFile($this->video_thumbnail, $filePath, $fileName, true)) {
