@@ -44,6 +44,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
      */
     protected function getActiveUserId()
     {
+        if (!empty($this->sender_id)) {
+            return $this->sender_id;
+        }
         return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
     }
 
