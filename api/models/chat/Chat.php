@@ -32,7 +32,7 @@ class Chat extends \common\models\chat\Chat
 
 
         $fields = [
-            'id',
+            // 'id',
             'chat_hash',
             'last_message',
             'last_message_datetime'  => function () {

@@ -54,7 +54,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function fields()
     {
         $fields = [
-            'id',
+            // 'id',
             'message',
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
