@@ -57,7 +57,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 return strtotime($this->message_datetime);
             },
             'is_message_sent_by_you' => function () {
-                return $this->created_by == \Yii::$app->params['active_user_id'];
+                return $this->created_by == $this->getActiveUserId() ? true : false;
             },
         ];
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
@@ -67,7 +67,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
 
-            if ($this->is_quotation_active == true) {
+            if ($this->is_quotation_active == true && $this->created_by != $this->getActiveUserId()) {
                 $fields['payment_details'] = function () {
                     return $this->payment_details;
                 };
@@ -146,19 +146,19 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $fields = [];
         $fields['chat_hash'] = $this->chat->chat_hash;
 
-        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
-            if ($this->is_quotation_message == true) {
-                $fields['quote'] = function () {
-                    return $this->quote;
-                };
-            }
+        // if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+        //     if ($this->is_quotation_message == true) {
+        //         $fields['quote'] = function () {
+        //             return $this->quote;
+        //         };
+        //     }
 
-            if ($this->is_quotation_active == true) {
-                $fields['payment_details'] = function () {
-                    return $this->payment_details;
-                };
-            }
-        }
+        //     if ($this->is_quotation_active == true) {
+        //         $fields['payment_details'] = function () {
+        //             return $this->payment_details;
+        //         };
+        //     }
+        // }
         return  $fields;
     }
 
