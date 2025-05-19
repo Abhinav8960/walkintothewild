@@ -251,12 +251,12 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
 
-        $followers_list = UserFollow::find()->where(['user_id' => $user->id])->joinWith('follower')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all();
+        $following_list = UserFollow::find()->where(['user_id' => $user->id])->joinWith('follower')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
 
-        $ids = array_column($followers_list, 'follow_user_id');
+        // $ids = array_column($followers_list, 'follow_user_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $ids]),
+            'query' => $following_list,
         ]);
 
         return $this->querySender($dataProvider, $rootIndexName = "user_follower_list");
@@ -269,12 +269,12 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);
         }
 
-        $following_list = UserFollow::find()->where(['follow_user_id' => $user->id])->joinWith('user')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all();
+        $followers_list = UserFollow::find()->where(['follow_user_id' => $user->id])->joinWith('user')->andWhere(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
 
-        $ids = array_column($following_list, 'user_id');
+        // $ids = array_column($following_list, 'user_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $ids]),
+            'query' => $followers_list,
         ]);
 
         return $this->querySender($dataProvider, $rootIndexName = "user_following_list");

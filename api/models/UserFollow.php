@@ -19,7 +19,34 @@ use api\models\User;
  */
 class UserFollow extends \common\models\UserFollow
 {
-    
+    public function fields()
+    {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followers-list'])) {
+            if ($this->user) {
+                foreach ($this->user->toArray() as $key => $value) {
+                    $fields[$key] = function () use ($key) {
+                        return $this->user->{$key};
+                    };
+                }
+            }
+        }
+
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['profile/default/followings-list'])) {
+            if ($this->follower) {
+                foreach ($this->follower->toArray() as $key => $value) {
+                    $fields[$key] = function () use ($key) {
+                        return $this->follower->{$key};
+                    };
+                }
+            }
+        }
+        $fields['joined_at'] = function () {
+            return $this->created_at;
+        };
+
+        return $fields;
+    }
+
 
     public function getUser()
     {
