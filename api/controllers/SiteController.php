@@ -13,6 +13,7 @@ use api\models\MasterMetaTableInfoSearch;
 use api\models\operator\SafariOperator;
 use api\models\OtpVerificationSocialLoginForm;
 use api\models\SocialLoginForm;
+use api\models\UserMobileNoVerificationForm;
 use api\models\VerifySocialLoginForm;
 use common\models\AccessTokens;
 use common\models\Auth;
@@ -41,10 +42,10 @@ class SiteController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'profile', 'update-token'],
+                'only' => ['logout', 'profile', 'update-token', 'mobile-no-verification', 'verify-mobile-no'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'profile', 'update-token', 'deactivate'],
+                        'actions' => ['logout', 'profile', 'update-token', 'deactivate', 'mobile-no-verification', 'verify-mobile-no'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -70,6 +71,8 @@ class SiteController extends RestController
                     'verify-social-login' => ['POST'],
                     'reset-social-login' => ['POST'],
                     'deactivate' => ['POST'],
+                    'mobile-no-verification' => ['POST'],
+                    'verify-mobile-no' => ['POST'],
 
                 ],
             ],
@@ -450,5 +453,45 @@ class SiteController extends RestController
             }
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Deactivated Successfully"]);
+    }
+
+    public function actionMobileNoVerification()
+    {
+        $user_model = $this->userinfo;
+        if ($user_model->is_mobile_no_verified == true) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
+        }
+        $model = new UserMobileNoVerificationForm();
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            $model->proceedforverification($this->auth_token);
+
+            return Yii::$app->api->sendResponse($data = ['status' => 1, 'otp' => $model->otp], ['message' => "Mobile No Verified Successfully"]);
+        }
+        if ($model->hasErrors()) {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+    }
+
+    public function actionVerifyMobileNo()
+    {
+
+        $user_model = $this->userinfo;
+        if ($user_model->is_mobile_no_verified == true) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
+        }
+        $model = new UserMobileNoVerificationForm();
+        $model->scenario = 'validateOtp';
+        $model->attributes = $this->request;
+        if ($model->validate()) {
+            if ($model->validateOtp($this->auth_token)) {
+
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No Verified Successfully"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No  not verified, check mobile no and otp."]);
+        }
+        if ($model->hasErrors()) {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
     }
 }

@@ -83,7 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
-            [['user_handle', 'user_bio', 'user_flaged'], 'safe']
+            [['user_handle', 'user_bio', 'user_flaged', 'mobile_no', 'is_mobile_no_verified', 'mobile_no_verified_at'], 'safe']
         ];
     }
 
@@ -534,5 +534,4 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return implode(', ', $roles);
     }
-    
 }
