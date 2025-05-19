@@ -4,6 +4,7 @@ ALTER TABLE `package_day` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL
 
 ALTER TABLE `user_posts` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `safari_operator_id`;
 ALTER TABLE `sighting` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `safari_operator_id`;
+ALTER TABLE `sighting` ADD `original_thumbnail` VARCHAR(512) NULL DEFAULT NULL AFTER `filepath`;
 
 ALTER TABLE `user` ADD `mobile_no_verified_at` INT NULL DEFAULT NULL AFTER `is_mobile_no_verified`;
 ALTER TABLE `user_session` ADD `verification_mobile_no` VARCHAR(50) NOT NULL AFTER `is_firebase_token_active`, ADD `verification_mobile_no_otp` VARCHAR(10) NOT NULL AFTER `verification_mobile_no`, ADD `verification_mobile_no_otp_expiry_datetime` DATETIME NULL DEFAULT NULL AFTER `verification_mobile_no_otp`;
