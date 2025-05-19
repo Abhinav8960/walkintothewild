@@ -51,7 +51,7 @@ class RequestSanitization extends \yii\base\Component
             // else {
             //     return \Yii::$app->api->sendFailedStringResponse(['Authorization Bearer token not found'], 401);
             // }
-            if (isset($_GET['access_token'])) {
+            elseif (isset($_GET['access_token'])) {
                 $accessToken = $_GET['access_token'];
             } elseif (isset($_GET['access-token'])) {
                 $accessToken = $_GET['access-token'];
