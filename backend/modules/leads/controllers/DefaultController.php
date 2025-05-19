@@ -178,7 +178,7 @@ class DefaultController extends  Controller
         $message .= "; ";
         $message .= $quotation->addional_notes;
 
-        $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
         ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);

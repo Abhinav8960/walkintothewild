@@ -169,28 +169,28 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
         return $this->staycatgory->title ?? NULL;
     }
 
-    public function getPreparedata()
-    {
+    // public function getPreparedata()
+    // {
 
-        return $arr = [
-            'park' => $this->park->toArray()  ?? NULL,
-            'safaris' => $this->safaris,
-            'travelers' => $this->travelers,
-            'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'phone' => $this->phone,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'partner_selling_price' => $this->partner_selling_price,
-            'plateform_partner_fees_percentage' => $this->plateform_partner_fees_percentage,
-            'plateform_partner_fees' => $this->plateform_partner_fees,
-            'partner_net_selling_price' => $this->partner_net_selling_price,
-            'plateform_customer_discount' => $this->plateform_customer_discount,
-            'net_payment_price' => $this->net_payment_price,
-            'addional_notes' => $this->addional_notes, // Ensure related data is fetched
-            // 'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
-        ];
-    }
+    //     return $arr = [
+    //         'park' => $this->park->toArray()  ?? NULL,
+    //         'safaris' => $this->safaris,
+    //         'travelers' => $this->travelers,
+    //         'staycatgory' => $this->staycatgory ? $this->staycatgory->toArray() : null, // Ensure related data is fetched
+    //         'name' => $this->name,
+    //         'email' => $this->email,
+    //         'phone' => $this->phone,
+    //         'phone' => $this->phone,
+    //         'start_date' => $this->start_date,
+    //         'end_date' => $this->end_date,
+    //         'partner_selling_price' => $this->partner_selling_price,
+    //         'plateform_partner_fees_percentage' => $this->plateform_partner_fees_percentage,
+    //         'plateform_partner_fees' => $this->plateform_partner_fees,
+    //         'partner_net_selling_price' => $this->partner_net_selling_price,
+    //         'plateform_customer_discount' => $this->plateform_customer_discount,
+    //         'net_payment_price' => $this->net_payment_price,
+    //         'addional_notes' => $this->addional_notes, // Ensure related data is fetched
+    //         // 'due_quatation' => $this->due_quatation ? $this->due_quatation->toArray() : null, // Ensure related data is fetched
+    //     ];
+    // }
 }
