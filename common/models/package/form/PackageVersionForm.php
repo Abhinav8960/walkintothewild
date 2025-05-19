@@ -76,7 +76,7 @@ class PackageVersionForm extends \yii\base\Model
     public $package_version_model;
     public $action_url;
     public $action_validate_url;
-
+    public $created_at;
 
 
     /**
@@ -134,6 +134,7 @@ class PackageVersionForm extends \yii\base\Model
 
 
             $this->status = $this->package_version_model->status;
+            $this->created_at = $this->package_version_model->created_at;
 
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
             $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
@@ -171,6 +172,7 @@ class PackageVersionForm extends \yii\base\Model
             [['day_title'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
+            ['created_at', 'safe'],
 
 
         ];
@@ -415,15 +417,16 @@ class PackageVersionForm extends \yii\base\Model
             // }
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
-            $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
+            $storagePath = 'package' . '/' . date('ym', $this->created_at);
+            // $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
 
-            $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
+            $fileName = $this->version . '_package_image' . '_' . time() . '.' . $this->package_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($fileName) {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_image, $filePath, $fileName, true)) {
                     $this->package_version_model->package_image = $filePath;
+                    $this->package_version_model->original_image_filename = $this->package_image->name;
                     $this->package_version_model->save(false);
                 }
             }
@@ -453,15 +456,16 @@ class PackageVersionForm extends \yii\base\Model
 
             // _______________________Move to S3 From apr 22, 2025_____________________________________
 
-            $storagePath = 'package';
-            $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
+            $storagePath = 'package' . '/' . date('ym', $this->created_at);
+            // $storagePath = $storagePath . '/' . $this->package_id . '/' . $this->version;
 
-            $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
+            $fileName =  $this->version . '_package_banner_image' . '_' . time() . '.' . $this->package_banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
             if ($fileName) {
                 // try {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->package_banner_image, $filePath, $fileName, true)) {
                     $this->package_version_model->package_banner_image = $filePath;
+                    $this->package_version_model->original_banner_filename = $this->package_banner_image->name;
                     $this->package_version_model->save(false);
                 }
             }

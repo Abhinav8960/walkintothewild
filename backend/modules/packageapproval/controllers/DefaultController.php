@@ -100,6 +100,8 @@ class DefaultController extends Controller
             $package->end_date = $model->end_date;
             $package->package_image = $model->package_image;
             $package->package_banner_image = $model->package_banner_image;
+            $package->original_image_filename = $model->original_image_filename;
+            $package->original_banner_filename = $model->original_banner_filename;
             $package->stay_category_id = $model->stay_category_id;
             $package->cost_per_person = $model->cost_per_person;
             $package->type = $model->type;

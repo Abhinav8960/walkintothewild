@@ -68,7 +68,9 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['post_datetime'], 'safe'],
             [['file', 'filepath', 'etag'], 'string', 'max' => 255],
             [['video_thumbnail_path', 'video_thumbnail_etag', 'delete_reason'], 'string', 'max' => 512],
-            [['show_in_front'],'integer']
+            [['show_in_front'],'integer'],
+            [['original_filename'], 'string', 'max' => 255],
+
         ];
     }
 
