@@ -198,6 +198,7 @@ return [
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
                 'chat/send-quote-message/<lead_id>'   => 'chat/default/send-quote-message',
 
+                'notification-history' => 'notification-history',
 
 
 
