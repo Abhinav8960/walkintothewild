@@ -232,7 +232,8 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
         }
         $same_operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-        if ($same_operator->id == $operator->id) {
+        
+        if (!empty($same_operator) && $same_operator->id == $operator->id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Not Rate Yourself!!!"]);
         }
 
