@@ -49,6 +49,7 @@ class SafariPark extends \common\models\park\SafariPark
             'status' => function () {
                 return (bool)$this->status;
             },
+            'is_followed',
         ];
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
@@ -56,7 +57,7 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL])) {
-            $fields = ['id', 'title', 'slug','feature_image_path'];
+            $fields = ['id', 'title', 'slug', 'feature_image_path'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
@@ -398,5 +399,14 @@ class SafariPark extends \common\models\park\SafariPark
             'packages' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/park-package',
             'reviews' => Yii::$app->params['api_url'] . '/park/' . $this->slug . '/reviewlist?sort_by=highest',
         ];
+    }
+
+    public function getIs_followed()
+    {
+        $followed = SafariParkFollower::find()->where(['safari_park_id' => $this->id, 'user_id' => \Yii::$app->params['active_user_id'] ? \Yii::$app->params['active_user_id'] : '', 'status' => 1])->limit(1)->one();
+        if ($followed) {
+            return true;
+        }
+        return false;
     }
 }
