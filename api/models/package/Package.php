@@ -16,7 +16,7 @@ class Package extends \common\models\package\Package
     public function fields()
     {
         $fields = [
-            'id',
+            // 'id',
             'package_display_name',
             'package_name',
             'package_slug',

@@ -54,7 +54,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function fields()
     {
         $fields = [
-            'id',
+            // 'id',
             'message',
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
@@ -169,6 +169,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
 
     public function getReciverId()
     {
+        if (!empty($this->sender_id)) {
+            return $this->chat->user_id == $this->sender_id ? $this->chat->user_id : $this->sender_id;
+
+        }
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }
 
