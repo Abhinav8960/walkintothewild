@@ -1,3 +1,6 @@
+ALTER TABLE `user` ADD `mobile_no_verified_at` INT NULL DEFAULT NULL AFTER `is_mobile_no_verified`;
+ALTER TABLE `user_session` ADD `verification_mobile_no` VARCHAR(50) NOT NULL AFTER `is_firebase_token_active`, ADD `verification_mobile_no_otp` VARCHAR(10) NOT NULL AFTER `verification_mobile_no`, ADD `verification_mobile_no_otp_expiry_datetime` DATETIME NULL DEFAULT NULL AFTER `verification_mobile_no_otp`;
+ALTER TABLE `user_session` CHANGE `verification_mobile_no` `verification_mobile_no` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `verification_mobile_no_otp` `verification_mobile_no_otp` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 <!-- 17may -->
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`share_safari_id`);
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`status`);
@@ -76,5 +79,6 @@ ALTER TABLE `sighting` ADD `show_in_front` INT NULL DEFAULT '0' AFTER `delete_re
 <!-- 16 may -->
 ALTER TABLE `chat_message` ADD `is_quotation_message` BOOLEAN NOT NULL DEFAULT FALSE AFTER `message`, ADD `quotation_id` INT NULL DEFAULT NULL AFTER `is_quotation_message`, ADD `is_quotation_active` BOOLEAN NOT NULL DEFAULT FALSE AFTER `quotation_id`;
 ALTER TABLE `user` ADD `is_mobile_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `mobile_no`;
+
 <!-- 14 may -->
 ALTER TABLE `sighting` CHANGE `post_datetime` `post_datetime` DATE NULL DEFAULT NULL;

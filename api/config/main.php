@@ -107,6 +107,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'mobile-no-verification'=>'site/mobile-no-verification',
+                'verify-mobile-no'=>'site/verify-mobile-no',
                 'site/error' => 'site/error',
                 'site/file' => 'site/file',
                 'master-meta-info' => 'site/master-meta-info',
