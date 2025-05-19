@@ -49,17 +49,18 @@ class NotificationHistoryController extends RestController
     public function actionIndex()
     {
         if ($this->userinfo) {
-            $query = FirebaseNotificationLog::find()->where([
-                'user_id' => $this->userinfoId,
-                'is_send' => 0,
-                'is_cron_run' => 0,
-                'status' => 1
-            ]);
+
             $dataProvider = new ActiveDataProvider([
-                'query' =>  $query,
+                'query' => FirebaseNotificationLog::find()->where([
+                    'user_id' => $this->userinfoId,
+                    'status' => 1,
+                ]),
+                'pagination' => false,
             ]);
+            
             return $this->querySender($dataProvider, $rootIndexName = "notification_history");
         }
+
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
     }
 }
