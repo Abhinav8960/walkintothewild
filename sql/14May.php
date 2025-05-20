@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!-- 19 may -->
 ALTER TABLE `firebase_notification_log` ADD `is_web_notification` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_cron_run`;
 
@@ -10,7 +9,6 @@ UPDATE `master_notification_template` SET `message` = '{{username}} has created 
 UPDATE `master_notification_template` SET `message` = 'Shared Safari in {{park_name}}! Don’t miss out.' WHERE `master_notification_template`.`id` = 14
 
 
-=======
 ALTER TABLE `package_version` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
 ALTER TABLE `package` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
 ALTER TABLE `package_day` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `day_image`;
@@ -22,7 +20,6 @@ ALTER TABLE `sighting` ADD `original_thumbnail` VARCHAR(512) NULL DEFAULT NULL A
 ALTER TABLE `user` ADD `mobile_no_verified_at` INT NULL DEFAULT NULL AFTER `is_mobile_no_verified`;
 ALTER TABLE `user_session` ADD `verification_mobile_no` VARCHAR(50) NOT NULL AFTER `is_firebase_token_active`, ADD `verification_mobile_no_otp` VARCHAR(10) NOT NULL AFTER `verification_mobile_no`, ADD `verification_mobile_no_otp_expiry_datetime` DATETIME NULL DEFAULT NULL AFTER `verification_mobile_no_otp`;
 ALTER TABLE `user_session` CHANGE `verification_mobile_no` `verification_mobile_no` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `verification_mobile_no_otp` `verification_mobile_no_otp` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
->>>>>>> a3cbf5855dea8b59e125f467428970cc09f9270a
 <!-- 17may -->
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`share_safari_id`);
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`status`);
