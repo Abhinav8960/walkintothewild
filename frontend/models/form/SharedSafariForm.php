@@ -35,6 +35,8 @@ class SharedSafariForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
 
+    public $created_at;
+
 
     public function __construct(ShareSafari $shared_safari_model = null)
     {
@@ -64,6 +66,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->tour_duration =  $this->shared_safari_model->tour_duration;
             $this->version =  $this->shared_safari_model->version;
             $this->status =  $this->shared_safari_model->status;
+            $this->created_at =  $this->shared_safari_model->created_at;
         }
     }
 
@@ -89,6 +92,7 @@ class SharedSafariForm extends \yii\base\Model
             [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000],
             // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['version'], 'integer'],
+            [['created_at'], 'safe'],
 
         ];
     }
@@ -174,29 +178,44 @@ class SharedSafariForm extends \yii\base\Model
 
     public function UploadFiles($id)
     {
+        // if ($this->shared_safari_image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/share_safari';
+
+        //     $withoutRootPath = 'share_safari';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->shared_safari_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $fileName = 'shared_safari_image' . time() . '.' . $this->shared_safari_image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+        //     $withoutRootPath = $withoutRootPath . '/' . $this->shared_safari_model->id . '/' . $fileName;
+
+        //     if ($this->shared_safari_image->saveAs($filePath)) {
+        //         $this->shared_safari_model->image = $fileName;
+        //         $this->shared_safari_model->filepath = $withoutRootPath;
+        //         $this->shared_safari_model->save(false);
+        //     }
+        // }
+
+        // ______________________Move to S3 on May 20 _____________________________________
+
         if ($this->shared_safari_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/share_safari';
-
-            $withoutRootPath = 'share_safari';
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->shared_safari_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $fileName = 'shared_safari_image' . time() . '.' . $this->shared_safari_image->extension;
+            $storagePath = 'share_safari' . '/' . date('ym', $this->created_at);
+            $fileName =  $this->shared_safari_model->id . '_' . time() . '.' . $this->shared_safari_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-
-            $withoutRootPath = $withoutRootPath . '/' . $this->shared_safari_model->id . '/' . $fileName;
-
-            if ($this->shared_safari_image->saveAs($filePath)) {
-                $this->shared_safari_model->image = $fileName;
-                $this->shared_safari_model->filepath = $withoutRootPath;
-                $this->shared_safari_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->shared_safari_image, $filePath, $fileName, true)) {
+                    $this->shared_safari_model->image = $fileName;
+                    $this->shared_safari_model->filepath = $filePath;
+                    $this->shared_safari_model->save(false);
+                }
             }
         }
     }
