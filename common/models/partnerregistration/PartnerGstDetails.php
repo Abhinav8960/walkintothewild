@@ -119,4 +119,10 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
     public function getUser(){
         return $this->hasOne(PartnerRegistration::className(), ['gst_id' => 'id']);
     }
+
+    public function getGst_upload_path()
+    {
+        return Yii::$app->params['business_url'] . '/site/files/' . $this->filepath;
+    }
+
 }

@@ -78,7 +78,7 @@ $readOnly = false;
     </div>
             <?php if (!empty($gst_model->filepath)) { ?>
                 <?= $form->field($gst_model, 'filepath')->hiddenInput(['id' => 'filepath'])->label(false); ?>
-                <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->partner_model->gstDetail->filepath ?>" target="_blank">
+                <a href="<?= $model->partner_model->gstDetail->gst_upload_path ?>" target="_blank">
                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                 </a>
             <?php } ?>

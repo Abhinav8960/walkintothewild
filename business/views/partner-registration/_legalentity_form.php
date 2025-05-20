@@ -53,9 +53,9 @@ $form = ActiveForm::begin([
 
     <div class="col-md-3">
         <?php
-        if (!empty($model->logo)) {
+        if (!empty($model->logo_path)) {
         ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->logo ?>" alt="Logo" style="max-height:50px; max-width:100px;">
+            <img src="<?= $model->logo_path ?>" alt="Logo" style="max-height:50px; max-width:100px;">
             <?= $form->field($model, 'logo')->hiddenInput(['id' => 'logo'])->label(false); ?>
         <?php
         }

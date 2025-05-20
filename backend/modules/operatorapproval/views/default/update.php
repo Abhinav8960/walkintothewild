@@ -38,7 +38,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Email : </strong><?= $model->legal_entity_email ?></p>
                                         <p><strong>Logo : </strong>
                                         <?php if(isset($model->logo)){?>
-                                        <img src="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->logo ?>" alt="Logo" style="width:100px; height:auto;">
+                                        <img src="<?= $model->logo_path ?>" alt="Logo" style="width:100px; height:auto;">
                                         <?php }else{ 
                                         echo '<span class="text-muted">No file uploaded</span>';
                                         }?>
@@ -100,8 +100,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="col-md-6">
                                         <p><strong>Registration Number :</strong> <?= $model->registration_number ?></p>
                                         <p><strong>Registration File : </strong>
-                                        <?php if (!empty($model->registration_copy_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->registration_copy_upload ?>" target="_blank">
+                                        <?php if (!empty($model->registration_copy_upload_path)){?>
+                                            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>
@@ -110,8 +110,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         </p>
                                         <p><strong>PAN Number : </strong><?= $model->pan_number ?></p>
                                         <p><strong>PAN Card : </strong>
-                                        <?php if (!empty($model->pan_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->pan_upload ?>" target="_blank">
+                                        <?php if (!empty($model->pan_upload_path)){?>
+                                            <a href="<?= $model->pan_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>
@@ -183,8 +183,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>State Name : </strong><?= $model->partner_model->gstDetail->stateRelation->state_name ?? '' ?></p>
                                         <p><strong>GST Number : </strong><?= $model->partner_model->gstDetail->gst_number ?? '' ?></p>
                                         <p><strong>GST Image : </strong>
-                                            <?php if (!empty($model->partner_model->gstDetail->filepath)){?>
-                                                <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->partner_model->gstDetail->filepath ?>" target="_blank">
+                                            <?php if (!empty($model->partner_model->gstDetail->gst_upload_path)){?>
+                                                <a href="<?= $model->partner_model->gstDetail->gst_upload_path ?>" target="_blank">
                                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                                 </a>
                                             <?php } else{ ?>
@@ -245,8 +245,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Account No :</strong><?= $model->account_number ?></p>
                                         <p><strong>Ifsc Code :</strong><?= $model->ifsc_number ?></p>
                                         <p><strong>Cancel Check : </strong>
-                                        <?php if (!empty($model->cancel_check_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->cancel_check_upload ?>" target="_blank">
+                                        <?php if (!empty($model->cancel_check_upload_path)){?>
+                                            <a href="<?= $model->cancel_check_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>
@@ -307,8 +307,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong> Email :</strong> <?= $model->kyc_email ?></p>
                                         <p><strong>Adhaar Number :</strong> <?= $model->aadhar_number ?></p>
                                         <p><strong>Aadhar Front : </strong>
-                                        <?php if (!empty($model->aadhar_front_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_front_upload ?>" target="_blank">
+                                        <?php if (!empty($model->aadhar_front_upload_path)){?>
+                                            <a href="<?= $model->aadhar_front_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>
@@ -316,8 +316,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <?php } ?>
                                         </p>
                                         <p><strong>Aadhar Back : </strong>
-                                        <?php if (!empty($model->kyc_pan_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_back_upload ?>" target="_blank">
+                                        <?php if (!empty($model->aadhar_back_upload_path)){?>
+                                            <a href="<?= $model->aadhar_back_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>
@@ -326,8 +326,8 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         </p>
                                         <p><strong>PAN Number : </strong><?= $model->kyc_pan ?></p>
                                         <p><strong>PAN Card : </strong>
-                                        <?php if (!empty($model->kyc_pan_upload)){?>
-                                            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->kyc_pan_upload ?>" target="_blank">
+                                        <?php if (!empty($model->kyc_pan_upload_path)){?>
+                                            <a href="<?= $model->kyc_pan_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                             </a>
                                         <?php } else{ ?>

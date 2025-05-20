@@ -66,9 +66,9 @@ $readOnly = false;
                     ]) ?>
                 </div>
 
-                <?php if (!empty($model->cancel_check_upload)) { ?>
+                <?php if (!empty($model->cancel_check_upload_path)) { ?>
                     <?= $form->field($model, 'cancel_check_upload')->hiddenInput(['id' => 'cancel_check_upload'])->label(false); ?>
-                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->cancel_check_upload, '/') ?>" target="_blank">
+                    <a href="<?= $model->cancel_check_upload_path ?>" target="_blank">
                         <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                     </a>
                 <?php } ?>
