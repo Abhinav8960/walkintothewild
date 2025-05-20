@@ -35,6 +35,7 @@ class BroadcastService
      */
     private function queue($channelName, $template)
     {
+       
         $queueService = new QueueService();
         return $queueService->addToQueue($channelName, $template);
     }
@@ -44,6 +45,7 @@ class BroadcastService
      */
     public function send($event, $immediate = false)
     {
+      
         foreach ($event->templates as $template) {
             $log = $this->queue($event->channelName, $template);
             if ($immediate) {

@@ -1,3 +1,14 @@
+<!-- 19 may -->
+ALTER TABLE `firebase_notification_log` ADD `is_web_notification` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_cron_run`;
+
+INSERT INTO `master_notification_template` (`id`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'New Safari Created', 'Check New Safari!', '1', '1735806556', '30', '1735806556', '30');
+INSERT INTO `master_notification_template` (`id`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'Safari Updated', 'Safari is updated now !', '1', '1735806556', '30', '1735806556', '30');
+UPDATE `master_notification_template` SET `type` = 'New Safari Created' WHERE `master_notification_template`.`id` = 13;
+UPDATE `master_notification_template` SET `type` = 'Safari Updated' WHERE `master_notification_template`.`id` = 14;
+UPDATE `master_notification_template` SET `message` = '{{username}} has created a Shared Safari! Join now and explore together.' WHERE `master_notification_template`.`id` = 13
+UPDATE `master_notification_template` SET `message` = 'Shared Safari in {{park_name}}! Do not miss out.' WHERE `master_notification_template`.`id` = 14;
+
+
 ALTER TABLE `package_version` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
 ALTER TABLE `package` ADD `original_image_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `package_banner_image`, ADD `original_banner_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `original_image_filename`;
 ALTER TABLE `package_day` ADD `original_filename` VARCHAR(512) NULL DEFAULT NULL AFTER `day_image`;

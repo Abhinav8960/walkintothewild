@@ -79,8 +79,8 @@ class UserFollow extends \yii\db\ActiveRecord
         if($this->status == 1){
             return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$this->user->name,$this->user->email);
         }
-        // elseif($this->status == 0){
-        //     return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->user_id);
-        // }
+        elseif($this->status == 0){
+            return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->user->name,$this->user->email);
+        }
     }
 }

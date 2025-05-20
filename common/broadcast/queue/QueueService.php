@@ -15,6 +15,7 @@ class QueueService
      */
     public function addToQueue($channelName, $template)
     {
+        
         if ($channelName == 'email') {
             $log =  $this->emailLog($template);
         } elseif ($channelName == 'firebase') {
@@ -27,8 +28,7 @@ class QueueService
 
     private function emailLog($template)
     {
-
-
+    
         // $mail_from = 'no-reply@walkintothewild.in';
         $log = new \common\models\MailLog();
         $log->subject = $template['subject'];
@@ -84,10 +84,7 @@ class QueueService
     }
 
     private function firebaseLog($template)
-    {
-
-
-
+    {   
         $user_id = $template['user_id'];
         $master_notification_template_id = $template['master_notification_template_id'];
         $title = $template['title'] ?? NULL;

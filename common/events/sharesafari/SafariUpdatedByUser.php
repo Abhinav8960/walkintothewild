@@ -9,7 +9,7 @@ use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
 use yii\base\Event;
 
-class NewSafariCreatedByUser extends Event
+class SafariUpdatedByUser extends Event
 {
     public $userId;
     public $email;
@@ -18,6 +18,8 @@ class NewSafariCreatedByUser extends Event
     public $channelName;
     public $shared_safari_id;
     public $shared_safari_name;
+    public $shared_safari_title;
+    public $receiverUserIds = [];
     public $shared_safari_url;
     protected $sent_data = [];
     protected $shared_safari;
@@ -29,10 +31,12 @@ class NewSafariCreatedByUser extends Event
         'firebase',
     ];
 
-    protected $mail_template_code = 'NSCU';  // New Safari Created By User
+    protected $mail_template_code = 'USCU';  // New Safari Created By User
 
-    public function __construct($userId, $email, $name ,$shared_safari_id)
+    public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
     {
+        
+        $this->receiverUserIds = $receiverUserIds;
         $this->userId = $userId;
         $this->email = $email;
         $this->name = $name;
@@ -59,37 +63,36 @@ class NewSafariCreatedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'Welcome to our platform',
+                    'subject' => 'Check Out Updated Safari !!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->name,
                         'email' => $this->email,
                         'shared_safari' => $this->shared_safari_name,
                         'share_safari_title'=>$this->shared_safari_title,
-                        'no_of_safari'=>$this->no_of_safari,
-                        'start_date'=>$this->start_date,
-                        'end_date'=>$this->end_date,
-                        'end_date'=>$this->end_date,
-                        'total_seat' => $this->total_seat,
                         'shared_safari_url' => $this->shared_safari_url,
-
                     ],
                     'to_mail' => $this->email,
                     'cc' => [],
                     'bcc' => [],
-                ]
+                ],
             ],
-            'firebase' => [
-                [
-                    'master_notification_template_id' => $this->firebaseTemplateId(),
-                    'title' => $this->title(),
-                    'message' => $this->message(),
-                    'sent_data' => $this->sent_data,
-                    'user_id' => $this->userId,
-                    'image_url' => NULL,
-                    'action' => NULL,
-                ]
-            ],
+            'firebase' => $this->prepareFirebaseTemplate()
+
+            //  array_merge(
+                // [
+                //     [
+                //         'master_notification_template_id' => $this->firebaseTemplateId(),
+                //         'title' => $this->title(),
+                //         'message' => $this->message(),
+                //         'sent_data' => $this->sent_data,
+                //         'user_id' => $this->userId,
+                //         'image_url' => NULL,
+                //         'action' => NULL,
+                //     ],
+                // ],
+                // $this->prepareFirebaseTemplate()
+                // ),
             // Add more templates for other channels as needed
         ];
         return $arr;
@@ -106,7 +109,7 @@ class NewSafariCreatedByUser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::NEW_SAFARI_CREATED, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_UPDATED, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }
@@ -120,7 +123,7 @@ class NewSafariCreatedByUser extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['username' => $this->name]);
+        return $this->engine->render($this->master_notification_template->message, ['park_name'=>$this->shared_safari->park->title]);
     }
 
     public function prepareData()
@@ -141,5 +144,22 @@ class NewSafariCreatedByUser extends Event
             'share_safari_title' => $this->shared_safari->share_safari_title,
             'slug' => $this->shared_safari->slug
         ];
+    }
+
+
+    private function prepareFirebaseTemplate()
+    {
+        foreach ($this->receiverUserIds as $userId) {
+            $arr[] =  [
+                'master_notification_template_id'   => $this->firebaseTemplateId(),
+                'title'                             => $this->title(),
+                'message'                           => $this->message(),
+                'sent_data'                         => $this->sent_data,
+                'user_id'                           => $userId,
+                'image_url'                         => NULL,
+                'action'                            => NULL,
+            ];
+        }
+        return $arr;
     }
 }
