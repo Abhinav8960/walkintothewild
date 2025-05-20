@@ -24,6 +24,8 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     const UNFOLLOW_OPERATOR = 10;
     const PACKAGE_QUOTATION_RECEIVED = 11;
     const PARTNER_QUOTATION_RECEIVED = 12;
+    const NEW_SAFARI_CREATED = 13 ;
+    const SAFARI_UPDATED = 14;
 
 
 

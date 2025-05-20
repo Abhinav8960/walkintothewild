@@ -27,11 +27,11 @@ class OperatorUnfollowedByUser extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        // 'email',
+        'email',
         'firebase',
     ];
 
-    protected $mail_template_code = 'SOFR';  // To Follow OPERATOR
+    protected $mail_template_code = 'SOUR';  // To Unfollow OPERATOR
 
     public function __construct($user_name, $safari_operator,$safari_operator_email)
     {

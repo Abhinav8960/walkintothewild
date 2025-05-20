@@ -1,3 +1,14 @@
+<!-- 19 may -->
+ALTER TABLE `firebase_notification_log` ADD `is_web_notification` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_cron_run`;
+
+INSERT INTO `master_notification_template` (`id`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'New Safari Created', 'Check New Safari!', '1', '1735806556', '30', '1735806556', '30');
+INSERT INTO `master_notification_template` (`id`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'Safari Updated', 'Safari is updated now !', '1', '1735806556', '30', '1735806556', '30');
+UPDATE `master_notification_template` SET `type` = 'New Safari Created' WHERE `master_notification_template`.`id` = 13;
+UPDATE `master_notification_template` SET `type` = 'Safari Updated' WHERE `master_notification_template`.`id` = 14;
+UPDATE `master_notification_template` SET `message` = '{{username}} has created a Shared Safari! Join now and explore together.' WHERE `master_notification_template`.`id` = 13
+UPDATE `master_notification_template` SET `message` = 'Shared Safari in {{park_name}}! Don’t miss out.' WHERE `master_notification_template`.`id` = 14
+
+
 <!-- 17may -->
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`share_safari_id`);
 ALTER TABLE `witw_staging`.`share_safari_comment` ADD INDEX (`status`);
