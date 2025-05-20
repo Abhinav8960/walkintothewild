@@ -10,8 +10,11 @@ Take Backup For production and staging both
 7. run sql from site_api_request.md
 8. run sql from user_posts_history.md
 9. run  sql from safari_park_follower
+10. run  sql from master_sms_template.md
+11. run  sql from sms_log.md
+    
    
-10. Run These Queries
+12. Run These Queries
 
 TRUNCATE package;
 TRUNCATE package_comment;
