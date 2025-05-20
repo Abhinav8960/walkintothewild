@@ -11,6 +11,7 @@ use business\components\AuthHandler;
 use common\models\CustomLoginForm;
 use common\models\MailLog;
 use common\models\operator\SafariOperator;
+use common\models\RestrictedFiles;
 use yii\web\Response;
 
 /**
@@ -28,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'custom-login'],
+                        'actions' => ['login', 'error', 'auth', 'custom-login', 'files'],
                         'allow' => true,
                     ],
                     [
@@ -73,9 +74,9 @@ class SiteController extends Controller
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id])->limit(1)->exists()) {
             return $this->redirect(['/partner-registration/create']);
         }
-        if(!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id,'status'=>SafariOperator :: STATUS_ACTIVE])->limit(1)->exists()) {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->exists()) {
             return $this->redirect(['/partner-registration/deactivate']);
-        }  
+        }
         return $this->render('index');
     }
 
@@ -146,5 +147,86 @@ class SiteController extends Controller
         return $this->render('custom_login', [
             'model' => $model,
         ]);
+    }
+
+
+    // public function actionFiledownload($filepath, $original_name = NULL, $duration = 1)
+    // {
+    //     $expiresAt = new \DateTimeImmutable("+$duration minutes");
+    //     $url = Yii::$app->rfs->temporaryUrl($filepath, $expiresAt);
+
+    //     if (!$url) {
+    //         throw new \yii\web\BadRequestHttpException("Temporary URL could not be generated.");
+    //     }
+
+    //     $fileContent = @file_get_contents($url);
+    //     if ($fileContent === false) {
+    //         throw new \yii\web\NotFoundHttpException("Unable to fetch the file content.");
+    //     }
+
+    //     $filename = basename($filepath);
+    //     if (!empty($original_name)) {
+    //         $filename = $original_name;
+    //     }
+
+    //     return Yii::$app->response->sendContentAsFile($fileContent, $filename);
+    // }
+
+
+    // public function actionFileshow($filepath, $duration = 1)
+    // {
+    //     $expiresAt = new \DateTimeImmutable("+$duration minutes");
+    //     $url = Yii::$app->rfs->temporaryUrl($filepath, $expiresAt);
+
+    //     if (!$url) {
+    //         throw new \yii\web\BadRequestHttpException("Temporary URL could not be generated.");
+    //     }
+
+    //     $imginfo = getimagesize($url);
+    //     header("Content-type: {$imginfo['mime']}");
+    //     readfile($url);
+    // }
+
+
+    public function actionFiles($filepath, $duration = 1)
+    {
+        $expiresAt = new \DateTimeImmutable("+$duration minutes");
+        $url = Yii::$app->rfs->temporaryUrl($filepath, $expiresAt);
+
+        if (!$url) {
+            throw new \yii\web\BadRequestHttpException("Temporary URL could not be generated.");
+        }
+
+
+        $fileContents = @file_get_contents($url);
+
+        if ($fileContents === false) {
+            throw new \yii\web\BadRequestHttpException("Failed to retrieve file content.");
+        }
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($fileContents);
+
+        if (!$mimeType) {
+            throw new \yii\web\BadRequestHttpException("Could not determine MIME type of the file.");
+        }
+
+        $filename = basename($filepath);
+
+        $original_file_name = RestrictedFiles::find()->where(['file_path' => $filepath])->orderBy(['created_at' => SORT_DESC])->limit(1)->one();
+        if (!empty($original_file_name)) {
+            $filename = $original_file_name->original_name;
+        }
+
+        header("Content-Type: $mimeType");
+
+
+        if (strpos($mimeType, 'image/') === 0) {
+            header("Content-Disposition: inline; filename=\"" . $filename . "\"");
+        } else {
+            header("Content-Disposition: attachment; filename=\"" . $filename . "\"");
+        }
+
+        echo $fileContents;
     }
 }
