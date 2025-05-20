@@ -4,6 +4,8 @@ namespace common\Helper;
 
 // use common\models\Image;
 
+use common\models\Files;
+use common\models\RestrictedFiles;
 use common\models\UserPosts;
 use Moderation;
 use yii\web\UploadedFile;
@@ -46,6 +48,36 @@ class FsHelper
         $filesystem = \Yii::$app->get('fs');
 
         $filesystem->write($filesystem->normalizePath($filePath), $contents);
+        self::filesave($file, $filePath, $fileName);
+        return $checksum = $filesystem->checksum($filePath); // etag or md5
+
+    }
+
+    public static function restrictedsaveUploadedFile(UploadedFile $file, $filePath,  $fileName = '', $autoExtension = true)
+    {
+
+        if (empty($fileName)) {
+            $fileName = $file->name;
+        }
+        if ($autoExtension) {
+            $_file    = (string) pathinfo($fileName, PATHINFO_FILENAME);
+            $fileName = $_file . '.' . $file->extension;
+        }
+
+        // $this->{$attribute} = $fileName;
+        // if (!$this->validate($attribute)) {
+        //     return;
+        // }
+        // $filePath  = 'images/' . $fileName;
+        $localPath = $file->tempName;
+        $handle    = fopen($localPath, 'r');
+        $contents  = fread($handle, filesize($localPath));
+        fclose($handle);
+
+        $filesystem = \Yii::$app->get('rfs');
+
+        $filesystem->write($filesystem->normalizePath($filePath), $contents);
+        self::restrictedfilesave($file, $filePath, $fileName);
         return $checksum = $filesystem->checksum($filePath); // etag or md5
 
     }
@@ -119,8 +151,12 @@ class FsHelper
         // Using str_replace() function
         // to replace the word
         $res = str_replace(array(
-            '\'', '"',
-            ',', ';', '<', '>'
+            '\'',
+            '"',
+            ',',
+            ';',
+            '<',
+            '>'
         ), ' ', $str);
 
         // Returning the result
@@ -185,5 +221,31 @@ class FsHelper
     private function createThumbnail($path)
     {
         \yii\imagine\Image::frame($path, 5, '666', 0)->save('path/to/destination/image.jpg', ['jpeg_quality' => 50]);
+    }
+
+    public static function filesave($file, $filePath, $fileName)
+    {
+        $model = new Files();
+        $model->file_name = $fileName;
+        $model->original_name = $file->name;
+        $model->file_path = $filePath;
+        $model->file_type = $file->type;
+        if ($model->save(false)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function restrictedfilesave($file, $filePath, $fileName)
+    {
+        $model = new RestrictedFiles();
+        $model->file_name = $fileName;
+        $model->original_name = $file->name;
+        $model->file_path = $filePath;
+        $model->file_type = $file->type;
+        if ($model->save(false)) {
+            return true;
+        }
+        return false;
     }
 }

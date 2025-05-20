@@ -20,14 +20,14 @@ use yii\bootstrap5\Html;
         </div>
 
         <div class="col-md-6">
-        <div class="info-line">
-            <strong>Registration Copy:</strong>
+            <div class="info-line">
+                <strong>Registration Copy:</strong>
                 <span>
-                    <?php if (!empty($model->registration_copy_upload) && !empty($model->registration_copy_upload)){?>
-                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->registration_copy_upload, '/') ?>" target="_blank">
+                    <?php if (!empty($model->registration_copy_upload_path) && !empty($model->registration_copy_upload_path)) { ?>
+                        <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
-                    <?php } else{ ?>
+                    <?php } else { ?>
                         <span class="text-muted">No file uploaded</span>
                     <?php } ?>
                 </span>
@@ -47,14 +47,14 @@ use yii\bootstrap5\Html;
             <div class="info-line">
                 <strong>PAN CARD :</strong>
                 <span>
-                    <?php if (!empty($model->pan_upload)){?>
+                    <?php if (!empty($model->pan_upload)) { ?>
                         <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->pan_upload ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
-                    <?php } else{ ?>
+                    <?php } else { ?>
                         <span class="text-muted">No file uploaded</span>
                     <?php } ?>
-                 </span>
+                </span>
             </div>
         </div>
     </div>

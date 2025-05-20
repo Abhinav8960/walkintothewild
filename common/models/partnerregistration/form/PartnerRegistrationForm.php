@@ -99,7 +99,7 @@ class PartnerRegistrationForm extends Model
     public $skiponemptystep5 = true;
 
     public $park_list;
-
+    public $created_at;
 
     public function __construct(PartnerRegistration $partner_model = null)
     {
@@ -164,8 +164,8 @@ class PartnerRegistrationForm extends Model
             $this->final = $this->partner_model->final;
             $this->updated_time_final = $this->partner_model->updated_time_final;
 
-            $this->park_list =  PartnerParkList::find()->select('park_id')->where(['partner_registration_id' => $this->partner_model->id,'status'=>1])->column(); 
-
+            $this->park_list =  PartnerParkList::find()->select('park_id')->where(['partner_registration_id' => $this->partner_model->id, 'status' => 1])->column();
+            $this->created_at = $this->partner_model->created_at;
         }
 
         $this->skiponemptystep1 = !$this->isNewRecord;
@@ -180,7 +180,7 @@ class PartnerRegistrationForm extends Model
         return [
             self::SCENARIO_STEP1 => ['legal_entity_name', 'legal_entity_type', 'brand_name', 'logo_file_upload', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address'],
             self::SCENARIO_STEP2 => ['registration_number', 'pan_number', 'registration_copy_file_upload', 'pan_file_upload'],
-            self::SCENARIO_STEP3 => ['park_list','about_business', 'billing_phone', 'billing_mail'],
+            self::SCENARIO_STEP3 => ['park_list', 'about_business', 'billing_phone', 'billing_mail'],
             self::SCENARIO_STEP4 => ['bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_file_upload'],
             self::SCENARIO_STEP5 => ['owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_file_upload', 'aadhar_number', 'aadhar_front_file_upload', 'aadhar_back_file_upload'],
 
@@ -281,20 +281,21 @@ class PartnerRegistrationForm extends Model
             //         return $(\'#aadhar_back_upload\').val() === \'\';
             //     }',
             // ],
-            [['kyc_pan_file_upload','aadhar_front_file_upload','aadhar_back_file_upload'], 'file', 'extensions' => ['pdf'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
-           
+            [['kyc_pan_file_upload', 'aadhar_front_file_upload', 'aadhar_back_file_upload'], 'file', 'extensions' => ['pdf'], 'maxSize' => 1 * 1024 * 1024, 'on' => self::SCENARIO_STEP5, 'skipOnEmpty' => $this->skiponemptystep5],
+
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'safe'],
-            [['legal_entity_phone', 'legal_entity_whatsapp','billing_phone','kyc_phone', 'kyc_whatsapp'],'match', 'pattern' =>'/^\d{10}$/', 'message' => 'Contact Number should have 10 digits.'],
-            [['kyc_pan','pan_number'], 'match', 'pattern' => '/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/', 'message' => 'PAN must be in format AAAAA9999A'],
-            [['address','about_business', 'bank_name','account_holder_name', 'owner_name','kyc_email','kyc_pan','ifsc_number','legal_entity_name','brand_name',], 'string', 'max' => 255, 'tooLong' => 'should not exceed 255 characters'],
+            [['legal_entity_phone', 'legal_entity_whatsapp', 'billing_phone', 'kyc_phone', 'kyc_whatsapp'], 'match', 'pattern' => '/^\d{10}$/', 'message' => 'Contact Number should have 10 digits.'],
+            [['kyc_pan', 'pan_number'], 'match', 'pattern' => '/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/', 'message' => 'PAN must be in format AAAAA9999A'],
+            [['address', 'about_business', 'bank_name', 'account_holder_name', 'owner_name', 'kyc_email', 'kyc_pan', 'ifsc_number', 'legal_entity_name', 'brand_name',], 'string', 'max' => 255, 'tooLong' => 'should not exceed 255 characters'],
             ['aadhaar_number', 'match', 'pattern' => '/^[2-9]{1}[0-9]{11}$/', 'message' => 'Aadhaar number must be 12 digits and not start with 0 or 1'],
             ['aadhaar_number', 'string', 'length' => 12, 'tooShort' => 'Aadhaar must be 12 digits', 'tooLong' => 'Aadhaar must be 12 digits'],
             ['ifsc_number', 'match', 'pattern' => '/^[A-Z]{4}0[A-Z0-9]{6}$/', 'message' => 'Invalid IFSC format'],
             ['account_number', 'match', 'pattern' => '/^[0-9]{9,18}$/', 'message' => 'Account number must be 9 to 18 digits'],
 
             [['park_list'], 'safe'],
+            [['created_at'], 'safe'],
 
 
         ];
@@ -439,16 +440,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->logo_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/logo';
+            $storagePath = 'operator-registration' . '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/logo';
 
             $fileName = $this->partner_model->user_id . '_logo_' . time() . '.' . $this->logo_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->logo_file_upload, $filePath, $fileName, true)) {
+                    if ($etag =  FsHelper::restrictedsaveUploadedFile($this->logo_file_upload, $filePath, $fileName, true)) {
                         $this->partner_model->logo = $filePath;
                         // $this->partner_model->filepath = $filePath;
                         // $this->partner_model->etag = $etag;
@@ -483,16 +484,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->registration_copy_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/registrationcopy';
+            $storagePath = 'operator-registration' . '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/registrationcopy';
 
             $fileName = $this->partner_model->user_id . '_registrationcopy_' . time() . '.' . $this->registration_copy_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->registration_copy_file_upload, $filePath, $fileName, true)) {
+                    if ($etag =  FsHelper::restrictedsaveUploadedFile($this->registration_copy_file_upload, $filePath, $fileName, true)) {
                         $this->partner_model->registration_copy_upload = $filePath;
                         // $this->partner_model->filepath = $filePath;
                         // $this->partner_model->etag = $etag;
@@ -527,16 +528,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->pan_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/pancard';
+            $storagePath = 'operator-registration'. '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/pancard';
 
             $fileName = $this->partner_model->user_id . '_pancard_' . time() . '.' . $this->pan_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->pan_file_upload, $filePath, $fileName, true)) {
+                    if ($etag =  FsHelper::restrictedsaveUploadedFile($this->pan_file_upload, $filePath, $fileName, true)) {
                         $this->partner_model->pan_upload = $filePath;
                         // $this->partner_model->filepath = $filePath;
                         // // $this->partner_model->etag = $etag;
@@ -571,16 +572,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->cancel_check_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/cancelcheck';
+            $storagePath = 'operator-registration'. '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/cancelcheck';
 
             $fileName = $this->partner_model->user_id . '_cancelcheck_' . time() . '.' . $this->cancel_check_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->cancel_check_file_upload, $filePath, $fileName, true)) {
+                    if ($etag =  FsHelper::restrictedsaveUploadedFile($this->cancel_check_file_upload, $filePath, $fileName, true)) {
                         $this->partner_model->cancel_check_upload = $filePath;
                         // $this->partner_model->filepath = $filePath;
                         // $this->partner_model->etag = $etag;
@@ -614,16 +615,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->kyc_pan_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/kycpan';
+            $storagePath = 'operator-registration'. '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/kycpan';
 
             $fileName = $this->partner_model->user_id . '_kycpan_' . time() . '.' . $this->kyc_pan_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 try {
-                    if ($etag =  FsHelper::saveUploadedFile($this->kyc_pan_file_upload, $filePath, $fileName, true)) {
+                    if ($etag =  FsHelper::restrictedsaveUploadedFile($this->kyc_pan_file_upload, $filePath, $fileName, true)) {
                         $this->partner_model->kyc_pan_upload = $filePath;
                         // $this->partner_model->filepath = $filePath;
                         // $this->partner_model->etag = $etag;
@@ -658,16 +659,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->aadhar_front_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharfront';
+            $storagePath = 'operator-registration'. '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharfront';
 
             $fileName = $this->partner_model->user_id . '_aadharfront_' . time() . '.' . $this->aadhar_front_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 // try {
-                if ($etag =  FsHelper::saveUploadedFile($this->aadhar_front_file_upload, $filePath, $fileName, true)) {
+                if ($etag =  FsHelper::restrictedsaveUploadedFile($this->aadhar_front_file_upload, $filePath, $fileName, true)) {
                     $this->partner_model->aadhar_front_upload = $filePath;
                     // $this->aadhar_front_file_upload = $filePath;
                     // $this->partner_model->etag = $etag;
@@ -706,16 +707,16 @@ class PartnerRegistrationForm extends Model
         // }
 
         if ($this->aadhar_back_file_upload) {
-            $storagePath = 'operator-registration';
-            $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharback';
+            $storagePath = 'operator-registration'. '/' . date('ym', $this->created_at);
+            // $userPath = $storagePath . '/' . $this->partner_model->user_id . '/aadharback';
 
             $fileName = $this->partner_model->user_id . '_aadharback_' . time() . '.' . $this->aadhar_back_file_upload->extension;
-            $filePath = $userPath . '/' . $fileName;
+            $filePath = $storagePath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
             if ($fileName) {
                 // try {
-                if ($etag =  FsHelper::saveUploadedFile($this->aadhar_back_file_upload, $filePath, $fileName, true)) {
+                if ($etag =  FsHelper::restrictedsaveUploadedFile($this->aadhar_back_file_upload, $filePath, $fileName, true)) {
                     $this->partner_model->aadhar_back_upload = $filePath;
                     // $this->partner_model->filepath = $filePath;
                     // $this->partner_model->etag = $etag;
@@ -737,37 +738,15 @@ class PartnerRegistrationForm extends Model
             }
         }
     }
+
+    public function getLogo_path()
+    {
+        return Yii::$app->params['business_url'] . '/site/files/' . $this->logo;
+    }
+
+    public function getRegistration_copy_upload_path()
+    {
+        return Yii::$app->params['business_url'] . '/site/files/' . $this->registration_copy_upload;
+    }
 }
 
-
-// if ($this->file) {
-//     $storagePath = 'watchpost';
-//     $userPath = $storagePath . '/' . $this->user_photo_model->user_id . '/media';
-
-//     $fileName = $this->user_photo_model->user_id . '_media_' . time() . '.' . $this->file->extension;
-//     $filePath = $userPath . '/' . $fileName;
-
-//     // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
-//     if ($fileName) {
-//         try {
-//             if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-//                 $this->user_photo_model->file = $fileName;
-//                 $this->user_photo_model->filepath = $filePath;
-//                 $this->user_photo_model->etag = $etag;
-
-//                 $extension = $this->file->extension;
-//                 if ($extension === 'svg') {
-//                     $width = 0;
-//                     $height = 0;
-//                 } else {
-//                     list($width, $height) = getimagesize($this->file->tempName);
-//                 }
-//                 $this->user_photo_model->height =  $height;
-//                 $this->user_photo_model->width = $width;
-//                 $this->user_photo_model->save(false);
-//             }
-//         } catch (\Exception $e) {
-//             throw new \yii\base\Exception("Failed to save uploaded file. Please try again.");
-//         }
-//     }
-// }

@@ -12,7 +12,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
 
-<div class="mb-4">
+    <div class="mb-4">
         <h4 class="section-title text-secondary">Legal Entity Details</h4>
     </div>
 
@@ -23,33 +23,33 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span><?= Html::encode($model->legal_entity_name) ?></span>
             </div>
         </div>
-   
+
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Legal Entity Type:</strong>
                 <span><?= Html::encode($model->legal_entity_type) ?></span>
             </div>
         </div>
-   
+
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Brand Name:</strong>
                 <span><?= Html::encode($model->brand_name) ?></span>
             </div>
         </div>
-   
-    <div class="col-md-6">
-        <div class="info-line">
-            <strong>Logo:</strong>
-            <span>
-            <?php if(isset($model->logo)){ ?>
-            <img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->logo ?>" alt="Logo" class="key-img">
-            <?php }else{ 
-                echo '<span class="text-muted">No file uploaded</span>';
-            }?>
-            </span>
+
+        <div class="col-md-6">
+            <div class="info-line">
+                <strong>Logo:</strong>
+                <span>
+                    <?php if (isset($model->logo_path)) { ?>
+                        <img src="<?= $model->logo_path ?>" alt="Logo" class="key-img">
+                    <?php } else {
+                        echo '<span class="text-muted">No file uploaded</span>';
+                    } ?>
+                </span>
+            </div>
         </div>
-    </div>
 
         <div class="col-md-6">
             <div class="info-line">
@@ -57,21 +57,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span><?= Html::encode($model->legal_entity_phone) ?></span>
             </div>
         </div>
-   
+
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Legal Entity Whatsapp:</strong>
                 <span><?= Html::encode($model->legal_entity_whatsapp) ?></span>
             </div>
         </div>
-    
+
         <div class="col-md-6">
             <div class="info-line">
                 <strong>Legal Entity Email:</strong>
                 <span><?= Html::encode($model->legal_entity_email) ?></span>
             </div>
         </div>
-   
+
         <div class="col-md-12">
             <div class="info-line">
                 <strong>Address:</strong>
