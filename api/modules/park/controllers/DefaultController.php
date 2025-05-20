@@ -274,6 +274,11 @@ class DefaultController extends RestController
                 // FirebaseNotificationHelper::operatorquoterequest($operator, $this->userinfo);
             }
         }
+
+        if(count($sf->safarioperatorlist)<1){
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'There is no active operartor in this park, We will get back to you soon!!!']);
+
+        }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
     }
