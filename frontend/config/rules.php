@@ -25,6 +25,7 @@ return [
     '/park/<slug>/reviewlist' => '/park/default/reviewlist', //park view url
     '/park/<slug>/contributionlist' => '/park/default/contributionlist', //park view url
     '/park' => '/park/default/index', //home-old page url
+    '/deleteuser' => '/userdelete/index', //home-old page url
 
     // '/park/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/index',
     // '/park' => '/park/default/index', //park listing url

@@ -140,6 +140,10 @@ class DefaultController extends SafariController
 
     public function actionOrganizeSafari()
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
         if ($operator) {
@@ -1135,7 +1139,7 @@ class DefaultController extends SafariController
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
-   
+
         $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
 
         $ids = array_column($ShareSafariIntrested, 'user_id');

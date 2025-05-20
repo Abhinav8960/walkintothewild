@@ -20,6 +20,7 @@ use common\models\User;
  */
 class ChatMessage extends \yii\db\ActiveRecord
 {
+    public $sender_id;
     /**
      * {@inheritdoc}
      */
@@ -50,6 +51,9 @@ class ChatMessage extends \yii\db\ActiveRecord
      */
     protected function getActiveUserId()
     {
+        if (!empty($this->sender_id)) {
+            return $this->sender_id;
+        }
         return \Yii::$app->user->id ?? \Yii::$app->params['active_user_id'];
     }
 
@@ -63,6 +67,7 @@ class ChatMessage extends \yii\db\ActiveRecord
             [['chat_id'], 'required'],
             [['chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['message'], 'string', 'max' => 512],
+            [['sender_id'], 'safe'],
         ];
     }
 
@@ -120,6 +125,10 @@ class ChatMessage extends \yii\db\ActiveRecord
 
     public function getReciverId()
     {
+        if (!empty($this->sender_id)) {
+            return $this->chat->user_id == $this->sender_id ? $this->chat->user_id : $this->sender_id;
+
+        }
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }
 

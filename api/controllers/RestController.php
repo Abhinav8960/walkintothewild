@@ -25,6 +25,7 @@ class RestController extends Controller
     public $userinfo;
     public $userinfoId;
     public $access_token;
+    public $auth_token;
 
     public $pageSize = 2;
 
@@ -106,19 +107,17 @@ class RestController extends Controller
         $this->userinfo =  NULL;
 
         $accessToken = NULL;
-        if (isset($_GET['access_token'])) {
+        $accessToken = NULL;
+        if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
+            $accessToken = $matches[1];
+        } elseif (isset($_GET['access_token'])) {
             $accessToken = $_GET['access_token'];
+        } elseif (isset($_GET['access-token'])) {
+            $accessToken = $_GET['access-token'];
+        } elseif (!empty($headers->get('x-access-token'))) {
+            $accessToken = $headers->get('x-access-token');
         } else {
             $accessToken = $headers->get('x-access_token');
-        }
-
-        if (empty($accessToken)) {
-
-            if (isset($_GET['access-token'])) {
-                $accessToken = $_GET['access-token'];
-            } else {
-                $accessToken = $headers->get('x-access-token');
-            }
         }
 
         if (!empty($accessToken)) {
@@ -127,6 +126,7 @@ class RestController extends Controller
 
             if ($access_token) {
                 $this->access_token = $access_token;
+                $this->auth_token = $accessToken;
                 // if ($access_token->expires_at < time()) {
                 //     Yii::$app->api->sendFailedResponse([], 'Access token expired');
                 // };

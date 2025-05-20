@@ -165,20 +165,20 @@ class DefaultController extends  Controller
             $message = "Park: " . $quotation->park->title;
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "<br>";
+        $message .= "; ";
         $message .= "<b>Note</b>";
-        $message .= "<br>";
+        $message .= "; ";
         $message .= $quotation->addional_notes;
 
-        $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
         ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
@@ -190,13 +190,10 @@ class DefaultController extends  Controller
         $chat_message->is_quotation_active = true;
         // $chat_message->data = json_encode($data);
         $chat_message->status = 1;
-        $chat_message->created_by = $quotation->partner->user_id;
-        $chat_message->updated_by = $quotation->partner->user_id;
+        $chat_message->sender_id = $quotation->partner->user_id;
 
         if ($chat_message->save(false)) {
-            $chat_message->created_by = $quotation->partner->user_id;
-            $chat_message->updated_by = $quotation->partner->user_id;
-            $chat_message->save(false);
+
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = $message;
             $chat->last_message_at = time();

@@ -21,6 +21,7 @@ class UserPostsImageForm extends Model
     public $status;
     public $safari_operator_id;
     public $version;
+    public $created_at;
 
     public function __construct(UserPosts $user_image_model = null)
     {
@@ -36,6 +37,7 @@ class UserPostsImageForm extends Model
             $this->version = $this->user_image_model->version;
 
             $this->status = $this->user_image_model->status;
+            $this->created_at = $this->user_image_model->created_at;
         }
     }
 
@@ -50,7 +52,7 @@ class UserPostsImageForm extends Model
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
             ],
-            [['user_id', 'status','safari_operator_id'], 'integer'],
+            [['user_id', 'status', 'safari_operator_id'], 'integer'],
             [['caption'], 'string'],
             [
                 ['file'],
@@ -72,7 +74,8 @@ class UserPostsImageForm extends Model
                     return empty($model->caption);
                 },
             ],
-            [['version'],'integer'],
+            [['version'], 'integer'],
+            ['created_at','safe'],
         ];
     }
 
@@ -104,16 +107,22 @@ class UserPostsImageForm extends Model
     {
 
         if ($this->file) {
-            $storagePath = 'post';
-            $userPath = $storagePath . '/' . $this->user_image_model->user_id . '/media';
+            // $storagePath = 'post';
+            // $userPath = $storagePath . '/' . $this->user_image_model->user_id . '/media';
 
-            $fileName = $this->user_image_model->user_id . '_media_' . time() . '.' . $this->file->extension;
-            $filePath = $userPath . '/' . $fileName;
+            // $fileName = $this->user_image_model->user_id . '_media_' . time() . '.' . $this->file->extension;
+            // $filePath = $userPath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
+
+            $storagePath = 'post' . '/' . date('ym', $this->created_at);
+            $fileName = $this->user_image_model->user_id . '_' . time() . '.' . $this->file->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
             if ($fileName) {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
                     $this->user_image_model->file = $fileName;
+                    $this->user_image_model->original_filename = $this->file->name;
                     $this->user_image_model->filepath = $filePath;
                     $this->user_image_model->etag = $etag;
 

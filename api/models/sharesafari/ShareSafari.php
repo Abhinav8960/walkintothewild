@@ -24,7 +24,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
 
         $fields = [
-            'id',
+            // 'id',
             'have_you_joined',
             'share_safari_title',
             'slug',

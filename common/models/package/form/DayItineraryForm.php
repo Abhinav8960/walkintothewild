@@ -34,6 +34,8 @@ class DayItineraryForm  extends \yii\base\Model
     public $package_day_model;
     public $status;
 
+    public $created_at;
+
 
     /**
      * @param [type] $package_day_model
@@ -63,6 +65,7 @@ class DayItineraryForm  extends \yii\base\Model
             $this->latitude = $this->package_day_model->latitude;
             $this->longitude = $this->package_day_model->longitude;
             $this->status = $this->package_day_model->status;
+            $this->created_at = $this->package_day_model->created_at;
         }
     }
 
@@ -96,6 +99,7 @@ class DayItineraryForm  extends \yii\base\Model
                 // 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
+            ['created_at','safe'],
         ];
     }
 
@@ -161,15 +165,20 @@ class DayItineraryForm  extends \yii\base\Model
             // }
 
             // -----------------------------Move to S3-----------------------------------------
-            $storagePath = 'package/' . $this->package_id . '/' . $this->version . '/day';
-            $storagePath = $storagePath . '/' . $this->package_day_model->id;
+            // $storagePath = 'package/' . $this->package_id . '/' . $this->version . '/day';
+            // $storagePath = $storagePath . '/' . $this->package_day_model->id;
 
-            $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
+            // $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
+            // $filePath = $storagePath . '/' . $fileName;
+
+            $storagePath = 'package' . '/' . date('ym', $this->created_at) ;
+            $fileName = $this->version . '_package_day' . '_' . time() . '.' . $this->day_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($fileName) {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->day_image, $filePath, $fileName, true)) {
                     $this->package_day_model->day_image = $filePath;
+                    $this->package_day_model->original_filename = $this->day_image->name;
                     $this->package_day_model->save(false);
                 }
             }

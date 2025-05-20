@@ -44,20 +44,23 @@ class ChatMessage extends \common\models\chat\ChatMessage
      */
     protected function getActiveUserId()
     {
-        return \Yii::$app->params['active_user_id'];
+        if (!empty($this->sender_id)) {
+            return $this->sender_id;
+        }
+        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
     }
 
 
     public function fields()
     {
         $fields = [
-            'id',
+            // 'id',
             'message',
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
             },
             'is_message_sent_by_you' => function () {
-                return $this->created_by == \Yii::$app->params['active_user_id'];
+                return $this->created_by == $this->getActiveUserId() ? true : false;
             },
         ];
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
@@ -67,7 +70,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
 
-            if ($this->is_quotation_active == true) {
+            if ($this->is_quotation_active == true && $this->created_by != $this->getActiveUserId()) {
                 $fields['payment_details'] = function () {
                     return $this->payment_details;
                 };
@@ -135,7 +138,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+        if ($insert) {
+            return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+        }
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
@@ -146,24 +151,28 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $fields = [];
         $fields['chat_hash'] = $this->chat->chat_hash;
 
-        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
-            if ($this->is_quotation_message == true) {
-                $fields['quote'] = function () {
-                    return $this->quote;
-                };
-            }
+        // if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+        //     if ($this->is_quotation_message == true) {
+        //         $fields['quote'] = function () {
+        //             return $this->quote;
+        //         };
+        //     }
 
-            if ($this->is_quotation_active == true) {
-                $fields['payment_details'] = function () {
-                    return $this->payment_details;
-                };
-            }
-        }
+        //     if ($this->is_quotation_active == true) {
+        //         $fields['payment_details'] = function () {
+        //             return $this->payment_details;
+        //         };
+        //     }
+        // }
         return  $fields;
     }
 
     public function getReciverId()
     {
+        if (!empty($this->sender_id)) {
+            return $this->chat->user_id == $this->sender_id ? $this->chat->user_id : $this->sender_id;
+
+        }
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }
 

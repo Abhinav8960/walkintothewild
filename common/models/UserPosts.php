@@ -74,6 +74,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             [['caption', 'filepath', 'etag'], 'string'],
             [['file', 'delete_reason'], 'string', 'max' => 512],
             [['version'], 'integer'],
+            [['original_filename'],'string', 'max' => 512]
 
         ];
     }

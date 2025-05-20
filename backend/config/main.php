@@ -115,6 +115,9 @@ return [
         'leads' => [
             'class' => 'backend\modules\leads\Module',
         ],
+        'userdeleterequest' => [
+            'class' => 'backend\modules\userdeleterequest\Module',
+        ],
 
     ],
     'components' => [
