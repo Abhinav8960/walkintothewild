@@ -19,6 +19,8 @@ class QueueService
             $log =  $this->emailLog($template);
         } elseif ($channelName == 'firebase') {
             $log = $this->firebaseLog($template);
+        } elseif ($channelName == 'sms') {
+            $log = $this->smsLog($template);
         }
         return $log;
     }
@@ -26,7 +28,7 @@ class QueueService
     private function emailLog($template)
     {
 
-      
+
         // $mail_from = 'no-reply@walkintothewild.in';
         $log = new \common\models\MailLog();
         $log->subject = $template['subject'];
@@ -97,7 +99,7 @@ class QueueService
         // }
         $sent_data =  !empty($template['sent_data'])  ?  $template['sent_data'] : NULL;
 
-        
+
         $image_url = $template['image_url'] ?? NULL;
         $action = $template['action'] ?? NULL;
         $model = new FirebaseNotificationLog();
@@ -115,6 +117,27 @@ class QueueService
 
         $model->save(false);
         return $model;
+    }
+
+    private function smsLog($template)
+    {
+        $log = new \common\models\SmsLog();
+        $log->user_id = $template['user_id'];
+        $log->phone_no = $template['phone_no'];
+        $log->template_id = $template['template_id'];
+        $log->route = $template['route'];
+        $log->params = NULL;
+        if (is_array($template['params'])) {
+            $log->params = json_encode($template['params'], true);
+        } else {
+            $log->params = $template['params'];
+        }
+        $log->status = 0; // Mail Not Send
+        $log->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
+        $log->updated_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
+
+        $log->save(false);
+        return $log;
     }
 
     /**
