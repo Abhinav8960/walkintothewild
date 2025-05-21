@@ -18,6 +18,8 @@ use api\models\VerifySocialLoginForm;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\User;
+use common\models\UserDeleteRequest;
+use common\models\UserDeleteRequestForm;
 use common\models\UserSession;
 use common\models\WhatsappHelper;
 use yii\httpclient\debug\SearchModel;
@@ -42,10 +44,10 @@ class SiteController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'profile', 'update-token', 'mobile-no-verification', 'verify-mobile-no'],
+                'only' => ['logout', 'profile', 'update-token', 'mobile-no-verification', 'verify-mobile-no', 'deactivate-account', 'request-delete-account'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'profile', 'update-token', 'deactivate', 'mobile-no-verification', 'verify-mobile-no'],
+                        'actions' => ['logout', 'profile', 'update-token', 'deactivate', 'mobile-no-verification', 'verify-mobile-no', 'deactivate-account', 'request-delete-account'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,6 +75,8 @@ class SiteController extends RestController
                     'deactivate' => ['POST'],
                     'mobile-no-verification' => ['POST'],
                     'verify-mobile-no' => ['POST'],
+                    'deactivate-account' => ['POST'],
+                    'delete-account' => ['POST'],
                     'report-page-reason' => ['GET']
 
                 ],
@@ -477,7 +481,6 @@ class SiteController extends RestController
 
     public function actionVerifyMobileNo()
     {
-
         $user_model = $this->userinfo;
         if ($user_model->is_mobile_no_verified == true) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
@@ -510,5 +513,32 @@ class SiteController extends RestController
             '3' => 'Fake Page',
             '4' => 'Other Form'
         ];
+    }
+
+    public function actionDeactivateAccount()
+    {
+        $user_model = $this->userinfo;
+        if ($user_model) {
+            $user_model->status = User::STATUS_INACTIVE;
+            UserSession::deleteAll(['user_id' => $user_model->id]);
+            if ($user_model->save(false)) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Deactivated Successfully, we will miss you."]);
+            }
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Deactivated Successfully"]);
+    }
+
+    public function actionRequestDeleteAccount()
+    {
+        $user_model = $this->userinfo;
+        $model = new UserDeleteRequest();
+        $model->email =  $user_model->email;
+        $model->user_id =  $user_model->id;
+        if ($model->validate()) {
+            if ($model->save()) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Your Information Will be deleted in upcoming 90 Days!!!, we will miss you."]);
+            }
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Facing some issue, please try again after a while."]);
     }
 }

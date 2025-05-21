@@ -16,7 +16,7 @@ $this->params['title'] = $this->title;
         <div class="col-xxl-12 m-5">
             <div class="row" style="height: 600px;">
                 <img
-                    src="<?= Yii::$app->params['cloud_front_url'] . $userpost->filepath ?>"
+                    src="<?= Yii::$app->params['s3_endpoint'] .'/'. $userpost->filepath ?>"
                     width="100%"
                     height="100%">
                 </img>

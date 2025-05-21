@@ -46,7 +46,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             if ($model->filepath) {
 
-                                return Html::img(Yii::$app->params['cloud_front_url'] . $model->filepath, ['alt' => 'User Posts', 'style' => 'max-width:60px;']);
+                                return Html::img(Yii::$app->params['s3_endpoint'] .'/'. $model->filepath, ['alt' => 'User Posts', 'style' => 'max-width:60px;']);
                             }
                             return '';
                         }

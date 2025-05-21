@@ -119,7 +119,7 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function getBannerimagepath()
     {
         if ($this->banner_image != '') {
-            return \Yii::$app->params['endpoint'] .'/article/' . $this->id . '/' . $this->banner_image;
+            return \Yii::$app->params['s3_endpoint'] .'/article/' . $this->id . '/' . $this->banner_image;
         }
     }
 

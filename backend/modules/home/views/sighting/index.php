@@ -46,7 +46,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return "<div style='text-align: center;'>
                                         <video width='320' height='240' controls>
-                                            <source src='" . Yii::$app->params['cloud_front_url'] . $model->filepath . "' type='video/mp4'>
+                                            <source src='" . Yii::$app->params['s3_endpoint'] .'/'. $model->filepath . "' type='video/mp4'>
                                         </video>
                                     </div>";
                         }
