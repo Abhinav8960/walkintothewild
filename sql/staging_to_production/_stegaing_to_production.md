@@ -892,7 +892,7 @@ ADD `aadhar_back_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `aadhar_front_uplo
 
 ALTER TABLE `package_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 ALTER TABLE `share_safari_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
-ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
+ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT '0' AFTER `dateTime`;
 
 ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
 ALTER TABLE `sighting_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;

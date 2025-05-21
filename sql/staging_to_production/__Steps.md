@@ -54,5 +54,6 @@ php yii  package-assign/approval-time
 14. run query below -------------
 DROP TABLE `pp_package`, `pp_package_comment`, `pp_package_comment_report`, `pp_package_day`, `pp_package_enquiry`, `pp_package_faq`, `pp_package_feature`, `pp_package_gallery`, `pp_package_included`, `pp_package_quote`, `pp_package_safari_park`;
 
-
+15. run 14may.php
+16. 
 
