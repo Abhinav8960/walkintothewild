@@ -79,7 +79,7 @@ use common\models\GeneralModel;
                         </div>
                         <div class="col-lg-8 pt-sm-0 pt-3">
                             <div class="safrititles">
-                                <h5 class="fs-4"><a href="<?= Yii::$app->params['frontend_url'] . 'package/' . $package->safarioperator->slug . '/' . $package->package_slug ?>"><?= $package->package_name ?></a></h5>
+                                <h5 class="fs-4"><a href="<?= Yii::$app->params['frontend_url'] . '/package/' . $package->safarioperator->slug . '/' . $package->package_slug ?>"><?= $package->package_name ?></a></h5>
                                 <p class="mb-0 ">Organized by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></p>
 
                             </div>

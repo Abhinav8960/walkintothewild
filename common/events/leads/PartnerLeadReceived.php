@@ -34,7 +34,7 @@ class PartnerLeadReceived extends Event
         $this->user = User::find()->where(['id' => $user_id])->one();
         $this->park = $park;
         $this->to_mail = $this->partner->email;
-        $this->chat_url  = \Yii::$app->params['frontend_url'] . $this->user->user_handle . "/" . $chat_hash;
+        $this->chat_url  = \Yii::$app->params['frontend_url'] .'/'. $this->user->user_handle . "/" . $chat_hash;
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
