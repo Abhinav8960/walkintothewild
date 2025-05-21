@@ -47,6 +47,7 @@ class CreateDepartureForm extends \yii\base\Model
 
     public $action_url;
     public $action_validate_url;
+    public $version;
 
 
 
@@ -90,6 +91,7 @@ class CreateDepartureForm extends \yii\base\Model
             $this->lunch_included = $this->shared_safari_departure_model->lunch_included;
             $this->dinner_included = $this->shared_safari_departure_model->dinner_included;
             $this->meal_not_included = $this->shared_safari_departure_model->meal_not_included;
+            $this->version = $this->shared_safari_departure_model->version;
 
 
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_model->id])->column(); //abb multiple park ko store karenge
@@ -113,6 +115,7 @@ class CreateDepartureForm extends \yii\base\Model
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included','mail_sent'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
+            [['version'], 'integer'],
 
         ];
     }
@@ -207,6 +210,7 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->lunch_included = $this->lunch_included;
         $this->shared_safari_departure_model->dinner_included = $this->dinner_included;
         $this->shared_safari_departure_model->meal_not_included = $this->meal_not_included;
+        $this->shared_safari_departure_model->version = 1;
 
         if ($this->park_list) {
             $this->shared_safari_departure_model->park_id = $this->park_list[0];
