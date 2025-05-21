@@ -148,12 +148,12 @@ class DefaultController extends RestController
 
 
 
-    public function actionStayCategory()
-    {
-        $searchModel = new MetaStayCategorySearch();
-        $searchModel->status = 1;
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
-    }
+    // public function actionStayCategory()
+    // {
+    //     $searchModel = new MetaStayCategorySearch();
+    //     $searchModel->status = 1;
+    //     return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
+    // }
 
     public function actionTermConditionType()
     {
@@ -165,5 +165,41 @@ class DefaultController extends RestController
     {
         $searchModel = new MetaZoneTypeSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaZoneType");
+    }
+
+    public function actionStayCategory()
+    {
+        $shareSafariModel = new MetaStayCategorySearch();
+        $shareSafariModel->status = 1;
+
+        $shareSafariModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $shareSafariModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $shareSafariModel->search(\Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'sequence_for_share_safari', 0]);
+
+        if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+            $dataProvider->pagination = false;
+        }
+
+        $data = [];
+        $data['MetaStayCategory']['summary']['query_params'] = $this->query_params;
+        $data['MetaStayCategory']['shared_safari'] = $this->serializeData($dataProvider->getModels());
+
+        $packageModel =  new MetaStayCategorySearch();
+        $packageModel->status = 1;
+
+        $packageModel->load(\Yii::$app->getRequest()->getQueryParams());
+        $packageModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $packageModel->search(\Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'sequence_for_package', 0]);
+
+        if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+            $dataProvider->pagination = false;
+        }
+
+        $data['MetaStayCategory']['package'] = $this->serializeData($dataProvider->getModels());
+        return Yii::$app->api->sendResponse($data);
     }
 }

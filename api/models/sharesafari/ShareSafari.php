@@ -3,6 +3,7 @@
 namespace api\models\sharesafari;
 
 use api\models\master\packageinclude\MasterPackageInclude;
+use api\models\meta\MetaStayCategory;
 use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
@@ -104,7 +105,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'urls';
             $fields[] = 'types';
             $fields[] = 'share_safari_agenda';
-            $fields[] = 'budget';
+            $fields[] = 'stay_category_display';
             $fields[] = 'comments_count';
             $fields[] = 'parks';
             $fields[] = 'share_safari_agenda_id';
@@ -351,16 +352,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return isset($options[$this->share_safari_agenda_id]) ? $options[$this->share_safari_agenda_id] : $this->share_safari_agenda_id;
     }
 
-    public function getBudget()
+    public function getStay_category_display()
     {
-        $options = [
-            '1' => 'Premium',
-            '2' => 'Standard',
-            '3' => 'Economical',
-            '4' => 'Not Included',
-
-        ];
-        return isset($options[$this->stay_category_id]) ? $options[$this->stay_category_id] : $this->stay_category_id;
+        $stay_category = MetaStayCategory::find()->where(['id' => $this->stay_category_id, 'status' => 1])->limit(1)->one();
+        if ($stay_category) {
+            return $stay_category->title;
+        }
+        return null;
     }
 
     public function getSharesafariFaqs()

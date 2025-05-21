@@ -5,6 +5,7 @@ namespace api\models\package;
 use api\models\master\packagefeature\MasterPackagefeature;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaPackageRange;
+use api\models\meta\MetaStayCategory;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
 use api\models\UserWishlist;
@@ -39,7 +40,8 @@ class Package extends \common\models\package\Package
             'package_day_night_labels',
             'pick_and_drop',
             'pick_and_drop_display',
-            'package_range',
+            // 'package_range',
+            'stay_category_display',
             'meals_listing',
             'partner',
             'comment_count',
@@ -515,5 +517,14 @@ class Package extends \common\models\package\Package
             ];
         }
         return [];
+    }
+
+    public function getStay_category_display()
+    {
+        $stay_category = MetaStayCategory::find()->where(['id' => $this->stay_category_id, 'status' => 1])->limit(1)->one();
+        if ($stay_category) {
+            return $stay_category->title;
+        }
+        return null;
     }
 }
