@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                             <div class="safrititles">
-                                <a href="<?= Yii::$app->params['frontend_url'] . 'sharedsafari/' . $share_safari->organizedslug . '/' . $share_safari->slug  ?>">
+                                <a href="<?= Yii::$app->params['frontend_url'] . '/sharedsafari/' . $share_safari->organizedslug . '/' . $share_safari->slug  ?>">
                                     <h5><?= $share_safari->share_safari_title ?></h5>
                                 </a>
                                 <div class="date_bx">
