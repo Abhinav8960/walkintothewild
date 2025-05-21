@@ -9,12 +9,12 @@ Take Backup For production and staging both
 6. run sql from user_post_comment_flag.md
 7. run sql from site_api_request.md
 8. run sql from user_posts_history.md
-9. run  sql from safari_park_follower
+<!-- 9. run  sql from safari_park_follower
 10. run  sql from master_sms_template.md
 11. run  sql from sms_log.md
 12. run sql from files.md
 13. run sql from restricted_files.md
-14. runsql from user_delete_request.md
+14. runsql from user_delete_request.md -->
     
    
 15. Run These Queries
@@ -54,5 +54,6 @@ php yii  package-assign/approval-time
 14. run query below -------------
 DROP TABLE `pp_package`, `pp_package_comment`, `pp_package_comment_report`, `pp_package_day`, `pp_package_enquiry`, `pp_package_faq`, `pp_package_feature`, `pp_package_gallery`, `pp_package_included`, `pp_package_quote`, `pp_package_safari_park`;
 
-
+15. run 14may.php
+16. 
 
