@@ -9,12 +9,12 @@ Take Backup For production and staging both
 6. run sql from user_post_comment_flag.md
 7. run sql from site_api_request.md
 8. run sql from user_posts_history.md
-9. run  sql from safari_park_follower
+<!-- 9. run  sql from safari_park_follower
 10. run  sql from master_sms_template.md
 11. run  sql from sms_log.md
 12. run sql from files.md
 13. run sql from restricted_files.md
-14. runsql from user_delete_request.md
+14. runsql from user_delete_request.md -->
     
    
 15. Run These Queries
