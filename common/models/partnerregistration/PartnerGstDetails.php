@@ -122,7 +122,7 @@ class PartnerGstDetails extends \yii\db\ActiveRecord
 
     public function getGst_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->filepath;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->filepath;
     }
 
 }
