@@ -23,10 +23,10 @@ $this->params['title'] = $this->title;
             <div class="col-md-4">
                 <?php if ($model->type == 2) { ?>
                     <video width='320' height='240' controls>
-                        <source src="<?= Yii::$app->params['cloud_front_url'] . $model->video_url ?>" type='video/mp4'>
+                        <source src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->video_url ?>" type='video/mp4'>
                     </video>
                 <?php } else if ($model->type == 3) { ?>
-                    <img src="<?= Yii::$app->params['cloud_front_url'] . $model->image_url ?>" alt="" srcset="">
+                    <img src="<?= Yii::$app->params['s3_endpoint'] .'/'. $model->image_url ?>" alt="" srcset="">
                 <?php } ?>
                 <div class="col-md-8">
                     <h1> Meta Data </h1>
