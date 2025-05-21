@@ -38,7 +38,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey', 'report-page-reason'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -73,6 +73,7 @@ class SiteController extends RestController
                     'deactivate' => ['POST'],
                     'mobile-no-verification' => ['POST'],
                     'verify-mobile-no' => ['POST'],
+                    'report-page-reason' => ['GET']
 
                 ],
             ],
@@ -129,7 +130,7 @@ class SiteController extends RestController
     {
         //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
         // return  new \common\events\user\NewUserRegistration(748, 'anurag@triline.co.in', 'Anurag Kumar Yadav');
-                // return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
+        // return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
 
 
         $model = new SocialLoginForm();
@@ -494,5 +495,20 @@ class SiteController extends RestController
         if ($model->hasErrors()) {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
+    }
+
+
+    public function actionReportPageReason()
+    {
+        return  [
+            '1' => 'Scam,Fraud, or False Information',
+            'spam' => [
+                '21' => 'Me',
+                '22' => 'A business',
+                '23' => 'Else',
+            ],
+            '3' => 'Fake Page',
+            '4' => 'Other Form'
+        ];
     }
 }

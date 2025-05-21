@@ -111,6 +111,7 @@ return [
                 'verify-mobile-no'=>'site/verify-mobile-no',
                 'site/error' => 'site/error',
                 'site/file' => 'site/file',
+                'report-page-reason' => 'site/report-page-reason',
                 'master-meta-info' => 'site/master-meta-info',
                 'convergent-survey' => 'site/convergent-survey',
                 'social-login' => 'site/social-login',

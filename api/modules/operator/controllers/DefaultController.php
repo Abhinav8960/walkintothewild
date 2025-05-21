@@ -82,7 +82,8 @@ class DefaultController extends RestController
                     'reviewupdate' => ['POST'],
                     'flag' => ['POST'],
                     'operator-park-dropdown' => ['GET'],
-                    'report-operator' => ['POST']
+                    'report-operator' => ['POST'],
+                   
                 ],
             ],
         ];
