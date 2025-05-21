@@ -34,7 +34,7 @@ class PackageLeadReceived extends Event
         $this->package = $package;
         $this->partner = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
         $this->to_mail = $this->partner->email;
-        $this->chat_url  = \Yii::$app->params['frontend_url'] . $this->user->user_handle . "/" . $chat_hash;
+        $this->chat_url  = \Yii::$app->params['frontend_url'] .'/'. $this->user->user_handle . "/" . $chat_hash;
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
