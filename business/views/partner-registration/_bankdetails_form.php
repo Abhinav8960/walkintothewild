@@ -66,7 +66,7 @@ $readOnly = false;
                     ]) ?>
                 </div>
 
-                <?php if (!empty($model->cancel_check_upload_path)) { ?>
+                <?php if (!empty($model->cancel_check_upload)) { ?>
                     <?= $form->field($model, 'cancel_check_upload')->hiddenInput(['id' => 'cancel_check_upload'])->label(false); ?>
                     <a href="<?= $model->cancel_check_upload_path ?>" target="_blank">
                         <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">

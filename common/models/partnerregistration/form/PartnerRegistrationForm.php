@@ -741,37 +741,37 @@ class PartnerRegistrationForm extends Model
 
     public function getLogo_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->logo;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->logo;
     }
 
     public function getRegistration_copy_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->registration_copy_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->registration_copy_upload;
     }
 
     public function getPan_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->pan_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->pan_upload;
     }
 
     public function getCancel_check_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->cancel_check_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->cancel_check_upload;
     }
 
     public function getKyc_pan_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->kyc_pan_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->kyc_pan_upload;
     }
 
     public function getAadhar_front_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->aadhar_front_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_front_upload;
     }
     
     public function getAadhar_back_upload_path()
     {
-        return Yii::$app->params['business_url'] . '/site/files/' . $this->aadhar_back_upload;
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_back_upload;
     }
 }
 

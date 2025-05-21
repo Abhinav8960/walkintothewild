@@ -53,11 +53,11 @@ class DefaultController extends Controller
                             Yii::$app->moderation->textFeedback($model->moderation_model->text, $model->moderation_model->id);
                             \Yii::$app->session->setFlash('success', 'Extracted Successfully');
                         } elseif ($model->moderation_model->type == 2) {
-                            $format = $this->getVideoFormat(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                            $this->getVideoStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
-                            $this->getVideoAudioStream(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
+                            $format = $this->getVideoFormat(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
+                            $this->getVideoStream(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
+                            $this->getVideoAudioStream(Yii::$app->params['s3_endpoins3_endpointt'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
                             if ($format->duration <= 30) {
-                                $saved = Yii::$app->moderation->videoFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->video_url, $model->moderation_model->id);
+                                $saved = Yii::$app->moderation->videoFeedback(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->video_url, $model->moderation_model->id);
                                 if (!$saved) {
                                     $model->moderation_model->is_api_failed = 1;
                                     $model->moderation_model->save(false);
@@ -73,7 +73,7 @@ class DefaultController extends Controller
                         } elseif ($model->moderation_model->type == 3) {
                             $this->getImageMetadata($model);
 
-                            $saved =  Yii::$app->moderation->imageFeedback(Yii::$app->params['cloud_front_url'] . $model->moderation_model->image_url, $model->moderation_model->id);
+                            $saved =  Yii::$app->moderation->imageFeedback(Yii::$app->params['s3_endpoint'] .'/'. $model->moderation_model->image_url, $model->moderation_model->id);
                             if (!$saved) {
                                 $model->moderation_model->is_api_failed = 1;
                                 $model->moderation_model->save(false);

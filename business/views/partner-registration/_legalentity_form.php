@@ -53,7 +53,7 @@ $form = ActiveForm::begin([
 
     <div class="col-md-3">
         <?php
-        if (!empty($model->logo_path)) {
+        if (!empty($model->logo)) {
         ?>
             <img src="<?= $model->logo_path ?>" alt="Logo" style="max-height:50px; max-width:100px;">
             <?= $form->field($model, 'logo')->hiddenInput(['id' => 'logo'])->label(false); ?>

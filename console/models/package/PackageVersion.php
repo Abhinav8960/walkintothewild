@@ -218,7 +218,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         $image_path = '';
         if (isset($this->package_image)) {
             // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
-            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_image;
         } else {
 
             if (isset($this->singlepark)) {
@@ -241,7 +241,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         $image_path = '';
         if (isset($this->package_banner_image)) {
             // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_banner_image;
-            $image_path = \Yii::$app->params['endpoint'] . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_banner_image;
         } else {
 
             if (isset($this->singlepark)) {

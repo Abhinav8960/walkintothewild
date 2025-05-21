@@ -353,14 +353,14 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return \Yii::$app->params['endpoint'] . '/safaripark/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['s3_endpoint'] . '/safaripark/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getLogoimagepath()
     {
         if ($this->logo != '') {
-            return \Yii::$app->params['endpoint'] . '/safaripark/' . $this->id . '/' . $this->logo;
+            return \Yii::$app->params['s3_endpoint'] . '/safaripark/' . $this->id . '/' . $this->logo;
         }
     }
 }

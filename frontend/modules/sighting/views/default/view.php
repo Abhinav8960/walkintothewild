@@ -16,7 +16,7 @@ $this->params['title'] = $this->title;
         <div class="col-xxl-12 m-5">
             <div class="row" style="height: 600px;">
                 <iframe 
-                    src="<?= Yii::$app->params['cloud_front_url'] . $sighting->filepath ?>" 
+                    src="<?= Yii::$app->params['s3_endpoint'] .'/'. $sighting->filepath ?>" 
                     width="100%" 
                     height="100%" 
                     frameborder="0" 

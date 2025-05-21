@@ -53,11 +53,11 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             if ($model->type == 2) {
                                 return "<div style='text-align: center;'>
                                             <video width='320' height='240' controls>
-                                                <source src='" . Yii::$app->params['cloud_front_url'] . $model->video_url . "' type='video/mp4'>
+                                                <source src='" . Yii::$app->params['s3_endpoint'] .'/'. $model->video_url . "' type='video/mp4'>
                                             </video>
                                         </div>";
                             } elseif ($model->type == 3) {
-                                return Html::tag('div', Html::img(Yii::$app->params['cloud_front_url'] . $model->image_url, [
+                                return Html::tag('div', Html::img(Yii::$app->params['s3_endpoint'] .'/'. $model->image_url, [
                                     'alt' => 'Uploaded Image',
                                     'height' => '240px',
                                     'width' => '320px'
