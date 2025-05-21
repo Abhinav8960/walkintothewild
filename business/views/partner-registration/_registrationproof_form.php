@@ -40,7 +40,7 @@ $form = ActiveForm::begin([
             ]) ?>
         </div>
 
-        <?php if (!empty($model->registration_copy_upload_path)) { ?>
+        <?php if (!empty($model->registration_copy_upload)) { ?>
             <?= $form->field($model, 'registration_copy_upload')->hiddenInput(['id' => 'registration_copy_upload'])->label(false); ?>
             <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
@@ -72,7 +72,7 @@ $form = ActiveForm::begin([
                     'disabled' => $readOnly,
                 ]) ?>
             </div>
-            <?php if (!empty($model->pan_upload_path)) { ?>
+            <?php if (!empty($model->pan_upload)) { ?>
                 <?= $form->field($model, 'pan_upload')->hiddenInput(['id' => 'pan_upload'])->label(false); ?>
                 <a href="<?= $model->pan_upload_path ?>" target="_blank">
                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
