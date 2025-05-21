@@ -109,6 +109,8 @@ return [
             'rules' => [
                 'mobile-no-verification'=>'site/mobile-no-verification',
                 'verify-mobile-no'=>'site/verify-mobile-no',
+                'deactivate-account' => 'site/deactivate-account',
+                'request-delete-account' => 'site/request-delete-account',
                 'site/error' => 'site/error',
                 'site/file' => 'site/file',
                 'report-page-reason' => 'site/report-page-reason',

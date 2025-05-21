@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\events\user\UserAccountDeleteRequest;
 use Yii;
 
 /**
@@ -72,5 +73,13 @@ class UserDeleteRequest extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
+            new UserAccountDeleteRequest($this->user_id, $this->email);            
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 }

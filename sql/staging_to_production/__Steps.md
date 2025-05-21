@@ -12,9 +12,12 @@ Take Backup For production and staging both
 9. run  sql from safari_park_follower
 10. run  sql from master_sms_template.md
 11. run  sql from sms_log.md
+12. run sql from files.md
+13. run sql from restricted_files.md
+14. runsql from user_delete_request.md
     
    
-12. Run These Queries
+15. Run These Queries
 
 TRUNCATE package;
 TRUNCATE package_comment;

@@ -101,3 +101,6 @@ ALTER TABLE `user` ADD `is_mobile_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AF
 
 <!-- 14 may -->
 ALTER TABLE `sighting` CHANGE `post_datetime` `post_datetime` DATE NULL DEFAULT NULL;
+
+
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'UADR', 'User Account Delete Request', 'userAccountDeleteRequest-html', '1', '1716278771', '2', '1716289465', '2')
