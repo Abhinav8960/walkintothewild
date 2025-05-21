@@ -19,7 +19,7 @@ class ShareSafariGallery extends \common\models\sharesafari\ShareSafariGallery
     public function getImage_path()
     {
         if ($this->image != '') {
-            return \Yii::$app->params['frontend_url_for_api'] .'storage/share_safari/gallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['s3_endpoint'] .'/share_safari/gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

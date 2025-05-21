@@ -138,7 +138,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getImage_path()
     {
         if ($this->logo != '') {
-            return Yii::$app->params['frontend_url_for_api'] . 'storage/safarioperator/' . $this->id . '/' . $this->logo;
+            return Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
 

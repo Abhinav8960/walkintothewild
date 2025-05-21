@@ -40,7 +40,7 @@ class ShareSafariDay extends \common\models\sharesafari\ShareSafariDay
     public function getImage_path()
     {
         if ($this->day_image != '') {
-            return \Yii::$app->params['frontend_url_for_api'] .'storage/share_safari/day/' . $this->id . '/' . $this->day_image;
+            return \Yii::$app->params['s3_endpoint'] .'/share_safari/day/' . $this->id . '/' . $this->day_image;
         }
     }
 }

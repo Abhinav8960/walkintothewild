@@ -224,7 +224,7 @@ class PackageVersion extends \common\models\package\PackageVersion
     {
         $image_path = '';
         if (isset($this->package_image)) {
-            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
         } else {
 
             if (isset($this->singlepark)) {
@@ -246,7 +246,7 @@ class PackageVersion extends \common\models\package\PackageVersion
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
-            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
         } else {
 
             if (isset($this->singlepark)) {
