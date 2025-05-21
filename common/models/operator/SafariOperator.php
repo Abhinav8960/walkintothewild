@@ -5,6 +5,7 @@ namespace common\models\operator;
 use common\models\package\Package;
 use Yii;
 use common\models\package\PackageVersion;
+use common\models\partnerregistration\PartnerGstDetails;
 use common\traits\CommanRelationship;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
@@ -235,11 +236,52 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id']);
     }
 
-    public function getImagepath()
+
+    public function getGstDetail(){
+        return $this->hasOne(PartnerGstDetails :: class , ['partner_registration_id'=>'safari_operator_request_id'])->orderBy(['id'=>SORT_DESC]);
+    }
+
+    public function getImagepath() // logo_path
     {
         if ($this->logo != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
+            return Yii::$app->params['partner_url'] . '/site/files/' . $this->logo;
+            // return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
         }
+    }
+
+    public function getRegistration_copy_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->registration_copy_upload;
+    }
+
+    public function getGst_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->filepath;
+    }
+
+    public function getPan_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->pan_upload;
+    }
+
+    public function getCancel_check_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->cancel_check_upload;
+    }
+
+    public function getKyc_pan_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->kyc_pan_upload;
+    }
+
+    public function getAadhar_front_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_front_upload;
+    }
+    
+    public function getAadhar_back_upload_path()
+    {
+        return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_back_upload;
     }
 
 
