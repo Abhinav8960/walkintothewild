@@ -57,9 +57,9 @@ class RequestSanitization extends \yii\base\Component
             } else {
                 $accessToken = $headers->get('x-access_token');
             }
-            else {
-                return \Yii::$app->api->sendFailedStringResponse(['Authorization Bearer token not found'], 401);
-            }
+            // else {
+            //     return \Yii::$app->api->sendFailedStringResponse(['Authorization Bearer token not found'], 401);
+            // }
 
             if (!empty($accessToken)) {
 
