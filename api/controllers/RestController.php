@@ -107,10 +107,10 @@ class RestController extends Controller
         $this->userinfo =  NULL;
 
         $accessToken = NULL;
-        $accessToken = NULL;
         if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
             $accessToken = $matches[1];
-        } elseif (isset($_GET['access_token'])) {
+        } 
+        elseif (isset($_GET['access_token'])) {
             $accessToken = $_GET['access_token'];
         } elseif (isset($_GET['access-token'])) {
             $accessToken = $_GET['access-token'];

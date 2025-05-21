@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <p>Best regards,</p>
     <p>Team Walk into the Wild
         <?php if (isset(\Yii::$app->params['environment'])) {
-            \Yii::$app->params['environment'] != 'production' ?  \Yii::$app->params['environment'] : '';
+           echo \Yii::$app->params['environment'] != 'production' ?  \Yii::$app->params['environment'] : '';
         } ?>
     </p>
 </div>

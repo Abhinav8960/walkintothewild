@@ -7,9 +7,11 @@ use business\assets\AppAsset;
 use business\assets\NovaAppAsset;
 use common\assets\NotifyAsset;
 
-NovaAppAsset::register($this);
 AppAsset::register($this);
 NotifyAsset::register($this);
+
+$webasset = NovaAppAsset::register($this);
+$this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 <?php $this->beginPage() ?>

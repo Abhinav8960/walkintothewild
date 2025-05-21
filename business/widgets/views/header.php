@@ -36,7 +36,7 @@
                             <div class="dropdown-menu" style="left:-194px !important;">
                                 <div class="menu-header-content p-3 border-bottom">
                                     <div class="d-flex wd-100p">
-                                        <div class="main-img-user"><img alt="" src="/theme/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></div>
+                                        <div class="main-img-user"><img alt="" src="<?= $this->params['baseurl'] ?>/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></div>
                                         <div class="ms-3 my-auto">
                                             <h6 class="tx-15 font-weight-semibold mb-0"><?= Yii::$app->user->identity->name ?></h6></span>
                                         </div>
