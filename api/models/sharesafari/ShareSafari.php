@@ -204,7 +204,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getShared_image_path()
     {
 
-        return isset($this->image) ? (\Yii::$app->params['endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()

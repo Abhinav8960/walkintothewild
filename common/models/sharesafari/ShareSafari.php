@@ -161,7 +161,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? (\Yii::$app->params['endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
