@@ -39,8 +39,8 @@ $this->params['title'] = $this->title;
                                 return Html::a(
                                     $model->user->name,
                                     [
-                                        '/trierror/api-request-log/user-view',
-                                        'id' => $model->user_id
+                                        '/user/default/profile',
+                                        'user_id' => $model->user_id
                                     ],
                                     [
                                         'class' => 'btn p-0 change-menuicon',
