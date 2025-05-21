@@ -816,11 +816,13 @@ ALTER TABLE `package_comment_report`  ADD `version` VARCHAR(10) NOT NULL  AFTER 
 ALTER TABLE `package_day`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
 ALTER TABLE `package_faq`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
 ALTER TABLE `package_feature`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
-ALTER TABLE `wildwalks`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
+
+
+ALTER TABLE `prod_witw`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `package_id`, `version`) USING BTREE;
 ALTER TABLE `package_gallery`  ADD `version` VARCHAR(10) NOT NULL  AFTER `package_id`;
 ALTER TABLE `package_included` ADD `version` VARCHAR(10) NOT NULL AFTER `package_id`;
-ALTER TABLE `wildwalks`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
-ALTER TABLE `wildwalks`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
+ALTER TABLE `prod_witw`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
+ALTER TABLE `prod_witw`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
 
 
 ALTER TABLE `package` ADD `pending_for_approval_version` CHAR(10) NULL DEFAULT NULL AFTER `live_version`, ADD `editable_version` CHAR(10) NULL DEFAULT NULL AFTER `pending_for_approval_version`;
@@ -890,7 +892,7 @@ ADD `aadhar_back_upload` VARCHAR(255) NULL DEFAULT NULL AFTER `aadhar_front_uplo
 
 ALTER TABLE `package_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
 ALTER TABLE `share_safari_comment` CHANGE `is_deleted` `deleted_by` INT NULL DEFAULT '0';
-ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
+ALTER TABLE `user_post_comment` ADD `flaged` INT NULL DEFAULT '0' AFTER `dateTime`;
 
 ALTER TABLE `sighting_comment` ADD `flaged` INT NULL DEFAULT NULL AFTER `dateTime`;
 ALTER TABLE `sighting_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
@@ -912,11 +914,6 @@ ALTER TABLE `user_posts` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTE
 
 
 
-
-
-ALTER TABLE `prod_witw`.`package_feature` DROP INDEX `feature_id`, ADD UNIQUE `feature_id` (`feature_id`, `version`, `package_id`) USING BTREE;
-ALTER TABLE `prod_witw`.`package_safari_park` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `park_id`) USING BTREE;
-ALTER TABLE `prod_witw`.`package_included` DROP INDEX `package_id`, ADD UNIQUE `package_id` (`package_id`, `version`, `include_id`) USING BTREE;
 
 ALTER TABLE `share_safari` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;
 ALTER TABLE `share_safari_history` ADD `version` INT NOT NULL DEFAULT '1' AFTER `id`;

@@ -44,7 +44,7 @@ CREATE TABLE `site_api_request` (
   `response_error` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `is_server_error` tinyint DEFAULT NULL,
   `is_client_error` tinyint DEFAULT NULL,
-  `response` text COLLATE utf8mb4_general_ci,
+  `response` longtext COLLATE utf8mb4_general_ci,
   `device` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `system` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `platform` varchar(155) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
