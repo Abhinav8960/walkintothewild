@@ -27,6 +27,8 @@ use common\interfaces\NewStatusInterface;
 use common\models\GeneralModel;
 use common\models\leads\form\PartnerLeadForm;
 use common\models\MailLog;
+use common\models\operator\form\SafariOperatorReportProfileForm;
+use common\models\operator\SafariOperatorReportProfile;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
@@ -53,10 +55,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag'],
+                'only' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag', 'report-operator'],
                 'rules' => [
                     [
-                        'actions' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag'],
+                        'actions' => ['follow', 'unfollow', 'quotesrequest', 'review', 'reviewupdate', 'flag', 'report-operator'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -80,6 +82,7 @@ class DefaultController extends RestController
                     'reviewupdate' => ['POST'],
                     'flag' => ['POST'],
                     'operator-park-dropdown' => ['GET'],
+                    'report-operator' => ['POST']
                 ],
             ],
         ];
@@ -232,7 +235,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
         }
         $same_operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one();
-        
+
         if (!empty($same_operator) && $same_operator->id == $operator->id) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Not Rate Yourself!!!"]);
         }
@@ -403,7 +406,11 @@ class DefaultController extends RestController
         if (!$operator) {
             return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
         }
+
         $rating = SafariOperatorRating::find()->where(['id' => $id])->limit(1)->one();
+        if (!$rating) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Review Not Found!!!"]);
+        }
 
         $model = new SafariOperatorRatingReportForm();
         $model->safari_operator_id = $operator->id;
@@ -418,14 +425,14 @@ class DefaultController extends RestController
                 $rating->flaged = 1;
                 $rating->save(false);
                 /* Mail to admin*/
-                $to_mail = Yii::$app->params['adminEmail'];
-                $subject = 'Flag Raised in Operator Review : ' . substr($operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-                $req = ['comment' => $rating->review, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
+                // $to_mail = Yii::$app->params['adminEmail'];
+                // $subject = 'Flag Raised in Operator Review : ' . substr($operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                // $req = ['comment' => $rating->review, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userinfo) ? $this->userinfo->name : ''];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Review reported successfully!']);
             }
         }
@@ -452,5 +459,27 @@ class DefaultController extends RestController
         ]);
 
         return $this->querySender($dataProvider, $rootIndexName = "parks");
+    }
+
+    public function actionReportOperator($slug)
+    {
+        $operator = SafariOperator::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$operator) {
+            return Yii::$app->api->sendResponse([], ['message' => "Operator Not Found!!!"]);
+        }
+
+        $model = new SafariOperatorReportProfileForm();
+        $model->user_id = $this->userinfoId;
+        $model->safari_operator_id = $operator->id;
+        $model->status = SafariOperatorReportProfile::STATUS_ACTIVE;
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->report_model->save(false)) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Reported successfully!']);
+            }
+        }
     }
 }
