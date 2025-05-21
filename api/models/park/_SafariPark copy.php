@@ -459,14 +459,14 @@ class _SafariPark extends \common\models\park\SafariPark
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return \Yii::$app->params['frontend_url_for_api'] . 'storage/safaripark/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['s3_endpoint'] . '/safaripark/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getLogoimagepath()
     {
         if ($this->logo != '') {
-            return \Yii::$app->params['frontend_url_for_api'] . 'storage/safaripark/' . $this->id . '/' . $this->logo;
+            return \Yii::$app->params['s3_endpoint'] . '/safaripark/' . $this->id . '/' . $this->logo;
         }
     }
 
