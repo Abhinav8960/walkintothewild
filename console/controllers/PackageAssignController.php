@@ -42,4 +42,17 @@ class PackageAssignController extends Controller
             $pack->save(false);
         }
     }
+
+    public function actionInactive()
+    {
+        $package_model = Package::find()->andWhere(['status', Package::STATUS_ACTIVE])->all();
+        foreach ($package_model as $package) {
+            $package->status = Package::STATUS_SUSPEND;
+            $package->save();
+        }
+        echo "All packages are inactive now";
+        die();
+    }
+
+
 }
