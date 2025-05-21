@@ -32,8 +32,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>PAN Uploaded File:</strong>
-                <?php if (!empty($model->kyc_pan_upload)){?>
-                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->kyc_pan_upload ?>" target="_blank">
+                <?php if (!empty($model->kyc_pan_upload_path)){?>
+                        <a href="<?= $model->kyc_pan_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
                     <?php } else{ ?>
@@ -43,8 +43,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>Aadhar Front:</strong>
-                <?php if (!empty($model->aadhar_front_upload)){?>
-                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_front_upload ?>" target="_blank">
+                <?php if (!empty($model->aadhar_front_upload_path)){?>
+                        <a href="<?= $model->aadhar_front_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
                     <?php } else{ ?>
@@ -54,8 +54,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="col-md-6">
             <div class="info-line"><strong>Aadhar Back:</strong>
-                <?php if (!empty($model->aadhar_back_upload)){?>
-                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->aadhar_back_upload ?>" target="_blank">
+                <?php if (!empty($model->aadhar_back_upload_path)){?>
+                        <a href="<?= $model->aadhar_back_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
                     <?php } else{ ?>

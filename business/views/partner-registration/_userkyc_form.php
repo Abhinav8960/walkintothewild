@@ -86,9 +86,9 @@ $readOnly = false;
                     'disabled' => $readOnly,
                 ]) ?>
             </div>
-                <?php if (!empty($model->kyc_pan_upload)) { ?>
+                <?php if (!empty($model->kyc_pan_upload_path)) { ?>
                     <?= $form->field($model, 'kyc_pan_upload')->hiddenInput(['id' => 'kyc_pan_upload'])->label(false); ?>
-                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->kyc_pan_upload ?>" target="_blank">
+                    <a href="<?= $model->kyc_pan_upload_path ?>" target="_blank">
                         <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                     </a>
                 <?php } ?>
@@ -114,9 +114,9 @@ $readOnly = false;
                 ]) ?>
 
             </div>
-            <?php if (!empty($model->aadhar_front_upload)) { ?>
+            <?php if (!empty($model->aadhar_front_upload_path)) { ?>
                 <?= $form->field($model, 'aadhar_front_upload')->hiddenInput(['id' => 'aadhar_front_upload'])->label(false); ?>
-                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->aadhar_front_upload ?>" target="_blank">
+                    <a href="<?= $model->aadhar_front_upload_path ?>" target="_blank">
                         <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                     </a>
                 <?php } ?>
@@ -133,9 +133,9 @@ $readOnly = false;
                 ]) ?>
 
             </div>
-            <?php if (!empty($model->aadhar_back_upload)) { ?>
+            <?php if (!empty($model->aadhar_back_upload_path)) { ?>
                 <?= $form->field($model, 'aadhar_back_upload')->hiddenInput(['id' => 'aadhar_back_upload'])->label(false); ?>
-                    <a href="<?= Yii::$app->params['s3_endpoint'] . '/' .$model->aadhar_back_upload ?>" target="_blank">
+                    <a href="<?= $model->aadhar_back_upload_path ?>" target="_blank">
                         <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                     </a>
                 <?php } ?>

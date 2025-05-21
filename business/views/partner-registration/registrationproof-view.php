@@ -23,7 +23,7 @@ use yii\bootstrap5\Html;
             <div class="info-line">
                 <strong>Registration Copy:</strong>
                 <span>
-                    <?php if (!empty($model->registration_copy_upload_path) && !empty($model->registration_copy_upload_path)) { ?>
+                    <?php if (!empty($model->registration_copy_upload_path)) { ?>
                         <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
@@ -47,8 +47,8 @@ use yii\bootstrap5\Html;
             <div class="info-line">
                 <strong>PAN CARD :</strong>
                 <span>
-                    <?php if (!empty($model->pan_upload)) { ?>
-                        <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . $model->pan_upload ?>" target="_blank">
+                    <?php if (!empty($model->pan_upload_path)) { ?>
+                        <a href="<?= $model->pan_upload_path ?>" target="_blank">
                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                         </a>
                     <?php } else { ?>

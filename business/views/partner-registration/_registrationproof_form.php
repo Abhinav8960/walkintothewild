@@ -40,9 +40,9 @@ $form = ActiveForm::begin([
             ]) ?>
         </div>
 
-        <?php if (!empty($model->registration_copy_upload)) { ?>
+        <?php if (!empty($model->registration_copy_upload_path)) { ?>
             <?= $form->field($model, 'registration_copy_upload')->hiddenInput(['id' => 'registration_copy_upload'])->label(false); ?>
-            <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->registration_copy_upload, '/') ?>" target="_blank">
+            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
             </a>
         <?php } ?>
@@ -72,9 +72,9 @@ $form = ActiveForm::begin([
                     'disabled' => $readOnly,
                 ]) ?>
             </div>
-            <?php if (!empty($model->pan_upload)) { ?>
+            <?php if (!empty($model->pan_upload_path)) { ?>
                 <?= $form->field($model, 'pan_upload')->hiddenInput(['id' => 'pan_upload'])->label(false); ?>
-                <a href="<?= Yii::$app->params['s3_endpoint'] . '/' . ltrim($model->pan_upload, '/') ?>" target="_blank">
+                <a href="<?= $model->pan_upload_path ?>" target="_blank">
                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="40" height="40">
                 </a>
             <?php } ?>
