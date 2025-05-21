@@ -17,12 +17,16 @@ class OperatorRemovalController extends Controller
 {
     public function actionRemove()
     {
-        $excludedIds = [76, 23, 4, 3, 95, 94];  //id column of operator
+        $excludedIds = [76, 23, 4, 3];  //id column of operator
 
         $userIdsToUpdate = SafariOperator::find()
             ->where(['id' => $excludedIds])
             ->all();
 
+        foreach ($userIdsToUpdate as $active_operator) {
+            $active_operator->status = 1;
+            $active_operator->save(false);
+        }
 
         //Delete Operators
         $safariOperators = SafariOperator::find()
@@ -41,6 +45,7 @@ class OperatorRemovalController extends Controller
             foreach ($users as $user) {
                 $user->is_safari_operator = 1;
                 $user->account_type = 3;
+                $user->status = 10;
                 $user->save(false);
             }
         }
