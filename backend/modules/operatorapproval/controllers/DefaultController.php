@@ -330,14 +330,14 @@ class DefaultController extends Controller
 
     protected function safariOperatorId()
     {
-        $partnerModel = PartnerRegistration::find()->where(['status' => 1])->one();
+        $partnerModel = PartnerRegistration::find()->where(['status' => PartnerRegistration :: STATUS_ACTIVE])->one();
     
         if ($partnerModel === null) {
             return null;
         }
     
         $operator = SafariOperator::find()
-            ->where(['status' => 1, 'safari_operator_request_id' => $partnerModel->id])
+            ->where(['status' => SafariOperator :: STATUS_ACTIVE, 'safari_operator_request_id' => $partnerModel->id])
             ->one();
     
         return $operator ? $operator->id : null;
