@@ -543,6 +543,14 @@ class SiteController extends RestController
         $model->user_id =  $user_model->id;
         if ($model->validate()) {
             if ($model->save()) {
+                $user_model->status = User::STATUS_INACTIVE;
+                $user_model->save(false);
+                $op = OperatorSafariOperator::find()->where(['user_id' => $user_model->id])->limit(1)->one();
+                if ($op) {
+                    $op->status = OperatorSafariOperator::STATUS_SUSPEND;
+                    $op->save(false);
+                }
+                UserSession::deleteAll(['user_id' => $user_model->id]);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Your Information Will be deleted in upcoming 90 Days!!!, we will miss you."]);
             }
         }

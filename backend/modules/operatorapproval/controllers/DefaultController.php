@@ -28,8 +28,9 @@ class DefaultController extends Controller
     {
         $searchModel = new PartnerRegistrationSearch();
         $searchModel->status = 1;
+        $searchModel->is_sendforapproval == 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -315,7 +316,7 @@ class DefaultController extends Controller
         if (!empty($model->parkList)) {
             foreach ($model->parkList as $park_field) {
                 $operator_park = new SafariOperatorPark();
-                $operator_park->safari_operator_id = $park_field['partner_registration_id']; 
+                $operator_park->safari_operator_id = $this->safarioperatorId(); 
                 $operator_park->park_id = $park_field['park_id'];
                 $operator_park->status = $park_field['status'];
                 if (!$operator_park->save(false)) {
@@ -326,6 +327,22 @@ class DefaultController extends Controller
         }
         return false;
     }
+
+    protected function safariOperatorId()
+    {
+        $partnerModel = PartnerRegistration::find()->where(['status' => 1])->one();
+    
+        if ($partnerModel === null) {
+            return null;
+        }
+    
+        $operator = SafariOperator::find()
+            ->where(['status' => 1, 'safari_operator_request_id' => $partnerModel->id])
+            ->one();
+    
+        return $operator ? $operator->id : null;
+    }
+    
 
     protected function findModel($id)
     {
