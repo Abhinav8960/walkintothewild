@@ -371,6 +371,7 @@ class DefaultController extends RestController
 
         $searchModel = new PackageSearch();
         $searchModel->owned_by_id = $operator->id;
+        $searchModel->status = Package::STATUS_ACTIVE;
         $condition = ['not', ['live_version' => null]];
         return $this->dataProviderSenderWithCondition($searchModel, "packages", $condition);
         // return Yii::$app->api->sendResponse($data = ['operatorpackage' => $this->serializeData($operator->packages)]);
