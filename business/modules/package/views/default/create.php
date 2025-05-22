@@ -19,6 +19,7 @@ $this->params['title'] = $this->title;
         <div class="card-body">
             <?= $this->render('_form', [
                 'model' => $model,
+                'safari_operator' => $safari_operator,
             ]) ?>
         </div>
     </div>
