@@ -30,8 +30,7 @@ class OperatorParkRemovalController extends Controller
             ->all();
 
         foreach ($safari_operator_parks as $safari_operator_park) {
-            $safari_operator_park->status = 0;
-            $safari_operator_park->save(false);
+            $safari_operator_park->delete();
         }
     }
 }
