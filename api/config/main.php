@@ -107,6 +107,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'site/test' => 'site/test',
                 'mobile-no-verification'=>'site/mobile-no-verification',
                 'verify-mobile-no'=>'site/verify-mobile-no',
                 'deactivate-account' => 'site/deactivate-account',

@@ -14,16 +14,17 @@ class SmsChannel
         $phone_no = $log->phone_no;
         $route = $log->route;
         // $message = $log->message;
+        // $message = "DearXXXX, your OTP for mobile number verification with Walk Into The Wild is XXXX. Please enter this code to complete your verification. - Mediarc Technology";
         $message = $this->generateMessage($log->template_id, !empty($log->params) ? json_decode($log->params, true) : []);
         $template_id = $log->template_id;
         $url = "http://sms.trilineinfotech.com/api/smsapi?key=" . \Yii::$app->params['sms_api_key'] . "&route=" . $route . "&sender=" . \Yii::$app->params['sms_sender_id'] . "&number=" . $phone_no . "&sms=" . urlencode($message) . "&templateid=" . $template_id;
         $client = new Client();
-        $response = $client->createRequest()
+         echo $response = $client->createRequest()
             ->setMethod('GET')
             ->setUrl($url)
             ->send();
+        die();
 
-        
         // \yii::info('SMS Response: ' . json_encode($response), __METHOD__);
         // if ($response->isOk) {
         //     $response = $this->getResponse($response->content);
