@@ -48,30 +48,57 @@ foreach ($park as $key => $role) {
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="<?= $model->Imagepath ?>">
+                                <img src="<?= $model->Imagepath ?? ''?>">
                             </div>
                             <div class="col-md-3">
                                 <div class="text-box">
                                     <p>
-                                        <span>Business Name:</span><?= $model->business_name ?>
+                                        <span>Business Name:</span><?= $model->business_name ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Address: </span><?= $model->address ?>
+                                        <span>Address: </span><?= $model->address ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Phone Number: </span><?= $model->phone_no ?>
+                                        <span>Phone Number: </span><?= $model->phone_no ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Email Address: </span><?= $model->email ?>
+                                        <span>Email Address: </span><?= $model->email ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Alternate Phone Number: </span><?= $model->operator_phone_no ?>
+                                        <span>Alternate Phone Number: </span><?= $model->operator_phone_no ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Alternate Email Address: </span><?= $model->operator_email ?>
+                                        <span>Alternate Email Address: </span><?= $model->operator_email ?? 'N/A'?>
                                     </p>
                                     <p>
-                                        <span>Registered Name: </span><?= $model->register_comapany_name ?>
+                                        <span>Registered Name: </span><?= $model->register_comapany_name ?? 'N/A'?>
+                                    </p>
+                                   
+                                    <p>
+                                        <span>Registered Number: </span><?= $model->registration_number ?? 'N/A'?>
+                                    </p>                                      
+                                    <p>
+                                        <span>Registered File: </span>
+                                        <?php if (!empty($model->registration_copy_upload) && strtolower(pathinfo($model->registration_copy_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
+                                            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
+                                                <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px; ">
+                                            </a>
+                                        <?php } else{ ?>
+                                            <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
+                                        <?php } ?>
+                                    </p>
+                                    <p>
+                                        <span>PanCard Number: </span><?= $model->pan_number ?? 'N/A'?>
+                                    </p>                                      
+                                    <p>
+                                        <span>PanCard File: </span>
+                                        <?php if (!empty($model->pan_upload)){?>
+                                            <a href="<?= $model->pan_upload_path ?>" target="_blank">
+                                                <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
+                                            </a>
+                                        <?php } else{ ?>
+                                            <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
+                                        <?php } ?>
                                     </p>
                                     <p>
                                         <span>Category: </span><?php
@@ -122,11 +149,34 @@ foreach ($park as $key => $role) {
                                         <span>Budget Segment: </span><?= implode(', ', $budget) ?>
                                     </p>
                                     <p>
-                                        <span>Offers Other Wildlife Activities: </span><?= substr($html, 0, -2) ?>
+                                        <span>Offers Other Wildlife Activities: </span><?= !empty($html) ? substr($html, 0, -2) : 'N/A' ?>
                                     </p>
 
                                     <p>
-                                        <span>Operates in Parks : </span><?= substr($html_park, 0, -2) ?>
+                                        <span>Operates in Parks : </span><?= !empty($html_park) ? substr($html_park, 0, -2) : 'N/A'?>
+                                    </p>
+                                    <p>
+                                        <span>Billing Phone : </span><?= $model->billing_phone ?? 'N/A'?>
+                                    </p> 
+                                    <p>
+                                        <span>Billing Mail : </span><?= $model->billing_mail ?? 'N/A' ?>
+                                    </p> 
+                                    <p>
+                                        <span>GST Number : </span><?= $model->gstDetail->gst_number ?? 'N/A' ?>
+                                    </p>
+
+                                    <p>
+                                        <span>State Name : </span><?= $model->gstDetail->stateRelation->state_name ?? 'N/A' ?>
+                                    </p>
+                                    <p>
+                                        <span>GST Image : </span>
+                                        <?php if (!empty($model->gstDetail->gst_upload_path)){?>
+                                            <a href="<?= $model->gstDetail->gst_upload_path ?>" target="_blank">
+                                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
+                                            </a>
+                                        <?php } else{ ?>
+                                            <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
+                                        <?php } ?>
                                     </p>
                                 </div>
                             </div>

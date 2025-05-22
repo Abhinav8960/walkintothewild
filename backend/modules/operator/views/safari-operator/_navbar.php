@@ -103,6 +103,7 @@ use yii\helpers\Url;
             <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
             <!-- <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li> -->
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/operator-parks', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'operator-parks' ? 'active' : '' ?>">Operator Parks</a></li>
+            <li><a href="<?= Url::toRoute(['/operator/safari-operator/bank-and-kyc-details', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'bank-and-kyc-details' ? 'active' : '' ?>">Bank and Kyc Details</a></li>
 
         </ul>
     </div>
