@@ -206,4 +206,13 @@ class DefaultController extends  Controller
 
         return false;
     }
+
+    public function actionPdfGeneration()
+    {
+        $content = $this->renderPartial('_report_view');
+        $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+
+        $mpdf->WriteHTML($content);
+        $mpdf->Output();
+    }
 }
