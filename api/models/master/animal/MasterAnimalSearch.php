@@ -17,7 +17,7 @@ class MasterAnimalSearch extends MasterAnimal
     public function rules()
     {
         return [
-            [['status', 'is_filter', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'is_filter', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_filter_sequence'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 125],
         ];
     }
@@ -46,7 +46,7 @@ class MasterAnimalSearch extends MasterAnimal
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['name' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['name' => SORT_ASC]],
         ]);
 
         $this->load($params);
@@ -62,6 +62,7 @@ class MasterAnimalSearch extends MasterAnimal
             'id' => $this->id,
             'slug' => $this->slug,
             'is_filter' => $this->is_filter,
+            'is_filter_sequence' => $this->is_filter_sequence,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
