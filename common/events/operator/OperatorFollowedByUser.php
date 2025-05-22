@@ -62,7 +62,7 @@ class OperatorFollowedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->user_name.' '.'followed you',
+                    'subject' => $this->user_name.' '.' followed you',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->safari_operator,
