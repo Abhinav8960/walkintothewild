@@ -625,4 +625,11 @@ class SiteController extends FrontendBaseController
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return ['fordorp_item' => $fordorp_item];
     }
+
+    public function actionMaintenance()
+    {
+        // You can set a specific HTTP status code, like 503 Service Unavailable
+        Yii::$app->response->statusCode = 503; 
+        return $this->renderPartial('maintenance'); // Or render('maintenance') if you want a full layout
+    }
 }
