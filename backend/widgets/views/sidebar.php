@@ -1108,6 +1108,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/package/quote/index",
 															"/package/quote",
 														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/packageapproval/default/index",
+															"/packageapproval/default/view",
+														)) ? "active" : "" ?>" href="/packageapproval/default/index">Package Approval</a></li>
 
 						</ul>
 					</li>
