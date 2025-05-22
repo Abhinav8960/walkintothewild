@@ -16,7 +16,7 @@ class PartnerRegistrationSearch extends PartnerRegistration
     public function rules()
     {
         return [
-            [['id', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'current_step', 'is_sendforapproval'], 'integer'],
+            [['id', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'current_step', 'status','is_sendforapproval'], 'integer'],
             [['legal_entity_type', 'legal_entity_name', 'brand_name', 'logo', 'legal_entity_phone', 'legal_entity_whatsapp', 'legal_entity_email', 'address', 'registration_number', 'registration_copy_upload', 'pan_number', 'pan_upload', 'operated_park', 'about_business', 'gst_id', 'billing_mail', 'billing_phone', 'bank_name', 'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload', 'owner_name', 'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload', 'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'], 'safe'],
         ];
     }
@@ -72,6 +72,7 @@ class PartnerRegistrationSearch extends PartnerRegistration
             'form4_status' => $this->form4_status,
             'form5_status' => $this->form5_status,
             'current_step' => $this->current_step,
+            'status'=>$this->status,
             'is_sendforapproval' => $this->is_sendforapproval,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
