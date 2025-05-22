@@ -23,10 +23,10 @@ class PackageVersion extends \common\models\package\PackageVersion
             'package_slug'=> function () {
                 return  $this->package->package_slug;
             },
-            'is_any_version_live' => function () {
+            'is_any_live_version' => function () {
                 return (bool) !empty($this->package->live_version) ? true : false;
             },
-            'is_any_version_pending_for_approve' => function () {
+            'is_any_pending_for_approval_version' => function () {
                 return (bool) !empty($this->package->pending_for_approval_version) ? true : false;
             },
             'primary_park',
