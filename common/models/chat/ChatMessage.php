@@ -97,7 +97,7 @@ class ChatMessage extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
@@ -107,19 +107,19 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         $fields = [];
         $fields['chat_hash'] = $this->chat->chat_hash;
-        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
-            if ($this->is_quotation_message == true) {
-                $fields['quote'] = function () {
-                    return $this->quote;
-                };
-            }
+        // if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+        //     if ($this->is_quotation_message == true) {
+        //         $fields['quote'] = function () {
+        //             return $this->quote;
+        //         };
+        //     }
 
-            if ($this->is_quotation_active == true) {
-                $fields['payment_details'] = function () {
-                    return $this->payment_details;
-                };
-            }
-        }
+        //     if ($this->is_quotation_active == true) {
+        //         $fields['payment_details'] = function () {
+        //             return $this->payment_details;
+        //         };
+        //     }
+        // }
         return  $fields;
     }
 
