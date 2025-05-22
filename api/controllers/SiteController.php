@@ -17,6 +17,7 @@ use api\models\UserMobileNoVerificationForm;
 use api\models\VerifySocialLoginForm;
 use common\models\AccessTokens;
 use common\models\Auth;
+use common\models\operator\SafariOperator as OperatorSafariOperator;
 use common\models\User;
 use common\models\UserDeleteRequest;
 use common\models\UserDeleteRequestForm;
@@ -520,8 +521,14 @@ class SiteController extends RestController
         $user_model = $this->userinfo;
         if ($user_model) {
             $user_model->status = User::STATUS_INACTIVE;
-            UserSession::deleteAll(['user_id' => $user_model->id]);
             if ($user_model->save(false)) {
+                UserSession::deleteAll(['user_id' => $user_model->id]);
+                $op = OperatorSafariOperator::find()->where(['user_id' => $user_model->id])->limit(1)->one();
+                if ($op) {
+                    $op->status = OperatorSafariOperator::STATUS_SUSPEND;
+                    $op->save(false);
+                }
+                OperatorSafariOperator::updateAll(['status' => OperatorSafariOperator::STATUS_SUSPEND], ['user_id' => $user_model->id]);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Deactivated Successfully, we will miss you."]);
             }
         }
