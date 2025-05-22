@@ -41,7 +41,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey', 'report-page-reason'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey', 'report-page-reason', 'test'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -53,7 +53,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -78,7 +78,8 @@ class SiteController extends RestController
                     'verify-mobile-no' => ['POST'],
                     'deactivate-account' => ['POST'],
                     'delete-account' => ['POST'],
-                    'report-page-reason' => ['GET']
+                    'report-page-reason' => ['GET'],
+                    'test' => ['GET'],
 
                 ],
             ],
@@ -163,7 +164,7 @@ class SiteController extends RestController
                 if ($auth && $model->apiLogin()) { // login
                     /* @var User $user */
                     if ($auth->user->status != User::STATUS_ACTIVE) {
-                        return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'],401);
+                        return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
                     }
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
@@ -183,7 +184,7 @@ class SiteController extends RestController
 
                         if ($user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one()) {
                             if ($user->status != User::STATUS_ACTIVE) {
-                                return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!']);
+                                return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
                             }
 
                             $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
@@ -555,5 +556,10 @@ class SiteController extends RestController
             }
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Facing some issue, please try again after a while."]);
+    }
+
+    public function actionTest()
+    {
+        return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
     }
 }
