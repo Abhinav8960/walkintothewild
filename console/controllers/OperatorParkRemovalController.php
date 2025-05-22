@@ -20,18 +20,17 @@ class OperatorParkRemovalController extends Controller
     {
         $safari_operator_ids = [76, 23, 4, 3];
 
-        $excludedIds = SafariOperatorPark::find()
-            ->where(['safari_operator_id' => $safari_operator_ids, 'status' => SafariOperatorPark::STATUS_ACTIVE])
-            ->all();
-
+        $excludedIds = SafariOperatorPark::find()->select('id')->where([
+            'safari_operator_id' => $safari_operator_ids,
+            'status' => SafariOperatorPark::STATUS_ACTIVE
+        ])->column();
 
         $safari_operator_parks = SafariOperatorPark::find()
             ->where(['not in', 'id', $excludedIds])
             ->all();
 
         foreach ($safari_operator_parks as $safari_operator_park) {
-            $safari_operator_park->status = 0;
-            $safari_operator_park->save(false);
+            $safari_operator_park->delete();
         }
     }
 }
