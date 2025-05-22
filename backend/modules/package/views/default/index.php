@@ -51,7 +51,7 @@ $this->params['buttons'][] = Html::a('Package Approval List', [Url::toRoute(['/p
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
+                            return isset($model->stay_category_id) ? GeneralModel::packagemetastaycategory()[$model->stay_category_id] : '';
                         }
                     ],
                     [
