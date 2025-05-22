@@ -107,19 +107,19 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         $fields = [];
         $fields['chat_hash'] = $this->chat->chat_hash;
-        if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
-            if ($this->is_quotation_message == true) {
-                $fields['quote'] = function () {
-                    return $this->quote;
-                };
-            }
+        // if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
+        //     if ($this->is_quotation_message == true) {
+        //         $fields['quote'] = function () {
+        //             return $this->quote;
+        //         };
+        //     }
 
-            if ($this->is_quotation_active == true) {
-                $fields['payment_details'] = function () {
-                    return $this->payment_details;
-                };
-            }
-        }
+        //     if ($this->is_quotation_active == true) {
+        //         $fields['payment_details'] = function () {
+        //             return $this->payment_details;
+        //         };
+        //     }
+        // }
         return  $fields;
     }
 
