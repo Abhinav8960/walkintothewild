@@ -160,6 +160,7 @@ class DefaultController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 
@@ -173,6 +174,7 @@ class DefaultController extends Controller
      */
     public function actionUpdate($id)
     {
+        $safari_operator = $this->operatormodel();
 
         $package_version_model = $this->findModel($id);
         $model = new PackageVersionForm($package_version_model);
@@ -225,6 +227,7 @@ class DefaultController extends Controller
         return $this->render('update', [
             'model' => $model,
             'package_version_model' => $package_version_model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 

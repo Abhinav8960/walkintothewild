@@ -1715,4 +1715,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         return $bytes;
     }
+
+    public static function packagemetastaycategory()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['!=', 'sequence_for_package', 0])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
+    }
 }

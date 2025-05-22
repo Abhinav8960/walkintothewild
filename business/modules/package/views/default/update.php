@@ -18,6 +18,7 @@ $this->title = 'Package: ' . $package_version_model->package_name;
             <div class="tab-pane active">
                 <?= $this->render('_form', [
                     'model' => $model,
+                    'safari_operator' => $safari_operator,
                 ]) ?>
             </div>
         </div>
