@@ -102,7 +102,7 @@ use kartik\datetime\DateTimePicker;
 
     <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::safariparklist(),
+            'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
             'options' => ['placeholder' => 'Select', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true
@@ -112,7 +112,7 @@ use kartik\datetime\DateTimePicker;
 
     
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select'])->label('ACCOMDATION') ?>
+        <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Select'])->label('ACCOMDATION') ?>
     </div>
 
 

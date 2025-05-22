@@ -13,14 +13,3 @@ use yii\helpers\Html;
     <p style="text-align:center">Team Walk into the Wild</p>
     <p style="text-align:center"><a href="https://www.walkintothewild.in" style="text-align:center !important;color:blue !important;">www.walkintothewild.in</a></p>
 </div>
-<?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
-    <div class="card">
-        <div class="card-body">
-            <p>Sample Array :</p>
-            <p>1. token</p>
-
-            <p>Expected Key :</p>
-            <p>1. xyz </p>
-        </div>
-    </div>
-<?php } ?>

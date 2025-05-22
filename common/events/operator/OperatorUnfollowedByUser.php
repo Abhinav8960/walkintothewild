@@ -61,7 +61,7 @@ class OperatorUnfollowedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->user_name.' '.'followed you',
+                    'subject' => $this->user_name.' '.' unfollowed you',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->safari_operator,
@@ -72,7 +72,7 @@ class OperatorUnfollowedByUser extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->user_name . ' has followed ' . $this->safari_operator,
+                    'subject' => 'New Update !! ' . $this->user_name . ' has unfollowed ' . $this->safari_operator,
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' =>$this->safari_operator,

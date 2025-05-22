@@ -21,7 +21,7 @@ class MetaStayCategory extends \common\models\meta\MetaStayCategory
     {
         $fields = parent::fields();
 
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['sequence', 'sequence_for_share_safari', 'sequence_for_package', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

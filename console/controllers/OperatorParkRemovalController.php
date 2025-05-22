@@ -18,7 +18,7 @@ class OperatorParkRemovalController extends Controller
 {
     public function actionRemove()
     {
-        $safari_operator_ids = [3, 4, 23, 76, 94, 95, 96, 97, 98, 99, 100];
+        $safari_operator_ids = [76, 23, 4, 3];
 
         $excludedIds = SafariOperatorPark::find()
             ->where(['safari_operator_id' => $safari_operator_ids, 'status' => SafariOperatorPark::STATUS_ACTIVE])

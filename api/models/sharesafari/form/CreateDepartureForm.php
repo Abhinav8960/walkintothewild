@@ -4,7 +4,7 @@ namespace api\models\sharesafari\form;
 
 class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
 {
-    
+
     public function rules()
     {
         return [
@@ -19,9 +19,10 @@ class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
-            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included','mail_sent'], 'default', 'value' => 0],
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             ['cut_off_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
+            [['version'], 'integer'],
 
         ];
     }
@@ -54,5 +55,4 @@ class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
             'status' => 'Status',
         ];
     }
-
 }
