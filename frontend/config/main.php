@@ -20,6 +20,7 @@ return [
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
     'defaultRoute' => '/plan-safari',
     'controllerNamespace' => 'frontend\controllers',
+    'catchAll' => ['site/maintenance'], // This will redirect all requests to site/maintenance
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
