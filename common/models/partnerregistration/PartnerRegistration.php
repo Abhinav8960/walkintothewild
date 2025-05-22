@@ -4,6 +4,7 @@ namespace common\models\partnerregistration;
 
 use common\models\park\SafariPark;
 use common\models\User;
+use common\traits\CommanRelationship;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -61,9 +62,10 @@ use yii\web\UploadedFile;
  * @property int $updated_at
  * @property int $updated_by
  */
-class PartnerRegistration extends \yii\db\ActiveRecord
+class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
+    use CommanRelationship;
     public $reason;
 
     /**
