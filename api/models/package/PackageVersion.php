@@ -20,6 +20,7 @@ class PackageVersion extends \common\models\package\PackageVersion
             'id',
             'package_display_name',
             'package_name',
+            'version',
             'package_slug' => function () {
                 return  $this->package->package_slug;
             },
