@@ -20,14 +20,23 @@ class PackageVersion extends \common\models\package\PackageVersion
             'id',
             'package_display_name',
             'package_name',
-            'package_slug'=> function () {
+            'package_slug' => function () {
                 return  $this->package->package_slug;
             },
-            'is_any_live_version' => function () {
-                return (bool) !empty($this->package->live_version) ? true : false;
-            },
-            'is_any_pending_for_approval_version' => function () {
-                return (bool) !empty($this->package->pending_for_approval_version) ? true : false;
+            // 'is_any_live_version' => function () {
+            //     return (bool) !empty($this->package->live_version) ? true : false;
+            // },
+            // 'is_any_pending_for_approval_version' => function () {
+            //     return (bool) !empty($this->package->pending_for_approval_version) ? true : false;
+            // },
+            'package_status_label' => function () {
+                $str = "";
+                if (!empty($this->package->pending_for_approval_version)) {
+                    $str = "Pending For Approval";
+                } elseif (!empty($this->package->pending_for_approval_version)) {
+                    $str = "Live";
+                }
+                return $str;
             },
             'primary_park',
             'no_of_day',
