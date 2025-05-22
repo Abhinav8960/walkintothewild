@@ -26,12 +26,7 @@ class MobileNoVerification extends Event
     {
         $this->userId = $userId;
         $this->phone_no = $phone_no;
-        $this->otp = $otp;
-        if (!isset(\Yii::$app->params['environment']) || \Yii::$app->params['environment'] != 'production') {
-            $this->name = $name . ' witw';
-        } else {
-            $this->name = $name;
-        }
+        $this->otp = $otp;       
         $this->name = $name;
         $this->smsTemplateId();
         $this->broadcastHandle();
@@ -58,7 +53,7 @@ class MobileNoVerification extends Event
                     'template_id'  => $this->template_id,
                     'route' => $this->sms_template->route,
                     'params' => [
-                        'name' => SmsHelper::handleMaxlength($this->name),
+                        'name' => SmsHelper::handleMaxlength($this->name, true),
                         'otp' => SmsHelper::handleMaxlength($this->otp),
                     ],
 

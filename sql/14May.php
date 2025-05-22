@@ -102,6 +102,6 @@ UPDATE `master_notification_template` SET `message` = '{{username}} has created 
 UPDATE `master_notification_template` SET `message` = 'Shared Safari in {{park_name}}! Do not miss out.' WHERE `master_notification_template`.`id` = 14;
 
 
-
+UPDATE `master_sms_template` SET `route` = '1' WHERE `master_sms_template`.`id` = 1;
 
 
