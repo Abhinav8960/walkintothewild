@@ -7,8 +7,14 @@ class SmsHelper
 {
 
 
-    public static function handleMaxlength($value)
+    public static function handleMaxlength($value, $is_addon_needed = false)
     {
-       return $value = strlen($value) > 25 ? (substr($value, 0, 25) . '...') : $value;        
+        $value = strlen($value) > 20 ? (substr($value, 0, 20) . '...') : $value;
+        if ($is_addon_needed == true && !isset(\Yii::$app->params['environment']) || \Yii::$app->params['environment'] != 'production') {
+            if ($is_addon_needed == true) {
+                $value = $value . ' witw';
+            }
+        }
+        return $value;
     }
 }

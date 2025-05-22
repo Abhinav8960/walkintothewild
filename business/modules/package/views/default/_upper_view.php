@@ -158,7 +158,7 @@ use common\models\GeneralModel;
                                     <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= isset(GeneralModel::packageoption()[$package->stay_category_id]) ? GeneralModel::packageoption()[$package->stay_category_id] : 'Not Included' ?></p>
+                                    <p class="mb-0"><?= isset(GeneralModel::packagemetastaycategory()[$package->stay_category_id]) ? GeneralModel::packagemetastaycategory()[$package->stay_category_id] : 'Not Included' ?></p>
                                 </div>
                             </div>
                         </div>
