@@ -169,7 +169,7 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = UserPosts::STATUS_SUSPEND;
-        $model->save(false);
+        $model->save();
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
@@ -177,7 +177,7 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = UserPosts::STATUS_ACTIVE;
-        $model->save(false);
+        $model->save();
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
