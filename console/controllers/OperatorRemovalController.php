@@ -17,7 +17,8 @@ class OperatorRemovalController extends Controller
 {
     public function actionRemove()
     {
-        $excludedIds = [76, 23, 4, 3];  //id column of operator
+        // $excludedIds = [76, 23, 4, 3];  //id column of operator
+        $excludedIds = [76, 4, 3];  //id column of operator
 
         $userIdsToUpdate = SafariOperator::find()
             ->where(['id' => $excludedIds])

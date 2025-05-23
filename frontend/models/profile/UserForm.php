@@ -104,7 +104,7 @@ class UserForm extends Model
             ],
 
             ['gender', 'integer'],
-            ['date_of_birth', 'date', 'format'=>'php:Y-m-d'],
+            ['date_of_birth', 'date', 'format' => 'php:Y-m-d'],
 
 
         ];
@@ -155,52 +155,77 @@ class UserForm extends Model
     public function uploadFile()
     {
 
+        // if ($this->profile_image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/user';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->user_model->id;
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'user' . time() . '.' . $this->profile_image->extension;
+
+        //     $filePath = $storagePath . '/' . $fileName;
+
+
+        //     if ($this->profile_image->saveAs($filePath)) {
+        //         $this->user_model->profile_image = $fileName;
+        //         $this->user_model->save(false);
+        //     }
+        // }
+        // ____________________________________Move To S3_____________________________________________
         if ($this->profile_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/user';
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->user_model->id;
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'user' . time() . '.' . $this->profile_image->extension;
-
+            $storagePath = 'user/profile';
+            $fileName =  $this->user_model->id . '_profile_' . time() . '.' . $this->profile_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-
-
-            if ($this->profile_image->saveAs($filePath)) {
-                $this->user_model->profile_image = $fileName;
-                $this->user_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->profile_image, $filePath, $fileName, true)) {
+                    $this->user_model->profile_image = $fileName;
+                    $this->user_model->save(false);
+                }
             }
         }
 
+        // if ($this->cover_image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/user_cover_image';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->user_model->id;
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'user_cover_image' . time() . '.' . $this->cover_image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+
+        //     if ($this->cover_image->saveAs($filePath)) {
+        //         $this->user_model->cover_image = $fileName;
+        //         $this->user_model->save(false);
+        //     }
+        // }
+        // ____________________________________Move To S3_____________________________________________
+
         if ($this->cover_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/user_cover_image';
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->user_model->id;
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'user_cover_image' . time() . '.' . $this->cover_image->extension;
+            $storagePath = 'user/profile';
+            $fileName =  $this->user_model->id . '_cover_' . time() . '.' . $this->cover_image->extension;
             $filePath = $storagePath . '/' . $fileName;
-
-
-            if ($this->cover_image->saveAs($filePath)) {
-                $this->user_model->cover_image = $fileName;
-                $this->user_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->cover_image, $filePath, $fileName, true)) {
+                    $this->user_model->cover_image = $fileName;
+                    $this->user_model->save(false);
+                }
             }
         }
     }

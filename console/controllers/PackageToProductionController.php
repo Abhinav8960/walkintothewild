@@ -271,12 +271,29 @@ class PackageToProductionController extends Controller
     //     return true;
     // }
 
-    public function actionMakeLive(){
-        $model = \common\models\package\Package::find()->where(['status'=>0])->all();
-        foreach($model as $m){
+    public function actionMakeLive()
+    {
+        $model = \common\models\package\Package::find()->where(['status' => 0])->all();
+        foreach ($model as $m) {
             $m->status = 1;
             $m->save();
         }
         echo "done";
+    }
+
+    public function actionPackageImageSet()
+    {
+        $package_models = Package::find()->all();
+        foreach ($package_models as $package) {
+            if ($package->package_image != null) {
+                $package->package_image = 'package/' . $package->id . '/' . $package->package_image;
+            }
+
+            if ($package->package_banner_image != null) {
+                $package->package_banner_image = 'package/' . $package->id . '/' . $package->package_banner_image;
+            }
+
+            $package->save(false);
+        }
     }
 }
