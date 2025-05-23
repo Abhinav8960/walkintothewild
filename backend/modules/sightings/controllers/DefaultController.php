@@ -174,6 +174,14 @@ class DefaultController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+    public function actionActive($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Sighting::STATUS_ACTIVE;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
     public function actionMarkAsDaily($id)
     {
         $model = $this->findModel($id);
@@ -202,9 +210,9 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 $model->video_thumbnail = UploadedFile::getInstance($model, 'video_thumbnail');
                 if ($model->validate()) {
-                        $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
-                        return $this->redirect(['index']);                   
+                    $model->uploadFile();
+                    \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                    return $this->redirect(['index']);
                 }
             }
         } else {

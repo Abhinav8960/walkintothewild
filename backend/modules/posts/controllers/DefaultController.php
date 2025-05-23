@@ -173,6 +173,14 @@ class DefaultController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+    public function actionActive($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = UserPosts::STATUS_ACTIVE;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
     protected function findModel($id)
     {
         if (($model = UserPosts::findOne(['id' => $id, 'status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]])) !== null) {
