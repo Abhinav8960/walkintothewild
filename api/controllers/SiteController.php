@@ -131,130 +131,193 @@ class SiteController extends RestController
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "master_meta_table_info");
     }
 
-
     public function actionSocialLogin()
     {
-        //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
-        // return  new \common\events\user\NewUserRegistration(748, 'anurag@triline.co.in', 'Anurag Kumar Yadav');
-        // return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
-
-
         $model = new SocialLoginForm();
-
         $model->attributes = $this->request;
 
         if ($model->validate()) {
-            /* @var Auth $auth */
             $user_form = new User();
-            if ($user_form->hasAttribute($model->source . '_source_id')) {
+            $source_id_col = strtolower($model->source . '_source_id');
 
-                if (!in_array($model->source, ['google', 'apple'])) {
-                    return Yii::$app->api->sendFailedStringResponse(['You are not register with us, check source']);
+            // Check if the column exists in the User model
+            if (!$user_form->hasAttribute($source_id_col)) {
+                return Yii::$app->api->sendFailedStringResponse(['The source not exist.'], 400);
+            }
+
+            $user = User::find()->where([$source_id_col => $model->source_id])->one();
+
+            if ($user) {
+                if ($user->status != User::STATUS_ACTIVE) {
+                    return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
                 }
 
-
-
-                $auth = Auth::find()->where([
-                    'source' => $model->source,
-                    'source_id' => $model->source_id,
-                ])->one();
-
-
-
-                if ($auth && $model->apiLogin()) { // login
-                    /* @var User $user */
-                    if ($auth->user->status != User::STATUS_ACTIVE) {
-                        return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
-                    }
-                    $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
-                    // $model->UserSession($accesstoken);
-                    $data = [];
-                    // $data['authorization_code'] = $auth_code;
-                    $data['access_token'] = $accesstoken->token;
-                    // $data['expires_at'] = $accesstoken->expires_at;
-                    return \Yii::$app->api->sendResponse($data);
-                    // $this->updateUserInfo($user);
-                } else {
-
-                    if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
-
-                        $user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one();
-                        // $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
-
-
-                        if ($user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one()) {
-                            if ($user->status != User::STATUS_ACTIVE) {
-                                return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
-                            }
-
-                            $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
-                            $data = [];
-                            // $data['authorization_code'] = $auth_code;
-                            $data['access_token'] = $accesstoken->token;
-                            // $data['expires_at'] = $accesstoken->expires_at;
-                            return \Yii::$app->api->sendResponse($data);
-                        } else {
-                            $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
-
-                            $source_id_col = strtolower($model->source . '_source_id');
-                            if (!empty($user->$source_id_col)) {
-                                return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
-                            }
-                            $user->$source_id_col  = $model->source_id;
-                            $user->status = User::STATUS_ACTIVE;
-                            $user->save(false);
-                            $auth = new Auth([
-                                'user_id' => $user->id,
-                                'source' => $model->source,
-                                'source_id' => $model->source_id,
-                            ]);
-                            $auth->save();
-                            $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
-                            $data = [];
-                            // $data['authorization_code'] = $auth_code;
-                            $data['access_token'] = $accesstoken->token;
-                            return \Yii::$app->api->sendResponse($data);
-                        }
-                    } else {
-
-                        // Yii::$app->api->sendFailedResponse([], "you are not register with us.");
-
-                        $user = new User();
-                        $user->setPassword(rand(10000000, 99999999));
-                        $user->generateAuthKey();
-                        $user->generateEmailVerificationToken();
-
-                        $user->name = isset($model->name) ? $model->name : NULL;
-                        $user->username = $model->email;
-                        $user->email = $model->email;
-                        $user->avatar = $model->avatar;
-                        $source_id_col = strtolower($model->source . '_source_id');
-                        $user->$source_id_col  = $model->source_id;
-                        $user->status = User::STATUS_ACTIVE;
-                        $user->save();
-                        $auth = new Auth([
-                            'user_id' => $user->id,
-                            'source' => $model->source,
-                            'source_id' => $model->source_id,
-                        ]);
-                        $auth->save();
-
-
-
-
-                        return $this->actionSocialLogin();
-                    }
-                }
+                $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+                $data = ['access_token' => $accesstoken->token];
+                return Yii::$app->api->sendResponse($data);
             } else {
+                if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
+                    $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
 
+                    if (!empty($user->$source_id_col)) {
+                        return Yii::$app->api->sendFailedStringResponse(['Source ID is already available in records and not matching with given']);
+                    }
 
+                    $user->$source_id_col = $model->source_id;
+                    $user->status = User::STATUS_ACTIVE;
+                    $user->save(false);
 
-                return  Yii::$app->api->sendFailedStringResponse(['you are not register with us, check source']);
+                    $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+                    $data = ['access_token' => $accesstoken->token];
+                    return Yii::$app->api->sendResponse($data);
+                } else {
+                    $user = new User();
+                    $user->setPassword(rand(10000000, 99999999));
+                    $user->generateAuthKey();
+                    $user->generateEmailVerificationToken();
+
+                    $user->name = $model->name ?? null;
+                    $user->username = $model->email;
+                    $user->email = $model->email;
+                    $user->avatar = $model->avatar;
+                    $user->$source_id_col = $model->source_id;
+                    $user->status = User::STATUS_ACTIVE;
+                    $user->save(false);
+
+                    $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+                    $data = ['access_token' => $accesstoken->token];
+                    return Yii::$app->api->sendResponse($data);
+                }
             }
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
+
+
+    // public function actionSocialLogin()
+    // {
+    //     //   return  \common\broadcast\services\BroadcastService::BroadcastEvent(new \common\events\user\NewUserRegistration(1, 'user@example.com', 'John Doe', '1234567890'), true);
+    //     // return  new \common\events\user\NewUserRegistration(748, 'anurag@triline.co.in', 'Anurag Kumar Yadav');
+    //     // return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
+
+
+    //     $model = new SocialLoginForm();
+
+    //     $model->attributes = $this->request;
+
+    //     if ($model->validate()) {
+    //         /* @var Auth $auth */
+    //         $user_form = new User();
+    //         if ($user_form->hasAttribute($model->source . '_source_id')) {
+
+    //             if (!in_array($model->source, ['google', 'apple'])) {
+    //                 return Yii::$app->api->sendFailedStringResponse(['You are not register with us, check source']);
+    //             }
+
+
+
+    //             $auth = Auth::find()->where([
+    //                 'source' => $model->source,
+    //                 'source_id' => $model->source_id,
+    //             ])->one();
+
+
+
+    //             if ($auth && $model->apiLogin()) { // login
+    //                 /* @var User $user */
+    //                 if ($auth->user->status != User::STATUS_ACTIVE) {
+    //                     return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
+    //                 }
+    //                 $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
+    //                 // $model->UserSession($accesstoken);
+    //                 $data = [];
+    //                 // $data['authorization_code'] = $auth_code;
+    //                 $data['access_token'] = $accesstoken->token;
+    //                 // $data['expires_at'] = $accesstoken->expires_at;
+    //                 return \Yii::$app->api->sendResponse($data);
+    //                 // $this->updateUserInfo($user);
+    //             } else {
+
+    //                 if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
+
+    //                     $user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one();
+    //                     // $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
+
+
+    //                     if ($user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one()) {
+    //                         if ($user->status != User::STATUS_ACTIVE) {
+    //                             return Yii::$app->api->sendFailedStringResponse(['Profile is not active, contact administration!!'], 423);
+    //                         }
+
+    //                         $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+    //                         $data = [];
+    //                         // $data['authorization_code'] = $auth_code;
+    //                         $data['access_token'] = $accesstoken->token;
+    //                         // $data['expires_at'] = $accesstoken->expires_at;
+    //                         return \Yii::$app->api->sendResponse($data);
+    //                     } else {
+    //                         $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
+
+    //                         $source_id_col = strtolower($model->source . '_source_id');
+    //                         if (!empty($user->$source_id_col)) {
+    //                             return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
+    //                         }
+    //                         $user->$source_id_col  = $model->source_id;
+    //                         $user->status = User::STATUS_ACTIVE;
+    //                         $user->save(false);
+    //                         $auth = new Auth([
+    //                             'user_id' => $user->id,
+    //                             'source' => $model->source,
+    //                             'source_id' => $model->source_id,
+    //                         ]);
+    //                         $auth->save();
+    //                         $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
+    //                         $data = [];
+    //                         // $data['authorization_code'] = $auth_code;
+    //                         $data['access_token'] = $accesstoken->token;
+    //                         return \Yii::$app->api->sendResponse($data);
+    //                     }
+    //                 } else {
+
+    //                     // Yii::$app->api->sendFailedResponse([], "you are not register with us.");
+
+    //                     $user = new User();
+    //                     $user->setPassword(rand(10000000, 99999999));
+    //                     $user->generateAuthKey();
+    //                     $user->generateEmailVerificationToken();
+
+    //                     $user->name = isset($model->name) ? $model->name : NULL;
+    //                     $user->username = $model->email;
+    //                     $user->email = $model->email;
+    //                     $user->avatar = $model->avatar;
+    //                     $source_id_col = strtolower($model->source . '_source_id');
+    //                     $user->$source_id_col  = $model->source_id;
+    //                     $user->status = User::STATUS_ACTIVE;
+    //                     $user->save();
+    //                     $auth = new Auth([
+    //                         'user_id' => $user->id,
+    //                         'source' => $model->source,
+    //                         'source_id' => $model->source_id,
+    //                     ]);
+    //                     $auth->save();
+
+
+
+
+    //                     return $this->actionSocialLogin();
+    //                 }
+    //             }
+    //         } else {
+
+
+
+    //             return  Yii::$app->api->sendFailedStringResponse(['you are not register with us, check source']);
+    //         }
+    //     } else {
+    //         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    //     }
+    // }
 
     public function actionResetSocialLogin()
     {
