@@ -29,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'custom-login', 'files'],
+                        'actions' => ['login', 'error', 'auth', 'files'],
                         'allow' => true,
                     ],
                     [
