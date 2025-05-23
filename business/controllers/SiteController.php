@@ -131,23 +131,23 @@ class SiteController extends Controller
         (new AuthHandler($client))->handle();
     }
 
-    public function actionCustomLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    // public function actionCustomLogin()
+    // {
+    //     if (!Yii::$app->user->isGuest) {
+    //         return $this->goHome();
+    //     }
 
-        $this->layout = 'blank';
+    //     $this->layout = 'blank';
 
-        $model = new CustomLoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+    //     $model = new CustomLoginForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->login()) {
+    //         return $this->goBack();
+    //     }
 
-        return $this->render('custom_login', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('custom_login', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
 
     // public function actionFiledownload($filepath, $original_name = NULL, $duration = 1)
