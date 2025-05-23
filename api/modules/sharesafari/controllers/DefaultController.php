@@ -220,14 +220,14 @@ class DefaultController extends SafariController
                 //     }
                 // }
                 if ($active_followers = $model->shared_safari_model->getsharesafarifollowerlist()->asArray()->all()) {
-                new \common\events\sharesafari\NewSafariCreatedByUser(
+                    new \common\events\sharesafari\NewSafariCreatedByUser(
                         $active_followers,
                         $this->userinfoId,
                         $model->shared_safari_model->user->name,
                         $model->shared_safari_model->user->email,
                         $model->shared_safari_model->id
-                );
-            }
+                    );
+                }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
             }
@@ -478,16 +478,15 @@ class DefaultController extends SafariController
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($share_safari)) {
             /**To Creator */
-            FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
-            /**To All Join */
-            FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
-            // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
-            // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
-            $comment = $model->comment($share_safari);
-            if($comment){
+            if ($comment = $model->comment($share_safari)) {
+                FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
+                /**To All Join */
+                FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
+                // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
+                // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
                 $model->NotifyUser($comment, []);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
@@ -538,7 +537,7 @@ class DefaultController extends SafariController
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
 
         if ($replymodel->validate()) {
-            if ($replymodel->reply($share_safari)) {
+            if ($reply = $replymodel->reply($share_safari)) {
                 /* To Creator*/
                 if ($this->userinfo && $share_safari->host_user_id != $this->userinfoId) {
                     $user = $this->userinfo;
@@ -575,8 +574,7 @@ class DefaultController extends SafariController
                     }
                 }
 
-                $reply = $replymodel->reply($share_safari);
-                if($reply){
+                if ($reply) {
                     $replymodel->NotifyUser($reply, []);
                 }
 
@@ -810,15 +808,15 @@ class DefaultController extends SafariController
                 // FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
                 // print_r(json_encode($intrested_users));
                 // die();
-                if($intrested_users){
-                new \common\events\sharesafari\SafariUpdatedByUser(
-                    $intrested_users,
-                    $this->userinfoId,
-                    $model->shared_safari_model->user->name,
-                    $model->shared_safari_model->user->email,
-                    $model->shared_safari_model->id
-                );
-            }
+                if ($intrested_users) {
+                    new \common\events\sharesafari\SafariUpdatedByUser(
+                        $intrested_users,
+                        $this->userinfoId,
+                        $model->shared_safari_model->user->name,
+                        $model->shared_safari_model->user->email,
+                        $model->shared_safari_model->id
+                    );
+                }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
