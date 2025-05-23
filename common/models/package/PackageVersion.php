@@ -271,6 +271,14 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
     }
 
 
+    public function getSharesafarifollowerlist()
+    {
+        if ($this->user &&  $this->user->userfollowers) {
+            return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
+        }
+    }
+
+
     public function getPickdrop()
     {
         $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();

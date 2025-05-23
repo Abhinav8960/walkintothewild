@@ -219,7 +219,14 @@ class DefaultController extends SafariController
                         }
                     }
                 }
-                // return  new \common\events\sharesafari\NewSafariCreatedByUser($this->userinfoId,$model->shared_safari_model->user->name,$model->shared_safari_model->user->email,$model->shared_safari_model->id);
+                $user_followers = $model->shared_safari_model->getSharesafarifollowerlist()->joinWith('user')->andWhere(['user.status' => 10, 'user_follower.status' => 1])->asArray()->all();
+                return  new \common\events\sharesafari\NewSafariCreatedByUser(
+                    $user_followers,
+                        $this->userinfoId,
+                        $model->shared_safari_model->user->name,
+                        $model->shared_safari_model->user->email,
+                        $model->shared_safari_model->id
+                );
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not created successfully"]);
@@ -472,7 +479,12 @@ class DefaultController extends SafariController
             FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
             /**To All Join */
             FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
-
+            // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
+            // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
+            $comment = $model->comment($share_safari);
+            if($comment){
+                $model->NotifyUser($comment, []);
+            }
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
 
@@ -560,6 +572,12 @@ class DefaultController extends SafariController
                         GeneralModel::sendmailfromlog($maillog_data['log_id']);
                     }
                 }
+
+                $reply = $replymodel->reply($share_safari);
+                if($reply){
+                    $replymodel->NotifyUser($reply, []);
+                }
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
