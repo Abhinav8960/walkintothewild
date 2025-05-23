@@ -41,7 +41,7 @@ class FeedsBehavior extends Behavior
         $model->objective = $this->objective;
         $model->collection = $this->collection;
         $model->collection_id = $this->owner->id;
-        if ($this->owner->status == NULL) {
+        if ($this->owner->status === NULL) {
             $model->status = Feeds::STATUS_ACTIVE;
         } else {
             $model->status = $this->owner->status == 1 ? 1 : 0;
