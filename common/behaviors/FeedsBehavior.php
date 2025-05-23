@@ -30,7 +30,7 @@ class FeedsBehavior extends Behavior
 
             $model = new Feeds();
 
-            if (!in_array($this->owner->status, [0, 1])) {
+            if (!in_array($this->owner->status, [-1, 0, 1])) {
 
                 $this->do_feed = false;
             }
