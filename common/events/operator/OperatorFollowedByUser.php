@@ -28,7 +28,7 @@ class OperatorFollowedByUser extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
 
