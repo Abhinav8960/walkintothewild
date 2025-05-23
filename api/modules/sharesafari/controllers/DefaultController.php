@@ -786,19 +786,19 @@ class DefaultController extends SafariController
                 //         }
                 //     }
                 // }
-               
+
                 // FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
                 // print_r(json_encode($intrested_users));
                 // die();
-                    
-                return new \common\events\sharesafari\SafariUpdatedByUser(
-                        $intrested_users,
-                        $this->userinfoId,
-                        $model->shared_safari_model->user->name,
-                        $model->shared_safari_model->user->email,
-                        $model->shared_safari_model->id
-                    );
-                
+
+                new \common\events\sharesafari\SafariUpdatedByUser(
+                    $intrested_users,
+                    $this->userinfoId,
+                    $model->shared_safari_model->user->name,
+                    $model->shared_safari_model->user->email,
+                    $model->shared_safari_model->id
+                );
+
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
