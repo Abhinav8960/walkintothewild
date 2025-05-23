@@ -3,7 +3,8 @@ namespace api\components;
 
 use Yii;
 use yii\web\ErrorHandler;
-use \yii\web\Response;
+use yii\web\Response;
+use yii\db\Exception as DbException;
 
 class CustomErrorHandler extends ErrorHandler
 {
@@ -11,8 +12,6 @@ class CustomErrorHandler extends ErrorHandler
     {
         if (Yii::$app->has('response')) {
             $response = Yii::$app->getResponse();
-            // reset parameters of response to avoid interference with partially created response data
-            // in case the error occurred while sending the response.
             $response->isSent = false;
             $response->stream = null;
             $response->data = null;
@@ -23,13 +22,21 @@ class CustomErrorHandler extends ErrorHandler
 
         $response->setStatusCodeByException($exception);
 
-        // $response->data = $this->convertExceptionToString($exception);
-
-        $result = \Yii::$app->runAction($this->errorAction);
-        // $response->data = $this->convertExceptionToArray($exception);
-        // $response->data = json_decode($result);
-        $response->data = $result;
-        
+        // Handle database exceptions
+        if ($exception instanceof DbException) {
+            $response->data = [
+                'name' => 'Database Error',
+                'message' => 'An error occurred while processing your request. Please try again later.',
+                'code' => $exception->getCode(),
+            ];
+        } else {
+            // Handle other exceptions
+            $response->data = [
+                'name' => $exception->getName(),
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+            ];
+        }
 
         $response->send();
 
