@@ -62,7 +62,7 @@ class PackageToProductionController extends Controller
                 $copyModel = new \common\models\package\Package();
                 $copyModel->attributes = $model->attributes;
                 $copyModel->package_slug = $model->package_slug;
-                $copyModel->status = 1;
+                $copyModel->status = $model->status;
                 $copyModel->id = null; // Set the ID to null for the new record
                 $this->version =   $copyModel->live_version = 'v1';
             } else {
