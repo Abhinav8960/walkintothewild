@@ -364,6 +364,7 @@ class DefaultController extends Controller
                 $this->approvedparks($model);
                 $model_user = User::findOne(['id' => $model->user_id]);
                 $model_user->is_safari_operator = 1;
+                $model_user->account_type = 3;
                 $model_user->save(false);
                 \Yii::$app->session->setFlash('success', 'Final Approved Successfully');
                 return $this->redirect(['update', 'id' => $model->id]);
