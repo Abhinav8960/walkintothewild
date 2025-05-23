@@ -28,7 +28,7 @@ class SafariCommentReplyByUser extends Event
 
     protected $channels = [
         // 'email',
-        'firebase',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'THOS';  // To Host Join Safari
