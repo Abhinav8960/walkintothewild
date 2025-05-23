@@ -74,6 +74,7 @@ class NewChatMessageSend extends Event
 
     private function prepareFirebaseTemplate()
     {
+        $arr = [];
         foreach ($this->receiverUserIds as $userId) {
             $arr[] =  [
                 'master_notification_template_id'   => $this->firebaseTemplateId(),

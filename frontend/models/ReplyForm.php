@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use api\models\User;
 use common\interfaces\NewStatusInterface;
 use common\models\cms\blog\Blog;
 use common\models\cms\blog\BlogComment;
@@ -87,5 +88,14 @@ class ReplyForm extends Model
         if ($wordCount >= 200) {
             $this->addError($attribute, 'Please provide content within 200 words.');
         }
+    }
+
+    public function NotifyUser($reply, $getAttributes)
+    {
+        if($reply->status == 1){
+            $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
+            return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$reply->share_safari_id);     
+        }
+       
     }
 }

@@ -18,6 +18,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
 
     const NEW_USER_REGISTRATION_TEMPLATE = 1;
     const SAFARI_JOIN_TEMPLATE = 1;
+    const SAFARI_NEW_COMMENT = 3;
     const FOLLOW_OPERATOR = 4;
     const CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE = 8;
     const SAFARI_UNJOIN_TEMPLATE = 9;
@@ -26,6 +27,11 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     const PARTNER_QUOTATION_RECEIVED = 12;
     const NEW_SAFARI_CREATED = 13 ;
     const SAFARI_UPDATED = 14;
+    const FIXED_DEPARTURE_CREATED = 15;
+    const FIXED_DEPARTURE_UPDATED = 16;
+    const PACKAGE_CREATED = 17;
+    const PACKAGE_UPDATED = 18;
+
 
 
 

@@ -1,15 +1,14 @@
 <?php
 
-namespace common\events\sharesafari;
+namespace common\events\package;
 
-
-use common\models\sharesafari\ShareSafari;
+use api\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
 use yii\base\Event;
 
-class NewSafariCreatedByUser extends Event
+class PackageCreatedByOperator extends Event
 {
     public $userId;
     public $email;
@@ -35,7 +34,7 @@ class NewSafariCreatedByUser extends Event
         // 'firebase',
     ];
 
-    protected $mail_template_code = 'NSCU';  // New Safari Created By User
+    protected $mail_template_code = 'OCNP';  // Package Created by Opertor
 
     public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
     {
@@ -67,7 +66,7 @@ class NewSafariCreatedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'Check Out new Safari !!',
+                    'subject' => 'Check Out new Package !!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->name,
@@ -101,7 +100,7 @@ class NewSafariCreatedByUser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::NEW_SAFARI_CREATED, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate:: PACKAGE_CREATED, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }

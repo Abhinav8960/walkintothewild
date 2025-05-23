@@ -2,28 +2,24 @@
 
 namespace common\events\sharesafari;
 
-
 use common\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
+use common\models\User;
 use yii\base\Event;
 
-class NewSafariCreatedByUser extends Event
+class SafariCommentReplyByUser extends Event
 {
     public $userId;
     public $email;
     public $name;
     public $templates;
     public $channelName;
+    public $interested_user;
+    public $admin_mail;
     public $shared_safari_id;
     public $shared_safari_name;
-    public $no_of_safari; 
-    public $start_date;
-    public $end_date ;
-    public $total_seat;
-    public $shared_safari_title;
-    public $receiverUserIds = [];
     public $shared_safari_url;
     protected $sent_data = [];
     protected $shared_safari;
@@ -35,29 +31,26 @@ class NewSafariCreatedByUser extends Event
         // 'firebase',
     ];
 
-    protected $mail_template_code = 'NSCU';  // New Safari Created By User
+    protected $mail_template_code = 'THOS';  // To Host Join Safari
 
-    public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
+    public function __construct($interested_user, $shared_safari_id)
     {
         
-        $this->receiverUserIds = $receiverUserIds;
-        $this->userId = $userId;
-        $this->email = $email;
-        $this->name = $name;
+        $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
-        $this->broadcast();
+        $this->broadcastHandle();
     }
 
-    public function broadcast()
+    public function broadcastHandle()
     {
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
             $this->templates = $this->getTemplates()[$channel];
-
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
+            // $broadcastService->send($this);
             $broadcastService->send($this, true);
         }
     }
@@ -67,25 +60,42 @@ class NewSafariCreatedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'Check Out new Safari !!',
+                    'subject' => $this->interested_user . ' commented your Shared Safari!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->name,
-                        'email' => $this->email,
-                        // 'shared_safari' => $this->shared_safari_name,
-                        'shared_safari_title'=>$this->shared_safari_title,
-                        'no_of_safari'=>$this->no_of_safari,
-                        'start_date'=>$this->start_date,
-                        'end_date'=>$this->end_date,
-                        'total_seat'=>$this->total_seat,
+                        'username' => $this->interested_user,
+                        'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
                     'to_mail' => $this->email,
                     'cc' => [],
                     'bcc' => [],
                 ],
+                // [
+                //     'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
+                //     'mail_template_id' => $this->emailTemplateId(),
+                //     'params' => [
+                //         'username' => $this->interested_user,
+                //         'shared_safari' => $this->shared_safari_name,
+                //         'shared_safari_url' => $this->shared_safari_url,
+                //     ],
+                //     'to_mail' => \Yii::$app->params['adminEmail'],  
+                //     'cc' => [],
+                //     'bcc' => [],
+                // ]
             ],
-            'firebase' => $this->prepareFirebaseTemplate()
+            'firebase' => [
+                [
+                    'master_notification_template_id' => $this->firebaseTemplateId(),
+                    'message' => $this->message(),
+                    'sent_data' => NULL,
+                    'user_id' => $this->userId,
+                    'image_url' => NULL,
+                    'action' => NULL,
+                ],
+                
+            ],
+            // Add more templates for other channels as needed
         ];
         return $arr;
     }
@@ -101,7 +111,7 @@ class NewSafariCreatedByUser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::NEW_SAFARI_CREATED, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_NEW_COMMENT, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }
@@ -115,52 +125,27 @@ class NewSafariCreatedByUser extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['username'=>$this->name]);
+        return $this->engine->render($this->master_notification_template->message, ['var1' => $this->interested_user, 'var2' => $this->shared_safari_name]);
     }
 
     public function prepareData()
     {
-
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_title = $this->shared_safari->share_safari_title;
-        $this->no_of_safari = $this->shared_safari->no_of_safari;
-        $this->start_date = $this->shared_safari->start_date;
-        $this->end_date = $this->shared_safari-> end_date;
-        $this->total_seat = $this->shared_safari->total_seat;
-
+        $this->shared_safari_name = $this->shared_safari->share_safari_title;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
         $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+
             $this->email = $this->shared_safari->safarioperator->email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
         } else {
             $this->email = $this->shared_safari->user->email;
             $this->name =  $this->shared_safari->user->name;
         }
+        // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
         $this->sent_data = [
-            'shared_safari_title' => $this->shared_safari->share_safari_title,
-            'slug' => $this->shared_safari->slug,
-            'no_of_safari'=>$this->no_of_safari,
-            'start_date'=>$this->start_date,
-            'end_date'=>$this->end_date,
-            'total_seat'=>$this->total_seat,
+            'share_safari_title' => $this->shared_safari->share_safari_title,
+            'slug' => $this->shared_safari->slug
         ];
-    }
-
-
-    private function prepareFirebaseTemplate()
-    {
-        foreach ($this->receiverUserIds as $userId) {
-            $arr[] =  [
-                'master_notification_template_id'   => $this->firebaseTemplateId(),
-                'title'                             => $this->title(),
-                'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
-                'user_id'                           => $userId,
-                'image_url'                         => NULL,
-                'action'                            => NULL,
-            ];
-        }
-        return $arr;
     }
 }
