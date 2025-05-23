@@ -27,11 +27,11 @@ class SafariUpdatedByUser extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
-        'firebase',
+        // 'email',
+        // 'firebase',
     ];
 
-    protected $mail_template_code = 'USCU';  // New Safari Created By User
+    protected $mail_template_code = 'USCU';  //  Safari Updated By User
 
     public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
     {
