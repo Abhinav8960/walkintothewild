@@ -296,4 +296,21 @@ class PackageToProductionController extends Controller
             $package->save(false);
         }
     }
+
+    public function actionPackageCommentDate()
+    {
+        $model = PackageComment::find()->all();
+        if ($model) {
+            foreach ($model as $comment) {
+            
+                $package_model = \common\models\package\PackageComment::find()->where(['id' => $comment->id])->limit(1)->one();
+                if ($package_model) {
+                    $package_model->created_at = $comment->created_at;
+                    $package_model->save(false);
+                }
+            }
+        }
+
+        return true;
+    }
 }
