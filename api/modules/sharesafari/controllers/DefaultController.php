@@ -476,7 +476,7 @@ class DefaultController extends SafariController
         $model = new ShareSafariCommentForm();
         $model->version = $share_safari->version;
         $model->attributes = $this->request;
-        if ($model->validate() && $model->comment($share_safari)) {
+        if ($model->validate()) {
             /**To Creator */
             if ($comment = $model->comment($share_safari)) {
                 FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
