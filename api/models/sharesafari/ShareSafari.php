@@ -181,12 +181,12 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getIntrestedUser()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested');
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->andWhere(['user.status' => 10])->via('intrested');
     }
 
     public function getIntrestedUserLimited()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested')->limit(3);
+        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1])->joinWith('user')->andWhere(['user.status' => 10])->limit(3);
     }
 
     public function getInterseted_user_count()
