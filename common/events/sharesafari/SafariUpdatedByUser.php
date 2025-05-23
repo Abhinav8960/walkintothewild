@@ -33,9 +33,9 @@ class SafariUpdatedByUser extends Event
 
     protected $mail_template_code = 'USCU';  // New Safari Created By User
 
-    public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
+    public function __construct(array $receiverUserIds, $userId, $email, $name, $shared_safari_id)
     {
-        
+
         $this->receiverUserIds = $receiverUserIds;
         $this->userId = $userId;
         $this->email = $email;
@@ -69,7 +69,7 @@ class SafariUpdatedByUser extends Event
                         'username' => $this->name,
                         'email' => $this->email,
                         'shared_safari' => $this->shared_safari_name,
-                        'share_safari_title'=>$this->shared_safari_title,
+                        'share_safari_title' => $this->shared_safari_title,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
                     'to_mail' => $this->email,
@@ -80,19 +80,19 @@ class SafariUpdatedByUser extends Event
             'firebase' => $this->prepareFirebaseTemplate()
 
             //  array_merge(
-                // [
-                //     [
-                //         'master_notification_template_id' => $this->firebaseTemplateId(),
-                //         'title' => $this->title(),
-                //         'message' => $this->message(),
-                //         'sent_data' => $this->sent_data,
-                //         'user_id' => $this->userId,
-                //         'image_url' => NULL,
-                //         'action' => NULL,
-                //     ],
-                // ],
-                // $this->prepareFirebaseTemplate()
-                // ),
+            // [
+            //     [
+            //         'master_notification_template_id' => $this->firebaseTemplateId(),
+            //         'title' => $this->title(),
+            //         'message' => $this->message(),
+            //         'sent_data' => $this->sent_data,
+            //         'user_id' => $this->userId,
+            //         'image_url' => NULL,
+            //         'action' => NULL,
+            //     ],
+            // ],
+            // $this->prepareFirebaseTemplate()
+            // ),
             // Add more templates for other channels as needed
         ];
         return $arr;
@@ -123,7 +123,7 @@ class SafariUpdatedByUser extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['park_name'=>$this->shared_safari->park->title]);
+        return $this->engine->render($this->master_notification_template->message, ['park_name' => $this->shared_safari->park->title]);
     }
 
     public function prepareData()
@@ -149,6 +149,7 @@ class SafariUpdatedByUser extends Event
 
     private function prepareFirebaseTemplate()
     {
+        $arr = [];
         foreach ($this->receiverUserIds as $userId) {
             $arr[] =  [
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
