@@ -219,15 +219,15 @@ class DefaultController extends SafariController
                 //         }
                 //     }
                 // }
-                if ($active_followers = $model->shared_safari_model->getsharesafarifollowerlist()->asArray()->all()) {
-                    new \common\events\sharesafari\NewSafariCreatedByUser(
-                        $active_followers,
-                        $this->userinfoId,
-                        $model->shared_safari_model->user->name,
-                        $model->shared_safari_model->user->email,
-                        $model->shared_safari_model->id
-                    );
-                }
+                // if ($active_followers = $model->shared_safari_model->getsharesafarifollowerlist()->asArray()->all()) {
+                //     new \common\events\sharesafari\NewSafariCreatedByUser(
+                //         $active_followers,
+                //         $this->userinfoId,
+                //         $model->shared_safari_model->user->name,
+                //         $model->shared_safari_model->user->email,
+                //         $model->shared_safari_model->id
+                //     );
+                // }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
             }
@@ -809,13 +809,13 @@ class DefaultController extends SafariController
                 // print_r(json_encode($intrested_users));
                 // die();
                 if ($intrested_users) {
-                    new \common\events\sharesafari\SafariUpdatedByUser(
-                        $intrested_users,
-                        $this->userinfoId,
-                        $model->shared_safari_model->user->name,
-                        $model->shared_safari_model->user->email,
-                        $model->shared_safari_model->id
-                    );
+                    // new \common\events\sharesafari\SafariUpdatedByUser(
+                    //     $intrested_users,
+                    //     $this->userinfoId,
+                    //     $model->shared_safari_model->user->name,
+                    //     $model->shared_safari_model->user->email,
+                    //     $model->shared_safari_model->id
+                    // );
                 }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
             }
