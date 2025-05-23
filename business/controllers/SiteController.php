@@ -65,27 +65,7 @@ class SiteController extends Controller
     }
 
 
-    public function beforeAction($action)
-    {
-        if (!parent::beforeAction($action)) {
-            return false;
-        } 
-            
-        $userId = Yii::$app->user->id;
-        $operator = SafariOperator::find()->where(['user_id' => $userId])->limit(1)->one();
-
-        if (!$operator && $action->id !== 'create') {
-            $this->redirect(['/partner-registration/create'])->send();
-            return false;
-        }
-
-        if ($operator && $operator->status != SafariOperator::STATUS_ACTIVE && $action->id !== 'deactivate') {
-            $this->redirect(['/partner-registration/deactivate'])->send();
-            return false;
-        }
-
-        return true;
-    }
+   
 
     /**
      * Displays homepage.

@@ -24,13 +24,13 @@ class FeedsBehavior extends Behavior
 
     public function feeds($event)
     {
-       
+
         $model = Feeds::find()->where(['collection' => $this->collection, 'collection_id' => $this->owner->id])->one();
         if (empty($model)) {
 
             $model = new Feeds();
 
-            if ($this->owner->status != 1) {
+            if (!in_array($this->owner->status, [-1, 0, 1])) {
 
                 $this->do_feed = false;
             }
