@@ -4,7 +4,8 @@ use common\models\partnerregistration\PartnerRegistration;
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 
-
+$this->title = 'Partner Registration';
+$this->params['title'] = $this->title;
 ?>
 
 <?php if ($model->partner_model->final_approved != 1) { ?>

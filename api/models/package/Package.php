@@ -463,7 +463,8 @@ class Package extends \common\models\package\Package
 
     public function getCan_reply()
     {
-        if (\Yii::$app->params['active_user_id'] == $this->owned_by_id) {
+        $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
+        if ((!empty($login_partner) && $this->owned_by_id == $login_partner->id)) {
             return true;
         }
         return false;
