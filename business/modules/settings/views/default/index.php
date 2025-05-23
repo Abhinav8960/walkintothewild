@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = 'My Business Profile';
+$this->params['title'] = $this->title;
 ?>
 
 <div class="d-flex justify-content-between align-items-center mt-5">

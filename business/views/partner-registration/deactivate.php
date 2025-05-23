@@ -1,6 +1,10 @@
 <?php
 
 use yii\bootstrap5\Html;
+
+
+$this->title = 'Account Deactivated';
+$this->params['title'] = $this->title;
 ?>
 
 <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
