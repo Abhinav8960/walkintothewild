@@ -84,7 +84,7 @@ class DataCopyController extends Controller
 
     public function actionPackage()
     {
-        $dpackages = \common\models\package\Package::find()->where(['live_version' => 'v1'])->all();
+        $dpackages = \common\models\package\Package::find()->where(['live_version' => 'v1','status'=>1])->all();
         foreach ($dpackages as $dpackage) {
             $model = Feeds::find()->where(['collection' => Feeds::MODEL_PACKAGE, 'collection_id' => $dpackage->id])->one();
             if (empty($model)) {
