@@ -30,8 +30,8 @@ class PackageCreatedByOperator extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
-        'firebase',
+        // 'email',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'OCNP';  // Package Created by Opertor

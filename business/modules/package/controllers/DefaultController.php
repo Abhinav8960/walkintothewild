@@ -137,16 +137,6 @@ class DefaultController extends Controller
                             }
                         }
 
-                        $package = PackageVersion::findOne($model->package_version_id);
-                        $operator_followers = $package->getSharesafarifollowerlist()->joinWith('user')->andWhere(['user.status' => 10, 'user_follower.status' => 1])->asArray()->all();
-                        return  new \common\events\package\PackageCreatedByOperator(
-                                $operator_followers,
-                                $this->userinfoId,
-                                $package->user->name,
-                                $package->user->email,
-                                $package->id
-                        );
-
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
                         return $this->redirect(['update', 'id' => $model->package_version_model->id]);
                     } else {
