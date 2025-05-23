@@ -31,8 +31,8 @@ class NewSafariCreatedByUser extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
-        'firebase',
+        // 'email',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'NSCU';  // New Safari Created By User

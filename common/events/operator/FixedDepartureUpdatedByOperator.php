@@ -27,8 +27,8 @@ class FixedDepartureUpdatedByOperator extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
-        'firebase',
+        // 'email',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'OCNF';  //  Fixed Departure Updated By Operator

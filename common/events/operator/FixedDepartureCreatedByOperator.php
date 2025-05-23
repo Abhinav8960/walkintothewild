@@ -30,8 +30,8 @@ class FixedDepartureCreatedByOperator extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        'email',
-        'firebase',
+        // 'email',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'OCNF';  // Fixed Departure Created by Opertor
