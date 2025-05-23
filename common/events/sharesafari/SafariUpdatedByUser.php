@@ -27,8 +27,8 @@ class SafariUpdatedByUser extends Event
     protected $master_notification_template;
 
     protected $channels = [
-        // 'email',
-        // 'firebase',
+        'email',
+        'firebase',
     ];
 
     protected $mail_template_code = 'USCU';  //  Safari Updated By User
