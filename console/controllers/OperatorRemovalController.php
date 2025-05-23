@@ -17,7 +17,8 @@ class OperatorRemovalController extends Controller
 {
     public function actionRemove()
     {
-        $excludedIds = [76, 23, 4, 3];  //id column of operator
+        // $excludedIds = [76, 23, 4, 3];  //id column of operator
+        $excludedIds = [76, 4, 3];  //id column of operator
 
         $userIdsToUpdate = SafariOperator::find()
             ->where(['id' => $excludedIds])
@@ -34,11 +35,21 @@ class OperatorRemovalController extends Controller
             ->all();
 
         foreach ($safariOperators as $operator) {
-            $operator->delete();
+            $operator->status = 0;
+            $operator->save(false);
+            $user = User::find()->where(['id' => $operator->user_id])->one();
+            if ($user) {
+                $user->email = time() . '_' . $user->email;
+                $user->google_source_id = time() . '_' . $user->google_source_id;
+                $user->is_safari_operator = 1;
+                $user->account_type = 3;
+                $user->status = 9;
+                $user->save(false);
+            }
         }
 
 
-        User::updateAll(['is_safari_operator' => 0, 'account_type' => 1]);
+        // User::updateAll(['is_safari_operator' => 0, 'account_type' => 1]);
 
         foreach ($userIdsToUpdate as $user) {
             $users = User::find()->where(['id' => $user->user_id])->all();

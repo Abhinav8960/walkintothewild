@@ -8,20 +8,31 @@ use api\models\User;
 class ShareSafariIntrested extends \common\models\sharesafari\ShareSafariIntrested
 {
 
-    // public function fields()
-    // {
-    //     $fields = parent::fields();
-    //     $fields[] = 'user';
-    //     // $fields[] = 'sharesafari';
-    //     $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-    //     return array_diff($fields, $hold_fields);
-    //     return $fields;
-    // }
+    public function fields()
+    {
 
-    // public function getUser()
-    // {
-    //     return $this->hasOne(User::className(), ['id' => 'user_id']);
-    // }
+        if ($this->user) {
+            foreach ($this->user->toArray() as $key => $value) {
+                $fields[$key] = function () use ($key) {
+                    if ($key == 'is_safari_operator') {
+                        return (bool) $this->user->is_safari_operator;
+                    }
+                    return $this->user->{$key};
+                };
+            }
+        }
+
+        $fields['joined_at'] = function () {
+            return $this->intrested_at;
+        };
+
+        return $fields;
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 
     // public function getSharesafari()
     // {

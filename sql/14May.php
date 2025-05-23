@@ -103,5 +103,6 @@ UPDATE `master_notification_template` SET `message` = 'Shared Safari in {{park_n
 
 
 UPDATE `master_sms_template` SET `route` = '1' WHERE `master_sms_template`.`id` = 1;
+UPDATE `master_sms_template` SET `message` = 'Dear{{name}}, your OTP for mobile number verification with Walk Into The Wild is {{otp}}. Please enter this code to complete your verification. - Mediarc Technology' WHERE `master_sms_template`.`id` = 1;
 
 

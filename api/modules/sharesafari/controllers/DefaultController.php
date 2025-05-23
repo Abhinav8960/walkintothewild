@@ -19,11 +19,11 @@ use api\models\cms\flagreason\Flagreason;
 use api\models\sharesafari\form\SharedSafariForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\sharesafari\ShareSafariHistory;
+use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
 // use api\models\UserWishlist;
-use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
@@ -140,9 +140,9 @@ class DefaultController extends SafariController
 
     public function actionOrganizeSafari()
     {
-        if ($this->userinfo->is_mobile_no_verified == 0) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
-        }
+        // if ($this->userinfo->is_mobile_no_verified == 0) {
+        //     return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        // }
 
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
@@ -1158,11 +1158,11 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
 
-        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->all();
+        $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->joinWith('user')->andWhere(['user.status' => 10]);
 
-        $ids = array_column($ShareSafariIntrested, 'user_id');
+        // $ids = array_column($ShareSafariIntrested, 'user_id');
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['id' => $ids, 'status' => User::STATUS_ACTIVE]),
+            'query' => $ShareSafariIntrested,
             // 'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "intrested_users");

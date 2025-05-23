@@ -403,11 +403,12 @@ class SafariOperatorController extends Controller
     //     ]));
     // }
 
-    public function actionRedirectPartner($id)
-    {
-        $safari_operator = $this->findModel($id);
-        return $this->redirect('https://staging-partners.walkintothewild.in' . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
-    }
+    // public function actionRedirectPartner($id)
+    // {
+    //     $safari_operator = $this->findModel($id);
+    //      \Yii::$app->response->redirect(Yii::$app->params['partner_url'] . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id)->send();
+    //     // return $this->redirect(Yii::$app->params['partner_url'] . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
+    // }
 
     public function actionTemporaryDelete($id)
     {

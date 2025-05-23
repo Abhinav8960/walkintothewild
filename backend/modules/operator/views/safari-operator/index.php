@@ -135,7 +135,7 @@ $this->params['title'] = $this->title;
                                 if ($model->is_temporary_delete != 1) {
                                     return Html::a(
                                         '<img src="' . $this->params['baseurl'] . '/img/login.png" alt="" width="25" height="25">',
-                                        ['redirect-partner', 'id' => $model->id],
+                                        Yii::$app->params['partner_url'] . '/check-in?username=' . $model->user->username . '&google_source_id=' . $model->user->google_source_id,
                                         [
                                             'class' => 'btn p-0 change-menuicon',
                                             'title' => 'Check-out',

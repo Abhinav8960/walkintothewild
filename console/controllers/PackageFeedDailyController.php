@@ -34,4 +34,22 @@ class PackageFeedDailyController extends Controller
 
         echo "Package Successfully remove because operator is inactive";
     }
+
+ 
+    public function actionPackageFeedRemoval()
+    {
+        $package_model = Package::find()->where(['owned_by_id' => 23])->all();
+        foreach($package_model as $package)
+        {
+            $package->status = 0;
+            $package->save(false);
+            $feed_model = Feeds::find()->where(['collection'=>2,'collection_id'=>$package->id])->limit(1)->one();
+            if($feed_model)
+            {
+                $feed_model->status = 0;
+                $feed_model->save(false);
+            }
+        }
+        echo "Done";
+    }
 }
