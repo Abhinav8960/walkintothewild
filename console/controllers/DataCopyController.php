@@ -6,6 +6,8 @@ use common\models\feeds\Feeds;
 use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
 use common\models\UserPosts;
+use console\models\operator\SafariOperator;
+use console\models\operator\SafariOperatorPark;
 use yii\console\Controller;
 
 
@@ -149,4 +151,26 @@ class DataCopyController extends Controller
     // }
     //    return "";
     // }
+
+    public function actionCopyOperator()
+    {
+        $dpackages = SafariOperator::find()->all();
+        foreach ($dpackages as $dpackage) {
+            $sp = new \common\models\operator\SafariOperator();
+            foreach($dpackage->attributes as $key => $value) {                
+                $sp->$key = $value;
+            }
+            $sp->save(false);
+        }
+        $dpackages = SafariOperatorPark::find()->all();
+        foreach ($dpackages as $dpackage) {
+            $sp = new \common\models\operator\SafariOperatorPark();
+            foreach($dpackage->attributes as $key => $value) {                
+                $sp->$key = $value;
+            }
+            $sp->save(false);
+        }
+        echo "Data copied successfully";
+       
+    }
 }
