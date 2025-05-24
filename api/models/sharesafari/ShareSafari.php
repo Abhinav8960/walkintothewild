@@ -109,6 +109,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'comments_count';
             $fields[] = 'parks';
             $fields[] = 'share_safari_agenda_id';
+            $fields[] = 'stay_category_id';
             $fields[] = 'status';
         }
         return $fields;
