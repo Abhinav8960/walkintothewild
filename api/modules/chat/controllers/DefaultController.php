@@ -46,10 +46,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message','send-quote-message','chat-user-list'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -214,7 +214,7 @@ class DefaultController extends RestController
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send"]);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send", 'chat_hash' => $chat->chat_hash]);
         } else {
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
         }
