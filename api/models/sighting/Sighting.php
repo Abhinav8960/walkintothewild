@@ -2,6 +2,8 @@
 
 namespace api\models\sighting;
 
+use api\models\master\animal\MasterAnimal;
+use api\models\meta\MetaSafariSession;
 use api\models\park\SafariPark;
 use api\models\User;
 use Yii;
@@ -25,6 +27,8 @@ class Sighting extends \common\models\sighting\Sighting
         $fields[] = 'resource_uri';
         $fields[] = 'thumbnail';
         $fields[] = 'thumbnails';
+        $fields[] = 'animal_label';
+        $fields[] = 'safari_session_label';
         $hold_fields = [
             'height',
             'width',
@@ -160,5 +164,23 @@ class Sighting extends \common\models\sighting\Sighting
             'medium' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg',
             'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg',
         ];
+    }
+
+    public function getAnimal_label()
+    {
+        $animal_model = MasterAnimal::find()->where(['id' => $this->master_animal_id])->limit(1)->one();
+        if ($animal_model) {
+            return $animal_model->name;
+        }
+        return null;
+    }
+
+    public function getSafari_session_label()
+    {
+        $meta_model = MetaSafariSession::find()->where(['id' => $this->safari_session_id])->limit(1)->one();
+        if ($meta_model) {
+            return $meta_model->title;
+        }
+        return null;
     }
 }
