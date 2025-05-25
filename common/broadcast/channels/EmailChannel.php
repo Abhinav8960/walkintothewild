@@ -31,7 +31,7 @@ class EmailChannel
                 $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
                 if ($template) {
                     $mailer =  \Yii::$app->mailer;
-                    if (!isset(\Yii::$app->params['environment']) || \Yii::$app->params['environment'] != 'production') {
+                    if (\Yii::$app->params['environment'] != 'production') {
                         $log->torecipient->recipient = \Yii::$app->params['adminEmail'];
                         $bcc = [];
                         $cc = [];
