@@ -22,7 +22,7 @@
         <div class="main-header-right">
             <?php if (\Yii::$app->params['environment']) { ?>
                 <strong>
-                    <span style="letter-spacing: 1.4px;font-weight: 900;font-size: 17px;text-transform: uppercase;margin-right: 20px;color: yellow;"><?= \Yii::$app->params['environment'] ?></span>
+                    <span style="letter-spacing: 1.4px;font-weight: 900;font-size: 17px;text-transform: uppercase;margin-right: 20px;color: yellow;"><?= \Yii::$app->params['environment'] != "production" ? \Yii::$app->params['environment'] : '' ?></span>
                 </strong>
             <?php } ?>
             <button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
