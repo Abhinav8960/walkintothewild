@@ -26,7 +26,6 @@ class TestUserController extends Controller
                 $user->name = "op" . $i;
                 $user->email = "op" . $i . "@gmail.com";
                 $user->is_safari_operator = 1;
-
             } else {
                 $user->username = "u" . $i . "@gmail.com";
                 $user->name = "u" . $i;
@@ -35,7 +34,7 @@ class TestUserController extends Controller
 
 
             // $user->mobile_no = $faker->unique()->phoneNumber;
-            $user->mobile_no = rand(8888888888,9999999999);
+            $user->mobile_no = rand(8888888888, 9999999999);
             $user->token_key = Yii::$app->security->generateRandomString();
             $user->verification_token = Yii::$app->security->generateRandomString();
             $user->auth_key = Yii::$app->security->generateRandomString();
@@ -105,5 +104,29 @@ class TestUserController extends Controller
         if ($safari_operator_model->save(false)) {
             return true;
         }
+    }
+
+    public function actionGenerateUserHandle()
+    {
+        $users = User::find()->where(['user_handle' => NULL])->all();
+        foreach ($users as $user) {
+            $baseHandle = strtolower(str_replace(' ', '_', $user->name));
+            $uniqueHandle = $baseHandle;
+
+            // Ensure the handle is unique
+            $counter = 1;
+            while (User::find()->where(['user_handle' => $uniqueHandle])->exists()) {
+                $uniqueHandle = $baseHandle . '_' . $counter;
+                $counter++;
+            }
+
+            $user->user_handle = $uniqueHandle;
+            if ($user->save(false)) {
+                echo "Handle for user {$user->id} generated: {$user->user_handle}\n";
+            } else {
+                echo "Failed to save handle for user {$user->id}\n";
+            }
+        }
+        return true;
     }
 }
