@@ -182,7 +182,7 @@ class SiteController extends RestController
                     $user->avatar = $model->avatar;
                     $user->$source_id_col = $model->source_id;
                     $user->status = User::STATUS_ACTIVE;
-                    $user->save(false);
+                    $user->save();
 
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                     $data = ['access_token' => $accesstoken->token];
