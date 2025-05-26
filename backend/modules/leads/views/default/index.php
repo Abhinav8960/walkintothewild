@@ -44,7 +44,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Safaris',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->safaris) ? $model->safaris : '';
@@ -52,7 +52,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Travelers',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->travelers) ? $model->travelers : '';
@@ -61,14 +61,14 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Accomodation',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->staycatgory) ? $model->staycatgory->title : '';
                         }
                     ],
                     [
-                        'label' => 'Travel Date looking For',
+                        'label' => 'Travel Date looking',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -79,13 +79,22 @@ $this->params['title'] = $this->title;
                             return $str;
                         }
                     ],
-
                     [
                         'label' => 'Lead Received Date',
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return date('d M, Y h:i A', $model->created_at);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Quotation Count',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->quotation ? count($model->quotation) : '';
                         }
                     ],
 
