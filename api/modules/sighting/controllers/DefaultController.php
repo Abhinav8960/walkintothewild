@@ -315,7 +315,8 @@ class DefaultController extends RestController
 
     public function actionDailyUpdate()
     {
-        $query = Sighting::find()->where(['show_in_front' => 1, 'status' => Sighting::STATUS_ACTIVE])->limit(9);
+        // $query = Sighting::find()->where(['show_in_front' => 1, 'status' => Sighting::STATUS_ACTIVE])->limit(9);
+        $query = Sighting::find()->where(['status' => Sighting::STATUS_ACTIVE])->orderBy(['created_at' => SORT_DESC])->limit(10);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
