@@ -68,7 +68,7 @@ class FsHelper
         }
 
         // Save metadata to the RestrictedFiles model
-        if (!self::restrictedfilesave($file, $fileFullPath, $fileName)) {
+        if (!self::filesave($file, $fileFullPath, $fileName)) {
             throw new \Exception("Failed to save file metadata for: " . $fileName);
         }
 
