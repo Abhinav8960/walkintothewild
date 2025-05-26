@@ -45,7 +45,7 @@ use yii\helpers\Html;
         </tbody>
     </table>
     <br>
-    <table cellpadding="2" style="width: 614px;">
+    <table cellpadding="2"  style="width: 100%; border-collapse: collapse;">
         <tbody>
             <tr>
                 <td bgcolor="#ffffff" style="background: #ffffff;border: 1px solid #999999;padding: 0.04cm 0cm;">
