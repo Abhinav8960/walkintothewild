@@ -14,7 +14,7 @@ use yii\helpers\Html;
                 <table cellpadding="0" cellspacing="0" border="0" align="center" style="background-color: #ffffff; max-width: 600px; width: 100%; margin: 0 auto; border-radius: 8px; text-align: center; padding: 20px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
                     <tr>
                         <td>
-                            <h1 style="font-size: 24px; font-family: Arial, sans-serif; color: #333333; margin: 0 0 10px;"><?php if ($shared_safari && $shared_safari['type'] == 1) {
+                            <h1 style="font-size: 24px; font-family: Arial, sans-serif; color: #333333; margin: 0 0 10px;"><?php if ($type && $type == 1) {
                                                                                                                                 echo "New Safari Alert";
                                                                                                                             } else {
                                                                                                                                 echo "New Fixed Departure Alert";
@@ -23,11 +23,11 @@ use yii\helpers\Html;
                                 <tr>
                                     <td>
                                         <p style="font-size: 16px; font-family: Arial, sans-serif; color: #555555; margin: 0 0 20px;">
-                                            <?= $creator_name && isset($creator_name) ? $creator_name : '' ?> has created new <?php if ($shared_safari && $shared_safari['type'] == 1) {
+                                            <?= $username && isset($username) ? $username : '' ?> has created new <?php if ($type && $type == 1) {
                                                                                                                                     echo "shared safari";
                                                                                                                                 } else {
                                                                                                                                     echo "fixed departure";
-                                                                                                                                } ?> <?= $shared_safari && isset($shared_safari['share_safari_title']) ? $shared_safari['share_safari_title'] : '' ?>. Visit the <?php if ($shared_safari && $shared_safari['type'] == 1) {
+                                                                                                                                } ?> <?= $shared_safari_title && isset($shared_safari_title) ? $shared_safari_title : '' ?>. Visit the <?php if ($type && $type == 1) {
                                                                                                                                                                                                                                                                         echo "shared safari ";
                                                                                                                                                                                                                                                                     } else {
                                                                                                                                                                                                                                                                         echo "fixed departure ";

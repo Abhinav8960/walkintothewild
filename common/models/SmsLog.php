@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\master\smstemplate\MasterSmsTemplate;
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -24,6 +26,11 @@ use Yii;
  */
 class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
 {
+
+    use CommanRelationship;
+     /**
+     * {@inheritdoc}
+     */
 
     public function behaviors()
     {
@@ -79,5 +86,10 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getTemplate()
+    {
+        return $this->hasOne(MasterSmsTemplate::className(), ['id' => 'template_id']);
     }
 }

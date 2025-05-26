@@ -1157,6 +1157,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/notification-log/index")) ? "active" : "" ?>" href="/log/notification-log/index">Notification Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/log/sms-log/index")) ? "active" : "" ?>" href="/log/sms-log/index">SMS Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/trierror/default/index")) ? "active" : "" ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>

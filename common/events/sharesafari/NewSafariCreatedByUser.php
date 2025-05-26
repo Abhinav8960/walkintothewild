@@ -7,6 +7,7 @@ use common\models\sharesafari\ShareSafari;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
+use Yii;
 use yii\base\Event;
 
 class NewSafariCreatedByUser extends Event
@@ -22,6 +23,7 @@ class NewSafariCreatedByUser extends Event
     public $start_date;
     public $end_date ;
     public $total_seat;
+    public $type;
     public $shared_safari_title;
     public $receiverUserIds = [];
     public $shared_safari_url;
@@ -35,7 +37,9 @@ class NewSafariCreatedByUser extends Event
         // 'firebase',
     ];
 
-    protected $mail_template_code = 'NSCU';  // New Safari Created By User
+    protected $mail_template_code = 'NSCU';  // New Safari Created By User mail to admin
+    protected $mail_template_code_follower = 'NSTF';  // New Safari Created By User mail to followers
+
 
     public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
     {
@@ -52,6 +56,7 @@ class NewSafariCreatedByUser extends Event
 
     public function broadcast()
     {
+       
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
             $this->templates = $this->getTemplates()[$channel];
@@ -78,6 +83,26 @@ class NewSafariCreatedByUser extends Event
                         'start_date'=>$this->start_date,
                         'end_date'=>$this->end_date,
                         'total_seat'=>$this->total_seat,
+                        'type'=>$this->type,
+                        'shared_safari_url' => $this->shared_safari_url,
+                    ],
+                    'to_mail' => Yii::$app->params['adminEmail'],
+                    'cc' => [],
+                    'bcc' => [],
+                ],
+                [
+                    'subject' => 'Check Out new Safari !!',
+                    'mail_template_id' => $this->emailTemplateIdFollwer(),
+                    'params' => [
+                        'username' => $this->name,
+                        'email' => $this->email,
+                        // 'shared_safari' => $this->shared_safari_name,
+                        'shared_safari_title'=>$this->shared_safari_title,
+                        'no_of_safari'=>$this->no_of_safari,
+                        'start_date'=>$this->start_date,
+                        'end_date'=>$this->end_date,
+                        'total_seat'=>$this->total_seat,
+                        'type'=>$this->type,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
                     'to_mail' => $this->email,
@@ -93,6 +118,17 @@ class NewSafariCreatedByUser extends Event
     protected function emailTemplateId()
     {
         $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code, 'status' => 1])->limit(1)->one();
+        if ($template) {
+            return $template->id;
+        }
+        return null;
+    }
+
+    protected function emailTemplateIdFollwer()
+    {
+        print_r($this->email);
+        die;
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_follower, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }
@@ -127,7 +163,7 @@ class NewSafariCreatedByUser extends Event
         $this->start_date = $this->shared_safari->start_date;
         $this->end_date = $this->shared_safari-> end_date;
         $this->total_seat = $this->shared_safari->total_seat;
-
+$this->type =$this->shared_safari->type;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
         $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
@@ -144,6 +180,7 @@ class NewSafariCreatedByUser extends Event
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
             'total_seat'=>$this->total_seat,
+            'type'=>$this->type
         ];
     }
 
