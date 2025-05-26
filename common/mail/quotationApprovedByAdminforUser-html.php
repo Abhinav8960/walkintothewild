@@ -56,7 +56,7 @@ use yii\helpers\Html;
             <?php endif; ?>
         </tbody>
     </table>
-    <table cellpadding="2" style="width: 100%; border-collapse: collapse;">
+    <table cellpadding="2" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <tbody>
             <tr>
                 <td bgcolor="#ffffff" style="background: #ffffff;border: 1px solid #999999;padding: 0.04cm 0cm;">
@@ -98,9 +98,7 @@ use yii\helpers\Html;
                         <li>
                             <p style="line-height: 115%;padding: 0px 5px;text-align: justify;background: transparent;margin-bottom: 0cm;">Any amendments or addition to the package including changes to travel dates, inclusions or itinerary will incur an additional cost to the customer. Such changes will be subject to the cancellation policy of the original package and the customer shall bear any associated costs arising from the modification.</p>
                         </li>
-                        <li>
-                            <p style="line-height: 115%;padding: 0px 5px;text-align: justify;background: transparent;margin-bottom: 0cm;">.</p>
-                        </li>
+                       
                         <li>
                             <p style="line-height: 115%;padding: 0px 5px;text-align: justify;background: transparent;margin-bottom: 0cm;">WALKINTOTHEWILD does not encourage modifications to the bookings once confirmed online. However, any changes related to postponement or rescheduling of a booked package are subject to the sole discretion of the operator and are permitted only under certain circumstances. WALKINTOTHEWILD shall not be held liable for any consequences arising from changes to the original itinerary initiated by the operator. Such changes are subject to the mutual consent between the operator and the customers.</p>
                         </li>
