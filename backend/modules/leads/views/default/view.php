@@ -300,4 +300,8 @@ $this->registerJs($script);
         background-color: #237729 !important;
         border-color: #dee2e6 #dee2e6 #fff;
     }
+
+    .table a {
+        color: #237729 !important;
+    }
 </style>
