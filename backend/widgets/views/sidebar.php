@@ -166,6 +166,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template/index")) ? "active" : "" ?>" href="/master/mail-template/index">Mail Template</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/notification-template/index")) ? "active" : "" ?>" href="/master/notification-template/index">Notification Template</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/master/sms-template/index")) ? "active" : "" ?>" href="/master/sms-template/index">SMS Template</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/operator-category/index")) ? "active" : "" ?>" href="/master/operator-category/index">Operator Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/suggestion-category/index")) ? "active" : "" ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
