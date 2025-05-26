@@ -254,6 +254,13 @@ class DefaultController extends RestController
 
     public function actionQuotesrequest($slug)
     {
+        if ($this->userinfo) {
+            $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId])->limit(1)->one();
+            if ($safari_operator) {
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator Can't do Quote Request!!!"]);
+            }
+        }
+        
         $sf = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$sf) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
