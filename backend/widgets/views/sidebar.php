@@ -21,6 +21,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<li class="slide">
 					<a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/leads",
+														"/leads/default/index",
+													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
+					</li>
+				<?php } ?>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
@@ -1109,9 +1117,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/package/quote",
 														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/packageapproval/default/index",
-															"/packageapproval/default/view",
-														)) ? "active" : "" ?>" href="/packageapproval/default/index">Package Approval</a></li> -->
+																"/packageapproval/default/index",
+																"/packageapproval/default/view",
+															)) ? "active" : "" ?>" href="/packageapproval/default/index">Package Approval</a></li> -->
 
 						</ul>
 					</li>
@@ -1249,16 +1257,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													)) ? "active" : "" ?>" href="/urlshortner/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Url Shortner</span></a>
 					</li>
 				<?php endif; ?>
-
-
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
-					<li class="slide">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/leads",
-														"/leads/default/index",
-													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
-					</li>
-				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
