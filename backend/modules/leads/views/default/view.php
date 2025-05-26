@@ -27,7 +27,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
         <table class="table table-bordered">
             <thead>
-                <th>Source</th>
+                <th>Name</th>
                 <th>Safaris</th>
                 <th>Travelers</th>
                 <th>Accomodation</th>
@@ -37,7 +37,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
             <tbody>
                 <tr>
                     <td>
-                        <?= $model->sourceLabel ?>
+                        <?= $model->displayLabel ?>
                     </td>
                     <td>
                         <?= !empty($model->safaris) ? $model->safaris : ''; ?>
