@@ -290,14 +290,14 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat_message = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render(
             '_operator_lead_chat',
             [
                 'model' => $model,
                 'quotations' => $quotations,
-                'chat_message' => $chat_message,
+                'chat' => $chat,
                 'safari_operator_model' => $safari_operator_model,
             ]
         );
