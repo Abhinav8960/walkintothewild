@@ -1,0 +1,129 @@
+<?php
+
+namespace common\events\operator;
+
+use common\broadcast\services\BroadcastService;
+use common\models\master\email\MasterMailTemplate;
+use common\models\master\notification\MasterNotificationTemplate;
+use common\models\operator\SafariOperator;
+use common\models\User;
+use yii\base\Event;
+
+class QuotationApprovatedByAdmin extends Event
+{
+    public $quotation;
+    protected $user;
+    protected $partner_user;
+    protected $master_notification_template;
+    protected $engine;
+    protected $payment_url;
+
+    public $templates;
+    public $channelName;
+
+    protected $channels = [
+        'email',
+    ];
+    protected $mail_template_code_FOR_USER = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_USER; // New User Registration
+    protected $mail_template_code_FOR_OPERATOR = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_OPERATOR; // New User Registration
+
+    public function __construct($quotation, $payment_url, $user_id, $partner_user_id)
+    {
+        $this->user = User::find()->where(['id' => $user_id])->one();
+        $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
+        $this->quotation = $quotation;
+        $this->payment_url  =  $payment_url;
+        $this->engine  = \Yii::$app->engine;
+
+        $this->broadcast();
+    }
+
+    public function broadcast()
+    {
+        foreach ($this->channels as $channel) {
+            $this->channelName = $channel;
+            $this->templates = $this->getTemplates()[$channel];
+            // $this->template['channel'] = $channel;
+            $broadcastService = new BroadcastService();
+            $broadcastService->send($this, true);
+        }
+    }
+
+    public function getTemplates()
+    {
+        $arr = [
+            'email' => [
+                [
+                    'subject' => 'Quote Received for ' . @$this->quotation->park_label,
+                    'mail_template_id'  => $this->emailTemplateIdForUser(),
+                    'params' => [
+                        'username' => $this->user->name,
+                        'parkname' =>  @$this->quotation->park_label,
+                        'travelers' => $this->quotation->travelers,
+                        'safaris' => $this->quotation->safaris,
+                        'start_date' => $this->quotation->start_date,
+                        'end_date' => $this->quotation->end_date,
+                        'staycategory' => @$this->quotation->staycatgory->title,
+                        'addional_notes' => $this->quotation->addional_notes,
+                        'amount' => $this->quotation->due_quatation->amount,
+                        'payment_url' => urlencode($this->payment_url),
+                        'qr_code' => $this->quotation->due_quatation->qr_code_file_base64,
+                    ],
+                    'to_mail' => $this->user->email,
+                    'cc' => [],
+                    'bcc' => [],
+                ],
+                [
+                    'subject' => 'Quote approved and forwared to user ' . $this->user->name,
+                    'mail_template_id'  => $this->emailTemplateIdForOperartor(),
+                    'params' => [
+                        'username' => $this->partner_user->name,
+                        // 'lead' => $this->quotation->lead,
+                        'user' => $this->user->name,
+                        'parkname' =>  @$this->quotation->park_label,
+                        'travelers' => $this->quotation->travelers,
+                        'safaris' => $this->quotation->safaris,
+                        'start_date' => $this->quotation->start_date,
+                        'end_date' => $this->quotation->end_date,
+                        'staycategory' =>  @$this->quotation->staycatgory->title,
+                        'addional_notes' => $this->quotation->addional_notes,
+                        'amount' => $this->quotation->due_quatation->amount,
+                    ],
+                    'to_mail' => $this->user->email,
+                    'cc' => [],
+                    'bcc' => [],
+                ]
+            ],
+
+            // Add more templates for other channels as needed
+        ];
+        return $arr;
+    }
+
+    protected function emailTemplateIdForUser()
+    {
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_USER, 'status' => 1])->limit(1)->one();
+        if ($template) {
+            return $template->id;
+        }
+        return null;
+    }
+
+    protected function emailTemplateIdForOperartor()
+    {
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_OPERATOR, 'status' => 1])->limit(1)->one();
+        if ($template) {
+            return $template->id;
+        }
+        return null;
+    }
+
+    // private function title()
+    // {
+    //     return $this->engine->render($this->master_notification_template->title, ['package_name' => $this->package->package_name]);
+    // }
+    // private function message()
+    // {
+    //     return $this->engine->render($this->master_notification_template->message, ['package_name' => $this->package->package_name, 'user_name' => $this->user->name]);
+    // }
+}

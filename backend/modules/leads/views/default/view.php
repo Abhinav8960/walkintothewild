@@ -159,7 +159,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                         <?php
                                         if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING) {
                                         ?>
-                                            <button class="btn btn-success btn-sm approve-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
+                                            <button class="btn btn-success btn-sm approve-btn" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
                                             <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button>
 
                                         <?php
@@ -215,6 +215,12 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                         <div class="mb-3">
                             <label for="payment-url" class="form-label">Payment URL</label>
                             <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
+
+                            <label for="payment-url" class="form-label">Plateform Partner Fees Percentage</label>
+                            <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Plateform partner fees percentage" required>
+
+                            <label for="approval-file" class="form-label">Upload QR Code File</label>
+                            <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
                         </div>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
@@ -250,7 +256,9 @@ $script = <<< JS
 // Handle Approve Button Click
 $('.approve-btn').on('click', function() {
     var quotationId = $(this).data('id');
+    var percentage = $(this).data('percentage'); // Get the percentage value from the button
     $('#approve-quotation-id').val(quotationId); // Set the quotation ID in the modal
+    $('#plateform-partner-fees-percentage').val(percentage); // Prepopulate the
 });
 
 // Handle Approve Form Submission
@@ -258,11 +266,33 @@ $('#approve-form').on('submit', function(e) {
     e.preventDefault();
     var quotationId = $('#approve-quotation-id').val();
     var paymentUrl = $('#payment-url').val();
+    var partnerFeesPercentage = $('#plateform-partner-fees-percentage').val();
+    var fileInput = $('#approval-file')[0].files[0];
 
-    // Send POST request to approve the quotation
-    $.post('/leads/default/approve', {id: quotationId, payment_url: paymentUrl}, function(response) {
+    if (fileInput) {
+        // If a file is selected, read it as Base64
+        var reader = new FileReader();
+        reader.onload = function(e) {
+           // Include the MIME type before the Base64 content
+           var qr_code_file_base64 = e.target.result; // Full Base64 string with MIME type
+            sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qr_code_file_base64);
+        };
+        reader.readAsDataURL(fileInput); // Read the file as Base64
+    } else {
+        // If no file is selected, proceed without the file
+        sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, null);
+    }
+});
+
+// Function to send the approve request
+function sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qr_code_file_base64) {
+    $.post('/leads/default/approve', {
+        id: quotationId,
+        payment_url: paymentUrl,
+        plateform_partner_fees_percentage: partnerFeesPercentage,
+        qr_code_file_base64: qr_code_file_base64 // Include the Base64 file content if available
+    }, function(response) {
         if (response.success) {
-            // alert('Quotation approved successfully.');
             location.reload(); // Reload the page to reflect changes
         } else {
             alert('An error occurred: ' + response.message);
@@ -270,7 +300,7 @@ $('#approve-form').on('submit', function(e) {
     });
 
     $('#approveModal').modal('hide'); // Hide the modal
-});
+}
 
 // Handle Disapprove Button Click
 $('.disapprove-btn').on('click', function() {

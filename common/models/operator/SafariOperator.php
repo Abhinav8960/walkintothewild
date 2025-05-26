@@ -244,8 +244,8 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath() // logo_path
     {
         if ($this->logo != '') {
-            return Yii::$app->params['partner_url'] . '/site/files/' . $this->logo;
-            // return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
+            // return Yii::$app->params['partner_url'] . '/site/files/' . $this->logo;
+            return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
 

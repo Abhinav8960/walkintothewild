@@ -45,7 +45,7 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
     public function rules()
     {
         return [
-            [['payment_link', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['payment_link', 'created_at', 'updated_at', 'created_by', 'updated_by','qr_code_file_base64'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'amount', 'payment_hash', 'before_datetime'], 'required'],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
@@ -64,6 +64,7 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
             'id' => 'ID',
             'lead_partner_quote_id' => 'Lead Partner Quote ID',
             'lead_id' => 'Lead ID',
+            'qr_code_file_base64'=> 'QR Code File Base64',
             'partner_id' => 'Partner ID',
             'amount' => 'Amount',
             'payment_link' => 'Payment Link',

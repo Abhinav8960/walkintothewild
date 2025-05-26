@@ -47,39 +47,89 @@ class FsHelper
 
         $filesystem = \Yii::$app->get('fs');
 
-        $filesystem->write($filesystem->normalizePath($filePath), $contents);
-        self::filesave($file, $filePath, $fileName);
-        return $checksum = $filesystem->checksum($filePath); // etag or md5
+        $normalizedPath = $filesystem->normalizePath($filePath);
+
+        // Simulate directory creation for S3
+        if (!$filesystem->fileExists($normalizedPath . '/')) {
+            try {
+                $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
+            } catch (\Exception $e) {
+                throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
+            }
+        }
+    
+        // Write the file to RFS
+        $fileFullPath = $normalizedPath . '/' . $fileName;
+        try {
+            $filesystem->write($fileFullPath, $contents);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to write file to RFS: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
+    
+        // Save metadata to the RestrictedFiles model
+        if (!self::restrictedfilesave($file, $fileFullPath, $fileName)) {
+            throw new \Exception("Failed to save file metadata for: " . $fileName);
+        }
+    
+        // Return the checksum of the uploaded file
+        try {
+            return $filesystem->checksum($fileFullPath);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to calculate checksum for file: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
 
     }
 
-    public static function restrictedsaveUploadedFile(UploadedFile $file, $filePath,  $fileName = '', $autoExtension = true)
+    public static function restrictedsaveUploadedFile(UploadedFile $file, $filePath, $fileName = '', $autoExtension = true)
     {
-
         if (empty($fileName)) {
             $fileName = $file->name;
         }
         if ($autoExtension) {
-            $_file    = (string) pathinfo($fileName, PATHINFO_FILENAME);
+            $_file = (string) pathinfo($fileName, PATHINFO_FILENAME);
             $fileName = $_file . '.' . $file->extension;
         }
 
-        // $this->{$attribute} = $fileName;
-        // if (!$this->validate($attribute)) {
-        //     return;
-        // }
-        // $filePath  = 'images/' . $fileName;
         $localPath = $file->tempName;
-        $handle    = fopen($localPath, 'r');
-        $contents  = fread($handle, filesize($localPath));
+        if (!file_exists($localPath)) {
+            throw new \Exception("Temporary file does not exist: " . $localPath);
+        }
+
+        $handle = fopen($localPath, 'r');
+        $contents = fread($handle, filesize($localPath));
         fclose($handle);
 
         $filesystem = \Yii::$app->get('rfs');
+        $normalizedPath = $filesystem->normalizePath($filePath);
 
-        $filesystem->write($filesystem->normalizePath($filePath), $contents);
-        self::restrictedfilesave($file, $filePath, $fileName);
-        return $checksum = $filesystem->checksum($filePath); // etag or md5
+        // Simulate directory creation for S3
+        if (!$filesystem->fileExists($normalizedPath . '/')) {
+            try {
+                $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
+            } catch (\Exception $e) {
+                throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
+            }
+        }
 
+        // Write the file to RFS
+        $fileFullPath = $normalizedPath . '/' . $fileName;
+        try {
+            $filesystem->write($fileFullPath, $contents);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to write file to RFS: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
+
+        // Save metadata to the RestrictedFiles model
+        if (!self::restrictedfilesave($file, $fileFullPath, $fileName)) {
+            throw new \Exception("Failed to save file metadata for: " . $fileName);
+        }
+
+        // Return the checksum of the uploaded file
+        try {
+            return $filesystem->checksum($fileFullPath);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to calculate checksum for file: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
     }
 
     /**

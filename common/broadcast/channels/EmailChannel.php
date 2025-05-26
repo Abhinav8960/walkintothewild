@@ -19,12 +19,21 @@ class EmailChannel
         if ($log) {
             $cc = [];
             $bcc = [];
+            $attachments = [];
             foreach ($log->ccrecipients as $c) {
                 $cc[] = $c->recipient;
             }
 
             foreach ($log->bccrecipients as $b) {
                 $bcc[] = $b->recipient;
+            }
+
+            foreach ($log->attachments as $attachment) {
+                if ($attachment->file_path && !file_exists($attachment->file_path)) {
+                    continue; // Skip if file does not exist
+
+                }
+                $attachments[] = $attachment->filepath;
             }
 
             if ($log->mail_template_id) {
@@ -43,13 +52,16 @@ class EmailChannel
                         ->setBcc($bcc)
                         ->setCc($cc)
                         ->setSubject($log->subject)
+                        ->setHeaders([
+                            'X-SES-CONFIGURATION-SET' => 'DisableClickTracking', // Disables click tracking
+                        ])
                         ->send();
 
                     if ($message) {
                         $m = MailLog::find()->where(['id' => $log->id])->one();
 
                         $id = $mailer->getSentMessage()->getMessageId();
-                        $m->aws_message_id = $id;
+                        $m->aws_message_id = $log->torecipient->recipient.'-'.$id;
                         $m->try_send_count = $m->try_send_count + 1;
                         $m->status = true;
                         $m->mail_send_time = date('Y-m-d H:i:s');
