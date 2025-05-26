@@ -188,7 +188,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
         <h4>Assign To</h4>
         <ul class="nav nav-tabs" role="tablist">
             <?php foreach ($model->assignOperator as $index => $assignOperator) {  ?>
-                <li class="nav-item"><a href="<?= Url::toRoute(['operator-lead-chat', 'id' => $model->id, 'safari_operator_id' => $assignOperator->partner->id]) ?>" class="nav-link  <?= $assignOperator->partner->id == $safari_operator_id ? 'active' : '' ?>"><?= $assignOperator->partner->business_name ?></a></li>
+                <li class="nav-item"><a href="<?= Url::toRoute(['operator-lead-chat', 'id' => $model->id, 'safari_operator_id' => $assignOperator->partner->id]) ?>" class="nav-link  <?= isset($safari_operator_id) && $assignOperator->partner->id == $safari_operator_id ? 'active' : '' ?>"><?= $assignOperator->partner->business_name ?></a></li>
             <?php
             } ?>
         </ul>
