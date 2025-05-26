@@ -160,8 +160,8 @@ class DefaultController extends  Controller
                     'error' => UPLOAD_ERR_OK,
                 ]);
 
-                $filePath = 'quotations/' . date('ym');
                 $fileName = 'quotation_' . $quotation->id . '.pdf';
+                $filePath = 'quotations/' . date('ym') . '/' . $fileName;
 
                 $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
 
@@ -169,7 +169,7 @@ class DefaultController extends  Controller
                     throw new \Exception('Failed to upload PDF to RFS.');
                 }
 
-                $quotation->quotation_filepath = $filePath . '/' . $fileName;
+                $quotation->quotation_filepath = $filePath;
 
                 // Save quotation and installment
                 $quotation->save(false);
