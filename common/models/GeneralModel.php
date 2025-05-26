@@ -1738,7 +1738,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [
             1 => 'Package',
             2 => 'Park',
-            3 => 'Operator'
+            3 => 'Partner'
         ];
     }
 }
