@@ -16,7 +16,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
 <div class="d-flex justify-content-between align-items-center mt-5">
     <!-- <h3 class="mt-5">Leads : <?= $model->name ?>, Quotation Received On <?= date('d M, Y h:i A', $model->created_at) ?></h3> -->
-    <h3 class="mt-5">Leads </h3>
+    <h3 class="mt-5">Leads (<?= $model->sourceLabel ?>)</h3>
 </div>
 
 

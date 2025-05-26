@@ -1736,9 +1736,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function leadSource()
     {
         return [
-            1 => 'package',
-            2 => 'park',
-            3 => 'operator'
+            1 => 'Package',
+            2 => 'Park',
+            3 => 'Operator'
         ];
     }
 }
