@@ -10,6 +10,10 @@ use yii\helpers\Html;
     <br>
     <table style="width: 100%; border-collapse: collapse;">
         <tbody>
+        <tr>
+                <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Park</th>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= isset($parkname) ? $parkname : '' ?></td>
+            </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Travelers</th>
                 <td style="padding: 10px; border: 1px solid #ddd;"><?= isset($travelers) ? $travelers : '' ?></td>
