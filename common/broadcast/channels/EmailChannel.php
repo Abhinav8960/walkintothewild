@@ -51,10 +51,7 @@ class EmailChannel
                         ->setTo($log->torecipient->recipient)
                         ->setBcc($bcc)
                         ->setCc($cc)
-                        ->setSubject($log->subject)
-                        ->setHeaders([
-                            'X-SES-CONFIGURATION-SET' => 'DisableClickTracking', // Disables click tracking
-                        ])
+                        ->setSubject($log->subject)                        
                         ->send();
 
                     if ($message) {
