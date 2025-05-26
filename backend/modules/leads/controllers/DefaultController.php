@@ -124,24 +124,24 @@ class DefaultController extends  Controller
                 // Handle QR code file upload
                 if (!empty($qr_code_file)) {
                     // Retrieve the uploaded file directly
-                
-                      
-                
-                        // Generate the file name
-                        $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
-                
-                        // Define the file path in the RFS storage
-                        $qrCodeFilePathInRfs = 'qr_codes/' . date('ym');
-                
-                        // Save the uploaded file to the RFS storage
-                        $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePathInRfs, $qrCodeFileName);
-                
-                        if (!$qrCodeChecksum) {
-                            throw new \Exception('Failed to upload QR code to RFS.');
-                        }
-                
-                        // Save the file path in the installment model
-                        $installment->qr_code_file = $qrCodeFilePathInRfs . '/' . $qrCodeFileName;
+
+
+
+                    // Generate the file name
+                    $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
+
+                    // Define the file path in the RFS storage
+                    $qrCodeFilePath = 'qr_codes/' . date('ym') . '/' . $qrCodeFileName;
+
+                    // Save the uploaded file to the RFS storage
+                    $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePath, $qrCodeFileName);
+
+                    if (!$qrCodeChecksum) {
+                        throw new \Exception('Failed to upload QR code to RFS.');
+                    }
+
+                    // Save the file path in the installment model
+                    $installment->qr_code_file = $qrCodeFilePath;
                 }
 
                 // Generate PDF

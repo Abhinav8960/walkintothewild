@@ -59,7 +59,8 @@ class FsHelper
         // }
 
         // Write the file to RFS
-        $fileFullPath = $filePath . '/' . $fileName;
+        // $fileFullPath = $filePath . '/' . $fileName;
+        $fileFullPath = $filePath;
         try {
             $filesystem->write($fileFullPath, $contents);
         } catch (\Exception $e) {
@@ -111,7 +112,8 @@ class FsHelper
         // }
 
         // Write the file to RFS
-        $fileFullPath = $filePath . '/' . $fileName;
+        // $fileFullPath = $filePath . '/' . $fileName;
+        $fileFullPath = $filePath;
 
         try {
             $filesystem->write($fileFullPath, $contents);
