@@ -10,7 +10,7 @@ use yii\helpers\Html;
     <br>
     <table style="width: 100%; border-collapse: collapse;">
         <tbody>
-        <tr>
+            <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Park</th>
                 <td style="padding: 10px; border: 1px solid #ddd;"><?= isset($parkname) ? $parkname : '' ?></td>
             </tr>
@@ -44,7 +44,7 @@ use yii\helpers\Html;
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Payment Link</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= isset($payment_url) ?  '<a href=' . $payment_url . '>Pay</a>' : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= isset($payment_url) ?  '<a href=' . urldecode($payment_url) . ' target="_blank">Pay</a>' : '' ?></td>
             </tr>
             <?php if (isset($qr_code) && $qr_code): ?>
                 <tr>
