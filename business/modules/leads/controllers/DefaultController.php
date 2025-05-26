@@ -76,36 +76,34 @@ class DefaultController extends  Controller
 
     public function actionQuotation($id)
     {
+       
         $m = $this->findModel($id);
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
         $model->lead_id = $m->id;
+        $model->park_id = $m->park_id;
         $model->lead_partner_id = $lead_partner->id;
-        $model->partner_id = $lead_partner->partner_id;
         $model->partner_id = $lead_partner->partner_id;
         $model->action_url = '/leads/default/quotation?id=' . $id;
         $model->action_validate_url = '/leads/default/quotation-validate?id=' . $id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
-
                     if ($model->request(\Yii::$app->user->identity)) {
                         \Yii::$app->session->setFlash('success', 'Quotation Submitted Successfully');
                         return  $this->redirect(Yii::$app->request->referrer);
                     }
                 } else {
                     return  $this->redirect(Yii::$app->request->referrer);
-
-                    // print_r($model->getErrors());
-                    // die();
                 }
             }
             return  $this->redirect(Yii::$app->request->referrer);
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_quotation_form', [
-                'model' => $model
+                'model' => $model,
+                'lead' => $m,
             ]);
         }
     }
