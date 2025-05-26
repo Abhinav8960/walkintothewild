@@ -241,9 +241,12 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                     <button type="submit" class="btn btn-danger">Submit</button>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
 
-            <?php
-            $script = <<< JS
+<?php
+$script = <<< JS
 // Handle Approve Button Click
 $('.approve-btn').on('click', function() {
     var quotationId = $(this).data('id');
@@ -318,17 +321,17 @@ $('#disapprove-form').on('submit', function(e) {
     $('#disapproveModal').modal('hide'); // Hide the modal
 });
 JS;
-            $this->registerJs($script);
-            ?>
+$this->registerJs($script);
+?>
 
-            <style>
-                .nav-tabs .nav-link.active {
-                    color: white !important;
-                    background-color: #237729 !important;
-                    border-color: #dee2e6 #dee2e6 #fff;
-                }
+<style>
+    .nav-tabs .nav-link.active {
+        color: white !important;
+        background-color: #237729 !important;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
 
-                .table a {
-                    color: #237729 !important;
-                }
-            </style>
+    .table a {
+        color: #237729 !important;
+    }
+</style>
