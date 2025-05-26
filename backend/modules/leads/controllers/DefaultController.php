@@ -123,7 +123,6 @@ class DefaultController extends  Controller
         if ($quotation) {
             $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_REJECT; // Update status to approved
             $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s'); // Update status to approved
-            ; // Update status to disapproved
             $quotation->rejection_reason = $reason; // Save the rejection reason
             if ($quotation->save()) {
                 return $this->asJson(['success' => true]);
@@ -207,12 +206,17 @@ class DefaultController extends  Controller
         return false;
     }
 
-    public function actionPdfGeneration()
-    {
-        $content = $this->renderPartial('_report_view');
-        $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+    // public function actionPdfGeneration()
+    // {
+    //     $content = $this->renderPartial('_report_view');
+    //     $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
 
-        $mpdf->WriteHTML($content);
-        $mpdf->Output();
-    }
+    //     $mpdf->WriteHTML($content);
+    //     $mpdf->Output();
+    // }
+
+    // public function actionOperatorLeadChat()
+    // {
+    //     return $this->render('_operator_lead_chat');
+    // }
 }
