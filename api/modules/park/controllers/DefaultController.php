@@ -45,14 +45,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'quotesrequest'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['suggestion','park-follow','park-unfollow'],
+                'only' => ['suggestion', 'park-follow', 'park-unfollow', 'quotesrequest'],
                 'rules' => [
                     [
-                        'actions' => ['suggestion','park-follow','park-unfollow'],
+                        'actions' => ['suggestion', 'park-follow', 'park-unfollow', 'quotesrequest'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -265,7 +265,6 @@ class DefaultController extends RestController
             $model->email = $this->userinfo->email;
             $model->full_name = $this->userinfo->name;
             $model->phone_no = $this->userinfo->mobile_no;
-
         }
         $model->attributes = $this->request;
         $model->safari_park_id = $sf->id;
@@ -275,9 +274,8 @@ class DefaultController extends RestController
             }
         }
 
-        if(count($sf->safarioperatorlist)<1){
+        if (count($sf->safarioperatorlist) < 1) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'There is no active operartor in this park, We will get back to you soon!!!']);
-
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
@@ -303,7 +301,6 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Follow Successfully!!"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Follow Successfully!!"]);
-
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
     }
