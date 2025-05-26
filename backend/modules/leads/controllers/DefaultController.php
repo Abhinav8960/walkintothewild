@@ -118,7 +118,44 @@ class DefaultController extends  Controller
                 $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED;
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
                 $installment->payment_link = $paymentUrl;
-                $installment->qr_code_file_base64 = !empty($qr_code_file_base64) ? $qr_code_file_base64 : null;
+
+                // Handle QR code file upload
+                if (!empty($qr_code_file_base64)) {
+                    // Decode the base64 string to get the MIME type
+                    $qrCodeData = base64_decode($qr_code_file_base64);
+                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                    $mimeType = $finfo->buffer($qrCodeData);
+
+                    // Determine the file extension based on the MIME type
+                    $fileExtension = match ($mimeType) {
+                        'image/png' => 'png',
+                        'image/jpeg' => 'jpg',
+                        'application/octet-stream' => 'png', // Default to .png for octet-stream
+                        default => throw new \Exception('Unsupported QR code image type.' . $mimeType),
+                    };
+
+                    $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $fileExtension;
+                    $qrCodeFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $qrCodeFileName;
+                    file_put_contents($qrCodeFilePath, $qrCodeData);
+
+                    $uploadedFile = new \yii\web\UploadedFile([
+                        'name' => $qrCodeFileName,
+                        'tempName' => $qrCodeFilePath,
+                        'type' => $mimeType,
+                        'size' => filesize($qrCodeFilePath),
+                        'error' => UPLOAD_ERR_OK,
+                    ]);
+
+                    $qrCodeFilePathInRfs = 'qr_codes/' . date('ym');
+
+                    $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $qrCodeFilePathInRfs, $qrCodeFileName);
+
+                    if (!$qrCodeChecksum) {
+                        throw new \Exception('Failed to upload QR code to FS.');
+                    }
+
+                    $installment->qr_code_file_base64 = $qrCodeFilePathInRfs . '/' . $qrCodeFileName;
+                }
 
                 // Generate PDF
                 $content = $this->renderPartial('_quotation_pdf', ['quotation' => $quotation]);
@@ -159,7 +196,7 @@ class DefaultController extends  Controller
             return $this->asJson(['success' => true]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.'.$e->getMessage()]);
+            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.' . $e->getMessage()]);
         }
     }
 
@@ -290,7 +327,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat_message = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat_message = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render(
             '_operator_lead_chat',
