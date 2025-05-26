@@ -61,6 +61,8 @@ use yii\helpers\ArrayHelper;
 use common\models\trierror\SitePages;
 use common\models\MailLog;
 use common\models\MailLogRecipients;
+use common\models\master\notification\MasterNotificationTemplate;
+use common\models\master\smstemplate\MasterSmsTemplate;
 use common\models\master\userflag\MasterUserFlag;
 use DOMDocument;
 use DOMXPath;
@@ -557,6 +559,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function mailtemplateoption()
     {
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function notificationtemplateoption()
+    {
+        return ArrayHelper::map(MasterNotificationTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['type' => SORT_ASC])->all(), 'id', 'type');
+    }
+
+    public static function smstemplateoption()
+    {
+        return ArrayHelper::map(MasterSmsTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 

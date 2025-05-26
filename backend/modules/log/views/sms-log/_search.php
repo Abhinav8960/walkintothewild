@@ -22,21 +22,21 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'master_notification_template_id')->dropDownList(
-            GeneralModel::notificationtemplateoption(),
+        <?= $form->field($model, 'template_id')->dropDownList(
+            GeneralModel::smstemplateoption(),
             [
                 'prompt' => 'Select Template',
             ]
         ) ?>
     </div>
-    <!-- <div class="col-md-3">
+    <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::statusoption(),
             [
                 'prompt' => 'Select Status',
             ]
         ) ?>
-    </div> -->
+    </div>
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>
