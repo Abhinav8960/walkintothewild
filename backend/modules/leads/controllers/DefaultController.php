@@ -95,8 +95,10 @@ class DefaultController extends  Controller
         $id = Yii::$app->request->post('id');
         $paymentUrl = Yii::$app->request->post('payment_url');
         $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage');
-        $qr_code_file_base64 = Yii::$app->request->post('qr_code_file_base64') ?? null;
+        $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
+        // print_r($qr_code_file);
+        // die();
         $quotation = LeadPartnerQuotes::findOne($id);
         $installment = LeadPartnerQuoteInstallments::find()->where(['lead_partner_quote_id' => $id])->one();
         $transaction = Yii::$app->db->beginTransaction();
@@ -120,41 +122,26 @@ class DefaultController extends  Controller
                 $installment->payment_link = $paymentUrl;
 
                 // Handle QR code file upload
-                if (!empty($qr_code_file_base64)) {
-                    // Decode the base64 string to get the MIME type
-                    $qrCodeData = base64_decode($qr_code_file_base64);
-                    $finfo = new \finfo(FILEINFO_MIME_TYPE);
-                    $mimeType = $finfo->buffer($qrCodeData);
-
-                    // Determine the file extension based on the MIME type
-                    $fileExtension = match ($mimeType) {
-                        'image/png' => 'png',
-                        'image/jpeg' => 'jpg',
-                        'application/octet-stream' => 'png', // Default to .png for octet-stream
-                        default => throw new \Exception('Unsupported QR code image type.' . $mimeType),
-                    };
-
-                    $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $fileExtension;
-                    $qrCodeFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $qrCodeFileName;
-                    file_put_contents($qrCodeFilePath, $qrCodeData);
-
-                    $uploadedFile = new \yii\web\UploadedFile([
-                        'name' => $qrCodeFileName,
-                        'tempName' => $qrCodeFilePath,
-                        'type' => $mimeType,
-                        'size' => filesize($qrCodeFilePath),
-                        'error' => UPLOAD_ERR_OK,
-                    ]);
-
-                    $qrCodeFilePathInRfs = 'qr_codes/' . date('ym');
-
-                    $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $qrCodeFilePathInRfs, $qrCodeFileName);
-
-                    if (!$qrCodeChecksum) {
-                        throw new \Exception('Failed to upload QR code to FS.');
-                    }
-
-                    $installment->qr_code_file_base64 = $qrCodeFilePathInRfs . '/' . $qrCodeFileName;
+                if (!empty($qr_code_file)) {
+                    // Retrieve the uploaded file directly
+                
+                      
+                
+                        // Generate the file name
+                        $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
+                
+                        // Define the file path in the RFS storage
+                        $qrCodeFilePathInRfs = 'qr_codes/' . date('ym');
+                
+                        // Save the uploaded file to the RFS storage
+                        $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePathInRfs, $qrCodeFileName);
+                
+                        if (!$qrCodeChecksum) {
+                            throw new \Exception('Failed to upload QR code to RFS.');
+                        }
+                
+                        // Save the file path in the installment model
+                        $installment->qr_code_file = $qrCodeFilePathInRfs . '/' . $qrCodeFileName;
                 }
 
                 // Generate PDF
@@ -327,7 +314,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render(
             '_operator_lead_chat',

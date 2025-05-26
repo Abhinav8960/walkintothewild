@@ -5,7 +5,7 @@ use yii\helpers\Html;
 ?>
 <div class="verify-email">
     <p>Hi <?= Html::encode($username) ?>,</p>
-    <p>You have received a new quote request for <?= $parkname ?>,. Please check your inbox to review the details and respond promptly. </p>
+    <p>You have received a quote request for <?= $parkname ?>. </p>
     <p>Quote</p>
     <br>
     <table style="width: 100%; border-collapse: collapse;">

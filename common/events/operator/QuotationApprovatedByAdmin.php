@@ -67,7 +67,7 @@ class QuotationApprovatedByAdmin extends Event
                         'addional_notes' => $this->quotation->addional_notes,
                         'amount' => $this->quotation->due_quatation->amount,
                         'payment_url' => urlencode($this->payment_url),
-                        'qr_code' => isset($this->quotation->due_quatation->qr_code_file_base64) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file_base64) : null,
+                        'qr_code' => isset($this->quotation->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file) : null,
                     ],
                     'to_mail' => $this->user->email,
                     'cc' => [],
