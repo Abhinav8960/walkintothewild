@@ -4,6 +4,7 @@ namespace common\models\leads;
 
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperator;
+use common\models\package\Package;
 use common\models\park\SafariPark;
 use common\models\User;
 use Yii;
@@ -68,7 +69,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     public function rules()
     {
         return [
-            [['package_id', 'package_version','park_id','addional_notes', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['package_id', 'package_version', 'park_id', 'addional_notes', 'name', 'email', 'phone', 'park_id', 'destination', 'from_date',  'operator_id', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_seen_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['source', 'package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'user_id'], 'required'],
@@ -119,7 +120,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
 
     public function getPark()
     {
-        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
     public function getOperator()
@@ -159,8 +160,22 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
 
     public function getQuotation()
     {
-       return $this->hasMany(LeadPartnerQuotes::className(), ['lead_id' => 'id']);
+        return $this->hasMany(LeadPartnerQuotes::className(), ['lead_id' => 'id']);
     }
 
-   
+    public function getDisplayLabel()
+    {
+        if ($this->source == 1) {
+            return $this->package ? $this->package->package_name : '';
+        } else if ($this->source == 2) {
+            return $this->park ? $this->park->title : '';
+        } else if ($this->source == 3) {
+            return $this->operator ? $this->operator->business_name : '';
+        }
+    }
+
+    public function getPackage()
+    {
+        return $this->hasOne(Package::className(), ['id' => 'package_id', 'live_version' => 'package_version']);
+    }
 }

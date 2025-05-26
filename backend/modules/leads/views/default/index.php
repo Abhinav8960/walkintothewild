@@ -24,6 +24,16 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $imageUrl = isset($model->user) ? $model->user->profileImage : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->user) ? $model->user->name : '';
+                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+                        },
+                    ],
+                    [
                         'label' => 'Source',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
@@ -31,7 +41,7 @@ $this->params['title'] = $this->title;
                             return $model->sourceLabel;
                         }
                     ],
-                   
+
                     [
                         'label' => 'Safaris',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
@@ -72,7 +82,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Lead Received Date',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return date('d M, Y h:i A', $model->created_at);
@@ -85,7 +95,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{view}',
                         'buttons' => [
-                           
+
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/leads/default/view', 'id' => $model->id], [
@@ -94,7 +104,7 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
 
-                           
+
                         ]
                     ],
                 ],

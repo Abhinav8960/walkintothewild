@@ -317,4 +317,12 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getTemporaryImagepath() 
+    {
+        if ($this->logo != '') {
+            return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
+        }
+        return '';
+    }
 }

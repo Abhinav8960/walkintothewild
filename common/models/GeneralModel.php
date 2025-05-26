@@ -1732,4 +1732,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['!=', 'sequence_for_package', 0])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
     }
+
+    public static function leadSource()
+    {
+        return [
+            1 => 'Package',
+            2 => 'Park',
+            3 => 'Partner'
+        ];
+    }
 }

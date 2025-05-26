@@ -11,6 +11,7 @@ use common\models\leads\Lead;
  */
 class LeadSearch extends Lead
 {
+    public $user_name;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class LeadSearch extends Lead
         return [
             [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'package_version', 'email', 'phone', 'destination', 'from_date', 'to_date', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes'], 'safe'],
+            [['user_name'], 'string'],
         ];
     }
 
@@ -90,6 +92,12 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'meals', $this->meals])
             ->andFilterWhere(['like', 'budget', $this->budget])
             ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
+
+        if (!empty($this->user_name)) {
+            $query->joinwith(['user' => function ($query) {
+                $query->andFilterWhere(['like', 'user.name', $this->user_name]);
+            }]);
+        }
 
         return $dataProvider;
     }
