@@ -19,7 +19,7 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
         return [
             [['id', 'status', 'created_by', 'created_at', 'status', 'created_at'], 'integer'],
             [['message', 'image_url'], 'string'],
-            [['sent_data'], 'safe'],
+            [['master_notification_template_id','sent_data'], 'safe'],
         ];
     }
 
@@ -75,6 +75,7 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
         // die('hi');
         $query
             ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'master_notification_template_id', $this->master_notification_template_id])
             ->andFilterWhere(['like', 'action', $this->action])
             ->andFilterWhere(['like', 'created_by', $this->created_by])
             ->andFilterWhere(['like', 'created_at', $this->created_at]);

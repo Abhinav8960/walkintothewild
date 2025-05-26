@@ -61,6 +61,8 @@ use yii\helpers\ArrayHelper;
 use common\models\trierror\SitePages;
 use common\models\MailLog;
 use common\models\MailLogRecipients;
+use common\models\master\notification\MasterNotificationTemplate;
+use common\models\master\smstemplate\MasterSmsTemplate;
 use common\models\master\userflag\MasterUserFlag;
 use DOMDocument;
 use DOMXPath;
@@ -557,6 +559,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function mailtemplateoption()
     {
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function notificationtemplateoption()
+    {
+        return ArrayHelper::map(MasterNotificationTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['type' => SORT_ASC])->all(), 'id', 'type');
+    }
+
+    public static function smstemplateoption()
+    {
+        return ArrayHelper::map(MasterSmsTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 
@@ -1719,5 +1731,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function packagemetastaycategory()
     {
         return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['!=', 'sequence_for_package', 0])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function leadSource()
+    {
+        return [
+            1 => 'Package',
+            2 => 'Park',
+            3 => 'Partner'
+        ];
     }
 }

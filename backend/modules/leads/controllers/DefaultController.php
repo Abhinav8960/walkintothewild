@@ -10,6 +10,7 @@ use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
+use common\models\operator\SafariOperator;
 use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -192,7 +193,6 @@ class DefaultController extends  Controller
         if ($quotation) {
             $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_REJECT; // Update status to approved
             $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s'); // Update status to approved
-            ; // Update status to disapproved
             $quotation->rejection_reason = $reason; // Save the rejection reason
             if ($quotation->save()) {
                 return $this->asJson(['success' => true]);
@@ -276,12 +276,30 @@ class DefaultController extends  Controller
         return false;
     }
 
-    public function actionPdfGeneration()
-    {
-        $content = $this->renderPartial('_report_view');
-        $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+    // public function actionPdfGeneration()
+    // {
+    //     $content = $this->renderPartial('_report_view');
+    //     $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
 
-        $mpdf->WriteHTML($content);
-        $mpdf->Output();
+    //     $mpdf->WriteHTML($content);
+    //     $mpdf->Output();
+    // }
+
+    public function actionOperatorLeadChat($id, $safari_operator_id)
+    {
+        $model = $this->findModel($id);
+        $quotations = $model->quotation;
+        $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
+        $chat_message = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+
+        return $this->render(
+            '_operator_lead_chat',
+            [
+                'model' => $model,
+                'quotations' => $quotations,
+                'chat_message' => $chat_message,
+                'safari_operator_model' => $safari_operator_model,
+            ]
+        );
     }
 }

@@ -219,7 +219,9 @@ class DefaultController extends SafariController
                 //         }
                 //     }
                 // }
-                // if ($active_followers = $model->shared_safari_model->getsharesafarifollowerlist()->asArray()->all()) {
+                // if($model->shared_safari_model->getsharesafarifollowerlist() != null){
+                // $active_followers = $model->shared_safari_model->getsharesafarifollowerlist()->asArray()->all();
+                // if (!empty($active_followers)) {
                 //     new \common\events\sharesafari\NewSafariCreatedByUser(
                 //         $active_followers,
                 //         $this->userinfoId,
@@ -227,8 +229,18 @@ class DefaultController extends SafariController
                 //         $model->shared_safari_model->user->email,
                 //         $model->shared_safari_model->id
                 //     );
+                //     }
                 // }
-
+                // $notify_admins = User :: find()->where(['status'=>User ::STATUS_ACTIVE , 'is_admin'=> 1,'is_adminstrator'=>User :: ROLE_ADMINISTRATOR])->asArray()->all();
+                // if ($notify_admins) {
+                //     new \common\events\sharesafari\NewSafariCreatedByUser(
+                //         $notify_admins,
+                //         $this->userinfoId,
+                //         $model->shared_safari_model->user->name,
+                //         $model->shared_safari_model->user->email,
+                //         $model->shared_safari_model->id
+                //     );
+                // }
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not created successfully"]);

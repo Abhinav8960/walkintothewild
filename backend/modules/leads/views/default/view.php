@@ -16,7 +16,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
 <div class="d-flex justify-content-between align-items-center mt-5">
     <!-- <h3 class="mt-5">Leads : <?= $model->name ?>, Quotation Received On <?= date('d M, Y h:i A', $model->created_at) ?></h3> -->
-    <h3 class="mt-5">Leads </h3>
+    <h3 class="mt-5">Leads (<?= $model->sourceLabel ?>)</h3>
 </div>
 
 
@@ -27,7 +27,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
         <table class="table table-bordered">
             <thead>
-                <th>Source</th>
+                <th>Name</th>
                 <th>Safaris</th>
                 <th>Travelers</th>
                 <th>Accomodation</th>
@@ -37,7 +37,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
             <tbody>
                 <tr>
                     <td>
-                        <?= $model->sourceLabel ?>
+                        <?= $model->displayLabel ?>
                     </td>
                     <td>
                         <?= !empty($model->safaris) ? $model->safaris : ''; ?>
@@ -179,80 +179,71 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
                     </tbody>
                 </table>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Assign To</h4>
-                        <?php
-                        foreach ($model->assignOperator as $assignOperator) {
-                        ?>
-                            <li>
-                                <a target="_blank" href="/operator/safari-operator/index?SafariOperatorSearch[business_name]=<?= $assignOperator->partner->business_name ?>"><?= $assignOperator->partner->business_name ?> </a>
-
-                            <?php
-                        }
-                            ?>
-                            </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <!-- Approve Modal -->
-    <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="approve-form">
-                        <input type="hidden" id="approve-quotation-id">
-                        <div class="mb-3">
-                            <label for="payment-url" class="form-label">Payment URL</label>
-                            <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
-
-                            <label for="payment-url" class="form-label">Plateform Partner Fees Percentage</label>
-                            <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Plateform partner fees percentage" required>
-
-                            <label for="approval-file" class="form-label">Upload QR Code File</label>
-                            <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
-                        </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Disapprove Modal -->
-    <div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="disapproveModalLabel">Disapprove Quotation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="disapprove-form">
-                        <input type="hidden" id="disapprove-quotation-id">
-                        <div class="mb-3">
-                            <label for="disapprove-reason" class="form-label">Reason for Disapproval</label>
-                            <textarea class="form-control" id="disapprove-reason" rows="3" placeholder="Enter reason for disapproval" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Submit</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
 </div>
-<?php
-$script = <<< JS
+<div class="card">
+    <div class="card-body">
+        <h4>Assign To</h4>
+        <ul class="nav nav-tabs" role="tablist">
+            <?php foreach ($model->assignOperator as $index => $assignOperator) {  ?>
+                <li class="nav-item"><a href="<?= Url::toRoute(['operator-lead-chat', 'id' => $model->id, 'safari_operator_id' => $assignOperator->partner->id]) ?>" class="nav-link  <?= isset($safari_operator_id) && $assignOperator->partner->id == $safari_operator_id ? 'active' : '' ?>"><?= $assignOperator->partner->business_name ?></a></li>
+            <?php
+            } ?>
+        </ul>
+    </div>
+</div>
+
+<!-- Approve Modal -->
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="approve-form">
+                    <input type="hidden" id="approve-quotation-id">
+                    <div class="mb-3">
+                        <label for="payment-url" class="form-label">Payment URL</label>
+                        <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
+
+                        <label for="payment-url" class="form-label">Plateform Partner Fees Percentage</label>
+                        <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Plateform partner fees percentage" required>
+
+                        <label for="approval-file" class="form-label">Upload QR Code File</label>
+                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Disapprove Modal -->
+<div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Quotation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="disapprove-form">
+                    <input type="hidden" id="disapprove-quotation-id">
+                    <div class="mb-3">
+                        <label for="disapprove-reason" class="form-label">Reason for Disapproval</label>
+                        <textarea class="form-control" id="disapprove-reason" rows="3" placeholder="Enter reason for disapproval" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </form>
+            </div>
+
+            <?php
+            $script = <<< JS
 // Handle Approve Button Click
 $('.approve-btn').on('click', function() {
     var quotationId = $(this).data('id');
@@ -327,5 +318,17 @@ $('#disapprove-form').on('submit', function(e) {
     $('#disapproveModal').modal('hide'); // Hide the modal
 });
 JS;
-$this->registerJs($script);
-?>
+            $this->registerJs($script);
+            ?>
+
+            <style>
+                .nav-tabs .nav-link.active {
+                    color: white !important;
+                    background-color: #237729 !important;
+                    border-color: #dee2e6 #dee2e6 #fff;
+                }
+
+                .table a {
+                    color: #237729 !important;
+                }
+            </style>

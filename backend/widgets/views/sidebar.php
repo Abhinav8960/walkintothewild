@@ -21,6 +21,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<li class="slide">
 					<a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/leads",
+														"/leads/default/index",
+													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
+					</li>
+				<?php } ?>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
@@ -158,6 +166,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template/index")) ? "active" : "" ?>" href="/master/mail-template/index">Mail Template</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/notification-template/index")) ? "active" : "" ?>" href="/master/notification-template/index">Notification Template</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/master/sms-template/index")) ? "active" : "" ?>" href="/master/sms-template/index">SMS Template</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/operator-category/index")) ? "active" : "" ?>" href="/master/operator-category/index">Operator Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/suggestion-category/index")) ? "active" : "" ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -1109,9 +1118,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/package/quote",
 														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/packageapproval/default/index",
-															"/packageapproval/default/view",
-														)) ? "active" : "" ?>" href="/packageapproval/default/index">Package Approval</a></li> -->
+																"/packageapproval/default/index",
+																"/packageapproval/default/view",
+															)) ? "active" : "" ?>" href="/packageapproval/default/index">Package Approval</a></li> -->
 
 						</ul>
 					</li>
@@ -1149,6 +1158,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/notification-log/index")) ? "active" : "" ?>" href="/log/notification-log/index">Notification Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/log/sms-log/index")) ? "active" : "" ?>" href="/log/sms-log/index">SMS Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/trierror/default/index")) ? "active" : "" ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>
@@ -1249,16 +1259,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													)) ? "active" : "" ?>" href="/urlshortner/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Url Shortner</span></a>
 					</li>
 				<?php endif; ?>
-
-
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
-					<li class="slide">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/leads",
-														"/leads/default/index",
-													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
-					</li>
-				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">

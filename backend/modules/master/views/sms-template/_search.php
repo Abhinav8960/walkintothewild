@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\airport\MasterAirportSearch $model */
+/** @var common\models\master\smstemplate\MasterSmsTemplate $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -22,21 +22,16 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'master_notification_template_id')->dropDownList(
-            GeneralModel::notificationtemplateoption(),
-            [
-                'prompt' => 'Select Template',
-            ]
-        ) ?>
+        <?= $form->field($model, 'name')->textInput(['placeholder' => 'Search by Template Name'])->label(false) ?>
     </div>
-    <!-- <div class="col-md-3">
+    <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::statusoption(),
+            GeneralModel::newstatusoption(),
             [
                 'prompt' => 'Select Status',
             ]
         ) ?>
-    </div> -->
+    </div>
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>
