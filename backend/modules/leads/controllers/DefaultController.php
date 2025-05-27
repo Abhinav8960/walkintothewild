@@ -119,6 +119,7 @@ class DefaultController extends  Controller
                 $quotation->net_payment_price = $quotation->partner_net_selling_price - $quotation->plateform_customer_discount;
                 $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED;
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
+                $installment->amount = $quotation->net_payment_price;
                 $installment->payment_link = $paymentUrl;
 
                 // Handle QR code file upload

@@ -142,7 +142,7 @@ class User extends \common\models\User
         }
 
         if ($this->profile_image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/user/' . $this->id . '/' . $this->profile_image;
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->profile_image;
         }
 
         if ($this->avatar != '') {
@@ -153,7 +153,7 @@ class User extends \common\models\User
     public function getCover_display_image()
     {
         if ($this->cover_image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/user_cover_image/' . $this->id . '/' . $this->cover_image;
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->cover_image;
         }
     }
 
