@@ -51,12 +51,15 @@ use yii\helpers\Html;
 
             <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
                 Additional Notes<br>
-                <?= isset($addional_notes) ? $addional_notes : '' ?>
+                <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
+                Additional Notes<br>
+                <span style="padding: 8px 0; color: #555;"><?= isset($addional_notes) ? $addional_notes : '' ?></span>
+            </p>
             </p>
 
             <table style="width: 100%; font-size: 18px; font-weight: bold; color: #333; margin-bottom: 20px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding-top: 15px; padding-bottom: 15px;">
                 <tr>
-                    <td style="text-align: left;">Amount</td>
+                <td style="text-align: left;">Amount <span style="color: #666666; font-size: 14px;">(inclusive of all taxes)</span></td>
                     <td style="text-align: right;"><?= isset($amount) ? '₹' . $amount : '' ?></td>
                 </tr>
             </table>
