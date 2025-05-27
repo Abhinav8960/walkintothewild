@@ -129,4 +129,30 @@ trait CommanRelationship
     {
         return base64_encode(convert_uuencode($this->id));
     }
+
+
+    public function getModulename(){
+        $module = GeneralModel :: moduletype();
+        if(isset($module[$this->module_type])){
+            if($this->module_type == 1){
+                return "Package";
+            }
+            elseif($this->module_type == 2){
+                return "Safari";
+            }
+            elseif($this->module_type == 3){
+                return "Fixed Departure";
+            }
+            elseif($this->module_type == 4){
+                return "User";
+            }
+            elseif($this->module_type == 5){
+                return "Operator";
+            }
+            elseif($this->module_type == 6){
+                return "Chat";
+            }
+        }
+        return "";
+    }
 }

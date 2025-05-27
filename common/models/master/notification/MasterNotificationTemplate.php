@@ -70,9 +70,9 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     public function rules()
     {
         return [
-            [['id', 'message', 'title'], 'required'],
+            [['id','module_type','message', 'title'], 'required'],
             [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message', 'type'], 'string'],
+            [['message','module_type','type'], 'string'],
             [['type'], 'safe'],
         ];
     }
@@ -84,6 +84,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     {
         return [
             'id' => 'ID',
+            'module_type'=>'Module Type',
             'title' => 'Title',
             'message' => 'Message',
             'status' => 'Status',

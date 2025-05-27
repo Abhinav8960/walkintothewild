@@ -106,6 +106,8 @@ UPDATE `master_sms_template` SET `route` = '1' WHERE `master_sms_template`.`id` 
 UPDATE `master_sms_template` SET `message` = 'Dear{{name}}, your OTP for mobile number verification with Walk Into The Wild is {{otp}}. Please enter this code to complete your verification. - Mediarc Technology' WHERE `master_sms_template`.`id` = 1;
 
 
+
+<!-- --new -->
 UPDATE `master_notification_template` SET `message` = '{{username}} has created a Shared Safari! Join now and explore together.' WHERE `master_notification_template`.`id` = 13;
 UPDATE `master_notification_template` SET `message` = '{{var1}} commented on your {{var2}} !' WHERE `master_notification_template`.`id` = 3;
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (15, 'Fixed Departure Created', 'Fixed Departure Created', 'Your safari {{safari_name}} is live! Spread the word to fill seats fast!', '1', '1735806556', '30', '1735806556', '30');
@@ -114,3 +116,5 @@ INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `s
 INSERT INTO `master_notification_template` (`id`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'Package Updated', 'Package Updated', '{{username}} has updated their safari package! See what’s new.', '1', '1735806556', '30', '1735806556', '30')
 ALTER TABLE `sms_log` ADD `service_id` INT NULL DEFAULT NULL AFTER `message_id`;
 ALTER TABLE `sms_log` CHANGE `status` `status` INT NOT NULL DEFAULT '2';
+
+ALTER TABLE `master_notification_template` ADD `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\', ' AFTER `id`;
