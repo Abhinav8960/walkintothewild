@@ -658,7 +658,7 @@ class DefaultController extends SafariController
 
 
         $dataProvider = new ActiveDataProvider([
-            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1, 'parent_id' => null])->orderBy(['created_at' => SORT_DESC]),
+            'query' => ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1, 'parent_id' => null]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "comments");
