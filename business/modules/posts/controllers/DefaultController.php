@@ -5,6 +5,8 @@ namespace business\modules\posts\controllers;
 use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
 use common\models\UserPostSearch;
+use frontend\models\profile\UserPostImageForm;
+use frontend\models\profile\UserPostsImageForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -25,7 +27,7 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'quotation', 'quotation-validate'],
+                'only' => ['index','view', 'quotation', 'quotation-validate'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -33,7 +35,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'quotation', 'quotation-validate'],
+                        'actions' => ['view','quotation', 'quotation-validate'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -61,6 +63,82 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionCreate()
+    {
+        $model = new UserPostImageForm();
+        $safari_operator = $this->module->operatormodel();
+        $model->safari_operator_id = $safari_operator->id;
+        $model->status = UserPosts::STATUS_ACTIVE;
+        $model->user_id = \Yii :: $app->user->identity->id;
+        $model->version = 1;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_image_model->save()) {
+                        $model->uploadFile();
+                        if ($model->file) {
+                            list($width, $height) = getimagesize($model->file->tempName);
+                            $model->user_image_model->height = $height;
+                            $model->user_image_model->width = $width;
+                            $model->user_image_model->size = $model->file->size;
+                        }
+                        if ($model->user_image_model->save()) {
+                            $model->user_image_model->savehistory();
+                            \Yii::$app->session->setFlash('success', 'Post added successfully');
+                            return $this->redirect(['index']);
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            $model->user_image_model->loadDefaultValues();
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdate($id){
+        $formModel = $this->findPostId($id);
+        $model = new UserPostImageForm($formModel);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_image_model->save()) {
+                        $model->uploadFile();
+                        if ($model->file) {
+                            list($width, $height) = getimagesize($model->file->tempName);
+                            $model->user_image_model->height = $height;
+                            $model->user_image_model->width = $width;
+                            $model->user_image_model->size = $model->file->size;
+                        }
+                        if ($model->user_image_model->save()) {
+                            $model->user_image_model->savehistory();
+                            \Yii::$app->session->setFlash('success', 'Post Edited successfully');
+                            return $this->redirect(['index']);
+                        } 
+                    }
+                }
+            }
+        } 
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function findPostId($id){
+        if (($model = UserPosts::findOne(['id' => $id, 'status' => [UserPosts::STATUS_ACTIVE, UserPosts::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     public function actionView($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id])->limit(1)->one();
@@ -71,6 +149,14 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $userpost,
         ]);
+    }
+    public function actionDelete($id)
+    {
+        $model = $this->findPostId($id);
+        $model->status = UserPosts::STATUS_DELETE;
+        $model->save();
+        Yii::$app->session->setFlash('success', 'Post Deleted Successfully');
+        return $this->redirect(['index']); 
     }
 
     public function actionCommentListing($id)
