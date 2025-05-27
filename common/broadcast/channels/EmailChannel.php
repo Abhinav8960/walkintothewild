@@ -58,7 +58,7 @@ class EmailChannel
                         $m = MailLog::find()->where(['id' => $log->id])->one();
 
                         $id = $mailer->getSentMessage()->getMessageId();
-                        $m->aws_message_id = $log->torecipient->recipient.'-'.$id;
+                        $m->aws_message_id = $id;
                         $m->try_send_count = $m->try_send_count + 1;
                         $m->status = true;
                         $m->mail_send_time = date('Y-m-d H:i:s');

@@ -95,8 +95,10 @@ class DefaultController extends  Controller
         $id = Yii::$app->request->post('id');
         $paymentUrl = Yii::$app->request->post('payment_url');
         $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage');
-        $qr_code_file_base64 = Yii::$app->request->post('qr_code_file_base64') ?? null;
+        $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
+        // print_r($qr_code_file);
+        // die();
         $quotation = LeadPartnerQuotes::findOne($id);
         $installment = LeadPartnerQuoteInstallments::find()->where(['lead_partner_quote_id' => $id])->one();
         $transaction = Yii::$app->db->beginTransaction();
@@ -118,7 +120,29 @@ class DefaultController extends  Controller
                 $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED;
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
                 $installment->payment_link = $paymentUrl;
-                $installment->qr_code_file_base64 = !empty($qr_code_file_base64) ? $qr_code_file_base64 : null;
+
+                // Handle QR code file upload
+                if (!empty($qr_code_file)) {
+                    // Retrieve the uploaded file directly
+
+
+
+                    // Generate the file name
+                    $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
+
+                    // Define the file path in the RFS storage
+                    $qrCodeFilePath = 'qr_codes/' . date('ym') . '/' . $qrCodeFileName;
+
+                    // Save the uploaded file to the RFS storage
+                    $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePath, $qrCodeFileName);
+
+                    if (!$qrCodeChecksum) {
+                        throw new \Exception('Failed to upload QR code to RFS.');
+                    }
+
+                    // Save the file path in the installment model
+                    $installment->qr_code_file = $qrCodeFilePath;
+                }
 
                 // Generate PDF
                 $content = $this->renderPartial('_quotation_pdf', ['quotation' => $quotation]);
@@ -136,8 +160,8 @@ class DefaultController extends  Controller
                     'error' => UPLOAD_ERR_OK,
                 ]);
 
-                $filePath = 'quotations/' . date('ym');
                 $fileName = 'quotation_' . $quotation->id . '.pdf';
+                $filePath = 'quotations/' . date('ym') . '/' . $fileName;
 
                 $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
 
@@ -145,7 +169,7 @@ class DefaultController extends  Controller
                     throw new \Exception('Failed to upload PDF to RFS.');
                 }
 
-                $quotation->quotation_filepath = $filePath . '/' . $fileName;
+                $quotation->quotation_filepath = $filePath;
 
                 // Save quotation and installment
                 $quotation->save(false);
@@ -159,7 +183,7 @@ class DefaultController extends  Controller
             return $this->asJson(['success' => true]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.'.$e->getMessage()]);
+            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.' . $e->getMessage()]);
         }
     }
 
@@ -290,7 +314,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render(
             '_operator_lead_chat',

@@ -47,37 +47,37 @@ class FsHelper
 
         $filesystem = \Yii::$app->get('fs');
 
-        $normalizedPath = $filesystem->normalizePath($filePath);
+        // $normalizedPath = $filesystem->normalizePath($filePath);
 
         // Simulate directory creation for S3
-        if (!$filesystem->fileExists($normalizedPath . '/')) {
-            try {
-                $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
-            } catch (\Exception $e) {
-                throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
-            }
-        }
-    
+        // if (!$filesystem->fileExists($normalizedPath . '/')) {
+        //     try {
+        //         $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
+        //     } catch (\Exception $e) {
+        //         throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
+        //     }
+        // }
+
         // Write the file to RFS
-        $fileFullPath = $normalizedPath . '/' . $fileName;
+        // $fileFullPath = $filePath . '/' . $fileName;
+        $fileFullPath = $filePath;
         try {
             $filesystem->write($fileFullPath, $contents);
         } catch (\Exception $e) {
             throw new \Exception("Failed to write file to RFS: " . $fileFullPath . ". Error: " . $e->getMessage());
         }
-    
+
         // Save metadata to the RestrictedFiles model
-        if (!self::restrictedfilesave($file, $fileFullPath, $fileName)) {
+        if (!self::filesave($file, $fileFullPath, $fileName)) {
             throw new \Exception("Failed to save file metadata for: " . $fileName);
         }
-    
+
         // Return the checksum of the uploaded file
         try {
             return $filesystem->checksum($fileFullPath);
         } catch (\Exception $e) {
             throw new \Exception("Failed to calculate checksum for file: " . $fileFullPath . ". Error: " . $e->getMessage());
         }
-
     }
 
     public static function restrictedsaveUploadedFile(UploadedFile $file, $filePath, $fileName = '', $autoExtension = true)
@@ -100,19 +100,21 @@ class FsHelper
         fclose($handle);
 
         $filesystem = \Yii::$app->get('rfs');
-        $normalizedPath = $filesystem->normalizePath($filePath);
+        // $normalizedPath = $filesystem->normalizePath($filePath);
 
-        // Simulate directory creation for S3
-        if (!$filesystem->fileExists($normalizedPath . '/')) {
-            try {
-                $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
-            } catch (\Exception $e) {
-                throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
-            }
-        }
+        // // Simulate directory creation for S3
+        // if (!$filesystem->fileExists($normalizedPath . '/')) {
+        //     try {
+        //         $filesystem->write($normalizedPath . '/', ''); // Create a placeholder object
+        //     } catch (\Exception $e) {
+        //         throw new \Exception("Failed to create directory: " . $normalizedPath . ". Error: " . $e->getMessage());
+        //     }
+        // }
 
         // Write the file to RFS
-        $fileFullPath = $normalizedPath . '/' . $fileName;
+        // $fileFullPath = $filePath . '/' . $fileName;
+        $fileFullPath = $filePath;
+
         try {
             $filesystem->write($fileFullPath, $contents);
         } catch (\Exception $e) {

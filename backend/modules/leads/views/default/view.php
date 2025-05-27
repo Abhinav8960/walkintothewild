@@ -261,30 +261,46 @@ $('#approve-form').on('submit', function(e) {
     var quotationId = $('#approve-quotation-id').val();
     var paymentUrl = $('#payment-url').val();
     var partnerFeesPercentage = $('#plateform-partner-fees-percentage').val();
-    var fileInput = $('#approval-file')[0].files[0];
+    var fileInput = $('#approval-file')[0].files[0]; // Get the file directly
 
+    // Create a FormData object to send the file and other data
+    var formData = new FormData();
+    formData.append('id', quotationId);
+    formData.append('payment_url', paymentUrl);
+    formData.append('plateform_partner_fees_percentage', partnerFeesPercentage);
     if (fileInput) {
-        // If a file is selected, read it as Base64
-        var reader = new FileReader();
-        reader.onload = function(e) {
-           // Include the MIME type before the Base64 content
-           var qr_code_file_base64 = e.target.result; // Full Base64 string with MIME type
-            sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qr_code_file_base64);
-        };
-        reader.readAsDataURL(fileInput); // Read the file as Base64
-    } else {
-        // If no file is selected, proceed without the file
-        sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, null);
+        formData.append('qr_code_file', fileInput); // Append the file
     }
+
+    // Send the request using AJAX
+    $.ajax({
+        url: '/leads/default/approve',
+        type: 'POST',
+        data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the data
+        contentType: false, // Prevent jQuery from setting the content type
+        success: function(response) {
+            if (response.success) {
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert('An error occurred: ' + response.message);
+            }
+        },
+        error: function() {
+            alert('An error occurred while processing the request.');
+        }
+    });
+
+    $('#approveModal').modal('hide'); // Hide the modal
 });
 
 // Function to send the approve request
-function sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qr_code_file_base64) {
+function sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qr_code_file) {
     $.post('/leads/default/approve', {
         id: quotationId,
         payment_url: paymentUrl,
         plateform_partner_fees_percentage: partnerFeesPercentage,
-        qr_code_file_base64: qr_code_file_base64 // Include the Base64 file content if available
+        qr_code_file: qr_code_file // Include the Base64 file content if available
     }, function(response) {
         if (response.success) {
             location.reload(); // Reload the page to reflect changes

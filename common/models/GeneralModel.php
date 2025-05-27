@@ -1741,4 +1741,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             3 => 'Partner'
         ];
     }
+
+    public static function moduletype(){
+        $module_type = [
+            1 => 'Package',
+            2 => 'Safari',
+            3 => 'Fixed Departure',
+            4 => 'User',
+            5 => 'Operator',
+            6 =>'Chat',
+        ];
+        return $module_type;
+    }
 }
