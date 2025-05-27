@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -11,8 +12,16 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'module_type')->dropDownList(
+            GeneralModel::moduletype(),
+            [
+                'prompt' => 'Select Module Type',
+            ]
+        )  ?>
     </div>
     <hr>
     <div class="col-md-6">

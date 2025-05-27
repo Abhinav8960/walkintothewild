@@ -25,6 +25,14 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'message')->textInput(['placeholder' => 'Search by Template Name'])->label(false) ?>
     </div>
     <div class="col-md-3">
+        <?= $form->field($model, 'module_type')->dropDownList(
+            GeneralModel::moduletype(),
+            [
+                'prompt' => 'Select By Module',
+            ]
+        )?>
+    </div>
+    <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::newstatusoption(),
             [

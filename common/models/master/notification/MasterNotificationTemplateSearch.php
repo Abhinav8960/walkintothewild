@@ -18,7 +18,7 @@ class MasterNotificationTemplateSearch extends MasterNotificationTemplate
     {
         return [
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message', 'type'], 'string', 'max' => 255],
+            [['message', 'module_type','type'], 'string', 'max' => 255],
         ];
     }
 
@@ -66,7 +66,8 @@ class MasterNotificationTemplateSearch extends MasterNotificationTemplate
             'status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'message', $this->message]);
+              ->andFilterWhere(['like', 'module_type', $this->module_type]) 
+              ->andFilterWhere(['like', 'message', $this->message]);
 
         return $dataProvider;
     }

@@ -25,6 +25,7 @@ class SafariJoinedByuser extends Event
     protected $shared_safari;
     protected $engine;
     protected $master_notification_template;
+    // public $safariOperatorId;
 
     protected $channels = [
         'email',
@@ -141,12 +142,13 @@ class SafariJoinedByuser extends Event
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
         $this->shared_safari_name = $this->shared_safari->share_safari_title;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
-        $this->userId = $this->shared_safari->host_user_id;
+        // $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-
+            $this->userId = $this->shared_safari->safarioperator->user_id;
             $this->email = $this->shared_safari->safarioperator->email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
         } else {
+            $this->userId = $this->shared_safari->host_user_id;
             $this->email = $this->shared_safari->user->email;
             $this->name =  $this->shared_safari->user->name;
         }
