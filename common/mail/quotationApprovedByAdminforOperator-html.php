@@ -18,7 +18,7 @@ use yii\helpers\Html;
         <hr>
         <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>, Your quotation for <?= $user ?> approved and forwarded!</p>
 
-        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? '+' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? '+' . $safaris . ' Jungle Safaris' : '' ?></p>
+        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
         <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
             <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Quotation</div>
