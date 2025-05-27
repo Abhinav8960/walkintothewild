@@ -118,3 +118,8 @@ ALTER TABLE `sms_log` ADD `service_id` INT NULL DEFAULT NULL AFTER `message_id`;
 ALTER TABLE `sms_log` CHANGE `status` `status` INT NOT NULL DEFAULT '2';
 
 ALTER TABLE `master_notification_template` ADD `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\', ' AFTER `id`;
+
+
+<!-- 27 may -->
+INSERT INTO `content_management` (`id`, `name`, `content`, `remark`, `type`, `status`, `created_at`, `updated_by`, `created_by`, `updated_at`) VALUES (9, 'Refund Policy', 'THIS IS TEST REFUND POLICY ', 'xyz', 'p', '1', '1723560406', '19', '1', '1726041026');
+INSERT INTO `content_management` (`id`, `name`, `content`, `remark`, `type`, `status`, `created_at`, `updated_by`, `created_by`, `updated_at`) VALUES ('10', 'cancellation', 'THIS IS TEST Cancellation POLICY ', 'xyz', 'p', '1', '1723560406', '19', '1', '1726041026');

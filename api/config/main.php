@@ -127,6 +127,10 @@ return [
                 'logout' => 'site/logout',
                 'termofuse' => 'site/termofuse',
                 'privacypolicy' => 'site/privacypolicy',
+
+                'refundpolicy' => 'site/refundpolicy',
+                'cancellation' => 'site/cancellation',
+
                 'update-token' => 'site/update-token',
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',
