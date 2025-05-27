@@ -166,7 +166,10 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     public function getDisplayLabel()
     {
         if ($this->source == 1) {
-            return $this->package ? $this->package->package_name : '';
+            if ($this->package) {
+                return '<a href="' . Yii::$app->params['frontend_url'] . '/package/' . $this->package->package_slug . '" style="color: blue;">' . $this->package->package_name . '</a>';
+            }
+            return '';
         } else if ($this->source == 2) {
             return $this->park ? $this->park->title : '';
         } else if ($this->source == 3) {

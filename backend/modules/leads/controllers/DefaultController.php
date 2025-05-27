@@ -94,24 +94,117 @@ class DefaultController extends  Controller
     {
         $id = Yii::$app->request->post('id');
         $paymentUrl = Yii::$app->request->post('payment_url');
+        $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage');
+        $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
+        // print_r($qr_code_file);
+        // die();
         $quotation = LeadPartnerQuotes::findOne($id);
         $installment = LeadPartnerQuoteInstallments::find()->where(['lead_partner_quote_id' => $id])->one();
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if ($quotation) {
-                $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED; // Update status to approved
-                $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s'); // Update status to approved
-                $installment->payment_link = $paymentUrl; // Save the payment URL
+
+
+                // Calculate platform partner fees
+                $partnerSellingPrice = $quotation->partner_selling_price;
+                $platformPartnerFees = ($partnerSellingPrice * $partnerFeesPercentage) / 100;
+                $netSellingPrice = $partnerSellingPrice + $platformPartnerFees;
+
+                // Update quotation details
+                $quotation->plateform_partner_fees_percentage = $partnerFeesPercentage;
+                $quotation->plateform_partner_fees = $platformPartnerFees;
+                $quotation->partner_net_selling_price = $netSellingPrice;
+                // $quotation->plateform_customer_discount = $quotation->plateform_customer_discount;
+                $quotation->net_payment_price = $quotation->partner_net_selling_price - $quotation->plateform_customer_discount;
+                $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED;
+                $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
+                $installment->payment_link = $paymentUrl;
+
+                // Handle QR code file upload
+                if (!empty($qr_code_file)) {
+                    // Retrieve the uploaded file directly
+
+
+
+                    // Generate the file name
+                    $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
+
+                    // Define the file path in the RFS storage
+                    $qrCodeFilePath = 'qr_codes/' . date('ym') . '/' . $qrCodeFileName;
+
+                    // Save the uploaded file to the RFS storage
+                    $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePath, $qrCodeFileName);
+
+                    if (!$qrCodeChecksum) {
+                        throw new \Exception('Failed to upload QR code to RFS.');
+                    }
+
+                    // Save the file path in the installment model
+                    $installment->qr_code_file = $qrCodeFilePath;
+                }
+
+                // Generate PDF
+                $content = $this->renderPartial('_quotation_pdf', ['quotation' => $quotation]);
+                $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+                $pdf->WriteHTML($content);
+                $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $quotation->id . '.pdf';
+                $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+                // Upload PDF to RFS
+                $uploadedFile = new \yii\web\UploadedFile([
+                    'name' => 'quotation_' . $quotation->id . '.pdf',
+                    'tempName' => $pdfFilePath,
+                    'type' => 'application/pdf',
+                    'size' => filesize($pdfFilePath),
+                    'error' => UPLOAD_ERR_OK,
+                ]);
+
+                $fileName = 'quotation_' . $quotation->id . '.pdf';
+                $filePath = 'quotations/' . date('ym') . '/' . $fileName;
+
+                $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
+
+                if (!$checksum) {
+                    throw new \Exception('Failed to upload PDF to RFS.');
+                }
+
+                $quotation->quotation_filepath = $filePath;
+
+                // Save quotation and installment
                 $quotation->save(false);
                 $installment->save(false);
+
+                // Trigger events and prepare chat
+                new \common\events\operator\QuotationApprovatedByAdmin($quotation, $paymentUrl, $quotation->lead->user_id, $quotation->partner->user_id);
                 $this->prepareChat($quotation);
             }
             $transaction->commit();
             return $this->asJson(['success' => true]);
         } catch (\Exception $e) {
             $transaction->rollBack();
-            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.']);
+            return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.' . $e->getMessage()]);
+        }
+    }
+
+    private function uploadToRfs($filePath, $quotationId)
+    {
+        // Define the destination path in the RFS storage
+        $destinationPath = "quotations/" . date('ym') . "/quotation_{$quotationId}.pdf";
+
+        // Use the 'rfs' component to upload the file
+        $rfs = Yii::$app->rfs;
+
+        try {
+            // Read the file content
+            $fileContent = file_get_contents($filePath);
+
+            // Write the file to the RFS storage
+            $rfs->write($destinationPath, $fileContent);
+
+            return ['success' => true, 'path' => $destinationPath];
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 
@@ -221,14 +314,14 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat_message = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or',['user_id'=>$safari_operator_model->user_id],['recipient_user_id'=>$safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render(
             '_operator_lead_chat',
             [
                 'model' => $model,
                 'quotations' => $quotations,
-                'chat_message' => $chat_message,
+                'chat' => $chat,
                 'safari_operator_model' => $safari_operator_model,
             ]
         );

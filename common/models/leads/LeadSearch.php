@@ -12,6 +12,7 @@ use common\models\leads\Lead;
 class LeadSearch extends Lead
 {
     public $user_name;
+    public $safari_operator_id;
     /**
      * {@inheritdoc}
      */
@@ -21,6 +22,7 @@ class LeadSearch extends Lead
             [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'package_version', 'email', 'phone', 'destination', 'from_date', 'to_date', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes'], 'safe'],
             [['user_name'], 'string'],
+            [['safari_operator_id'], 'integer'],
         ];
     }
 
@@ -98,7 +100,11 @@ class LeadSearch extends Lead
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
             }]);
         }
-
+        if ($this->safari_operator_id) {
+            $query->joinWith(['assignOperator' => function ($q) {
+                $q->andFilterWhere([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => $this->safari_operator_id]);
+            }]);
+        }
         return $dataProvider;
     }
 

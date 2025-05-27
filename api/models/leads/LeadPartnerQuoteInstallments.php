@@ -83,6 +83,7 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
 
     public function getPayment_initiate_link()
     {
-        return \Yii::$app->params['frontend_url'] . '/payment/' . $this->payment_hash;
+        // return \Yii::$app->params['frontend_url'] . '/payment/' . $this->payment_hash;
+        return $this->payment_link;
     }
 }

@@ -199,7 +199,7 @@ class MailLog extends \common\models\trierror\ActiveLogRecord implements \common
                     ->setSubject($log->subject)
                     ->send();
 
-                if ($message ) {
+                if ($message) {
                     $m = MailLog::find()->where(['id' => $log->id])->one();
 
                     $id = $mailer->getSentMessage()->getMessageId();
@@ -234,5 +234,10 @@ class MailLog extends \common\models\trierror\ActiveLogRecord implements \common
     public function getTemplate()
     {
         return $this->hasOne(MasterMailTemplate::className(), ['id' => 'mail_template_id']);
+    }
+    
+    public function getAttachments()
+    {
+        return $this->hasMany(MailAttachments::className(), ['mail_log_id' => 'id']);
     }
 }

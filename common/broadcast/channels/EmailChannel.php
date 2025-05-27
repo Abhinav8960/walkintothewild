@@ -19,12 +19,21 @@ class EmailChannel
         if ($log) {
             $cc = [];
             $bcc = [];
+            $attachments = [];
             foreach ($log->ccrecipients as $c) {
                 $cc[] = $c->recipient;
             }
 
             foreach ($log->bccrecipients as $b) {
                 $bcc[] = $b->recipient;
+            }
+
+            foreach ($log->attachments as $attachment) {
+                if ($attachment->file_path && !file_exists($attachment->file_path)) {
+                    continue; // Skip if file does not exist
+
+                }
+                $attachments[] = $attachment->filepath;
             }
 
             if ($log->mail_template_id) {
@@ -42,7 +51,7 @@ class EmailChannel
                         ->setTo($log->torecipient->recipient)
                         ->setBcc($bcc)
                         ->setCc($cc)
-                        ->setSubject($log->subject)
+                        ->setSubject($log->subject)                        
                         ->send();
 
                     if ($message) {

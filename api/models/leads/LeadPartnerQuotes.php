@@ -3,6 +3,7 @@
 namespace api\models\leads;
 
 use api\models\meta\MetaPackageRange;
+use api\models\meta\MetaStayCategory;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
 use Yii;
@@ -155,7 +156,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 
     public function getStaycatgory()
     {
-        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
     }
 
     public function getDue_quatation()

@@ -42,14 +42,15 @@ $names = ArrayHelper::getColumn(
             ]
         ) ?>
     </div>
-    <!-- <div class="col-md-2">
-        <?= $form->field($model, 'operator_id')->dropDownList(
+    
+    <div class="col-md-2">
+        <?= $form->field($model, 'safari_operator_id')->dropDownList(
             GeneralModel::operatorslist(),
             [
                 'prompt' => 'Select Operator',
             ]
         ) ?>
-    </div> -->
+    </div>
 
 
 </div>

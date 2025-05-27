@@ -18,7 +18,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
     {
         return [
             [['id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'email', 'phone', 'start_date', 'end_date', 'addtional_data'], 'safe'],
+            [['name', 'email', 'phone', 'start_date', 'end_date', 'addtional_data','quotation_filepath'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
         ];
     }
@@ -77,6 +77,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
             'installment' => $this->installment,
             'received_amount' => $this->received_amount,
             'end_date' => $this->end_date,
+            
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -86,6 +87,7 @@ class LeadPartnerQuotesSearch extends LeadPartnerQuotes
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'quotation_filepath', $this->quotation_filepath])            
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'addtional_data', $this->addtional_data]);
 

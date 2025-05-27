@@ -1,4 +1,7 @@
 <?php
+
+use common\models\chat\ChatMessage;
+
 ?>
 
 <?= $this->render('view', ['model' => $model, 'quotations' => $quotations, 'safari_operator_id' => $safari_operator_model->id]) ?>
@@ -7,24 +10,25 @@
     <div class="inbox_msg">
         <div class="mesgs">
             <div class="msg_history">
-                <?php if ($chat_message) {
-                    foreach ($chat_message as $message) {
-                        if ($message->created_by == $safari_operator_model->user_id) {
+                <?php if ($chat) {
+                    foreach ($chat as $message) {
+                        $chat_message = ChatMessage::find()->where(['chat_id'=>$message->id])->limit(1)->one();
+                        if ($chat_message->created_by == $safari_operator_model->user_id) {
                 ?>
                             <div class="incoming_msg">
                                 <div class="incoming_msg_img"> <img src="<?= $safari_operator_model->temporaryImagepath ?>" alt="sunil"> </div>
                                 <div class="received_msg">
                                     <div class="received_withd_msg">
-                                        <p><?= $message->last_message ?></p>
-                                        <span class="time_date"><?= date('Y-m-d H:i:s', $message->last_message_at) ?></span>
+                                        <p><?= $chat_message->message ?></p>
+                                        <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
                                     </div>
                                 </div>
                             </div>
                         <?php } else { ?>
                             <div class="outgoing_msg">
                                 <div class="sent_msg">
-                                    <p><?= $message->last_message ?></p>
-                                    <span class="time_date"><?= date('Y-m-d H:i:s', $message->last_message_at) ?></span>
+                                    <p><?= $chat_message->message ?></p>
+                                    <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
                                 </div>
                             </div>
                 <?php }

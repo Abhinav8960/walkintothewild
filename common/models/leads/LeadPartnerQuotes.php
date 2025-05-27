@@ -3,6 +3,7 @@
 namespace common\models\leads;
 
 use common\models\meta\MetaPackageRange;
+use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use Yii;
@@ -64,12 +65,12 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     public function rules()
     {
         return [
-            [['addtional_data', 'datetime_of_approval_by_admin', 'created_at', 'updated_at', 'created_by', 'updated_by','park_id'], 'default', 'value' => null],
+            [['addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'created_at', 'updated_at', 'created_by', 'updated_by', 'park_id'], 'default', 'value' => null],
             [['received_amount', 'is_approved_by_admin'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
             [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data','addional_notes','rejection_reason'], 'safe'],
+            [['start_date', 'end_date', 'addtional_data', 'addional_notes', 'rejection_reason'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
@@ -105,6 +106,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'is_approved_by_admin' => 'is approved by admin',
             'datetime_of_approval_by_admin' => 'Datetime of Approval by admin',
             'status' => 'Status',
+            'quotation_filepath'=> 'Quotation File',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
@@ -124,23 +126,21 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
 
     public function getLead()
     {
-       return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
-
+        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
     }
 
     public function getPartner()
     {
-       return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
-
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
     }
 
     public function getStaycatgory()
     {
-        return $this->hasOne(MetaPackageRange::className(), ['id' => 'stay_category_id']);
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
     }
 
     public function getDue_quatation()
     {
-        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id'=>SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
     }
 }
