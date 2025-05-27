@@ -145,6 +145,10 @@ class User extends \common\models\User
             return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->profile_image;
         }
 
+        if ($this->google_avatar_image != '') {
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->google_avatar_image;
+        }
+
         if ($this->avatar != '') {
             return $this->avatar;
         }

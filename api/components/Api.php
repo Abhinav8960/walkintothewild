@@ -186,6 +186,32 @@ class Api extends Component
         if (!empty($params->avatar) && $user->avatar != $params->avatar) {
             $u = User::findOne(['id' => $user->id]);
             $u->avatar = $params->avatar;
+            // $u->save(false);
+
+            $fileName = $u->id . '_google_avatar' . '.jpg';
+
+            $url = $u->avatar;
+            $content = @file_get_contents($url);
+
+            if ($content != false) {
+                $tempPath = tempnam(sys_get_temp_dir(), $u->id . '_google_avatar') . '.jpg';
+                file_put_contents($tempPath, $content);
+
+                $uploadedFile = new \yii\web\UploadedFile([
+                    'name' => $fileName,
+                    'tempName' => $tempPath,
+                    'type' => 'image/jpg',
+                    'size' => filesize($tempPath),
+                    'error' => UPLOAD_ERR_OK,
+                ]);
+
+                $filePath = 'user/profile/' . $fileName;
+
+                $avatar_image = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
+
+                $u->google_avatar_image = $fileName;
+                @unlink($tempPath);
+            }
             $u->save(false);
         }
         return true;
