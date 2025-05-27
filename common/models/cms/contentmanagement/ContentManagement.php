@@ -32,6 +32,10 @@ class ContentManagement extends \yii\db\ActiveRecord implements \common\interfac
     const CM_DISCLAIMER = 6;
     const CM_ABOUT_US = 7;
     const CMS_PRIVACY_POLICY = 8;
+    const CMS_REFUND_POLICY = 9;
+    const CMS_CANCELLATION = 10;
+
+
 
 
     public function behaviors()

@@ -41,7 +41,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'error', 'convergent-survey', 'report-page-reason', 'test'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy','cancellation','error', 'convergent-survey', 'report-page-reason', 'test'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -80,6 +80,8 @@ class SiteController extends RestController
                     'delete-account' => ['POST'],
                     'report-page-reason' => ['GET'],
                     'test' => ['GET'],
+                    'refundpolicy' => ['GET'],
+                    'cancellation' => ['GET'],
 
                 ],
             ],
@@ -481,6 +483,25 @@ class SiteController extends RestController
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
+
+    public function actionRefundpolicy()
+    {
+        $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY]);
+        if ($refund_policy) {
+            return \Yii::$app->api->sendResponse($data = ['content' => $refund_policy->content], ['message' => "Success"]);
+        }
+        return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
+    }
+
+    public function actionCancellation()
+    {
+        $cancellation = ContentManagement::findOne(['id' => ContentManagement::CMS_CANCELLATION]);
+        if ($cancellation) {
+            return \Yii::$app->api->sendResponse($data = ['content' => $cancellation->content], ['message' => "Success"]);
+        }
+        return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
+    }
+    
     public function actionUpdateToken($firebase_token, $old_firebase_token)
     {
         if ($this->access_token) {
