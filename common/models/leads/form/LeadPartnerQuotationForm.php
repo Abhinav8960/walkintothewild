@@ -62,6 +62,9 @@ class LeadPartnerQuotationForm extends Model
             ['start_date', 'date', 'format' => 'php:Y-m-d'],
             ['end_date', 'date', 'format' => 'php:Y-m-d'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>='],
+            ['partner_selling_price', 'max', 'value' => 9999999],
+            ['plateform_partner_fees_percentage', 'max', 'value' => 100],
+            ['plateform_partner_fees_percentage', 'default', 'value' => 10],
 
 
         ];

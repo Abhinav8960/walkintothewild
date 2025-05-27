@@ -18,7 +18,7 @@ use yii\helpers\Html;
         <hr>
         <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>, get ready for your next wild adventure!</p>
 
-        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? '+' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? '+' . $safaris . ' Jungle Safaris' : '' ?></p>
+        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
         <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
             <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Quotation</div>
@@ -47,16 +47,17 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">End Date</td>
                     <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
                 </tr>
+
             </table>
 
             <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
                 Additional Notes<br>
-                <?= isset($addional_notes) ? $addional_notes : '' ?>
+                <span style="padding: 8px 0; color: #555;"><?= isset($addional_notes) ? $addional_notes : '' ?></span>
             </p>
 
             <table style="width: 100%; font-size: 18px; font-weight: bold; color: #333; margin-bottom: 20px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding-top: 15px; padding-bottom: 15px;">
                 <tr>
-                    <td style="text-align: left;">Amount</td>
+                    <td style="text-align: left;">Amount <span style="color: #666666; font-size: 14px;">(inclusive of all taxes)</span></td>
                     <td style="text-align: right;"><?= isset($amount) ? '₹' . $amount : '' ?></td>
                 </tr>
             </table>

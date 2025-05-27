@@ -91,7 +91,7 @@ class QuotationApprovatedByAdmin extends Event
                         'addional_notes' => $this->quotation->addional_notes,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->quotation->due_quatation->amount),
                     ],
-                    'to_mail' => $this->user->email,
+                    'to_mail' => $this->partner_user->email,
                     'cc' => [],
                     'bcc' => [],
                 ]
