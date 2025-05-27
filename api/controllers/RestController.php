@@ -27,7 +27,7 @@ class RestController extends Controller
     public $access_token;
     public $auth_token;
 
-    public $pageSize = 2;
+    public $pageSize = 5;
 
 
 
