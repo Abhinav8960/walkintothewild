@@ -50,7 +50,7 @@ use yii\helpers\Html;
             </table>
 
             <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
-                Additional Notes<br>               
+            <span style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Additional Notes</span><br>         
                 <span style="padding: 8px 0; color: #555;"><?= isset($addional_notes) ? $addional_notes : '' ?></span>
             </p>
 
