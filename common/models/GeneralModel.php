@@ -1742,15 +1742,32 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         ];
     }
 
-    public static function moduletype(){
+    public static function moduletype()
+    {
         $module_type = [
             1 => 'Package',
             2 => 'Safari',
             3 => 'Fixed Departure',
             4 => 'User',
             5 => 'Operator',
-            6 =>'Chat',
+            6 => 'Chat',
         ];
         return $module_type;
+    }
+
+    public static function formatIndianCurrency($amount)
+    {
+        $decimal = '';
+        if (strpos($amount, '.') !== false) {
+            list($amount, $decimal) = explode('.', $amount);
+            $decimal = '.' . substr($decimal, 0, 2); // Keep only two decimal places
+        }
+        $lastThree = substr($amount, -3);
+        $restUnits = substr($amount, 0, -3);
+        if ($restUnits != '') {
+            $lastThree = ',' . $lastThree;
+        }
+        $formatted = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', $restUnits) . $lastThree . $decimal;
+        return $formatted;
     }
 }
