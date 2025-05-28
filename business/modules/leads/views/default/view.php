@@ -62,7 +62,7 @@ AppAsset::register($this);
 
             </tbody>
         </table>
-        <table class="table table-bordered">
+<!--        <table class="table table-bordered">
             <thead>
                 <th>Name</th>
                 <th>Email</th>
@@ -82,7 +82,7 @@ AppAsset::register($this);
                 </tr>
 
             </tbody>
-        </table>
+        </table>-->
         <div class="card">
             <div class="card-body" id="quotation-form-div" value="/leads/default/quotation?id=<?= $model->id ?>">
 
