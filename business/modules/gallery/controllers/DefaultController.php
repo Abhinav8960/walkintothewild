@@ -102,13 +102,13 @@ class DefaultController extends Controller
         }
 
         $searchModel = new PartnerGalleryImageSearch();
-        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
+        // $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
             'model' => $partner_gallery_model,
-            'searchModel' => $searchModel ,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -131,7 +131,7 @@ class DefaultController extends Controller
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->partner_gallery_image_model->save(false)) {
+                    if ($model->partner_gallery_image_model->save()) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Successfully Uploaded');
                         return $this->redirect(['view', 'id' => $partner_gallery_model->id]);
@@ -143,6 +143,56 @@ class DefaultController extends Controller
         }
 
         return $this->render('create_gallery', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSwtich($id)
+    {
+        $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if ($model->status == PartnerGallery::STATUS_ACTIVE) {
+            $model->status = PartnerGallery::STATUS_SUSPEND;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Successfully Inacive !!!');
+        } else {
+            $model->status = PartnerGallery::STATUS_ACTIVE;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Successfully Active!!!');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUpdateGalleryImage($id)
+    {
+        $partner_gallery_image_model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
+        if (!$partner_gallery_image_model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model = new PartnerGalleryImageForm($partner_gallery_image_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->partner_gallery_image_model->save()) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Successfully Uploaded');
+                        return $this->redirect(['view', 'id' => $partner_gallery_image_model->partner_gallery_id]);
+                    }
+                }
+            }
+        } else {
+            $model->partner_gallery_image_model->loadDefaultValues();
+        }
+
+        return $this->render('update_gallery', [
             'model' => $model,
         ]);
     }

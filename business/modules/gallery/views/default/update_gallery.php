@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Create Gallery';
+$this->title = 'Update Gallery';
 $this->params['title'] = $this->title;
 
 ?>

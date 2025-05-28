@@ -60,28 +60,45 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                         }
                     ],
 
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'headerOptions' => ['style' => 'width:10%; text-align:left;'],
-                    //     'template' => '{view}',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-
-                    //             return Html::a(
-                    //                 Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                    //                 [
-                    //                     Url::toRoute(['view', 'id' => $model->id])
-                    //                 ],
-                    //                 [
-                    //                     'class' => 'btn p-0 change-menuicon',
-                    //                     'title' => 'View',
-                    //                 ]
-                    //             );
-                    //         },
-
-                    //     ]
-                    // ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'headerOptions' => ['style' => 'width:10%; text-align:left;'],
+                        'template' => '{check}&nbsp{edit}',
+                        'buttons' => [
+                            'check' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['swtich', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-success',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to Inactive this Gallery?',
+                                        'title' => 'Remove ',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                } else {
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['swtich', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-warning',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure to Active this Gallery?',
+                                        'title' => 'Show in Front',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                }
+                            },
+                            'edit' => function ($url, $model) {
+                                return Html::a(
+                                    Html::img($this->params['baseurl'] . '/img/update.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        Url::toRoute(['update-gallery-image', 'id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Edit',
+                                    ]
+                                );
+                            }
+                        ]
+                    ],
 
                 ],
             ]); ?>
