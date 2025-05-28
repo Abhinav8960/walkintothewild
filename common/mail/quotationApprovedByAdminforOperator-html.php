@@ -68,11 +68,11 @@ use yii\helpers\Html;
         <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
             <h1 style="text-align: center; font-size: 22px; margin-bottom: 10px;">T&C</h1>
             <h2 style="text-align: center; font-size: 16px; font-weight: normal; margin-bottom: 25px; color: #555;">T&C of Mediarc Technologies Private Limited ("MEDIARC OR WALKINTOTHEWILD")</h2>
-            <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD is operated by Mediarc Technologies Pvt. Ltd. and functions as an e-commerce operator providing a dedicated online marketplace for wildlife travel through <a style="color: #007bff; text-decoration: none;" href="http://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
+            
             <h3>1. General Information</h3>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD is operated by Mediarc Technologies Pvt. Ltd. and functions as an e-commerce operator
                 providing a dedicated online marketplace for wildlife travel through <a
-                    href="http://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
+                    href="https://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">The platform connects travel agents, service providers, and prospective travellers for safari tours,
                 travel packages, and related services.</p>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD solely operates as a technology platform and booking intermediary; all travel services
