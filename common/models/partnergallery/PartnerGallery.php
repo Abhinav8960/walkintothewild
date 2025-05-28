@@ -3,6 +3,7 @@
 namespace common\models\partnergallery;
 
 use common\models\park\SafariPark;
+use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\traits\CommanRelationship;
 use Yii;
 use yii\behaviors\SluggableBehavior;
@@ -100,5 +101,14 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getPark_label()
     {
         return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
+    }
+
+    public function getGallery_count()
+    {
+        $gallery_count = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+        if ($gallery_count > 0) {
+            return $gallery_count;
+        }
+        return 0;
     }
 }

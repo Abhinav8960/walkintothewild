@@ -37,7 +37,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return isset($model->park_label) ? $model->park_label->title : '';
                         }
                     ],
-
+                    [
+                        'label' => 'Gallery Count',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->gallery_count;
+                        }
+                    ],
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
