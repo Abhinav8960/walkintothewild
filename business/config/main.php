@@ -34,6 +34,9 @@ return [
         'leads' => [
             'class' => 'business\modules\leads\Module',
         ],
+        'gallery' => [
+            'class' => 'business\modules\gallery\Module',
+        ]
 
 
     ],
