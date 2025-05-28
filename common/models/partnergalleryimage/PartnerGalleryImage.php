@@ -1,29 +1,29 @@
 <?php
 
-namespace common\models\partnergallery;
+namespace common\models\partnergalleryimage;
 
-use common\models\park\SafariPark;
 use common\traits\CommanRelationship;
 use Yii;
-use yii\behaviors\SluggableBehavior;
 
 /**
- * This is the model class for table "partner_gallery".
+ * This is the model class for table "partner_gallery_image".
  *
  * @property int $id
- * @property int $safari_operator_id
- * @property string $title
- * @property int $safari_park_id
- * @property string $slug
- * @property int|null $sequence
+ * @property int $partner_gallery_id
+ * @property string $original_filename
+ * @property string $filepath
+ * @property string $file
+ * @property string|null $title
+ * @property string|null $caption
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class PartnerGalleryImage extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+
     use CommanRelationship;
 
     /**
@@ -31,7 +31,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
      */
     public static function tableName()
     {
-        return 'partner_gallery';
+        return 'partner_gallery_image';
     }
 
     /**
@@ -53,12 +53,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
                     return time();
                 },
             ],
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'title',
-                'slugAttribute' => 'slug',
-                'ensureUnique' => true,
-            ],
         ];
     }
 
@@ -68,12 +62,13 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['sequence', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['title', 'caption', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['safari_operator_id', 'title', 'safari_park_id', 'slug'], 'required'],
-            [['safari_operator_id', 'safari_park_id', 'sequence', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title', 'slug'], 'string', 'max' => 255],
-            [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
+            [['partner_gallery_id', 'original_filename', 'filepath', 'file'], 'required'],
+            [['partner_gallery_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['caption'], 'string'],
+            [['original_filename', 'filepath', 'file'], 'string', 'max' => 512],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -84,11 +79,12 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             'id' => 'ID',
-            'safari_operator_id' => 'Safari Operator ID',
+            'partner_gallery_id' => 'Partner Gallery ID',
+            'original_filename' => 'Original Filename',
+            'filepath' => 'Filepath',
+            'file' => 'File',
             'title' => 'Title',
-            'safari_park_id' => 'Safari Park ID',
-            'slug' => 'Slug',
-            'sequence' => 'Sequence',
+            'caption' => 'Caption',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
@@ -97,8 +93,11 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         ];
     }
 
-    public function getPark_label()
+    public function getGallery_image()
     {
-        return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
+        if ($this->filepath) {
+            return Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
+        }
+        return '';
     }
 }
