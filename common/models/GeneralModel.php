@@ -1771,6 +1771,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $formatted;
     }
 
+<<<<<<< HEAD
     public static function safarisession()
     {
         $query = ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','title');
@@ -1781,5 +1782,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $query = ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','name');
         return $query;
+=======
+    public static function PaymentgatewayOptions()
+    {
+        return [           
+            1 => 'PayU',
+            2 => 'HDFC',
+        ];
+>>>>>>> 10f6da3024d31c1920440a7cd1dda04103458347
     }
 }

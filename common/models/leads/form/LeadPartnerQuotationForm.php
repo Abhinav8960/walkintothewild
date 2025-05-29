@@ -41,7 +41,7 @@ class LeadPartnerQuotationForm extends Model
 
     public $action_url;
     public $action_validate_url;
-    public $validity_date_time;
+    public $validity_date;
     public $permit_booking_date;
 
 
@@ -64,11 +64,11 @@ class LeadPartnerQuotationForm extends Model
             ['end_date', 'date', 'format' => 'php:Y-m-d'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>='],
             [['partner_selling_price'], 'integer', 'max' => 9999999],
-            [['validity_date_time'], 'date', 'format' => 'php:Y-m-d H:i:s'],
+            [['validity_date'], 'date', 'format' => 'php:Y-m-d'],
             [['permit_booking_date'], 'date', 'format' => 'php:Y-m-d'],
-            [['validity_date_time'], 'validateTwoHourCondition'],
+            [['validity_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
             [['permit_booking_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
-            [['validity_date_time','permit_booking_date'], 'safe'],
+            [['validity_date','permit_booking_date'], 'safe'],
 
 
         ];
@@ -107,7 +107,7 @@ class LeadPartnerQuotationForm extends Model
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
-            'validity_date_time' => 'Validity Date Time',
+            'validity_date' => 'Validity Date',
             'permit_booking_date' => 'Permit Booking Date',
         ];
     }
@@ -143,7 +143,7 @@ class LeadPartnerQuotationForm extends Model
             $lpq->received_amount = $this->received_amount;
             $lpq->end_date = $this->end_date;
             $lpq->addtional_data = $this->addtional_data;
-            $lpq->validity_date_time = $this->validity_date_time;
+            $lpq->validity_date = $this->validity_date;
             $lpq->permit_booking_date = $this->permit_booking_date;
             $lpq->status = 1;
             $lpq->save(false);

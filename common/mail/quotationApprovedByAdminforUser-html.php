@@ -48,10 +48,10 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
                 </tr>
 
-                <?php if (isset($validity_date_time) && $validity_date_time != null) { ?>
+                <?php if (isset($validity_date) && $validity_date != null) { ?>
                     <tr>
                         <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Vaility Date</td>
-                        <td style="padding: 8px 0; color: #555;"><?= isset($validity_date_time) ? $validity_date_time : '' ?></td>
+                        <td style="padding: 8px 0; color: #555;"><?= isset($validity_date) ? $validity_date : '' ?></td>
                     </tr>
                 <?php } ?>
                 <?php if (isset($permit_booking_date) && $permit_booking_date != null) { ?>

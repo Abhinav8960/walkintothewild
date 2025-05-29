@@ -15,13 +15,16 @@ use Yii;
  * @property int $lead_partner_id
  * @property int $lead_id
  * @property int $partner_id
- * @property int $safari
+ * @property int|null $park_id
+ * @property string|null $addional_notes
+ * @property int $safaris
  * @property int $travelers
  * @property int $stay_category_id
- * @property string $name
- * @property string $email
- * @property string $phone
+ * @property string|null $name
+ * @property string|null $email
+ * @property string|null $phone
  * @property string $start_date
+ * @property string $end_date
  * @property float $partner_selling_price
  * @property int $plateform_partner_fees_percentage %
  * @property float $plateform_partner_fees
@@ -30,10 +33,17 @@ use Yii;
  * @property float $net_payment_price
  * @property int $installment
  * @property float $received_amount
- * @property string $end_date
  * @property string|null $addtional_data
+ * @property int $is_approved_by_admin
+ * @property string|null $datetime_of_approval_by_admin
+ * @property string|null $rejection_reason
+ * @property string|null $quotation_filepath
  * @property int|null $status
  * @property int|null $created_at
+ * @property int $is_payment_received
+ * @property string|null $transaction_id
+ * @property string|null $transaction_datetime
+ * @property int|null $payment_gateway 1=>payu,2=>hdfc
  * @property int|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
@@ -59,22 +69,40 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         return 'lead_partner_quotes';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function rules()
+    // {
+    //     return [
+    //         [['addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'created_at', 'updated_at', 'created_by', 'updated_by', 'park_id'], 'default', 'value' => null],
+    //         [['received_amount', 'is_approved_by_admin'], 'default', 'value' => 0],
+    //         [['status'], 'default', 'value' => 1],
+    //         [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
+    //         [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+    //         [['start_date', 'end_date', 'addtional_data', 'addional_notes', 'rejection_reason'], 'safe'],
+    //         [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
+    //         [['name', 'email'], 'string', 'max' => 255],
+    //         [['phone'], 'string', 'max' => 50],
+
+            
+    //     ];
+    // }
+
     public function rules()
     {
         return [
-            [['addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'created_at', 'updated_at', 'created_by', 'updated_by', 'park_id'], 'default', 'value' => null],
-            [['received_amount', 'is_approved_by_admin'], 'default', 'value' => 0],
+            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'addtional_data', 'datetime_of_approval_by_admin', 'rejection_reason', 'quotation_filepath', 'created_at', 'transaction_id', 'transaction_datetime', 'payment_gateway', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'name', 'email', 'start_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'end_date'], 'required'],
-            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['start_date', 'end_date', 'addtional_data', 'addional_notes', 'rejection_reason'], 'safe'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price'], 'required'],
+            [['lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_approved_by_admin', 'status', 'created_at', 'is_payment_received', 'payment_gateway', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['addional_notes'], 'string'],
+            [['start_date', 'end_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
-            [['name', 'email'], 'string', 'max' => 255],
+            [['name', 'email', 'rejection_reason', 'quotation_filepath', 'transaction_id'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
-            [['validity_date_time', 'permit_booking_date'], 'safe'],
+            [['validity_date', 'permit_booking_date'], 'safe'],
         ];
     }
 
@@ -88,12 +116,16 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'lead_partner_id' => 'Lead Partner ID',
             'lead_id' => 'Lead ID',
             'partner_id' => 'Partner ID',
+            'park_id' => 'Park ID',
+            'addional_notes' => 'Addional Notes',
+            'safaris' => 'Safaris',
             'travelers' => 'Travelers',
             'stay_category_id' => 'Stay Category ID',
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
             'start_date' => 'Start Date',
+            'end_date' => 'End Date',
             'partner_selling_price' => 'Partner Selling Price',
             'plateform_partner_fees_percentage' => 'Plateform Partner Fees Percentage',
             'plateform_partner_fees' => 'Plateform Partner Fees',
@@ -101,18 +133,22 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'plateform_customer_discount' => 'Plateform Customer Discount',
             'net_payment_price' => 'Net Payment Price',
             'installment' => 'Installment',
-            'received_amount' => 'Recived Amount',
-            'end_date' => 'End Date',
+            'received_amount' => 'Received Amount',
             'addtional_data' => 'Addtional Data',
-            'is_approved_by_admin' => 'is approved by admin',
-            'datetime_of_approval_by_admin' => 'Datetime of Approval by admin',
+            'is_approved_by_admin' => 'Is Approved By Admin',
+            'datetime_of_approval_by_admin' => 'Datetime Of Approval By Admin',
+            'rejection_reason' => 'Rejection Reason',
+            'quotation_filepath' => 'Quotation Filepath',
             'status' => 'Status',
-            'quotation_filepath'=> 'Quotation File',
             'created_at' => 'Created At',
+            'is_payment_received' => 'Is Payment Received',
+            'transaction_id' => 'Transaction ID',
+            'transaction_datetime' => 'Transaction Datetime',
+            'payment_gateway' => 'Payment Gateway',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
-            'validity_date_time' => 'Validity Date Time',
+            'validity_date' => 'Validity Date',
             'permit_booking_date' => 'Permit Booking Date',
         ];
     }
@@ -145,5 +181,11 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     public function getDue_quatation()
     {
         return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+    }
+
+    public function getInstallment()
+    {
+        // return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'transaction_id', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 }

@@ -88,7 +88,42 @@ $this->params['title'] = $this->title;
                             return date('d M, Y h:i A', $model->created_at);
                         }
                     ],
-
+                    [
+                        'label' => 'Is payment received',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->is_payment_received) {
+                                return '<span class="badge badge-success">Yes</span>';
+                            } else {
+                                return '<span class="badge badge-danger">No</span>';
+                            }
+                        }
+                    ],
+                    [
+                        'label' => 'payment Information',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str = '';
+                            if ($model->is_payment_received) {
+                                $str .= '<span class="badge badge-success">Payment Received</span>';
+                                if (!empty($model->transaction_datetime)) {
+                                    $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
+                                }
+                                if (!empty($model->transaction_id)) {
+                                    $str .= '<br><b>Transaction Id</b>: ' .  $model->transaction_id;
+                                }
+                                if (!empty($model->booked_operator_id)) {
+                                    $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
+                                }
+                            } 
+                            return $str;
+                            
+                        }
+                    ],
                     [
                         'label' => 'Quotation Count',
                         'headerOptions' => ['style' => 'width: 15%;'],
