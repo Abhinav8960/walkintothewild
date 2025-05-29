@@ -257,21 +257,21 @@ class DefaultController extends  Controller
             $message = "Park: " . $quotation->park->title;
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "; ";
+        $message .= "\n";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "; ";
+        $message .= "\n";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "; ";
+        $message .= "\n";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "; ";
+        $message .= "\n";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "; ";
+        $message .= "\n";
         $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
-        $message .= "; ";
+        $message .= "\n";
         $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
-        $message .= "; ";
+        $message .= "\n";
         $message .= "<b>Note</b>";
-        $message .= "; ";
+        $message .= "\n";
         $message .= $quotation->addional_notes;
 
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();

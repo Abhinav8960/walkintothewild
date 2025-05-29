@@ -2,6 +2,8 @@
 
 namespace backend\modules\leads\model;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
@@ -79,8 +81,8 @@ class QuotationPaymentReceived extends Model
             $this->updateQuotation();
             $this->updateQuotationInstallment();
             $this->updateLead();
-            // $this->prepareChat();
-            // $this->prepareNotification();
+            $this->prepareChat();
+            $this->prepareNotification();
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -133,12 +135,98 @@ class QuotationPaymentReceived extends Model
 
     private function prepareChat()
     {
-        // Prepare chat message or any other related operations
-        // This is a placeholder for actual chat preparation logic
+
+        $quotation = $this->form_model;
+        // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
+        if (!$chat_model) {
+            return Yii::$app->api->sendFailedResponse([], 'you can not send quote on this chat', 400);
+        }
+
+        $message = "Payment received for the send quotation.\n";
+        $message .= "Transaction ID: " . $this->transaction_id;
+        $message .= "\n";
+        $message .= "Amount: " . $this->form_model->received_amount;
+        $message .= "\n";
+
+
+
+        if (isset($quotation->park->title)) {
+            $message = "Park: " . $quotation->park->title;
+            $message .= "Safaris: " . $quotation->safaris;
+        }
+        $message .= "\n";
+        $message .= "Travelers: " . $quotation->travelers;
+        $message .= "\n";
+        $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
+        $message .= "\n";
+        $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
+        $message .= "\n";
+        $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
+        $message .= "\n";
+        // $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+        // $message .= "\n";
+        // $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        // $message .= "\n";
+        $message .= "<b>Note</b>";
+        $message .= "\n";
+        $message .= $quotation->addional_notes;
+
+        // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        // $data = $x->preparedata;
+        // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
+        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->message = $message;
+        $chat_message->is_quotation_message = false;
+        // $chat_message->quotation_id = $quotation->id;
+        $chat_message->is_quotation_active = false;
+        // $chat_message->data = json_encode($data);
+        $chat_message->status = 1;
+        $chat_message->sender_id = $quotation->partner->user_id;
+
+        if ($chat_message->save(false)) {
+
+            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+            $chat->last_message = $message;
+            $chat->last_message_at = time();
+            $chat->quote_id = $quotation->id;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            return $chat->save(false);
+        }
+
+        return false;
     }
 
     private function prepareNotification()
     {
+        new \common\events\leads\QuotationPaymentReceived(
+            $quotation = $this->form_model,
+            $user_id = $this->form_model->lead->user_id,
+            $partner_user_id = $this->form_model->partner_id,
+            $transaction_id = $this->transaction_id,
+            $payment_date = $this->transaction_datetime,
+        );
+        return true;
         // Prepare notification message or any other related operations
         // This is a placeholder for actual notification preparation logic
     }

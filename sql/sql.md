@@ -32,3 +32,13 @@ ALTER TABLE `user` ADD `google_avatar_image` VARCHAR(512) NULL DEFAULT NULL AFTE
 ALTER TABLE `lead_partner_quotes` CHANGE `permit_booking_date_time` `permit_booking_date` DATE NULL DEFAULT NULL;
 
 ALTER TABLE `lead_partner_quotes` CHANGE `validity_date_time` `validity_date` DATE NULL DEFAULT NULL;
+
+
+
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QPRU', 'Quotation Payment Received', 'quotationPaymentReceived-html', '1', '1716278771', '2', '1716289465', '2')
+
+UPDATE `master_mail_template` SET `name` = 'Quotation Payment Received For User', `path` = 'quotationPaymentReceivedForUser-html' WHERE `master_mail_template`.`code` = 'QPRU';
+
+
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QPRP', 'Quotation Payment Received For Partner', 'quotationPaymentReceivedForPartner-html', '1', '1716278771', '2', '1716289465', '2')
+
