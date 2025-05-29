@@ -47,6 +47,7 @@ class PartnerGalleryImageSearch extends PartnerGalleryImage
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['sequence' => SORT_ASC]],
         ]);
 
         $this->load($params);
