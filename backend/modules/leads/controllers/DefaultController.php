@@ -104,8 +104,6 @@ class DefaultController extends  Controller
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if ($quotation) {
-
-
                 // Calculate platform partner fees
                 $partnerSellingPrice = $quotation->partner_selling_price;
                 $platformPartnerFees = ($partnerSellingPrice * $partnerFeesPercentage) / 100;
@@ -326,5 +324,39 @@ class DefaultController extends  Controller
                 'safari_operator_model' => $safari_operator_model,
             ]
         );
+    }
+
+    public function actionPaymentReceived($quotation_id)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $quotation = LeadPartnerQuotes::findOne($quotation_id);
+        if (empty($quotation)) {
+            return ['success' => false, 'message' => 'The Quotation page does not exist.'];
+        }
+
+        if (isset($quotation->lead) && $quotation->lead->is_payment_received == true) {
+            return ['success' => false, 'message' => 'Payment already received for this Lead.'];
+        }
+
+        $model = new \backend\modules\leads\model\QuotationPaymentReceived($quotation);
+
+        if (Yii::$app->request->isPost) {
+            $postData = \Yii::$app->request->post();
+            $model->load($postData);
+
+            if ($model->validate()) {
+
+                if ($model->markPaymentReceived()) {
+                    return ['success' => true, 'message' => 'Payment marked as received successfully.'];
+                } else {
+                    return ['success' => false, 'message' => 'Failed to mark payment as received.'];
+                }
+            } else {
+                return ['success' => false, 'message' => 'Validation failed: ' . implode(', ', $model->getFirstErrors())];
+            }
+        }
+
+        return ['success' => false, 'message' => 'Invalid request method.'];
     }
 }

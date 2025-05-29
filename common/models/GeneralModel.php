@@ -1770,4 +1770,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $formatted = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', $restUnits) . $lastThree . $decimal;
         return $formatted;
     }
+
+    public static function PaymentgatewayOptions()
+    {
+        return [           
+            1 => 'PayU',
+            2 => 'HDFC',
+        ];
+    }
 }

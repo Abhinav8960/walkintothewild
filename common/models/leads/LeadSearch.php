@@ -13,14 +13,18 @@ class LeadSearch extends Lead
 {
     public $user_name;
     public $safari_operator_id;
+
+
+
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'travelers', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'package_version', 'email', 'phone', 'destination', 'from_date', 'to_date', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes'], 'safe'],
+            [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'safaris', 'travelers', 'stay_category_id', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'is_payment_received', 'booked_operator_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
         ];
@@ -69,16 +73,21 @@ class LeadSearch extends Lead
             'source' => $this->source,
             'package_id' => $this->package_id,
             'park_id' => $this->park_id,
-            'stay_category_id' => $this->stay_category_id,
             'operator_id' => $this->operator_id,
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
             'is_date_flexible' => $this->is_date_flexible,
+            'safaris' => $this->safaris,
             'travelers' => $this->travelers,
+            'stay_category_id' => $this->stay_category_id,
             'user_id' => $this->user_id,
             'is_booking_for_login_user' => $this->is_booking_for_login_user,
             'is_seen_by_admin' => $this->is_seen_by_admin,
             'status' => $this->status,
+            'is_payment_received' => $this->is_payment_received,
+            'booked_operator_id' => $this->booked_operator_id,
+            'transaction_datetime' => $this->transaction_datetime,
+            'payment_gateway' => $this->payment_gateway,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -93,6 +102,7 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'transport', $this->transport])
             ->andFilterWhere(['like', 'meals', $this->meals])
             ->andFilterWhere(['like', 'budget', $this->budget])
+            ->andFilterWhere(['like', 'transaction_id', $this->transaction_id])
             ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
 
         if (!empty($this->user_name)) {
@@ -139,16 +149,20 @@ class LeadSearch extends Lead
             'package_id' => $this->package_id,
             'park_id' => $this->park_id,
             'operator_id' => $this->operator_id,
-            'stay_category_id' => $this->stay_category_id,
-
             'from_date' => $this->from_date,
             'to_date' => $this->to_date,
             'is_date_flexible' => $this->is_date_flexible,
+            'safaris' => $this->safaris,
             'travelers' => $this->travelers,
+            'stay_category_id' => $this->stay_category_id,
             'user_id' => $this->user_id,
             'is_booking_for_login_user' => $this->is_booking_for_login_user,
             'is_seen_by_admin' => $this->is_seen_by_admin,
             'status' => $this->status,
+            'is_payment_received' => $this->is_payment_received,
+            'booked_operator_id' => $this->booked_operator_id,
+            'transaction_datetime' => $this->transaction_datetime,
+            'payment_gateway' => $this->payment_gateway,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -163,6 +177,7 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'transport', $this->transport])
             ->andFilterWhere(['like', 'meals', $this->meals])
             ->andFilterWhere(['like', 'budget', $this->budget])
+            ->andFilterWhere(['like', 'transaction_id', $this->transaction_id])
             ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
 
         return $dataProvider;

@@ -17,9 +17,9 @@ class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
     public function rules()
     {
         return [
-            [['id', 'lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
-            [['payment_link', 'payment_hash', 'before_datetime'], 'safe'],
+            [['payment_link', 'payment_hash', 'qr_code_file', 'before_datetime', 'transaction_id', 'transaction_datetime'], 'safe'],
         ];
     }
 
@@ -67,6 +67,8 @@ class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
             'amount' => $this->amount,
             'before_datetime' => $this->before_datetime,
             'status' => $this->status,
+            'payment_gateway' => $this->payment_gateway,
+            'transaction_datetime' => $this->transaction_datetime,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -74,7 +76,9 @@ class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
         ]);
 
         $query->andFilterWhere(['like', 'payment_link', $this->payment_link])
-            ->andFilterWhere(['like', 'payment_hash', $this->payment_hash]);
+            ->andFilterWhere(['like', 'payment_hash', $this->payment_hash])
+            ->andFilterWhere(['like', 'qr_code_file', $this->qr_code_file])
+            ->andFilterWhere(['like', 'transaction_id', $this->transaction_id]);
 
         return $dataProvider;
     }

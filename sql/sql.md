@@ -16,3 +16,12 @@ UPDATE `lead_partner_quote_installments` SET `qr_code_file_base64`=NULL;
 
 ALTER TABLE `lead_partner_quote_installments` CHANGE `qr_code_file` `qr_code_file` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
+-- 29052025
+
+ALTER TABLE `lead_partner_quote_installments` CHANGE `status` `status` INT NOT NULL DEFAULT '0' COMMENT '0=>not received, 1=> received';
+ALTER TABLE `lead_partner_quotes` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `created_at`;
+ALTER TABLE `lead_partner_quote_installments` ADD `transaction_id` VARCHAR(255) NULL DEFAULT NULL AFTER `status`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`;
+ALTER TABLE `lead_partner_quote_installments` ADD `payment_gateway` INT NULL DEFAULT NULL COMMENT '1=>payu,2=>hdfc' AFTER `status`;
+ALTER TABLE `lead_partner_quotes` ADD `transaction_id` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`, ADD `payment_gateway` INT NULL DEFAULT NULL COMMENT '1=>payu,2=>hdfc' AFTER `transaction_datetime`;
+
+ALTER TABLE `lead` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`, ADD `booked_operator_id` INT NOT NULL AFTER `is_payment_received`, ADD `transaction_id` VARCHAR(255) NULL DEFAULT NULL AFTER `booked_operator_id`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`, ADD `payment_gateway` INT NOT NULL COMMENT '1=>payu,2=>hdfc' AFTER `transaction_datetime`;

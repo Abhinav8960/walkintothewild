@@ -27,6 +27,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                 <th>Accomodation</th>
                 <th>Travel Date looking For</th>
                 <th>Lead Received Date</th>
+                <th>Payment Info</th>
             </thead>
             <tbody>
                 <tr>
@@ -44,6 +45,28 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                         ?>
                     </td>
                     <td><?= date('d M, Y h:i A', $model->created_at) ?></td>
+                    <td>
+                        <?php
+                        $str = '';
+                        if ($model->is_payment_received) {
+                            $str .= '<span class="badge badge-success">Payment Received</span>';
+                            if (!empty($model->transaction_datetime)) {
+                                $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
+                            }
+                            if (!empty($model->transaction_id)) {
+                                $str .= '<br><b>Transaction Id</b>: ' .  $model->transaction_id;
+                            }
+                            if (!empty($model->booked_operator_id)) {
+                                $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
+                            }
+                        } else {
+                            $str .= '<span class="badge badge-danger">Payment Not Received</span>';
+                        }
+
+                        echo $str;
+                        ?>
+
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -75,7 +98,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                     <tbody>
                         <?php if (count($quotations) > 0) { ?>
                             <?php foreach ($quotations as $quotation) { ?>
-                                <tr>
+                                <tr class="<?= $quotation->is_payment_received == true ? 'bg-warning' : '' ?>">
                                     <td><?= $quotation->partner->business_name ?></td>
                                     <td><?= !empty($quotation->safaris) ? $quotation->safaris : ''; ?></td>
                                     <td><?= !empty($quotation->travelers) ? $quotation->travelers : '' ?></td>
@@ -120,9 +143,13 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
                                     <td>
-                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING) { ?>
+                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING && $model->is_payment_received == 0) { ?>
                                             <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
                                             <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button>
+                                        <?php } ?>
+
+                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED && $model->is_payment_received == 0) { ?>
+                                            <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -200,8 +227,55 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
     </div>
 </div>
 
+
+<!-- Payment Received Modal -->
+<div class="modal fade" id="PaymentReceivedModel" tabindex="-1" aria-labelledby="PaymentReceivedModelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PaymentReceivedModelLabel">Payment Received</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="payment-received-form">
+                    <input type="hidden" id="payment-received-quotation-id">
+                    <div class="mb-3">
+                        <label for="payment-gateway" class="form-label">Payment Gateway</label>
+                        <select class="form-control" id="payment-gateway" required>
+                            <option value="">Select Payment Gateway</option>
+
+                            <?php
+                            foreach (GeneralModel::PaymentgatewayOptions() as $key => $value) {
+                                echo "<option value=\"$key\">$value</option>";
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transaction-id" class="form-label">Transaction ID</label>
+                        <input type="text" class="form-control" id="transaction-id" placeholder="Enter Transaction ID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transaction-datetime" class="form-label">Transaction Datetime</label>
+                        <input type="datetime-local" class="form-control" id="transaction-datetime" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <?php
 $script = <<< JS
+
+
+
+
 // Handle Approve Button Click
 $('.approve-btn').on('click', function() {
     var quotationId = $(this).data('id');
@@ -291,6 +365,51 @@ $('#disapprove-form').on('submit', function(e) {
     });
     $('#disapproveModal').modal('hide');
 });
+
+
+// Handle Payment Received Button Click
+$('.payment-received').on('click', function () {
+    var quotationId = $(this).data('id');
+    console.log('Quotation ID:', quotationId); // Debugging log
+    $('#payment-received-quotation-id').val(quotationId);
+    $('#PaymentReceivedModel').modal('show');
+});
+
+// Handle Payment Received Form Submission
+$('#payment-received-form').on('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Get form values
+    var quotationId = $('#payment-received-quotation-id').val();
+    var transactionId = $('#transaction-id').val();
+    var transactionDatetime = $('#transaction-datetime').val();
+    var paymentGateway = $('#payment-gateway').val(); // Get the selected payment gateway
+    // Format transactionDatetime to 'YYYY-MM-DD HH:mm'
+    transactionDatetime = transactionDatetime.replace('T', ' ');
+    // Send AJAX request
+    $.ajax({
+        url: '/leads/default/payment-received?quotation_id=' + quotationId,
+        type: 'POST',
+        data: {
+            'QuotationPaymentReceived[payment_gateway]': paymentGateway,
+            'QuotationPaymentReceived[transaction_id]': transactionId,
+            'QuotationPaymentReceived[transaction_datetime]': transactionDatetime,
+        },
+        success: function(response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert('An error occurred: ' + response.message);
+            }
+        },
+        error: function() {
+            alert('An error occurred while processing the request.');
+        }
+    });
+
+    $('#PaymentReceivedModel').modal('hide');
+});
+
 JS;
 $this->registerJs($script);
 ?>
