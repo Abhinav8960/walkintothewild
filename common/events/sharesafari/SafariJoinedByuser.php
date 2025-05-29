@@ -145,7 +145,7 @@ class SafariJoinedByuser extends Event
         // $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->userId = $this->shared_safari->safarioperator->user_id;
-            $this->email = $this->shared_safari->safarioperator->email;
+            $this->email = $this->shared_safari->safarioperator->operator_email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
         } else {
             $this->userId = $this->shared_safari->host_user_id;

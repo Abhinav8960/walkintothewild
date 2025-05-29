@@ -1,14 +1,15 @@
 <?php
 
-namespace common\models\partnergallery;
+namespace api\models\partnergalleryimage;
 
+use api\models\partnergalleryimage\PartnerGalleryImage;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * PartnerGallerySearch represents the model behind the search form of PartnerGallery.
+ * PartnerGalleryImageSearch represents the model behind the search form of PartnerGalleryImage.
  */
-class PartnerGallerySearch extends PartnerGallery
+class PartnerGalleryImageSearch extends PartnerGalleryImage
 {
     /**
      * {@inheritdoc}
@@ -16,8 +17,9 @@ class PartnerGallerySearch extends PartnerGallery
     public function rules()
     {
         return [
-            [['safari_operator_id', 'title', 'safari_park_id'], 'safe'],
-            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['partner_gallery_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['caption'], 'string'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,7 +41,7 @@ class PartnerGallerySearch extends PartnerGallery
      */
     public function search($params)
     {
-        $query = PartnerGallery::find()->where(['status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]]);
+        $query = PartnerGalleryImage::find()->where(['status' => [PartnerGalleryImage::STATUS_ACTIVE, PartnerGalleryImage::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -58,7 +60,7 @@ class PartnerGallerySearch extends PartnerGallery
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'safari_operator_id' => $this->safari_operator_id,
+            'partner_gallery_id' => $this->partner_gallery_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

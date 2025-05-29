@@ -108,8 +108,8 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 'site/test' => 'site/test',
-                'mobile-no-verification'=>'site/mobile-no-verification',
-                'verify-mobile-no'=>'site/verify-mobile-no',
+                'mobile-no-verification' => 'site/mobile-no-verification',
+                'verify-mobile-no' => 'site/verify-mobile-no',
                 'deactivate-account' => 'site/deactivate-account',
                 'request-delete-account' => 'site/request-delete-account',
                 'site/error' => 'site/error',
@@ -194,6 +194,10 @@ return [
                 'manage/package/create' => 'manage/package/create',
                 'manage/package/<action>/<slug>' => 'manage/package/<action>',
                 'manage/package/<action>/<slug>/<day>' => 'manage/package/<action>',
+
+                /**Partner Gallery */
+                'manage/gallery/list' => 'manage/gallery/index',
+                'manage/gallery/<slug>/<action>' => 'manage/gallery/<action>',
 
                 /** feeds */
                 'feeds' => 'feeds/default/index',

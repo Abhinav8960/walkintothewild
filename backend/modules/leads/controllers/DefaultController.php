@@ -266,6 +266,10 @@ class DefaultController extends  Controller
         $message .= "; ";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
         $message .= "; ";
+        $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+        $message .= "; ";
+        $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        $message .= "; ";
         $message .= "<b>Note</b>";
         $message .= "; ";
         $message .= $quotation->addional_notes;

@@ -62,27 +62,27 @@ AppAsset::register($this);
 
             </tbody>
         </table>
-<!--        <table class="table table-bordered">
+       <table class="table table-bordered">
             <thead>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>Lead Name</th>
+                <!-- <th>Email</th>
+                <th>Phone</th> -->
             </thead>
             <tbody>
                 <tr>
                     <td>
                         <?= !empty($model->name) ? $model->name : ''; ?>
                     </td>
-                    <td>
+                    <!-- <td>
                         <?= !empty($model->email) ? $model->email : '' ?>
                     </td>
                     <td>
                         <?= !empty($model->phone) ? $model->phone : '' ?>
-                    </td>
+                    </td> -->
                 </tr>
 
             </tbody>
-        </table>-->
+        </table>
         <div class="card">
             <div class="card-body" id="quotation-form-div" value="/leads/default/quotation?id=<?= $model->id ?>">
 

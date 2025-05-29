@@ -9,7 +9,7 @@ use kartik\datetime\DateTimePicker;
 ?>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'package-form',
+    'id' => 'posts-form',
     'method' => 'POST',
     'fieldConfig' => [
         'template' => '<div class="form-group">{label}{input}{error}</div>',

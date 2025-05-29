@@ -1,4 +1,4 @@
-ALTER TABLE `user` ADD `google_avatar_image` VARCHAR(512) NULL DEFAULT NULL AFTER `avatar`;						
+					
 ALTER TABLE `lead_partner_quotes` ADD `quotation_filepath` VARCHAR(255) NULL DEFAULT NULL AFTER `rejection_reason`;
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QABA', 'Quotation Approved By Admin', 'quotationApprovedByAdmin-html', '1', '1716278771', '2', '1716289465', '2');
 UPDATE `master_mail_template` SET `code` = 'QAAU' WHERE `master_mail_template`.`id` = 37;
@@ -25,3 +25,8 @@ ALTER TABLE `lead_partner_quote_installments` ADD `payment_gateway` INT NULL DEF
 ALTER TABLE `lead_partner_quotes` ADD `transaction_id` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`, ADD `payment_gateway` INT NULL DEFAULT NULL COMMENT '1=>payu,2=>hdfc' AFTER `transaction_datetime`;
 
 ALTER TABLE `lead` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`, ADD `booked_operator_id` INT NOT NULL AFTER `is_payment_received`, ADD `transaction_id` VARCHAR(255) NULL DEFAULT NULL AFTER `booked_operator_id`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`, ADD `payment_gateway` INT NOT NULL COMMENT '1=>payu,2=>hdfc' AFTER `transaction_datetime`;
+ALTER TABLE `user` ADD `google_avatar_image` VARCHAR(512) NULL DEFAULT NULL AFTER `avatar`;	
+
+ALTER TABLE `lead_partner_quotes` CHANGE `permit_booking_date_time` `permit_booking_date` DATE NULL DEFAULT NULL;
+
+ALTER TABLE `lead_partner_quotes` CHANGE `validity_date_time` `validity_date` DATE NULL DEFAULT NULL;

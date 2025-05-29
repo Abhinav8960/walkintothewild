@@ -41,7 +41,8 @@ class LeadPartnerQuotationForm extends Model
 
     public $action_url;
     public $action_validate_url;
-
+    public $validity_date;
+    public $permit_booking_date;
 
 
     /**
@@ -63,7 +64,11 @@ class LeadPartnerQuotationForm extends Model
             ['end_date', 'date', 'format' => 'php:Y-m-d'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>='],
             [['partner_selling_price'], 'integer', 'max' => 9999999],
-          
+            [['validity_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['permit_booking_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['validity_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
+            [['permit_booking_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
+            [['validity_date','permit_booking_date'], 'safe'],
 
 
         ];
@@ -102,6 +107,8 @@ class LeadPartnerQuotationForm extends Model
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'validity_date' => 'Validity Date',
+            'permit_booking_date' => 'Permit Booking Date',
         ];
     }
 
@@ -136,6 +143,8 @@ class LeadPartnerQuotationForm extends Model
             $lpq->received_amount = $this->received_amount;
             $lpq->end_date = $this->end_date;
             $lpq->addtional_data = $this->addtional_data;
+            $lpq->validity_date = $this->validity_date;
+            $lpq->permit_booking_date = $this->permit_booking_date;
             $lpq->status = 1;
             $lpq->save(false);
 
@@ -171,5 +180,16 @@ class LeadPartnerQuotationForm extends Model
     private function calculate_net_payment_price()
     {
         return $this->partner_selling_price + $this->calculate_plateform_partner_fees();
+    }
+
+    public function validateTwoHourCondition($attribute, $params)
+    {
+        $inputTime = strtotime($this->$attribute);
+        $currentTime = time();
+        $invalideTime = strtotime('+2 hours', $currentTime);
+
+        if ($inputTime < $invalideTime) {
+            $this->addError($attribute, 'The ' . $attribute . ' must be greater that 2 hours from current time.');
+        }
     }
 }

@@ -69,7 +69,7 @@ class NewChatMessageSend extends Event
     }
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['message' => $this->message]);
+        return $this->engine->render($this->master_notification_template->message, ['message' => strip_tags($this->message)]);
     }
 
     private function prepareFirebaseTemplate()
