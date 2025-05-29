@@ -16,7 +16,6 @@ use yii\behaviors\SluggableBehavior;
  * @property string $title
  * @property int $safari_park_id
  * @property string $slug
- * @property int|null $sequence
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $created_by
@@ -69,10 +68,10 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['sequence', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['safari_operator_id', 'title', 'safari_park_id', 'slug'], 'required'],
-            [['safari_operator_id', 'safari_park_id', 'sequence', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
@@ -89,7 +88,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'title' => 'Title',
             'safari_park_id' => 'Safari Park ID',
             'slug' => 'Slug',
-            'sequence' => 'Sequence',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
