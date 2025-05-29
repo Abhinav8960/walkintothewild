@@ -1770,4 +1770,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $formatted = preg_replace('/\B(?=(\d{2})+(?!\d))/', ',', $restUnits) . $lastThree . $decimal;
         return $formatted;
     }
+
+    public static function safarisession()
+    {
+        $query = ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','title');
+        return $query;
+    }
+
+    public static function safarizone()
+    {
+        $query = ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','name');
+        return $query;
+    }
 }

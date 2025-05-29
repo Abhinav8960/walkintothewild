@@ -115,4 +115,28 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
     {
         return $this->hasMany(UserPostCommentFlag::className(), ['user_post_comment_id' => 'id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updatePostCommentCount();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete()
+    {
+        $this->updatePostCommentCount();
+        parent::afterDelete();
+    }
+    
+    public function updatePostCommentCount()
+    {
+        if ($this->user_posts_id) {
+            $userposts = UserPosts::find()->where(['status' => UserPosts :: STATUS_ACTIVE, 'id' => $this->user_posts_id])->one();
+            $likes = UserPostComment::find()->where(['user_posts_id' => $this->user_posts_id])->count();
+            if ($userposts) {                
+                $userposts->comment_count = $likes;
+                $userposts->save(false); 
+            }
+        }
+    }
 }

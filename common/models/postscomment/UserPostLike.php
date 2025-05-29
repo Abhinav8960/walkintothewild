@@ -2,6 +2,7 @@
 
 namespace common\models\postscomment;
 
+use common\models\UserPosts;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -75,5 +76,29 @@ class UserPostLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updatePostLikeCount();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete()
+    {
+        $this->updatePostLikeCount();
+        parent::afterDelete();
+    }
+    
+    public function updatePostLikeCount()
+    {
+        if ($this->user_post_id) {
+            $userposts = UserPosts::find()->where(['status' => UserPosts :: STATUS_ACTIVE, 'id' => $this->user_post_id])->one();
+            $comments = UserPostLike::find()->where(['user_post_id' => $this->user_post_id])->count();
+            if ($userposts) {                
+                $userposts->like_count = $comments;
+                $userposts->save(false); 
+            }
+        }
     }
 }

@@ -66,4 +66,29 @@ class SightingLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         ];
     }
 
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updateSightingLikeCount();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete()
+    {
+        $this->updateSightingLikeCount();
+        parent::afterDelete();
+    }
+    
+    public function updateSightingLikeCount()
+    {
+        if ($this->sighting_id) {
+            $sighting = Sighting::find()->where(['status' => Sighting :: STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
+            $likes = SightingLike::find()->where(['sighting_id' => $this->sighting_id])->count();
+            if ($sighting) {                
+                $sighting->like_count = $likes;
+                $sighting->save(false); 
+            }
+        }
+    }
+
 }

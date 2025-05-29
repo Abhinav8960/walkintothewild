@@ -2,9 +2,11 @@
 
 namespace business\modules\sightings\controllers;
 
+use common\models\sighting\form\SightingForm;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
+use getID3;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -61,6 +63,81 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionCreate()
+    {
+        $model = new SightingForm();
+        $safari_operator = $this->module->operatormodel();
+        $model->safari_operator_id = $safari_operator->id;
+        $model->status = Sighting::STATUS_ACTIVE;
+        $model->user_id = \Yii :: $app->user->identity->id;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->sighting_model->save()) {
+                        $model->uploadFile();
+                        $model->sighting_model->v_size = $model->file->size;
+                        $model->sighting_model->v_duration = $this->getVideoDuration($model->file);
+                        if ($model->sighting_model->save()) {
+                            \Yii::$app->session->setFlash('success', 'Sighting added successfully');
+                            return $this->redirect(['index']);
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            $model->sighting_model->loadDefaultValues();
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+    private function getVideoDuration($tempFile)
+    {
+        $tempFilePath = $tempFile->tempName;
+        $getID3 = new getID3();
+        $fileInfo = $getID3->analyze($tempFilePath);
+        if (isset($fileInfo['playtime_seconds'])) {
+            return (int) $fileInfo['playtime_seconds'];
+        }
+        return 0;
+    }
+
+
+    // public function actionUpdate($id){
+    //     $formModel = $this->findSightingId($id);
+    //     $model = new SightingForm($formModel);
+
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             $model->file = \yii\web\UploadedFile::getInstance($model,'file');
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->sighting_model->save()) {
+    //                     $model->uploadFile();
+    //                     $model->sighting_model->v_size = $model->file->size;
+    //                     $model->sighting_model->v_duration = $this->getVideoDuration($model->file);
+    //                     if ($model->sighting_model->save()) {
+    //                         \Yii::$app->session->setFlash('success', 'Sighting added successfully');
+    //                         return $this->redirect(['index']);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     } 
+    //     return $this->render('update', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    public function findSightingId($id){
+        if (($model = Sighting::findOne(['id' => $id, 'status' => [Sighting::STATUS_ACTIVE, Sighting::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 
     public function actionView($id)
     {
@@ -72,6 +149,15 @@ class DefaultController extends Controller
         return $this->render('view', [
             'model' => $sighting,
         ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $model = $this->findSightingId($id);
+        $model->status = Sighting::STATUS_DELETE;
+        $model->save();
+        Yii::$app->session->setFlash('success', 'Sighting Deleted Successfully');
+        return $this->redirect(['index']); 
     }
 
     public function actionCommentListing($id)
