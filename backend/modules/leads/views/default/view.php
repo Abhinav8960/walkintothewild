@@ -101,6 +101,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                     <td>₹<?= $quotation->plateform_customer_discount ?></td>
                                     <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
+                                    <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
                                     <td>
                                         <?php
                                         if (isset($quotation->due_quatation)) {
@@ -118,7 +119,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
 
                                     </td>
 
-                                    <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
+
                                     <td>
                                         <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING) { ?>
                                             <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
