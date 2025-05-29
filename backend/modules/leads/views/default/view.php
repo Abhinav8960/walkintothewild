@@ -69,6 +69,8 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                         <th>Net payment price</th>
                         <th>No of installment</th>
                         <th>Lead Received Date</th>
+                        <th>Validity Date</th>
+                        <th>Permit Booking Date</th>
                         <th>QR Code/Payment Link</th>
                         <th>Action</th>
                     </thead>
@@ -102,6 +104,8 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                     <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
+                                    <td><?= $quotation->validity_date_time ?></td>
+                                    <td><?= $quotation->permit_booking_date_time ?></td>
                                     <td>
                                         <?php
                                         if (isset($quotation->due_quatation)) {

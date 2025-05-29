@@ -74,6 +74,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
+            [['validity_date_time', 'permit_booking_date_time'], 'safe'],
         ];
     }
 
@@ -111,6 +112,8 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
+            'validity_date_time' => 'Validity Date Time',
+            'permit_booking_date_time' => 'Permit Booking Date Time',
         ];
     }
 
