@@ -48,6 +48,19 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
                 </tr>
 
+                <?php if (isset($validity_date_time) && $validity_date_time != null) { ?>
+                    <tr>
+                        <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Vaility Date</td>
+                        <td style="padding: 8px 0; color: #555;"><?= isset($validity_date_time) ? $validity_date_time : '' ?></td>
+                    </tr>
+                <?php } ?>
+                <?php if (isset($permit_booking_date_time) && $permit_booking_date_time != null) { ?>
+                    <tr>
+                        <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Permit Booking Date</td>
+                        <td style="padding: 8px 0; color: #555;"><?= isset($permit_booking_date_time) ? $permit_booking_date_time : '' ?></td>
+                    </tr>
+                <?php } ?>
+
             </table>
 
             <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
@@ -83,7 +96,7 @@ use yii\helpers\Html;
         <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
             <h1 style="text-align: center; font-size: 22px; margin-bottom: 10px;">T&C</h1>
             <h2 style="text-align: center; font-size: 16px; font-weight: normal; margin-bottom: 25px; color: #555;">T&C of Mediarc Technologies Private Limited ("MEDIARC OR WALKINTOTHEWILD")</h2>
-            
+
             <h3>1. General Information</h3>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD is operated by Mediarc Technologies Pvt. Ltd. and functions as an e-commerce operator
                 providing a dedicated online marketplace for wildlife travel through <a

@@ -144,12 +144,12 @@ class ParkLeadForm extends Model
         $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "Park:" . $park->title . "; ";
-        $message .= "Safaries:" . $this->safaris . "; ";
-        $message .= "Travelers:" . $this->travelers . "; ";
-        $message .= "Stay Category:" . $lead->staycatgory->title . "; ";
-        $message .= "Start Date:" . date('M j, Y', strtotime($this->start_date)) . "; ";
-        $message .= "End Date:" . date('M j, Y', strtotime($this->end_date)) . "; ";
+        $short_msg = $message = "Park:" . $park->title . "<br/>";
+        $message .= "Safaries:" . $this->safaris . "<br/>";
+        $message .= "Travelers:" . $this->travelers . "<br/>";
+        $message .= "Stay Category:" . $lead->staycatgory->title . "<br/>";
+        $message .= "Start Date:" . date('M j, Y', strtotime($this->start_date)) . "<br/>";
+        $message .= "End Date:" . date('M j, Y', strtotime($this->end_date)) . "<br/>";
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;
