@@ -19,3 +19,5 @@ ALTER TABLE `lead_partner_quote_installments` CHANGE `qr_code_file` `qr_code_fil
 ALTER TABLE `user` ADD `google_avatar_image` VARCHAR(512) NULL DEFAULT NULL AFTER `avatar`;	
 
 ALTER TABLE `lead_partner_quotes` CHANGE `permit_booking_date_time` `permit_booking_date` DATE NULL DEFAULT NULL;
+
+ALTER TABLE `lead_partner_quotes` CHANGE `validity_date_time` `validity_date` DATE NULL DEFAULT NULL;
