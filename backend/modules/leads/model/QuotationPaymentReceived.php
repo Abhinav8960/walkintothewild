@@ -79,8 +79,8 @@ class QuotationPaymentReceived extends Model
             $this->updateQuotation();
             $this->updateQuotationInstallment();
             $this->updateLead();
-            $this->prepareChat();
-            $this->prepareNotification();
+            // $this->prepareChat();
+            // $this->prepareNotification();
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
