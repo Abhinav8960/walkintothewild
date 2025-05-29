@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use common\models\operator\SafariOperator;
+use common\models\partnerregistration\PartnerRegistration;
 use Yii;
 use common\models\User;
 
@@ -76,11 +78,16 @@ class UserFollow extends \yii\db\ActiveRecord
 
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->status == 1){
-            return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$this->user->name,$this->user->email);
-        }
-        elseif($this->status == 0){
-            return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->user->name,$this->user->email);
+        $partner_request = PartnerRegistration::find()->where(['status' => PartnerRegistration::STATUS_ACTIVE])->one();
+        if (!empty($partner_request)) {
+            $operator = SafariOperator::find()->where(['safari_operator_request_id' => $partner_request->id, 'status' => SafariOperator::STATUS_ACTIVE])->one();
+            if (!empty($operator)) {
+                if ($this->status == 1) {
+                    return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$operator->business_name,$operator->operator_email);
+                } elseif ($this->status == 0) {
+                    return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$operator->business_name,$operator->operator_email);
+                }
+            }
         }
     }
 }

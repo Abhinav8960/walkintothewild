@@ -71,18 +71,18 @@ class SafariCommentReplyByUser extends Event
                     'cc' => [],
                     'bcc' => [],
                 ],
-                // [
-                //     'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
-                //     'mail_template_id' => $this->emailTemplateId(),
-                //     'params' => [
-                //         'username' => $this->interested_user,
-                //         'shared_safari' => $this->shared_safari_name,
-                //         'shared_safari_url' => $this->shared_safari_url,
-                //     ],
-                //     'to_mail' => \Yii::$app->params['adminEmail'],  
-                //     'cc' => [],
-                //     'bcc' => [],
-                // ]
+                [
+                    'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
+                    'mail_template_id' => $this->emailTemplateId(),
+                    'params' => [
+                        'username' => $this->interested_user,
+                        'shared_safari' => $this->shared_safari_name,
+                        'shared_safari_url' => $this->shared_safari_url,
+                    ],
+                    'to_mail' => \Yii::$app->params['adminEmail'],  
+                    'cc' => [],
+                    'bcc' => [],
+                ]
             ],
             'firebase' => [
                 [
@@ -136,7 +136,7 @@ class SafariCommentReplyByUser extends Event
         // $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->userId = $this->shared_safari->safarioperator->user_id;
-            $this->email = $this->shared_safari->safarioperator->email;
+            $this->email = $this->shared_safari->safarioperator->operator_email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
         } else {
             $this->userId = $this->shared_safari->host_user_id;
