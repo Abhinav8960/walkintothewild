@@ -17,7 +17,6 @@ use yii\filters\AccessControl;
  */
 class GalleryController extends RestController
 {
-    public $action_ids = ['index'];
 
     public function behaviors()
     {
@@ -31,7 +30,7 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images'],
+                'only' => ['index','gallery-images'],
                 'rules' => [
                     [
                         'actions' => ['index', 'gallery-images'],
@@ -52,6 +51,7 @@ class GalleryController extends RestController
 
     public function actionIndex()
     {
+
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
