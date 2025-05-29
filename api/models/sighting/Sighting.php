@@ -49,7 +49,8 @@ class Sighting extends \common\models\sighting\Sighting
             'updated_at',
             'video_thumbnail',
             'video_thumbnail_path',
-            'video_thumbnail_etag'
+            'video_thumbnail_etag',
+            'comment_count',
         ];
 
 
