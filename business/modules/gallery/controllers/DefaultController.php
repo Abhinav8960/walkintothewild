@@ -12,8 +12,10 @@ use common\models\partnergalleryimage\PartnerGalleryImageSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -122,9 +124,12 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
+        $maxSequence = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id])->max('sequence');
+
         $model = new PartnerGalleryImageForm();
         $model->partner_gallery_id = $partner_gallery_model->id;
         $model->status = PartnerGalleryImage::STATUS_ACTIVE;
+        $model->sequence = $maxSequence ? ($maxSequence + 1) : 1;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -195,6 +200,48 @@ class DefaultController extends Controller
         return $this->render('update_gallery', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Set Sequence of Privacy Policy
+     *
+     * @return void
+     */
+    public function actionSetSequence($partner_gallery_id)
+    {
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        $searchModel = new PartnerGalleryImageSearch();
+        $searchModel->partner_gallery_id = $partner_gallery_model->id;
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider->pagination = false;
+
+        return $this->render('set_sequence', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionUpdateSequence()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $ids = Yii::$app->request->post('ids');
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Invalid data format.');
+        }
+        $count = 1;
+        foreach ($ids as $id) {
+            PartnerGalleryImage::updateAll(
+                ['sequence' => $count],
+                ['id' => $id]
+            );
+            $count++;
+        }
+        return ['status' => 'success', 'message' => 'Order updated successfully.'];
     }
 
 

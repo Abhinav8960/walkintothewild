@@ -7,6 +7,7 @@ use yii\helpers\Url;
 
 $this->title = 'Collection ' . '(' . $model->title . ')';
 $this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('+ Set Sequence', [Url::toRoute(['set-sequence', 'partner_gallery_id' => $model->id])], ['class' => 'btn btn-info me-2', 'title' => 'Set Sequence']);
 $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-gallery', 'partner_gallery_id' => $model->id])], ['class' => 'btn btn-orange float-end', 'title' => 'Upload Gallery']);
 ?>
 
