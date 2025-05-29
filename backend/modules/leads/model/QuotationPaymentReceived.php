@@ -17,13 +17,10 @@ use common\models\leads\LeadPartnerQuotes;
 class QuotationPaymentReceived extends Model
 {
     public $payment_gateway;
-    public $payment_gateway_options = [];
     public $transaction_id;
     public $transaction_datetime;
     public $status;
 
-    public $action_url;
-    public $action_validate_url;
     public $form_model;
 
     public function __construct($form_model = null, $config = [])
@@ -38,7 +35,6 @@ class QuotationPaymentReceived extends Model
             $this->transaction_datetime = $this->form_model->transaction_datetime;
             $this->status = $this->form_model->status;
         }
-        $this->payment_gateway_options = GeneralModel::PaymentgatewayOptions();
     }
 
     /**
@@ -83,6 +79,8 @@ class QuotationPaymentReceived extends Model
             $this->updateQuotation();
             $this->updateQuotationInstallment();
             $this->updateLead();
+            $this->prepareChat();
+            $this->prepareNotification();
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -131,5 +129,17 @@ class QuotationPaymentReceived extends Model
             return $lead->save(false);
         }
         return false;
+    }
+
+    private function prepareChat()
+    {
+        // Prepare chat message or any other related operations
+        // This is a placeholder for actual chat preparation logic
+    }
+
+    private function prepareNotification()
+    {
+        // Prepare notification message or any other related operations
+        // This is a placeholder for actual notification preparation logic
     }
 }
