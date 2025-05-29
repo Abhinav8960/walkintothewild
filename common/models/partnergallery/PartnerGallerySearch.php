@@ -17,7 +17,7 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title', 'safari_park_id'], 'safe'],
-            [['safari_operator_id', 'safari_park_id', 'sequence', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
 
