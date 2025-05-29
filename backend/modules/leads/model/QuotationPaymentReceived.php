@@ -168,7 +168,7 @@ class QuotationPaymentReceived extends Model
 
 
         if (isset($quotation->park->title)) {
-            $message = "Park: " . $quotation->park->title;
+            $message .= "Park: " . $quotation->park->title;
             $message .= "Safaris: " . $quotation->safaris;
         }
         $message .= "\n";
