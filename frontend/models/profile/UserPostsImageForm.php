@@ -58,7 +58,7 @@ class UserPostsImageForm extends Model
                 ['file'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'maxSize' => 18 * 1024 * 1024,
+                'maxSize' => 2 * 1024 * 1024,
             ],
             [
                 ['caption'],
