@@ -105,7 +105,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                     <td><?= $quotation->installment ?></td>
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
                                     <td><?= $quotation->validity_date_time ?></td>
-                                    <td><?= $quotation->permit_booking_date_time ?></td>
+                                    <td><?= $quotation->permit_booking_date ?></td>
                                     <td>
                                         <?php
                                         if (isset($quotation->due_quatation)) {

@@ -17,5 +17,5 @@ UPDATE `lead_partner_quote_installments` SET `qr_code_file_base64`=NULL;
 ALTER TABLE `lead_partner_quote_installments` CHANGE `qr_code_file` `qr_code_file` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
 ALTER TABLE `user` ADD `google_avatar_image` VARCHAR(512) NULL DEFAULT NULL AFTER `avatar`;	
-ALTER TABLE `lead_partner_quotes` ADD `validity_date_time` DATETIME NULL DEFAULT NULL AFTER `end_date`, ADD `permit_booking_date_time` DATETIME NULL DEFAULT NULL AFTER `validity_date_time`;
 
+ALTER TABLE `lead_partner_quotes` CHANGE `permit_booking_date_time` `permit_booking_date` DATE NULL DEFAULT NULL;
