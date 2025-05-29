@@ -263,7 +263,8 @@ class DefaultController extends Controller
         $safari_operator_model->instagram_url = null;
         $safari_operator_model->youtube_link = null;
         $safari_operator_model->phone_no = null;
-        $safari_operator_model->email = $model->user->email;
+        // $safari_operator_model->email = $model->user->email;
+        $safari_operator_model->email = $model->legal_entity_email;
         $safari_operator_model->website = null;
         $safari_operator_model->is_register_company = 0;
         $safari_operator_model->has_a_website = 0;
@@ -286,7 +287,7 @@ class DefaultController extends Controller
         $safari_operator_model->registration_copy_upload  = $model->registration_copy_upload;
         $safari_operator_model->pan_number  = $model->pan_number;
         $safari_operator_model->pan_upload  = $model->pan_upload;
-        $safari_operator_model->operated_park  = $model->operated_park;
+        // $safari_operator_model->operated_park  = $model->operated_park;
         $safari_operator_model->billing_mail  = $model->billing_mail;
         $safari_operator_model->billing_phone  = $model->billing_phone;
         $safari_operator_model->bank_name  = $model->bank_name;

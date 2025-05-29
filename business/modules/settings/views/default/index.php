@@ -20,7 +20,7 @@ $this->params['title'] = $this->title;
                         <img src="<?= $safari_operator_model->imagepath ?>" alt="Operator placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
                     </div>
                     <div class="flex-grow-1 ps-4">
-                        <h3 class="mb-2"><?= $safari_operator_model->operator_name ?></h3>
+                        <h3 class="mb-2"><?= $safari_operator_model->business_name ?></h3>
                         <div class="justify-content-start rounded-3 mb-2 bg-body-tertiary">
                             <div>
                                 <p><span style="color: red;">Name :</span> <?= $safari_operator_model->operator_name ?></p>
@@ -54,6 +54,7 @@ $this->params['title'] = $this->title;
                 <div class="flex-grow-1">
                     <h3 class="mb-1">Registration Details</h3>
                     <div class="justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                        <p><span style="color: red;">Registered Company Name :</span> <?= $safari_operator_model->register_comapany_name ?></p>
                         <p><span style="color: red;">Registration Number :</span> <?= $safari_operator_model->registration_number ?></p>
                         <p><span style="color: red;">Registration File :</span>
                             <?php if (!empty($safari_operator_model->registration_copy_upload)) { ?>
@@ -83,7 +84,7 @@ $this->params['title'] = $this->title;
                     <h3 class="mb-1">Business Details</h3>
                     <div class="justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
                         <div style="display: flex; align-items: flex-start; gap: 10px;">
-                            <span style="color: red; min-width: 150px;">Operated Park :</span>
+                            <span style="color: red; min-width: 150px;">Operated Parks :</span>
                             <div style="flex: 1; background: #f9f9f9; padding: 10px 15px; border-radius: 6px; border: 1px solid #ddd;">
                                 <ul style="margin: 0; padding-left: 20px; list-style: disc;">
                                     <?php
@@ -124,7 +125,7 @@ $this->params['title'] = $this->title;
                         <p><span style="color: red; min-width: 150px;">Account No :</span><?= $safari_operator_model->account_number ?></p>
                         <p><span style="color: red; min-width: 150px;">Ifsc Code :</span><?= $safari_operator_model->ifsc_number ?></p>
                         <p><span style="color: red; min-width: 150px;">Cancel Check : </span>
-                            <?php if (!empty($safari_operator_model->cancel_check_upload_path)) { ?>
+                            <?php if (!empty($safari_operator_model->cancel_check_upload)) { ?>
                                 <a href="<?= $safari_operator_model->cancel_check_upload_path ?>" target="_blank">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                 </a>
@@ -145,7 +146,7 @@ $this->params['title'] = $this->title;
                         <p><span style="color: red; min-width: 150px;">Email :</span> <?= $safari_operator_model->kyc_email ?></p>
                         <p><span style="color: red; min-width: 150px;">Adhaar Number :</span> <?= $safari_operator_model->aadhar_number ?></p>
                         <p><span style="color: red; min-width: 150px;">Aadhar Front : </span>
-                            <?php if (!empty($safari_operator_model->aadhar_front_upload_path)) { ?>
+                            <?php if (!empty($safari_operator_model->aadhar_front_upload)) { ?>
                                 <a href="<?= $safari_operator_model->aadhar_front_upload_path ?>" target="_blank">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                 </a>
@@ -154,7 +155,7 @@ $this->params['title'] = $this->title;
                             <?php } ?>
                         </p>
                         <p><span style="color: red; min-width: 150px;">Aadhar Back : </span>
-                            <?php if (!empty($safari_operator_model->aadhar_back_upload_path)) { ?>
+                            <?php if (!empty($safari_operator_model->aadhar_back_upload)) { ?>
                                 <a href="<?= $safari_operator_model->aadhar_back_upload_path ?>" target="_blank">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                 </a>
@@ -164,7 +165,7 @@ $this->params['title'] = $this->title;
                         </p>
                         <p><span style="color: red; min-width: 150px;">PAN Number : </span><?= $safari_operator_model->kyc_pan ?></p>
                         <p><span style="color: red; min-width: 150px;">PAN Card : </span>
-                            <?php if (!empty($safari_operator_model->kyc_pan_upload_path)) { ?>
+                            <?php if (!empty($safari_operator_model->kyc_pan_upload)) { ?>
                                 <a href="<?= $safari_operator_model->kyc_pan_upload_path ?>" target="_blank">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
                                 </a>
