@@ -70,7 +70,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['video_thumbnail_path', 'video_thumbnail_etag', 'delete_reason'], 'string', 'max' => 512],
             [['show_in_front'], 'integer'],
             [['original_filename', 'original_thumbnail'], 'string', 'max' => 255],
-
+            [['comment_count','like_count'],'integer'],
         ];
     }
 
@@ -100,6 +100,8 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             'zone_id' => 'Zone ID',
             'v_size' => 'V Size',
             'v_duration' => 'V Duration',
+            'comment_count' => 'Comment Count',
+            'like_count'=>'Like Count',
             'status' => 'Status',
             'total_view' => 'Total View',
             'created_at' => 'Created At',

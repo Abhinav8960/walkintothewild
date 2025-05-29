@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                         <div class="d-flex mb-2">
                             <div>
                                 <h5><?= isset($model->safarioperator) ? $model->safarioperator->business_name : ''; ?></h5>
-                                <p><?= '@' . $model->user->user_handle; ?></p>
+                                <!-- <p><?= '@' . $model->user->user_handle; ?></p> -->
                                 <p><?= $model->description; ?></p>
                             </div>
                         </div>

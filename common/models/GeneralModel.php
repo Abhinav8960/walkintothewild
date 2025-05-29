@@ -1778,4 +1778,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             2 => 'HDFC',
         ];
     }
+
+    public static function safarisession()
+    {
+        $query = ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','title');
+        return $query;
+    }
+
+    public static function safarizone()
+    {
+        $query = ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','name');
+        return $query;
+    }
 }
