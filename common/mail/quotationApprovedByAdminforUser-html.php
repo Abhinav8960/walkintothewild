@@ -18,7 +18,7 @@ use yii\helpers\Html;
         <hr>
         <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>, get ready for your next wild adventure!</p>
 
-        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? '+' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? '+' . $safaris . ' Jungle Safaris' : '' ?></p>
+        <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
         <div style="background-color: #e6f7e8; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
             <div style="font-size: 18px; font-weight: bold; color: #333; text-align: center; margin-bottom: 15px;">Quotation</div>
@@ -47,16 +47,17 @@ use yii\helpers\Html;
                     <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">End Date</td>
                     <td style="padding: 8px 0; color: #555;"><?= isset($end_date) ? $end_date : '' ?></td>
                 </tr>
+
             </table>
 
             <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 20px;">
-                Additional Notes<br>
-                <?= isset($addional_notes) ? $addional_notes : '' ?>
+                <span style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Additional Notes</span><br>
+                <span style="padding: 8px 0; color: #555;"><?= isset($addional_notes) ? $addional_notes : '' ?></span>
             </p>
 
             <table style="width: 100%; font-size: 18px; font-weight: bold; color: #333; margin-bottom: 20px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding-top: 15px; padding-bottom: 15px;">
                 <tr>
-                    <td style="text-align: left;">Amount</td>
+                    <td style="text-align: left;">Amount <span style="color: #666666; font-size: 14px;">(inclusive of all taxes)</span></td>
                     <td style="text-align: right;"><?= isset($amount) ? '₹' . $amount : '' ?></td>
                 </tr>
             </table>
@@ -82,11 +83,11 @@ use yii\helpers\Html;
         <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
             <h1 style="text-align: center; font-size: 22px; margin-bottom: 10px;">T&C</h1>
             <h2 style="text-align: center; font-size: 16px; font-weight: normal; margin-bottom: 25px; color: #555;">T&C of Mediarc Technologies Private Limited ("MEDIARC OR WALKINTOTHEWILD")</h2>
-            <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD is operated by Mediarc Technologies Pvt. Ltd. and functions as an e-commerce operator providing a dedicated online marketplace for wildlife travel through <a style="color: #007bff; text-decoration: none;" href="http://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
+            
             <h3>1. General Information</h3>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD is operated by Mediarc Technologies Pvt. Ltd. and functions as an e-commerce operator
                 providing a dedicated online marketplace for wildlife travel through <a
-                    href="http://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
+                    href="https://www.walkintothewild.in">www.walkintothewild.in</a>.</p>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">The platform connects travel agents, service providers, and prospective travellers for safari tours,
                 travel packages, and related services.</p>
             <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px;">WALKINTOTHEWILD solely operates as a technology platform and booking intermediary; all travel services

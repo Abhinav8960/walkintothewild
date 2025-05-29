@@ -51,6 +51,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
                                                             )) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
                 </li>
 
+                <li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
+                                                                "/gallery/default/index",
+                                                                "/gallery/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/img/grommet-icons_gallery.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Gallery</span></a>
+                </li>
+
                 <li class="slide <?= in_array($active_url, array(
                                         "/settings/default/index",
                                     )) ? "is-expanded" : "" ?>">

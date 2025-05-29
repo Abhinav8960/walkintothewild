@@ -135,7 +135,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getAssignOperator()

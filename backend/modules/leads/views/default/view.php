@@ -69,6 +69,9 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                         <th>Net payment price</th>
                         <th>No of installment</th>
                         <th>Lead Received Date</th>
+                        <th>Validity Date</th>
+                        <th>Permit Booking Date</th>
+                        <th>QR Code/Payment Link</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -101,6 +104,26 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                                     <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
+                                    <td><?= $quotation->validity_date_time ?></td>
+                                    <td><?= $quotation->permit_booking_date_time ?></td>
+                                    <td>
+                                        <?php
+                                        if (isset($quotation->due_quatation)) {
+                                            if (!empty($quotation->due_quatation->qr_code_file)) {
+                                        ?>
+                                                <img src="<?= \Yii::$app->params['s3_endpoint'] . '/' . $quotation->due_quatation->qr_code_file ?>" width="100px" alt="QR Code">
+                                        <?php
+                                            }
+                                            if (!empty($quotation->due_quatation->payment_link)) {
+                                                echo Html::a('Payment Link', $quotation->due_quatation->payment_link, ['target' => '_blank', 'class' => 'btn btn-link btn-sm']);
+                                            }
+                                        }
+                                        ?>
+
+
+                                    </td>
+
+
                                     <td>
                                         <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING) { ?>
                                             <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>

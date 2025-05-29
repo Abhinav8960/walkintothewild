@@ -41,7 +41,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy','cancellation','error', 'convergent-survey', 'report-page-reason', 'test'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -181,7 +181,7 @@ class SiteController extends RestController
                     $user->name = $model->name ?? null;
                     $user->username = $model->email;
                     $user->email = $model->email;
-                    $user->avatar = $model->avatar;
+                    // $user->avatar = $model->avatar;
                     $user->$source_id_col = $model->source_id;
                     $user->status = User::STATUS_ACTIVE;
                     $user->save();
@@ -501,7 +501,7 @@ class SiteController extends RestController
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
-    
+
     public function actionUpdateToken($firebase_token, $old_firebase_token)
     {
         if ($this->access_token) {
@@ -646,4 +646,38 @@ class SiteController extends RestController
     {
         return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
     }
+
+    // public function avatarImageGeneration(User $user)
+    // {
+    //     if (!empty($user->avatar)) {
+    //         $fileName = $user->id . '_google_avatar' . '.jpg';
+
+    //         $url = $user->avatar;
+    //         $content = @file_get_contents($url);
+
+    //         if ($content === false) {
+    //             return false;
+    //         }
+
+    //         $tempPath = tempnam(sys_get_temp_dir(), $user->id . '_google_avatar') . '.jpg';
+    //         file_put_contents($tempPath, $content);
+
+    //         $uploadedFile = new \yii\web\UploadedFile([
+    //             'name' => $fileName,
+    //             'tempName' => $tempPath,
+    //             'type' => 'image/jpg',
+    //             'size' => filesize($tempPath),
+    //             'error' => UPLOAD_ERR_OK,
+    //         ]);
+
+    //         $filePath = 'user/profile/' . $fileName;
+
+    //         $avatar_image = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
+
+    //         $user->google_avatar_image = $fileName;
+    //         $user->save(false);
+
+    //         @unlink($tempPath);
+    //     }
+    // }
 }

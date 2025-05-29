@@ -86,5 +86,44 @@ class UserImageController extends Controller
         return true;
     }
 
-  
+
+    public function actionAvatarContent()
+    {
+        $users = User::find()->all();
+
+        foreach ($users as $user) {
+            if (!empty($user->avatar)) {
+                $fileName = $user->id . '_google_avatar' . '.jpg';
+
+                $url = $user->avatar;
+                $content = @file_get_contents($url);
+
+                if ($content === false) {
+                    continue;
+                }
+
+                $tempPath = tempnam(sys_get_temp_dir(), $user->id . '_google_avatar') . '.jpg';
+                file_put_contents($tempPath, $content);
+               
+                $uploadedFile = new \yii\web\UploadedFile([
+                    'name' => $fileName,
+                    'tempName' => $tempPath,
+                    'type' => 'image/jpg',
+                    'size' => filesize($tempPath),
+                    'error' => UPLOAD_ERR_OK,
+                ]);
+
+                $filePath = 'user/profile/' . $fileName;
+
+                $avatar_image = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
+
+                $user->google_avatar_image = $fileName;
+                $user->save(false);
+
+                @unlink($tempPath);
+            }
+        }
+
+        echo "Done";
+    }
 }
