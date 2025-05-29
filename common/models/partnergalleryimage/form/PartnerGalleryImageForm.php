@@ -57,7 +57,7 @@ class PartnerGalleryImageForm extends model
                 ['file'],
                 'file',
                 'extensions' => ['jpg', 'jpeg', 'png'],
-                'maxSize' => 18 * 1024 * 1024,
+                'maxSize' => 8 * 1024 * 1024,
             ],
         ];
     }
