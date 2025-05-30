@@ -17,6 +17,7 @@ use api\models\operator\SafariOperator;
 use api\models\operator\SafariOperatorRating;
 use api\models\UserFollow;
 use api\models\UserWishlist;
+use common\models\GeneralModel;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
@@ -101,7 +102,10 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'getting_there';
             $fields[] = 'includeds';
             $fields[] = 'share_safari_days';
-            $fields[] = 'safari_plan';
+            // $fields[] = 'safari_plan';
+            $fields['safari_plan'] = function ($model) {
+                return GeneralModel::apicommentConversion($model->safari_plan);
+            };
             $fields[] = 'urls';
             $fields[] = 'types';
             $fields[] = 'share_safari_agenda';
