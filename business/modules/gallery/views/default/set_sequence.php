@@ -40,28 +40,28 @@ $(function() {
     });
 
     $('#submit').click(function (e) {
-        e.preventDefault();
-        
-        var gallery_id_array = [];
-        $('#gallery_list li').each(function() {
-            gallery_id_array.push($(this).attr("id"));
-        });
+            e.preventDefault();
+            
+            var gallery_id_array = [];
+            $('#gallery_list li').each(function() {
+                gallery_id_array.push($(this).attr("id"));
+            });
 
-        $.ajax({
-            url: "{$form_validate_url}",
-            method: "POST",
-            data: {
-                ids: gallery_id_array,
-                _csrf: yii.getCsrfToken()
+            $.ajax({
+                url: "{$form_validate_url}",
+                method: "POST",
+                data: {
+                    ids: gallery_id_array,
+                    _csrf: yii.getCsrfToken()
+                },
+            
+            success: function(data) {
+                location.reload();
             },
-         
-        success: function(data) {
-            location.reload();
-        },
 
-        error: function(xhr) {
-            alert("Error: " + xhr.responseText);
-        }
+            error: function(xhr) {
+                alert("Error: " + xhr.responseText);
+            }
         });
     });
 });
