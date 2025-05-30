@@ -2,8 +2,12 @@
 
 namespace backend\modules\log\controllers;
 
+use common\models\MailLog;
 use common\models\MailLogSearch;
+use common\models\master\email\MasterMailTemplate;
+use common\models\sharesafari\ShareSafari;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController.
@@ -24,5 +28,23 @@ class DefaultController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionView($id){
+        $model = $this->findModel($id);
+        $master_mail_template = MasterMailTemplate :: find()->where(['id'=>$model->mail_template_id , 'status'=>MasterMailTemplate :: STATUS_ACTIVE])->one();
+        return $this->render('view', [
+            'master_mail_template'=>$master_mail_template,
+            'model' => $model,
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = MailLog::findOne(['id' => $id, 'status' => [MailLog::STATUS_ACTIVE, MailLog::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
