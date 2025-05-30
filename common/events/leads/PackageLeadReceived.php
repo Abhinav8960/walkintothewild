@@ -56,9 +56,10 @@ class PackageLeadReceived extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'New Quote Request for ' . $this->package->packagename,
+                    'subject' => 'New Quote Request for package' . $this->package->packagename,
                     'mail_template_id'  => $this->emailTemplateId(),
                     'params' => [
+                        'package_name' => $this->package->packagename,
                         'username' => $this->partner->business_name,
                         'parkname' => $this->package->package_name,
                         'chat_url' => urlencode($this->chat_url),

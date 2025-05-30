@@ -66,7 +66,7 @@ class PartnerLeadForm extends Model
             'email' => 'Email',
             'phone_no' => 'Phone No',
             'start_date' => 'Start Date',
-            'end_date' => 'End Date',           
+            'end_date' => 'End Date',
             'status' => 'Status',
         ];
     }
@@ -124,12 +124,14 @@ class PartnerLeadForm extends Model
         $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "<b>Park: </b>" . $park->title . "\n";
-        $message .= "<b>Safaries: </b>" . $this->safaris . "\n";
-        $message .= "<b>Travelers: </b>" . $this->travelers . "\n";
-        $message .= "<b>Stay Category: </b>" . $lead->staycatgory->title . "\n";
-        $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($this->start_date)) . "\n";
-        $message .= "<b>End Date: </b>" . date('M j, Y', strtotime($this->end_date)) . "\n";
+        $short_msg = $message = "Hi, I am interested in <br>";
+        $short_msg .= "<b>Park: </b>" . $park->title . "<br>";
+        $message .= "<b>Park: </b>" . $park->title . "<br>";
+        $message .= "<b>Safaries: </b>" . $this->safaris . "<br>";
+        $message .= "<b>Travelers: </b>" . $this->travelers . "<br>";
+        $message .= "<b>Stay Category: </b>" . $lead->staycatgory->title . "<br>";
+        $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($this->start_date)) . "<br>";
+        $message .= "<b>End Date: </b>" . date('M j, Y', strtotime($this->end_date)) . "<br>";
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;

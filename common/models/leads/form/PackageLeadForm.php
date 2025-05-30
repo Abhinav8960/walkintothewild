@@ -111,7 +111,9 @@ class PackageLeadForm extends Model
         $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "<b>Package: </b>" . $package->package_name . "<br>";
+        $short_msg = $message = "Hi, I am interested in <br>";
+        $short_msg .= "<b>Package: </b>" . $package->package_name . "<br>";
+        $message .= "<b>Package: </b>" . $package->package_name . "<br>";
         $message .= "<b>Travelers: </b>" . $lead->travelers . "<br>";
         $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($lead->from_date)) . "<br>";
 

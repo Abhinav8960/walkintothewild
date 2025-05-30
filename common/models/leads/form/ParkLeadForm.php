@@ -144,7 +144,10 @@ class ParkLeadForm extends Model
         $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "<b>Park</b>:" . $park->title . "<br>";
+        $short_msg = $message = "Hi, I am interested in". "<br>";
+        $short_msg .= "<b>Park: </b>" . $park->title . "<br>";
+        $message .= "<b>Park: </b>" . $park->title . "<br>";
+        $message .= "<b>Safaries: </b>" . $this->safaris . "<br>";
         $message .= "<b>Safaries</b>:" . $this->safaris . "<br>";
         $message .= "<b>Travelers</b>:" . $this->travelers . "<br>";
         $message .= "<b>Stay Category</b>:" . $lead->staycatgory->title . "<br>";
