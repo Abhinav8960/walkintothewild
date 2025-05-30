@@ -45,14 +45,14 @@ $this->params['title'] = $this->title;
                     ],
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->statuslabel;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->statuslabel;
+                    //     }
+                    // ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Template Preview",
