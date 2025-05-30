@@ -14,7 +14,7 @@ $this->params['title'] = $this->title;
                 <?php foreach ($dataProvider->models as $model): ?>
                     <li id="<?= $model->id ?>">
                         <div class="card" style="width: 18rem;">
-                            <img src="<?= $model->gallery_image ?>" class="card-img-top" alt="ALT IMG" width="100" height="100">
+                            <img src="<?= $model->gallery_image ?>" class="card-img-top" alt="ALT IMG">
                             <div class="card-body">
                                 <h5><?= $model->title ?></h5>
                                 <p class="card-text"><?= $model->caption ?></p>
