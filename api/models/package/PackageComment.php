@@ -4,6 +4,7 @@ namespace api\models\package;
 
 use api\models\operator\SafariOperator;
 use api\models\User;
+use common\models\GeneralModel;
 use Yii;
 
 /**
@@ -37,7 +38,10 @@ class PackageComment extends \common\models\package\PackageComment
         $fields[] = 'replies';
         $fields[] = 'will_flag';
         $hold_fields = ['user_id', 'safari_operator_id', 'package_id', 'comment_id', 'flaged', 'deleted_by', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        return array_diff($fields, $hold_fields);
+        $fields = array_diff($fields, $hold_fields);
+        $fields['comment'] = function ($model) {
+            return GeneralModel::apicommentConversion($model->comment);
+        };
         return $fields;
     }
 

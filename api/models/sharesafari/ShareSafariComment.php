@@ -5,7 +5,7 @@ namespace api\models\sharesafari;
 use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
-
+use common\models\GeneralModel;
 
 class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
 {
@@ -19,8 +19,13 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         // $fields[] = 'parent';
         $fields[] = 'will_flag';
         $fields[] = 'replies';
+       
         $hold_fields = ['user_id','flaged', 'deleted_by', 'share_safari_id', 'park_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        return array_diff($fields, $hold_fields);
+        $fields = array_diff($fields, $hold_fields);
+
+        $fields['comment'] = function ($model) {
+            return GeneralModel::apicommentConversion($model->comment);
+        };
         return $fields;
     }
 
