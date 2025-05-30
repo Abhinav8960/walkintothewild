@@ -4,7 +4,7 @@ namespace api\models\posts;
 
 use Yii;
 use api\models\User;
-
+use common\models\GeneralModel;
 
 class UserPostComment extends \common\models\postscomment\UserPostComment
 {
@@ -18,7 +18,9 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         // $hold_fields = ['user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         // return array_diff($fields, $hold_fields);
         // return $fields;
-        $fields = ['id', 'safari_operator_id', 'comment', 'dateTime', 'flaged' => function () {
+        $fields = ['id', 'safari_operator_id', 'comment' => function ($model) {
+            return GeneralModel::apicommentConversion($model->comment);
+        }, 'dateTime', 'flaged' => function () {
             return (bool) $this->flaged;
         }, 'user', 'replies', 'is_liked', 'liked_count'];
 
@@ -64,5 +66,4 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
     {
         return $this->getLike()->count();
     }
-
 }
