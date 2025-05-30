@@ -24,21 +24,21 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Title',
+                        'label' => 'Gallery Name',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
                         }
                     ],
                     [
-                        'label' => 'Park',
+                        'label' => 'Park Name',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->park_label) ? $model->park_label->title : '';
                         }
                     ],
                     [
-                        'label' => 'Gallery Count',
+                        'label' => 'Number of Images',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->gallery_count;

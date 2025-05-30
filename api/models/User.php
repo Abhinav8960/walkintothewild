@@ -77,7 +77,9 @@ class User extends \common\models\User
             'created_by',
             'updated_by',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'is_mobile_no_verified',
+            'mobile_no_verified_at'
         ];
         if (in_array(\Yii::$app->controller->layout, [\common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL])) {
             // $fields[] = 'user_followers_count';
@@ -94,7 +96,6 @@ class User extends \common\models\User
                 'id',
                 "password_hash",
                 "auth_key",
-
                 "token_key",
                 "is_adminstrator",
                 "is_admin",
@@ -125,6 +126,9 @@ class User extends \common\models\User
             $fields = array_diff($fields, $hold_fields);
             $fields['is_safari_operator'] = function () {
                 return (bool) $this->is_safari_operator;
+            };
+            $fields['is_mobile_no_verified'] = function () {
+                return (bool) $this->is_mobile_no_verified;
             };
             return $fields;
         }
