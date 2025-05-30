@@ -124,12 +124,17 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        $maxSequence = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id])->max('sequence');
+        $pgi_query = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id]);
+        $maxSequence = $pgi_query->max('sequence');
+        $pgi_thumbnail = $pgi_query->where(['set_as_thumbnail' => 1])->limit(1)->one();
 
         $model = new PartnerGalleryImageForm();
         $model->partner_gallery_id = $partner_gallery_model->id;
         $model->status = PartnerGalleryImage::STATUS_ACTIVE;
         $model->sequence = $maxSequence ? ($maxSequence + 1) : 1;
+        if (empty($pgi_thumbnail)) {
+            $model->set_as_thumbnail = 1;
+        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -257,5 +262,21 @@ class DefaultController extends Controller
             return true;
         }
         return false;
+    }
+
+    public function actionUpdateThumbnail($partner_gallery_id, $id)
+    {
+        $update_model = PartnerGalleryImage::updateAll(['set_as_thumbnail' => 0], ['partner_gallery_id' => $partner_gallery_id]);
+
+        $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model->set_as_thumbnail = 1;
+        if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', 'Updated successfully.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
     }
 }

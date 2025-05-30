@@ -51,6 +51,14 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                             ]), ['style' => 'text-align: center;']);
                         }
                     ],
+                    [
+                        'label' => 'Set as Thumbanil',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align: center;'],
+                        'value' => function ($model) {
+                            return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
+                        }
+                    ],
 
                     [
                         'label' => 'Status',
@@ -65,25 +73,28 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width:10%; text-align:left;'],
-                        'template' => '{check}&nbsp{edit}',
+                        'template' => '{check}&nbsp{edit}&nbsp{set}',
                         'buttons' => [
+
                             'check' => function ($url, $model) {
-                                if ($model->status == 1) {
-                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['swtich', 'id' => $model->id], [
-                                        'class' => 'btn btn-xs btn-success',
-                                        'data-method' => 'post',
-                                        'data-confirm' => 'Are you sure to Inactive this Gallery?',
-                                        'title' => 'Remove ',
-                                        'data-bs-toggle' => "tooltip"
-                                    ]);
-                                } else {
-                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['swtich', 'id' => $model->id], [
-                                        'class' => 'btn btn-xs btn-warning',
-                                        'data-method' => 'post',
-                                        'data-confirm' => 'Are you sure to Active this Gallery?',
-                                        'title' => 'Show in Front',
-                                        'data-bs-toggle' => "tooltip"
-                                    ]);
+                                if ($model->set_as_thumbnail == 0) {
+                                    if ($model->status == 1) {
+                                        return Html::a('<i class="fa fa-toggle-on"></i>', ['swtich', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-success',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to Inactive this Gallery?',
+                                            'title' => 'Remove ',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    } else {
+                                        return Html::a('<i class="fa fa-toggle-off"></i>', ['swtich', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-warning',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to Active this Gallery?',
+                                            'title' => 'Show in Front',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    }
                                 }
                             },
                             'edit' => function ($url, $model) {
@@ -97,7 +108,21 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                                         'title' => 'Edit',
                                     ]
                                 );
+                            },
+
+                            'set' => function ($url, $model) {
+                                return Html::a(
+                                    'Set Thumbnail',
+                                    ['update-thumbnail', 'partner_gallery_id' => $model->partner_gallery_id, 'id' => $model->id],
+                                    [
+                                        'class' => 'btn btn-sm btn-warning',
+                                        'title' => 'Set Thumbnail',
+                                        'data-confirm' => 'Are you sure you want to set this as the thumbnail?',
+                                        'data-method' => 'post',
+                                    ]
+                                );
                             }
+
                         ]
                     ],
 
