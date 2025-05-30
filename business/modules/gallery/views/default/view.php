@@ -51,6 +51,14 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                             ]), ['style' => 'text-align: center;']);
                         }
                     ],
+                    [
+                        'label' => 'Set as Thumbanil',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align: center;'],
+                        'value' => function ($model) {
+                            return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
+                        }
+                    ],
 
                     [
                         'label' => 'Status',

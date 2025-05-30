@@ -42,3 +42,5 @@ UPDATE `master_mail_template` SET `name` = 'Quotation Payment Received For User'
 
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QPRP', 'Quotation Payment Received For Partner', 'quotationPaymentReceivedForPartner-html', '1', '1716278771', '2', '1716289465', '2')
 
+
+ALTER TABLE `partner_gallery_image` ADD `set_as_thumbnail` INT NULL DEFAULT '0' AFTER `sequence`;
