@@ -4,7 +4,7 @@ namespace api\models\sighting;
 
 use Yii;
 use api\models\User;
-
+use common\models\GeneralModel;
 
 class SightingComment extends \common\models\sighting\SightingComment
 {
@@ -18,7 +18,9 @@ class SightingComment extends \common\models\sighting\SightingComment
         // $hold_fields = ['sighting_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         // return array_diff($fields, $hold_fields);
         // return $fields;
-        $fields = ['id', 'safari_operator_id', 'comment', 'dateTime', 'flaged' => function () {
+        $fields = ['id', 'safari_operator_id', 'comment' => function ($model) {
+            return GeneralModel::apicommentConversion($model->comment);
+        }, 'dateTime', 'flaged' => function () {
             return (bool) $this->flaged;
         }, 'user', 'replies', 'is_liked', 'liked_count'];
 
