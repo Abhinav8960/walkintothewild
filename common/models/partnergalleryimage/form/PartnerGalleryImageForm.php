@@ -21,6 +21,7 @@ class PartnerGalleryImageForm extends model
 
     public $status_option = [];
     public $sequence;
+    public $set_as_thumbnail;
 
     public function __construct(PartnerGalleryImage $partner_gallery_image_model = null)
     {
@@ -39,6 +40,7 @@ class PartnerGalleryImageForm extends model
             $this->created_at = $this->partner_gallery_image_model->created_at;
             $this->status = $this->partner_gallery_image_model->status;
             $this->sequence = $this->partner_gallery_image_model->sequence;
+            $this->set_as_thumbnail = $this->partner_gallery_image_model->set_as_thumbnail;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -52,7 +54,7 @@ class PartnerGalleryImageForm extends model
     {
         return [
             [['file'], 'required'],
-            [['partner_gallery_id', 'status', 'created_at','sequence'], 'integer'],
+            [['partner_gallery_id', 'status', 'created_at','sequence','set_as_thumbnail'], 'integer'],
             [['caption'], 'string'],
             [['title'], 'string', 'max' => 255],
             [
@@ -93,6 +95,7 @@ class PartnerGalleryImageForm extends model
         $this->partner_gallery_image_model->caption = $this->caption;
         $this->partner_gallery_image_model->status = $this->status;
         $this->partner_gallery_image_model->sequence = $this->sequence;
+        $this->partner_gallery_image_model->set_as_thumbnail = $this->set_as_thumbnail;
     }
 
     public function uploadFile()

@@ -65,7 +65,7 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width:10%; text-align:left;'],
-                        'template' => '{check}&nbsp{edit}',
+                        'template' => '{check}&nbsp{edit}&nbsp{set}',
                         'buttons' => [
                             'check' => function ($url, $model) {
                                 if ($model->status == 1) {
@@ -97,7 +97,21 @@ $this->params['buttons'][] = Html::a('+ Upload Gallery', [Url::toRoute(['create-
                                         'title' => 'Edit',
                                     ]
                                 );
+                            },
+
+                            'set' => function ($url, $model) {
+                                return Html::a(
+                                    'Set Thumbnail',
+                                    ['update-thumbnail', 'partner_gallery_id' => $model->partner_gallery_id, 'id' => $model->id],
+                                    [
+                                        'class' => 'btn btn-sm btn-warning',
+                                        'title' => 'Set Thumbnail',
+                                        'data-confirm' => 'Are you sure you want to set this as the thumbnail?',
+                                        'data-method' => 'post',
+                                    ]
+                                );
                             }
+
                         ]
                     ],
 
