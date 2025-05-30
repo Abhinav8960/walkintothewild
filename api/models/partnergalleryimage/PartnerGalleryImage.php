@@ -13,13 +13,13 @@ class PartnerGalleryImage extends \common\models\partnergalleryimage\PartnerGall
 
 
         $fields = [
-            'original_filename',
+            // 'original_filename',
             'gallery_image_path',
-            'file',
+            // 'file',
             'title',
             'caption',
-            'sequence',
-            'status'
+            // 'sequence',
+            // 'status'
         ];
 
         return $fields;
