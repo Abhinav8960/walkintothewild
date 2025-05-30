@@ -161,31 +161,32 @@ class QuotationPaymentReceived extends Model
 
         $message = "Payment received for the send quotation.\n";
         $message .= "Transaction ID: " . $this->transaction_id;
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Amount: " . $this->form_model->received_amount;
-        $message .= "\n";
+        $message .= "<br>";
 
 
 
         if (isset($quotation->park->title)) {
             $message .= "Park: " . $quotation->park->title;
+            $message .= "<br>";
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "\n";
+        $message .= "<br>";
         // $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
-        // $message .= "\n";
+        // $message .= "<br>";
         // $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
-        // $message .= "\n";
+        // $message .= "<br>";
         $message .= "<b>Note</b>";
-        $message .= "\n";
+        $message .= "<br>";
         $message .= $quotation->addional_notes;
 
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();

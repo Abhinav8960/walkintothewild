@@ -48,7 +48,8 @@ class Chat extends \common\models\chat\Chat
             // 'quote_price_max',
             // 'quote_more_detail',
             'is_seen' => function () {
-                return (bool)$this->is_seen;
+                // return (bool)$this->is_seen;
+                return true;
             },
             'contact',
             // 'status' => function () {
