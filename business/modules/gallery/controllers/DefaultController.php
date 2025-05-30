@@ -241,7 +241,10 @@ class DefaultController extends Controller
             );
             $count++;
         }
-        return ['status' => 'success', 'message' => 'Order updated successfully.'];
+
+        Yii::$app->session->setFlash('success', 'Image order updated successfully.');
+
+        return ['status' => 'success'];
     }
 
 

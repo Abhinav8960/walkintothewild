@@ -10,7 +10,6 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="box-body">
         <div class="col-md-12">
-            <div id="txtresponse"> </div>
             <ul class="list-unstyled" id="gallery_list">
                 <?php foreach ($dataProvider->models as $model): ?>
                     <li id="<?= $model->id ?>">
@@ -19,7 +18,7 @@ $this->params['title'] = $this->title;
                 <?php endforeach; ?>
             </ul>
             <div id="submit-container">
-                <input type='button' class="btn-submit" value='Submit' id='submit' />
+                <input type='button' class="btn btn-info mb-2" value='Submit' id='submit' />
             </div>
         </div>
     </div>
@@ -55,13 +54,14 @@ $(function() {
                 ids: gallery_id_array,
                 _csrf: yii.getCsrfToken()
             },
-            success: function(data) {
-                $("#txtresponse").css('display', 'inline-block'); 
-                $("#txtresponse").text(response);
-            },
-            error: function(xhr) {
-                alert("Error: " + xhr.responseText);
-            }
+         
+        success: function(data) {
+            location.reload();
+        },
+
+        error: function(xhr) {
+            alert("Error: " + xhr.responseText);
+        }
         });
     });
 });
