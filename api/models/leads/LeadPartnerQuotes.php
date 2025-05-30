@@ -58,6 +58,13 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             'end_date' => function () {
                 return date('Y-m-d', strtotime($this->end_date));
             },
+            'validity_date' => function () {
+                return !empty($this->permit_booking_date) ? date('Y-m-d', strtotime($this->permit_booking_date)) : null;
+            },
+            'permit_booking_date' => function () {
+                return !empty($this->permit_booking_date) ? date('Y-m-d', strtotime($this->permit_booking_date)) : null;
+
+            },
             // 'partner_selling_price',
             // 'plateform_partner_fees_percentage',
             // 'plateform_partner_fees',

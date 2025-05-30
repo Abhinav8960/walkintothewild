@@ -54,8 +54,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function fields()
     {
         $fields = [
-            // 'id',
-            'message',
+            'message' => function () {
+                return $this->message;
+            },
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
             },
@@ -63,8 +64,11 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 return $this->created_by == $this->getActiveUserId() ? true : false;
             },
         ];
+
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
             if ($this->is_quotation_message == true) {
+                // Remove 'message' from the fields array
+                unset($fields['message']);
                 $fields['quote'] = function () {
                     return $this->quote;
                 };
@@ -76,6 +80,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
         }
+
         return $fields;
     }
     /**
@@ -171,7 +176,6 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         if (!empty($this->sender_id)) {
             return $this->chat->user_id == $this->sender_id ? $this->chat->user_id : $this->sender_id;
-
         }
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }
