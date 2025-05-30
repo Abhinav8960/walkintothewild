@@ -266,10 +266,14 @@ class DefaultController extends  Controller
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
         $message .= "<br>";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "<br>";
-        $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
-        $message .= "<br>";
-        $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        if (!empty($quotation->validity_date)) {
+            $message .= "<br>";
+            $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+        }
+        if (!empty($quotation->permit_booking_date)) {
+            $message .= "<br>";
+            $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        }
         $message .= "<br>";
         $message .= "<b>Note</b>";
         $message .= "<br>";
