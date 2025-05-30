@@ -23,7 +23,7 @@ class PartnerGalleryImageForm extends model
     public $sequence;
     public $set_as_thumbnail;
 
-    public function __construct(PartnerGalleryImage $partner_gallery_image_model = null)
+    public function __construct($partner_gallery_image_model = null)
     {
 
         $this->partner_gallery_image_model = Yii::createObject([
@@ -32,7 +32,7 @@ class PartnerGalleryImageForm extends model
 
 
 
-        if ($partner_gallery_image_model  != '') {
+        if ($partner_gallery_image_model != null) {
             $this->partner_gallery_image_model = $partner_gallery_image_model;
             $this->partner_gallery_id = $this->partner_gallery_image_model->partner_gallery_id;
             $this->title = $this->partner_gallery_image_model->title;

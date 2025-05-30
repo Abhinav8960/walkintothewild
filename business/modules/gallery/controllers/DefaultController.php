@@ -126,12 +126,13 @@ class DefaultController extends Controller
 
         $pgi_query = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id]);
         $maxSequence = $pgi_query->max('sequence');
-        $pgi_thumbnail = $pgi_query->where(['set_as_thumbnail' => 1])->limit(1)->one();
+        $pgi_thumbnail = $pgi_query->andWhere(['set_as_thumbnail' => 1])->limit(1)->one();
 
         $model = new PartnerGalleryImageForm();
         $model->partner_gallery_id = $partner_gallery_model->id;
         $model->status = PartnerGalleryImage::STATUS_ACTIVE;
         $model->sequence = $maxSequence ? ($maxSequence + 1) : 1;
+
         if (empty($pgi_thumbnail)) {
             $model->set_as_thumbnail = 1;
         }

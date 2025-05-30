@@ -109,4 +109,13 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         }
         return 0;
     }
+
+    public function getThumbnail()
+    {
+        $model = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id])->andWhere(['set_as_thumbnail' => 1])->limit(1)->one();
+        if ($model) {
+            return Yii::$app->params['s3_endpoint'] . '/' . $model->filepath;
+        }
+        return null;
+    }
 }
