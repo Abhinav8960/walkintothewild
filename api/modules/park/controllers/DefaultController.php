@@ -260,7 +260,7 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator Can't do Quote Request!!!"]);
             }
         }
-        
+
         $sf = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$sf) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
@@ -281,11 +281,11 @@ class DefaultController extends RestController
             }
         }
 
-        if (count($sf->safarioperatorlist) < 1) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'There is no active operartor in this park, We will get back to you soon!!!']);
+        if (count($sf->operator) < 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thank you for sending the request. Unfortunately, we currently don’t have any verified operators for this park. We’re working to onboard trusted partners soon and will notify you once services become available.']);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!'. count($sf->operator)]);
     }
 
     public function actionParkFollow($slug)
