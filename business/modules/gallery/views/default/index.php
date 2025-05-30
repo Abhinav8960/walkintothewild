@@ -31,6 +31,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         }
                     ],
                     [
+                        'label' => 'Thumbnail',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->thumbnail != null) {
+                                return '<img src="' . $model->thumbnail . '" alt="ALT IMG" style="max-width: 100px;">';
+                            }
+                            return '';
+                        }
+                    ],
+                    [
                         'label' => 'Park Name',
                         'format' => 'raw',
                         'value' => function ($model) {
