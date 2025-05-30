@@ -186,26 +186,26 @@ class DefaultController extends  Controller
         }
     }
 
-    private function uploadToRfs($filePath, $quotationId)
-    {
-        // Define the destination path in the RFS storage
-        $destinationPath = "quotations/" . date('ym') . "/quotation_{$quotationId}.pdf";
+    // private function uploadToRfs($filePath, $quotationId)
+    // {
+    //     // Define the destination path in the RFS storage
+    //     $destinationPath = "quotations/" . date('ym') . "/quotation_{$quotationId}.pdf";
 
-        // Use the 'rfs' component to upload the file
-        $rfs = Yii::$app->rfs;
+    //     // Use the 'rfs' component to upload the file
+    //     $rfs = Yii::$app->rfs;
 
-        try {
-            // Read the file content
-            $fileContent = file_get_contents($filePath);
+    //     try {
+    //         // Read the file content
+    //         $fileContent = file_get_contents($filePath);
 
-            // Write the file to the RFS storage
-            $rfs->write($destinationPath, $fileContent);
+    //         // Write the file to the RFS storage
+    //         $rfs->write($destinationPath, $fileContent);
 
-            return ['success' => true, 'path' => $destinationPath];
-        } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
-        }
-    }
+    //         return ['success' => true, 'path' => $destinationPath];
+    //     } catch (\Exception $e) {
+    //         return ['success' => false, 'message' => $e->getMessage()];
+    //     }
+    // }
 
     public function actionDisapprove()
     {
@@ -255,23 +255,24 @@ class DefaultController extends  Controller
 
         if (isset($quotation->park->title)) {
             $message = "Park: " . $quotation->park->title;
+            $message .= "<br>";
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
-        $message .= "\n";
+        $message .= "<br>";
         $message .= "<b>Note</b>";
-        $message .= "\n";
+        $message .= "<br>";
         $message .= $quotation->addional_notes;
 
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
