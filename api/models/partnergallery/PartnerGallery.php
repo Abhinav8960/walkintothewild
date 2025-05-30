@@ -18,7 +18,8 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             'safari_park_id',
             'safari_park_label',
             'slug',
-            'url',
+            'private_url',
+            'public_url',
             'thumbnail',
             'status'
         ];
@@ -31,7 +32,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
         return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
     }
 
-    public function getUrl()
+    public function getPrivate_url()
     {
         return Yii::$app->params['api_url'] . '/manage/gallery/' . $this->slug . '/gallery-images';
     }
@@ -51,5 +52,10 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             return $this->park->title;
         }
         return null;
+    }
+
+    public function getPublic_url()
+    {
+        return Yii::$app->params['api_url'] . '/chat/gallery-images/' . $this->slug;
     }
 }

@@ -44,3 +44,4 @@ INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `cre
 
 
 ALTER TABLE `partner_gallery_image` ADD `set_as_thumbnail` INT NULL DEFAULT '0' AFTER `sequence`;
+ALTER TABLE `chat_message` ADD `gallery_url` VARCHAR(512) NULL DEFAULT NULL AFTER `data`;
