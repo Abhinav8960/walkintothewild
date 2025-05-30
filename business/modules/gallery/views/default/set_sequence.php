@@ -10,10 +10,16 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="box-body">
         <div class="col-md-12">
-            <ul class="list-unstyled" id="gallery_list">
+            <ul class="list-unstyled d-flex gap-2" id="gallery_list">
                 <?php foreach ($dataProvider->models as $model): ?>
                     <li id="<?= $model->id ?>">
-                        <img src="<?= $model->gallery_image ?>" alt="ALT IMG" width="50" height="50">
+                        <div class="card" style="width: 18rem;">
+                            <img src="<?= $model->gallery_image ?>" class="card-img-top" alt="ALT IMG" width="100" height="100">
+                            <div class="card-body">
+                                <h5><?= $model->title ?></h5>
+                                <p class="card-text"><?= $model->caption ?></p>
+                            </div>
+                        </div>
                     </li>
                 <?php endforeach; ?>
             </ul>
