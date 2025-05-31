@@ -148,6 +148,7 @@ class ParkLeadForm extends Model
         $short_msg .= "<b>Park: </b>" . $park->title . "<br>";
         $message .= "<b>Park: </b>" . $park->title . "<br>";
         $message .= "<b>Safaries: </b>" . $this->safaris . "<br>";
+        $message .= "<b>Safaries</b>:" . $this->safaris . "<br>";
         $message .= "<b>Travelers</b>:" . $this->travelers . "<br>";
         $message .= "<b>Stay Category</b>:" . $lead->staycatgory->title . "<br>";
         $message .= "<b>Start Date</b>:" . date('M j, Y', strtotime($this->start_date)) . "<br>";
