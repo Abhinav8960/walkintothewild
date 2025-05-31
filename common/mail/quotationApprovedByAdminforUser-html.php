@@ -50,7 +50,7 @@ use yii\helpers\Html;
 
                 <?php if (isset($validity_date) && $validity_date != null) { ?>
                     <tr>
-                        <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Vaility Date</td>
+                        <td style="padding: 8px 0; font-weight: bold; width: 40%; color: #555;">Quotation valid till</td>
                         <td style="padding: 8px 0; color: #555;"><?= isset($validity_date) ? $validity_date : '' ?></td>
                     </tr>
                 <?php } ?>
