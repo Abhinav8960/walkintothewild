@@ -68,10 +68,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
         if (isset($this->chat->chat_type) && $this->chat->chat_type == 2) {
             if ($this->is_quotation_message == true) {
                 // Remove 'message' from the fields array
-                // unset($fields['message']);
-                $fields['message'] = function () {
-                    return "Please see below quotation";
-                };
+                unset($fields['message']);
+                // $fields['message'] = function () {
+                //     return "Please see below quotation";
+                // };
 
                 $fields['quote'] = function () {
                     return $this->quote;
