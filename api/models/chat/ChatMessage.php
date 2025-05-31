@@ -96,7 +96,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
         return [
             [['chat_id'], 'required'],
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['message', 'gallery_url'], 'string', 'max' => 512],
+            [['gallery_url'], 'string', 'max' => 512],
+            [['message'], 'string'],
             [['gallery_url'], 'safe'],
         ];
     }
@@ -150,7 +151,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+            return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, \common\models\GeneralModel::strMaxlength($this->message), $this->chat->chat_hash, $this->prepareData());
         }
 
         // anurag's testing line

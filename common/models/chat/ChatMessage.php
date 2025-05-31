@@ -66,7 +66,8 @@ class ChatMessage extends \yii\db\ActiveRecord
         return [
             [['chat_id'], 'required'],
             [['chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['message', 'gallery_url'], 'string', 'max' => 512],
+            [['gallery_url'], 'string', 'max' => 512],
+            [['message'], 'string'],
             [['sender_id'], 'safe'],
             [['gallery_url'], 'safe'],
         ];

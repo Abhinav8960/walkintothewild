@@ -1773,7 +1773,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function PaymentgatewayOptions()
     {
-        return [           
+        return [
             1 => 'PayU',
             2 => 'HDFC',
         ];
@@ -1781,13 +1781,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function safarisession()
     {
-        $query = ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','title');
+        $query = ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
         return $query;
     }
 
     public static function safarizone()
     {
-        $query = ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(),'id','name');
+        $query = ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'name');
         return $query;
     }
 
@@ -1841,5 +1841,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         }
 
         return $comment;
+    }
+
+    public static function strMaxlength($value, $limit = 200)
+    {
+        $value = strlen($value) > $limit ? (substr($value, 0, $limit) . '...') : $value;
+
+        return $value;
     }
 }
