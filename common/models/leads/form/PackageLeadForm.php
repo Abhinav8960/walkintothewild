@@ -114,6 +114,7 @@ class PackageLeadForm extends Model
         $short_msg = $message = "Hi, I am interested in \n";
         $short_msg .= "Package:" . $package->package_name . "\n";
         $message .= "Package:" . $package->package_name . "\n";
+        $message .= "Park:" . $package->primary_park . "\n";
         $message .= "Travelers:" . $lead->travelers . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($lead->from_date)) . "\n";
 
