@@ -125,13 +125,13 @@ class PartnerLeadForm extends Model
 
         $chat = new Chat();
         $short_msg = $message = "Hi, I am interested in \n";
-        $short_msg .= "<b>Park: </b>" . $park->title . "\n";
-        $message .= "<b>Park: </b>" . $park->title . "\n";
-        $message .= "<b>Safaries: </b>" . $this->safaris . "\n";
-        $message .= "<b>Travelers: </b>" . $this->travelers . "\n";
-        $message .= "<b>Stay Category: </b>" . $lead->staycatgory->title . "\n";
-        $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($this->start_date)) . "\n";
-        $message .= "<b>End Date: </b>" . date('M j, Y', strtotime($this->end_date)) . "\n";
+        $short_msg .= "Park: " . $park->title . "\n";
+        $message .= "Park: " . $park->title . "\n";
+        $message .= "Safaries: " . $this->safaris . "\n";
+        $message .= "Travelers: " . $this->travelers . "\n";
+        $message .= "Stay Category: " . $lead->staycatgory->title . "\n";
+        $message .= "Start Date: " . date('M j, Y', strtotime($this->start_date)) . "\n";
+        $message .= "End Date: " . date('M j, Y', strtotime($this->end_date)) . "\n";
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;

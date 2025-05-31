@@ -275,7 +275,7 @@ class DefaultController extends  Controller
             $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
         }
         $message .= "\n";
-        $message .= "<b>Note</b>";
+        $message .= "Notes:";
         $message .= "\n";
         $message .= $quotation->addional_notes;
 

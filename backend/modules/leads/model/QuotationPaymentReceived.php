@@ -190,7 +190,7 @@ class QuotationPaymentReceived extends Model
             $message .= "\n";
         }
 
-        $message .= "<b>Note</b>";
+        $message .= "Notes: ";
         $message .= "\n";
         $message .= $quotation->addional_notes;
 
