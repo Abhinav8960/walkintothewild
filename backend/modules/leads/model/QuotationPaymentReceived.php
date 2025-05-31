@@ -161,32 +161,37 @@ class QuotationPaymentReceived extends Model
 
         $message = "Payment received for the send quotation.\n";
         $message .= "Transaction ID: " . $this->transaction_id;
-        $message .= "<br>";
+        $message .= "\n";
         $message .= "Amount: " . $this->form_model->received_amount;
-        $message .= "<br>";
+        $message .= "\n";
 
 
 
         if (isset($quotation->park->title)) {
             $message .= "Park: " . $quotation->park->title;
-            $message .= "<br>";
+            $message .= "\n";
             $message .= "Safaris: " . $quotation->safaris;
         }
-        $message .= "<br>";
+        $message .= "\n";
         $message .= "Travelers: " . $quotation->travelers;
-        $message .= "<br>";
+        $message .= "\n";
         $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
-        $message .= "<br>";
+        $message .= "\n";
         $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
-        $message .= "<br>";
+        $message .= "\n";
         $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
-        $message .= "<br>";
-        // $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
-        // $message .= "<br>";
-        // $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
-        // $message .= "<br>";
+        $message .= "\n";
+        if (!empty($quotation->validity_date)) {
+            $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+            $message .= "\n";
+        }
+        if (!empty($quotation->permit_booking_date)) {
+            $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+            $message .= "\n";
+        }
+
         $message .= "<b>Note</b>";
-        $message .= "<br>";
+        $message .= "\n";
         $message .= $quotation->addional_notes;
 
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
@@ -206,7 +211,7 @@ class QuotationPaymentReceived extends Model
         if ($chat_message->save(false)) {
 
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
-            $chat->last_message = $message;
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->quote_id = $quotation->id;
             $chat->status = 1;

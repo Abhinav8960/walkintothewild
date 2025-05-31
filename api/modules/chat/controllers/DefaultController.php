@@ -214,7 +214,7 @@ class DefaultController extends RestController
 
         if ($chat_message->save(false)) {
             $chat = Chat::find()->where(['id' => $chat_id])->one();
-            $chat->last_message = $message;
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->status = 1;
             $chat->is_seen = 0;
