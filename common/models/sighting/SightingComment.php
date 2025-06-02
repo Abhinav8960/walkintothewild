@@ -122,12 +122,6 @@ class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function afterDelete()
-    {
-        $this->updateSightingCommentCount();
-        parent::afterDelete();
-    }
-
     public function updateSightingCommentCount()
     {
         if ($this->sighting_id) {

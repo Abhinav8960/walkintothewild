@@ -129,12 +129,6 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
         }
     }
 
-    public function afterDelete()
-    {
-        $this->updatePostCommentCount();
-        parent::afterDelete();
-    }
-
     public function updatePostCommentCount()
     {
         if ($this->user_posts_id) {
