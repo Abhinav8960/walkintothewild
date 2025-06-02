@@ -84,13 +84,4 @@ class ShareSafariCommentForm extends Model
             $this->addError($attribute, 'Please provide content within 200 words.');
         }
     }
-
-    public function NotifyUser($comment, $getAttributes)
-    {
-        if($comment->status == 1){
-            $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
-            return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$comment->share_safari_id);     
-        }
-       
-    }
 }

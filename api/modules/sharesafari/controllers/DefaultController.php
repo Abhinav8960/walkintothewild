@@ -491,12 +491,11 @@ class DefaultController extends SafariController
         if ($model->validate()) {
             /**To Creator */
             if ($comment = $model->comment($share_safari)) {
-                FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
+                // FirebaseNotificationHelper::safaricommentorreply($share_safari, $this->userinfo);
                 /**To All Join */
-                FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
+                // FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
                 // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
                 // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
-                $model->NotifyUser($comment, []);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
             }
         }

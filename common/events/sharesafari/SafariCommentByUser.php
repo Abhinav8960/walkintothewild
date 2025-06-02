@@ -9,7 +9,7 @@ use common\models\master\notification\MasterNotificationTemplate;
 use common\models\User;
 use yii\base\Event;
 
-class SafariCommentReplyByUser extends Event
+class SafariCommentByUser extends Event
 {
     public $userId;
     public $email;
@@ -28,10 +28,10 @@ class SafariCommentReplyByUser extends Event
 
     protected $channels = [
         // 'email',
-        // 'firebase',
+        'firebase',
     ];
 
-    protected $mail_template_code = 'THOS';  // To Host Join Safari
+    protected $mail_template_code = 'THOS';  // To Host on Comment Safari
 
     public function __construct($interested_user, $shared_safari_id)
     {
@@ -72,7 +72,7 @@ class SafariCommentReplyByUser extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'New Update !! ' . $this->interested_user . ' has joined ' . $this->name . "'s" . ' Shared Safari',
+                    'subject' => $this->interested_user . ' has commented ' . $this->name . "'s" . ' Shared Safari',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->interested_user,
@@ -95,7 +95,6 @@ class SafariCommentReplyByUser extends Event
                 ],
                 
             ],
-            // Add more templates for other channels as needed
         ];
         return $arr;
     }
@@ -143,7 +142,7 @@ class SafariCommentReplyByUser extends Event
             $this->email = $this->shared_safari->user->email;
             $this->name =  $this->shared_safari->user->name;
         }
-        // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
+        $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
         $this->sent_data = [
             'share_safari_title' => $this->shared_safari->share_safari_title,
             'slug' => $this->shared_safari->slug
