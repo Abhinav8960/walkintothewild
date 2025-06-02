@@ -17,6 +17,7 @@ use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsImageForm;
 use getID3;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 class DefaultController extends RestController
@@ -33,7 +34,7 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'posts-images'],
+                'exclude' => ['index', 'view', 'posts-images','comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,6 +62,8 @@ class DefaultController extends RestController
                     'post-delete' => ['POST'],
                     'post-edit' => ['POST'],
                     'flag' => ['POST'],
+                    'comment-view' => ['GET'],
+
                 ],
             ],
         ];
@@ -334,5 +337,19 @@ class DefaultController extends RestController
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionCommentView($id)
+    {
+        $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$user_post_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => UserPostComment::find()->where(['user_posts_id' => $user_post_model->id, 'status' => 1, 'parent_id' => null]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "comments");
     }
 }

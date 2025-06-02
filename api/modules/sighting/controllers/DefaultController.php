@@ -35,7 +35,7 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view','daily-update'],
+                'exclude' => ['index', 'view', 'daily-update','comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -67,6 +67,7 @@ class DefaultController extends RestController
                     'sighting-delete' => ['POST'],
                     'flag' => ['POST'],
                     'daily-update' => ['GET'],
+                    'comment-view' => ['GET'],
                 ],
             ],
         ];
@@ -321,8 +322,22 @@ class DefaultController extends RestController
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-            'pagination' => false, 
+            'pagination' => false,
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "sighting");
+    }
+
+    public function actionCommentView($id)
+    {
+        $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => SightingComment::find()->where(['sighting_id' => $sighting_model->id, 'status' => 1, 'parent_id' => null]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "comments");
     }
 }
