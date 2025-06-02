@@ -29,6 +29,7 @@ class ParkLeadForm extends Model
     public $action_url;
     public $action_validate_url;
 
+    public $user_notes;
 
 
     /**
@@ -47,6 +48,8 @@ class ParkLeadForm extends Model
             [['safaris', 'travelers'], 'number', 'min' => 1],
             // ['stay_category_id', 'exist', 'targetClass' => MetaStayCategory::class, 'targetAttribute' => ['stay_category_id' => 'id']],
             // ['safari_park_id', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['safari_park_id' => 'id']],
+            [['user_notes'], 'string', 'max' => 1000],
+
         ];
     }
 
@@ -92,6 +95,7 @@ class ParkLeadForm extends Model
             $lead->phone = $this->phone_no;
             $lead->user_id = $login_user->id;
             $lead->status = 1;
+            $lead->user_notes = $this->user_notes;
 
 
             if ($lead->save(false)) {
@@ -152,6 +156,9 @@ class ParkLeadForm extends Model
         $message .= "Stay Category:" . $lead->staycatgory->title . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($this->start_date)) . "\n";
         $message .= "End Date:" . date('M j, Y', strtotime($this->end_date)) . "\n";
+        if ($lead->user_notes != null) {
+            $message .= "Notes:" . $lead->user_notes . "\n";
+        }
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;

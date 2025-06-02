@@ -26,6 +26,7 @@ class PackageLeadForm extends Model
     public $action_url;
     public $action_validate_url;
 
+    public $user_notes;
 
     /**
      * {@inheritdoc}
@@ -38,6 +39,7 @@ class PackageLeadForm extends Model
             [['pack_start_date'], 'date', 'format' => 'php:Y-m-d'],
             [['travelers'], 'integer', 'min' => 1, 'max' => 100, 'tooSmall' => 'Minimum 1 traveler', 'tooBig' => 'Maximum 100 travelers'],
             [['pack_start_date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>=', 'type' => 'date', 'message' => '{attribute} must be today or a future date.'],
+            [['user_notes'], 'string', 'max' => 1000],
 
 
         ];
@@ -73,6 +75,7 @@ class PackageLeadForm extends Model
             $lead->email = $this->email ?? $login_user->email;
             $lead->phone = $this->phone;
             $lead->travelers = $this->travelers;
+            $lead->user_notes = $this->user_notes;
             $lead->from_date = $this->pack_start_date;
             $lead->user_id = $login_user->id;
             $lead->created_by = $login_user->id;
@@ -117,6 +120,9 @@ class PackageLeadForm extends Model
         $message .= "Park:" . $package->primary_park . "\n";
         $message .= "Travelers:" . $lead->travelers . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($lead->from_date)) . "\n";
+        if ($lead->user_notes != null) {
+            $message .= "Notes:" . $lead->user_notes . "\n";
+        }
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;
