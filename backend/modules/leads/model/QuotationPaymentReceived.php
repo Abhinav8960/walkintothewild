@@ -228,7 +228,7 @@ class QuotationPaymentReceived extends Model
         new \common\events\leads\QuotationPaymentReceived(
             $quotation = $this->form_model,
             $user_id = $this->form_model->lead->user_id,
-            $partner_user_id = $this->form_model->partner_id,
+            $partner_id = $this->form_model->partner_id,
             $transaction_id = $this->transaction_id,
             $payment_date = $this->transaction_datetime,
         );
