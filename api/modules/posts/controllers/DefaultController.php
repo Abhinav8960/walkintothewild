@@ -34,15 +34,20 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'posts-images','comment-view'],
+                'exclude' => ['index', 'view', 'posts-images', 'comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'post-delete', 'post-edit', 'flag'],
+                        'actions' => ['create', 'comment', 'reply', 'comment-like', 'user-post-like', 'user-post-report', 'flag'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['post-delete', 'post-edit'],
+                        'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -351,5 +356,17 @@ class DefaultController extends RestController
             'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "comments");
+    }
+
+    private function isOwner()
+    {
+        if ($this->userinfo) {
+            $owner = UserPosts::find()->where(['user_id' => $this->userinfoId, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+            if ($owner) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

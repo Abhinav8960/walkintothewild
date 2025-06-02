@@ -35,20 +35,25 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'daily-update','comment-view'],
+                'exclude' => ['index', 'view', 'daily-update', 'comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
                         'actions' => ['create'],
                         'allow' => $this->isSafariOperator(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['sighting-delete'],
+                        'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -339,5 +344,17 @@ class DefaultController extends RestController
             'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "comments");
+    }
+
+    private function isOwner()
+    {
+        if ($this->userinfo) {
+            $owner = Sighting::find()->where(['user_id' => $this->userinfoId, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+            if ($owner) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }
