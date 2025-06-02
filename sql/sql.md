@@ -54,3 +54,4 @@ ALTER TABLE `lead` ADD `user_notes` VARCHAR(1000) NULL DEFAULT NULL AFTER `addio
 ALTER TABLE `sms_log` ADD `report_status` VARCHAR(100) NULL DEFAULT NULL AFTER `is_deliver`, ADD `report_status_datetime` DATETIME NULL DEFAULT NULL AFTER `report_status`;
 
 ALTER TABLE `sms_log` ADD `report_error_code` INT NULL DEFAULT '0' AFTER `is_deliver`;
+ALTER TABLE `lead` CHANGE `user_notes` `user_notes` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
