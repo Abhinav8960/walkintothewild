@@ -114,7 +114,9 @@ class GalleryController extends RestController
                 $model->uploadFile();
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Uploaded!!!"]);
             }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Uploaded!!!"]);
         }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     public function actionGalleryImages($slug)
