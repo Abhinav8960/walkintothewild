@@ -197,6 +197,7 @@ return [
 
                 /**Partner Gallery */
                 'manage/gallery/list' => 'manage/gallery/index',
+                'manage/gallery/<action>' => 'manage/gallery/<action>',
                 'manage/gallery/<slug>/<action>' => 'manage/gallery/<action>',
 
                 /** feeds */
