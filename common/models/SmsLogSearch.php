@@ -66,6 +66,7 @@ class SmsLogSearch extends SmsLog
             'service_id' => $this->service_id,
             'is_cron_run' => $this->is_cron_run,
             'is_ok' => $this->is_ok,
+            'report_status_datetime' => $this->report_status_datetime,
             'is_deliver' => $this->is_deliver,
             'status' => $this->status,
             'response_code' => $this->response_code,
@@ -77,6 +78,7 @@ class SmsLogSearch extends SmsLog
 
         $query->andFilterWhere(['like', 'template_id', $this->template_id])
             ->andFilterWhere(['like', 'message_id', $this->message_id])
+            ->andFilterWhere(['like', 'report_status', $this->report_status])
             ->andFilterWhere(['like', 'params', $this->params]);
 
         return $dataProvider;

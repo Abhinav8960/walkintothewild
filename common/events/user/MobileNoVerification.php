@@ -15,7 +15,7 @@ class MobileNoVerification extends Event
     public $name;
     public $templates;
     public $channelName;
-    public $template_id = "17071745330767XXXXX";
+    public $template_id = "1707174799017772045";
     public $sms_template;
 
     protected $channels = [

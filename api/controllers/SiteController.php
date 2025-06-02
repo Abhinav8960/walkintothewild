@@ -556,9 +556,9 @@ class SiteController extends RestController
         $model = new UserMobileNoVerificationForm();
         $model->attributes = $this->request;
         if ($model->validate()) {
-            $model->proceedforverification($this->auth_token);
+            $model->proceedforverification($this->auth_token, $user_model);
 
-            return Yii::$app->api->sendResponse($data = ['status' => 1, 'otp' => $model->otp], ['message' => "Mobile No Verified Successfully"]);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
         }
         if ($model->hasErrors()) {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -644,6 +644,7 @@ class SiteController extends RestController
 
     public function actionTest()
     {
+        return [];
         return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
     }
 

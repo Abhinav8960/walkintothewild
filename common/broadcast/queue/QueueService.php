@@ -132,7 +132,7 @@ class QueueService
         $log->status = 0; // Mail Not Send
         $log->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
         $log->updated_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
-
+        
         $log->save(false);
         return $log;
     }
