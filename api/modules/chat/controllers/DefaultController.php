@@ -18,6 +18,9 @@ use api\behaviours\Verbcheck;
 use api\models\leads\Lead;
 use api\models\leads\LeadPartners;
 use api\models\operator\SafariOperator;
+use api\models\partnergallery\PartnerGallery;
+use api\models\partnergalleryimage\PartnerGalleryImage;
+use api\models\partnergalleryimage\PartnerGalleryImageSearch;
 use api\models\sales\SalesQuote;
 use common\models\GeneralModel as ModelsGeneralModel;
 use common\models\leads\form\LeadPartnerQuotationForm;
@@ -46,10 +49,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -69,6 +72,7 @@ class DefaultController extends RestController
                     'send' => ['POST'],
                     'send-message' => ['POST'],
                     'messages' => ['GET'],
+                    'gallery-images' => ['GET']
                 ],
             ],
         ];
@@ -181,14 +185,15 @@ class DefaultController extends RestController
         }
 
         $message = Yii::$app->request->post('message');
+        $gallery_url = Yii::$app->request->post('gallery_url') ?? null;
         if ($message == '') {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $data = NULL);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $data = null)
+    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -202,13 +207,14 @@ class DefaultController extends RestController
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
+        $chat_message->gallery_url = $gallery_url;
         $chat_message->data = $data;
         $chat_message->status = 1;
         $chat_message->created_by = $this->userinfo->id;
 
         if ($chat_message->save(false)) {
             $chat = Chat::find()->where(['id' => $chat_id])->one();
-            $chat->last_message = $message;
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->status = 1;
             $chat->is_seen = 0;
@@ -361,5 +367,19 @@ class DefaultController extends RestController
             $model->status = 0;
             $model->save(false);
         }
+    }
+
+    public function actionGalleryImages($slug)
+    {
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $searchModel = new PartnerGalleryImageSearch();
+        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
+        $searchModel->partner_gallery_id = $partner_gallery_model->id;
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
     }
 }

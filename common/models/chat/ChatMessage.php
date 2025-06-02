@@ -66,8 +66,10 @@ class ChatMessage extends \yii\db\ActiveRecord
         return [
             [['chat_id'], 'required'],
             [['chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['message'], 'string', 'max' => 512],
+            [['gallery_url'], 'string', 'max' => 512],
+            [['message'], 'string'],
             [['sender_id'], 'safe'],
+            [['gallery_url'], 'safe'],
         ];
     }
 
@@ -97,7 +99,9 @@ class ChatMessage extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+        if ($insert) {
+            return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+        }
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
@@ -127,7 +131,6 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         if (!empty($this->sender_id)) {
             return $this->chat->user_id == $this->sender_id ? $this->chat->user_id : $this->sender_id;
-
         }
         return $this->chat->user_id == $this->created_by ? $this->chat->recipient_user_id : $this->chat->user_id;
     }

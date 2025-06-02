@@ -28,10 +28,11 @@ class QuotationPaymentReceived extends Event
     protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_PAYMENT_RECEIVED_FOR_USER; // New User Registration
     protected $mail_template_code_for_Operator = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_PAYMENT_RECEIVED_FOR_PARTNER; // New User Registration
 
-    public function __construct($quotation, $user_id, $partner_user_id, $transaction_id, $payment_date)
+    public function __construct($quotation, $user_id, $partner_id, $transaction_id, $payment_date)
     {
         $this->user = User::find()->where(['id' => $user_id])->one();
-        $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
+        $partner = SafariOperator::find()->where(['id' => $partner_id])->one();
+        $this->partner_user = User::find()->where(['id' => $partner->user_id])->one();
         $this->quotation = $quotation;
         $this->transaction_id = $transaction_id;
         $this->payment_date = $payment_date;

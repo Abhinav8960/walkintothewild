@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\chat\ChatMessage;
 use common\models\feeds\Feeds;
 use common\models\package\PackageVersion;
 use common\models\sharesafari\ShareSafari;
@@ -86,7 +87,7 @@ class DataCopyController extends Controller
 
     public function actionPackage()
     {
-        $dpackages = \common\models\package\Package::find()->where(['live_version' => 'v1','status'=>1])->all();
+        $dpackages = \common\models\package\Package::find()->where(['live_version' => 'v1', 'status' => 1])->all();
         foreach ($dpackages as $dpackage) {
             $model = Feeds::find()->where(['collection' => Feeds::MODEL_PACKAGE, 'collection_id' => $dpackage->id])->one();
             if (empty($model)) {
@@ -157,7 +158,7 @@ class DataCopyController extends Controller
         $dpackages = SafariOperator::find()->all();
         foreach ($dpackages as $dpackage) {
             $sp = new \common\models\operator\SafariOperator();
-            foreach($dpackage->attributes as $key => $value) {                
+            foreach ($dpackage->attributes as $key => $value) {
                 $sp->$key = $value;
             }
             $sp->save(false);
@@ -165,12 +166,31 @@ class DataCopyController extends Controller
         $dpackages = SafariOperatorPark::find()->all();
         foreach ($dpackages as $dpackage) {
             $sp = new \common\models\operator\SafariOperatorPark();
-            foreach($dpackage->attributes as $key => $value) {                
+            foreach ($dpackage->attributes as $key => $value) {
                 $sp->$key = $value;
             }
             $sp->save(false);
         }
         echo "Data copied successfully";
-       
+    }
+
+    public  function actionRemoveHtml()
+    {
+
+        $chatmessages = ChatMessage::find()->where(['<', 'id', 2300])->all();
+
+        foreach ($chatmessages as $chatmessage) {
+            $chatmessage->message = $this->removeBAndReplaceBr($chatmessage->message);
+            $chatmessage->save(false);
+        }
+    }
+
+    public function removeBAndReplaceBr($text)
+    {
+        // Remove <b> tags
+        $text = preg_replace('/<b>(.*?)<\/b>/', '$1', $text);
+        // Replace <br> tags with new lines
+        $text = str_replace('<br>', "\n", $text);
+        return $text;
     }
 }

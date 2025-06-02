@@ -197,6 +197,7 @@ return [
 
                 /**Partner Gallery */
                 'manage/gallery/list' => 'manage/gallery/index',
+                'manage/gallery/<action>' => 'manage/gallery/<action>',
                 'manage/gallery/<slug>/<action>' => 'manage/gallery/<action>',
 
                 /** feeds */
@@ -211,6 +212,8 @@ return [
                 'chat/messages/<chat_hash>'   => 'chat/default/messages',
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
                 'chat/send-quote-message/<lead_id>'   => 'chat/default/send-quote-message',
+                'chat/gallery-images/<slug>'   => 'chat/default/gallery-images',
+
 
                 'notification-history' => 'notification-history',
 
