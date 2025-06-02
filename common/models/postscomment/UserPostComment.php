@@ -127,15 +127,15 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
         $this->updatePostCommentCount();
         parent::afterDelete();
     }
-    
+
     public function updatePostCommentCount()
     {
         if ($this->user_posts_id) {
-            $userposts = UserPosts::find()->where(['status' => UserPosts :: STATUS_ACTIVE, 'id' => $this->user_posts_id])->one();
-            $likes = UserPostComment::find()->where(['user_posts_id' => $this->user_posts_id])->count();
-            if ($userposts) {                
-                $userposts->comment_count = $likes;
-                $userposts->save(false); 
+            $userposts = UserPosts::find()->where(['status' => UserPosts::STATUS_ACTIVE, 'id' => $this->user_posts_id])->one();
+            $comment_count = UserPostComment::find()->where(['user_posts_id' => $this->user_posts_id, 'status' => UserPostComment::STATUS_ACTIVE])->andWhere(['parent_id' => null])->count();
+            if ($userposts) {
+                $userposts->comment_count = $comment_count;
+                $userposts->save(false);
             }
         }
     }
