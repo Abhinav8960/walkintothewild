@@ -50,3 +50,4 @@ ALTER TABLE `chat_message` ADD `gallery_url` VARCHAR(512) NULL DEFAULT NULL AFTE
 ALTER TABLE `chat_message` CHANGE `message` `message` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
 ALTER TABLE `lead` ADD `user_notes` VARCHAR(1000) NULL DEFAULT NULL AFTER `addional_notes`;
+ALTER TABLE `lead` CHANGE `user_notes` `user_notes` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
