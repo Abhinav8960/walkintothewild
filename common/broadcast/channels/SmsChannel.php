@@ -3,6 +3,7 @@
 namespace common\broadcast\channels;
 
 use common\models\master\smstemplate\MasterSmsTemplate;
+use common\models\SmsLog;
 use yii\httpclient\Client;
 
 class SmsChannel
@@ -34,12 +35,12 @@ class SmsChannel
             \yii::info('Extracted Last Line: ' . $responseContent, __METHOD__);
             if ($response) {
                 $log->is_ok = 1;
-                $log->status = 1;
+                $log->status = SmsLog::STATUS_SENT; // Assuming you have a constant for success status
                 $log->response_code = $lastLinecode; // Save the extracted code if needed
                 $log->sms_send_time = time(); // Save the extracted code if needed
                 $log->save(false);
             } else {
-                $log->status = 0;
+                $log->status = SmsLog::STATUS_PENDING;
                 $log->sms_send_time = time(); // Save the extracted code if needed
                 $log->save(false);
             }

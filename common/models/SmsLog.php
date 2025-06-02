@@ -32,7 +32,7 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
 
     const STATUS_PENDING = 0;
     const STATUS_SENT = 1;
-    const STATUS_DELIVERD = 1;
+    const STATUS_DELIVERD = 2;
     const STATUS_FAILED = 3;
     use CommanRelationship;
      /**

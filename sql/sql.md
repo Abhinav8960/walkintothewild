@@ -55,3 +55,4 @@ ALTER TABLE `sms_log` ADD `report_status` VARCHAR(100) NULL DEFAULT NULL AFTER `
 
 ALTER TABLE `sms_log` ADD `report_error_code` INT NULL DEFAULT '0' AFTER `is_deliver`;
 ALTER TABLE `lead` CHANGE `user_notes` `user_notes` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+ALTER TABLE `sms_log` CHANGE `report_error_code` `report_error_code` INT NULL DEFAULT '0' COMMENT '101 : Invalid user,\r\n110 : Invalid message id';

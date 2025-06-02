@@ -57,8 +57,8 @@ class ScheduleController extends Controller
 
                 foreach ($responseContent as $res) {
 
-                    $log->report_status = $res[1];
-                    $log->is_deliver = $res[1] == 'Delivered' ? SmsLog::STATUS_DELIVERD : 0;
+                    $log->report_status = strtolower($res[1]);
+                    $log->is_deliver = strtolower($res[1]) == 'delivered' ? SmsLog::STATUS_DELIVERD : 0;
                     $log->status = $log->is_deliver ? SmsLog::STATUS_DELIVERD : SmsLog::STATUS_FAILED;
                     $log->report_status_datetime = $res[2];
                     // Save the log entry with the updated report status
