@@ -2,6 +2,8 @@
 
 namespace console\controllers;
 
+use common\models\operator\SafariOperator;
+use common\models\package\Package;
 use common\models\SmsLog;
 use yii\console\Controller;
 use yii\httpclient\Client;
@@ -76,4 +78,19 @@ class ScheduleController extends Controller
     }
 
     // Add more actions as needed for scheduling tasks
+
+    public function actionInactivePackage()
+    {
+        $safari_operators = SafariOperator::find()->where(['status'=>SafariOperator::STATUS_SUSPEND])->all();
+        foreach($safari_operators as $operator)
+        {
+            $packages = Package::find()->where(['owned_by_id'=>$operator->id])->all();
+            foreach($packages as $pack)
+            {
+                $pack->status = Package::STATUS_SUSPEND;
+                $pack->save(false);
+            }
+        }
+        echo "Done";
+    }
 }
