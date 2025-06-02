@@ -29,6 +29,7 @@ AppAsset::register($this);
                 <th>Safaris</th>
                 <th>Travelers</th>
                 <th>Accomodation</th>
+                <th>User Notes</th>
                 <th>Travel Date looking For</th>
                 <th>Lead Received Date</th>
             </thead>
@@ -45,6 +46,9 @@ AppAsset::register($this);
                     </td>
                     <td>
                         <?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?>
+                    </td>
+                    <td>
+                        <?= !empty($model->user_notes) ? $model->user_notes : '' ?>
                     </td>
                     <td>
                         <?php
