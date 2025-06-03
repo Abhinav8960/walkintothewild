@@ -151,6 +151,7 @@ class DefaultController extends RestController
 
     public function actionSendMessage($user_handle, $chat_hash = NULL)
     {
+        $login_user = $this->userinfo;
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
@@ -191,10 +192,10 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL, $login_user);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null)
+    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null, $login_user)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -204,6 +205,20 @@ class DefaultController extends RestController
         }
         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
 
+        if ($login_user->partner) {
+            if ($chat->type == 2) {
+                $lead_partner_model = LeadPartners::find()->where(['lead_id' => $chat->lead_id, 'partner_id' => $login_user->partner->id])->limit(1)->one();
+                if ($lead_partner_model) {
+                    $lead_partner_model->is_chat_started = 1;
+                    $lead_partner_model->save(false);
+                }
+                $lead_model = Lead::find()->where(['id' => $chat->lead_id])->limit(1)->one();
+                if ($lead_model) {
+                    $lead_model->is_chat_started = 1;
+                    $lead_model->save(false);
+                }
+            }
+        }
 
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
