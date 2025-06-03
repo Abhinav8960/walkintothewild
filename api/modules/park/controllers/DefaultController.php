@@ -19,6 +19,8 @@ use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\Helper\FirebaseNotificationHelper;
 use api\models\package\PackageSearch;
+use api\models\park\ParkStayCategory;
+use api\models\park\ParkStayCategorySearch;
 use api\models\park\SafariParkFollower;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
@@ -45,7 +47,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package','park-stay-category'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -72,7 +74,8 @@ class DefaultController extends RestController
                     'park-package' => ['GET'],
                     'quotesrequest' => ['POST'],
                     'park-follow' => ['POST'],
-                    'park-unfollow' => ['POST']
+                    'park-unfollow' => ['POST'],
+                    'park-stay-category' => ['GET'],
 
                 ],
             ],
@@ -331,5 +334,18 @@ class DefaultController extends RestController
             }
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+    }
+
+    public function actionParkStayCategory($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+
+        $searchModel = new ParkStayCategorySearch();
+        $searchModel->safari_park_id = $model->id;
+        $searchModel->status = ParkStayCategory::STATUS_ACTIVE;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "stay_category_options");
     }
 }
