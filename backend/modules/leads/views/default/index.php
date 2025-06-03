@@ -43,6 +43,15 @@ $this->params['title'] = $this->title;
                     ],
 
                     [
+                        'label' => 'Detail',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->displayLabel) ? $model->displayLabel : '';
+                        }
+                    ],
+
+                    [
                         'label' => 'Safaris',
                         'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
@@ -119,9 +128,8 @@ $this->params['title'] = $this->title;
                                 if (!empty($model->booked_operator_id)) {
                                     $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
                                 }
-                            } 
+                            }
                             return $str;
-                            
                         }
                     ],
                     [
