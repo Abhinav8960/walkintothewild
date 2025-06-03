@@ -126,8 +126,6 @@ class NewSafariCreatedByUser extends Event
 
     protected function emailTemplateIdFollwer()
     {
-        print_r($this->email);
-        die;
         $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_follower, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
@@ -163,7 +161,7 @@ class NewSafariCreatedByUser extends Event
         $this->start_date = $this->shared_safari->start_date;
         $this->end_date = $this->shared_safari-> end_date;
         $this->total_seat = $this->shared_safari->total_seat;
-$this->type =$this->shared_safari->type;
+        $this->type =$this->shared_safari->type;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
         $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {

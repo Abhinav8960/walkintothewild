@@ -122,4 +122,11 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord implements \common
     {
         return isset($this->rating) ? $this->rating->review : '';
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == SafariOperatorRatingReport::STATUS_ACTIVE){
+            return new \common\events\user\NewFlagRaisedByUser($this->user->id, $this->user->email, $this->user->name,$this->commentname,$this->report_detail);
+        }
+    }
 }

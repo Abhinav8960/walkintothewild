@@ -1751,6 +1751,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             4 => 'User',
             5 => 'Operator',
             6 => 'Chat',
+            7 => 'Comment/Review',
+            8 => 'Quote',
         ];
         return $module_type;
     }
