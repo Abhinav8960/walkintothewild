@@ -29,7 +29,7 @@ class SafariJoinedByuser extends Event
 
     protected $channels = [
         // 'email',
-        // 'firebase',
+        'firebase',
     ];
 
     protected $mail_template_code = 'THJS';  // To Host Join Safari
