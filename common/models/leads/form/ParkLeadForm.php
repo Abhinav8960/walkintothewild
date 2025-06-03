@@ -94,7 +94,8 @@ class ParkLeadForm extends Model
             $lead->to_date = $this->end_date;
             $lead->phone = $this->phone_no;
             $lead->user_id = $login_user->id;
-            $lead->status = 1;
+            // $lead->status = 1;
+            $lead->status = 0;
             $lead->user_notes = $this->user_notes;
 
 
@@ -111,6 +112,10 @@ class ParkLeadForm extends Model
                     }
                 }
 
+                if(count($safarioperatorlist) > 0){
+                    $lead->status = 1;
+                    $lead->save(false);
+                }
 
                 foreach ($safarioperatorlist as $op) {
 
