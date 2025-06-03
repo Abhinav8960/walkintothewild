@@ -49,10 +49,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,7 +72,8 @@ class DefaultController extends RestController
                     'send' => ['POST'],
                     'send-message' => ['POST'],
                     'messages' => ['GET'],
-                    'gallery-images' => ['GET']
+                    'gallery-images' => ['GET'],
+                    'profile-chat' => ['GET']
                 ],
             ],
         ];
@@ -381,5 +382,21 @@ class DefaultController extends RestController
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
+    }
+
+    public function actionProfileChat($user_handle)
+    {
+        $individual_user = $this->individualuser($user_handle);
+        if (!$individual_user) {
+            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+        }
+
+        $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
+        if (!$chat) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Chat Not Found!!!'], 400);
+        }
+
+
+        return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
     }
 }

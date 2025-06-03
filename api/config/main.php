@@ -213,6 +213,7 @@ return [
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
                 'chat/send-quote-message/<lead_id>'   => 'chat/default/send-quote-message',
                 'chat/gallery-images/<slug>'   => 'chat/default/gallery-images',
+                'chat/profile-chat/<user_handle>'   => 'chat/default/profile-chat',
 
 
                 'notification-history' => 'notification-history',
