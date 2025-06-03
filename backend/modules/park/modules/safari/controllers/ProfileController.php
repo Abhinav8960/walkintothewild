@@ -900,7 +900,7 @@ class ProfileController extends Controller
 
     public function actionRemoveAccomodationCategory($safari_park_id, $id)
     {
-        $park_accomodation_category_model = ParkStayCategory::find()->where(['id' => $id, 'safari_park_id' => $safari_park_id])->limit(1)->one();
+        $park_accomodation_category_model = ParkStayCategory::find()->where(['id' => $id, 'safari_park_id' => $safari_park_id])->andWhere(['status' => ParkStayCategory::STATUS_ACTIVE])->limit(1)->one();
         if (!$park_accomodation_category_model) {
             \Yii::$app->session->setFlash('success', 'Not Found!!!');
             return $this->redirect(Yii::$app->request->referrer);
