@@ -21,7 +21,10 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             'private_url',
             'public_url',
             'thumbnail',
-            'status'
+            'status',
+            'image_count' => function () {
+                return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+            },
         ];
 
         return $fields;
