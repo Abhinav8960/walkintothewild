@@ -12,24 +12,24 @@ use yii\helpers\Html;
         <tbody>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;"> Name</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari && isset($shared_safari['share_safari_title']) ? $shared_safari['share_safari_title'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari_title && isset($shared_safari_title) ? $shared_safari_title : ''  ?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Number of Safari</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari && isset($shared_safari['no_of_safari']) ? $shared_safari['no_of_safari'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $no_of_safari && isset($no_of_safari) ? $no_of_safari : '' ?></td>
             </tr>
 
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Start Date</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari && isset($shared_safari['start_date']) ? $shared_safari['start_date'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $start_date && isset($start_date) ? $start_date : '' ?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">End Date</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari && isset($shared_safari['end_date']) ? $shared_safari['end_date'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $end_date && isset($end_date) ? $end_date : ''  ?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Total Seat</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $shared_safari && isset($shared_safari['total_seat']) ? $shared_safari['total_seat'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $total_seat && isset($total_seat) ? $total_seat : ''  ?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Link</th>
