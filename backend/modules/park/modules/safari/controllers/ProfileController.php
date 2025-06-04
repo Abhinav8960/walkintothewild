@@ -97,7 +97,8 @@ class ProfileController extends Controller
                             foreach ($safariaccomodation as $safari_accomodation) {
                                 $safariparkAccomodation = new SafariParkAccomodation();
                                 $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
-                                $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                // $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                $safariparkAccomodation->meta_stay_category_id = $safari_accomodation;
                                 $safariparkAccomodation->save(false);
                             }
                         }

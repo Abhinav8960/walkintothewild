@@ -78,10 +78,6 @@ ALTER TABLE `safari_operator` DROP `operated_park`;
 
 --3June
 
-CREATE TABLE `prod_witw`.`park_stay_category` ( `id` INT NOT NULL AUTO_INCREMENT , `safari_park_id` INT NOT NULL , `meta_stay_category_id` INT NOT NULL , `status` INT NULL DEFAULT '1' , `created_at` INT NULL DEFAULT NULL , `created_by` INT NULL DEFAULT NULL , `updated_at` INT NULL DEFAULT NULL , `updated_by` INT NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
-
-
-
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'CPBU', 'Comment on Post by User', 'postcomment-html', '1', '1730794695', '30', '1730794695', '30');
 
 
@@ -113,4 +109,11 @@ ALTER TABLE `lead` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `payment_gat
 
 ALTER TABLE `lead_partners` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `partner_id`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`;
 
+--Meta Stay Category Park
+ALTER TABLE `safari_park_accomodation` ADD `meta_stay_category_id` INT NULL DEFAULT NULL AFTER `master_accomodation_id`;
+UPDATE safari_park_accomodation SET meta_stay_category_id = master_accomodation_id;
+ALTER TABLE `safari_park_accomodation` DROP `master_accomodation_id`;
+
+ALTER TABLE `package` ADD `max_booking_date` DATE NULL DEFAULT NULL AFTER `is_published_on_api`;
+ALTER TABLE `package_version` ADD `max_booking_date` DATE NULL DEFAULT NULL AFTER `popular_package`;
 

@@ -170,7 +170,8 @@ class SafariParkForm extends model
             $this->master_bonus_experience_id = SafariParkBonusExperience::find()->select('master_bonus_experience_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->month = SafariParkMonth::find()->select('month_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->safari_session = SafariParkSession::find()->select('session_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
-            $this->accomodation = SafariParkAccomodation::find()->select('master_accomodation_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
+            // $this->accomodation = SafariParkAccomodation::find()->select('master_accomodation_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
+            $this->accomodation = SafariParkAccomodation::find()->select('meta_stay_category_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::newstatusoption();

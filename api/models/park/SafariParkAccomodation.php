@@ -2,6 +2,7 @@
 
 namespace api\models\park;
 
+use api\models\meta\MetaStayCategory;
 use Yii;
 
 /**
@@ -18,5 +19,22 @@ use Yii;
  */
 class SafariParkAccomodation extends \common\models\park\SafariParkAccomodation
 {
-    
+    public function fields()
+    {
+        $fields = [
+            'stay_category',
+            'status' => function () {
+                return (bool)$this->status;
+            }
+        ];
+
+        return $fields;
+    }
+
+
+
+    public function getStay_category()
+    {
+        return $this->hasOne(MetaStayCategory::class, ['id' => 'meta_stay_category_id']);
+    }
 }

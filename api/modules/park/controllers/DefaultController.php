@@ -21,6 +21,8 @@ use common\Helper\FirebaseNotificationHelper;
 use api\models\package\PackageSearch;
 use api\models\park\ParkStayCategory;
 use api\models\park\ParkStayCategorySearch;
+use api\models\park\SafariParkAccomodation;
+use api\models\park\SafariParkAccomodationSearch;
 use api\models\park\SafariParkFollower;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
@@ -343,9 +345,9 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
         }
 
-        $searchModel = new ParkStayCategorySearch();
+        $searchModel = new SafariParkAccomodationSearch();
         $searchModel->safari_park_id = $model->id;
-        $searchModel->status = ParkStayCategory::STATUS_ACTIVE;
+        $searchModel->status = SafariParkAccomodation::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "stay_category_options");
     }
 }
