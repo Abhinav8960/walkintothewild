@@ -207,18 +207,10 @@ class DefaultController extends RestController
 
         if ($login_user->partner) {
             if ($chat->chat_type == 2) {
-                $lead_partner_model = LeadPartners::find()->where(['lead_id' => $chat->lead_id, 'partner_id' => $login_user->partner->id])->limit(1)->one();
-                if ($lead_partner_model) {
-                    $lead_partner_model->is_chat_started = 1;
-                    $lead_partner_model->save(false);
-                }
-                $lead_model = Lead::find()->where(['id' => $chat->lead_id])->limit(1)->one();
-                if ($lead_model) {
-                    $lead_model->is_chat_started = 1;
-                    $lead_model->save(false);
-                }
-            }
+                Chat::markChatStarted($chat,$login_user->partner->id);
+            } 
         }
+        
 
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;

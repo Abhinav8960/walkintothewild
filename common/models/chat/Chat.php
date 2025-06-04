@@ -2,6 +2,8 @@
 
 namespace common\models\chat;
 
+use common\models\leads\Lead;
+use common\models\leads\LeadPartners;
 use Yii;
 use common\models\User;
 use common\models\operator\SafariOperator;
@@ -44,7 +46,7 @@ class Chat extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['user_id','lead_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'lead_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -96,5 +98,22 @@ class Chat extends \yii\db\ActiveRecord
     public function getPackageoperator()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'recipient_user_id']);
+    }
+
+    public static function markChatStarted($chat_model, $partner_id)
+    {
+        if ($chat_model) {
+            $lead_partner_model = LeadPartners::find()->where(['lead_id' => $chat_model->lead_id, 'partner_id' => $partner_id, 'is_chat_started' => 0])->limit(1)->one();
+            if ($lead_partner_model) {
+                $lead_partner_model->is_chat_started = 1;
+                $lead_partner_model->save(false);
+            }
+            $lead_model = Lead::find()->where(['id' => $chat_model->lead_id, 'is_chat_started' => 0])->limit(1)->one();
+            if ($lead_model) {
+                $lead_model->is_chat_started = 1;
+                $lead_model->save(false);
+            }
+        }
+        return true;
     }
 }
