@@ -89,6 +89,13 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 return $this->gallery_url;
             };
         }
+        if ($this->is_call_message == true && !empty($this->call_id)) {
+            unset($fields['message']);
+
+            $fields['call'] = function () {
+                return $this->call;
+            };
+        }
 
         return $fields;
     }
@@ -99,7 +106,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         return [
             [['chat_id'], 'required'],
-            [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery_url'], 'string', 'max' => 512],
             [['message'], 'string'],
             [['gallery_url'], 'safe'],
@@ -155,7 +162,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, \common\models\GeneralModel::strMaxlength($this->message), $this->chat->chat_hash, $this->prepareData());
+            if($this->is_call_message != true){
+                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, \common\models\GeneralModel::strMaxlength($this->message), $this->chat->chat_hash, $this->prepareData());
+            }
         }
 
         // anurag's testing line
@@ -202,5 +211,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
         if (!empty($this->quote)) {
             return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
         }
+    }
+
+    public function getCall()
+    {
+        return $this->hasOne(\api\models\CallLog::className(), ['id' => 'call_id']);
     }
 }

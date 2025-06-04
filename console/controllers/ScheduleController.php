@@ -81,16 +81,68 @@ class ScheduleController extends Controller
 
     public function actionInactivePackage()
     {
-        $safari_operators = SafariOperator::find()->where(['status'=>SafariOperator::STATUS_SUSPEND])->all();
-        foreach($safari_operators as $operator)
-        {
-            $packages = Package::find()->where(['owned_by_id'=>$operator->id])->all();
-            foreach($packages as $pack)
-            {
+        $safari_operators = SafariOperator::find()->where(['status' => SafariOperator::STATUS_SUSPEND])->all();
+        foreach ($safari_operators as $operator) {
+            $packages = Package::find()->where(['owned_by_id' => $operator->id])->all();
+            foreach ($packages as $pack) {
                 $pack->status = Package::STATUS_SUSPEND;
                 $pack->save(false);
             }
         }
         echo "Done";
     }
+
+    public function actionCallLog()
+    {
+        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/pull-data';
+
+        $model = \common\models\CallLog::find()
+            ->where(['status' => \common\models\CallLog::STATUS_SUCCESS])
+            ->andWhere(['is_detail_fetched' => 0])
+            ->all();
+
+        foreach ($model as $log) {
+
+            $options = [
+                'vnm' => \Yii::$app->params['airphone_api_vnm'],
+                'unique_id' => $log->unique_id,
+                'token' => \Yii::$app->params['airphone_api_token'],
+            ];
+            $client = new \yii\httpclient\Client();
+            $response = $client->createRequest()
+                ->setMethod('POST')
+                ->setHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])
+                ->setUrl($url)
+                ->setData($options) // Use setData for form parameters
+                ->send();
+            if (!$response->isOk) {
+                \Yii::error('Call failed: ' . $response->content, __METHOD__);
+                return false;
+            }
+
+            $json_contents = $response->content;
+
+            $arr_contents = json_decode($json_contents, true);
+
+            $data = $arr_contents['data'] ?? [];
+            if (is_array($data) && !empty($data)) {
+                $log->is_detail_fetched = true;
+                $log->caller_id = $data['caller_id'] ?? '';
+                $log->received_id = $data['received_id'] ?? '';
+                $log->ivr_number = $data['ivr_number'] ?? '';
+                $log->dial_status = $data['dial_status'] ?? '';
+                $log->call_type = $data['call_type'] ?? '';
+                $log->call_status = $data['call_status'] ?? '';
+                $log->duration = $data['duration'] ?? '';
+                $log->rec_duration = $data['Rec_duration'] ?? '';
+                $log->recording_url = $data['recording_url'] ?? '';
+                $log->datetime = $data['datetime'] ?? '';
+                $log->save(false);
+            }
+        }
+        echo "done";
+        die();
+    }
+
+ 
 }

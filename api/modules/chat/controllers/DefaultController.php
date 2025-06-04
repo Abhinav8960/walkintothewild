@@ -49,10 +49,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -73,7 +73,8 @@ class DefaultController extends RestController
                     'send-message' => ['POST'],
                     'messages' => ['GET'],
                     'gallery-images' => ['GET'],
-                    'profile-chat' => ['GET']
+                    'profile-chat' => ['GET'],
+                    'make-call' => ['POST'],
                 ],
             ],
         ];
@@ -405,5 +406,43 @@ class DefaultController extends RestController
 
 
         return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
+    }
+
+    public function actionMakeCall()
+    {
+        // Example parameters
+        $chat_id = '84';
+        $lead_id = '16';
+        $operator_user_id = 2015; // Example operator user ID
+        $call_initiated_user_id = 2015; // Example user ID who initiated the call
+        $call_initiated_partner_id = 3; // can be null
+        $request_caller_1_no = '9953326121';
+        $request_caller_1_user_id = 2014;
+        $request_caller_2_no = 9650901148; // Optional
+        $request_caller_2_user_id = 2015; // Optional
+
+        // Instantiate the CallingService
+        $callingService = new \common\calling\services\CallingService(
+            $chat_id,
+            $lead_id,
+            $operator_user_id,
+            $call_initiated_user_id,
+            $call_initiated_partner_id,
+            $request_caller_1_no,
+            $request_caller_1_user_id,
+            // $request_caller_2_no,
+            // $request_caller_2_user_id
+        );
+
+
+        // Call the callNow method
+        $result = $callingService->callNow();
+
+        // Handle the result
+        if ($result) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
+        } else {
+            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+        }
     }
 }
