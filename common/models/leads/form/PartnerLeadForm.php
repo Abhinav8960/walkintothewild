@@ -95,6 +95,7 @@ class PartnerLeadForm extends Model
             $lead->operator_id = $operator->id;
             $lead->status = 1;
             $lead->user_notes = $this->user_notes;
+            $lead->assigned_operator_count = 1;
 
 
             if ($lead->save(false)) {

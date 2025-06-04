@@ -152,6 +152,7 @@ class DefaultController extends RestController
 
     public function actionSendMessage($user_handle, $chat_hash = NULL)
     {
+        $login_user = $this->userinfo;
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
@@ -192,10 +193,10 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL, $login_user);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null)
+    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null, $login_user)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -205,6 +206,12 @@ class DefaultController extends RestController
         }
         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
 
+        if ($login_user->partner) {
+            if ($chat->chat_type == 2) {
+                Chat::markChatStarted($chat,$login_user->partner->id);
+            } 
+        }
+        
 
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;

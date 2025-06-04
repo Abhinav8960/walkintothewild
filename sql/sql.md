@@ -61,6 +61,18 @@ ALTER TABLE `sms_log` CHANGE `report_error_code` `report_error_code` INT NULL DE
 CREATE TABLE `prod_witw`.`park_stay_category` ( `id` INT NOT NULL AUTO_INCREMENT , `safari_park_id` INT NOT NULL , `meta_stay_category_id` INT NOT NULL , `status` INT NULL DEFAULT '1' , `created_at` INT NULL DEFAULT NULL , `created_by` INT NULL DEFAULT NULL , `updated_at` INT NULL DEFAULT NULL , `updated_by` INT NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 
+
+
+--4 June
+ALTER TABLE `lead` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `payment_gateway`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`, ADD `assigned_operator_count` INT NULL DEFAULT '0' AFTER `is_chat_started`;
+
+ALTER TABLE `lead_partners` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `partner_id`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`;
+
+UPDATE `master_notification_template` SET `message` = '{{username}} has created a new Safari Package! Join now and explore together.' WHERE `master_notification_template`.`id` = 17;
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OUNP', 'Operator Updated Package', 'updatepackage-html', '1', '1726655386', '19', '1726655386', '19');
+
 ALTER TABLE `chat_message` ADD `is_call_message` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_quotation_active`;
 ALTER TABLE `chat_message` ADD `call_id` INT NULL DEFAULT NULL AFTER `is_call_message`;
 ALTER TABLE `chat` ADD `call_id` INT NULL DEFAULT NULL AFTER `quote_id`;
+
+

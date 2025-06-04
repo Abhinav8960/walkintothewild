@@ -279,6 +279,7 @@ class DefaultController extends  Controller
         $message .= "\n";
         $message .= $quotation->addional_notes;
 
+        Chat::markChatStarted($chat_model, $quotation->partner_id);
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);

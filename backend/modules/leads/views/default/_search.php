@@ -42,7 +42,7 @@ $names = ArrayHelper::getColumn(
             ]
         ) ?>
     </div>
-    
+
     <div class="col-md-2">
         <?= $form->field($model, 'safari_operator_id')->dropDownList(
             GeneralModel::operatorslist(),
@@ -50,6 +50,10 @@ $names = ArrayHelper::getColumn(
                 'prompt' => 'Select Operator',
             ]
         ) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
     </div>
 
 
