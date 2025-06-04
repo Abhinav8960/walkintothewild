@@ -74,6 +74,11 @@ class Chat extends \common\models\chat\Chat
                     return $this->payment_details;
                 };
             }
+            // if ($this->call_id > 0) {
+                $fields['call'] = function () {
+                    return $this->call;
+                };
+            // }
         }
         return $fields;
     }
@@ -100,7 +105,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -195,5 +200,10 @@ class Chat extends \common\models\chat\Chat
         if (!empty($this->quote)) {
             return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quote_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
         }
+    }
+
+    public function getCall()
+    {
+        return $this->hasOne(\api\models\CallLog::className(), ['id' => 'call_id']);
     }
 }

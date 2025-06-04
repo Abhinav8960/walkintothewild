@@ -59,3 +59,8 @@ ALTER TABLE `sms_log` CHANGE `report_error_code` `report_error_code` INT NULL DE
 
 
 CREATE TABLE `prod_witw`.`park_stay_category` ( `id` INT NOT NULL AUTO_INCREMENT , `safari_park_id` INT NOT NULL , `meta_stay_category_id` INT NOT NULL , `status` INT NULL DEFAULT '1' , `created_at` INT NULL DEFAULT NULL , `created_by` INT NULL DEFAULT NULL , `updated_at` INT NULL DEFAULT NULL , `updated_by` INT NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+
+ALTER TABLE `chat_message` ADD `is_call_message` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_quotation_active`;
+ALTER TABLE `chat_message` ADD `call_id` INT NULL DEFAULT NULL AFTER `is_call_message`;
+ALTER TABLE `chat` ADD `call_id` INT NULL DEFAULT NULL AFTER `quote_id`;

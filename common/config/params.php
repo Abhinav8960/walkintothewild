@@ -18,8 +18,11 @@ return [
     'frontend_url' => 'https://www.walkintothewild.in',
     'endpoint' => 'https://www.walkintothewild.in',
     'comment_threshold' => 60, //user can not post same comment within 60 seconds of their comment
-    'businessDomain' => 'http://business.walkintothewild.io',   
-    'sms_api_key'=>NULL,
-    'sms_sender_id'=>NULL,
+    'businessDomain' => 'http://business.walkintothewild.io',
+    'sms_api_key' => NULL,
+    'sms_sender_id' => NULL,
+    'airphone_api_token' => NULL,
+    'airphone_api_host_url' => NULL,
+    'airphone_api_vnm' => NULL,
 
 ];
