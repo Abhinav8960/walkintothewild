@@ -97,6 +97,7 @@ class ParkLeadForm extends Model
             // $lead->status = 1;
             $lead->status = 0;
             $lead->user_notes = $this->user_notes;
+            $lead->assigned_operator_count = 0;
 
 
             if ($lead->save(false)) {
@@ -114,6 +115,7 @@ class ParkLeadForm extends Model
 
                 if(count($safarioperatorlist) > 0){
                     $lead->status = 1;
+                    $lead->assigned_operator_count = count($safarioperatorlist);
                     $lead->save(false);
                 }
 

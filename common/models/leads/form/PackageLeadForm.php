@@ -81,6 +81,7 @@ class PackageLeadForm extends Model
             $lead->created_by = $login_user->id;
             $lead->updated_by = $login_user->id;
             $lead->status = 1;
+            $lead->assigned_operator_count = 1;
 
             if ($lead->save(false)) {
                 $this->assignToPartner($lead, $package, $login_user);
