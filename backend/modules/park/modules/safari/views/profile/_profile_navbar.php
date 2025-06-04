@@ -26,7 +26,7 @@ use yii\helpers\Url;
             <li><a href="/park/safari/profile/suggestions?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($suggestions_active) ? $suggestions_active : '' ?>">Suggestions</a></li>
             <li><a href="/park/safari/profile/reviews?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($reviews_active) ? $reviews_active : '' ?>">Reviews</a></li>
             <li><a href="/park/safari/profile/operatorlist?safari_park_id=<?= $safari_park->id ?>" class="nav-link <?= isset($operator_list) ? $operator_list : '' ?>">Operator List</a></li>
-            <!-- <li><a href="<?= Url::toRoute(['/park/safari/profile/park-stay-list', 'safari_park_id' => $safari_park->id]) ?>" class="nav-link <?= isset($park_stay_category_list) ? $park_stay_category_list : '' ?>">Stay Category</a></li> -->
+            <li><a href="<?= Url::toRoute(['/park/safari/profile/park-stay-list', 'safari_park_id' => $safari_park->id]) ?>" class="nav-link <?= isset($park_stay_category_list) ? $park_stay_category_list : '' ?>">Stay Category</a></li>
         </ul>
     </div>
 </div>

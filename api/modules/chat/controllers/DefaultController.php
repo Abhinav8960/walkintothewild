@@ -206,7 +206,7 @@ class DefaultController extends RestController
         $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
 
         if ($login_user->partner) {
-            if ($chat->type == 2) {
+            if ($chat->chat_type == 2) {
                 $lead_partner_model = LeadPartners::find()->where(['lead_id' => $chat->lead_id, 'partner_id' => $login_user->partner->id])->limit(1)->one();
                 if ($lead_partner_model) {
                     $lead_partner_model->is_chat_started = 1;
