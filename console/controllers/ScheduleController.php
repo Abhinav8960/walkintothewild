@@ -123,7 +123,7 @@ class ScheduleController extends Controller
             $json_contents = $response->content;
 
             $arr_contents = json_decode($json_contents, true);
-            
+
             $data = $arr_contents['data'] ?? [];
             if (is_array($data) && !empty($data)) {
                 $log->is_detail_fetched = true;
@@ -143,4 +143,6 @@ class ScheduleController extends Controller
         echo "done";
         die();
     }
+
+ 
 }

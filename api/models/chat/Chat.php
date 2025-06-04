@@ -75,9 +75,9 @@ class Chat extends \common\models\chat\Chat
                 };
             }
             // if ($this->call_id > 0) {
-                $fields['call'] = function () {
-                    return $this->call;
-                };
+            $fields['call'] = function () {
+                return $this->call;
+            };
             // }
         }
         return $fields;

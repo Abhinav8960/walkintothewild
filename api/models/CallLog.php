@@ -46,7 +46,7 @@ class CallLog extends \common\models\CallLog
 
 
         $fields = [
-            // 'id',
+            'id',
             // 'reference_id',
             // 'unique_id',
             // 'chat_id',
@@ -64,7 +64,7 @@ class CallLog extends \common\models\CallLog
             'call_type',
             'call_status',
             'datetime' => function () {
-                return strtotime($this->datetime);
+                return date('d M, Y h:i A', strtotime($this->datetime));
             },
             'duration',
             // 'operator_user_id',
@@ -72,6 +72,9 @@ class CallLog extends \common\models\CallLog
             // 'call_initiated_user_id',
             'call_request_status',
             'call_request_message',
+            'call_recording_url' => function () {
+                return !empty($this->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $this->file_path : NULL;
+            },
             // Status is an integer, but we can return it as a boolean if needed
             // 'status' => function () {
             //     return (bool)$this->status;
@@ -81,7 +84,7 @@ class CallLog extends \common\models\CallLog
             //     return (bool)$this->is_detail_fetched;
             // },
         ];
-      
+
         return $fields;
     }
 }
