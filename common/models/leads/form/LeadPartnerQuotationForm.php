@@ -5,6 +5,7 @@ namespace common\models\leads\form;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
+use common\models\leads\LeadPartners;
 use Yii;
 use yii\base\Model;
 use common\models\park\safarisPark;
@@ -66,9 +67,9 @@ class LeadPartnerQuotationForm extends Model
             [['partner_selling_price'], 'integer', 'max' => 9999999],
             [['validity_date'], 'date', 'format' => 'php:Y-m-d'],
             [['permit_booking_date'], 'date', 'format' => 'php:Y-m-d'],
-            [['validity_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
-            [['permit_booking_date'],'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
-            [['validity_date','permit_booking_date'], 'safe'],
+            [['validity_date'], 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
+            [['permit_booking_date'], 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
+            [['validity_date', 'permit_booking_date'], 'safe'],
 
 
         ];
@@ -119,6 +120,7 @@ class LeadPartnerQuotationForm extends Model
         try {
 
             $lead = Lead::find()->where(['id' => $this->lead_id])->one();
+            $lead_partner = LeadPartners::find()->where(['lead_id' => $this->lead_id, 'partner_id' => $this->partner_id])->one();
 
             $lpq = new LeadPartnerQuotes();
             $lpq->lead_partner_id = $this->lead_partner_id;
@@ -158,6 +160,12 @@ class LeadPartnerQuotationForm extends Model
             $installment->created_by = $login_user->id;
             $installment->updated_by = $login_user->id;
             $installment->save(false);
+
+            $lead->quotation_count = $lead->quotation_count + 1;
+            $lead->save(false);
+
+            $lead_partner->quotation_count = $lead_partner->quotation_count + 1;
+            $lead_partner->save(false);
 
             $transaction->commit();
             return true;
