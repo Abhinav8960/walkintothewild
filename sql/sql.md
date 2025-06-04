@@ -105,11 +105,12 @@ UPDATE `master_notification_template` SET `module_type` = '1' WHERE `master_noti
 UPDATE `master_notification_template` SET `module_type` = '1' WHERE `master_notification_template`.`id` = 18;
 ALTER TABLE `master_notification_template` CHANGE `module_type` `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\',\r\n7 => \'comment/review\',\r\n8 =>\'quote\' ';
 
+UPDATE `master_notification_template` SET `message` = '{{username}} has created a new Safari Package! Join now and explore together.' WHERE `master_notification_template`.`id` = 17;
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OUNP', 'Operator Updated Package', 'updatepackage-html', '1', '1726655386', '19', '1726655386', '19');
 
 --4 June
 ALTER TABLE `lead` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `payment_gateway`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`, ADD `assigned_operator_count` INT NULL DEFAULT '0' AFTER `is_chat_started`;
 
 ALTER TABLE `lead_partners` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `partner_id`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`;
 
-UPDATE `master_notification_template` SET `message` = '{{username}} has created a new Safari Package! Join now and explore together.' WHERE `master_notification_template`.`id` = 17;
-INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OUNP', 'Operator Updated Package', 'updatepackage-html', '1', '1726655386', '19', '1726655386', '19')
+
