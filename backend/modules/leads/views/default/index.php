@@ -137,7 +137,16 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->quotation ? count($model->quotation) : '';
+                            return $model->quotation_count;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Is Chat Started',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->is_chat_started == 1 ? 'Yes' : 'No';
                         }
                     ],
 
