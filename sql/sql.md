@@ -61,7 +61,7 @@ ALTER TABLE `sms_log` CHANGE `report_error_code` `report_error_code` INT NULL DE
 
 CREATE TABLE `prod_witw`.`park_stay_category` ( `id` INT NOT NULL AUTO_INCREMENT , `safari_park_id` INT NOT NULL , `meta_stay_category_id` INT NOT NULL , `status` INT NULL DEFAULT '1' , `created_at` INT NULL DEFAULT NULL , `created_by` INT NULL DEFAULT NULL , `updated_at` INT NULL DEFAULT NULL , `updated_by` INT NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-
+--4 June
 ALTER TABLE `lead` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `payment_gateway`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`, ADD `assigned_operator_count` INT NULL DEFAULT '0' AFTER `is_chat_started`;
 
 ALTER TABLE `lead_partners` ADD `quotation_count` INT NULL DEFAULT '0' AFTER `partner_id`, ADD `is_chat_started` TINYINT NULL DEFAULT '0' AFTER `quotation_count`;
