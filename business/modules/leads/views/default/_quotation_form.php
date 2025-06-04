@@ -64,6 +64,15 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'park_id')->dropDownList(
+            GeneralModel::operatorsafariparkoption($model->partner_id),
+            [
+                'prompt' => 'Select Park',
+            ]
+        )->label('Park') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Start date') ?>
     </div>
 

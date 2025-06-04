@@ -17,10 +17,11 @@ class FixedDepartureCreatedByOperator extends Event
     public $channelName;
     public $shared_safari_id;
     public $shared_safari_name;
-    public $no_of_safari; 
+    public $no_of_safari;
     public $start_date;
-    public $end_date ;
+    public $end_date;
     public $total_seat;
+    public $type;
     public $shared_safari_title;
     public $receiverUserIds = [];
     public $shared_safari_url;
@@ -31,18 +32,14 @@ class FixedDepartureCreatedByOperator extends Event
 
     protected $channels = [
         // 'email',
-        // 'firebase',
+        'firebase',
     ];
 
-    protected $mail_template_code = 'OCNF';  // Fixed Departure Created by Opertor
+    protected $mail_template_code = 'OCNF';  // Fixed Departure Created by Operator
 
-    public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
+    public function __construct($userId,$shared_safari_id)
     {
-        
-        $this->receiverUserIds = $receiverUserIds;
         $this->userId = $userId;
-        $this->email = $email;
-        $this->name = $name;
         $this->shared_safari_id = $shared_safari_id;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
@@ -54,10 +51,8 @@ class FixedDepartureCreatedByOperator extends Event
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
             $this->templates = $this->getTemplates()[$channel];
-
-            // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
-            $broadcastService->send($this, true);
+            $broadcastService->send($this,true);
         }
     }
 
@@ -66,25 +61,35 @@ class FixedDepartureCreatedByOperator extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'Check Out new Safari !!',
-                    'mail_template_id' => $this->emailTemplateId(),
+                    'subject' => 'New Fixed Departure Created !',
+                    'mail_template_id'  => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->name,
+                        'operator_name' => $this->name,
                         'email' => $this->email,
-                        // 'shared_safari' => $this->shared_safari_name,
-                        'shared_safari_title'=>$this->shared_safari_title,
-                        'no_of_safari'=>$this->no_of_safari,
-                        'start_date'=>$this->start_date,
-                        'end_date'=>$this->end_date,
-                        'total_seat'=>$this->total_seat,
+                        'shared_safari_title' => $this->shared_safari_title,
+                        'no_of_safari' => $this->no_of_safari,
+                        'start_date' => $this->start_date,
+                        'end_date' => $this->end_date,
+                        'total_seat' => $this->total_seat,
                         'shared_safari_url' => $this->shared_safari_url,
+
                     ],
-                    'to_mail' => $this->email,
+                    'to_mail' => \Yii::$app->params['adminEmail'],
                     'cc' => [],
                     'bcc' => [],
-                ],
+                ]
             ],
-            'firebase' => $this->prepareFirebaseTemplate()
+            'firebase' => [
+                [
+                'master_notification_template_id'   => $this->firebaseTemplateId(),
+                'title'                             => $this->title(),
+                'message'                           => $this->message(),
+                'sent_data'                         => NULL,
+                'user_id'                           => $this->userId,
+                'image_url'                         => NULL,
+                'action'                            => NULL,
+                ]
+            ]
         ];
         return $arr;
     }
@@ -114,28 +119,24 @@ class FixedDepartureCreatedByOperator extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['username'=>$this->name]);
+        return $this->engine->render($this->master_notification_template->message, ['safari_name' => $this->shared_safari_title]);
     }
 
     public function prepareData()
     {
-
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
         $this->shared_safari_title = $this->shared_safari->share_safari_title;
         $this->no_of_safari = $this->shared_safari->no_of_safari;
         $this->start_date = $this->shared_safari->start_date;
         $this->end_date = $this->shared_safari-> end_date;
         $this->total_seat = $this->shared_safari->total_seat;
-
+        $this->type =$this->shared_safari->type;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
-        $this->userId = $this->shared_safari->host_user_id;
+        // $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->email = $this->shared_safari->safarioperator->email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
-        } else {
-            $this->email = $this->shared_safari->user->email;
-            $this->name =  $this->shared_safari->user->name;
-        }
+        } 
         $this->sent_data = [
             'shared_safari_title' => $this->shared_safari->share_safari_title,
             'slug' => $this->shared_safari->slug,
@@ -143,23 +144,7 @@ class FixedDepartureCreatedByOperator extends Event
             'start_date'=>$this->start_date,
             'end_date'=>$this->end_date,
             'total_seat'=>$this->total_seat,
+            'type'=>$this->type
         ];
-    }
-
-
-    private function prepareFirebaseTemplate()
-    {
-        foreach ($this->receiverUserIds as $userId) {
-            $arr[] =  [
-                'master_notification_template_id'   => $this->firebaseTemplateId(),
-                'title'                             => $this->title(),
-                'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
-                'user_id'                           => $userId,
-                'image_url'                         => NULL,
-                'action'                            => NULL,
-            ];
-        }
-        return $arr;
     }
 }

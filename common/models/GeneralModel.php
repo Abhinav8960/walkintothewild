@@ -556,6 +556,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
     }
+    
     public static function mailtemplateoption()
     {
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
@@ -1850,5 +1851,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $value = strlen($value) > $limit ? (substr($value, 0, $limit) . '...') : $value;
 
         return $value;
+    }
+
+    public static function packageStayOption()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
     }
 }

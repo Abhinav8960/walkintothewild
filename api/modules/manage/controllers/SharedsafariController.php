@@ -16,6 +16,7 @@ use api\models\sharesafari\ShareSafariGallery;
 use api\models\sharesafari\ShareSafariGallerySearch;
 use api\models\sharesafari\ShareSafariIncluded;
 use api\models\sharesafari\ShareSafariParklist;
+use api\models\User;
 use common\models\GeneralModel;
 use common\models\MailLog;
 use common\models\sharesafari\form\DayItineraryForm;
@@ -124,14 +125,18 @@ class SharedsafariController extends RestController
                     }
                 }
 
-                $to_mail = Yii::$app->params['adminEmail'];
-                $subject = 'New Fixed Departure | ' . substr($model->shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_FIXEDDEPARTURE;
-                $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_departure_model->slug, 'organized_slug' => $model->shared_safari_departure_model->organizedslug ? $model->shared_safari_departure_model->organizedslug : '']);
-                $req = ['shared_safari' => $model->shared_safari_departure_model->attributes, 'operator_name' => $safari_operator->business_name, 'shared_safari_url' => $shared_safari_url];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // $to_mail = Yii::$app->params['adminEmail'];
+                // $subject = 'New Fixed Departure | ' . substr($model->shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_FIXEDDEPARTURE;
+                // $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_departure_model->slug, 'organized_slug' => $model->shared_safari_departure_model->organizedslug ? $model->shared_safari_departure_model->organizedslug : '']);
+                // $req = ['shared_safari' => $model->shared_safari_departure_model->attributes, 'operator_name' => $safari_operator->business_name, 'shared_safari_url' => $shared_safari_url];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
+
+                if (!empty($model->shared_safari_departure_model->safarioperator)) {
+                    new \common\events\operator\FixedDepartureCreatedByOperator($this->userinfoId,$model->shared_safari_departure_model->id);
                 }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->shared_safari_departure_model->slug], ['message' => "Fixed Departure created successfully"]);
@@ -165,48 +170,58 @@ class SharedsafariController extends RestController
                     }
                 }
 
-                $intrested_users = $shared_safari_departure_model->getIntrested()->where(['share_safari_intrested.status' => 1])->all();
-                if ($intrested_users) {
-                    foreach ($intrested_users as $intrest) {
-                        $user = $intrest->user;
-                        $username = $user->name;
-                        $to_mail = $user->username;
-                        $creator_name = $shared_safari_departure_model->organizedbyname;
-                        $subject = 'Update Fixed Departure | ' . substr($shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_FIXED_CREATEDBY_USER;
-                        $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_departure_model->slug, 'organized_slug' => $shared_safari_departure_model->organizedslug ? $shared_safari_departure_model->organizedslug : '']);
-                        $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_departure_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
-                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                        }
-                    }
-                }
+                // $intrested_users = $shared_safari_departure_model->getIntrested()->where(['share_safari_intrested.status' => 1])->all();
+                // if ($intrested_users) {
+                //     foreach ($intrested_users as $intrest) {
+                //         $user = $intrest->user;
+                //         $username = $user->name;
+                //         $to_mail = $user->username;
+                //         $creator_name = $shared_safari_departure_model->organizedbyname;
+                //         $subject = 'Update Fixed Departure | ' . substr($shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_FIXED_CREATEDBY_USER;
+                //         $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_departure_model->slug, 'organized_slug' => $shared_safari_departure_model->organizedslug ? $shared_safari_departure_model->organizedslug : '']);
+                //         $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_departure_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //     }
+                // }
 
-                if ($model->shared_safari_departure_model->mail_sent == 0 && $model->shared_safari_departure_model->status == 1) {
-                    $model->shared_safari_departure_model->mail_sent = 1;
-                    if ($model->shared_safari_departure_model->save(false)) {
-                        $model->shared_safari_departure_model->savehistory();
-                        if ($active_followers = $model->shared_safari_departure_model->fixeddeparturefollowerlist) {
-                            foreach ($active_followers as $follower) {
-                                /** Creator Info */
-                                $creator_name = $model->shared_safari_departure_model->organizedbyname;
-                                /**User Info */
-                                $to_mail = $follower->user->username;
-                                /**Template info */
-                                $subject = 'New Fixed departure | ' . substr($model->shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_TO_FOLLOWER;
-                                /**Url Info */
-                                $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_departure_model->slug, 'organized_slug' => $model->shared_safari_departure_model->organizedslug ? $model->shared_safari_departure_model->organizedslug : '']);
-                                $req = ['shared_safari' => $model->shared_safari_departure_model->attributes, 'shared_safari_url' => $shared_safari_url, 'creator_name' => $creator_name];
-                                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if ($model->shared_safari_departure_model->mail_sent == 0 && $model->shared_safari_departure_model->status == 1) {
+                //     $model->shared_safari_departure_model->mail_sent = 1;
+                //     if ($model->shared_safari_departure_model->save(false)) {
+                //         $model->shared_safari_departure_model->savehistory();
+                //         if ($active_followers = $model->shared_safari_departure_model->fixeddeparturefollowerlist) {
+                //             foreach ($active_followers as $follower) {
+                //                 /** Creator Info */
+                //                 $creator_name = $model->shared_safari_departure_model->organizedbyname;
+                //                 /**User Info */
+                //                 $to_mail = $follower->user->username;
+                //                 /**Template info */
+                //                 $subject = 'New Fixed departure | ' . substr($model->shared_safari_departure_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_TO_FOLLOWER;
+                //                 /**Url Info */
+                //                 $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_departure_model->slug, 'organized_slug' => $model->shared_safari_departure_model->organizedslug ? $model->shared_safari_departure_model->organizedslug : '']);
+                //                 $req = ['shared_safari' => $model->shared_safari_departure_model->attributes, 'shared_safari_url' => $shared_safari_url, 'creator_name' => $creator_name];
+                //                 $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
-                                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                                }
-                            }
-                        }
-                    }
+                //                 if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //                     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+                $operator_followers = $shared_safari_departure_model->getFixeddeparturefollowerlist()->asArray()->all();
+                if ($operator_followers) {
+                    new \common\events\operator\FixedDepartureUpdatedByOperator(
+                        $operator_followers,
+                        $this->userinfoId,
+                        $model->shared_safari_departure_model->user->name,
+                        $model->shared_safari_departure_model->user->email,
+                        $model->shared_safari_departure_model->id
+                    );
                 }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Fixed Departure updated successfully"]);
