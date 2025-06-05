@@ -126,7 +126,7 @@ class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces
     {
         if ($this->sighting_id) {
             $sighting = Sighting::find()->where(['status' => Sighting::STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
-            $comments = SightingComment::find()->where(['sighting_id' => $this->sighting_id, 'status' => Sighting::STATUS_ACTIVE])->andWhere(['parent_id' => null])->count();
+            $comments = SightingComment::find()->where(['sighting_id' => $this->sighting_id, 'status' => Sighting::STATUS_ACTIVE])->count();
             if ($sighting) {
                 $sighting->comment_count = $comments;
                 $sighting->save(false);

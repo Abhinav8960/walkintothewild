@@ -5,6 +5,12 @@ namespace console\controllers;
 use common\models\chat\Chat;
 use common\models\chat\ChatMessage;
 use common\models\leads\Lead;
+use common\models\postscomment\UserPostComment;
+use common\models\postscomment\UserPostLike;
+use common\models\sighting\Sighting;
+use common\models\sighting\SightingComment;
+use common\models\sighting\SightingLike;
+use common\models\UserPosts;
 use Yii;
 use yii\console\Controller;
 
@@ -103,6 +109,58 @@ class TestController extends Controller
             }
         }
         echo "\n";
+        echo "Done";
+    }
+
+    public function actionUpdatePostCommentCount()
+    {
+        $user_posts = UserPosts::find()->all();
+        foreach ($user_posts as $post) {
+            $comment_count = UserPostComment::find()->where(['user_posts_id' => $post->id])->andWhere(['status' => 1])->count();
+            if ($comment_count > 0) {
+                $post->comment_count = $comment_count;
+                $post->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionUpdatePostLikeCount()
+    {
+        $user_posts = UserPosts::find()->all();
+        foreach ($user_posts as $post) {
+            $like_count = UserPostLike::find()->where(['user_post_id' => $post->id])->andWhere(['status' => 1])->count();
+            if ($like_count > 0) {
+                $post->like_count = $like_count;
+                $post->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionSightingCommentCount()
+    {
+        $sightings = Sighting::find()->all();
+        foreach ($sightings as $sighting) {
+            $comment_count = SightingComment::find()->where(['sighting_id' => $sighting->id])->andWhere(['status' => 1])->count();
+            if ($comment_count > 0) {
+                $sighting->comment_count = $comment_count;
+                $sighting->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionSightingLikeCount()
+    {
+        $sightings = Sighting::find()->all();
+        foreach ($sightings as $sighting) {
+            $like_count = SightingLike::find()->where(['sighting_id' => $sighting->id])->andWhere(['status' => 1])->count();
+            if ($like_count > 0) {
+                $sighting->like_count = $like_count;
+                $sighting->save(false);
+            }
+        }
         echo "Done";
     }
 }
