@@ -60,14 +60,14 @@ use kartik\datetime\DateTimePicker;
     </div>
 
 
-    <div class="col-md-6 col-lg-3">
+    <!-- <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('START DATE') ?>
     </div>
 
 
     <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('END DATE') ?>
-    </div>
+    </div> -->
 
     <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Maximum Booking Date') ?>
