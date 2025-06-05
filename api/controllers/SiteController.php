@@ -550,11 +550,14 @@ class SiteController extends RestController
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
-        if ($user_model->is_mobile_no_verified == true) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
-        }
+        // if ($user_model->is_mobile_no_verified == true) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
+        // }
         $model = new UserMobileNoVerificationForm();
         $model->attributes = $this->request;
+        if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+        }
         if ($model->validate()) {
             $model->proceedforverification($this->auth_token, $user_model);
 
@@ -568,12 +571,15 @@ class SiteController extends RestController
     public function actionVerifyMobileNo()
     {
         $user_model = $this->userinfo;
-        if ($user_model->is_mobile_no_verified == true) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
-        }
+        // if ($user_model->is_mobile_no_verified == true) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+        // }
         $model = new UserMobileNoVerificationForm();
         $model->scenario = 'validateOtp';
         $model->attributes = $this->request;
+        if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+        }
         if ($model->validate()) {
             if ($model->validateOtp($this->auth_token)) {
 

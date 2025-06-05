@@ -25,7 +25,7 @@ class UserMobileNoVerificationForm extends Model
             [['otp'], 'required', 'on' => 'validateOtp'],
             [['mobile_no'], 'string', 'max' => 15],
             [['mobile_no'], 'trim'],
-            [['mobile_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
+            [['mobile_no'], 'match', 'pattern' => '/^[5-9]\d{9}$/', 'message' => 'Invalid Phone number.'],
         ];
     }
 
