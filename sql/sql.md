@@ -83,5 +83,4 @@ ALTER TABLE `chat_message` ADD `call_id` INT NULL DEFAULT NULL AFTER `is_call_me
 ALTER TABLE `chat` ADD `call_id` INT NULL DEFAULT NULL AFTER `quote_id`;
 
 
--------
 ALTER TABLE `partner_registration` ADD `resent_after_rejection` INT NULL DEFAULT '0' AFTER `is_sendforapproval`;
