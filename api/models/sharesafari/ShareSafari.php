@@ -220,7 +220,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getComments_count()
     {
-        return $this->getComments()->andWhere(['parent_id' => null])->count();
+        // return $this->getComments()->andWhere(['parent_id' => null])->count();
+        return $this->getComments()->count();
     }
 
     /**
