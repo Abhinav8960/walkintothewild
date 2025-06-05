@@ -56,6 +56,15 @@ $names = ArrayHelper::getColumn(
         <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
     </div>
 
+    <div class="col-md-3">
+        <?= $form->field($model, 'status')->dropDownList(
+            GeneralModel::newstatusoption(),
+            [
+                'prompt' => 'Select Status',
+            ]
+        ) ?>
+    </div>
+
 
 </div>
 <?php ActiveForm::end(); ?>

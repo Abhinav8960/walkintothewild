@@ -119,6 +119,10 @@ class DefaultController extends RestController
 
     public function actionQuotesrequest($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+        
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
