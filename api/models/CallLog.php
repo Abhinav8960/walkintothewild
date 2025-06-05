@@ -73,7 +73,7 @@ class CallLog extends \common\models\CallLog
             'call_request_status',
             'call_request_message',
             'call_recording_url' => function () {
-                return !empty($this->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $this->file_path : NULL;
+                return !empty($this->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $this->file_path : $this->recording_url;
             },
             // Status is an integer, but we can return it as a boolean if needed
             // 'status' => function () {
