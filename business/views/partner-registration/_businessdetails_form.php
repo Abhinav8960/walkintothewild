@@ -47,7 +47,7 @@ $readOnly = false;
         ]) ?>
     </div>
     <hr>
-    <h5>GST</h5>
+    <h5 style="color: #9393b5;">GST</h5>
     <div class="col-md-4">
         <?= $form->field($gst_model, 'state')->dropDownList(
             GeneralModel::stateoption(),

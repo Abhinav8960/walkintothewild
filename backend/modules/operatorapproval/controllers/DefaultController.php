@@ -367,7 +367,7 @@ class DefaultController extends Controller
                 $model_user->is_safari_operator = 1;
                 $model_user->account_type = 3;
                 $model_user->save(false);
-                \Yii::$app->session->setFlash('success', 'Final Approved Successfully');
+                \Yii::$app->session->setFlash('success', 'Final Approval Successful');
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         } else {

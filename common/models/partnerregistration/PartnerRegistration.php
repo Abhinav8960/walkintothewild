@@ -160,7 +160,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
 
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id','current_step', 'user_id', 'form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'final', 'final_approved', 'status'], 'integer'],
-            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
+            [['resent_after_rejection','created_at', 'created_by', 'updated_at', 'updated_by'], 'safe'],
 
             [[
                 'legal_entity_name',
@@ -230,7 +230,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             'address' => 'Address',
 
             //Registration Proof
-            'registration_number' => 'Registration Number',
+            'registration_number' => 'Company Registration Number',
             'registration_copy_upload' => 'Registration Copy Upload',
             'pan_number' => 'Pan Number',
             'pan_upload' => 'Pan Upload',
@@ -250,7 +250,9 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             'account_holder_name' => 'Account Holder Name',
             'account_number' => 'Account Number',
             'ifsc_number' => 'IFSC',
-            'cancel_check_upload' => 'Cancel Check Upload',
+            'cancel_check_upload' => 'Cancel Cheque Upload',
+            'cancel_check_file_upload'=>'Cancel Cheque Upload',
+
 
             //User KYC 
             'owner_name' => 'Owner Name',
@@ -318,4 +320,9 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
     // {
     //     return $this->hasOne(SafariPark::className(), ['id' => 'operated_park']);
     // }
+    public function getWasRejectedBefore()
+{
+    return $this->previous_status == self::FORM_REJECTED && $this->form1_status == self::FORM_FILLED;
+}
+
 }
