@@ -154,7 +154,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{view}',
+                        'template' => '{view}&nbsp{inactive}',
                         'buttons' => [
 
                             'view' => function ($url, $model) {
@@ -164,6 +164,14 @@ $this->params['title'] = $this->title;
                                     'title' => 'View',
                                 ]);
                             },
+
+                            'inactive' => function($url,$model)
+                            {
+                                return  Html::a('Inactive', ['/leads/default/inactive', 'id' => $model->id], [
+                                    'class' => 'btn btn-info p-1',
+                                    'title' => 'Inactive',
+                                ]);
+                            }
 
 
                         ]

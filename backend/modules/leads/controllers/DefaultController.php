@@ -57,6 +57,7 @@ class DefaultController extends  Controller
     public function actionIndex()
     {
         $searchModel = new LeadSearch();
+        $searchModel->status = Lead::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
 
@@ -368,5 +369,18 @@ class DefaultController extends  Controller
         }
 
         return ['success' => false, 'message' => 'Invalid request method.'];
+    }
+
+
+    public function actionInactive($id)
+    {
+        $model = $this->findModel($id);
+        if ($model) {
+            $model->status = Lead::STATUS_SUSPEND;
+            if ($model->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Inactive Successfully!!!');
+                return  $this->redirect(Yii::$app->request->referrer);
+            }
+        }
     }
 }
