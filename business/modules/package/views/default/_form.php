@@ -69,6 +69,9 @@ use kartik\datetime\DateTimePicker;
         <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('END DATE') ?>
     </div>
 
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Maximum Booking Date') ?>
+    </div>
 
     <?php
     if ($model->package_version_model->package_image) { ?>
