@@ -2,7 +2,9 @@
 
 namespace console\controllers;
 
-
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
+use common\models\leads\Lead;
 use Yii;
 use yii\console\Controller;
 
@@ -16,60 +18,60 @@ class TestController extends Controller
         $models = \common\models\CallLog::find()
             ->where(['file_path' => NULL])
             ->all();
-            foreach($models as $model){
-                if (empty($model->file_path) && !empty($model->recording_url)) {
-                    try {
-                        $content = file_get_contents($model->recording_url);
-                        if ($content === false) {
-                            throw new \Exception('Failed to fetch recording content from URL: ' . $model->recording_url);
-                        }
-        
-                        // Determine the MIME type of the content
-                        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                        $mimeType = finfo_buffer($finfo, $content);
-                        finfo_close($finfo);
-        
-                        // Map MIME type to file extension
-                        $extension = $this->getFileExtensionFromMimeType($mimeType);
-                        if (!$extension) {
-                            throw new \Exception('Unsupported MIME type: ' . $mimeType);
-                        }
-        
-                        // Create a temporary file to store the recording content
-                        $tempFilePath = tempnam(sys_get_temp_dir(), 'recording_');
-                        file_put_contents($tempFilePath, $content);
-        
-                        // Prepare the UploadedFile instance
-                        $uploadedFile = new \yii\web\UploadedFile([
-                            'name' => $model->reference_id . '.' . $extension,
-                            'tempName' => $tempFilePath,
-                            'type' => $mimeType,
-                            'size' => filesize($tempFilePath),
-                            'error' => UPLOAD_ERR_OK,
-                        ]);
-        
-                        $fileName = $model->reference_id . '.' . $extension;
-                        $filePath = 'call_log/' . date('ym') . '/' . $fileName;
-        
-                        // Save the file using the existing helper method
-                        $checksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
-        
-                        // Clean up the temporary file
-                        unlink($tempFilePath);
-        
-                        if (!$checksum) {
-                            throw new \Exception('Failed to upload file to S3.');
-                        }
-        
-                        // Update the file path in the database
-                        $model->file_path = $filePath;
-                        $model->save(false);
-                    } catch (\Exception $e) {
-                        \Yii::error('Error in uploadfiletoS3: ' . $e->getMessage(), __METHOD__);
-                        throw $e; // Re-throw the exception for further handling
+        foreach ($models as $model) {
+            if (empty($model->file_path) && !empty($model->recording_url)) {
+                try {
+                    $content = file_get_contents($model->recording_url);
+                    if ($content === false) {
+                        throw new \Exception('Failed to fetch recording content from URL: ' . $model->recording_url);
                     }
+
+                    // Determine the MIME type of the content
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mimeType = finfo_buffer($finfo, $content);
+                    finfo_close($finfo);
+
+                    // Map MIME type to file extension
+                    $extension = $this->getFileExtensionFromMimeType($mimeType);
+                    if (!$extension) {
+                        throw new \Exception('Unsupported MIME type: ' . $mimeType);
+                    }
+
+                    // Create a temporary file to store the recording content
+                    $tempFilePath = tempnam(sys_get_temp_dir(), 'recording_');
+                    file_put_contents($tempFilePath, $content);
+
+                    // Prepare the UploadedFile instance
+                    $uploadedFile = new \yii\web\UploadedFile([
+                        'name' => $model->reference_id . '.' . $extension,
+                        'tempName' => $tempFilePath,
+                        'type' => $mimeType,
+                        'size' => filesize($tempFilePath),
+                        'error' => UPLOAD_ERR_OK,
+                    ]);
+
+                    $fileName = $model->reference_id . '.' . $extension;
+                    $filePath = 'call_log/' . date('ym') . '/' . $fileName;
+
+                    // Save the file using the existing helper method
+                    $checksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
+
+                    // Clean up the temporary file
+                    unlink($tempFilePath);
+
+                    if (!$checksum) {
+                        throw new \Exception('Failed to upload file to S3.');
+                    }
+
+                    // Update the file path in the database
+                    $model->file_path = $filePath;
+                    $model->save(false);
+                } catch (\Exception $e) {
+                    \Yii::error('Error in uploadfiletoS3: ' . $e->getMessage(), __METHOD__);
+                    throw $e; // Re-throw the exception for further handling
                 }
             }
+        }
     }
 
     private function getFileExtensionFromMimeType($mimeType)
@@ -83,5 +85,22 @@ class TestController extends Controller
         ];
 
         return $mimeMap[$mimeType] ?? null;
+    }
+
+    public function actionLeadDisable()
+    {
+        $leads = Lead::find()->where(['<', 'created_at', time()])->all();
+        foreach ($leads as $lead) {
+            $chat = Chat::find()->where(['lead_id' => $lead->id])->one();
+            if (!empty($chat)) {
+                $chat_messages = ChatMessage::find()->where(['chat_id' => $chat->id])->count();
+                if ($chat_messages < 2) {
+                    $lead->status = 0;
+                    $lead->save(false);
+                }
+            }
+        }
+        echo "\n";
+        echo "Done";
     }
 }
