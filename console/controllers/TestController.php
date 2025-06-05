@@ -96,8 +96,10 @@ class TestController extends Controller
                 $chat_messages = ChatMessage::find()->where(['chat_id' => $chat->id])->count();
                 if ($chat_messages < 2) {
                     $lead->status = 0;
-                    $lead->save(false);
+                } else {
+                    $lead->is_chat_started = 1;
                 }
+                $lead->save(false);
             }
         }
         echo "\n";
