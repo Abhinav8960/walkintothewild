@@ -556,7 +556,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
     }
-    
+
     public static function mailtemplateoption()
     {
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
@@ -1849,6 +1849,20 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function strMaxlength($value, $limit = 200)
     {
         $value = strlen($value) > $limit ? (substr($value, 0, $limit) . '...') : $value;
+
+        return $value;
+    }
+
+    public static function strMaxWord($value, $limit = 50)
+    {
+        // Split the string into an array of words
+        $words = explode(' ', $value);
+
+        // Check if the number of words exceeds the limit
+        if (count($words) > $limit) {
+            // Take only the first $limit words and append '...'
+            $value = implode(' ', array_slice($words, 0, $limit)) . '...';
+        }
 
         return $value;
     }

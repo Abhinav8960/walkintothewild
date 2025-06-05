@@ -102,7 +102,7 @@ class QueueService
         $model = new FirebaseNotificationLog();
         $model->master_notification_template_id = $master_notification_template_id;
         $model->title = ($title !== null) ? $title :  NULL;
-        $model->message = ($message !== null) ? trim($message) : NULL;
+        $model->message = ($message !== null) ? trim($message) : NULL;        
         $model->sent_data = ($sent_data !== null) ? $sent_data :  NULL;
         $model->image_url = ($image_url !== null) ? $image_url :  NULL;
         $model->action = ($action !== null) ? $action : NULL;
