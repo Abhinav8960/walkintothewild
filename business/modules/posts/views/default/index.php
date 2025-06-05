@@ -9,7 +9,7 @@ use yii\helpers\Url;
 $this->title = 'Posts';
 // $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange float-end', 'title' => 'Create']);
+// $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange float-end', 'title' => 'Create']);
 ?>
 <?php Pjax::begin([
     'id' => 'grid-data',
@@ -113,24 +113,24 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                 }
                                 return '';
                             },
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
-                                ', ['update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
+                            // 'update' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
+                            //     ', ['update', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'Update',
 
-                                ]);
-                            },
-                            'delete' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this post ?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
-                            },
+                            //     ]);
+                            // },
+                            // 'delete' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'Delete',
+                            //         'data' => [
+                            //             'confirm' => 'Are you sure you want to delete this post ?',
+                            //             'method' => 'post',
+                            //         ],
+                            //     ]);
+                            // },
 
                         ]
                     ],
