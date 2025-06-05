@@ -835,7 +835,7 @@ class PackageController extends RestController
 
         foreach ($packageversion as $version) {
             if ($version->version == $model->live_version) {
-                $version->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
+                $version->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
             } elseif ($version->version == $model->pending_for_approval_version) {
                 $version->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
             } elseif ($version->version ==  $model->editable_version) {
@@ -856,6 +856,7 @@ class PackageController extends RestController
     {
         $newModel = new Package();
         $newModel->package_name = $model->package_name;
+        $newModel->package_slug = Package::generateUnqiueSlug($newModel->package_name);
         // $newModel->package_agenda_id = $model->package_agenda_id;
         // $newModel->no_of_day = $model->no_of_day;
         // $newModel->no_of_night = $model->no_of_night;
