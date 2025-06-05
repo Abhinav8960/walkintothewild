@@ -262,6 +262,10 @@ class DefaultController extends RestController
 
     public function actionPackageQuote($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+        
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
