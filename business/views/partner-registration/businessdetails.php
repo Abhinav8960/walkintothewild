@@ -202,11 +202,22 @@ $this->params['title'] = $this->title;
                 } ?>
         <div id="collapse3" class="accordion-collapse collapse show" aria-labelledby="heading3" data-bs-parent="#formAccordion">
             <div class="accordion-body">
-                <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model]) ?>
+                <?= $this->render('_businessdetails_form', ['currentStep' => 3, 'model' => $model, 'gst_model' => $gst_model,'verification_model'=>$verification_model,'isbusinessSaved'=>$isbusinessSaved]) ?>
             </div>
         </div>
         </div>
 
+
+        <?php if ($isbusinessSaved && $model->partner_model->is_billing_mail_verified != 1){?>
+                <div class="card border-dark mt-4">
+                    <div class="card-body">
+                        <h4 class="mb-3 mt-2 ms-3 text-success fw-bold">VERIFICATION</h4>
+                        <div class="accordion-body">
+                            <?= $this->render('_email_verification_form', ['currentStep' => 1,'model' => $model,'verification_model' => $verification_model])?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
 
 
 
