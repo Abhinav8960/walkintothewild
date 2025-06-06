@@ -100,7 +100,7 @@ class DefaultController extends RestController
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        // $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
+        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
 
         if ($model->validate()) {
             $model->initializeForm();

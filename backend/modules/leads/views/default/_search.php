@@ -52,8 +52,22 @@ $names = ArrayHelper::getColumn(
         ) ?>
     </div>
 
+    
+
     <div class="col-md-2">
         <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_chat_started')->dropDownList(
+            [
+                '1' => 'Yes',
+                '0' => 'No'
+            ],
+            [
+                'prompt' => 'Is Chat Started',
+            ]
+        ) ?>
     </div>
 
     <div class="col-md-3">
