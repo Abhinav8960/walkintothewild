@@ -11,7 +11,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Sighting';
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-thumbnail', 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Change Logo']);
+$this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-high-thumbnail', 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Change Logo']);
 
 ?>
 

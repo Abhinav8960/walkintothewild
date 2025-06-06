@@ -300,4 +300,37 @@ class FsHelper
         }
         return false;
     }
+
+    public static function saveUploadedFilethumbnail(UploadedFile $file, $filePath,  $fileName = '', $autoExtension = true)
+    {
+        if (empty($fileName)) {
+            $fileName = $file->name;
+        }
+        if ($autoExtension) {
+            $_file    = (string) pathinfo($fileName, PATHINFO_FILENAME);
+            $fileName = $_file . '.' . $file->extension;
+        }
+        $localPath = $file->tempName;
+        $handle    = fopen($localPath, 'r');
+        $contents  = fread($handle, filesize($localPath));
+        fclose($handle);
+
+        $filesystem = \Yii::$app->get('fst');
+        $fileFullPath = $filePath;
+        try {
+            $filesystem->write($fileFullPath, $contents);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to write file to FST: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
+
+        if (!self::filesave($file, $fileFullPath, $fileName)) {
+            throw new \Exception("Failed to save file metadata for: " . $fileName);
+        }
+        try {
+            return $filesystem->checksum($fileFullPath);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to calculate checksum for file: " . $fileFullPath . ". Error: " . $e->getMessage());
+        }
+    }
+
 }

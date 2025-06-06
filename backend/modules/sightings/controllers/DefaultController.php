@@ -198,7 +198,33 @@ class DefaultController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionUpdateThumbnail($id)
+    // public function actionUpdateThumbnail($id)
+    // {
+    //     $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+    //     if (!$sighting_thumbnail_model) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+    //     }
+
+    //     $model = new SightingThumbnailForm($sighting_thumbnail_model);
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             $model->video_thumbnail = UploadedFile::getInstance($model, 'video_thumbnail');
+    //             if ($model->validate()) {
+    //                 $model->uploadFile();
+    //                 \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+    //                 return $this->redirect(['index']);
+    //             }
+    //         }
+    //     } else {
+    //         $model->sighting_thumbnail_model->loadDefaultValues();
+    //     }
+
+    //     return $this->renderAjax('_update_thumbnail_form', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    public function actionUpdateHighThumbnail($id)
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
@@ -206,12 +232,13 @@ class DefaultController extends Controller
         }
 
         $model = new SightingThumbnailForm($sighting_thumbnail_model);
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->video_thumbnail = UploadedFile::getInstance($model, 'video_thumbnail');
+                $model->high_thumbnail = UploadedFile::getInstance($model, 'high_thumbnail');
                 if ($model->validate()) {
                     $model->uploadFile();
-                    \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                    \Yii::$app->session->setFlash('success', 'Successfully Change');
                     return $this->redirect(['index']);
                 }
             }
@@ -222,6 +249,7 @@ class DefaultController extends Controller
         return $this->renderAjax('_update_thumbnail_form', [
             'model' => $model,
         ]);
+
     }
 
     protected function findModel($id)
