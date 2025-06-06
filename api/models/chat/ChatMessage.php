@@ -90,7 +90,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             $fields['gallery_url'] = function () {
                 return $this->gallery_url;
             };
-            $fields['gallery_thumbnail_url'] = function () {
+            $fields['thumbnail_url'] = function () {
                 return $this->getGalleryThumbnail();
             };
         }
