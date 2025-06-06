@@ -228,7 +228,8 @@ class DefaultController extends Controller
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
+            return $this->redirect(['index']);
         }
 
         $model = new SightingThumbnailForm($sighting_thumbnail_model);
@@ -249,7 +250,6 @@ class DefaultController extends Controller
         return $this->renderAjax('_update_thumbnail_form', [
             'model' => $model,
         ]);
-
     }
 
     protected function findModel($id)
