@@ -112,7 +112,7 @@ class PackageLeadForm extends Model
     private function prepareChat($lead, $package, $login_user)
     {
         $package_data = Package::find()->where(['id' => $lead->package_id])->asArray()->one();
-        $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
+        $operator_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
 
         $chat = new Chat();
         $short_msg = $message = "Hi, I am interested in \n";
@@ -128,9 +128,10 @@ class PackageLeadForm extends Model
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;
         $chat->user_id = $login_user->id;
-        $chat->recipient_user_id = $individual_user->id;
+        $chat->recipient_user_id = $operator_user->id;
         $chat->last_message = $short_msg;
         $chat->last_message_at = time();
+        $chat->sender_id = $login_user->id;
         $chat->status = 1;
         $chat->chat_type = 2;
         $chat->package_id = $lead->package_id;

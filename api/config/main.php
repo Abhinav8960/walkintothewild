@@ -215,6 +215,8 @@ return [
                 'chat/gallery-images/<slug>'   => 'chat/default/gallery-images',
                 'chat/profile-chat/<user_handle>'   => 'chat/default/profile-chat',
                 'chat/make-call'   => 'chat/default/make-call',
+                'chat/make-call-on-chat/<user_handle>'   => 'chat/default/make-call-on-chat',
+                
 
 
                 'notification-history' => 'notification-history',

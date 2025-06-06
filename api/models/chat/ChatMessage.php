@@ -85,6 +85,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             }
         }
         if ($this->gallery_url != null) {
+
             $fields['gallery_url'] = function () {
                 return $this->gallery_url;
             };

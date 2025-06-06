@@ -214,6 +214,7 @@ class QuotationPaymentReceived extends Model
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->quote_id = $quotation->id;
+            $chat->sender_id = $quotation->partner->user_id;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
