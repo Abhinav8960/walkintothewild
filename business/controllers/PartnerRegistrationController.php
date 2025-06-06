@@ -601,8 +601,12 @@ class PartnerRegistrationController extends Controller
                 $model->email = $email;
 
                 if ($model->save(false)) {
-                    $to_be_send = EmailVerification::find()->where(['email' => $email, 'otp' => $model->otp, 'status' => 1])->andWhere(['<=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
-                    
+                    $to_be_send = EmailVerification::find()->where(['email' => $email, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
+                    if($to_be_send != null){
+
+                    new \common\events\user\EmailVerification($model->user_id,$model->email,$partner_model->legal_entity_name,$to_be_send->otp,$model->exp_datetime);
+
+                    }
                     return \yii\helpers\Json::encode([
                         'success' => true,
                         'message' => 'OTP sent to ' . $email

@@ -57,6 +57,8 @@ $readOnly = false;
                 'class'=>'form-control',
                 'placeholder' => 'Enter OTP',
                 'readonly' => $readOnly,
+                'onkeypress' => 'return /[0-9]/i.test(event.key)',
+                'maxlength'=>6
             ]) ?>
         </div>
         <input type="hidden" id="hidden-mobile-no" value="<?= Html::encode($verification_model->mobile_no) ?>">
