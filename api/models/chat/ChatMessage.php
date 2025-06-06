@@ -91,7 +91,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 return $this->gallery_url;
             };
             $fields['gallery_thumbnail_url'] = function () {
-                return $this->gallery_thumbnail;
+                return $this->getGalleryThumbnail();
             };
         }
         if ($this->is_call_message == true && !empty($this->call_id)) {
