@@ -415,7 +415,7 @@ class SafariOperatorController extends Controller
         $safari_operator = $this->findModel($id);
         if ($safari_operator) {
             $user_model = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
-            $auth_model = Auth::find()->where(['user_id' => $user_model->id])->limit(1)->all();
+            // $auth_model = Auth::find()->where(['user_id' => $user_model->id])->limit(1)->all();
 
             $user_model->status = User::STATUS_DELETED;
             $safari_operator->status =  SafariOperator::STATUS_DELETE;
@@ -437,10 +437,10 @@ class SafariOperatorController extends Controller
 
                 if ($user_model->save(false)) {
 
-                    foreach ($auth_model as $auth) {
-                        $auth->source_id = time() . '_' . $auth->source_id;
-                        $auth->save(false);
-                    }
+                    // foreach ($auth_model as $auth) {
+                    //     $auth->source_id = time() . '_' . $auth->source_id;
+                    //     $auth->save(false);
+                    // }
                     \Yii::$app->session->setFlash('success', 'Successfully Temporary Deleted');
                     return $this->redirect(['index']);
                 }

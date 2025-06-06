@@ -61,7 +61,7 @@ $this->params['title'] = $this->title;
                             //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
                             //     'class' => 'comment-popup btn btn-info',
                             // ]);
-                            return $model->comments_count;
+                            return $model->comment_count;
                         }
                     ],
                     [
@@ -69,7 +69,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->likes_count;
+                            return $model->like_count;
                         }
                     ],
                     [
