@@ -135,6 +135,9 @@ class DefaultController extends RestController
         if ($chat->chat_type == 1 && $chat->sender_id != $this->userinfo->id) {
             Chat::MarkChatSeen($chat->id);
         }
+        if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
         // $dataProvider = new ActiveDataProvider([
         //     'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderby(['last_message_at' => SORT_DESC]),
         //     'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
@@ -539,7 +542,7 @@ class DefaultController extends RestController
             // Example parameters
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                
+
                 if(!$chat_model->user->is_mobile_no_verified){
                     return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
                 }
