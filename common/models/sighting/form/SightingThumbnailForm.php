@@ -13,9 +13,9 @@ use yii\base\Model;
  */
 class SightingThumbnailForm extends Model
 {
-    public $high_thumbnail;
+    public $thumbnail;
     public $sighting_thumbnail_model;
-    public $created_at;
+    public $path;
 
 
     public function __construct(Sighting $sighting_thumbnail_model = null)
@@ -27,7 +27,6 @@ class SightingThumbnailForm extends Model
 
         if ($sighting_thumbnail_model  != '') {
             $this->sighting_thumbnail_model    = $sighting_thumbnail_model;
-            $this->created_at       =  $this->sighting_thumbnail_model->created_at;
         }
     }
 
@@ -39,12 +38,11 @@ class SightingThumbnailForm extends Model
     {
         return [
             [
-                ['high_thumbnail'],
+                ['thumbnail'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 8 * 1024 * 1024,
             ],
-            [['created_at'], 'safe'],
         ];
     }
 
@@ -55,11 +53,11 @@ class SightingThumbnailForm extends Model
     {
         return [
             'id' => 'ID',
-            'high_thumbnail' => 'High Thumbnail',
+            'thumbnail' => 'Thumbnail',
         ];
     }
 
-    public function uploadFile()
+    public function uploadFile($url_path)
     {
         // if ($this->video_thumbnail) {
         //     $storagePath = 'watchpost' . '/' . date('ym', $this->created_at);
@@ -77,32 +75,18 @@ class SightingThumbnailForm extends Model
         //     }
         // }
 
-        // if ($this->high_thumbnail) {
-
-        //     $remove_extension_file_path = \common\models\GeneralModel::extentionRemove($this->sighting_thumbnail_model->filepath);
-        //     $remove_extension_file_name = \common\models\GeneralModel::extentionRemove($this->sighting_thumbnail_model->file);
-
-        //     $replacePath = 'thumbnail/high';
-        //     $filePath = $replacePath . '/' . $remove_extension_file_path .'.jpg';
-        //     $fileName = $remove_extension_file_name . '.jpg';
-
-        //     if ($filePath && $fileName) {
-        //         FsHelper::saveUploadedFilethumbnail($this->high_thumbnail, $filePath, $fileName, true);
-        //     }
-        // }
-
-
-        if ($this->high_thumbnail) {
-            $url = $this->sighting_thumbnail_model->thumbnail;
+        if ($this->thumbnail && $url_path) {
+            $url = $url_path;
             $parsedUrl = parse_url($url);
             $path = $parsedUrl['path'];
-            
+
             if ($path) {
                 $path = ltrim($path, '/');
                 $pathParts = explode('/', $path);
                 $fileName = array_pop($pathParts);
-                FsHelper::saveUploadedFilethumbnail($this->high_thumbnail, $path, $fileName, true);
+                FsHelper::saveUploadedFilethumbnail($this->thumbnail, $path, $fileName, true);
             }
         }
+
     }
 }

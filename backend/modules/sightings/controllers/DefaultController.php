@@ -224,23 +224,22 @@ class DefaultController extends Controller
     //     ]);
     // }
 
-    public function actionUpdateHighThumbnail($id)
+    public function actionUpdateThumbnail($url_path, $id)
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
-            \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
-            return $this->redirect(['index']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
         }
 
-        $model = new SightingThumbnailForm($sighting_thumbnail_model);
+        $model = new SightingThumbnailForm();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->high_thumbnail = UploadedFile::getInstance($model, 'high_thumbnail');
+                $model->thumbnail = UploadedFile::getInstance($model, 'thumbnail');
                 if ($model->validate()) {
-                    $model->uploadFile();
+                    $model->uploadFile($url_path);
                     \Yii::$app->session->setFlash('success', 'Successfully Change');
-                    return $this->redirect(['index']);
+                    return $this->redirect(['view', 'id' => $sighting_thumbnail_model->id]);
                 }
             }
         } else {

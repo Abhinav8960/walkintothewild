@@ -11,7 +11,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Sighting';
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-high-thumbnail', 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Change Logo']);
 
 ?>
 
@@ -61,13 +60,6 @@ $this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::t
                                 <img src="<?= $this->params['baseurl'] ?>/img/location.svg" alt="Location">
                                 <p class="ms-1 mt-2 pt-2"><?= isset($model->locationDetail) ? $model->locationDetail->title : ''; ?></p>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <?php if ($model->custom_thumbnail_path) { ?>
-                                <img class="card-img-top" src="<?= $model->custom_thumbnail_path ?>" alt="Card image cap" width='300px' height='300px'>
-                            <?php } else { ?>
-                                <img class="card-img-top" src="<?= $model->thumbnail ?>" alt="Card image cap" width='300px' height='300px'>
-                            <?php } ?>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">
@@ -129,6 +121,67 @@ $this->params['buttons'][] = Html::button('Update Thumbnail', ['value' => Url::t
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>Thumbnail Quality</th>
+                            <th>Thumbnail</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>High</p>
+                            </td>
+                            <td>
+                                <img class="img-thumbnail" src="<?= $model->thumbnail ?>" alt="High Thumbnail" width="200" height="200">
+                            </td>
+                            <td>
+                                <?= Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-thumbnail', 'url_path' => $model->thumbnail, 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Update Thumbnail']) ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Standard</p>
+                            </td>
+                            <td>
+                                <img class="img-thumbnail" src="<?= $model->standardThumbnail ?>" alt="Standard Thumbnail" width="200" height="200">
+                            </td>
+                            <td>
+                                <?= Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-thumbnail', 'url_path' => $model->standardThumbnail, 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Update Thumbnail']) ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Medium</p>
+                            </td>
+                            <td>
+                                <img class="img-thumbnail" src="<?= $model->mediumThumbnail ?>" alt="Medium Thumbnail" width='200' height='200'>
+                            </td>
+                            <td>
+                                <?= Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-thumbnail', 'url_path' => $model->mediumThumbnail, 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Update Thumbnail']) ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Low</p>
+                            </td>
+                            <td>
+                                <img class="img-thumbnail" src="<?= $model->lowThumbnail ?>" alt="Low Thumbnail" width='200' height='200'>
+                            </td>
+                            <td>
+                                <?= Html::button('Update Thumbnail', ['value' => Url::toRoute(['update-thumbnail', 'url_path' => $model->lowThumbnail, 'id' => $model->id]), 'class' => 'btn btn-orange update-popup', 'title' => 'Update Thumbnail']) ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
