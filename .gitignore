@@ -512,6 +512,16 @@ phpunit.phar
 /business/web/storage
 /business/web/robots.txt
 /csv
+
+/webhook/web/index.php
+/webhook/web/index-test.php
+/webhook/runtime
+/webhook/web/assets
+/webhook/web/storage
+/webhook/web/robots.txt
+/csv
+
+
 /common/config/service.json
 *.sql
 # End of https://www.toptal.com/developers/gitignore/api/yii2,linux,visualstudiocode,composer,compressedarchive,compression,images,docz,node,database,ssh
