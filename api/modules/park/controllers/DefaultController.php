@@ -294,7 +294,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thank you for sending the request. Unfortunately, we currently don’t have any verified operators for this park. We’re working to onboard trusted partners soon and will notify you once services become available.']);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!'. count($sf->operator)]);
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!!!']);
     }
 
     public function actionParkFollow($slug)
