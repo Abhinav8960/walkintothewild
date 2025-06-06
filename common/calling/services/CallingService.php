@@ -15,8 +15,10 @@ class CallingService
     public $request_vnm;
     public $request_caller_1_no;
     public $request_caller_1_user_id;
-    public $request_caller_2_no = "9650901148";
-    public $request_caller_2_user_id = "2015";
+    // public $request_caller_2_no = "9650901148";
+    // public $request_caller_2_user_id = "2015";
+    public $request_caller_2_no;
+    public $request_caller_2_user_id;
     public $caller_id;
     public $received_id;
     public $ivr_number;
@@ -35,6 +37,7 @@ class CallingService
 
     public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no = null, $request_caller_2_user_id = null)
     {
+       
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
         $this->request_vnm = \Yii::$app->params['airphone_api_vnm'];
         $this->chat_id = $chat_id;
@@ -157,6 +160,7 @@ class CallingService
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->call_id = $this->call_model->id;
+            $chat->sender_id = $this->call_initiated_user_id;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();

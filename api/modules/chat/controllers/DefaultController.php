@@ -132,6 +132,12 @@ class DefaultController extends RestController
         if (!$chat) {
             return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
         }
+        if ($chat->chat_type == 1 && $chat->sender_id != $this->userinfo->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
+        if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
         // $dataProvider = new ActiveDataProvider([
         //     'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderby(['last_message_at' => SORT_DESC]),
         //     'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
@@ -177,6 +183,7 @@ class DefaultController extends RestController
             $chat_model->recipient_user_id = $individual_user->id;
             $chat_model->last_message = '';
             $chat_model->last_message_at = time();
+            $chat_model->sender_id = $this->userinfo->id;
             $chat_model->status = 1;
             $chat_model->is_seen = 0;
             $chat_model->chat_type = 1;
@@ -189,8 +196,11 @@ class DefaultController extends RestController
 
         $message = Yii::$app->request->post('message');
         $gallery_url = Yii::$app->request->post('gallery_url') ?? null;
-        if ($message == '') {
+        if ($message == '' && empty($gallery_url)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
+        }
+        if (!empty($gallery_url)) {
+            $message = "Gallery";
         }
 
         return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL, $login_user);
@@ -208,10 +218,10 @@ class DefaultController extends RestController
 
         if ($login_user->partner) {
             if ($chat->chat_type == 2) {
-                Chat::markChatStarted($chat,$login_user->partner->id);
-            } 
+                Chat::markChatStarted($chat, $login_user->partner->id);
+            }
         }
-        
+
 
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
@@ -225,6 +235,7 @@ class DefaultController extends RestController
             $chat = Chat::find()->where(['id' => $chat_id])->one();
             $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
             $chat->last_message_at = time();
+            $chat->sender_id = $this->userinfo->id;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
@@ -408,15 +419,39 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
     }
 
+    // public function actionMakeCall($user_handle, $chat_hash)
     public function actionMakeCall()
     {
+
+        // $login_user = $this->userinfo;
+        // $individual_user = $this->individualuser($user_handle);
+        // if (!$individual_user) {
+        //     // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
+        //     return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+        // }
+
+        // if (!empty($chat_hash)) {
+
+        //     // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+        //     $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+        //     if (empty($chat_model)) {
+        //         return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+        //     }
+        // } else {
+        //     return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+        // };
+
+        // if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
+        //     return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
+        // }
+
         // Example parameters
         $chat_id = '84';
         $lead_id = '16';
         $operator_user_id = 2015; // Example operator user ID
         $call_initiated_user_id = 2015; // Example user ID who initiated the call
         $call_initiated_partner_id = 3; // can be null
-        $request_caller_1_no = '9953326121';
+        $request_caller_1_no = '9958858979';
         $request_caller_1_user_id = 2014;
         $request_caller_2_no = 9650901148; // Optional
         $request_caller_2_user_id = 2015; // Optional
@@ -443,6 +478,107 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+        }
+    }
+
+
+    public function actionMakeCallOnChat($user_handle, $chat_hash)
+    {
+
+        $login_user = $this->userinfo;
+        $individual_user = $this->individualuser($user_handle);
+        if (!$individual_user) {
+            // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
+            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+        }
+
+        if (!empty($chat_hash)) {
+
+            // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            if (empty($chat_model)) {
+                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+            }
+        } else {
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+        };
+
+        if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
+            return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
+        }
+
+        // if user is normal user then he only raise call request
+        if ($chat_model->user_id == $this->userinfo->id) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                // $message = "Call Request raised by " . $this->userinfo->name;
+                $message = "Call Request raised";
+                $chat_message = new ChatMessage();
+                $chat_message->chat_id = $chat_model->id;
+                $chat_message->message = $message;
+                $chat_message->is_call_request = true;
+                $chat_message->status = 1;
+                $chat_message->sender_id = $this->userinfo->id;
+
+                if ($chat_message->save(false)) {
+
+                    $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+                    $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+                    $chat->last_message_at = time();
+                    $chat_message->is_call_request = true;
+                    $chat->sender_id = $this->userinfo->id;
+                    $chat->status = 1;
+                    $chat->is_seen = 0;
+                    $chat->created_at = time();
+                    $chat->save(false);
+                    $transaction->commit();
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call request raised successfully.']);
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                return Yii::$app->api->sendResponse([], ['message' => 'Failed to initiate the call.'], 400);
+            }
+        } else {
+            // Example parameters
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+
+                if(!$chat_model->user->is_mobile_no_verified){
+                    return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
+                }
+
+                $chat_id = $chat_model->id;
+                $lead_id = $chat_model->lead_id;
+                $call_initiated_user_id = $this->userinfo->id; // Example user ID who initiated the call
+                $operator_user_id =  $this->userinfo->id; // Example operator user ID
+                $call_initiated_partner_id = $chat_model->operator->id; // can be null
+                $request_caller_1_no = $chat_model->user->mobile_no;
+                $request_caller_1_user_id = $chat_model->user->id;
+                $request_caller_2_no = $chat_model->operator->phone_no; // Optional
+                $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
+
+                // Instantiate the CallingService
+                $callingService = new \common\calling\services\CallingService(
+                    $chat_id,
+                    $lead_id,
+                    $operator_user_id,
+                    $call_initiated_user_id,
+                    $call_initiated_partner_id,
+                    $request_caller_1_no,
+                    $request_caller_1_user_id,
+                    $request_caller_2_no,
+                    $request_caller_2_user_id
+                );
+
+
+                // Call the callNow method
+                $result = $callingService->callNow();
+                $transaction->commit();
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+            }
         }
     }
 }

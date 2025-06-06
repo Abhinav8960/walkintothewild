@@ -32,7 +32,7 @@ class Chat extends \common\models\chat\Chat
 
 
         $fields = [
-            // 'id',
+            'id',
             'chat_hash',
             'last_message',
             'last_message_datetime'  => function () {
@@ -48,7 +48,10 @@ class Chat extends \common\models\chat\Chat
             // 'quote_price_max',
             // 'quote_more_detail',
             'is_seen' => function () {
-                // return (bool)$this->is_seen;
+                // return (bool) $this->is_seen;
+                if ($this->activeUserId != $this->sender_id) {
+                    return (bool) $this->is_seen;
+                }
                 return true;
             },
             'contact',
@@ -73,11 +76,16 @@ class Chat extends \common\models\chat\Chat
                 $fields['payment_details'] = function () {
                     return $this->payment_details;
                 };
+                $fields['is_call_request'] = function () {
+                    return (bool) $this->is_call_request;
+                };
+                $fields['call'] = function () {
+                    return $this->call;
+                };
             }
             // if ($this->call_id > 0) {
-            $fields['call'] = function () {
-                return $this->call;
-            };
+
+
             // }
         }
         return $fields;
@@ -105,7 +113,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -156,12 +164,16 @@ class Chat extends \common\models\chat\Chat
 
     public function getParkoperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'recipient_user_id']);
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
     }
 
     public function getPackageoperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'recipient_user_id']);
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
+    }
+
+    public function getOperator(){
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
     }
 
     public function getContact()
@@ -205,5 +217,20 @@ class Chat extends \common\models\chat\Chat
     public function getCall()
     {
         return $this->hasOne(\api\models\CallLog::className(), ['id' => 'call_id']);
+    }
+
+    public static function MarkChatSeen($chat_id)
+    {
+        $chat = self::findOne($chat_id);
+        if ($chat) {
+            $chat->is_seen = 1;
+            return $chat->save();
+        }
+        return false;
+    }
+
+    protected function getActiveUserId()
+    {
+        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
     }
 }

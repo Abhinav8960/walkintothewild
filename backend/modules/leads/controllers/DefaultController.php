@@ -300,6 +300,7 @@ class DefaultController extends  Controller
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
+            $chat->sender_id = $quotation->partner->user_id;
             $chat->quote_id = $quotation->id;
             $chat->status = 1;
             $chat->is_seen = 0;
