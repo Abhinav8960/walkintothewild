@@ -5,6 +5,7 @@ namespace api\models\chat;
 use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use api\models\User;
+use common\models\partnergallery\PartnerGallery;
 
 /**
  * This is the model class for table "chat_message".
@@ -89,6 +90,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
             $fields['gallery_url'] = function () {
                 return $this->gallery_url;
             };
+            $fields['gallery_thumbnail_url'] = function () {
+                return $this->gallery_thumbnail;
+            };
         }
         if ($this->is_call_message == true && !empty($this->call_id)) {
             unset($fields['message']);
@@ -163,7 +167,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            if($this->is_call_message != true){
+            if ($this->is_call_message != true) {
                 return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->prepareData());
             }
         }
@@ -217,5 +221,21 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function getCall()
     {
         return $this->hasOne(\api\models\CallLog::className(), ['id' => 'call_id']);
+    }
+
+    public function getGalleryThumbnail()
+    {
+        if (!empty($this->gallery_url)) {
+            $thumbnail_url = explode('/', $this->gallery_url);
+            $slug = end($thumbnail_url);
+            $gallery = PartnerGallery::find()
+                ->where(['slug' => $slug])
+                ->andWhere(['status' => 1])
+                ->one();
+            if ($gallery) {
+                return $gallery->thumbnail;
+            }
+            return NULL;
+        }
     }
 }
