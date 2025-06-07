@@ -550,35 +550,42 @@ class SiteController extends RestController
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
-        
 
-        // Proceed with the original logic
         $model = new UserMobileNoVerificationForm();
         $model->attributes = $this->request;
+
         if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No already Verified"]);
         }
+
         $cache = Yii::$app->cache;
         $rateLimitKey = 'mobile_verification_' . $user_model->id;
-        $rateLimitDuration = 300; // Time window in seconds
-        $rateLimitMaxRequests = 5; // Maximum allowed requests in the time window
+        $rateLimitDuration = 3600; // 1 hour in seconds
+        $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
+        $blockDuration = 10800; // 3 hours in seconds
 
         // Check rate limit
         $requestCount = $cache->get($rateLimitKey);
         if ($requestCount === false) {
             $cache->set($rateLimitKey, 1, $rateLimitDuration);
         } elseif ($requestCount >= $rateLimitMaxRequests) {
+            $blockKey = 'mobile_verification_block_' . $user_model->id;
+            $blockStatus = $cache->get($blockKey);
+
+            if ($blockStatus === false) {
+                $cache->set($blockKey, true, $blockDuration);
+            }
             return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
         } else {
             $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
         }
-
 
         if ($model->validate()) {
             $model->proceedforverification($this->auth_token, $user_model);
 
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
         }
+
         if ($model->hasErrors()) {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
