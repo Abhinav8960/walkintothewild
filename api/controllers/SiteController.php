@@ -601,9 +601,10 @@ class SiteController extends RestController
             }
             return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
         } else {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
             $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
             if (!$headers->has('X-Rate-Limit-Remaining')) {
-                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - $requestCount - 1);
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
             }
             if (!$headers->has('X-Rate-Limit-Reset')) {
                 $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
@@ -611,8 +612,9 @@ class SiteController extends RestController
         }
 
         if ($model->validate()) {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
             if (!$headers->has('X-Rate-Limit-Remaining')) {
-                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - $requestCount - 1);
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
             }
             if (!$headers->has('X-Rate-Limit-Reset')) {
                 $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
