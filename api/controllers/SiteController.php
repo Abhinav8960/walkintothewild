@@ -550,14 +550,30 @@ class SiteController extends RestController
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
-        // if ($user_model->is_mobile_no_verified == true) {
-        //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
-        // }
+        
+
+        // Proceed with the original logic
         $model = new UserMobileNoVerificationForm();
         $model->attributes = $this->request;
         if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No already Verified"]);
         }
+        $cache = Yii::$app->cache;
+        $rateLimitKey = 'mobile_verification_' . $user_model->id;
+        $rateLimitDuration = 300; // Time window in seconds
+        $rateLimitMaxRequests = 5; // Maximum allowed requests in the time window
+
+        // Check rate limit
+        $requestCount = $cache->get($rateLimitKey);
+        if ($requestCount === false) {
+            $cache->set($rateLimitKey, 1, $rateLimitDuration);
+        } elseif ($requestCount >= $rateLimitMaxRequests) {
+            return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
+        } else {
+            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+        }
+
+
         if ($model->validate()) {
             $model->proceedforverification($this->auth_token, $user_model);
 
@@ -567,6 +583,27 @@ class SiteController extends RestController
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
+
+    // public function actionMobileNoVerification()
+    // {
+    //     $user_model = $this->userinfo;
+    //     // if ($user_model->is_mobile_no_verified == true) {
+    //     //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
+    //     // }
+    //     $model = new UserMobileNoVerificationForm();
+    //     $model->attributes = $this->request;
+    //     if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+    //     }
+    //     if ($model->validate()) {
+    //         $model->proceedforverification($this->auth_token, $user_model);
+
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
+    //     }
+    //     if ($model->hasErrors()) {
+    //         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    //     }
+    // }
 
     public function actionVerifyMobileNo()
     {
