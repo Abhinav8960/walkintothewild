@@ -81,7 +81,7 @@ class GalleryController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Created Successfully!!!"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug'=>$model->partner_gallery_model->slug], ['message' => "Gallery Created Successfully!!!"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
         }
