@@ -555,6 +555,13 @@ class SiteController extends RestController
         $model->attributes = $this->request;
 
         if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+            $headers = Yii::$app->response->headers;
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
+            }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No already Verified"]);
         }
 
@@ -566,8 +573,16 @@ class SiteController extends RestController
 
         // Check rate limit
         $requestCount = $cache->get($rateLimitKey);
+        $headers = Yii::$app->response->headers;
+
         if ($requestCount === false) {
             $cache->set($rateLimitKey, 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
         } elseif ($requestCount >= $rateLimitMaxRequests) {
             $blockKey = 'mobile_verification_block_' . $user_model->id;
             $blockStatus = $cache->get($blockKey);
@@ -575,14 +590,33 @@ class SiteController extends RestController
             if ($blockStatus === false) {
                 $cache->set($blockKey, true, $blockDuration);
             }
+            if (!$headers->has('Retry-After')) {
+                $headers->add('Retry-After', $blockDuration);
+            }
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
+            }
             return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
         } else {
             $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - $requestCount - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
         }
 
         if ($model->validate()) {
-            $model->proceedforverification($this->auth_token, $user_model);
-
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - $requestCount - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
         }
 
