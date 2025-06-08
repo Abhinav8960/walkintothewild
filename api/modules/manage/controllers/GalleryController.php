@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail','update-gallery-image'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail','update-gallery-image'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -82,7 +82,7 @@ class GalleryController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug' => $model->partner_gallery_model->slug], ['message' => "Gallery Created Successfully!!!"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug' => $model->partner_gallery_model->slug, 'private_url' => Yii::$app->params['api_url'] . '/manage/gallery/' . $model->partner_gallery_model->slug . '/gallery-images'], ['message' => "Gallery Created Successfully!!!"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
         }
@@ -124,7 +124,7 @@ class GalleryController extends RestController
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
-    public function actionUpdateGalleryImage($slug,$id)
+    public function actionUpdateGalleryImage($slug, $id)
     {
         $safari_operator = $this->module->operatormodel();
 
@@ -151,10 +151,9 @@ class GalleryController extends RestController
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-
     }
 
-    
+
     public function actionGalleryImages($slug)
     {
         $safari_operator = $this->module->operatormodel();
