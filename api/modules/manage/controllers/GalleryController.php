@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image','edit-gallery'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image','edit-gallery'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -208,7 +208,11 @@ class GalleryController extends RestController
 
         $model->status = !$model->status;
         if ($model->save(false)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Status Change !!!"]);
+            if ($model->status == 0) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
+            } else {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Image is Active!!!"]);
+            }
         }
 
 
