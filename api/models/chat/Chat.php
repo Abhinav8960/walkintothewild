@@ -76,13 +76,16 @@ class Chat extends \common\models\chat\Chat
                 $fields['payment_details'] = function () {
                     return $this->payment_details;
                 };
-                $fields['is_call_request'] = function () {
-                    return (bool) $this->is_call_request;
-                };
-                $fields['call'] = function () {
-                    return $this->call;
-                };
             }
+            $fields['is_call_request'] = function () {
+                return (bool) $this->is_call_request;
+            };
+            $fields['call'] = function () {
+                return $this->call;
+            };
+            $fields['can_call'] = function () {
+                return (bool) $this->callpossible();
+            };
             // if ($this->call_id > 0) {
 
 
@@ -172,7 +175,8 @@ class Chat extends \common\models\chat\Chat
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
     }
 
-    public function getOperator(){
+    public function getOperator()
+    {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
     }
 
@@ -232,5 +236,16 @@ class Chat extends \common\models\chat\Chat
     protected function getActiveUserId()
     {
         return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
+    }
+
+    private function callpossible()
+    {
+        if ($this->chat_type == 2) {
+
+            if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

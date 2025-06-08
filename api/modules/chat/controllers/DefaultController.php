@@ -49,10 +49,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call'],
+                'only' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call', 'edit-message', 'delete-message', 'make-call-on-chat'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call'],
+                        'actions' => ['index', 'direct-user-chat', 'quatation-chat', 'operator-list', 'user-list', 'send', 'quotations', 'messages', 'send-message', 'send-quote-message', 'chat-user-list', 'gallery-images', 'profile-chat', 'make-call', 'edit-message', 'delete-message', 'make-call-on-chat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -543,7 +543,7 @@ class DefaultController extends RestController
             $transaction = Yii::$app->db->beginTransaction();
             try {
 
-                if(!$chat_model->user->is_mobile_no_verified){
+                if (!$chat_model->user->is_mobile_no_verified) {
                     return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
                 }
 
@@ -579,6 +579,62 @@ class DefaultController extends RestController
                 $transaction->rollBack();
                 return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
             }
+        }
+    }
+
+    public function actionEditMessage()
+    {
+        $chat_message_id = Yii::$app->request->post('chat_message_id');
+        $message = Yii::$app->request->post('message');
+
+        if (empty($chat_message_id) || empty($message)) {
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat message ID and message are required'], 400);
+        }
+
+        $chat_message = ChatMessage::find()->where(['id' => $chat_message_id, 'created_by' => $this->userinfo->id])->one();
+        if (!$chat_message) {
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat message not found or you do not have permission to edit it'], 404);
+        }
+
+        // Check if the message was created within the last 10 minutes
+        $timeLimit = 10 * 60; // 10 minutes in seconds
+        if ((time() - $chat_message->created_at) > $timeLimit) {
+            return Yii::$app->api->sendResponse([], ['message' => 'You can only edit messages within 10 minutes.'], 403);
+        }
+
+        $chat_message->message = $message;
+        if ($chat_message->save()) {
+            return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message updated successfully']);
+        } else {
+            return Yii::$app->api->sendResponse([], ['message' => 'Failed to update message'], 500);
+        }
+    }
+
+    public function actionDeleteMessage()
+    {
+        $chat_message_id = Yii::$app->request->post('chat_message_id');
+
+        if (empty($chat_message_id)) {
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat message ID is required'], 400);
+        }
+
+        $chat_message = ChatMessage::find()->where(['id' => $chat_message_id, 'created_by' => $this->userinfo->id])->one();
+        if (!$chat_message) {
+            return Yii::$app->api->sendResponse([], ['message' => 'Chat message not found or you do not have permission to delete it'], 404);
+        }
+
+        // Check if the message was created within the last 10 minutes
+        $timeLimit = 10 * 60; // 10 minutes in seconds
+        if ((time() - $chat_message->created_at) > $timeLimit) {
+            return Yii::$app->api->sendResponse([], ['message' => 'You can not delete messages.'], 403);
+        }
+
+        // Change the status to 0 instead of deleting
+        $chat_message->status = 0;
+        if ($chat_message->save(false)) {
+            return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message deleted successfully']);
+        } else {
+            return Yii::$app->api->sendResponse([], ['message' => 'Failed to delete '], 500);
         }
     }
 }

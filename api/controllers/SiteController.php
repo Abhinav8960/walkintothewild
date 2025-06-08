@@ -550,23 +550,103 @@ class SiteController extends RestController
     public function actionMobileNoVerification()
     {
         $user_model = $this->userinfo;
-        // if ($user_model->is_mobile_no_verified == true) {
-        //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
-        // }
+
         $model = new UserMobileNoVerificationForm();
         $model->attributes = $this->request;
-        if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
-        }
-        if ($model->validate()) {
-            $model->proceedforverification($this->auth_token, $user_model);
 
+        if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+            $headers = Yii::$app->response->headers;
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No already Verified"]);
+        }
+
+        $cache = Yii::$app->cache;
+        $rateLimitKey = 'mobile_verification_' . $user_model->id;
+        $rateLimitDuration = 3600; // 1 hour in seconds
+        $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
+        $blockDuration = 10800; // 3 hours in seconds
+
+        // Check rate limit
+        $requestCount = $cache->get($rateLimitKey);
+        $headers = Yii::$app->response->headers;
+
+        if ($requestCount === false) {
+            $cache->set($rateLimitKey, 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        } elseif ($requestCount >= $rateLimitMaxRequests) {
+            $blockKey = 'mobile_verification_block_' . $user_model->id;
+            $blockStatus = $cache->get($blockKey);
+
+            if ($blockStatus === false) {
+                $cache->set($blockKey, true, $blockDuration);
+            }
+            if (!$headers->has('Retry-After')) {
+                $headers->add('Retry-After', $blockDuration);
+            }
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
+            }
+            return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
+        } else {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        }
+
+        if ($model->validate()) {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
         }
+
         if ($model->hasErrors()) {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
+
+    // public function actionMobileNoVerification()
+    // {
+    //     $user_model = $this->userinfo;
+    //     // if ($user_model->is_mobile_no_verified == true) {
+    //     //     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No aleady Verified"]);
+    //     // }
+    //     $model = new UserMobileNoVerificationForm();
+    //     $model->attributes = $this->request;
+    //     if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No aleady Verified"]);
+    //     }
+    //     if ($model->validate()) {
+    //         $model->proceedforverification($this->auth_token, $user_model);
+
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
+    //     }
+    //     if ($model->hasErrors()) {
+    //         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    //     }
+    // }
 
     public function actionVerifyMobileNo()
     {
