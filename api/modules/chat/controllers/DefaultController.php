@@ -506,6 +506,9 @@ class DefaultController extends RestController
         if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
             return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
         }
+        if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+            return Yii::$app->api->sendResponse([], ['message' => 'You cannot perform this action, as phone is not available or verified for any of the chat members'], 403);
+        }
 
         // if user is normal user then he only raise call request
         if ($chat_model->user_id == $this->userinfo->id) {
