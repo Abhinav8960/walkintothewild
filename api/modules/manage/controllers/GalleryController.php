@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change','update-sequence','update-thumbnail'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail','update-gallery-image'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change','update-sequence','update-thumbnail'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail','update-gallery-image'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,7 +52,8 @@ class GalleryController extends RestController
                     'create-gallery' => ['POST'],
                     'status-change' => ['POST'],
                     'update-sequence' => ['POST'],
-                    'update-thumbnail' => ['POST']
+                    'update-thumbnail' => ['POST'],
+                    'update-gallery-image' => ['POST']
                 ],
             ],
         ];
@@ -81,7 +82,7 @@ class GalleryController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug'=>$model->partner_gallery_model->slug], ['message' => "Gallery Created Successfully!!!"]);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug' => $model->partner_gallery_model->slug], ['message' => "Gallery Created Successfully!!!"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
         }
@@ -107,7 +108,7 @@ class GalleryController extends RestController
         if (empty($pgi_thumbnail)) {
             $model->set_as_thumbnail = 1;
         }
-
+        $model->scenario = 'create';
         $model->attributes = $this->request;
 
 
@@ -121,6 +122,36 @@ class GalleryController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Uploaded!!!"]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionUpdateGalleryImage($slug,$id)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $partner_gallery_image_model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
+        if (!$partner_gallery_image_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Image Not Found!!!"]);
+        }
+
+        $model = new PartnerGalleryImageForm($partner_gallery_image_model);
+
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->partner_gallery_image_model->save()) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Updated!!!"]);
+        }
+
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+
     }
 
     public function actionGalleryImages($slug)
@@ -165,7 +196,7 @@ class GalleryController extends RestController
     public function actionUpdateSequence($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug,'safari_operator_id' => $safari_operator->id,'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
 
         if (!$partner_gallery_model) {
             return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
@@ -195,7 +226,7 @@ class GalleryController extends RestController
     public function actionUpdateThumbnail($slug, $id)
     {
         $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug,'safari_operator_id' => $safari_operator->id,'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
 
         if (!$partner_gallery_model) {
             return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
@@ -206,16 +237,13 @@ class GalleryController extends RestController
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_model->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$model) {
             return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Image Not Found!!!"]);
-
         }
 
         $model->set_as_thumbnail = 1;
         if ($model->save(false)) {
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => "Set thumbnail successfully!!!"]);
-
         }
 
         return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Please Try Again!!!"]);
-
     }
 }
