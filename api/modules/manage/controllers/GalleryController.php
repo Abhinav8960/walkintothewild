@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image','edit-gallery'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image','edit-gallery'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -83,6 +83,28 @@ class GalleryController extends RestController
             $model->initializeForm();
             if ($model->partner_gallery_model->save()) {
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug' => $model->partner_gallery_model->slug, 'private_url' => Yii::$app->params['api_url'] . '/manage/gallery/' . $model->partner_gallery_model->slug . '/gallery-images'], ['message' => "Gallery Created Successfully!!!"]);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
+        }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionEditGallery($slug)
+    {
+        $safari_operator_model = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator_model->id,  'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $model = new PartnerGalleryForm($partner_gallery_model);
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->partner_gallery_model->save()) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'slug' => $model->partner_gallery_model->slug, 'private_url' => Yii::$app->params['api_url'] . '/manage/gallery/' . $model->partner_gallery_model->slug . '/gallery-images'], ['message' => "Gallery Updated Successfully!!!"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
         }

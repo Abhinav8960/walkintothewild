@@ -58,6 +58,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
                 'attribute' => 'title',
                 'slugAttribute' => 'slug',
                 'ensureUnique' => true,
+                'immutable' => true,
             ],
         ];
     }
