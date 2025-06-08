@@ -194,9 +194,9 @@ class DefaultController extends RestController
             $chat_model->save(false);
         }
 
-        $message = Yii::$app->request->post('message');
+        $message = Yii::$app->request->post('message') ?? null;
         $gallery_url = Yii::$app->request->post('gallery_url') ?? null;
-        if ($message == '' && empty($gallery_url)) {
+        if (empty($message) && empty($gallery_url)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
         if (!empty($gallery_url)) {
