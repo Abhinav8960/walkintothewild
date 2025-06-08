@@ -30,7 +30,7 @@ class DefaultController extends Controller
         $searchModel->status = 1;
         $searchModel->is_sendforapproval == 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
-        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -305,19 +305,19 @@ class DefaultController extends Controller
         $safari_operator_model->aadhar_front_upload = $model->aadhar_front_upload;
         $safari_operator_model->aadhar_back_upload = $model->aadhar_back_upload;
 
-        $safari_operator_model->status = SafariOperator :: STATUS_ACTIVE;
-        
+        $safari_operator_model->status = SafariOperator::STATUS_ACTIVE;
+
         if ($safari_operator_model->save(false)) {
-            return true;
+            return $safari_operator_model;
         }
     }
 
-    public function approvedparks($model)
+    public function approvedparks($model, $safari_operator)
     {
         if (!empty($model->parkList)) {
             foreach ($model->parkList as $park_field) {
                 $operator_park = new SafariOperatorPark();
-                $operator_park->safari_operator_id = $this->safarioperatorId(); 
+                $operator_park->safari_operator_id = $safari_operator->id;
                 $operator_park->park_id = $park_field['park_id'];
                 $operator_park->status = $park_field['status'];
                 if (!$operator_park->save(false)) {
@@ -331,19 +331,19 @@ class DefaultController extends Controller
 
     protected function safariOperatorId()
     {
-        $partnerModel = PartnerRegistration::find()->where(['status' => PartnerRegistration :: STATUS_ACTIVE])->one();
-    
+        $partnerModel = PartnerRegistration::find()->where(['status' => PartnerRegistration::STATUS_ACTIVE])->one();
+
         if ($partnerModel === null) {
             return null;
         }
-    
+
         $operator = SafariOperator::find()
-            ->where(['status' => SafariOperator :: STATUS_ACTIVE, 'safari_operator_request_id' => $partnerModel->id])
+            ->where(['status' => SafariOperator::STATUS_ACTIVE, 'safari_operator_request_id' => $partnerModel->id])
             ->one();
-    
+
         return $operator ? $operator->id : null;
     }
-    
+
 
     protected function findModel($id)
     {
@@ -361,8 +361,8 @@ class DefaultController extends Controller
             $model->final_approved = 1;
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {
-                $this->makeoperator($model);
-                $this->approvedparks($model);
+                $safari_operator = $this->makeoperator($model);
+                $this->approvedparks($model, $safari_operator);
                 $model_user = User::findOne(['id' => $model->user_id]);
                 $model_user->is_safari_operator = 1;
                 $model_user->account_type = 3;
