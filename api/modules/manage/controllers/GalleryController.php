@@ -154,6 +154,7 @@ class GalleryController extends RestController
 
     }
 
+    
     public function actionGalleryImages($slug)
     {
         $safari_operator = $this->module->operatormodel();
