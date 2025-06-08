@@ -55,6 +55,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function fields()
     {
         $fields = [
+            'id',
             'message' => function () {
                 return $this->message;
             },

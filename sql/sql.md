@@ -90,3 +90,6 @@ ALTER TABLE `chat` CHANGE `is_quote_accept` `is_quote_accept` INT NULL DEFAULT '
 -- 5 june
 ALTER TABLE `chat` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE AFTER `call_id`, ADD `sender_id` INT NULL DEFAULT NULL AFTER `is_call_request`;
 ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE AFTER `call_id`;
+
+-- 8 June
+ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
