@@ -1678,7 +1678,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator_id, 'status' => 1])->all();
         $ids = array_column($operator_parks, 'park_id');
 
-        $safariparkList =  SafariPark::find()->where(['not in', 'id', $ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE]);
+        $safariparkList =  SafariPark::find()->where(['not in', 'id', $ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE, 'show_in_filter' => 1]);
         return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
