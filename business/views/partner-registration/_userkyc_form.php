@@ -30,12 +30,13 @@ $readOnly = false;
     </div>
 
     <div class="col-md-3">
+        <?php $verificationIcon = $model->is_kyc_phone_verified ? ' <i class="bi bi-patch-check-fill text-success fs-6 ms-2"></i>' : ''; ?>
         <?= $form->field($model, 'kyc_phone')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Phone Number',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
-        ]) ?>
+        ])->label('Phone Number'.$verificationIcon) ?>
     </div>
 
     <div class="col-md-3">

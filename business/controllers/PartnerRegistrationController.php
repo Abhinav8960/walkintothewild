@@ -209,7 +209,7 @@ class PartnerRegistrationController extends Controller
                         }
                         $this->actionSendOtpMobile();
                         if ($model->partner_model->is_billing_mail_verified == 1) {
-                        return $this->redirect(['step-4']);
+                            return $this->redirect(['step-4']);
                         }
                     }
                 }
@@ -329,7 +329,7 @@ class PartnerRegistrationController extends Controller
                         $this->actionSendOtpMobile();
                         if ($model->partner_model->is_kyc_phone_verified == 1) {
                             return $this->redirect(['final-view']);
-                        }          
+                        }
                     }
                 }
             }
@@ -385,26 +385,31 @@ class PartnerRegistrationController extends Controller
     public function actionSendApproval($id)
     {
         $model = $this->findModel($id);
-        $model->is_sendforapproval = 1;
-        $model->status = 1;
-
+        if ($model->is_phone_no_verified && $model->is_billing_mail_verified && $model->is_kyc_phone_verified) {
+            $model->is_sendforapproval = 1;
+            $model->status = 1;
+        }
 
         if (($model->form1_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_1 !== null) ||
             ($model->form2_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_2 !== null) ||
             ($model->form3_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_3 !== null) ||
             ($model->form4_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_4 !== null) ||
-            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null))
-        {
+            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null)
+        ) {
             $model->resent_after_rejection = 1;
         }
 
 
         if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
-            return $this->redirect(['thank-you']);
+            if (!($model->is_phone_no_verified && $model->is_billing_mail_verified && $model->is_kyc_phone_verified)) {
+                Yii::$app->session->setFlash('error', 'Phone or Email is Not Verified!');
+                return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
+            } else {
+                Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
+                return $this->redirect(['thank-you']);
+            }
         } else {
             Yii::$app->session->setFlash('error', 'There was an error while sending for approval.');
-
             return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
         }
     }
@@ -638,8 +643,8 @@ class PartnerRegistrationController extends Controller
 
                 if ($model->save(false)) {
                     $to_be_send = EmailVerification::find()->where(['email' => $email, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
-                    if($to_be_send != null){
-                    new \common\events\user\EmailVerification($model->user_id,$model->email,$partner_model->legal_entity_name,$to_be_send->otp,$model->exp_datetime);
+                    if ($to_be_send != null) {
+                        new \common\events\user\EmailVerification($model->user_id, $model->email, $partner_model->legal_entity_name, $to_be_send->otp, $model->exp_datetime);
                     }
                     return \yii\helpers\Json::encode([
                         'success' => true,

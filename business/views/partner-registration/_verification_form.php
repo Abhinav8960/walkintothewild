@@ -19,7 +19,7 @@ $readOnly = false;
 ]); ?>
 
 <?php
-$sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light', 'id' => 'send-otp-btn']);
+$sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light text-success', 'id' => 'send-otp-btn']);
 $verifyOtpButton = Html::button('Verify OTP', ['class' => 'btn btn-orange', 'id' => 'verify-otp-btn']);
 ?>
 
@@ -88,7 +88,7 @@ $('#send-otp-btn').on('click', function(e) {
 
     let mobileNo = $('#mobileverification-mobile_no').val();
     if (!/^[6-9]\d{9}$/.test(mobileNo)) {
-        alert('Please enter a valid 10-digit mobile number starting with 6-9');
+        alert('Please enter a valid 10-digit mobile number!');
         return;
     }
     

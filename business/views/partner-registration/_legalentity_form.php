@@ -67,12 +67,13 @@ $form = ActiveForm::begin([
     </div>
 
     <div class="col-md-4">
+        <?php $verificationIcon = $model->is_phone_no_verified ? ' <i class="bi bi-patch-check-fill text-success fs-6 ms-2"></i>' : ''; ?>
         <?= $form->field($model, 'legal_entity_phone')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Legal Entity Phone',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
-        ]) ?>
+        ])->label('Legal Entity Phone'.$verificationIcon) ?>
     </div>
 
     <div class="col-md-4">

@@ -103,6 +103,8 @@ class PartnerRegistrationForm extends Model
     public $created_at;
 
     public $is_phone_no_verified;
+    public $is_billing_mail_verified;
+    public $is_kyc_phone_verified;
 
 
     public function __construct(PartnerRegistration $partner_model = null)
@@ -171,6 +173,8 @@ class PartnerRegistrationForm extends Model
             $this->updated_time_final = $this->partner_model->updated_time_final;
 
             $this->is_phone_no_verified = $this->partner_model->is_phone_no_verified;
+            $this->is_billing_mail_verified = $this->partner_model->is_billing_mail_verified;
+            $this->is_kyc_phone_verified = $this->partner_model->is_kyc_phone_verified;
 
             $this->park_list =  PartnerParkList::find()->select('park_id')->where(['partner_registration_id' => $this->partner_model->id, 'status' => 1])->column();
             $this->created_at = $this->partner_model->created_at;
@@ -421,6 +425,8 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->updated_time_final = $this->updated_time_final;
 
         $this->partner_model->is_phone_no_verified = $this->is_phone_no_verified;
+        $this->partner_model->is_billing_mail_verified = $this->is_billing_mail_verified;
+        $this->partner_model->is_kyc_phone_verified = $this->is_kyc_phone_verified;
 
 
         if ($this->park_list) {

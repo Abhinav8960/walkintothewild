@@ -17,7 +17,7 @@ $readOnly = false;
 ]); ?>
 
 <?php
-$sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light', 'id' => 'send-otp-btn']);
+$sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light text-success', 'id' => 'send-otp-btn']);
 $verifyOtpButton = Html::button('Verify OTP', ['class' => 'btn btn-orange', 'id' => 'verify-otp-btn']);
 ?>
 
@@ -83,7 +83,7 @@ $('#send-otp-btn').on('click', function(e) {
 
     let email = $('#emailverification-email').val();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Please enter a valid email address');
+        alert('Please enter a valid email address!');
         return;
     }
 
