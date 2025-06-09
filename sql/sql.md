@@ -94,6 +94,9 @@ ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE 
 -- 8 June
 ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
 
+-- 9 june
+ALTER TABLE `chat_message` CHANGE `gallery_url` `gallery` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+
 
 
 

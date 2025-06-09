@@ -140,7 +140,7 @@ class ScheduleController extends Controller
                 $log->save(false);
             }
         }
-        echo date("Y-m-d h:i A")." done \n";
+        echo date("Y-m-d h:i A") . " done \n";
         die();
     }
 
@@ -217,6 +217,4 @@ class ScheduleController extends Controller
 
         return $mimeMap[$mimeType] ?? null;
     }
-
- 
 }
