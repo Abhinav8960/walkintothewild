@@ -7,6 +7,7 @@ use common\models\chat\ChatMessage;
 use common\models\cms\banner\Banner;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\leads\Lead;
+use common\models\master\vehicle\MasterVehicle;
 use common\models\postscomment\UserPostComment;
 use common\models\postscomment\UserPostLike;
 use common\models\sighting\Sighting;
@@ -185,6 +186,44 @@ class TestController extends Controller
                 if (!empty($exists)) {
                     $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
                     $model->frontend_banner = $fileName;
+                    $model->save(false);
+                }
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionMasterVehicle()
+    {
+        $master_model = MasterVehicle::find()->all();
+        foreach($master_model as $model)
+        {
+            if($model->icon != null)
+            {
+                $model->icon_path = 'icon/2506/'. $model->icon;
+                $model->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionMasterVehicleCopy()
+    {
+        $master_model = MasterVehicle::find()->all();
+
+        foreach ($master_model as $model) {
+            if (!empty($model->icon)) {
+                $sourcePath = 'icon/' . $model->id . '/' . $model->icon;
+                $extension = pathinfo($model->icon, PATHINFO_EXTENSION);
+
+                $fileName = $model->id . '_icon_' . time() . '.' . $extension;
+
+                $destinationPath = 'icon/2506/' . $fileName;
+
+                $exists = Yii::$app->fs->has($sourcePath);
+                if (!empty($exists)) {
+                    $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
+                    $model->icon = $fileName;
                     $model->save(false);
                 }
             }
