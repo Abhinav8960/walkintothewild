@@ -50,13 +50,6 @@ ALTER TABLE `chat_message` ADD `gallery_url` VARCHAR(512) NULL DEFAULT NULL AFTE
 ALTER TABLE `chat_message` CHANGE `message` `message` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
 
-
----partner registration verification added columns
-
-ALTER TABLE `partner_registration` ADD `is_legal_entity_phone_verified` TINYINT NULL DEFAULT '0' AFTER `legal_entity_phone`;
-ALTER TABLE `partner_registration` ADD `is_billing_mail_verified` TINYINT NULL DEFAULT '0' AFTER `billing_mail`;
-INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OTPV', 'Otp Email Verification', 'emailotpverification-html', '1', '1730710897', '30', '1730710897', '30')
-ALTER TABLE `partner_registration` ADD `is_kyc_phone_verified` TINYINT NULL DEFAULT '0' AFTER `kyc_phone`;
 ALTER TABLE `lead` ADD `user_notes` VARCHAR(1000) NULL DEFAULT NULL AFTER `addional_notes`;
 
 ALTER TABLE `sms_log` ADD `report_status` VARCHAR(100) NULL DEFAULT NULL AFTER `is_deliver`, ADD `report_status_datetime` DATETIME NULL DEFAULT NULL AFTER `report_status`;
@@ -101,3 +94,12 @@ ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE 
 
 -- 8 June
 ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
+
+
+
+---partner registration verification added columns
+
+ALTER TABLE `partner_registration` ADD `is_legal_entity_phone_verified` TINYINT NULL DEFAULT '0' AFTER `legal_entity_phone`;
+ALTER TABLE `partner_registration` ADD `is_billing_mail_verified` TINYINT NULL DEFAULT '0' AFTER `billing_mail`;
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OTPV', 'Otp Email Verification', 'emailotpverification-html', '1', '1730710897', '30', '1730710897', '30')
+ALTER TABLE `partner_registration` ADD `is_kyc_phone_verified` TINYINT NULL DEFAULT '0' AFTER `kyc_phone`;
