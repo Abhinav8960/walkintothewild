@@ -177,6 +177,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
     }
 
+    
+
     public function prepareData()
     {
         $fields = [];

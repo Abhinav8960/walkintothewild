@@ -184,6 +184,8 @@ class DefaultController extends RestController
             $chat_model->last_message = '';
             $chat_model->last_message_at = time();
             $chat_model->sender_id = $this->userinfo->id;
+            $chat_model->call_id = null;
+            $chat_model->is_call_request = false;
             $chat_model->status = 1;
             $chat_model->is_seen = 0;
             $chat_model->chat_type = 1;
@@ -236,6 +238,8 @@ class DefaultController extends RestController
             $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
             $chat->last_message_at = time();
             $chat->sender_id = $this->userinfo->id;
+            $chat->call_id = null;
+            $chat->is_call_request = false;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
@@ -520,6 +524,7 @@ class DefaultController extends RestController
                 $chat_message->chat_id = $chat_model->id;
                 $chat_message->message = $message;
                 $chat_message->is_call_request = true;
+                $chat_message->call_id = NULL;
                 $chat_message->status = 1;
                 $chat_message->sender_id = $this->userinfo->id;
 
@@ -528,7 +533,8 @@ class DefaultController extends RestController
                     $chat = Chat::find()->where(['id' => $chat_model->id])->one();
                     $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
                     $chat->last_message_at = time();
-                    $chat_message->is_call_request = true;
+                    $chat->is_call_request = true;
+                    $chat->call_id = NULL;
                     $chat->sender_id = $this->userinfo->id;
                     $chat->status = 1;
                     $chat->is_seen = 0;

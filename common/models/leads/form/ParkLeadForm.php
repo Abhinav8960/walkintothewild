@@ -176,6 +176,8 @@ class ParkLeadForm extends Model
         $chat->last_message_at = time();
         $chat->sender_id = $login_user->id;
         $chat->status = 1;
+        $chat->call_id = null;
+        $chat->is_call_request = false;
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;
         $chat->is_seen = 0;

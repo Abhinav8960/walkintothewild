@@ -64,7 +64,7 @@ class CallLog extends \common\models\CallLog
             'call_type',
             'call_status',
             'datetime' => function () {
-                return date('d M, Y h:i A', strtotime($this->datetime));
+                return strtotime($this->datetime);
             },
             'duration',
             // 'operator_user_id',

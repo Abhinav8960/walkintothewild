@@ -118,4 +118,20 @@ class Chat extends \yii\db\ActiveRecord
         }
         return true;
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // Check if the 'call' attribute is not set and set it to null
+            if ($insert && empty($this->call_id)) {
+                $this->call_id = null;
+            }
+            if ($insert && empty($this->is_call_request)) {
+                $this->is_call_request = null;
+            }
+
+            return true;
+        }
+        return false;
+    }
 }
