@@ -18,16 +18,14 @@ $readOnly = false;
     ]
 ]); ?>
 
+<?php
+$sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light', 'id' => 'send-otp-btn']);
+$verifyOtpButton = Html::button('Verify OTP', ['class' => 'btn btn-orange', 'id' => 'verify-otp-btn']);
+?>
+
 <div class="row">
 
     <div class="col-md-6">
-        <?php
-        $sendOtpButton = Html::button('Send OTP', [
-            'class' => 'btn btn-light',
-            'id' => 'send-otp-btn'
-        ]);
-        ?>
-
         <?= $form->field($verification_model, 'mobile_no', [
             'template' =>
             '<label class="form-label">{label}</label>
@@ -36,42 +34,42 @@ $readOnly = false;
                 $sendOtpButton .
                 '</div>
          {error}',
-         'errorOptions' => ['class' => 'invalid-feedback d-block text-danger'],
+            'errorOptions' => ['class' => 'invalid-feedback d-block text-danger'],
         ])->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
-            'maxlength'=>10
+            'maxlength' => 10
         ])->label('Phone Number') ?>
-
-
     </div>
 
 
     <!-- OTP section (initially hidden) -->
     <div class="row mt-3" id="otp-section" style="display: none;">
-        <div class="col-md-3">
-            <?= $form->field($verification_model, 'otp_by_user')->textInput([
+        <div class="col-md-6">
+            <?= $form->field($verification_model, 'otp_by_user', [
+                'template' =>
+                '<label class="form-label">{label}</label>
+         <div class="input-group">
+             {input}' .
+                    $verifyOtpButton .
+                    '</div>
+         {error}',
+                'errorOptions' => ['class' => 'invalid-feedback d-block text-danger'],
+            ])->textInput([
                 'id' => 'mobileverification-otp_by_user',
-                'class'=>'form-control',
+                'class' => 'form-control',
                 'placeholder' => 'Enter OTP',
                 'readonly' => $readOnly,
                 'onkeypress' => 'return /[0-9]/i.test(event.key)',
-                'maxlength'=>6
+                'maxlength' => 6
             ]) ?>
         </div>
         <input type="hidden" id="hidden-mobile-no" value="<?= Html::encode($verification_model->mobile_no) ?>">
-        <input type="hidden" name="hidden-source-type" value="<?= Html::encode($verification_model->source_type)?>">
-
-        <div class="col-md-2 mt-4">
-            <input type="hidden" id="otp-record-id" value="">
-           <?= Html::button('Verify OTP', [
-            'class' => 'btn btn-dark',
-            'id' => 'verify-otp-btn'
-        ]); ?>
-        </div>
+        <input type="hidden" name="hidden-source-type" value="<?= Html::encode($verification_model->source_type) ?>">
     </div>
+
 </div>
 
 <?php ActiveForm::end(); ?>
