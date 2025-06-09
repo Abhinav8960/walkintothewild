@@ -2,12 +2,15 @@
 
 namespace business\modules\leads\controllers;
 
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -142,4 +145,36 @@ class DefaultController extends  Controller
         }
         return false;
     }
+
+    public function actionLeadChatList($id)
+    {
+        $model = $this->findModel($id);
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->operator->id], ['recipient_user_id' => \Yii::$app->user->identity->operator->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
+
+        if (!$chat) {
+            \Yii::$app->session->setFlash('danger', 'Chat Not Found!!!');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+       
+        // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
+        //     Chat::MarkChatSeen($chat->id);
+        // }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+        ]);
+
+        return $this->render(
+            '_operator_lead_chat',
+            [
+                'model' => $model,
+                'chat' => $chat,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+
+
 }
