@@ -604,7 +604,7 @@ class PartnerRegistrationController extends Controller
         if ($partner_model->legal_entity_phone == $model->mobile_no) {
             $partner_model->is_phone_no_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'OTP verified successfully');
+                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
             }
             $partner_model->save(false);
         }
@@ -612,7 +612,7 @@ class PartnerRegistrationController extends Controller
         if ($partner_model->kyc_phone == $model->mobile_no) {
             $partner_model->is_kyc_phone_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'OTP verified successfully');
+                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
             }
             $partner_model->save(false);
         }
@@ -689,7 +689,7 @@ class PartnerRegistrationController extends Controller
             $model->save(false);
             $partner_model->is_billing_mail_verified = 1;
             if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'OTP verified successfully');
+                Yii::$app->session->setFlash('success', 'Email verified successfully');
             }
             $partner_model->save(false);
         }
