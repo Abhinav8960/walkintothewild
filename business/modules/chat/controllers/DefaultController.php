@@ -235,6 +235,8 @@ class DefaultController extends  Controller
                         $chat->recipient_user_id = $individual_user->id;
                         $chat->last_message = $message;
                         $chat->last_message_at = time();
+                        $chat->call_id = null;
+                        $chat->is_call_request = false;
                         $chat->status = 1;
                         $chat->is_seen = 0;
 
