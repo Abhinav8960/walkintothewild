@@ -6,3 +6,4 @@ Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/api');
 Yii::setAlias('@tinyurl', dirname(dirname(__DIR__)) . '/tinyurl');
 Yii::setAlias('@business', dirname(dirname(__DIR__)) . '/business');
+Yii::setAlias('@webhook', dirname(dirname(__DIR__)) . '/webhook');

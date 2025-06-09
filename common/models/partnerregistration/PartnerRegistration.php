@@ -206,7 +206,7 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
 
 
             [['current_step'], 'default', 'value' => 1],
-            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval'], 'safe'],
+            [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'form5_status','is_sendforapproval','is_legal_entity_phone_verified'], 'safe'],
         ];
     }
 
@@ -288,6 +288,9 @@ class PartnerRegistration extends \yii\db\ActiveRecord implements \common\interf
             'updated_time_final' => 'Updated Time Final',
             'status' => 'Status',
 
+            'is_legal_entity_phone_verified' => 'Is Legal Entity Phone Verified!',
+
+            
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
