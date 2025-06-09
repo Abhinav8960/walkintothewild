@@ -140,7 +140,7 @@ class ScheduleController extends Controller
                 $log->save(false);
             }
         }
-        echo "done";
+        echo date("Y-m-d h:i A")." done \n";
         die();
     }
 
