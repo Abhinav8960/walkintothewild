@@ -93,3 +93,16 @@ ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE 
 
 -- 8 June
 ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
+
+
+
+
+
+
+
+--------CMS Upload Sql
+--Banner
+ALTER TABLE `banner` ADD `image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `image`, ADD `original_image_name` VARCHAR(512) NULL DEFAULT NULL AFTER `image_path`;
+--Frontend Banner
+ALTER TABLE `master_frontend_banner` ADD `frontend_banner_path` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner`, ADD `frontend_banner_name` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner_path`;
+ALTER TABLE `master_frontend_banner` ADD `created_at` INT NULL DEFAULT NULL AFTER `status`, ADD `created_by` INT NULL DEFAULT NULL AFTER `created_at`, ADD `updated_at` INT NULL DEFAULT NULL AFTER `created_by`, ADD `updated_by` INT NULL DEFAULT NULL AFTER `updated_at`;

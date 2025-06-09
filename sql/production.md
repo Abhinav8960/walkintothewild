@@ -16,4 +16,8 @@ php yii test/sighting-comment-count
 php yii test/sighting-like-count
 php yii test/update-post-comment-count
 php yii test/update-post-like-count
+php yii test/update-post-like-count
+php yii test/update-post-like-count
+php yii test/banner-image
+php yii test/frontend-banner-image
 

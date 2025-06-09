@@ -14,6 +14,7 @@ class BannerForm extends model
     public $status;
     public $status_option = [];
     public $banner_model;
+    public $created_at;
 
 
     public function __construct(Banner $banner_model = null)
@@ -27,6 +28,7 @@ class BannerForm extends model
             $this->banner_model = $banner_model;
             $this->page_id = $this->banner_model->page_id;
             $this->status = $this->banner_model->status;
+            $this->created_at = $this->banner_model->created_at;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -45,13 +47,16 @@ class BannerForm extends model
             [['status'], 'default', 'value' => 1],
 
             [
-                ['image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['image',],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'minWidth' => 1920,
                 // 'maxWidth' => 1920,
                 // 'maxHeight' => 220,
                 // 'minHeight' => 220,
                 'maxSize' => 250 * 1024
             ],
+            [['created_at'], 'safe']
         ];
     }
 
@@ -60,10 +65,14 @@ class BannerForm extends model
     {
         $scenarios = parent::scenarios();
         $scenarios['create'] = [
-            'page_id', 'image', 'status'
+            'page_id',
+            'image',
+            'status'
         ];
         $scenarios['update'] = [
-            'page_id', 'image', 'status'
+            'page_id',
+            'image',
+            'status'
         ];
         return $scenarios;
     }
@@ -95,25 +104,41 @@ class BannerForm extends model
     public function uploadFile()
     {
 
+        // if ($this->image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/banner';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->banner_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'baneer' . time() . '.' . $this->image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+        //     if ($this->image->saveAs($filePath)) {
+        //         $this->banner_model->image = $fileName;
+        //         $this->banner_model->save(false);
+        //     }
+        // }
+        // __________________________________________Move To S3 (9 June 2025)___________________________________________
         if ($this->image) {
-            $storagePath = Yii::$app->params['datapath'] . '/banner';
+            $storagePath = 'banner' . '/' . date('ym', $this->created_at);
+            $fileName = $this->banner_model->id . '_banner_' . time() . '.' . $this->image->extension;
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->banner_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'baneer' . time() . '.' . $this->image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->image->saveAs($filePath)) {
-                $this->banner_model->image = $fileName;
-                $this->banner_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->image, $filePath, $fileName, true)) {
+                    $this->banner_model->image = $fileName;
+                    $this->banner_model->image_path = $filePath;
+                    $this->banner_model->original_image_name = $this->image->name;
+                    $this->banner_model->save(false);
+                }
             }
         }
     }
