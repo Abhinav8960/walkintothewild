@@ -169,12 +169,12 @@ class DefaultController extends RestController
 
             if ($follower->save(false)) {
 
-                $to_mail = $operator->email;
-                $subject = 'Follow Request';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
-                $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'Follow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 // FrontendNotificationHelper::operatorNewFollower($operator, $this->userinfo);
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You are start following']);
@@ -199,12 +199,12 @@ class DefaultController extends RestController
 
             if ($my_follower->save(false)) {
 
-                $to_mail = $operator->email;
-                $subject = 'UnFollow Request';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
-                $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'UnFollow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 // Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You unfollowed']);
             } else {

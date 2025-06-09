@@ -168,16 +168,16 @@ class PackageController extends RestController
                     }
                 }
 
-                $to_mail = Yii::$app->params['adminEmail'];
-                $subject = 'New Package Created | ' . substr($model->package_version_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
-                $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_version_model->package_slug, 'operator_slug' => $safari_operator->slug]);
+                // $to_mail = Yii::$app->params['adminEmail'];
+                // $subject = 'New Package Created | ' . substr($model->package_version_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
+                // $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_version_model->package_slug, 'operator_slug' => $safari_operator->slug]);
 
-                $req = ['package' => $model->package_version_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
+                // $req = ['package' => $model->package_version_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => "Package create successfully"]);
             }

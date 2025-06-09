@@ -53,7 +53,7 @@ class PartnerGalleryImageForm extends model
     public function rules()
     {
         return [
-            [['file'], 'required'],
+            [['file'], 'required', 'on' => 'create'],
             [['partner_gallery_id', 'status', 'created_at','sequence','set_as_thumbnail'], 'integer'],
             [['caption'], 'string'],
             [['title'], 'string', 'max' => 255],
