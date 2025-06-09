@@ -18,6 +18,8 @@ interface NewStatusInterface
     const PACKAGE_API_LAYOUT_FULL = "packagefull";
     const PACKAGE_API_LAYOUT_FULL_WITH_VERSION = "packagefullwithversion";
     const USER_API_LAYOUT_FULL = "userfull";
+    const PARTNER_GALLERY_API_LAYOUT_FULL = "partnergalleryfull";
+
 
     
 

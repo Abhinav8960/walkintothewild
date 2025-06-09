@@ -86,14 +86,15 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
         }
-        if ($this->gallery_url != null) {
+        if ($this->gallery != null) {
+            unset($fields['message']);
 
-            $fields['gallery_url'] = function () {
-                return $this->gallery_url;
+            $fields['gallery'] = function () {
+                return json_decode($this->gallery,true);
             };
-            $fields['thumbnail_url'] = function () {
-                return $this->getGalleryThumbnail();
-            };
+            // $fields['thumbnail_url'] = function () {
+            //     return $this->getGalleryThumbnail();
+            // };
         }
         if ($this->is_call_message == true && !empty($this->call_id)) {
             unset($fields['message']);
@@ -113,9 +114,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
         return [
             [['chat_id'], 'required'],
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['gallery_url'], 'string', 'max' => 512],
+            [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery_url'], 'safe'],
+            [['gallery'], 'safe'],
         ];
     }
 
@@ -226,19 +227,19 @@ class ChatMessage extends \common\models\chat\ChatMessage
         return $this->hasOne(\api\models\CallLog::className(), ['id' => 'call_id']);
     }
 
-    public function getGalleryThumbnail()
-    {
-        if (!empty($this->gallery_url)) {
-            $thumbnail_url = explode('/', $this->gallery_url);
-            $slug = end($thumbnail_url);
-            $gallery = PartnerGallery::find()
-                ->where(['slug' => $slug])
-                ->andWhere(['status' => 1])
-                ->one();
-            if ($gallery) {
-                return $gallery->thumbnail;
-            }
-            return NULL;
-        }
-    }
+    // public function getGalleryThumbnail()
+    // {
+    //     if (!empty($this->gallery)) {
+    //         $thumbnail_url = explode('/', $this->gallery);
+    //         $slug = end($thumbnail_url);
+    //         $gallery = PartnerGallery::find()
+    //             ->where(['slug' => $slug])
+    //             ->andWhere(['status' => 1])
+    //             ->one();
+    //         if ($gallery) {
+    //             return $gallery->thumbnail;
+    //         }
+    //         return NULL;
+    //     }
+    // }
 }
