@@ -22,6 +22,13 @@ class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\
         return 'master_frontend_banner';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -32,6 +39,8 @@ class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\
             [['type'], 'integer'],
             [['frontend_banner', 'url'], 'string'],
             [['frontend_banner', 'url'], 'safe'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+
         ];
     }
 
@@ -52,8 +61,11 @@ class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getImagepath()
     {
+        // if ($this->frontend_banner != '') {
+        //     return \Yii::$app->params['s3_endpoint'] . '/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
+        // }
         if ($this->frontend_banner != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
+            return \Yii::$app->params['s3_endpoint'] .'/'. $this->frontend_banner_path;
         }
     }
 

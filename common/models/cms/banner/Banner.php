@@ -68,8 +68,11 @@ class Banner extends \yii\db\ActiveRecord implements \common\interfaces\NewStatu
 
     public function getImagepath()
     {
-        if ($this->image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/banner/' . $this->id . '/' . $this->image;
+        // if ($this->image != '') {
+        //     return \Yii::$app->params['s3_endpoint'] . '/banner/' . $this->id . '/' . $this->image;
+        // }
+        if ($this->image_path != '') {
+            return \Yii::$app->params['s3_endpoint'] . '/' . $this->image_path;
         }
     }
 }
