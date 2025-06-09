@@ -25,6 +25,9 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             'status' =>  function () {
                 return (bool) $this->status;
             },
+            'can_share' =>  function () {
+                return true;
+            },
             'image_count' => function () {
                 return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
             },
