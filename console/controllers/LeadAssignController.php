@@ -64,6 +64,7 @@ class LeadAssignController extends Controller
     private function assignToPartner($lead, $operator)
     {
 
+        \Yii::$app->params['active_user_id']= $lead->user_id;
         $assign_to_partner = new LeadPartners();
         $assign_to_partner->lead_id = $lead->id;
         $assign_to_partner->partner_id = $operator->id;
@@ -75,10 +76,10 @@ class LeadAssignController extends Controller
 
     private function prepareChat($lead, $park, $operator)
     {
-        $operator_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
+        $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
-        $short_msg = $message = "Hi, I am interested in" . "\n";
+        $short_msg = $message = "Hi, I am interested in". "\n";
         $short_msg .= "Park: " . $park->park->title . "\n";
         $message .= "Park: " . $park->park->title . "\n";
         $message .= "Safaries: " . $lead->safaris . "\n";
@@ -94,13 +95,10 @@ class LeadAssignController extends Controller
         $chat->lead_id = $lead->id;
 
         $chat->user_id = $lead->user_id;
-        $chat->recipient_user_id = $operator->user_id;
+        $chat->recipient_user_id = $individual_user->id;
         $chat->last_message = $short_msg;
         $chat->last_message_at = time();
-        // $chat->sender_id = $lead->user_id;
         $chat->status = 1;
-        // $chat->call_id = null;
-        // $chat->is_call_request = false;
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;
         $chat->is_seen = 0;
@@ -122,11 +120,14 @@ class LeadAssignController extends Controller
                 // $this->PrepapareNotification($park, $operator, $login_user, $chat);
             }
         }
-        return true;
     }
 
     private function PrepapareNotification($park, $operator, $login_user, $chat)
     {
         new \common\events\leads\PartnerLeadReceived($park, $operator->id, $login_user->id, $chat->chat_hash);
     }
+
+  
+
+   
 }
