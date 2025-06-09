@@ -3,6 +3,7 @@
 namespace common\broadcast\channels;
 
 use common\models\master\smstemplate\MasterSmsTemplate;
+use common\models\SmsLog;
 use yii\httpclient\Client;
 
 class SmsChannel
@@ -19,26 +20,34 @@ class SmsChannel
         $template_id = $log->template_id;
         $url = "http://sms.trilineinfotech.com/api/smsapi?key=" . \Yii::$app->params['sms_api_key'] . "&route=" . $route . "&sender=" . \Yii::$app->params['sms_sender_id'] . "&number=" . $phone_no . "&sms=" . urlencode($message) . "&templateid=" . $template_id;
         $client = new Client();
-         echo $response = $client->createRequest()
+        $response = $client->createRequest()
             ->setMethod('GET')
             ->setUrl($url)
             ->send();
-        die();
+        \yii::info('SMS Response: ' . date('Y-m-d H:i:s') . ' ' . json_encode($response), __METHOD__);
+        if ($response->isOk) {
+            // Extract the last line from the response content
+            $responseContent = $response->content;
+            // Split the content into lines and get the last line
+            $lines = explode("\n", $responseContent);
+            $lastLinecode = trim(end($lines)); // Get the last line and trim any whitespace
 
-        // \yii::info('SMS Response: ' . json_encode($response), __METHOD__);
-        // if ($response->isOk) {
-        //     $response = $this->getResponse($response->content);
-        //     if ($response) {
-        //         $log->status = 1;
-        //         $log->save(false);
-        //     } else {
-        //         $log->status = 0;
-        //         $log->save(false);
-        //     }
-        // } else {
-        //     $log->status = 0;
-        //     $log->save(false);
-        // }
+            \yii::info('Extracted Last Line: ' . $responseContent, __METHOD__);
+            if ($response) {
+                $log->is_ok = 1;
+                $log->status = SmsLog::STATUS_SENT; // Assuming you have a constant for success status
+                $log->response_code = $lastLinecode; // Save the extracted code if needed
+                $log->sms_send_time = time(); // Save the extracted code if needed
+                $log->save(false);
+            } else {
+                $log->status = SmsLog::STATUS_PENDING;
+                $log->sms_send_time = time(); // Save the extracted code if needed
+                $log->save(false);
+            }
+        } else {
+            $log->status = 0;
+            $log->save(false);
+        }
     }
 
     private function generateMessage($template_id, $params = [])

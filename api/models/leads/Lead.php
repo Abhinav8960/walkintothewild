@@ -68,7 +68,8 @@ class Lead extends \common\models\leads\Lead
             'transport',
             // 'meals',
             // 'budget',
-            'addional_notes',
+            // 'addional_notes',
+            'user_notes'
         ];
         if ($this->source == self::SOURCE_PACKAGE) {
             $fields[] = 'package';

@@ -214,6 +214,7 @@ class QuotationPaymentReceived extends Model
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->quote_id = $quotation->id;
+            $chat->sender_id = $quotation->partner->user_id;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
@@ -228,7 +229,7 @@ class QuotationPaymentReceived extends Model
         new \common\events\leads\QuotationPaymentReceived(
             $quotation = $this->form_model,
             $user_id = $this->form_model->lead->user_id,
-            $partner_user_id = $this->form_model->partner_id,
+            $partner_id = $this->form_model->partner_id,
             $transaction_id = $this->transaction_id,
             $payment_date = $this->transaction_datetime,
         );

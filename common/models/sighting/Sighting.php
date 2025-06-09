@@ -137,6 +137,24 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
         return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
     }
 
+    public function getStandardThumbnail()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath . '.jpg';
+    }
+
+    public function getMediumThumbnail()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/medium/' . $this->filepath . '.jpg';
+    }
+
+    public function getLowThumbnail()
+    {
+        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath . '.jpg';
+    }
+
     public function getLike()
     {
         return $this->hasMany(SightingLike::class, ['sighting_id' => 'id']);

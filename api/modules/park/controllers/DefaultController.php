@@ -19,6 +19,10 @@ use api\models\sharesafari\ShareSafariSearch;
 use api\models\suggestions\SafariSuggestions;
 use common\Helper\FirebaseNotificationHelper;
 use api\models\package\PackageSearch;
+use api\models\park\ParkStayCategory;
+use api\models\park\ParkStayCategorySearch;
+use api\models\park\SafariParkAccomodation;
+use api\models\park\SafariParkAccomodationSearch;
 use api\models\park\SafariParkFollower;
 use common\models\leads\form\ParkLeadForm;
 use common\models\suggestions\form\SafariSuggestionsForm;
@@ -45,7 +49,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package','park-stay-category'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -72,7 +76,8 @@ class DefaultController extends RestController
                     'park-package' => ['GET'],
                     'quotesrequest' => ['POST'],
                     'park-follow' => ['POST'],
-                    'park-unfollow' => ['POST']
+                    'park-unfollow' => ['POST'],
+                    'park-stay-category' => ['GET'],
 
                 ],
             ],
@@ -254,6 +259,10 @@ class DefaultController extends RestController
 
     public function actionQuotesrequest($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+        
         if ($this->userinfo) {
             $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId])->limit(1)->one();
             if ($safari_operator) {
@@ -285,7 +294,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thank you for sending the request. Unfortunately, we currently don’t have any verified operators for this park. We’re working to onboard trusted partners soon and will notify you once services become available.']);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!'. count($sf->operator)]);
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!!!']);
     }
 
     public function actionParkFollow($slug)
@@ -331,5 +340,18 @@ class DefaultController extends RestController
             }
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+    }
+
+    public function actionParkStayCategory($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+        }
+
+        $searchModel = new SafariParkAccomodationSearch();
+        $searchModel->safari_park_id = $model->id;
+        $searchModel->status = SafariParkAccomodation::STATUS_ACTIVE;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "stay_category_options");
     }
 }

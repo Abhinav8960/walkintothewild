@@ -55,7 +55,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <div class="col-md-3 select_width">
                 <?= $form->field($model, 'accomodation')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::accomodationoption(),
+                    'data' => GeneralModel::staycategoryoption(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                     'options' => ['placeholder' => 'Select', 'multiple' => true],
                     'pluginOptions' => [

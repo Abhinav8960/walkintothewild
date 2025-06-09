@@ -119,6 +119,10 @@ class DefaultController extends RestController
 
     public function actionQuotesrequest($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+        
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
@@ -165,12 +169,12 @@ class DefaultController extends RestController
 
             if ($follower->save(false)) {
 
-                $to_mail = $operator->email;
-                $subject = 'Follow Request';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
-                $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'Follow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 // FrontendNotificationHelper::operatorNewFollower($operator, $this->userinfo);
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You are start following']);
@@ -195,12 +199,12 @@ class DefaultController extends RestController
 
             if ($my_follower->save(false)) {
 
-                $to_mail = $operator->email;
-                $subject = 'UnFollow Request';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
-                $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
+                // $to_mail = $operator->email;
+                // $subject = 'UnFollow Request';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
+                // $req = ['username' => $operator->business_name, 'name' => $this->userinfo->name, 'is_email_sending' => true];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                 // Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'You unfollowed']);
             } else {
@@ -253,25 +257,25 @@ class DefaultController extends RestController
                 $model->updateRatingintoTable($operator);
                 /**Mail to operator */
 
-                $operator_name = $operator->business_name;
-                /**Operator Mail Info */
-                $to_mail = $operator->user->username;
+                // $operator_name = $operator->business_name;
+                // /**Operator Mail Info */
+                // $to_mail = $operator->user->username;
 
-                /**Template info */
-                $subject = 'New Review';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_REVIEW_TO_OPERATOR;
-                // /**Url Info */
-                $operator_url = Yii::$app->frontendUrlManager->createAbsoluteUrl([
-                    '/operator/default/reviewlist',
-                    'slug' => $operator->slug
-                ]);
+                // /**Template info */
+                // $subject = 'New Review';
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_REVIEW_TO_OPERATOR;
+                // // /**Url Info */
+                // $operator_url = Yii::$app->frontendUrlManager->createAbsoluteUrl([
+                //     '/operator/default/reviewlist',
+                //     'slug' => $operator->slug
+                // ]);
 
-                $req = ['operator_name' => $operator_name, 'operator_url' => $operator_url];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // $req = ['operator_name' => $operator_name, 'operator_url' => $operator_url];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
                 // FirebaseNotificationHelper::newreview($operator, $this->userinfo);
                 // FrontendNotificationHelper::operatorNewReview($operator, $model->rating_model,  $this->userinfo);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thanks for review!!']);

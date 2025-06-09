@@ -122,22 +122,15 @@ class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function afterDelete()
-    {
-        $this->updateSightingCommentCount();
-        parent::afterDelete();
-    }
-    
     public function updateSightingCommentCount()
     {
         if ($this->sighting_id) {
-            $sighting = Sighting::find()->where(['status' => Sighting :: STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
-            $comments = SightingComment::find()->where(['sighting_id' => $this->sighting_id])->count();
+            $sighting = Sighting::find()->where(['status' => Sighting::STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
+            $comments = SightingComment::find()->where(['sighting_id' => $this->sighting_id, 'status' => Sighting::STATUS_ACTIVE])->count();
             if ($sighting) {
                 $sighting->comment_count = $comments;
-                $sighting->save(false); 
+                $sighting->save(false);
             }
         }
-
     }
 }

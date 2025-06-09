@@ -13,13 +13,17 @@ class PartnerGalleryImage extends \common\models\partnergalleryimage\PartnerGall
 
 
         $fields = [
+            'id',
             // 'original_filename',
             'gallery_image_path',
             // 'file',
             'title',
             'caption',
-            // 'sequence',
-            // 'status'
+            'sequence',
+            'set_as_thumbnail' => function () {
+                return (bool)$this->set_as_thumbnail;
+            },
+            'status',
         ];
 
         return $fields;

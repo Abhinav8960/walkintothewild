@@ -128,6 +128,7 @@ class DefaultController extends Controller
             $package->refund_policy = $model->refund_policy;
             $package->pending_for_approval_version = null;
             $package->live_version = $version;
+            $package->max_booking_date = $model->max_booking_date;
             $package->status = Package::STATUS_ACTIVE;
             $package->save(false);
 
@@ -248,7 +249,7 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_version_model->package_id;

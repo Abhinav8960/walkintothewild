@@ -28,7 +28,7 @@ class SafariJoinedByuser extends Event
     // public $safariOperatorId;
 
     protected $channels = [
-        'email',
+        // 'email',
         'firebase',
     ];
 

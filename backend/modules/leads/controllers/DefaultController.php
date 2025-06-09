@@ -57,6 +57,7 @@ class DefaultController extends  Controller
     public function actionIndex()
     {
         $searchModel = new LeadSearch();
+        $searchModel->status = Lead::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
 
@@ -279,6 +280,7 @@ class DefaultController extends  Controller
         $message .= "\n";
         $message .= $quotation->addional_notes;
 
+        Chat::markChatStarted($chat_model, $quotation->partner_id);
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
@@ -298,6 +300,7 @@ class DefaultController extends  Controller
             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
+            $chat->sender_id = $quotation->partner->user_id;
             $chat->quote_id = $quotation->id;
             $chat->status = 1;
             $chat->is_seen = 0;
@@ -367,5 +370,18 @@ class DefaultController extends  Controller
         }
 
         return ['success' => false, 'message' => 'Invalid request method.'];
+    }
+
+
+    public function actionInactive($id)
+    {
+        $model = $this->findModel($id);
+        if ($model) {
+            $model->status = Lead::STATUS_SUSPEND;
+            if ($model->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Inactive Successfully!!!');
+                return  $this->redirect(Yii::$app->request->referrer);
+            }
+        }
     }
 }

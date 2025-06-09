@@ -27,7 +27,7 @@ use common\models\park\SafariPark;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafariCommentReport extends \yii\db\ActiveRecord
+class ShareSafariCommentReport extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}
@@ -122,5 +122,12 @@ class ShareSafariCommentReport extends \yii\db\ActiveRecord
     public function getCommentname()
     {
         return isset($this->comment) ? $this->comment->comment : '';
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == ShareSafariCommentReport::STATUS_ACTIVE){
+            return new \common\events\user\NewFlagRaisedByUser($this->user->id,$this->user->email,$this->user->name,$this->commentname,$this->report_detail);
+        }
     }
 }

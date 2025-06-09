@@ -25,6 +25,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                 <th>Safaris</th>
                 <th>Travelers</th>
                 <th>Accomodation</th>
+                <th>User Notes</th>
                 <th>Travel Date looking For</th>
                 <th>Lead Received Date</th>
                 <th>Payment Info</th>
@@ -35,6 +36,7 @@ $this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->c
                     <td><?= !empty($model->safaris) ? $model->safaris : ''; ?></td>
                     <td><?= !empty($model->travelers) ? $model->travelers : '' ?></td>
                     <td><?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?></td>
+                    <td><?= !empty($model->user_notes) ? $model->user_notes : '' ?></td>
                     <td>
                         <?php
                         $str = date('d M, Y', strtotime($model->from_date));

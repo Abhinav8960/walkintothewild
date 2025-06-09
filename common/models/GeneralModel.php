@@ -556,6 +556,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
     }
+
     public static function mailtemplateoption()
     {
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
@@ -1677,7 +1678,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator_id, 'status' => 1])->all();
         $ids = array_column($operator_parks, 'park_id');
 
-        $safariparkList =  SafariPark::find()->where(['not in', 'id', $ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE]);
+        $safariparkList =  SafariPark::find()->where(['not in', 'id', $ids])->andWhere(['status' => SafariPark::STATUS_ACTIVE, 'show_in_filter' => 1]);
         return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
@@ -1751,6 +1752,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             4 => 'User',
             5 => 'Operator',
             6 => 'Chat',
+            7 => 'Comment/Review',
+            8 => 'Quote',
         ];
         return $module_type;
     }
@@ -1848,5 +1851,24 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $value = strlen($value) > $limit ? (substr($value, 0, $limit) . '...') : $value;
 
         return $value;
+    }
+
+    public static function strMaxWord($value, $limit = 50)
+    {
+        // Split the string into an array of words
+        $words = explode(' ', $value);
+
+        // Check if the number of words exceeds the limit
+        if (count($words) > $limit) {
+            // Take only the first $limit words and append '...'
+            $value = implode(' ', array_slice($words, 0, $limit)) . '...';
+        }
+
+        return $value;
+    }
+
+    public static function packageStayOption()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
     }
 }

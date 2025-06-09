@@ -26,7 +26,7 @@ class SightingLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['user_id', 'sighting_id'], 'required'],
-            [['user_id', 'sighting_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','safari_operator_id'], 'integer'],
+            [['user_id', 'sighting_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
         ];
     }
 
@@ -78,17 +78,16 @@ class SightingLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         $this->updateSightingLikeCount();
         parent::afterDelete();
     }
-    
+
     public function updateSightingLikeCount()
     {
         if ($this->sighting_id) {
-            $sighting = Sighting::find()->where(['status' => Sighting :: STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
-            $likes = SightingLike::find()->where(['sighting_id' => $this->sighting_id])->count();
-            if ($sighting) {                
-                $sighting->like_count = $likes;
-                $sighting->save(false); 
+            $sighting = Sighting::find()->where(['status' => Sighting::STATUS_ACTIVE, 'id' => $this->sighting_id])->one();
+            $likes_count = SightingLike::find()->where(['sighting_id' => $this->sighting_id, 'status' => SightingLike::STATUS_ACTIVE])->count();
+            if ($sighting) {
+                $sighting->like_count = $likes_count;
+                $sighting->save(false);
             }
         }
     }
-
 }

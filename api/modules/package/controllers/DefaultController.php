@@ -137,25 +137,25 @@ class DefaultController extends RestController
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($package)) {
 
-            if ($this->userinfo) {
-                /**login User info */
-                $user = $this->userinfo;
-                $username = $user->name;
-                /**Mail sent to package owner */
-                $to_mail = $package->user->username;
-                /**subject of mail */
-                $subject = 'New Comment : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $creator_name = $package->user->name;
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_COMMENT_BY_USER;
-                /**Package Url */
-                $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-                $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
-                FrontendNotificationHelper::packageNewComment($package, $this->userinfo);
-            }
+            // if ($this->userinfo) {
+            //     /**login User info */
+            //     $user = $this->userinfo;
+            //     $username = $user->name;
+            //     /**Mail sent to package owner */
+            //     $to_mail = $package->user->username;
+            //     /**subject of mail */
+            //     $subject = 'New Comment : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+            //     $creator_name = $package->user->name;
+            //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_COMMENT_BY_USER;
+            //     /**Package Url */
+            //     $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+            //     $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+            //     $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            //     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+            //         GeneralModel::sendmailfromlog($maillog_data['log_id']);
+            //     }
+            //     FrontendNotificationHelper::packageNewComment($package, $this->userinfo);
+            // }
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
@@ -180,23 +180,23 @@ class DefaultController extends RestController
             if ($replymodel->reply($package)) {
 
                 $reply_comment = $replymodel->commentbyParent();
-                if ($reply_comment) {
-                    if ($this->userinfo) {
-                        $user = $this->userinfo;
-                        $username = $user->name;
-                        $to_mail = $package->user->username;
-                        $subject = 'New Reply : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                        $creator_name = $package->user->name;
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_REPLY_BY_USER;
-                        $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-                        $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
-                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                        }
-                        // FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
-                    }
-                }
+                // if ($reply_comment) {
+                //     if ($this->userinfo) {
+                //         $user = $this->userinfo;
+                //         $username = $user->name;
+                //         $to_mail = $package->user->username;
+                //         $subject = 'New Reply : Package | ' . substr($package->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                //         $creator_name = $package->user->name;
+                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PACKAGE_REPLY_BY_USER;
+                //         $package_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                //         $req = ['username' => $username, 'package_url' => $package_url, 'creator_name' => $creator_name, 'package' => $package->attributes];
+                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                //         }
+                //         // FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+                //     }
+                // }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
@@ -262,6 +262,10 @@ class DefaultController extends RestController
 
     public function actionPackageQuote($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+        }
+        
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
@@ -307,14 +311,14 @@ class DefaultController extends RestController
                 $comments->flaged = 1;
                 $comments->save(false);
 
-                $to_mail = Yii::$app->params['adminEmail'];
-                $subject = 'Flag Raised | Package : ' . substr($package->package_name, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-                $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userInfo) ? $this->userInfo->name : ''];
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                }
+                // $to_mail = Yii::$app->params['adminEmail'];
+                // $subject = 'Flag Raised | Package : ' . substr($package->package_name, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                // $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset($this->userInfo) ? $this->userInfo->name : ''];
+                // $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                // }
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment/Reply reported successfully!"]);
             }
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment/Reply not reported!"]);

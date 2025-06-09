@@ -98,6 +98,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'gst_percentage';
             $fields[] = 'package_agenda_id';
             $fields[] = 'stay_category_id';
+            $fields[] = 'max_booking_date';
             $fields[] = 'status';
         }
         return $fields;
@@ -233,7 +234,8 @@ class Package extends \common\models\package\Package
 
     public function getComment_count()
     {
-        return $this->getComments()->andWhere(['parent_id' => null])->count();
+        // return $this->getComments()->andWhere(['parent_id' => null])->count();
+        return $this->getComments()->count();
     }
 
 

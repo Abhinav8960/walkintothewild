@@ -387,6 +387,18 @@ class PartnerRegistrationController extends Controller
         $model = $this->findModel($id);
         $model->is_sendforapproval = 1;
         $model->status = 1;
+
+
+        if (($model->form1_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_1 !== null) ||
+            ($model->form2_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_2 !== null) ||
+            ($model->form3_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_3 !== null) ||
+            ($model->form4_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_4 !== null) ||
+            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null))
+        {
+            $model->resent_after_rejection = 1;
+        }
+
+
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
             return $this->redirect(['thank-you']);

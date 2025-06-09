@@ -37,7 +37,7 @@ class UserPostLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         return [
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['user_id', 'user_post_id','version'], 'required'],
+            [['user_id', 'user_post_id', 'version'], 'required'],
             [['user_id', 'user_post_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'safari_operator_id'], 'integer'],
         ];
     }
@@ -89,15 +89,15 @@ class UserPostLike extends \yii\db\ActiveRecord implements \common\interfaces\Ne
         $this->updatePostLikeCount();
         parent::afterDelete();
     }
-    
+
     public function updatePostLikeCount()
     {
         if ($this->user_post_id) {
-            $userposts = UserPosts::find()->where(['status' => UserPosts :: STATUS_ACTIVE, 'id' => $this->user_post_id])->one();
-            $comments = UserPostLike::find()->where(['user_post_id' => $this->user_post_id])->count();
-            if ($userposts) {                
-                $userposts->like_count = $comments;
-                $userposts->save(false); 
+            $userposts = UserPosts::find()->where(['status' => UserPosts::STATUS_ACTIVE, 'id' => $this->user_post_id])->one();
+            $likes_count = UserPostLike::find()->where(['user_post_id' => $this->user_post_id, 'status' => UserPostLike::STATUS_ACTIVE])->count();
+            if ($userposts) {
+                $userposts->like_count = $likes_count;
+                $userposts->save(false);
             }
         }
     }

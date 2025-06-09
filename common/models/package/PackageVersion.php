@@ -112,7 +112,8 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['package_name'], 'string', 'max' => 512],
             ['cancellation_reason', 'required', 'on' => 'reject'],
             [['final_approved_at'], 'integer'],
-            [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512]
+            [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512],
+            [['max_booking_date'], 'safe'],
 
         ];
     }

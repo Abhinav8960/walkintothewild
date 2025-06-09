@@ -2,6 +2,7 @@
 
 use business\assets\AppAsset;
 use common\models\GeneralModel;
+use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -15,9 +16,11 @@ AppAsset::register($this);
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
-        <?= Html::a('<i class="fa fa-paper-plane" style="font-size:15px; margin-right:5px"></i>Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F7BF39', 'title' => 'Send For Approval']) ?>
+        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
+            <?= Html::a('<i class="fa fa-paper-plane" style="font-size:15px; margin-right:5px"></i>Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F7BF39', 'title' => 'Send For Approval']) ?>
+            <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
+        <?php } ?>
         <?= Html::a('<i class="fa fa-copy" style="font-size:15px; margin-right:5px"></i>Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#7B8191', 'title' => 'Copy']) ?>
-        <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
     </div>
 </div>
 

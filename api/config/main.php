@@ -197,6 +197,7 @@ return [
 
                 /**Partner Gallery */
                 'manage/gallery/list' => 'manage/gallery/index',
+                'manage/gallery/<action>' => 'manage/gallery/<action>',
                 'manage/gallery/<slug>/<action>' => 'manage/gallery/<action>',
 
                 /** feeds */
@@ -212,6 +213,12 @@ return [
                 'chat/send-message/<user_handle>'   => 'chat/default/send-message',
                 'chat/send-quote-message/<lead_id>'   => 'chat/default/send-quote-message',
                 'chat/gallery-images/<slug>'   => 'chat/default/gallery-images',
+                'chat/profile-chat/<user_handle>'   => 'chat/default/profile-chat',
+                'chat/make-call'   => 'chat/default/make-call',
+                'chat/edit-message'   => 'chat/default/edit-message',
+                'chat/delete-message'   => 'chat/default/delete-message',
+                'chat/make-call-on-chat/<user_handle>'   => 'chat/default/make-call-on-chat',
+                
 
 
                 'notification-history' => 'notification-history',

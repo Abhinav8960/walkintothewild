@@ -117,4 +117,14 @@ class SafariOperatorRating extends \yii\db\ActiveRecord implements \common\inter
         return $this->hasMany(SafariOperatorRatingReport::className(), ['safari_operator_rating_id' => 'id']);
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == SafariOperatorRating::STATUS_ACTIVE){
+            $operator_url = Yii::$app->frontendUrlManager->createAbsoluteUrl([
+                    '/operator/default/reviewlist',
+                    'slug' => $this->operator->slug
+                ]);
+            return new \common\events\operator\NewReviewByUser($this->operator->email,$operator_url);
+        }
+    }
 }
