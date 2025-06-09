@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
             </div>
         
 
-            <?php if ($isLegalEntitySaved && $model->partner_model->is_legal_entity_phone_verified != 1){?>
+            <?php if ($isLegalEntitySaved && $model->partner_model->is_phone_no_verified != 1){?>
                 <div class="card border-dark mt-4">
                     <div class="card-body">
                         <h4 class="mb-3 mt-2 ms-3 text-success fw-bold">VERIFICATION</h4>

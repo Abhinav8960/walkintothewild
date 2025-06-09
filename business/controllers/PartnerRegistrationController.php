@@ -56,17 +56,17 @@ class PartnerRegistrationController extends Controller
                     $model->form1_status = PartnerRegistration::FORM_FILLED;
 
                     if ($model->partner_model->getOldAttribute('legal_entity_phone') != $model->partner_model->legal_entity_phone) {
-                        $model->partner_model->is_legal_entity_phone_verified = 0;
+                        $model->partner_model->is_phone_no_verified = 0;
                     }
 
                     if ($model->partner_model->save()) {
                         $isLegalEntitySaved = true;  //flag
                         $model->uploadFiles();
-                        if ($model->partner_model != null && ($model->partner_model->is_legal_entity_phone_verified == 1) && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
+                        if ($model->partner_model != null && ($model->partner_model->is_phone_no_verified == 1) && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
                             return $this->redirect(['final-view']);
                         }
                         $this->actionSendOtpMobile();
-                        if ($model->partner_model->is_legal_entity_phone_verified == 1) {
+                        if ($model->partner_model->is_phone_no_verified == 1) {
                             return $this->redirect(['step-2']);
                         }
                     } else {
@@ -598,7 +598,7 @@ class PartnerRegistrationController extends Controller
         $model->source_type = MobileVerification::CALLING_NUMBER;
         $model->save(false);
         if ($partner_model->legal_entity_phone == $model->mobile_no) {
-            $partner_model->is_legal_entity_phone_verified = 1;
+            $partner_model->is_phone_no_verified = 1;
             if ($model->status == 2) {
                 Yii::$app->session->setFlash('success', 'OTP verified successfully');
             }

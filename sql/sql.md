@@ -96,10 +96,11 @@ ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE 
 ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
 
 
-
+--9 june
 ---partner registration verification added columns
 
 ALTER TABLE `partner_registration` ADD `is_legal_entity_phone_verified` TINYINT NULL DEFAULT '0' AFTER `legal_entity_phone`;
 ALTER TABLE `partner_registration` ADD `is_billing_mail_verified` TINYINT NULL DEFAULT '0' AFTER `billing_mail`;
 INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OTPV', 'Otp Email Verification', 'emailotpverification-html', '1', '1730710897', '30', '1730710897', '30')
 ALTER TABLE `partner_registration` ADD `is_kyc_phone_verified` TINYINT NULL DEFAULT '0' AFTER `kyc_phone`;
+ALTER TABLE `partner_registration` CHANGE `is_legal_entity_phone_verified` `is_phone_no_verified` TINYINT NULL DEFAULT '0';

@@ -109,7 +109,7 @@ $form = ActiveForm::begin([
          <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
     <?php }elseif($model->form1_status == PartnerRegistration :: FORM_REJECTED || $model->form2_status == PartnerRegistration :: FORM_REJECTED || $model->form3_status == PartnerRegistration :: FORM_REJECTED || $model->form4_status == PartnerRegistration :: FORM_REJECTED || $model->form5_status == PartnerRegistration :: FORM_REJECTED){?>
         <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
-    <?php }elseif($isLegalEntitySaved && $model->is_legal_entity_phone_verified){?>
+    <?php }elseif($isLegalEntitySaved && $model->is_phone_no_verified){?>
             <?= Html::submitButton('Next', ['class' => 'btn btn-orange']) ?>
     <?php }else{?>
     <?= Html::submitButton('Save & Next', ['class' => 'btn btn-orange']) ?>
