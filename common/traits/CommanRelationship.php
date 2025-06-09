@@ -152,6 +152,12 @@ trait CommanRelationship
             elseif($this->module_type == 6){
                 return "Chat";
             }
+            elseif($this->module_type == 7){
+                return "Comment/Review";
+            }
+            elseif($this->module_type == 8){
+                return "Quote";
+            }
         }
         return "";
     }

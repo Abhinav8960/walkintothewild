@@ -120,4 +120,11 @@ class ShareSafariComment extends \yii\db\ActiveRecord implements \common\interfa
     {
         return $this->hasMany(self::class, ['parent_id' => 'id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == Self::STATUS_ACTIVE){
+            return new \common\events\sharesafari\SafariCommentByUser($this->user->name,$this->sharesafari->id) ;
+        }
+    }
 }

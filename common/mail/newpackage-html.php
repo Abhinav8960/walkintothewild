@@ -12,35 +12,35 @@ use yii\helpers\Html;
         <tbody>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Package Name</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['package_name']) ? $package['package_name'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package_name && isset($package_name) ? $package_name : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Number of Safari</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['no_of_safari']) ? $package['no_of_safari'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $no_of_safari && isset($no_of_safari) ? $no_of_safari : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Start Location</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['start_location']) ? $package['start_location'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $start_location && isset($start_location) ? $start_location : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">End Location</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['end_location']) ? $package['end_location'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $end_location && isset($end_location) ? $end_location : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Start Date</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['start_date']) ? $package['start_date'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $start_date && isset($start_date) ? $start_date : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">End Date</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['end_date']) ? $package['end_date'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $end_date && isset($end_date) ? $end_date : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Cost Per Person</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package && isset($package['cost_per_person']) ? $package['cost_per_person'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $cost_per_person && isset($cost_per_person) ? $cost_per_person : ''?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Link</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package_url && isset($package_url) ? $package_url : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $package_url && isset($package_url) ? $package_url : ''?></td>
             </tr>
         </tbody>
     </table>

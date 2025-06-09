@@ -120,23 +120,25 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
     {
         $this->updatePostCommentCount();
         parent::afterSave($insert, $changedAttributes);
-    }
-
-    public function afterDelete()
-    {
-        $this->updatePostCommentCount();
-        parent::afterDelete();
-    }
-    
-    public function updatePostCommentCount()
-    {
-        if ($this->user_posts_id) {
-            $userposts = UserPosts::find()->where(['status' => UserPosts :: STATUS_ACTIVE, 'id' => $this->user_posts_id])->one();
-            $likes = UserPostComment::find()->where(['user_posts_id' => $this->user_posts_id])->count();
-            if ($userposts) {                
-                $userposts->comment_count = $likes;
-                $userposts->save(false); 
+        if($this->status == Self ::STATUS_ACTIVE){
+            $host = UserPosts::find()->where(['id'=>$this->user_posts_id,'status'=>UserPosts::STATUS_ACTIVE])->one();
+            $host_user = User::find()->where(['id'=>$host->user_id,'status'=>User::STATUS_ACTIVE])->one();
+            if(!empty($host && $host_user)){
+            return new \common\events\post\PostCommentByUser($this->user->name,$host_user->id,$host_user->name);
             }
         }
     }
+
+    public function updatePostCommentCount()
+    {
+        if ($this->user_posts_id) {
+            $userposts = UserPosts::find()->where(['status' => UserPosts::STATUS_ACTIVE, 'id' => $this->user_posts_id])->one();
+            $comment_count = UserPostComment::find()->where(['user_posts_id' => $this->user_posts_id, 'status' => UserPostComment::STATUS_ACTIVE])->count();
+            if ($userposts) {
+                $userposts->comment_count = $comment_count;
+                $userposts->save(false);
+            }
+        }
+    }
+    
 }

@@ -25,11 +25,11 @@ class UserMobileNoVerificationForm extends Model
             [['otp'], 'required', 'on' => 'validateOtp'],
             [['mobile_no'], 'string', 'max' => 15],
             [['mobile_no'], 'trim'],
-            [['mobile_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
+            [['mobile_no'], 'match', 'pattern' => '/^[5-9]\d{9}$/', 'message' => 'Invalid Phone number.'],
         ];
     }
 
-    public function proceedforverification($auth_token)
+    public function proceedforverification($auth_token, $userinfo)
     {
         $this->otp = rand(100000, 999999);
         $this->expiry_datetime = time() + 300; // 5 min 
@@ -38,6 +38,8 @@ class UserMobileNoVerificationForm extends Model
         $UserSession->verification_mobile_no = $this->mobile_no;
         $UserSession->verification_mobile_no_otp = $this->otp;
         $UserSession->verification_mobile_no_otp_expiry_datetime = date('Y-m-d H:i:s', $this->expiry_datetime);
+        new \common\events\user\MobileNoVerification($userinfo->id, $this->mobile_no, $this->otp, $userinfo->name);
+
         return $UserSession->save(false);
     }
 

@@ -52,7 +52,7 @@ class SafariParkAccomodation extends \yii\db\ActiveRecord implements \common\int
     public function rules()
     {
         return [
-            [['safari_park_id', 'master_accomodation_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_park_id', 'meta_stay_category_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
     }
 
@@ -64,7 +64,8 @@ class SafariParkAccomodation extends \yii\db\ActiveRecord implements \common\int
         return [
             'id' => 'ID',
             'safari_park_id' => 'Safari Park ID',
-            'master_accomodation_id' => 'Master Accomodation ID',
+            // 'master_accomodation_id' => 'Master Accomodation ID',
+            'meta_stay_category_id' => 'Meta Stay Category ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',

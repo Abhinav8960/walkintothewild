@@ -77,7 +77,7 @@ class PackageVersionForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
     public $created_at;
-
+    public $max_booking_date;
 
     /**
      * @param [type] $package_version_model
@@ -135,6 +135,7 @@ class PackageVersionForm extends \yii\base\Model
 
             $this->status = $this->package_version_model->status;
             $this->created_at = $this->package_version_model->created_at;
+            $this->max_booking_date = $this->package_version_model->max_booking_date;
 
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
             $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
@@ -173,7 +174,7 @@ class PackageVersionForm extends \yii\base\Model
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
             ['created_at', 'safe'],
-
+            [['max_booking_date'], 'date', 'format' => 'php:Y-m-d']
 
         ];
     }
@@ -215,7 +216,8 @@ class PackageVersionForm extends \yii\base\Model
             'breakfast_included',
             'lunch_included',
             'dinner_included',
-            'meal_not_included'
+            'meal_not_included',
+            'max_booking_date',
         ];
         $scenarios['update'] = [
             'package_name',
@@ -249,7 +251,8 @@ class PackageVersionForm extends \yii\base\Model
             'breakfast_included',
             'lunch_included',
             'dinner_included',
-            'meal_not_included'
+            'meal_not_included',
+            'max_booking_date',
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -304,6 +307,7 @@ class PackageVersionForm extends \yii\base\Model
             'total_price' => 'Total Price',
             'master_vehicle_id' => 'Select Vehicle',
             'popular_package' => 'Popular Package',
+            'max_booking_date' => 'Max Booking Date',
             'status' => 'Status',
         ];
     }
@@ -378,6 +382,7 @@ class PackageVersionForm extends \yii\base\Model
         // $this->package_version_model->package_slug = $this->package_slug;
         $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
         $this->package_version_model->popular_package = $this->popular_package;
+        $this->package_version_model->max_booking_date = $this->max_booking_date ? $this->max_booking_date : date('Y-m-d', strtotime('+1 year'));
 
         // if ($this->package_version_model->package_slug == '') {
         //     $without_space_string = str_replace(' ', '-', strtolower($this->package_version_model->safarioperator->business_name));

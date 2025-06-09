@@ -16,7 +16,7 @@ $this->params['title'] = $this->title;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'video_thumbnail')->fileInput() ?>
+                <?= $form->field($model, 'thumbnail')->fileInput() ?>
             </div>
             <div class="col-md-12">
                 <div class="form-group">

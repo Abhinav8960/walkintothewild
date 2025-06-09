@@ -129,9 +129,15 @@ class SafariParkSearch extends SafariPark
 
 
 
+        // if ($this->accomodation_id && $this->accomodation_id != 0) {
+        //     $query->joinwith(['accomodations' => function ($query) {
+        //         $query->andFilterWhere(['safari_park_accomodation.master_accomodation_id' => $this->accomodation_id]);
+        //     }]);
+        // }
+
         if ($this->accomodation_id && $this->accomodation_id != 0) {
             $query->joinwith(['accomodations' => function ($query) {
-                $query->andFilterWhere(['safari_park_accomodation.master_accomodation_id' => $this->accomodation_id]);
+                $query->andFilterWhere(['safari_park_accomodation.meta_stay_category_id' => $this->accomodation_id]);
             }]);
         }
 

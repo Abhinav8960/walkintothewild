@@ -10,7 +10,7 @@ use yii\helpers\Url;
 $this->title = 'Sightings';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
+// $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
 <?php Pjax::begin([
     'id' => 'grid-data',
@@ -82,7 +82,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                             //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
                             //     'class' => 'comment-popup btn btn-info',
                             // ]);
-                            return $model->comments_count;
+                            return $model->comment_count;
                         }
                     ],
                     [
@@ -90,7 +90,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         'contentOptions' => ['style' => '10%; text-align: right;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->likes_count;
+                            return $model->like_count;
                         }
                     ],
                     [
@@ -152,16 +152,16 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
 
                             //     ]);
                             // },
-                            'delete' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this Sighting ?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
-                            },
+                            // 'delete' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'Delete',
+                            //         'data' => [
+                            //             'confirm' => 'Are you sure you want to delete this Sighting ?',
+                            //             'method' => 'post',
+                            //         ],
+                            //     ]);
+                            // },
                         ]
                     ],
 

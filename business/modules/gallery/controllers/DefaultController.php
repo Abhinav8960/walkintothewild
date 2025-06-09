@@ -136,7 +136,8 @@ class DefaultController extends Controller
         if (empty($pgi_thumbnail)) {
             $model->set_as_thumbnail = 1;
         }
-
+        $model->scenario = 'create';
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->file = UploadedFile::getInstance($model, 'file');

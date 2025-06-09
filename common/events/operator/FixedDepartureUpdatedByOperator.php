@@ -19,6 +19,11 @@ class FixedDepartureUpdatedByOperator extends Event
     public $shared_safari_id;
     public $shared_safari_name;
     public $shared_safari_title;
+    public $no_of_safari;
+    public $start_date;
+    public $end_date;
+    public $total_seat;
+    public $type;
     public $receiverUserIds = [];
     public $shared_safari_url;
     protected $sent_data = [];
@@ -28,14 +33,13 @@ class FixedDepartureUpdatedByOperator extends Event
 
     protected $channels = [
         // 'email',
-        // 'firebase',
+        'firebase',
     ];
 
-    protected $mail_template_code = 'OCNF';  //  Fixed Departure Updated By Operator
+    protected $mail_template_code = 'UFCU';  //  Fixed Departure Updated By Operator
 
     public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
     {
-        
         $this->receiverUserIds = $receiverUserIds;
         $this->userId = $userId;
         $this->email = $email;
@@ -66,34 +70,22 @@ class FixedDepartureUpdatedByOperator extends Event
                     'subject' => 'Check Out Updated Safari !!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->name,
+                        'operator_name' => $this->name,
                         'email' => $this->email,
                         'shared_safari' => $this->shared_safari_name,
-                        'share_safari_title'=>$this->shared_safari_title,
+                        'shared_safari_title'=>$this->shared_safari_title,
+                        'no_of_safari' => $this->no_of_safari,
+                        'start_date' => $this->start_date,
+                        'end_date' => $this->end_date,
+                        'total_seat' => $this->total_seat,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
-                    'to_mail' => $this->email,
+                    'to_mail' => \Yii::$app->params['adminEmail'],
                     'cc' => [],
                     'bcc' => [],
                 ],
             ],
             'firebase' => $this->prepareFirebaseTemplate()
-
-            //  array_merge(
-                // [
-                //     [
-                //         'master_notification_template_id' => $this->firebaseTemplateId(),
-                //         'title' => $this->title(),
-                //         'message' => $this->message(),
-                //         'sent_data' => $this->sent_data,
-                //         'user_id' => $this->userId,
-                //         'image_url' => NULL,
-                //         'action' => NULL,
-                //     ],
-                // ],
-                // $this->prepareFirebaseTemplate()
-                // ),
-            // Add more templates for other channels as needed
         ];
         return $arr;
     }
@@ -109,7 +101,7 @@ class FixedDepartureUpdatedByOperator extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::SAFARI_UPDATED, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::FIXED_DEPARTURE_UPDATED, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }
@@ -123,23 +115,24 @@ class FixedDepartureUpdatedByOperator extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['park_name'=>$this->shared_safari->park->title]);
+        return $this->engine->render($this->master_notification_template->message, ['operator_name'=>$this->name]);
     }
 
     public function prepareData()
     {
 
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_name = $this->shared_safari->share_safari_title;
+        $this->shared_safari_title = $this->shared_safari->share_safari_title;
+        $this->no_of_safari = $this->shared_safari->no_of_safari;
+        $this->start_date = $this->shared_safari->start_date;
+        $this->end_date = $this->shared_safari-> end_date;
+        $this->total_seat = $this->shared_safari->total_seat;
+        $this->type =$this->shared_safari->type;
         $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
-        $this->userId = $this->shared_safari->host_user_id;
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->email = $this->shared_safari->safarioperator->email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
-        } else {
-            $this->email = $this->shared_safari->user->email;
-            $this->name =  $this->shared_safari->user->name;
-        }
+        } 
         $this->sent_data = [
             'share_safari_title' => $this->shared_safari->share_safari_title,
             'slug' => $this->shared_safari->slug

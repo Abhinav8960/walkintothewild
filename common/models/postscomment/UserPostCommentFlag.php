@@ -94,4 +94,11 @@ class UserPostCommentFlag extends \yii\db\ActiveRecord implements \common\interf
     {
         return $this->hasOne(UserPostComment::className(), ['id' => 'user_post_comment_id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == UserPostComment::STATUS_ACTIVE){
+            return new \common\events\user\NewFlagRaisedByUser($this->user->id,$this->user->email,$this->user->name,$this->comment->comment,$this->flag_detail);
+        }
+    }
 }

@@ -87,13 +87,13 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     //     ];
     // }
 
-     /**
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['package_id', 'package_version', 'park_id', 'operator_id', 'name', 'email', 'phone', 'destination', 'to_date', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['package_id', 'package_version', 'park_id', 'operator_id', 'name', 'email', 'phone', 'user_notes', 'destination', 'to_date', 'safaris', 'stay_category_id', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['source', 'from_date', 'user_id', 'booked_operator_id', 'payment_gateway'], 'required'],
@@ -103,6 +103,8 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
             [['package_version'], 'string', 'max' => 10],
             [['name', 'email', 'destination', 'transport', 'meals', 'budget', 'transaction_id'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
+            [['user_notes'], 'string', 'max' => 1000],
+
         ];
     }
 
@@ -213,7 +215,8 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         return $this->hasOne(Package::className(), ['id' => 'package_id', 'live_version' => 'package_version']);
     }
 
-    public function getBookedpartner(){
+    public function getBookedpartner()
+    {
         return $this->hasOne(SafariOperator::className(), ['id' => 'booked_operator_id']);
     }
 }

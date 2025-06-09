@@ -18,6 +18,9 @@ use Yii;
  * @property int $is_cron_run
  * @property int $is_ok
  * @property int $is_deliver
+ * @property string|null $report_status
+ * @property string|null $report_status_datetime
+ * @property int|null $response_code
  * @property int $status
  * @property int $created_at
  * @property int $created_by
@@ -27,6 +30,10 @@ use Yii;
 class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
 {
 
+    const STATUS_PENDING = 0;
+    const STATUS_SENT = 1;
+    const STATUS_DELIVERD = 2;
+    const STATUS_FAILED = 3;
     use CommanRelationship;
      /**
      * {@inheritdoc}
@@ -54,13 +61,16 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
     public function rules()
     {
         return [
-            [['params', 'updated_by', 'message_id', 'response_code'], 'default', 'value' => null],
+            [['params', 'updated_by', 'report_status', 'report_status_datetime', 'message_id', 'response_code'], 'default', 'value' => null],
             [['is_deliver'], 'default', 'value' => 0],
             [['user_id', 'template_id', 'sms_send_time', 'service_id', 'status'], 'required'],
             [['user_id', 'sms_send_time', 'service_id', 'is_cron_run', 'is_ok', 'is_deliver', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','response_code'], 'integer'],
             [['params'], 'string'],
             [['template_id', 'message_id'], 'string', 'max' => 255],
+            [['report_status'], 'string', 'max' => 100],
+
         ];
+        
     }
 
     /**

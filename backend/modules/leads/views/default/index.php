@@ -43,6 +43,15 @@ $this->params['title'] = $this->title;
                     ],
 
                     [
+                        'label' => 'Detail',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->displayLabel) ? $model->displayLabel : '';
+                        }
+                    ],
+
+                    [
                         'label' => 'Safaris',
                         'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
@@ -119,9 +128,8 @@ $this->params['title'] = $this->title;
                                 if (!empty($model->booked_operator_id)) {
                                     $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
                                 }
-                            } 
+                            }
                             return $str;
-                            
                         }
                     ],
                     [
@@ -129,7 +137,16 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->quotation ? count($model->quotation) : '';
+                            return $model->quotation_count;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Is Chat Started',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->is_chat_started == 1 ? 'Yes' : 'No';
                         }
                     ],
 
@@ -137,7 +154,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{view}',
+                        'template' => '{view}&nbsp{inactive}',
                         'buttons' => [
 
                             'view' => function ($url, $model) {
@@ -147,6 +164,14 @@ $this->params['title'] = $this->title;
                                     'title' => 'View',
                                 ]);
                             },
+
+                            'inactive' => function($url,$model)
+                            {
+                                return  Html::a('Inactive', ['/leads/default/inactive', 'id' => $model->id], [
+                                    'class' => 'btn btn-info p-1',
+                                    'title' => 'Inactive',
+                                ]);
+                            }
 
 
                         ]

@@ -116,12 +116,14 @@ class Sighting extends \common\models\sighting\Sighting
 
     public function getLikes_count()
     {
-        return $this->getLike()->count();
+        // return $this->getLike()->count();
+        return $this->like_count;
     }
 
     public function getComments_count()
     {
-        return $this->getComments()->count();
+        // return $this->getComments()->count();
+        return $this->comment_count;
     }
 
     public function getSafaripark()

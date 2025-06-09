@@ -35,20 +35,25 @@ class DefaultController extends RestController
         return $behaviors += [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view','daily-update'],
+                'exclude' => ['index', 'view', 'daily-update', 'comment-view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create', 'comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'sighting-delete', 'flag'],
+                        'actions' => ['comment', 'reply', 'comment-like', 'sighting-like', 'sighting-report', 'flag'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
                         'actions' => ['create'],
                         'allow' => $this->isSafariOperator(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['sighting-delete'],
+                        'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -67,6 +72,7 @@ class DefaultController extends RestController
                     'sighting-delete' => ['POST'],
                     'flag' => ['POST'],
                     'daily-update' => ['GET'],
+                    'comment-view' => ['GET'],
                 ],
             ],
         ];
@@ -94,7 +100,7 @@ class DefaultController extends RestController
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
-        // $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
+        $model->video_thumbnail = \yii\web\UploadedFile::getInstanceByName('video_thumbnail');
 
         if ($model->validate()) {
             $model->initializeForm();
@@ -321,8 +327,34 @@ class DefaultController extends RestController
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-            'pagination' => false, 
+            'pagination' => false,
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "sighting");
+    }
+
+    public function actionCommentView($id)
+    {
+        $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+        if (!$sighting_model) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => SightingComment::find()->where(['sighting_id' => $sighting_model->id, 'status' => 1, 'parent_id' => null]),
+            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]],
+        ]);
+        return $this->querySender($dataProvider, $rootIndexName = "comments");
+    }
+
+    private function isOwner()
+    {
+        if ($this->userinfo) {
+            $owner = Sighting::find()->where(['user_id' => $this->userinfoId, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
+            if ($owner) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

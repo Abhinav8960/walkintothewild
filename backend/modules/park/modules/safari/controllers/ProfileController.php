@@ -6,12 +6,15 @@ namespace backend\modules\park\modules\safari\controllers;
 use common\models\GeneralModel;
 use common\models\master\animal\MasterAnimal;
 use common\models\operator\SafariOperatorPark;
+use common\models\park\form\ParkStayCategoryForm;
 use common\models\park\form\SafariParkAnimalForm;
 use common\models\park\form\SafariParkFloraFaunaForm;
 use common\models\park\form\SafariParkForm;
 use common\models\park\form\SafariParkGalleryForm;
 use common\models\park\form\SafariParkVehicleForm;
 use common\models\park\form\SafariParkZoneForm;
+use common\models\park\ParkStayCategory;
+use common\models\park\ParkStayCategorySearch;
 use common\models\park\ParkAnimal;
 use common\models\park\ParkVehicle;
 use common\models\park\SafariPark;
@@ -38,6 +41,7 @@ use yii\filters\VerbFilter;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\FileHelper;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 /**
@@ -93,7 +97,8 @@ class ProfileController extends Controller
                             foreach ($safariaccomodation as $safari_accomodation) {
                                 $safariparkAccomodation = new SafariParkAccomodation();
                                 $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
-                                $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                // $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                $safariparkAccomodation->meta_stay_category_id = $safari_accomodation;
                                 $safariparkAccomodation->save(false);
                             }
                         }
@@ -845,5 +850,66 @@ class ProfileController extends Controller
             }
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionParkStayList($safari_park_id)
+    {
+        $safari_model = $this->findModel($safari_park_id);
+        $searchModel = new ParkStayCategorySearch();
+        $searchModel->safari_park_id = $safari_park_id;
+        $searchModel->status = ParkStayCategory::STATUS_ACTIVE;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('park_stay_category', [
+            'safari_model' => $safari_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAddParkStay($safari_park_id)
+    {
+        $safari_model = $this->findModel($safari_park_id);
+
+        $model = new ParkStayCategoryForm();
+        $model->safari_park_id = $safari_park_id;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->park_stay_categories) {
+                        foreach ($model->park_stay_categories as $stay) {
+                            $park_stay_category = new ParkStayCategory();
+                            $park_stay_category->safari_park_id = $model->safari_park_id;
+                            $park_stay_category->meta_stay_category_id = $stay;
+                            $park_stay_category->save();
+                        }
+                    }
+
+                    \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                    return $this->redirect(Url::toRoute(['/park/safari/profile/park-stay-list', 'safari_park_id' => $safari_park_id]));
+                }
+            }
+        }
+
+        return $this->renderAjax('_park_stay_category_form', [
+            'model' => $model,
+            'safari_model' => $safari_model
+        ]);
+    }
+
+    public function actionRemoveAccomodationCategory($safari_park_id, $id)
+    {
+        $park_accomodation_category_model = ParkStayCategory::find()->where(['id' => $id, 'safari_park_id' => $safari_park_id])->andWhere(['status' => ParkStayCategory::STATUS_ACTIVE])->limit(1)->one();
+        if (!$park_accomodation_category_model) {
+            \Yii::$app->session->setFlash('success', 'Not Found!!!');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $park_accomodation_category_model->status = ParkStayCategory::STATUS_SUSPEND;
+        if ($park_accomodation_category_model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Remove Successfully!!!');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
     }
 }

@@ -164,7 +164,7 @@ class DefaultController extends RestController
             //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
             // }
             // FrontendNotificationHelper::userNewFollower($user, $this->userinfo);
-            FirebaseNotificationHelper::profilefollowing($user, $this->userinfo);
+            // FirebaseNotificationHelper::profilefollowing($user, $this->userinfo);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Follow Successfully!!"]);
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Follow Successfully!!"]);

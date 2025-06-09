@@ -3,6 +3,7 @@
 namespace console\controllers;
 
 use common\models\Auth;
+use common\models\chat\Chat;
 use common\models\operator\SafariOperator;
 use common\models\User;
 use Faker\Factory;
@@ -129,4 +130,6 @@ class TestUserController extends Controller
         }
         return true;
     }
+
+    
 }

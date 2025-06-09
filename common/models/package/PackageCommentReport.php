@@ -132,4 +132,11 @@ class PackageCommentReport extends \yii\db\ActiveRecord implements \common\inter
     {
         return isset($this->comment) ? $this->comment->comment : '';
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($this->status == PackageCommentReport::STATUS_ACTIVE){
+            return new \common\events\user\NewFlagRaisedByUser($this->user->id,$this->user->email,$this->user->name,$this->commentname,$this->report_detail);
+        }
+    }
 }

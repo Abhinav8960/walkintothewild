@@ -19,7 +19,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
 
         if (Yii::$app->user->identity) {
@@ -79,7 +79,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 2);
@@ -127,10 +127,10 @@ class PartnerRegistrationController extends Controller
 
     public function actionStep3()
     {
-        
+
         $this->layout = 'registration';
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 3);
@@ -171,7 +171,7 @@ class PartnerRegistrationController extends Controller
                         }
                     }
                     $selectedParkIds = $model->park_list ?? [];
-                    $this->PartnerParks($selectedParkIds,$model->partner_model->id);
+                    $this->PartnerParks($selectedParkIds, $model->partner_model->id);
                     $model->initializeForm();
                     $model->partner_model->current_step = 4;
                     $model->partner_model->gst_id = $gstForm->gstdetail_model->id;
@@ -202,7 +202,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 4);
@@ -250,7 +250,7 @@ class PartnerRegistrationController extends Controller
     {
         $this->layout = 'registration';
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
         $partner_model = $this->findModel();
         $this->handleRedirect($partner_model, 5);
@@ -304,7 +304,7 @@ class PartnerRegistrationController extends Controller
     public function actionFinalView()
     {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); 
+            return $this->redirect(['site/login']);
         }
         if (!empty(\Yii::$app->user->identity->operator)) {
             return $this->redirect(['/']);
@@ -343,6 +343,18 @@ class PartnerRegistrationController extends Controller
         $model = $this->findModel($id);
         $model->is_sendforapproval = 1;
         $model->status = 1;
+
+
+        if (($model->form1_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_1 !== null) ||
+            ($model->form2_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_2 !== null) ||
+            ($model->form3_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_3 !== null) ||
+            ($model->form4_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_4 !== null) ||
+            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null))
+        {
+            $model->resent_after_rejection = 1;
+        }
+
+
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
             return $this->redirect(['thank-you']);
@@ -366,12 +378,12 @@ class PartnerRegistrationController extends Controller
             ->orderBy(['id' => SORT_DESC])
             ->one();;
 
-        $safari_operator = SafariOperator :: find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one();
+        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->orderBy(['id' => SORT_DESC])->one();
         if ($model === null) {
             throw new NotFoundHttpException('Registration record not found.');
         }
 
-        if ($model->final_approved == 1 && $model->is_sendforapproval == 1 && $safari_operator->status = SafariOperator :: STATUS_ACTIVE) {
+        if ($model->final_approved == 1 && $model->is_sendforapproval == 1 && $safari_operator->status = SafariOperator::STATUS_ACTIVE) {
             return $this->redirect(['site/index']);
         } elseif ($model->form1_status == PartnerRegistration::FORM_REJECTED || $model->form2_status == PartnerRegistration::FORM_REJECTED || $model->form3_status == PartnerRegistration::FORM_REJECTED || $model->form4_status == PartnerRegistration::FORM_REJECTED || $model->form5_status == PartnerRegistration::FORM_REJECTED) {
             return $this->redirect(['final-view']);
@@ -426,7 +438,7 @@ class PartnerRegistrationController extends Controller
         }
     }
 
-    private function PartnerParks($selectedParkIds,$id)
+    private function PartnerParks($selectedParkIds, $id)
     {
         $existingParks = PartnerParkList::find()
             ->where(['partner_registration_id' => $id])
@@ -454,12 +466,12 @@ class PartnerRegistrationController extends Controller
         }
 
         $operated_parks = PartnerParkList::find()
-        ->select('park_id')
-        ->where([
-            'partner_registration_id' => $id,
-            'status' => 1
-        ])
-        ->column();
+            ->select('park_id')
+            ->where([
+                'partner_registration_id' => $id,
+                'status' => 1
+            ])
+            ->column();
         return $operated_parks;
     }
 
@@ -470,6 +482,5 @@ class PartnerRegistrationController extends Controller
             return $this->redirect(['site/login']);
         }
         return $this->render('deactivate');
-        
     }
 }

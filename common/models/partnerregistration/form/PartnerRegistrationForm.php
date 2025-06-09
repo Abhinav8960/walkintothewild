@@ -83,6 +83,7 @@ class PartnerRegistrationForm extends Model
     public $form4_status = 0;
     public $form5_status = 0;
     public $is_sendforapproval;
+    public $resent_after_rejection = 0;
     public $status = 0;
     public $final;
     public $updated_time_final;
@@ -160,6 +161,8 @@ class PartnerRegistrationForm extends Model
             $this->form4_status = $this->partner_model->form4_status;
             $this->form5_status = $this->partner_model->form5_status;
             $this->is_sendforapproval = $this->partner_model->is_sendforapproval;
+            $this->resent_after_rejection = $this->partner_model->resent_after_rejection;
+
             $this->status = $this->partner_model->status;
             $this->final = $this->partner_model->final;
             $this->updated_time_final = $this->partner_model->updated_time_final;
@@ -295,7 +298,7 @@ class PartnerRegistrationForm extends Model
             ['account_number', 'match', 'pattern' => '/^[0-9]{9,18}$/', 'message' => 'Account number must be 9 to 18 digits'],
 
             [['park_list'], 'safe'],
-            [['created_at'], 'safe'],
+            [['created_at','resent_after_rejection'], 'safe'],
 
 
         ];
@@ -318,7 +321,7 @@ class PartnerRegistrationForm extends Model
             'address' => 'Address',
 
             //Registration Proof
-            'registration_number' => 'Registration Number',
+            'registration_number' => 'Company Registration Number',
             'registration_copy_upload' => 'Registration Copy Upload',
             'pan_number' => 'Pan Number',
             'pan_upload' => 'Pan Upload',
@@ -338,7 +341,8 @@ class PartnerRegistrationForm extends Model
             'account_holder_name' => 'Account Holder Name',
             'account_number' => 'Account Number',
             'ifsc_number' => 'IFSC',
-            'cancel_check_upload' => 'Cancel Check Upload',
+            'cancel_check_upload' => 'Cancel Cheque Upload',
+            'cancel_check_file_upload'=>'Cancel Cheque Upload',
 
 
             //User KYC 
@@ -404,6 +408,8 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->form4_status = $this->form4_status;
         $this->partner_model->form5_status = $this->form5_status;
         $this->partner_model->is_sendforapproval = $this->is_sendforapproval;
+        $this->partner_model->resent_after_rejection = $this->resent_after_rejection;
+
         $this->partner_model->status = $this->status;
         $this->partner_model->final = $this->final;
         $this->partner_model->updated_time_final = $this->updated_time_final;

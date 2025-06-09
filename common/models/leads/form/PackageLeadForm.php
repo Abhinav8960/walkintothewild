@@ -26,6 +26,7 @@ class PackageLeadForm extends Model
     public $action_url;
     public $action_validate_url;
 
+    public $user_notes;
 
     /**
      * {@inheritdoc}
@@ -38,6 +39,7 @@ class PackageLeadForm extends Model
             [['pack_start_date'], 'date', 'format' => 'php:Y-m-d'],
             [['travelers'], 'integer', 'min' => 1, 'max' => 100, 'tooSmall' => 'Minimum 1 traveler', 'tooBig' => 'Maximum 100 travelers'],
             [['pack_start_date'], 'compare', 'compareValue' => date('Y-m-d'), 'operator' => '>=', 'type' => 'date', 'message' => '{attribute} must be today or a future date.'],
+            [['user_notes'], 'string', 'max' => 1000],
 
 
         ];
@@ -73,11 +75,13 @@ class PackageLeadForm extends Model
             $lead->email = $this->email ?? $login_user->email;
             $lead->phone = $this->phone;
             $lead->travelers = $this->travelers;
+            $lead->user_notes = $this->user_notes;
             $lead->from_date = $this->pack_start_date;
             $lead->user_id = $login_user->id;
             $lead->created_by = $login_user->id;
             $lead->updated_by = $login_user->id;
             $lead->status = 1;
+            $lead->assigned_operator_count = 1;
 
             if ($lead->save(false)) {
                 $this->assignToPartner($lead, $package, $login_user);
@@ -108,21 +112,26 @@ class PackageLeadForm extends Model
     private function prepareChat($lead, $package, $login_user)
     {
         $package_data = Package::find()->where(['id' => $lead->package_id])->asArray()->one();
-        $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
+        $operator_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
 
         $chat = new Chat();
         $short_msg = $message = "Hi, I am interested in \n";
         $short_msg .= "Package:" . $package->package_name . "\n";
         $message .= "Package:" . $package->package_name . "\n";
+        $message .= "Park:" . $package->primary_park . "\n";
         $message .= "Travelers:" . $lead->travelers . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($lead->from_date)) . "\n";
+        if ($lead->user_notes != null) {
+            $message .= "Notes:" . $lead->user_notes . "\n";
+        }
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;
         $chat->user_id = $login_user->id;
-        $chat->recipient_user_id = $individual_user->id;
+        $chat->recipient_user_id = $operator_user->id;
         $chat->last_message = $short_msg;
         $chat->last_message_at = time();
+        $chat->sender_id = $login_user->id;
         $chat->status = 1;
         $chat->chat_type = 2;
         $chat->package_id = $lead->package_id;

@@ -23,11 +23,11 @@ $this->params['title'] = $this->title;
                 <div class="d-flex justify-content-around">
                     <div class="d-flex mb-2">
                         <img src="<?= $this->params['baseurl'] ?>/img/like.svg" alt="Like">
-                        <p class="ms-1 mt-2 pt-2"><?= $model->likes_count; ?></p>
+                        <p class="ms-1 mt-2 pt-2"><?= $model->like_count; ?></p>
                     </div>
                     <div class="d-flex mb-2">
                         <img src="<?= $this->params['baseurl'] ?>/img/comment.svg" alt="Comment">
-                        <p class="ms-1 mt-2 pt-2"><?= $model->comments_count; ?></p>
+                        <p class="ms-1 mt-2 pt-2"><?= $model->comment_count; ?></p>
                     </div>
                 </div>
             </div>

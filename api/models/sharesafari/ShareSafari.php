@@ -220,7 +220,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getComments_count()
     {
-        return $this->getComments()->andWhere(['parent_id' => null])->count();
+        // return $this->getComments()->andWhere(['parent_id' => null])->count();
+        return $this->getComments()->count();
     }
 
     /**
@@ -259,7 +260,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_by_image()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->profileimage : '';
+            return $this->user ? $this->user->profile_display_image : '';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return $this->partner &&  $this->partner->logo  ? $this->partner->imagepath : '';
         }

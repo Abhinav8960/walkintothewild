@@ -29,6 +29,7 @@ class PartnerLeadForm extends Model
     public $action_url;
     public $action_validate_url;
 
+    public $user_notes;
 
 
     /**
@@ -47,6 +48,8 @@ class PartnerLeadForm extends Model
             [['safaris', 'travelers'], 'number', 'min' => 1],
             // ['stay_category_id', 'exist', 'targetClass' => MetaStayCategory::class, 'targetAttribute' => ['stay_category_id' => 'id']],
             // ['safari_park_id', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['safari_park_id' => 'id']],
+            [['user_notes'], 'string', 'max' => 1000],
+
         ];
     }
 
@@ -91,6 +94,8 @@ class PartnerLeadForm extends Model
             $lead->user_id = $login_user->id;
             $lead->operator_id = $operator->id;
             $lead->status = 1;
+            $lead->user_notes = $this->user_notes;
+            $lead->assigned_operator_count = 1;
 
 
             if ($lead->save(false)) {
@@ -121,7 +126,7 @@ class PartnerLeadForm extends Model
 
     private function prepareChat($lead, $park, $operator, $login_user)
     {
-        $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
+        $operator_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
 
         $chat = new Chat();
         $short_msg = $message = "Hi, I am interested in \n";
@@ -132,13 +137,17 @@ class PartnerLeadForm extends Model
         $message .= "Stay Category: " . $lead->staycatgory->title . "\n";
         $message .= "Start Date: " . date('M j, Y', strtotime($this->start_date)) . "\n";
         $message .= "End Date: " . date('M j, Y', strtotime($this->end_date)) . "\n";
+        if ($lead->user_notes != null) {
+            $message .= "Notes:" . $lead->user_notes . "\n";
+        }
 
         $chat->generateChatHash();
         $chat->lead_id = $lead->id;
         $chat->user_id = $login_user->id;
-        $chat->recipient_user_id = $individual_user->id;
+        $chat->recipient_user_id = $operator_user->id;
         $chat->last_message = $short_msg;
         $chat->last_message_at = time();
+        $chat->sender_id = $login_user->id;
         $chat->status = 1;
         $chat->chat_type = 2;
         $chat->park_id = $lead->park_id;

@@ -102,14 +102,34 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [
                 [
-                    'legal_entity_type', 'legal_entity_whatsapp', 'registration_number', 'registration_copy_upload',
-                    'pan_number', 'pan_upload', 'operated_park', 'billing_mail', 'billing_phone', 'bank_name',
-                    'account_holder_name', 'account_number', 'ifsc_number', 'cancel_check_upload', 'owner_name',
-                    'kyc_phone', 'kyc_whatsapp', 'kyc_email', 'kyc_pan', 'kyc_pan_upload',
-                    'aadhar_number', 'aadhar_front_upload', 'aadhar_back_upload'
+                    'legal_entity_type',
+                    'legal_entity_whatsapp',
+                    'registration_number',
+                    'registration_copy_upload',
+                    'pan_number',
+                    'pan_upload',
+                    'operated_park',
+                    'billing_mail',
+                    'billing_phone',
+                    'bank_name',
+                    'account_holder_name',
+                    'account_number',
+                    'ifsc_number',
+                    'cancel_check_upload',
+                    'owner_name',
+                    'kyc_phone',
+                    'kyc_whatsapp',
+                    'kyc_email',
+                    'kyc_pan',
+                    'kyc_pan_upload',
+                    'aadhar_number',
+                    'aadhar_front_upload',
+                    'aadhar_back_upload'
                 ],
                 'safe'
             ],
+            [['is_phone_no_verified'], 'boolean'],
+            [['is_phone_no_verified'], 'default', 'value' => false],
         ];
     }
 
@@ -203,7 +223,6 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getPackagecount()
     {
         return Package::find()->where(['owned_by_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
-
     }
 
     public function getQuotescount()
@@ -237,8 +256,9 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     }
 
 
-    public function getGstDetail(){
-        return $this->hasOne(PartnerGstDetails :: class , ['partner_registration_id'=>'safari_operator_request_id'])->orderBy(['id'=>SORT_DESC]);
+    public function getGstDetail()
+    {
+        return $this->hasOne(PartnerGstDetails::class, ['partner_registration_id' => 'safari_operator_request_id'])->orderBy(['id' => SORT_DESC]);
     }
 
     public function getImagepath() // logo_path
@@ -278,7 +298,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_front_upload;
     }
-    
+
     public function getAadhar_back_upload_path()
     {
         return Yii::$app->params['partner_url'] . '/site/files/' . $this->aadhar_back_upload;
@@ -318,7 +338,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function getTemporaryImagepath() 
+    public function getTemporaryImagepath()
     {
         if ($this->logo != '') {
             return \Yii::$app->params['s3_endpoint'] . '/safarioperator/' . $this->id . '/' . $this->logo;
