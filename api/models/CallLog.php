@@ -100,7 +100,7 @@ class CallLog extends \common\models\CallLog
         ];
         if ($this->call_request_status == "success") {
 
-            return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated, But Call not connected';
+            return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated';
         }
         return 'Call Initiated, But call not connected';
     }
