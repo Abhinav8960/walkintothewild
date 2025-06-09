@@ -87,6 +87,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             }
         }
         if ($this->gallery != null) {
+            unset($fields['message']);
 
             $fields['gallery'] = function () {
                 return json_decode($this->gallery,true);
