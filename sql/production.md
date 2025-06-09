@@ -18,6 +18,10 @@ php yii test/update-post-comment-count
 php yii test/update-post-like-count
 php yii test/update-post-like-count
 php yii test/update-post-like-count
-php yii test/banner-image
-php yii test/frontend-banner-image
 
+php yii test/master-vehicle
+php yii test/master-vehicle-copy
+php yii test/frontend-banner-copy
+php yii test/frontend-banner-image
+php yii test/banner-copy
+php yii test/banner-image
