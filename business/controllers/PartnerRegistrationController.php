@@ -549,7 +549,6 @@ class PartnerRegistrationController extends Controller
             if ($mobileNo) {
                 if ($mobileNo != $partner_model->legal_entity_phone && $mobileNo != $partner_model->kyc_phone) {
                     Yii::$app->session->setFlash('error', 'Number is Invalid or Not Matched !!');
-                    // return $this->redirect(['partner-registration/create']);
                     return $this->redirect(Yii::$app->request->referrer);
                 }
                 $model->mobile_no = $mobileNo;

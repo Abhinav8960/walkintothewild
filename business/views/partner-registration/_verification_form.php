@@ -89,10 +89,12 @@ $('#send-otp-btn').on('click', function(e) {
     e.preventDefault();
 
     let mobileNo = $('#mobileverification-mobile_no').val();
-    if (!mobileNo.val || mobileNo.length !== 10) {
-        $('#send-otp-btn').prop('disabled',true);
+    if (!/^[6-9]\d{9}$/.test(mobileNo)) {
+        alert('Please enter a valid 10-digit mobile number starting with 6-9');
+        return;
     }
     
+    $('#send-otp-btn').prop('disabled',true);
 
     $.ajax({
         url: '$sendotpurl',
@@ -106,8 +108,10 @@ $('#send-otp-btn').on('click', function(e) {
             if (response.success) {
                 $('#otp-section').slideDown();
                 $('#send-otp-btn').text('Resend OTP');
+                $('#send-otp-btn').prop('disabled', false);
             } else {
                 alert(response.message || 'Something went wrong');
+                $('#send-otp-btn').prop('disabled', false);
             }
         },
         // error: function(xhr) {
@@ -156,7 +160,6 @@ $('#verify-otp-btn').on('click', function(e) {
         // }
     });
 });
-
 
 JS);
 ?>
