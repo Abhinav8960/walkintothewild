@@ -43,7 +43,7 @@ $readOnly = false;
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
             'maxlength'=>10
-        ])->label('Legal Entity Phone') ?>
+        ])->label('Phone Number') ?>
 
 
     </div>

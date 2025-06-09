@@ -328,10 +328,22 @@ $this->params['title'] = $this->title;
                 } ?>
                 <div id="collapse5" class="accordion-collapse collapse show" aria-labelledby="heading5" data-bs-parent="#formAccordion">
                     <div class="accordion-body">
-                        <?= $this->render('_userkyc_form', ['currentStep' => 5, 'model' => $model]) ?>
+                        <?= $this->render('_userkyc_form', ['currentStep' => 5, 'model' => $model,'verification_model'=>$verification_model,'isUserKycSaved'=>$isUserKycSaved]) ?>
                     </div>
                 </div>
             </div>
+
+            <?php if ($isUserKycSaved && $model->partner_model->is_kyc_phone_verified != 1){?>
+                <div class="card border-dark mt-4">
+                    <div class="card-body">
+                        <h4 class="mb-3 mt-2 ms-3 text-success fw-bold">VERIFICATION</h4>
+                        <div class="accordion-body">
+                            <?= $this->render('_verification_form', ['currentStep' => 1,'model' => $model,'verification_model' => $verification_model])?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
     </div>
 </div>
 
