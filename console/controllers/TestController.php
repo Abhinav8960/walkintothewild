@@ -7,6 +7,8 @@ use common\models\chat\ChatMessage;
 use common\models\cms\banner\Banner;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\leads\Lead;
+use common\models\master\animal\MasterAnimal;
+use common\models\master\vehicle\MasterVehicle;
 use common\models\postscomment\UserPostComment;
 use common\models\postscomment\UserPostLike;
 use common\models\sighting\Sighting;
@@ -185,6 +187,103 @@ class TestController extends Controller
                 if (!empty($exists)) {
                     $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
                     $model->frontend_banner = $fileName;
+                    $model->save(false);
+                }
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionMasterVehicle()
+    {
+        $master_model = MasterVehicle::find()->all();
+        foreach($master_model as $model)
+        {
+            if($model->icon != null)
+            {
+                $model->icon_path = 'icon/2506/'. $model->icon;
+                $model->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionMasterVehicleCopy()
+    {
+        $master_model = MasterVehicle::find()->all();
+
+        foreach ($master_model as $model) {
+            if (!empty($model->icon)) {
+                $sourcePath = 'icon/' . $model->id . '/' . $model->icon;
+                $extension = pathinfo($model->icon, PATHINFO_EXTENSION);
+
+                $fileName = $model->id . '_icon_' . time() . '.' . $extension;
+
+                $destinationPath = 'icon/2506/' . $fileName;
+
+                $exists = Yii::$app->fs->has($sourcePath);
+                if (!empty($exists)) {
+                    $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
+                    $model->icon = $fileName;
+                    $model->save(false);
+                }
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionRareAnimal()
+    {
+        $master_model = MasterAnimal::find()->all();
+        foreach($master_model as $model)
+        {
+            if($model->banner != null)
+            {
+                $model->banner_path = 'rareanimal/2506/'. $model->banner;
+                $model->save(false);
+            }
+
+            if($model->feature_image != null)
+            {
+                $model->feature_image_path = 'rareanimal/2506/'. $model->feature_image;
+                $model->save(false);
+            }
+        }
+        echo "Done";
+    }
+
+    public function actionRareAnimalCopy()
+    {
+        $master_model = MasterAnimal::find()->all();
+
+        foreach ($master_model as $model) {
+            if (!empty($model->banner)) {
+                $sourcePath = 'rareanimal/' . $model->id . '/' . $model->banner;
+                $extension = pathinfo($model->banner, PATHINFO_EXTENSION);
+
+                $fileName = $model->id . '_rareanimal_banner_' . time() . '.' . $extension;
+
+                $destinationPath = 'rareanimal/2506/' . $fileName;
+
+                $exists = Yii::$app->fs->has($sourcePath);
+                if (!empty($exists)) {
+                    $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
+                    $model->banner = $fileName;
+                    $model->save(false);
+                }
+            }
+            if (!empty($model->feature_image)) {
+                $sourcePath = 'rareanimal/' . $model->id . '/' . $model->feature_image;
+                $extension = pathinfo($model->feature_image, PATHINFO_EXTENSION);
+
+                $fileName = $model->id . '_rareanimal_feature_image_' . time() . '.' . $extension;
+
+                $destinationPath = 'rareanimal/2506/' . $fileName;
+
+                $exists = Yii::$app->fs->has($sourcePath);
+                if (!empty($exists)) {
+                    $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
+                    $model->feature_image = $fileName;
                     $model->save(false);
                 }
             }

@@ -27,6 +27,7 @@ class MasterRareAnimalForm extends model
     public $assigned_park;
     public $animal_type;
     public $is_searchable;
+    public $created_at;
 
     public function __construct(MasterAnimal $rare_animal_model = null)
     {
@@ -47,6 +48,7 @@ class MasterRareAnimalForm extends model
             $this->short_description = $this->rare_animal_model->short_description;
             $this->is_searchable = $this->rare_animal_model->is_searchable;
             $this->status = $this->rare_animal_model->status;
+            $this->created_at = $this->rare_animal_model->created_at;
 
             $this->assigned_park = SafariParkAnimal::find()->select('safari_park_id')->where(['master_animal_id' => $this->rare_animal_model->id, 'status' => 1])->column();
         }
@@ -86,7 +88,7 @@ class MasterRareAnimalForm extends model
     {
         return [
             [['name', 'short_description'], 'required'],
-            [['status','is_searchable'], 'integer'],
+            [['status', 'is_searchable'], 'integer'],
             ['assigned_park', 'safe'],
             [['name'], 'string', 'max' => 125],
             [['name', 'know_as'], 'string', 'max' => 125],
@@ -124,6 +126,7 @@ class MasterRareAnimalForm extends model
                     }
                 }
             ],
+            [['created_at'],'safe']
         ];
     }
 
@@ -180,50 +183,82 @@ class MasterRareAnimalForm extends model
     public function uploadFile()
     {
 
+        // if ($this->banner) {
+        //     // dd($this->banner);
+        //     $storagePath = Yii::$app->params['datapath'] . '/rareanimal';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->rare_animal_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'rareanimal' . '-' . time() . '.' . $this->banner->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+        //     if ($this->banner->saveAs($filePath)) {
+        //         $this->rare_animal_model->banner = $fileName;
+        //         $this->rare_animal_model->save(false);
+        //     }
+        // }
+
+        // if ($this->feature_image) {
+        //     // dd($this->feature_image);
+
+        //     $storagePath = Yii::$app->params['datapath'] . '/rareanimal';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->rare_animal_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'rareanimal' . time() . '.' . $this->feature_image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+        //     if ($this->feature_image->saveAs($filePath)) {
+        //         $this->rare_animal_model->feature_image = $fileName;
+        //         $this->rare_animal_model->save(false);
+        //     }
+        // }
+        // __________________________________________Move To S3 (9 June 2025)___________________________________________
         if ($this->banner) {
-            // dd($this->banner);
-            $storagePath = Yii::$app->params['datapath'] . '/rareanimal';
+            $storagePath = 'rareanimal' . '/' . date('ym', $this->created_at);
+            $fileName = $this->rare_animal_model->id . '_rareanimal_banner_' . time() . '.' . $this->banner->extension;
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->rare_animal_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'rareanimal' . '-' . time() . '.' . $this->banner->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->banner->saveAs($filePath)) {
-                $this->rare_animal_model->banner = $fileName;
-                $this->rare_animal_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->banner, $filePath, $fileName, true)) {
+                    $this->rare_animal_model->banner = $fileName;
+                    $this->rare_animal_model->banner_path = $filePath;
+                    $this->rare_animal_model->original_banner_name = $this->banner->name;
+                    $this->rare_animal_model->save(false);
+                }
             }
         }
 
         if ($this->feature_image) {
-            // dd($this->feature_image);
+            $storagePath = 'rareanimal' . '/' . date('ym', $this->created_at);
+            $fileName = $this->rare_animal_model->id . '_rareanimal_feature_' . time() . '.' . $this->feature_image->extension;
 
-            $storagePath = Yii::$app->params['datapath'] . '/rareanimal';
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->rare_animal_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'rareanimal' . time() . '.' . $this->feature_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->feature_image->saveAs($filePath)) {
-                $this->rare_animal_model->feature_image = $fileName;
-                $this->rare_animal_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->feature_image, $filePath, $fileName, true)) {
+                    $this->rare_animal_model->feature_image = $fileName;
+                    $this->rare_animal_model->feature_image_path = $filePath;
+                    $this->rare_animal_model->original_feature_image_name = $this->feature_image->name;
+                    $this->rare_animal_model->save(false);
+                }
             }
         }
     }

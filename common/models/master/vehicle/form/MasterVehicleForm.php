@@ -18,6 +18,7 @@ class MasterVehicleForm extends model
     public $status;
     public $status_option = [];
     public $vehicle_model;
+    public $created_at;
 
 
     public function __construct(MasterVehicle $vehicle_model = null)
@@ -34,6 +35,7 @@ class MasterVehicleForm extends model
             $this->vehicle_name = $this->vehicle_model->vehicle_name;
             $this->icon = $this->vehicle_model->icon;
             $this->status = $this->vehicle_model->status;
+            $this->created_at = $this->vehicle_model->created_at;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -50,7 +52,7 @@ class MasterVehicleForm extends model
             [['status'], 'integer'],
             [['vehicle_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
-            // [['icon'],'safe'],
+            [['icon'],'safe'],
             [
                 ['icon'],
                 'image',
@@ -72,6 +74,7 @@ class MasterVehicleForm extends model
                     }
                 }
             ],
+            [['created_at'], 'safe']
         ];
     }
 
@@ -101,25 +104,41 @@ class MasterVehicleForm extends model
 
     public function uploadFile()
     {
+        // if ($this->icon) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/vehicle';
+
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->vehicle_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+
+        //     $fileName = 'vehicle' . time() . '.' . $this->icon->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
+
+        //     if ($this->icon->saveAs($filePath)) {
+        //         $this->vehicle_model->icon = $fileName;
+        //         $this->vehicle_model->save(false);
+        //     }
+        // }
+        // __________________________________________Move To S3 (9 June 2025)___________________________________________
         if ($this->icon) {
-            $storagePath = Yii::$app->params['datapath'] . '/vehicle';
+            $storagePath = 'vehicle' . '/' . date('ym', $this->created_at);
+            $fileName = $this->vehicle_model->id . '_icon_' . time() . '.' . $this->icon->extension;
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->vehicle_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'vehicle' . time() . '.' . $this->icon->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->icon->saveAs($filePath)) {
-                $this->vehicle_model->icon = $fileName;
-                $this->vehicle_model->save(false);
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->icon, $filePath, $fileName, true)) {
+                    $this->vehicle_model->icon = $fileName;
+                    $this->vehicle_model->icon_path = $filePath;
+                    $this->vehicle_model->original_icon_name = $this->icon->name;
+                    $this->vehicle_model->save(false);
+                }
             }
         }
     }

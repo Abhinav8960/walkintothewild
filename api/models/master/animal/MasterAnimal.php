@@ -56,15 +56,21 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
 
     public function getImage_path()
     {
+        // if ($this->feature_image != '') {
+        //     return \Yii::$app->params['s3_endpoint'] . '/rareanimal/' . $this->id . '/' . $this->feature_image;
+        // }
         if ($this->feature_image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/rareanimal/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['s3_endpoint'] . '/' . $this->feature_image_path;
         }
     }
 
     public function getBanner_image_path()
     {
+        // if ($this->banner != '') {
+        //     return \Yii::$app->params['s3_endpoint'] . '/rareanimal/' . $this->id . '/' . $this->banner;
+        // }
         if ($this->banner != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/rareanimal/' . $this->id . '/' . $this->banner;
+            return \Yii::$app->params['s3_endpoint'] . '/' . $this->banner_path;
         }
     }
 
