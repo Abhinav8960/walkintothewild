@@ -63,6 +63,9 @@ class CallLog extends \common\models\CallLog
             'rec_duration',
             'call_type',
             'call_status',
+            'call_status_label' => function () {
+                return $this->getCallstatuslabel();
+            },
             'datetime' => function () {
                 return strtotime($this->datetime);
             },
@@ -86,5 +89,19 @@ class CallLog extends \common\models\CallLog
         ];
 
         return $fields;
+    }
+
+    public function getCallstatuslabel()
+    {
+        $callStatusLabels = [
+            'ANSWERED' => 'Call Connetced',
+            'NOANSWER' => 'Call not connected',
+            'BUSY' => 'Busy',
+        ];
+        if ($this->call_request_status == "success") {
+
+            return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated, But Call not connected';
+        }
+        return 'Call Initiated, But call not connected';
     }
 }
