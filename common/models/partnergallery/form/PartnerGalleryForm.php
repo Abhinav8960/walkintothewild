@@ -11,7 +11,6 @@ use common\models\partnergallery\PartnerGallery;
 class PartnerGalleryForm extends model
 {
     public $title;
-    public $safari_park_id;
     public $safari_operator_id;
     public $status;
     public $status_option = [];
@@ -30,7 +29,6 @@ class PartnerGalleryForm extends model
         if ($partner_gallery_model  != '') {
             $this->partner_gallery_model = $partner_gallery_model;
             $this->title = $this->partner_gallery_model->title;
-            $this->safari_park_id = $this->partner_gallery_model->safari_park_id;
             $this->safari_operator_id = $this->partner_gallery_model->safari_operator_id;
             $this->status = $this->partner_gallery_model->status;
         }
@@ -45,19 +43,11 @@ class PartnerGalleryForm extends model
     public function rules()
     {
         return [
-            [['title','safari_park_id', 'status'], 'required'],
-            [['status', 'safari_operator_id', 'safari_park_id'], 'integer'],
+            [['title', 'status'], 'required'],
+            [['status', 'safari_operator_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'validateUniqueTitle'],
-            [
-                ['safari_park_id'],
-                'exist',
-                'targetClass' => SafariOperatorPark::class,
-                'targetAttribute' => ['safari_park_id' => 'park_id'],
-                'filter' => function ($query) {
-                    $query->andWhere(['safari_operator_id' => $this->safari_operator_id, 'status' => SafariOperatorPark::STATUS_ACTIVE]);
-                }
-            ]
+          
         ];
     }
 
@@ -68,7 +58,6 @@ class PartnerGalleryForm extends model
     {
         return [
             'title' => 'Title',
-            'safari_park_id' => 'Safari Park ID',
             'safari_operator_id' => 'Safari Operator ID',
             'status' => 'Status',
         ];
@@ -82,7 +71,6 @@ class PartnerGalleryForm extends model
     {
         $this->partner_gallery_model->title = $this->title;
         $this->partner_gallery_model->safari_operator_id = $this->safari_operator_id;
-        $this->partner_gallery_model->safari_park_id = $this->safari_park_id;
         $this->partner_gallery_model->status = $this->status;
     }
 

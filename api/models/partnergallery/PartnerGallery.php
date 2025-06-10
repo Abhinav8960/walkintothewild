@@ -16,8 +16,6 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
         $fields = [
             // 'id',
             'title',
-            'safari_park_id',
-            'safari_park_label',
             'slug',
             'private_url',
             // 'public_url',
@@ -44,10 +42,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
         return $fields;
     }
 
-    public function getPark()
-    {
-        return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
-    }
+  
 
     public function getPrivate_url()
     {
@@ -63,13 +58,6 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
         return null;
     }
 
-    public function getSafari_park_label()
-    {
-        if ($this->park) {
-            return $this->park->title;
-        }
-        return null;
-    }
 
     public function getPublic_url()
     {
@@ -85,7 +73,6 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
     {
         return $arr = [
             'title' => $this->title,
-            'safari_park_label' => $this->safari_park_label,
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
             'status' => (bool) $this->status,

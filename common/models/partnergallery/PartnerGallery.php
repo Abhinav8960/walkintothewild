@@ -71,8 +71,8 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         return [
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['safari_operator_id', 'title', 'safari_park_id', 'slug'], 'required'],
-            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'title', 'slug'], 'required'],
+            [['safari_operator_id','status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
@@ -87,7 +87,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'id' => 'ID',
             'safari_operator_id' => 'Safari Operator ID',
             'title' => 'Title',
-            'safari_park_id' => 'Safari Park ID',
             'slug' => 'Slug',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -95,11 +94,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getPark_label()
-    {
-        return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
     }
 
     public function getGallery_count()

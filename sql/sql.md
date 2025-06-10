@@ -125,3 +125,7 @@ ALTER TABLE `master_animal` CHANGE `banner_image_path` `banner_path` VARCHAR(512
  'airphone_api_token' => 'SmzZvu9pRpSC3evJWPao07odoooMk4CNkJRIDgedTqxQFpszqkBeoeWXxa58WxVE',
     'airphone_api_host_url' => 'https://airphone.in',
     'airphone_api_vnm' => '7935296377',
+
+
+
+ALTER TABLE `partner_gallery` DROP `safari_park_id`;
