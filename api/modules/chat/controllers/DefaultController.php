@@ -593,7 +593,7 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+                return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.'. $e->getMessage()]);
             }
         }
     }
