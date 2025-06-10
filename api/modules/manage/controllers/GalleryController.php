@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery', 'gallery-delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery', 'gallery-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -271,5 +271,20 @@ class GalleryController extends RestController
         }
 
         return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Please Try Again!!!"]);
+    }
+
+    public function actionGalleryDelete($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+        $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
+        if ($partner_gallery_model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Deleted Successfully!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Deleted!!!"]);
     }
 }
