@@ -553,8 +553,12 @@ class PartnerRegistrationController extends Controller
 
             if ($mobileNo) {
                 if ($mobileNo != $partner_model->legal_entity_phone && $mobileNo != $partner_model->kyc_phone) {
-                    Yii::$app->session->setFlash('error', 'Number is Invalid or Not Matched !!');
-                    return $this->redirect(Yii::$app->request->referrer);
+                    // Yii::$app->session->setFlash('error', 'Number is Invalid or Not Matched !!');
+                    // return $this->redirect(Yii::$app->request->referrer);
+                    return \yii\helpers\Json::encode([
+                        'error' => true,
+                        'message' => 'Number is Invalid or Not Matched !!'
+                    ]);
                 }
                 $model->mobile_no = $mobileNo;
 
@@ -577,23 +581,39 @@ class PartnerRegistrationController extends Controller
 
         $otpByUser = Yii::$app->request->post('otp_by_user');
         if (!$otpByUser) {
-            Yii::$app->session->setFlash('error', 'Missing OTP');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'Missing OTP');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'Missing OTP'
+            ];
         }
 
         $model = MobileVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
         if (!$model) {
-            Yii::$app->session->setFlash('error', 'OTP record not found');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'OTP record not found');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'OTP record not found'
+            ];
         }
         if ($model->otp != $otpByUser) {
-            Yii::$app->session->setFlash('error', 'Incorrect OTP');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'Incorrect OTP');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'Incorrect OTP'
+            ];
         }
 
         if (strtotime($model->exp_datetime) < time()) {
-            Yii::$app->session->setFlash('error', 'OTP has expired');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'OTP has expired');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'OTP has expired'
+            ];
         }
 
         $partner_model  = $this->findModel();
@@ -636,8 +656,12 @@ class PartnerRegistrationController extends Controller
 
             if ($email) {
                 if ($email != $partner_model->billing_mail) {
-                    Yii::$app->session->setFlash('error', 'Email is Invalid or Not Matched !!');
-                    return $this->redirect(['partner-registration/step-3']);
+                    // Yii::$app->session->setFlash('error', 'Email is Invalid or Not Matched !!');
+                    // return $this->redirect(['partner-registration/step-3']);
+                    return \yii\helpers\Json::encode([
+                        'error' => true,
+                        'message' => 'Email is Invalid or Not Matched !!'
+                    ]);
                 }
                 $model->email = $email;
 
@@ -662,23 +686,39 @@ class PartnerRegistrationController extends Controller
 
         $otpByUser = Yii::$app->request->post('otp_by_user');
         if (!$otpByUser) {
-            Yii::$app->session->setFlash('error', 'Missing OTP');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'Missing OTP');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'Missing OTP'
+            ];
         }
 
         $model = EmailVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
         if (!$model) {
-            Yii::$app->session->setFlash('error', 'OTP record not found');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'OTP record not found');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'OTP record not found'
+            ];
         }
         if ($model->otp != $otpByUser) {
-            Yii::$app->session->setFlash('error', 'Incorrect OTP');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'Incorrect OTP');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'Incorrect OTP'
+            ];
         }
 
         if (strtotime($model->exp_datetime) < time()) {
-            Yii::$app->session->setFlash('error', 'OTP has expired');
-            return $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'OTP has expired');
+            // return $this->redirect(Yii::$app->request->referrer);
+            return [
+                'success' => false,
+                'message' => 'OTP has expired'
+            ];
         }
 
         $partner_model  = $this->findModel();

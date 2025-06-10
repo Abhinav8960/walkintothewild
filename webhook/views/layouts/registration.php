@@ -3,8 +3,8 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use business\assets\AppAsset;
-use business\assets\NovaAppAsset;
+use webhook\assets\AppAsset;
+use webhook\assets\NovaAppAsset;
 use common\assets\NotifyAsset;
 
 AppAsset::register($this);

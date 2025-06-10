@@ -23,6 +23,9 @@ $sendOtpButton = Html::button('Send OTP', ['class' => 'btn btn-light text-succes
 $verifyOtpButton = Html::button('Verify OTP', ['class' => 'btn btn-orange', 'id' => 'verify-otp-btn']);
 ?>
 
+<div id="flash-message-container"></div>
+
+
 <div class="row">
 
     <div class="col-md-6">
@@ -69,7 +72,6 @@ $verifyOtpButton = Html::button('Verify OTP', ['class' => 'btn btn-orange', 'id'
         <input type="hidden" id="hidden-mobile-no" value="<?= Html::encode($verification_model->mobile_no) ?>">
         <input type="hidden" name="hidden-source-type" value="<?= Html::encode($verification_model->source_type) ?>">
     </div>
-
 </div>
 
 <?php ActiveForm::end(); ?>
@@ -103,7 +105,33 @@ $('#send-otp-btn').on('click', function(e) {
             _csrf: '$csrfToken'
         },
         success: function(response) {
-            if (response.success) {
+            if (!response.success) {
+            // Show flash message without reload
+                \$('#flash-message-container').html(`
+                    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between" role="alert">
+                        <div>
+                            <span><i class="bi bi-exclamation-triangle-fill me-2"></i></span> 
+                            <strong>Error : </strong>`+response.message +`
+                        </div>
+                        <button type="button" class="btn btn-sm text-dark fs-2 fw-bold border-0 bg-transparent" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                `);
+
+                $('#send-otp-btn').prop('disabled', false);
+                
+            } else if (response.success) {
+
+            // Show flash message without reload
+                \$('#flash-message-container').html(`
+                    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center justify-content-between" role="alert">
+                        <div>
+                            <strong>`+response.message +`</strong>
+                        </div>
+                        <button type="button" class="btn btn-sm text-dark fs-2 fw-bold border-0 bg-transparent" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                `);
+           
+
                 $('#otp-section').slideDown();
                 $('#send-otp-btn').text('Resend OTP');
                 $('#send-otp-btn').prop('disabled', false);
@@ -141,7 +169,19 @@ $('#verify-otp-btn').on('click', function(e) {
             _csrf: '$csrfToken'
         },
         success: function(response) {
-            if (response.success) {
+            if (!response.success) {
+            // Show flash message without reload
+                \$('#flash-message-container').html(`
+                    <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between" role="alert">
+                        <div>
+                            <span><i class="bi bi-exclamation-triangle-fill me-2"></i></span> 
+                            <strong>Error : </strong>`+response.message +`
+                        </div>
+                        <button type="button" class="btn btn-sm text-dark fs-2 fw-bold border-0 bg-transparent" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+                    </div>
+                `);
+
+            } else if(response.success) {
                 alert(response.message || 'OTP Verified');
                 otpVerified = true;
 
