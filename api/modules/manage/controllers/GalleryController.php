@@ -206,13 +206,9 @@ class GalleryController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Image Not Found!!!"]);
         }
 
-        $model->status = !$model->status;
+        $model->status = PartnerGalleryImage::STATUS_SUSPEND;
         if ($model->save(false)) {
-            if ($model->status == 0) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
-            } else {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Image is Active!!!"]);
-            }
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
         }
 
 
