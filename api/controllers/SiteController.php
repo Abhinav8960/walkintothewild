@@ -599,7 +599,8 @@ class SiteController extends RestController
             if (!$headers->has('X-Rate-Limit-Reset')) {
                 $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
             }
-            return Yii::$app->api->sendResponse([], ['message' => "Rate limit exceeded. Please try again later.",429]);
+            // return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Rate limit exceeded. Please try again later."],429);
 
         } else {
             $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;

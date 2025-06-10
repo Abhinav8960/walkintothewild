@@ -103,15 +103,19 @@ ALTER TABLE `chat_message` CHANGE `gallery_url` `gallery` TEXT CHARACTER SET utf
 
 
 
-
+--------CMS Upload Sql
+--Banner
 ALTER TABLE `banner` ADD `image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `image`, ADD `original_image_name` VARCHAR(512) NULL DEFAULT NULL AFTER `image_path`;
 --Frontend Banner
 ALTER TABLE `master_frontend_banner` ADD `frontend_banner_path` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner`, ADD `frontend_banner_name` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner_path`;
 ALTER TABLE `master_frontend_banner` ADD `created_at` INT NULL DEFAULT NULL AFTER `status`, ADD `created_by` INT NULL DEFAULT NULL AFTER `created_at`, ADD `updated_at` INT NULL DEFAULT NULL AFTER `created_by`, ADD `updated_by` INT NULL DEFAULT NULL AFTER `updated_at`;
 
+------Master
+--Vehicle
 ALTER TABLE `master_vehicle` ADD `icon_path` VARCHAR(512) NULL DEFAULT NULL AFTER `icon`, ADD `original_icon_name` VARCHAR(512) NULL DEFAULT NULL AFTER `icon_path`;
 ALTER TABLE `master_vehicle` CHANGE `created_at` `created_at` INT NULL DEFAULT NULL, CHANGE `updated_at` `updated_at` INT NULL DEFAULT NULL, CHANGE `created_by` `created_by` INT NULL DEFAULT NULL, CHANGE `updated_by` `updated_by` INT NULL DEFAULT NULL;
 
+--Rare Animal
 ALTER TABLE `master_animal` ADD `banner_image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `banner`, ADD `original_banner_name` VARCHAR(512) NULL DEFAULT NULL AFTER `banner_image_path`;
 ALTER TABLE `master_animal` ADD `feature_image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `feature_image`, ADD `original_feature_image_name` VARCHAR(512) NULL DEFAULT NULL AFTER `feature_image_path`;
 
