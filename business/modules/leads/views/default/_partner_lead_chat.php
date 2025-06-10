@@ -14,13 +14,38 @@ use common\models\chat\ChatMessage;
                     foreach ($chats as $chat_message) {
                         if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
                 ?>
+
                             <div class="incoming_msg">
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p><?= $chat_message->message ?></p>
-                                        <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                <?php if ($chat_message->message != 'Gallery') { ?>
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p><?= $chat_message->message ?></p>
+                                            <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                        </div>
                                     </div>
-                                </div>
+                                    <?php } else {
+                                    $gallery_data = json_decode($chat_message->gallery, true);
+                                    if ($gallery_data) { ?>
+                                        <div class="received_msg">
+                                            <div class="received_withd_msg">
+                                                <div class="gallery-background">
+                                                    <h3 class="gallery-title"><?= isset($gallery_data['title']) ? $gallery_data['title'] : '' ?></h3>
+                                                    <div class="gallery-images mt-4">
+                                                        <?php if ($gallery_data['images']) {
+                                                            foreach ($gallery_data['images'] as $image) {  ?>
+                                                                <div class="gallery-image">
+                                                                    <img src="<?= isset($image['gallery_image_path']) ? $image['gallery_image_path'] : '' ?>" alt="<?= isset($image['title']) ? $image['title'] : ''  ?>" title="<?= isset($image['caption']) ? $image['caption'] : '' ?>">
+                                                                    <div class="image-caption"><?= isset($image['caption']) ? $image['caption'] : '' ?></div>
+                                                                </div>
+                                                        <?php }
+                                                        } ?>
+                                                    </div>
+                                                </div>
+                                                <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                            </div>
+                                        </div>
+                                <?php }
+                                } ?>
                             </div>
                         <?php } else { ?>
                             <div class="outgoing_msg">
@@ -35,94 +60,45 @@ use common\models\chat\ChatMessage;
 
                 ?>
             </div>
+
+            <?= $this->render('_send_message', ['chat' => $chat]) ?>
+
         </div>
     </div>
 </div>
 
+<?php
+$script = <<< JS
+$(document).ready(function() {
 
-
-<style>
-    .inbox_msg {
-        border: 1px solid #c4c4c4;
-        clear: both;
-        overflow: hidden;
+    function sendmessage(){
+        $.ajax({
+            type: 'POST',
+            url: '/chat/default/sendmessage',
+            data:$("#chatmessageform").serialize(),
+            success:function(data){
+                $('#chat-message').val('');
+                location.reload();
+            },
+            dataType:'html'
+        });   
     }
 
-    .incoming_msg {
+    $('#message_sent_btn').click(function(){
+        sendmessage();
+    });
 
-        margin-top: 10px;
-    }
-
-    .incoming_msg_img {
-        float: right;
-        width: 3%;
-        position: relative;
-        right: 65px;
-        bottom: 10px;
-    }
-
-    .received_msg {
-        display: inline-block;
-        padding: 0 0 0 10px;
-        vertical-align: top;
-        width: 92%;
-    }
-
-    .received_withd_msg p {
-
-        background: #ebebeb none repeat scroll 0 0;
-        border-radius: 3px;
-        color: #646464;
-        font-size: 14px;
-        margin: 0;
-        padding: 5px 10px 5px 12px;
-        width: 100%;
-    }
-
-    .time_date {
-        color: #747474;
-        display: block;
-        font-size: 12px;
-        margin: 8px 0 0;
-    }
-
-    .received_withd_msg {
-        float: right;
-        width: 57%;
-    }
-
-    .mesgs {
-        float: left;
-        padding: 30px 15px 0 25px;
-        width: 100%;
-    }
-
-    .sent_msg p {
-        background: #237729 !important;
-        border-radius: 3px;
-        font-size: 14px;
-        margin: 0;
-        color: #fff;
-        padding: 5px 10px 5px 12px;
-        width: 100%;
-    }
-
-    .outgoing_msg {
-        overflow: hidden;
-        margin: 26px 0 26px;
-    }
-
-    .sent_msg {
-        float: left;
-        width: 46%;
-    }
-
-    .messaging {
-        padding: 0 0 50px 0;
-    }
-
-    .msg_history {
-        height: 516px;
-        overflow-y: auto;
-    }
-</style>
+    $('#chat-message').keydown(function(e) {
+        if (e.keyCode === 13) { 
+            if (e.shiftKey) {
+                return ;
+            } else {
+                e.preventDefault(); 
+                sendmessage();
+            }
+        }
+    });
+});
+JS;
+$this->registerJs($script);
+?>
