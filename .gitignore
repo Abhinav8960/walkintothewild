@@ -519,6 +519,29 @@ phpunit.phar
 /webhook/web/assets
 /webhook/web/storage
 /webhook/web/robots.txt
+
+/accounts/web/index.php
+/accounts/web/index-test.php
+/accounts/runtime
+/accounts/web/assets
+/accounts/web/storage
+/accounts/web/robots.txt
+
+
+/support/web/index.php
+/support/web/index-test.php
+/support/runtime
+/support/web/assets
+/support/web/storage
+/support/web/robots.txt
+
+/cms/web/index.php
+/cms/web/index-test.php
+/cms/runtime
+/cms/web/assets
+/cms/web/storage
+/cms/web/robots.txt
+
 /csv
 
 
