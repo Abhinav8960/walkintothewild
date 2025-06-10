@@ -66,7 +66,7 @@ AppAsset::register($this);
 
             </tbody>
         </table>
-       <table class="table table-bordered">
+        <table class="table table-bordered">
             <thead>
                 <th>Lead Name</th>
                 <!-- <th>Email</th>
@@ -91,6 +91,12 @@ AppAsset::register($this);
             <div class="card-body" id="quotation-form-div" value="/leads/default/quotation?id=<?= $model->id ?>">
 
             </div>
+        </div>
+
+        <div class="card">
+            <?php if ($chat) { ?>
+                <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
+            <?php } ?>
         </div>
 
     </div>

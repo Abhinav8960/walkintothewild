@@ -71,9 +71,17 @@ class DefaultController extends  Controller
     {
         $model = $this->findModel($id);
         $quotations = $model->getQuotation()->where(['partner_id'=>\Yii::$app->user->identity->operator->id])->all();
+
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->operator->id], ['recipient_user_id' => \Yii::$app->user->identity->operator->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
+       
+        // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
+        //     Chat::MarkChatSeen($chat->id);
+        // }
+
         return $this->render('view', [
             'model' => $model,
             'quotations' => $quotations,
+            'chat' => $chat,
         ]);
     }
 
@@ -166,7 +174,7 @@ class DefaultController extends  Controller
         ]);
 
         return $this->render(
-            '_operator_lead_chat',
+            '_partner_lead_chat',
             [
                 'model' => $model,
                 'chat' => $chat,
