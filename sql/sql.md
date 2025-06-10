@@ -117,3 +117,11 @@ ALTER TABLE `master_animal` ADD `feature_image_path` VARCHAR(512) NULL DEFAULT N
 
 ALTER TABLE `master_animal` CHANGE `created_at` `created_at` INT NULL DEFAULT NULL, CHANGE `updated_at` `updated_at` INT NULL DEFAULT NULL, CHANGE `created_by` `created_by` INT NULL DEFAULT NULL, CHANGE `updated_by` `updated_by` INT NULL DEFAULT NULL;
 ALTER TABLE `master_animal` CHANGE `banner_image_path` `banner_path` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+
+
+
+
+-- params-local
+ 'airphone_api_token' => 'SmzZvu9pRpSC3evJWPao07odoooMk4CNkJRIDgedTqxQFpszqkBeoeWXxa58WxVE',
+    'airphone_api_host_url' => 'https://airphone.in',
+    'airphone_api_vnm' => '7935296377',
