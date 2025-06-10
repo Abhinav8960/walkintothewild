@@ -55,7 +55,7 @@ class DefaultController extends  Controller
     public function actionIndex()
     {
         $searchModel = new LeadSearch();
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams,\Yii::$app->user->identity->operator->id);
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
         // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
 
         return $this->render(
@@ -70,7 +70,7 @@ class DefaultController extends  Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $quotations = $model->getQuotation()->where(['partner_id'=>\Yii::$app->user->identity->operator->id])->all();
+        $quotations = $model->getQuotation()->where(['partner_id' => \Yii::$app->user->identity->operator->id])->all();
 
         $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
         // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
@@ -86,7 +86,7 @@ class DefaultController extends  Controller
 
     public function actionQuotation($id)
     {
-       
+
         $m = $this->findModel($id);
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
@@ -162,7 +162,7 @@ class DefaultController extends  Controller
             \Yii::$app->session->setFlash('danger', 'Chat Not Found!!!');
             return $this->redirect(Yii::$app->request->referrer);
         }
-       
+
         // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
         //     Chat::MarkChatSeen($chat->id);
         // }
@@ -183,5 +183,70 @@ class DefaultController extends  Controller
     }
 
 
+    public function actionSendMessage($user_handle, $chat_hash)
+    {
+        $login_user = $this->userinfo;
+        $individual_user = $this->individualuser($user_handle);
+        if (!$individual_user) {
+            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+        }
 
+        if (!empty($chat_hash)) {
+            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            if (empty($chat_model)) {
+                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+            }
+        }
+
+        $message = Yii::$app->request->post('message') ?? null;
+        $gallery  = NULL;
+        if (empty($message)) {
+            return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
+        }
+
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = NULL, $login_user);
+    }
+
+    
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
+    {
+
+        $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
+
+        if (is_array($data)) {
+            $data = json_encode($data);
+        }
+        $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
+
+        if ($login_user->partner) {
+            if ($chat->chat_type == 2) {
+                Chat::markChatStarted($chat, $login_user->partner->id);
+            }
+        }
+
+
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_id;
+        $chat_message->message = $message;
+        $chat_message->gallery = $gallery;
+        $chat_message->data = $data;
+        $chat_message->status = 1;
+        $chat_message->created_by = $this->userinfo->id;
+
+        if ($chat_message->save(false)) {
+            $chat = Chat::find()->where(['id' => $chat_id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
+            $chat->last_message_at = time();
+            $chat->sender_id = $this->userinfo->id;
+            $chat->call_id = null;
+            $chat->is_call_request = false;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            $chat->save(false);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send", 'chat_hash' => $chat->chat_hash]);
+        } else {
+            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
+        }
+    }
 }
