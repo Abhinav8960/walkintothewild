@@ -8,32 +8,32 @@ use common\models\chat\ChatMessage;
     <div class="inbox_msg">
         <div class="mesgs">
             <div class="msg_history">
-                <?php if ($chat) {
-                    foreach ($chat as $chatcontact) {
-                        if ($chats = $chatcontact->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
-                            foreach ($chats as $chat_message) {
-                                if ($chat_message->created_by == $safari_operator_model->user_id) {
+                <?php
+
+                if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
+                    foreach ($chats as $chat_message) {
+                        if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
                 ?>
-                                    <div class="incoming_msg">
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg">
-                                                <p><?= $chat_message->message ?></p>
-                                                <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                                            </div>
-                                        </div>
+                            <div class="incoming_msg">
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p><?= $chat_message->message ?></p>
+                                        <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
                                     </div>
-                                <?php } else { ?>
-                                    <div class="outgoing_msg">
-                                        <div class="sent_msg">
-                                            <p><?= $chat_message->message ?></p>
-                                            <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p><?= $chat_message->message ?></p>
+                                    <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                </div>
+                            </div>
                 <?php }
-                            }
-                        }
                     }
-                } ?>
+                }
+
+                ?>
             </div>
         </div>
     </div>

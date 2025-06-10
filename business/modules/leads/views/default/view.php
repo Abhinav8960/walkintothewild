@@ -93,11 +93,11 @@ AppAsset::register($this);
             </div>
         </div>
 
-        <div class="card">
-            <?php if ($chat) { ?>
-                <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
-            <?php } ?>
-        </div>
+
+        <?php if ($chat) { ?>
+            <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
+        <?php } ?>
+
 
     </div>
 
