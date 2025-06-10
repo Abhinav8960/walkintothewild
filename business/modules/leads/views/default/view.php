@@ -66,7 +66,7 @@ AppAsset::register($this);
 
             </tbody>
         </table>
-       <table class="table table-bordered">
+        <table class="table table-bordered">
             <thead>
                 <th>Lead Name</th>
                 <!-- <th>Email</th>
@@ -92,6 +92,12 @@ AppAsset::register($this);
 
             </div>
         </div>
+
+
+        <?php if ($chat) { ?>
+            <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
+        <?php } ?>
+
 
     </div>
 
