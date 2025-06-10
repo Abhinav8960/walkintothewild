@@ -160,6 +160,7 @@ class CallingService
             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
             $chat->last_message_at = time();
             $chat->call_id = $this->call_model->id;
+            $chat->is_call_request = false;
             $chat->sender_id = $this->call_initiated_user_id;
             $chat->status = 1;
             $chat->is_seen = 0;

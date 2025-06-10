@@ -184,6 +184,8 @@ class DefaultController extends RestController
             $chat_model->last_message = '';
             $chat_model->last_message_at = time();
             $chat_model->sender_id = $this->userinfo->id;
+            $chat_model->call_id = null;
+            $chat_model->is_call_request = false;
             $chat_model->status = 1;
             $chat_model->is_seen = 0;
             $chat_model->chat_type = 1;
@@ -195,18 +197,25 @@ class DefaultController extends RestController
         }
 
         $message = Yii::$app->request->post('message') ?? null;
-        $gallery_url = Yii::$app->request->post('gallery_url') ?? null;
-        if (empty($message) && empty($gallery_url)) {
+        $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
+        $gallery = NULL;
+        if (empty($message) && empty($gallery_slug)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
-        if (!empty($gallery_url)) {
+        if (!empty($gallery_slug)) {
             $message = "Gallery";
+            $this->layout = PartnerGallery::PARTNER_GALLERY_API_LAYOUT_FULL;
+            $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_slug])->one();
+            if ($partnerGallery) {
+                // Safely call toArray() if $gallery is not null
+                 $gallery = json_encode($partnerGallery->PrepareFullResponse());
+            }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery_url, $data = NULL, $login_user);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = NULL, $login_user);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery_url, $data = null, $login_user)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -226,7 +235,7 @@ class DefaultController extends RestController
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
-        $chat_message->gallery_url = $gallery_url;
+        $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
         $chat_message->created_by = $this->userinfo->id;
@@ -236,6 +245,8 @@ class DefaultController extends RestController
             $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
             $chat->last_message_at = time();
             $chat->sender_id = $this->userinfo->id;
+            $chat->call_id = null;
+            $chat->is_call_request = false;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
@@ -520,6 +531,7 @@ class DefaultController extends RestController
                 $chat_message->chat_id = $chat_model->id;
                 $chat_message->message = $message;
                 $chat_message->is_call_request = true;
+                $chat_message->call_id = NULL;
                 $chat_message->status = 1;
                 $chat_message->sender_id = $this->userinfo->id;
 
@@ -528,7 +540,8 @@ class DefaultController extends RestController
                     $chat = Chat::find()->where(['id' => $chat_model->id])->one();
                     $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
                     $chat->last_message_at = time();
-                    $chat_message->is_call_request = true;
+                    $chat->is_call_request = true;
+                    $chat->call_id = NULL;
                     $chat->sender_id = $this->userinfo->id;
                     $chat->status = 1;
                     $chat->is_seen = 0;

@@ -103,6 +103,8 @@ class PackageQuoteForm extends Model
             $chat->last_message = $short_msg;
             $chat->last_message_at = time();
             $chat->status = 1;
+            $chat->call_id = null;
+            $chat->is_call_request = false;
             $chat->chat_type = 2;
             $chat->package_id = $package_quote->package_id;
             $chat->quote_id = $package_quote->id;

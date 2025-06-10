@@ -619,6 +619,8 @@ class SiteController extends RestController
             if (!$headers->has('X-Rate-Limit-Reset')) {
                 $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
             }
+            $model->proceedforverification($this->auth_token, $user_model);
+
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Otp Sent on your mobile no, please check your mobile."]);
         }
 
