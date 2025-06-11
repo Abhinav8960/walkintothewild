@@ -548,6 +548,70 @@ class PartnerRegistrationController extends Controller
 
         $partner_model  = $this->findModel();
 
+        // if (($partner_model->is_phone_no_verified == true && $partner_model->legal_entity_phone == $model->mobile_no) || ($partner_model->is_kyc_phone_verified == true && $partner_model->kyc_phone == $model->mobile_no)) {
+        //     $headers = Yii::$app->response->headers;
+        //     if (!$headers->has('X-Rate-Limit-Remaining')) {
+        //         $headers->add('X-Rate-Limit-Remaining', 0);
+        //     }
+        //     if (!$headers->has('X-Rate-Limit-Reset')) {
+        //         $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
+        //     }
+        //     return \yii\helpers\Json::encode([
+        //         'success' => true,
+        //         'message' => 'Mobile No. already verified'
+        //     ]);
+        // }
+
+        $cache = Yii::$app->cache;
+        $rateLimitKey = 'mobile_verification_' . $model->user_id;
+        $rateLimitDuration = 300; // 5 minutes in seconds
+        $rateLimitMaxRequests = 4; // Maximum allowed requests in the time window
+        $blockDuration = 10800; // 3 hours in seconds
+
+        // Check rate limit
+        $requestCount = $cache->get($rateLimitKey);
+        $headers = Yii::$app->response->headers;
+
+        if ($requestCount === false) {
+            $cache->set($rateLimitKey, 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        } elseif ($requestCount >= $rateLimitMaxRequests) {
+            $blockKey = 'mobile_verification_block_' . $model->user_id;
+            $blockStatus = $cache->get($blockKey);
+
+            if ($blockStatus === false) {
+                $cache->set($blockKey, true, $blockDuration);
+            }
+            if (!$headers->has('Retry-After')) {
+                $headers->add('Retry-After', $blockDuration);
+            }
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
+            }
+
+            return \yii\helpers\Json::encode([
+                'error' => true,
+                'message' => 'Rate limit exceeded. Please try again later.'
+            ]);
+        } else {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        }
+
         if (Yii::$app->request->isPost) {
             $mobileNo = Yii::$app->request->post('mobile_no');
 
@@ -560,9 +624,17 @@ class PartnerRegistrationController extends Controller
                 }
                 $model->mobile_no = $mobileNo;
 
+                $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+                if (!$headers->has('X-Rate-Limit-Remaining')) {
+                    $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+                }
+                if (!$headers->has('X-Rate-Limit-Reset')) {
+                    $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+                }
+
                 if ($model->save(false)) {
                     $to_be_send = MobileVerification::find()->where(['mobile_no' => $mobileNo, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
-                    if($to_be_send != null){
+                    if ($to_be_send != null) {
                         new \common\events\user\MobileNoVerification($model->user_id, $model->mobile_no, $to_be_send->otp, $partner_model->legal_entity_name);
                     }
                     return \yii\helpers\Json::encode([
