@@ -1047,6 +1047,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																)) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
 					</li>
 				<?php } ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+
+
+					<li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
+																	"/galleryapproval/default/index",
+																)) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/img/grommet-icons_gallery.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Gallery Approval</span></a>
+					</li>
+				<?php } ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
 

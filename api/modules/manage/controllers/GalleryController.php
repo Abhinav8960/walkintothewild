@@ -53,7 +53,10 @@ class GalleryController extends RestController
                     'status-change' => ['POST'],
                     'update-sequence' => ['POST'],
                     'update-thumbnail' => ['POST'],
-                    'update-gallery-image' => ['POST']
+                    'update-gallery-image' => ['POST'],
+                    'edit-gallery' => ['POST'],
+                    'gallery-delete' => ['POST'],
+                    'send-for-approval' => ['POST']
                 ],
             ],
         ];
@@ -77,6 +80,7 @@ class GalleryController extends RestController
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
+        $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
 
         $model->attributes = $this->request;
         if ($model->validate()) {
@@ -167,7 +171,10 @@ class GalleryController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_image_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
+                $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+                if ($partner_gallery_model->save(false)) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
+                }
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Updated!!!"]);
         }
@@ -282,5 +289,20 @@ class GalleryController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Deleted Successfully!!!"]);
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Deleted!!!"]);
+    }
+
+    public function actionSendForApproval($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $partner_gallery_model->can_send_for_approval = PartnerGallery::SEND_FOR_APPROVAL;
+        if ($partner_gallery_model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Send For Approval!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Please Try Again!!!"]);
     }
 }

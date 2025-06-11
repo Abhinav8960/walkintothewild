@@ -16,12 +16,14 @@ class PartnerGalleryForm extends model
     public $status_option = [];
     public $partner_gallery_model;
 
+    public $can_send_for_approval;
 
-    public function __construct(PartnerGallery $partner_gallery_model = null)
+
+    public function __construct(?PartnerGallery $partner_gallery_model = null)
     {
 
         $this->partner_gallery_model = Yii::createObject([
-            'class' => PartnerGallery::className()
+            'class' => PartnerGallery::class
         ]);
 
 
@@ -44,7 +46,7 @@ class PartnerGalleryForm extends model
     {
         return [
             [['title', 'status'], 'required'],
-            [['status', 'safari_operator_id'], 'integer'],
+            [['status', 'safari_operator_id','can_send_for_approval'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'validateUniqueTitle'],
           
@@ -71,6 +73,7 @@ class PartnerGalleryForm extends model
     {
         $this->partner_gallery_model->title = $this->title;
         $this->partner_gallery_model->safari_operator_id = $this->safari_operator_id;
+        $this->partner_gallery_model->can_send_for_approval = $this->can_send_for_approval;
         $this->partner_gallery_model->status = $this->status;
     }
 

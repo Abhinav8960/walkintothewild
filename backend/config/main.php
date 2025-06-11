@@ -118,6 +118,9 @@ return [
         'userdeleterequest' => [
             'class' => 'backend\modules\userdeleterequest\Module',
         ],
+        'galleryapproval' => [
+            'class' => 'backend\modules\galleryapproval\Module',
+        ],
 
     ],
     'components' => [

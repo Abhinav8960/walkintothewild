@@ -208,7 +208,8 @@ class DefaultController extends RestController
             $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_slug])->one();
             if ($partnerGallery) {
                 // Safely call toArray() if $gallery is not null
-                 $gallery = json_encode($partnerGallery->PrepareFullResponse());
+                //  $gallery = json_encode($partnerGallery->PrepareFullResponse());
+                 $gallery = $partnerGallery->live_images;
             }
         }
 
