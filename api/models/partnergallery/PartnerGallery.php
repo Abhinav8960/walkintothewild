@@ -66,7 +66,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getGalleryActiveImages()
     {
-        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence'=>SORT_DESC]);
+        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence'=>SORT_ASC]);
     }
 
     public function PrepareFullResponse()
