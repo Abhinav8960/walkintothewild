@@ -99,7 +99,7 @@ return [
         'packageapproval' => [
             'class' => 'backend\modules\packageapproval\Module',
         ],
-        
+
         'compliancedocuments' => [
             'class' => 'backend\modules\compliancedocuments\Module',
         ],
@@ -120,6 +120,9 @@ return [
         ],
         'galleryapproval' => [
             'class' => 'backend\modules\galleryapproval\Module',
+        ],
+        'gallery' => [
+            'class' => 'backend\modules\gallery\Module',
         ],
 
     ],
