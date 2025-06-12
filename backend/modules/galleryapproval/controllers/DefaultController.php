@@ -5,6 +5,7 @@ namespace backend\modules\galleryapproval\controllers;
 use common\models\partnergallery\form\PartnerGalleryRejectionForm;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGallerySearch;
+use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\models\partnergalleryimage\PartnerGalleryImageSearch;
 use Yii;
 use yii\filters\AccessControl;
@@ -42,6 +43,7 @@ class DefaultController extends Controller
 
         $searchModel = new PartnerGalleryImageSearch();
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
+        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
