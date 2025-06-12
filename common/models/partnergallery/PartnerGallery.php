@@ -120,7 +120,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getGalleryActiveImages()
     {
-        return $this->hasMany(ApiPartnergalleryimage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_DESC]);
+        return $this->hasMany(ApiPartnergalleryimage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
     }
 
     public function PrepareFullResponse()
