@@ -116,7 +116,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by','is_lead_chat_open_for_user'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }

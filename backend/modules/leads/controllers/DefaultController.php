@@ -302,6 +302,7 @@ class DefaultController extends  Controller
             $chat->last_message_at = time();
             $chat->sender_id = $quotation->partner->user_id;
             $chat->quote_id = $quotation->id;
+            $chat->is_lead_chat_open_for_user = 1;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();

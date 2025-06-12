@@ -93,8 +93,14 @@ class DefaultController extends RestController
 
     public function actionQuatationChat()
     {
+        if(isset($this->userinfo->partner) && !empty($this->userinfo->partner)){
+            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+        }else{
+            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user'=>1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]),
+            'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "quotations");
@@ -196,6 +202,8 @@ class DefaultController extends RestController
             $chat_model->save(false);
         }
 
+
+
         $message = Yii::$app->request->post('message') ?? null;
         $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
         $gallery = NULL;
@@ -209,7 +217,7 @@ class DefaultController extends RestController
             if ($partnerGallery) {
                 // Safely call toArray() if $gallery is not null
                 //  $gallery = json_encode($partnerGallery->PrepareFullResponse());
-                 $gallery = $partnerGallery->live_images;
+                $gallery = $partnerGallery->live_images;
             }
         }
 
@@ -249,6 +257,13 @@ class DefaultController extends RestController
             $chat->call_id = null;
             $chat->is_call_request = false;
             $chat->status = 1;
+
+            // is_lead_chat_open_for_user
+            if ($chat->chat_type == Chat::CHAT_TYPE_QUOTE && $chat->recipient_user_id == $this->userinfo->id) {
+                $chat->is_lead_chat_open_for_user = 1;
+            }
+
+
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
@@ -544,6 +559,7 @@ class DefaultController extends RestController
                     $chat->is_call_request = true;
                     $chat->call_id = NULL;
                     $chat->sender_id = $this->userinfo->id;
+                    $chat->is_lead_chat_open_for_user = 1;
                     $chat->status = 1;
                     $chat->is_seen = 0;
                     $chat->created_at = time();
