@@ -133,3 +133,4 @@ ALTER TABLE `partner_gallery` DROP `safari_park_id`;
 
 -- Partner Gallery
 ALTER TABLE `partner_gallery` ADD `remark` VARCHAR(255) NULL DEFAULT NULL AFTER `slug`, ADD `can_send_for_approval` INT NULL DEFAULT '0' AFTER `remark`, ADD `live_images` LONGTEXT NULL DEFAULT NULL AFTER `can_send_for_approval`;
+ALTER TABLE `partner_gallery` CHANGE `can_send_for_approval` `can_send_for_approval` INT NULL DEFAULT '1';

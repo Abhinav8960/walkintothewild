@@ -24,10 +24,20 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
                 return (bool) $this->status;
             },
             'can_share' =>  function () {
-                return true;
+                return !empty($this->live_images) ?  true : false;
             },
-            'image_count' => function () {
+            'gallery_image_count' => function () {
                 return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+            },
+            'live_image_count' => function () {
+                if(!empty($this->live_images)){
+                   $c_arr =  json_decode($this->live_images,true);
+                   return $c_arr['image_count'] ?? 0;
+                }
+                return 0;
+            },
+            'can_send_for_approval' =>  function () {
+                return (bool) $this->can_send_for_approval;
             },
         ];
 
@@ -42,7 +52,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
         return $fields;
     }
 
-  
+
 
     public function getPrivate_url()
     {
@@ -66,20 +76,20 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getGalleryActiveImages()
     {
-        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence'=>SORT_ASC]);
+        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
     }
 
-    public function PrepareFullResponse()
-    {
-        return $arr = [
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'thumbnail' => $this->thumbnail,
-            'status' => (bool) $this->status,
-            'image_count' => $this->getGalleryActiveImages()->count(),
-            'images' => array_map(function ($image) {
-                return $image->toArray(); // Convert each related model to an array
-            }, $this->galleryActiveImages),
-        ];
-    }
+    // public function PrepareFullResponse()
+    // {
+    //     return $arr = [
+    //         'title' => $this->title,
+    //         'slug' => $this->slug,
+    //         'thumbnail' => $this->thumbnail,
+    //         'status' => (bool) $this->status,
+    //         'image_count' => $this->getGalleryActiveImages()->count(),
+    //         'images' => array_map(function ($image) {
+    //             return $image->toArray(); // Convert each related model to an array
+    //         }, $this->galleryActiveImages),
+    //     ];
+    // }
 }

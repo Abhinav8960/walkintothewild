@@ -24,7 +24,7 @@ class DefaultController extends Controller
     {
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        $searchModel->can_send_for_approval = PartnerGallery::SEND_FOR_APPROVAL;
+        $searchModel->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -35,7 +35,7 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
@@ -55,7 +55,7 @@ class DefaultController extends Controller
 
     public function actionApproved($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
@@ -71,7 +71,7 @@ class DefaultController extends Controller
 
     public function actionReject($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);

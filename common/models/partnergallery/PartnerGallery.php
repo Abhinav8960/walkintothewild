@@ -27,8 +27,8 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
 {
     use CommanRelationship;
 
-    const SEND_FOR_APPROVAL = 1;
-    const DEFAULT_APPROVAL_STATUS = 0;
+    const CANNOT_SEND_FOR_APPROVAL = 0;
+    const DEFAULT_APPROVAL_STATUS = 1;
 
     /**
      * {@inheritdoc}
