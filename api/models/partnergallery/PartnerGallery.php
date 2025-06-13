@@ -43,7 +43,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
                 return (bool) $this->can_send_for_approval;
             },
             'gallery_status_label' => function () {
-                return $this->can_send_for_approval == 1 ? "Send for Approval" : "Draft";
+                return $this->can_send_for_approval == 1 ? "Send for Approval" : NULL;
             }
         ];
 
