@@ -298,6 +298,9 @@ class GalleryController extends RestController
         if (!$partner_gallery_model) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
         }
+        if ($partner_gallery_model->can_send_for_approval == PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "This gallery already send for approval!!!"]);
+        }
 
         $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
         if ($partner_gallery_model->save(false)) {
