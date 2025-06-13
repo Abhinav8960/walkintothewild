@@ -4,10 +4,10 @@
 /** @var string $content */
 
 use business\assets\AppAsset;
-use business\assets\NovaAppAsset;
+use business\assets\PartnerAppAsset;
 use common\assets\NotifyAsset;
 
-NovaAppAsset::register($this);
+PartnerAppAsset::register($this);
 AppAsset::register($this);
 NotifyAsset::register($this);
 
