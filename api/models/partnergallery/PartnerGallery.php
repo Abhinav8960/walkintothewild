@@ -42,7 +42,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             'can_edit' =>  function () {
                 return (bool) $this->can_send_for_approval;
             },
-            'gallery_status' => function () {
+            'gallery_status_label' => function () {
                 return $this->can_send_for_approval == 1 ? "Send for Approval" : "Draft";
             }
         ];
