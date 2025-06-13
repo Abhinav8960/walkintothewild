@@ -7,10 +7,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
             <div class="profile-ditails d-flex justify-content-around align-items-center">
                 <div class="pro-img me-3">
                     <a href="/">
-                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  desktop-logo" alt="logo">
-                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  desktop-dark" alt="logo">
-                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  mobile-logo" alt="logo">
-                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  mobile-dark" alt="logo">
+                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" alt="">
                         <span class="success-online"></span>
                     </a>
                 </div>
@@ -40,12 +37,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
                 <span class="hide-slide-menu"> My Packages</span>
             </a>
         </li>
-        <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a href="" class="navLinks  d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> My Fixed Departures</span>
             </a>
-        </li>
+        </li> -->
         <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                     "/sightings/default/index",
@@ -75,7 +72,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                 <span class="hide-slide-menu"> Gallery</span>
             </a>
         </li>
-        <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> Reports</span>
@@ -86,7 +83,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> Settings</span>
             </a>
-        </li>
+        </li> -->
 
         <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
