@@ -2,6 +2,7 @@
 
 namespace common\models\partnergallery;
 
+use api\models\partnergalleryimage\PartnerGalleryImage as ApiPartnergalleryimage;
 use common\models\park\SafariPark;
 use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\traits\CommanRelationship;
@@ -25,6 +26,9 @@ use yii\behaviors\SluggableBehavior;
 class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+
+    const CANNOT_SEND_FOR_APPROVAL = 0;
+    const DEFAULT_APPROVAL_STATUS = 1;
 
     /**
      * {@inheritdoc}
@@ -71,8 +75,8 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         return [
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['safari_operator_id', 'title', 'safari_park_id', 'slug'], 'required'],
-            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'title', 'slug'], 'required'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
@@ -87,7 +91,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'id' => 'ID',
             'safari_operator_id' => 'Safari Operator ID',
             'title' => 'Title',
-            'safari_park_id' => 'Safari Park ID',
             'slug' => 'Slug',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -95,11 +98,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getPark_label()
-    {
-        return $this->hasOne(SafariPark::class, ['id' => 'safari_park_id']);
     }
 
     public function getGallery_count()
@@ -118,5 +116,24 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             return Yii::$app->params['s3_endpoint'] . '/' . $model->filepath;
         }
         return null;
+    }
+
+    public function getGalleryActiveImages()
+    {
+        return $this->hasMany(ApiPartnergalleryimage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
+    }
+
+    public function PrepareFullResponse()
+    {
+        return $arr = [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'thumbnail' => $this->thumbnail,
+            'status' => (bool) $this->status,
+            'image_count' => $this->getGalleryActiveImages()->count(),
+            'images' => array_map(function ($image) {
+                return $image->toArray();
+            }, $this->galleryActiveImages),
+        ];
     }
 }

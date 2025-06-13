@@ -162,6 +162,7 @@ class CallingService
             $chat->call_id = $this->call_model->id;
             $chat->is_call_request = false;
             $chat->sender_id = $this->call_initiated_user_id;
+            $chat->is_lead_chat_open_for_user = 1;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();

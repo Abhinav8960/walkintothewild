@@ -49,7 +49,6 @@ ALTER TABLE `chat_message` ADD `gallery_url` VARCHAR(512) NULL DEFAULT NULL AFTE
 
 ALTER TABLE `chat_message` CHANGE `message` `message` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
-
 ALTER TABLE `lead` ADD `user_notes` VARCHAR(1000) NULL DEFAULT NULL AFTER `addional_notes`;
 
 ALTER TABLE `sms_log` ADD `report_status` VARCHAR(100) NULL DEFAULT NULL AFTER `is_deliver`, ADD `report_status_datetime` DATETIME NULL DEFAULT NULL AFTER `report_status`;
@@ -95,15 +94,6 @@ ALTER TABLE `chat_message` ADD `is_call_request` BOOLEAN NOT NULL DEFAULT FALSE 
 -- 8 June
 ALTER TABLE `safari_operator` ADD `is_phone_no_verified` BOOLEAN NOT NULL DEFAULT FALSE AFTER `phone_no`;
 
-
---9 june
----partner registration verification added columns
-
-ALTER TABLE `partner_registration` ADD `is_legal_entity_phone_verified` TINYINT NULL DEFAULT '0' AFTER `legal_entity_phone`;
-ALTER TABLE `partner_registration` ADD `is_billing_mail_verified` TINYINT NULL DEFAULT '0' AFTER `billing_mail`;
-INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'OTPV', 'Otp Email Verification', 'emailotpverification-html', '1', '1730710897', '30', '1730710897', '30')
-ALTER TABLE `partner_registration` ADD `is_kyc_phone_verified` TINYINT NULL DEFAULT '0' AFTER `kyc_phone`;
-ALTER TABLE `partner_registration` CHANGE `is_legal_entity_phone_verified` `is_phone_no_verified` TINYINT NULL DEFAULT '0';
 -- 9 june
 ALTER TABLE `chat_message` CHANGE `gallery_url` `gallery` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
@@ -113,38 +103,21 @@ ALTER TABLE `chat_message` CHANGE `gallery_url` `gallery` TEXT CHARACTER SET utf
 
 
 
-
+--------CMS Upload Sql
+--Banner
 ALTER TABLE `banner` ADD `image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `image`, ADD `original_image_name` VARCHAR(512) NULL DEFAULT NULL AFTER `image_path`;
 --Frontend Banner
 ALTER TABLE `master_frontend_banner` ADD `frontend_banner_path` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner`, ADD `frontend_banner_name` VARCHAR(512) NULL DEFAULT NULL AFTER `frontend_banner_path`;
 ALTER TABLE `master_frontend_banner` ADD `created_at` INT NULL DEFAULT NULL AFTER `status`, ADD `created_by` INT NULL DEFAULT NULL AFTER `created_at`, ADD `updated_at` INT NULL DEFAULT NULL AFTER `created_by`, ADD `updated_by` INT NULL DEFAULT NULL AFTER `updated_at`;
 
+------Master
+--Vehicle
 ALTER TABLE `master_vehicle` ADD `icon_path` VARCHAR(512) NULL DEFAULT NULL AFTER `icon`, ADD `original_icon_name` VARCHAR(512) NULL DEFAULT NULL AFTER `icon_path`;
 ALTER TABLE `master_vehicle` CHANGE `created_at` `created_at` INT NULL DEFAULT NULL, CHANGE `updated_at` `updated_at` INT NULL DEFAULT NULL, CHANGE `created_by` `created_by` INT NULL DEFAULT NULL, CHANGE `updated_by` `updated_by` INT NULL DEFAULT NULL;
 
+--Rare Animal
 ALTER TABLE `master_animal` ADD `banner_image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `banner`, ADD `original_banner_name` VARCHAR(512) NULL DEFAULT NULL AFTER `banner_image_path`;
 ALTER TABLE `master_animal` ADD `feature_image_path` VARCHAR(512) NULL DEFAULT NULL AFTER `feature_image`, ADD `original_feature_image_name` VARCHAR(512) NULL DEFAULT NULL AFTER `feature_image_path`;
 
 ALTER TABLE `master_animal` CHANGE `created_at` `created_at` INT NULL DEFAULT NULL, CHANGE `updated_at` `updated_at` INT NULL DEFAULT NULL, CHANGE `created_by` `created_by` INT NULL DEFAULT NULL, CHANGE `updated_by` `updated_by` INT NULL DEFAULT NULL;
 ALTER TABLE `master_animal` CHANGE `banner_image_path` `banner_path` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
-
-
-
-
--- params-local
- 'airphone_api_token' => 'SmzZvu9pRpSC3evJWPao07odoooMk4CNkJRIDgedTqxQFpszqkBeoeWXxa58WxVE',
-    'airphone_api_host_url' => 'https://airphone.in',
-    'airphone_api_vnm' => '7935296377',
-
-
-
-ALTER TABLE `partner_gallery` DROP `safari_park_id`;
-
-
--- Partner Gallery
-ALTER TABLE `partner_gallery` ADD `remark` VARCHAR(255) NULL DEFAULT NULL AFTER `slug`, ADD `can_send_for_approval` INT NULL DEFAULT '0' AFTER `remark`, ADD `live_images` LONGTEXT NULL DEFAULT NULL AFTER `can_send_for_approval`;
-ALTER TABLE `partner_gallery` CHANGE `can_send_for_approval` `can_send_for_approval` INT NULL DEFAULT '1';
-
-
-ALTER TABLE `chat` ADD `is_lead_chat_open_for_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`;
-UPDATE `chat` SET `is_lead_chat_open_for_user`=1;

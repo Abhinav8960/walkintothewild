@@ -109,8 +109,7 @@ class RestController extends Controller
         $accessToken = NULL;
         if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
             $accessToken = $matches[1];
-        } 
-        elseif (isset($_GET['access_token'])) {
+        } elseif (isset($_GET['access_token'])) {
             $accessToken = $_GET['access_token'];
         } elseif (isset($_GET['access-token'])) {
             $accessToken = $_GET['access-token'];
@@ -135,6 +134,48 @@ class RestController extends Controller
                 \Yii::$app->params['active_user_id'] = $this->userinfoId = $this->userinfo->id;
             }
         }
+    }
+
+    protected function dataProviderSenderwithaddionalKey($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search", $addtionalKeys = [])
+    {
+        // print_r($additionalSearchQueryParams);
+        // die();
+        $data = [];
+        $searchModel->load(\Yii::$app->request->queryParams);
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+        if (!empty($additionalSearchQueryParams)) {
+            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams, implode(", ", $additionalSearchQueryParams));
+        } else {
+            $dataProvider = $searchModel->$searchfunction(\Yii::$app->request->queryParams);
+        }
+
+        if ($paginationNeededAsPerQuery == 1) {
+            if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+                $dataProvider->pagination = false;
+            }
+        }
+
+        // print_r($dataProvider->pagination);
+
+        // die();
+        if ($dataProvider->pagination && $singleRecord == false) {
+
+            $dataProvider->pagination->pageSize = $this->pageSize;
+            $dataProvider->pagination->validatePage = false;
+
+
+            $data[$rootIndexName]['summary']['total'] = (int) $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] =  \Yii::$app->request->get('page') ? (int) \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] = (int) $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = (int) ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+        if (count($addtionalKeys) > 0) {
+            foreach ($addtionalKeys as $key => $addtionalKey) {
+                $data[$rootIndexName][$key] = $addtionalKey;
+            }
+        }
+
+        return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
     }
 
 
