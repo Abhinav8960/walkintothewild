@@ -196,7 +196,7 @@ class GalleryController extends RestController
         $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
+        return $this->dataProviderSenderwithaddionalKey($searchModel, $rootIndexName = "partner_gallery_images", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search", $addtionalKeys = ["gallery" => $partner_gallery_model]);
     }
 
     public function actionStatusChange($slug, $id)
