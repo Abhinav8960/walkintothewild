@@ -202,8 +202,8 @@ use common\models\GeneralModel;
                               </div>
                               <div class="coLike d-flex justify-content-between">
                                 <?php if (!empty($operator_quotes)) { ?>
-                                  <a href=""><?= isset($operator_quotes['quote_count']) ? $operator_quotes['quote_count'] : '' ?></a> <!--not rendering properly-->
-                                <?php } ?>
+                                    <a href=""><?= isset($operator_quotes['quote_count']) ? $operator_quotes['quote_count'] : '' ?></a> <!--not rendering properly-->
+                                  <?php } ?>
                               </div>
                             </div>
                           </div>
@@ -238,17 +238,17 @@ use common\models\GeneralModel;
               <p>Monthly Quote Requests</p>
             </div>
             <!-- <div class="bodySectionParent"> -->
-            <!-- <div class="sideNumbers">
+              <!-- <div class="sideNumbers">
                           <p class="sideQuteno pb-3">300</p>
                           <p class="sideQuteno pb-3">300</p>
                           <p class="sideQuteno pb-3">300</p>
                           <p class="sideQuteno pb-3">300</p>
                           <p class="sideQuteno pb-3">300</p>
                         </div> -->
-            <!-- <div class="quote-chart"> -->
+              <!-- <div class="quote-chart"> -->
 
 
-            <!-- <div class="chart-area">
+                <!-- <div class="chart-area">
                   <div class="y-axis-labels">
                     <span style="bottom: 25px;">0</span>
                     <span style="bottom: 70px;">50</span>
@@ -275,13 +275,13 @@ use common\models\GeneralModel;
                     </div>
                   </div>
                 </div> -->
-            <!-- </div>
+              <!-- </div>
 
 
 
             </div> -->
             <div class="mb-2 px-5 pt-3 text-fade">
-              <p>Comming Soon</p>
+            <p>Comming Soon</p>
             </div>
           </div>
         </div>
@@ -294,6 +294,7 @@ use common\models\GeneralModel;
           </div>
           <div class="userMain d-flex Flex-1 gap-2  py-3 px-4">
             <div class="userProfile">
+
             </div>
             <div class="userName">
               <a href="">Username 1</a>
@@ -302,6 +303,7 @@ use common\models\GeneralModel;
           </div>
           <div class="userMain d-flex Flex-1 gap-2  py-3 px-4">
             <div class="userProfile">
+
             </div>
             <div class="userName">
               <a href="">Username 1</a>
@@ -310,6 +312,7 @@ use common\models\GeneralModel;
           </div>
           <div class="userMain d-flex Flex-1 gap-2  py-3 px-4">
             <div class="userProfile">
+
             </div>
             <div class="userName">
               <a href="">Username 1</a>
@@ -318,6 +321,7 @@ use common\models\GeneralModel;
           </div>
           <div class="userMain d-flex Flex-1 gap-2  py-3 px-4">
             <div class="userProfile">
+
             </div>
             <div class="userName">
               <a href="">Username 1</a>
@@ -326,6 +330,7 @@ use common\models\GeneralModel;
           </div>
           <div class="userMain d-flex Flex-1 gap-2  py-3 px-4">
             <div class="userProfile">
+
             </div>
             <div class="userName">
               <a href="">Username 1</a>

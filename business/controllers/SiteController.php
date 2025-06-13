@@ -105,8 +105,6 @@ class SiteController extends Controller
        
         $operator_quotes = OperatorQuote::find()->select(['id', 'quote_count' => new Expression('COUNT(*)')])->where(['id' => $park_ids, 'status' => OperatorQuote::STATUS_ACTIVE])->groupBy('id')->asArray()->all();
         
-
-        $recent_requests = SafariOperatorRequest::find()->where(['safari_operator_id'=>$safarioperator->id,'status'=>SafariOperator::STATUS_ACTIVE])->limit(5)->all();
         return $this->render('index',[
             'leads'=>$leads,
             'posts'=>$posts,
@@ -114,7 +112,6 @@ class SiteController extends Controller
             'packages'=>$packages,
             'demanding_parks'=>$demanding_parks,
             'operator_quotes'=>$operator_quotes,
-            'recent_requests'=>$recent_requests,
         ]);
     }
 
