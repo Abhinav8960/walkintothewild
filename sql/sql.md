@@ -127,3 +127,24 @@ ALTER TABLE `master_animal` ADD `feature_image_path` VARCHAR(512) NULL DEFAULT N
 
 ALTER TABLE `master_animal` CHANGE `created_at` `created_at` INT NULL DEFAULT NULL, CHANGE `updated_at` `updated_at` INT NULL DEFAULT NULL, CHANGE `created_by` `created_by` INT NULL DEFAULT NULL, CHANGE `updated_by` `updated_by` INT NULL DEFAULT NULL;
 ALTER TABLE `master_animal` CHANGE `banner_image_path` `banner_path` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+
+
+
+
+-- params-local
+ 'airphone_api_token' => 'SmzZvu9pRpSC3evJWPao07odoooMk4CNkJRIDgedTqxQFpszqkBeoeWXxa58WxVE',
+    'airphone_api_host_url' => 'https://airphone.in',
+    'airphone_api_vnm' => '7935296377',
+
+
+
+ALTER TABLE `partner_gallery` DROP `safari_park_id`;
+
+
+-- Partner Gallery
+ALTER TABLE `partner_gallery` ADD `remark` VARCHAR(255) NULL DEFAULT NULL AFTER `slug`, ADD `can_send_for_approval` INT NULL DEFAULT '0' AFTER `remark`, ADD `live_images` LONGTEXT NULL DEFAULT NULL AFTER `can_send_for_approval`;
+ALTER TABLE `partner_gallery` CHANGE `can_send_for_approval` `can_send_for_approval` INT NULL DEFAULT '1';
+
+
+ALTER TABLE `chat` ADD `is_lead_chat_open_for_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`;
+UPDATE `chat` SET `is_lead_chat_open_for_user`=1;

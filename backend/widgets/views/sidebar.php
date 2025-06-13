@@ -855,6 +855,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operatorapproval/default/index",
 															"/operatorapproval/default/view",
 														)) ? "active" : "" ?>" href="/operatorapproval/default/index">Operator approval List</a></li>
+							<li class="side-menu__label1"><a href="javascript:void(0);">Gallery List</a></li>
+							<li class="slide"><a class="slide-item <?= in_array($active_url, array(
+																		"/gallery/default/index",
+																	)) ? "active" : "" ?>" href="/gallery/default/index">Gallery List</a>
+							</li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 																"/operator/birding-operator/index",
 																"/operator/birding-operator/index/view",

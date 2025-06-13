@@ -16,8 +16,8 @@ class PartnerGallerySearch extends PartnerGallery
     public function rules()
     {
         return [
-            [['safari_operator_id', 'title', 'safari_park_id'], 'safe'],
-            [['safari_operator_id', 'safari_park_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'title'], 'safe'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval'], 'integer'],
         ];
     }
 
@@ -59,6 +59,7 @@ class PartnerGallerySearch extends PartnerGallery
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
+            'can_send_for_approval' => $this->can_send_for_approval,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

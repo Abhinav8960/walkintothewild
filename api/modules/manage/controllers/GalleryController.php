@@ -34,10 +34,10 @@ class GalleryController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
+                'only' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery', 'gallery-delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery'],
+                        'actions' => ['index', 'gallery-images', 'create', 'create-gallery', 'status-change', 'update-sequence', 'update-thumbnail', 'update-gallery-image', 'edit-gallery', 'gallery-delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,7 +53,10 @@ class GalleryController extends RestController
                     'status-change' => ['POST'],
                     'update-sequence' => ['POST'],
                     'update-thumbnail' => ['POST'],
-                    'update-gallery-image' => ['POST']
+                    'update-gallery-image' => ['POST'],
+                    'edit-gallery' => ['POST'],
+                    'gallery-delete' => ['POST'],
+                    'send-for-approval' => ['POST']
                 ],
             ],
         ];
@@ -77,6 +80,7 @@ class GalleryController extends RestController
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
+        $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
 
         $model->attributes = $this->request;
         if ($model->validate()) {
@@ -167,7 +171,10 @@ class GalleryController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_image_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
+                $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+                if ($partner_gallery_model->save(false)) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
+                }
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Updated!!!"]);
         }
@@ -189,7 +196,7 @@ class GalleryController extends RestController
         $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_images");
+        return $this->dataProviderSenderwithaddionalKey($searchModel, $rootIndexName = "partner_gallery_images", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search", $addtionalKeys = ["gallery" => $partner_gallery_model]);
     }
 
     public function actionStatusChange($slug, $id)
@@ -206,13 +213,9 @@ class GalleryController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Image Not Found!!!"]);
         }
 
-        $model->status = !$model->status;
+        $model->status = PartnerGalleryImage::STATUS_SUSPEND;
         if ($model->save(false)) {
-            if ($model->status == 0) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
-            } else {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Image is Active!!!"]);
-            }
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
         }
 
 
@@ -271,5 +274,35 @@ class GalleryController extends RestController
         }
 
         return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Please Try Again!!!"]);
+    }
+
+    public function actionGalleryDelete($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+        $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
+        if ($partner_gallery_model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Deleted Successfully!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Deleted!!!"]);
+    }
+
+    public function actionSendForApproval($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        if ($partner_gallery_model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Send For Approval!!!"]);
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Please Try Again!!!"]);
     }
 }
