@@ -25,42 +25,45 @@ NotifyAsset::register($this);
     <?php $this->head() ?>
 </head>
 
-<body class="ltr main-body app sidebar-mini">
+
+<body>
     <?php $this->beginBody() ?>
 
-    <div class="page">
+    <div class="container-scroller">
 
         <div>
-            <!-- /main-header -->
-            <?= \business\widgets\Header::widget() ?>
-            <!-- /main-header -->
-
             <!-- main-sidebar -->
             <?= \business\widgets\Sidebar::widget() ?>
             <!-- main-sidebar -->
         </div>
         <!-- START #content -->
+        <header class="container-fluid main-header">
 
-        <!-- main-content -->
-        <div class="main-content app-content">
+            <!-- main-content -->
+            <div class="main-pannel mt-4">
 
-            <!-- container -->
-            <div class="main-container container-fluid">
-                <?= \business\widgets\PageHeader::widget([
-                    'title' => isset($this->params['title']) ? $this->params['title'] : '',
-                    'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
-                ]) ?>
+                <!-- /main-header -->
+                <?= \business\widgets\Header::widget() ?>
+                <!-- /main-header -->
+
+                <!-- container -->
+                <div class="container-fluid">
+                    <?= \business\widgets\PageHeader::widget([
+                        'title' => isset($this->params['title']) ? $this->params['title'] : '',
+                        'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
+                    ]) ?>
 
 
-                <?= $content ?>
+                    <?= $content ?>
+                </div>
             </div>
-        </div>
 
 
-        <!-- END #content -->
-        <?= \common\widgets\NotifyAlert::widget() ?>
+            <!-- END #content -->
+            <?= \common\widgets\NotifyAlert::widget() ?>
 
-        <!-- END Setting -->
+            <!-- END Setting -->
+        </header>
     </div>
     <!-- END #app -->
     <?php $this->endBody() ?>

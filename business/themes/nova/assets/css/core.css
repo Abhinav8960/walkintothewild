@@ -1,0 +1,237 @@
+.container-scroller .side_bar {
+  background-color: #fff !important;
+  border: 1px solid #e7e7e7;
+}
+.container-scroller .nav .nav-icon {
+  background-color: transparent !important;
+}
+
+.container-scroller .nav {
+  background-color: #fff !important;
+}
+.container-scroller .main-header .navbar {
+  background-color: #fff !important;
+}
+.nav-right .nav-item i {
+  color: #000000 !important;
+}
+.nav-right .nav-item .dropdoen-detail-profile p {
+  color: #152f1b !important;
+}
+.container-scroller .main-header .navbar .navbar-menu-wrapper button {
+  color: #152f1b !important;
+}
+.nav-right .nav-item .dorpdown-profile img {
+  width: 30px !important;
+  height: 30px !important;
+}
+.container-scroller .main-header .main-pannel {
+  background-color: #f5f7fb !important;
+}
+.container-scroller .nav .nav-item {
+  color: #000000 !important;
+}
+.container-scroller .nav {
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin-bottom: 60px;
+  padding: 14px !important;
+  padding-top: 40px !important;
+  width: 100% !important;
+  background: #191c24;
+}
+.collapsed-sidebar .nav {
+  padding-left: 2px !important;
+}
+
+.collapsed-sidebar .navLinks.active {
+  background: transparent;
+}
+
+.navItems .navLinks.active {
+  padding: 8px 16px;
+  border-radius: 16px;
+  color: #99ff33;
+}
+.navItems .navLinks {
+  padding: 8px 16px;
+  color: #848a90;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+}
+.navItems i {
+  color: #99ff33 !important;
+}
+.nav-right .nav-item .nav-link {
+  margin-left: 0rem !important;
+}
+.mainCard {
+  background-color: #fff;
+  border-radius: 16px;
+}
+.iconsDiv {
+  width: 25px;
+  height: 25px;
+  background-color: #e5efff;
+  border-radius: 16px;
+}
+
+.iconsDiv i {
+  color: #0959e2;
+  font-size: 10px;
+}
+.text-card p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #848a90;
+}
+.numbwrCount h3 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #111111;
+}
+.mainParent {
+  border-radius: 12px !important;
+  background-color: #fff;
+  padding: 10px;
+}
+.mainParent img {
+  border-radius: 12px;
+}
+.topHead p {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+}
+.topHead a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+}
+.subtitle p {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 600;
+}
+.coLike a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #848a90;
+}
+.cadplaform {
+  background-color: #c4e3bd;
+  padding: 15px;
+  border-radius: 16px;
+}
+.cadplaform .headbg {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+}
+.cadplaform p {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111111;
+}
+.cadplaform a {
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111111;
+  border-radius: 8px;
+}
+.progressBar {
+  background: #fff;
+  border-radius: 16px;
+}
+.montlyQouteHeader p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+}
+.bodySectionParent .sideNumbers .sideQuteno {
+  font-size: 12px;
+  color: #848a90;
+}
+.boradUserParent {
+  background: #fff;
+  border-radius: 16px;
+}
+.userMain .userProfile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #000000;
+}
+.userName a {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+}
+.userName p {
+  font-size: 12px;
+  color: #848a90;
+}
+.quote-chart {
+  padding: 0px 16px 16px 16px;
+  border-radius: 12px;
+}
+
+.chart-area {
+  position: relative;
+  display: flex;
+}
+
+.y-axis-labels {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 275px;
+  width: 30px;
+}
+
+.y-axis-labels span {
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  color: #848a90;
+  transform: translateY(50%);
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 275px;
+  padding-left: 10px;
+  margin-left: 20px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.fill {
+  width: 100%;
+  border-radius: 8px;
+  background-color: #a4d4a3;
+  transition: 0.3s ease;
+}
+
+.fill.active {
+  background-color: #0b2e1e;
+}
+
+.bar span {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #848a90;
+}

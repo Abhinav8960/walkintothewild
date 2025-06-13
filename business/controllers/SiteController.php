@@ -2,6 +2,7 @@
 
 namespace business\controllers;
 
+use api\models\operator\SafariOperator as OperatorSafariOperator;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -9,9 +10,20 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use business\components\AuthHandler;
 use common\models\CustomLoginForm;
+use common\models\leads\Lead;
 use common\models\MailLog;
+use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
+use common\models\package\Package;
+use common\models\park\SafariPark;
+use common\models\registration\SafariOperatorRequest;
 use common\models\RestrictedFiles;
+use common\models\sighting\Sighting;
+use common\models\User;
+use common\models\UserPosts;
+use Google\Service\Blogger\Resource\Posts;
+use yii\db\Expression;
 use yii\web\Response;
 
 /**
@@ -80,7 +92,30 @@ class SiteController extends Controller
         if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->exists()) {
             return $this->redirect(['/partner-registration/deactivate']);
         }
-        return $this->render('index');
+
+        $safarioperator = SafariOperator::find()->where(['user_id'=>Yii::$app->user->identity->id,'status'=>SafariOperator::STATUS_ACTIVE])->one();
+        $leads = Lead::find()->where(['operator_id'=>$safarioperator->id,'status'=>Lead::STATUS_ACTIVE])->count();
+        $posts = UserPosts::find()->where(['safari_operator_id'=>$safarioperator->id,'status'=>UserPosts::STATUS_ACTIVE])->orderBy(['id'=>SORT_DESC])->limit(2)->all();
+        $sightings = Sighting::find()->where(['safari_operator_id'=>$safarioperator->id,'status'=>Sighting::STATUS_ACTIVE])->orderBy(['id'=>SORT_DESC])->limit(3)->all();
+        $packages = Package::find()->where(['owned_by_id'=>$safarioperator->id,'status'=>Package::STATUS_ACTIVE])->orderBy(['id'=>SORT_DESC])->limit(2)->all();
+
+        $parks_count = SafariOperatorPark::find()->select(['park_id', 'count' => new Expression('COUNT(*)')])->where(['safari_operator_id'=>$safarioperator->id,'status'=>SafariOperatorPark::STATUS_ACTIVE])->groupBy('park_id')->orderBy(['count' => SORT_DESC])->limit(2)->asArray()->all();
+        $park_ids = array_column($parks_count, 'park_id');
+        $demanding_parks = SafariPark::find()->where(['id' =>$park_ids])->andWhere(['status' =>SafariPark::STATUS_ACTIVE])->all();
+       
+        $operator_quotes = OperatorQuote::find()->select(['id', 'quote_count' => new Expression('COUNT(*)')])->where(['id' => $park_ids, 'status' => OperatorQuote::STATUS_ACTIVE])->groupBy('id')->asArray()->all();
+        
+
+        $recent_requests = SafariOperatorRequest::find()->where(['safari_operator_id'=>$safarioperator->id,'status'=>SafariOperator::STATUS_ACTIVE])->limit(5)->all();
+        return $this->render('index',[
+            'leads'=>$leads,
+            'posts'=>$posts,
+            'sightings'=>$sightings,
+            'packages'=>$packages,
+            'demanding_parks'=>$demanding_parks,
+            'operator_quotes'=>$operator_quotes,
+            'recent_requests'=>$recent_requests,
+        ]);
     }
 
     /**

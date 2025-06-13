@@ -1,106 +1,98 @@
-<!-- BEGIN #sidebar -->
 <?php
 $active_url = "/" . Yii::$app->requestedRoute;
 ?>
-
-<!-- main-sidebar -->
-<div class="sticky">
-    <aside class="app-sidebar ">
-        <div class="main-sidebar-header active" style="background: #F7BF39 !important;">
-            <a class="header-logo active" href="/">
-                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  desktop-dark" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-logo" alt="logo">
-                <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="main-logo  mobile-dark" alt="logo">
+<nav class="side_bar sidebar-offcanvas d-flex justify-content-center">
+    <ul class="nav">
+        <li class="nav-item-profile d-flex justify-content-between align-items-center nav-item mb-5">
+            <div class="profile-ditails d-flex justify-content-around align-items-center">
+                <div class="pro-img me-3">
+                    <a href="/">
+                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  desktop-logo" alt="logo">
+                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  desktop-dark" alt="logo">
+                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  mobile-logo" alt="logo">
+                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" class="main-logo  mobile-dark" alt="logo">
+                        <span class="success-online"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="navItems mb-2">
+            <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url,["/"]) ? "active" : "" ?>">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Dashboard</span>
             </a>
-        </div>
-        <div class="main-sidemenu">
-            <div class="slide-left disabled" id="slide-left"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
-            <ul class="side-menu">
-
-                <li class="slide">
-                    <a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
-                </li>
-
-                <li class="slide">
-                    <a class="side-menu__item <?= in_array($active_url, array(
-                                                    "/package/default/index",
-                                                    "/package/default/create",
-                                                )) ? "active" : "" ?>" href="/package/default/index"><img src="<?= $this->params['baseurl'] ?>/img/package.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">My Packages</span></a>
-                </li>
-
-                <li class="slide">
-                    <a class="side-menu__item <?= in_array($active_url, array(
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                     "/leads/default/index",
                                                     "/leads/default/create",
-                                                )) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
-                </li>
-
-                <li class="slide">
-                    <a class="side-menu__item <?= in_array($active_url, array(
+                                                )) ? "active" : "" ?>" href="/leads/default/index">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Leads</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                    "/package/default/index",
+                                                    "/package/default/create",
+                                                )) ? "active" : "" ?>" href="/package/default/index">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> My Packages</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a href="" class="navLinks  d-flex align-items-center">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> My Fixed Departures</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                     "/sightings/default/index",
                                                     "/sightings/default/create",
-                                                )) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
-                </li>
-
-
-                <li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
+                                                )) ? "active" : "" ?>" href="/sightings/default/index">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Sightings</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/posts/default/index",
                                                                 "/posts/default/create",
 
-                                                            )) ? "active" : "" ?>" href="/posts/default/index"><img src="<?= $this->params['baseurl'] ?>/img/post.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Posts</span></a>
-                </li>
-
-                <li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
+                                                            )) ? "active" : "" ?>" href="/posts/default/index">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Posts</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/gallery/default/index",
                                                                 "/gallery/default/create",
 
-                                                            )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/img/grommet-icons_gallery.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Gallery</span></a>
-                </li>
+                                                            )) ? "active" : "" ?>" href="/gallery/default/index">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Gallery</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a href="" class="navLinks d-flex align-items-center">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Reports</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a href="" class="navLinks  d-flex align-items-center">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Settings</span>
+            </a>
+        </li>
 
-                <li class="slide <?= in_array($active_url, array(
-                                        "/settings/default/index",
-                                    )) ? "is-expanded" : "" ?>">
-                    <a class="side-menu__item <?= in_array($active_url, array(
-                                                    "/settings/default/index",
-                                                )) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/setting.svg" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-right"></i></a>
-                    <ul class="slide-menu">
-                        <li class="side-menu__label1"><a href="javascript:void(0);">Settings</a></li>
-                        <li><a class="slide-item <?= in_array($active_url, array(
-                                                        "/settings/default/index",
-                                                    )) ? "active" : "" ?>" href="/settings/default/index">My Business Profile</a></li>
-                    </ul>
-                </li>
-
-                <!-- <li class="slide <?= in_array($active_url, array(
-                                            "/sharesafari/default/index",
-                                            "/sharesafari/default/create",
-                                        )) ? "is-expanded" : "" ?>">
-                    <a class="side-menu__item <?= in_array($active_url, array(
-                                                    "/sharesafari/default/index",
-                                                    "/sharesafari/default/create",
-                                                )) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
-                    <ul class="slide-menu">
-                        <li class="side-menu__label1"><a href="javascript:void(0);">Package</a></li>
-                        <li><a class="slide-item <?= in_array($active_url, array(
-                                                        "/sharesafari/default/index",
-                                                        "/sharesafari/default/create",
-
-                                                    )) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari (Fixed Departure)</a></li>
-                    </ul>
-                </li> -->
-
-                <li class="slide">
-                    <a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
-                        <span class="side-menu__label">Logout</span></a>
-                </li>
-
-            </ul>
-            <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
-                </svg></div>
-        </div>
-    </aside>
-</div>
-<!-- main-sidebar -->
-<!-- END #sidebar -->
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
+                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="hide-slide-menu"> Logout</span>
+            </a>
+        </li>
+    </ul>
+</nav>

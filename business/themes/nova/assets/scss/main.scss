@@ -1,0 +1,17 @@
+@import '../scss/sections/mainlay-out';
+@import '../scss/sections/Sidenav';
+@import '../scss/sections/sidebar-layout';
+
+*{
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+body{
+
+    overflow-x: hidden;
+    font-family: $font-family;
+    // background-color: #000000;
+}
