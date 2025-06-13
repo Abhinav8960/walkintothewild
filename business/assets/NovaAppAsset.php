@@ -20,11 +20,12 @@ class NovaAppAsset extends AssetBundle
         // 'plugins/perfect-scrollbar/p-scrollbar.css',
         // 'plugins/sidebar/sidebar.css',
         // 'plugins/select2/css/select2.min.css',
-
+        
         'css/main.css',
         'css/core.css',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css'
 
     ];
     public $publishOptions = [
