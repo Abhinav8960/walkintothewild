@@ -235,3 +235,389 @@
   font-size: 12px;
   color: #848a90;
 }
+.edinBtn button {
+  background-color: #152f1b;
+  color: #ffffff;
+  border: 0;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 50px;
+}
+.versions a {
+  background-color: #f4b400;
+  color: #152f1b;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 50px;
+}
+.package-banner-dummy {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 10px 10px;
+  color: #666;
+  height: 300px;
+}
+.package-banner-dummy img {
+  object-fit: cover;
+}
+.wrapper-skybgsafri {
+  padding: 30px 20px;
+}
+.border_bottom2 {
+  border-bottom: 1px solid #0000004d;
+}
+.border-right {
+  border-right: 1.5px solid #0000004d;
+}
+.images_tour {
+  align-items: center;
+  border: 1px solid #09422d4d;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.images_tour img {
+  object-fit: cover;
+}
+.safrititles div {
+  color: #09422d;
+  font-size: 23px;
+}
+.titler_safari {
+  font-size: 18px !important;
+  font-style: italic;
+}
+.safrititles h6 {
+  color: #4b4b4b;
+  font-size: 20px;
+  font-weight: 700;
+}
+.titler_safari a {
+  color: #4b4b4b;
+  display: flex;
+  font-weight: 500;
+  gap: 5px;
+}
+.wrapper-skybgsafri .safrititles p a {
+  color: #09422d;
+}
+.safrititles p {
+  color: #09422d;
+}
+.safridetails_form .iconImg {
+  width: 19px;
+}
+.mark_area {
+  color: #777;
+  font-size: 14px !important;
+}
+.social-share p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.sociel_icons ul {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+.iconSize .fa-facebook-f {
+  background-color: #395196;
+}
+.iconSize i {
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  font-size: 16px;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+}
+.iconSize i.fa-x-twitter {
+  color: #fff !important;
+}
+.iconSize .fa-x-twitter {
+  background-color: #000;
+}
+.iconSize .fa-instagram {
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
+.iconSize .fa-whatsapp {
+  background-color: #00b456;
+}
+.iconSize .fa-linkedin-in {
+  background: #257bb8;
+}
+.iconSize .fa-paper-plane {
+  background: #08c;
+}
+.iconSize .fa-link {
+  background: #f9d600;
+  cursor: pointer;
+}
+.perpersonText {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+.itenary_tabs .safartabs .nav-tabs.myPackagetab {
+  gap: 50px !important;
+}
+.nav.nav-tabs.myPackagetab {
+  border-bottom: 0;
+  margin-bottom: 0.3px;
+}
+.itenary_tabs .safartabs .nav-tabs.myPackagetab .nav-link.active {
+  background-color: initial !important;
+  border: 0 !important;
+  border-bottom: 3px solid #09422d !important;
+  color: #1e1e1e !important;
+  font-weight: 600 !important;
+  padding-bottom: 10px !important;
+}
+.itenary_tabs .safartabs .nav-tabs.myPackagetab .nav-link {
+  background: #fff !important;
+  border: 0 !important;
+  color: #1e1e1e !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+  padding: 0 0 10px !important;
+}
+.itenary_tabs .nav-tabs.myPackagetab .nav-link {
+  font-size: 16px;
+}
+.safartabs .tab-content {
+  --bs-accordion-bg: #f5f5f5 !important;
+  border-radius: 0 10px 10px 10px;
+}
+.nav-link {
+  color: #000;
+}
+.packageSfari {
+  background-color: #fff;
+  padding: 0px 20px !important;
+  border: 1px solid #7070704d;
+  border-radius: 5px;
+}
+.packageTabMain .nav.nav-tabs {
+  border: none !important;
+  gap: 80px;
+}
+.packageTabMain .nav {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.nav {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.packageTabMain .nav-item {
+  width: 0px !important;
+}
+.packageTabMain .nav-item .nav-link {
+  padding: 0 !important;
+  cursor: pointer;
+}
+.packageTabMain .nav.nav-tabs .nav-link.active {
+  background-color: transparent !important;
+  color: #000 !important;
+  border: none !important;
+  border-bottom: 5px solid #09422d !important;
+  border-radius: 0px !important;
+}
+.packageTabMain .nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  isolation: auto !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+.tabContent {
+  padding: 0px 60px !important;
+  background-color: #fff;
+  padding: 0px 20px !important;
+  border: 1px solid #7070704d;
+  border-radius: 5px;
+}
+.accordionItems .accordion .accordion-button {
+  background-color: #d7d7d8 !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #152f1b;
+}
+.accordionItems .accordion .accordion-button:focus {
+  border-color: transparent !important;
+  border: none !important;
+}
+.accordionMianBox .accordionItems .accordion-body {
+  background-color: #f5f7fb;
+}
+.policyInfo p {
+  color: #464a53;
+  font-size: 12px;
+}
+.policyInfo a {
+  color: #004eff;
+}
+.clsHeadings p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #464a53;
+}
+.form_boxes .inclabel {
+  font-size: 16px !important;
+  color: #abafb3;
+}
+
+.form_boxes input[type="radio"] {
+  transform: scale(1.5);
+  margin-right: 6px;
+  margin-top: 6px;
+}
+.chatMainParent {
+  padding: 15px 30px;
+  border-bottom: 1px solid #d8d8d8;
+}
+.chatuserProfile {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #00000033;
+}
+.chatUserName a {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+.sharBtn button {
+  background-color: #f4b400;
+  color: #152f1b;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 20px;
+}
+.callOption .callHere i{
+
+  color: #09422D;
+  font-size: 22px;
+}
+.chatWriteBody{
+
+  padding: 15px 30px;
+  height: 600px;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+}
+.chatWriteBody::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.receivedChat p{
+
+  font-size: 14px;
+  color: #131313;
+}
+.receivedChat{
+
+  max-width: 380px;
+  background: #fff;
+  padding: 15px 12px;
+  border-radius: 0px 15px 15px 15px;
+}
+.sentChat{
+
+  max-width: 340px;
+  background-color: #09432D;
+  padding: 7px 7px 20px 10px;
+  border-radius: 15px 0px 15px 15px;
+}
+.sentChat{
+
+  margin-top: 50px;
+}
+.sentChat p{
+  color: #fff;
+  font-size: 12px;
+ 
+}
+.clickOption i{
+
+  color: #fff;
+  font-size: 20px;
+}
+.currentTime span{
+
+  color: #fff;
+  font-size: 12px;
+ 
+}
+.tiknotified i{
+  color: #fff;
+  font-size: 12px;
+}
+.ItineraryQuotationarea{
+
+  max-width: 480px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+}
+.toptital h3{
+
+  font-size: 18px;
+  color: #1E1E1E;
+}
+.discriptionsCenter p{
+
+  font-size: 12px;
+  color: #421421;
+}
+.typeingField{
+
+  padding: 15px 30px;
+}
+.typeingField input{
+
+  padding: 20px;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+}
+.typeingField input::placeholder{
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #919191;
+}
+.sentimg img{
+
+  width: 30px;
+}
+.sentimg{
+
+  position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+}
