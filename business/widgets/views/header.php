@@ -29,7 +29,7 @@
                </div>
                <div class="d-lg-block d-none">
                  <div class="dropdoen-detail-profile d-flex ">
-                   <p>Operator Name </p>
+                   <p><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p>
                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                  </div>
                </div>
