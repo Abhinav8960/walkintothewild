@@ -23,6 +23,7 @@ class UserSearch extends User
             [['name'], 'string', 'max' => 30],
             [['username'], 'unique'],
             [['email'], 'unique'],
+            [['is_mobile_no_verified'],'integer'],
         ];
     }
 
@@ -66,6 +67,7 @@ class UserSearch extends User
             'name' => $this->name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'is_mobile_no_verified' => $this->is_mobile_no_verified,
             'status' => $this->status,
 
         ]);

@@ -30,6 +30,9 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'email')->textInput(['placeholder' => 'Search by Email'])->label(false) ?>
     </div>
     <div class="col-md-2">
+        <?= $form->field($model, 'is_mobile_no_verified')->dropDownList(['1' => 'Yes', '0' => 'No'], ['placeholder' => 'Search by Verified User'])->label(false) ?>
+    </div>
+    <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(['10' => 'Active', '9' => 'Inactive'], ['placeholder' => 'Search by Status'])->label(false) ?>
     </div>
     <div class="col-md-2">

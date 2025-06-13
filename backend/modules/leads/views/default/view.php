@@ -8,14 +8,13 @@ use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+$this->title = 'Leads('. $model->sourceLabel .')';
+$this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
 AppAsset::register($this);
-$this->title = 'Leads : ' . $model->name . ', ' . date('d M, Y h:i A', $model->created_at);
+
 
 ?>
-
-<div class="d-flex justify-content-between align-items-center mt-5">
-    <h3 class="mt-5">Leads (<?= $model->sourceLabel ?>)</h3>
-</div>
 
 <div class="row mb-5 mt-4 itenary_tabs">
     <div class="col-lg-12 col-xl-12 safartabs position-relative">
