@@ -30,15 +30,18 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
                 return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
             },
             'live_image_count' => function () {
-                if(!empty($this->live_images)){
-                   $c_arr =  json_decode($this->live_images,true);
-                   return $c_arr['image_count'] ?? 0;
+                if (!empty($this->live_images)) {
+                    $c_arr =  json_decode($this->live_images, true);
+                    return $c_arr['image_count'] ?? 0;
                 }
                 return 0;
             },
             'can_send_for_approval' =>  function () {
                 return (bool) $this->can_send_for_approval;
             },
+            'gallery_status' => function () {
+                return $this->can_send_for_approval == 1 ? "Send for Approval" : "Draft";
+            }
         ];
 
         // Add images field if the layout matches
