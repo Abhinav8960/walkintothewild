@@ -171,7 +171,7 @@ class RestController extends Controller
         }
         if (count($addtionalKeys) > 0) {
             foreach ($addtionalKeys as $key => $addtionalKey) {
-                $data[$rootIndexName][$$key] = $addtionalKey;
+                $data[$rootIndexName][$key] = $addtionalKey;
             }
         }
 
