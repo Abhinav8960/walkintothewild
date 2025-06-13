@@ -4,7 +4,7 @@
 
 use common\models\GeneralModel;
 
-// $this->title = 'Dashboard';
+$this->title = 'Dashboard';
 // $this->params['breadcrumbs'][] = $this->title;
 // $this->params['title'] = $this->title;
 ?>
