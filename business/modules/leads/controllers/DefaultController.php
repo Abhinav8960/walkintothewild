@@ -9,6 +9,7 @@ use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
+use common\models\partnergallery\PartnerGallery;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -187,27 +188,28 @@ class DefaultController extends  Controller
     {
         $login_user = $this->userinfo;
         $individual_user = $this->individualuser($user_handle);
-        if (!$individual_user) {
-            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
-        }
 
         if (!empty($chat_hash)) {
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-            if (empty($chat_model)) {
-                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
-            }
         }
 
         $message = Yii::$app->request->post('message') ?? null;
         $gallery  = NULL;
-        if (empty($message)) {
+        if (empty($message) && empty($gallery_slug)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
+        }
+        if (!empty($gallery_slug)) {
+            $message = "Gallery";
+            $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_slug])->one();
+            if ($partnerGallery) {
+                $gallery = $partnerGallery->live_images;
+            }
         }
 
         return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = NULL, $login_user);
     }
 
-    
+
     private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
     {
 

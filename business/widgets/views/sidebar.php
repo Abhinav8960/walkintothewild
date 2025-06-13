@@ -23,6 +23,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                     "/leads/default/index",
                                                     "/leads/default/create",
+                                                     "/leads/default/view",
                                                 )) ? "active" : "" ?>" href="/leads/default/index">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> Leads</span>
