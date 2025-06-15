@@ -205,7 +205,12 @@ AppAsset::register($this);
             </div>
         </div>
         <div class="col-lg-7">
-            <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
+            <div class="chats_wrapper">
+                <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
+                <div class="row">
+                    <?= $this->render('_send_message', ['model' => $chat_message_model]) ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

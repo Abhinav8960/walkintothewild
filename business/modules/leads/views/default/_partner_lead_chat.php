@@ -1,88 +1,74 @@
- <div class="chats_wrapper">
-     <div class="chatMainParent d-flex justify-content-between align-items-center">
-         <div class="chatHeader d-flex align-items-center gap-3 ">
-             <div class="chatuserProfile">
-                 <img src="<?= !empty($model->user) ? $model->user->profile_display_image : ''; ?>" alt="" srcset="">
-             </div>
-             <div class="chatUserName">
-                 <a href=""><?= !empty($model->name) ? $model->name : ''; ?></a>
-             </div>
+ <div class="chatMainParent d-flex justify-content-between align-items-center">
+     <div class="chatHeader d-flex align-items-center gap-3 ">
+         <div class="chatuserProfile">
+             <img src="<?= !empty($model->user) ? $model->user->profile_display_image : ''; ?>" alt="" srcset="">
          </div>
-         <div class="UserInfobx d-flex align-items-center gap-4">
-             <div class="sharBtn">
-                 <button type="btn" class="">
-                     Share Itinerary & Quotation
-                 </button>
-             </div>
-             <div class="callOption">
-                 <a href="" class="callHere"><i class="fa-solid fa-phone"></i></a>
-             </div>
-             <div class="callOption">
-                 <a href="" class="callHere"><i class="fa-solid fa-image"></i></a>
-             </div>
-             <div class="callOption">
-                 <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>
-             </div>
+         <div class="chatUserName">
+             <a href=""><?= !empty($model->name) ? $model->name : ''; ?></a>
          </div>
      </div>
-     <div class="chatWriteBody">
-         <?php
-            if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
-                foreach ($chats as $chat_message) {
-                    if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
-            ?>
-                     <div class="d-flex justify-content-end">
+     <div class="UserInfobx d-flex align-items-center gap-4">
+         <div class="sharBtn">
+             <button type="btn" class="">
+                 Share Itinerary & Quotation
+             </button>
+         </div>
+         <div class="callOption">
+             <a href="" class="callHere"><i class="fa-solid fa-phone"></i></a>
+         </div>
+         <div class="callOption">
+             <a href="" class="callHere"><i class="fa-solid fa-image"></i></a>
+         </div>
+         <div class="callOption">
+             <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>
+         </div>
+     </div>
+ </div>
+ <div class="chatWriteBody">
+     <?php
+        if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
+            foreach ($chats as $chat_message) {
+                if (Yii::$app->user->identity && $chat_message->created_by == Yii::$app->user->identity->id) {
+        ?>
+                 <div class="d-flex justify-content-end">
 
-                         <?php if ($chat_message->message != 'Gallery') { ?>
-                             <div class="sentChat">
-                                 <div class="clickOption d-flex justify-content-end">
-                                     <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>
-                                 </div>
-                                 <p><?= $chat_message->message ?></p>
-                                 <div class="timeingNotified d-flex justify-content-end pe-2">
-                                     <div class="d-flex gap-3">
-                                         <div class="currentTime">
-                                             <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                                         </div>
-                                         <div class="tiknotified">
-                                             <i class="fa-solid fa-check-double"></i>
-                                         </div>
+                     <?php if ($chat_message->message != 'Gallery') { ?>
+                         <div class="sentChat">
+                             <p><?= $chat_message->message ?></p>
+                             <div class="timeingNotified d-flex justify-content-end pe-2">
+                                 <div class="d-flex gap-3">
+                                     <div class="currentTime">
+                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                     </div>
+                                     <div class="tiknotified">
+                                         <i class="fa-solid fa-check-double"></i>
                                      </div>
                                  </div>
                              </div>
+                         </div>
 
-                             <?php } else {
-                                $gallery_data = json_decode($chat_message->gallery, true);
-                                if ($gallery_data) { ?>
+                         <?php } else {
+                            $gallery_data = json_decode($chat_message->gallery, true);
+                            if ($gallery_data) { ?>
 
-                         <?php }
-                            } ?>
-                     </div>
-                 <?php
-                    } else { ?>
-                     <div class="receivedChat">
-                         <p><?= $chat_message->message ?></p>
-                         <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                     </div>
-         <?php }
-                }
-            }
-            ?>
-     </div>
-     <div class="row">
-         <div class="col-lg-12">
-             <div class="typeingField w-100 position-relative">
-                 <input type="text" name="message" placeholder="Type message..." id="chat-message" value="" class="w-100">
-                 <div class="sentimg" id="message_sent_btn">
-                     <img src="<?= $this->params['baseurl'] ?>/images/chatsent.png" alt="">
+                     <?php }
+                        } ?>
                  </div>
-             </div>
-         </div>
-     </div>
-
+             <?php
+                } else { ?>
+                 <div class="receivedChat">
+                     <p><?= $chat_message->message ?></p>
+                     <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                 </div>
+     <?php }
+            }
+        }
+        ?>
  </div>
 
 
+
+ <!-- 
  <?php
     $script = <<< JS
 $(document).ready(function() {
@@ -117,4 +103,4 @@ $(document).ready(function() {
 });
 JS;
     $this->registerJs($script);
-?>
+    ?> -->

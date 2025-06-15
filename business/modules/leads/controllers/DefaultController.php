@@ -2,8 +2,9 @@
 
 namespace business\modules\leads\controllers;
 
-use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
+use common\models\chat\form\ChatForm;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
@@ -73,15 +74,28 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->getQuotation()->where(['partner_id' => \Yii::$app->user->identity->operator->id])->all();
 
+        /**Chat Section*/
         $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
         // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
         //     Chat::MarkChatSeen($chat->id);
         // }
+        $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat->chat_hash, 'chat_type' => 2])->one();
+        $chat_message_model = new ChatForm();
+        if ($this->request->isPost) {
+            if ($chat_message_model->load($this->request->post())) {
+                if ($chat_message_model->validate()) {
+                    $chat_message_model->initializeForm();
+                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity);
+                    $chat_message_model->message = '';
+                }
+            }
+        }
 
         return $this->render('view', [
             'model' => $model,
             'quotations' => $quotations,
             'chat' => $chat,
+            'chat_message_model' => $chat_message_model,
         ]);
     }
 
@@ -233,22 +247,22 @@ class DefaultController extends  Controller
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
-        $chat_message->created_by = $this->userinfo->id;
+        $chat_message->created_by = Yii::$app->user->identity->id;
 
         if ($chat_message->save(false)) {
             $chat = Chat::find()->where(['id' => $chat_id])->one();
             $chat->last_message = \common\models\GeneralModel::strMaxWord($message);
             $chat->last_message_at = time();
-            $chat->sender_id = $this->userinfo->id;
+            $chat->sender_id = Yii::$app->user->identity->id;
             $chat->call_id = null;
             $chat->is_call_request = false;
             $chat->status = 1;
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send", 'chat_hash' => $chat->chat_hash]);
+            return  \Yii::$app->session->setFlash('success', 'Message Sent Successfully');
         } else {
-            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
+            return  \Yii::$app->session->setFlash('success', 'Message not Sent Successfully');
         }
     }
 }

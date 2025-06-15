@@ -534,4 +534,9 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return implode(', ', $roles);
     }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
+    }
 }
