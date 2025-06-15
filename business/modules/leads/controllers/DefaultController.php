@@ -4,7 +4,9 @@ namespace business\modules\leads\controllers;
 
 use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
+use api\models\partnergallery\PartnerGallerySearch;
 use common\models\chat\form\ChatForm;
+use common\models\chat\form\GalleryChatForm;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
@@ -168,61 +170,47 @@ class DefaultController extends  Controller
         return false;
     }
 
-    public function actionLeadChatList($id)
+
+    public function actionSendGallery($id)
     {
         $model = $this->findModel($id);
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->operator->id], ['recipient_user_id' => \Yii::$app->user->identity->operator->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
+        /**Gallery Section*/
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
-        if (!$chat) {
-            \Yii::$app->session->setFlash('danger', 'Chat Not Found!!!');
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-
+        /**Chat Section*/
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
         // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
         //     Chat::MarkChatSeen($chat->id);
         // }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-        ]);
-
-        return $this->render(
-            '_chat',
-            [
-                'model' => $model,
-                'chat' => $chat,
-                'dataProvider' => $dataProvider,
-            ]
-        );
-    }
-
-
-    public function actionSendMessage($user_handle, $chat_hash)
-    {
-        $login_user = $this->userinfo;
-        $individual_user = $this->individualuser($user_handle);
-
-        if (!empty($chat_hash)) {
-            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-        }
-
-        $message = Yii::$app->request->post('message') ?? null;
-        $gallery  = NULL;
-        if (empty($message) && empty($gallery_slug)) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
-        }
-        if (!empty($gallery_slug)) {
-            $message = "Gallery";
-            $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_slug])->one();
-            if ($partnerGallery) {
-                $gallery = $partnerGallery->live_images;
+        $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat->chat_hash, 'chat_type' => 2])->one();
+        $gallery_selection_model = new GalleryChatForm();
+        if ($this->request->isPost) {
+            if ($gallery_selection_model->load($this->request->post())) {
+                if ($gallery_selection_model->validate()) {
+                    if (!empty($gallery_selection_model->gallery_slug)) {
+                        $message = "Gallery";
+                        $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_selection_model->gallery_slug])->one();
+                        if ($partnerGallery) {
+                            $gallery = $partnerGallery->live_images;
+                        }
+                        $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $message, $gallery, $data = NULL, Yii::$app->user->identity);
+                        return $this->redirect(['view', 'id' => $id]);
+                    }
+                }
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = NULL, $login_user);
+        return $this->renderAjax('_gallery_selection', [
+            'model' => $model,
+            'chat' => $chat,
+            'gallery_selection_model' => $gallery_selection_model,
+            'dataProvider' => $dataProvider
+        ]);
     }
-
 
     private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
     {

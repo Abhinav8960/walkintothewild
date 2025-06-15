@@ -1,3 +1,9 @@
+ <?php
+
+    use yii\bootstrap5\Html;
+    use yii\helpers\Url;
+
+    ?>
  <div class="chatMainParent d-flex justify-content-between align-items-center">
      <div class="chatHeader d-flex align-items-center gap-3 ">
          <div class="chatuserProfile">
@@ -17,7 +23,10 @@
              <a href="" class="callHere"><i class="fa-solid fa-phone"></i></a>
          </div>
          <div class="callOption">
-             <a href="" class="callHere"><i class="fa-solid fa-image"></i></a>
+             <?= Html::button('<i class="fa-solid fa-image"></i>', [
+                    'value' => Url::to(['send-gallery', 'id' => $model->id]),
+                    'class' => 'callHere image-button',
+                ]) ?>
          </div>
          <div class="callOption">
              <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>
@@ -67,40 +76,68 @@
  </div>
 
 
+ <div class="modal fade" id="galleryAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-xl modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Gallery Selection
+                 </h6>
+             </div>
 
- <!-- 
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+
  <?php
     $script = <<< JS
-$(document).ready(function() {
 
-    function sendmessage(){
-        $.ajax({
-            type: 'POST',
-            url: '/leads/default/send-message',
-            data:$("#chatmessageform").serialize(),
-            success:function(data){
-                $('#chat-message').val('');
-                location.reload();
-            },
-            dataType:'html'
-        });   
-    }
 
-    $('#message_sent_btn').click(function(){
-        sendmessage();
-    });
+    $('.image-button').on('click', function () {
+        $('#galleryAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
 
-    $('#chat-message').keydown(function(e) {
-        if (e.keyCode === 13) { 
-            if (e.shiftKey) {
-                return ;
-            } else {
-                e.preventDefault(); 
-                sendmessage();
-            }
-        }
-    });
-});
 JS;
     $this->registerJs($script);
-    ?> -->
+
+    //     $script = <<< JS
+    // $(document).ready(function() {
+
+    //     function sendmessage(){
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '/leads/default/send-message',
+    //             data:$("#chatmessageform").serialize(),
+    //             success:function(data){
+    //                 $('#chat-message').val('');
+    //                 location.reload();
+    //             },
+    //             dataType:'html'
+    //         });   
+    //     }
+
+    //     $('#message_sent_btn').click(function(){
+    //         sendmessage();
+    //     });
+
+    //     $('#chat-message').keydown(function(e) {
+    //         if (e.keyCode === 13) { 
+    //             if (e.shiftKey) {
+    //                 return ;
+    //             } else {
+    //                 e.preventDefault(); 
+    //                 sendmessage();
+    //             }
+    //         }
+    //     });
+    // });
+    // JS;
+    //     $this->registerJs($script);
+    ?>
