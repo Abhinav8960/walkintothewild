@@ -20,7 +20,7 @@
              </button>
          </div>
          <div class="callOption">
-             <a href="" class="callHere"><i class="fa-solid fa-phone"></i></a>
+             <a href="<?= Url::toRoute(['make-call-on-chat', 'id' => $model->id]) ?>" class="callHere"><i class="fa-solid fa-phone"></i></a>
          </div>
          <div class="callOption">
              <?= Html::button('<i class="fa-solid fa-image"></i>', [

@@ -253,4 +253,95 @@ class DefaultController extends  Controller
             return  \Yii::$app->session->setFlash('success', 'Message not Sent Successfully');
         }
     }
+
+    public function actionMakeCallOnChat($id)
+    {
+
+        $model = $this->findModel($id);
+        $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['lead_id' => $model->id, 'chat_type' => 2])->one();
+
+
+        if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+            \Yii::$app->session->setFlash('danger', 'You cannot perform this action, as phone is not available or verified for any of the chat members');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        // if user is normal user then he only raise call request
+        // if ($chat_model->user_id == Yii::$app->user->identity->id) {
+        //     $transaction = Yii::$app->db->beginTransaction();
+        //     try {
+        //         // $message = "Call Request raised by " . $this->userinfo->name;
+        //         $message = "Call Request raised";
+        //         $chat_message = new ChatMessage();
+        //         $chat_message->chat_id = $chat_model->id;
+        //         $chat_message->message = $message;
+        //         $chat_message->is_call_request = true;
+        //         $chat_message->call_id = NULL;
+        //         $chat_message->status = 1;
+        //         $chat_message->sender_id = Yii::$app->user->identity->id;
+
+        //         if ($chat_message->save(false)) {
+
+        //             $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+        //             $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+        //             $chat->last_message_at = time();
+        //             $chat->is_call_request = true;
+        //             $chat->call_id = NULL;
+        //             $chat->sender_id = Yii::$app->user->identity->id;
+        //             $chat->is_lead_chat_open_for_user = 1;
+        //             $chat->status = 1;
+        //             $chat->is_seen = 0;
+        //             $chat->created_at = time();
+        //             $chat->save(false);
+        //             $transaction->commit();
+        //             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call request raised successfully.']);
+        //         }
+        //     } catch (\Exception $e) {
+        //         $transaction->rollBack();
+        //         return Yii::$app->api->sendResponse([], ['message' => 'Failed to initiate the call.'], 400);
+        //     }
+        // }
+
+        // Example parameters
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+
+            if (!$chat_model->user->is_mobile_no_verified) {
+                \Yii::$app->session->setFlash('danger', 'User number is not verified.');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+
+            $chat_id = $chat_model->id;
+            $lead_id = $chat_model->lead_id;
+            $call_initiated_user_id = Yii::$app->user->identity->id; // Example user ID who initiated the call
+            $operator_user_id =  Yii::$app->user->identity->id; // Example operator user ID
+            $call_initiated_partner_id = $chat_model->operator->id; // can be null
+            $request_caller_1_no = $chat_model->user->mobile_no;
+            $request_caller_1_user_id = $chat_model->user->id;
+            $request_caller_2_no = $chat_model->operator->phone_no; // Optional
+            $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
+
+            // Instantiate the CallingService
+            $callingService = new \common\calling\services\CallingService(
+                $chat_id,
+                $lead_id,
+                $operator_user_id,
+                $call_initiated_user_id,
+                $call_initiated_partner_id,
+                $request_caller_1_no,
+                $request_caller_1_user_id,
+                $request_caller_2_no,
+                $request_caller_2_user_id
+            );
+            // Call the callNow method
+            $result = $callingService->callNow();
+            $transaction->commit();
+            \Yii::$app->session->setFlash('success', 'Call initiated successfully.');
+            return $this->redirect(['view', 'id' => $id]);
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+    }
 }
