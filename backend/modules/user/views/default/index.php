@@ -42,7 +42,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         }
                     ],
                     [
-                        'label' => 'Verified User',
+                        'label' => 'Mobile Verified User',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
