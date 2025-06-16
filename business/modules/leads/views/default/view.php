@@ -1,6 +1,7 @@
 <?php
 
 use business\assets\AppAsset;
+use common\models\GeneralModel;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -118,7 +119,7 @@ AppAsset::register($this);
                                         src="<?= $this->params['baseurl'] ?>/images/night-mode_9554519.png">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0">2 Nights , 3 Days</p>
+                                    <p class="mb-0"><?= $model->package ? $model->package->no_of_night : '' ?> Nights , <?= $model->package ? $model->package->no_of_day : '' ?> Days</p>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +149,7 @@ AppAsset::register($this);
                                         src="<?= $this->params['baseurl'] ?>/images/newicon.png">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0">4 Shared Gypsy Safari</p>
+                                    <p class="mb-0"><?= $model->package ? $model->package->no_of_safari : '' ?> Shared Gypsy Safari</p>
                                 </div>
                             </div>
                         </div>
@@ -193,14 +194,16 @@ AppAsset::register($this);
                                         src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-hotel.png">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0">Premium</p>
+                                    <?php if ($model->package) { ?>
+                                        <p class="mb-0"><?= isset(GeneralModel::packagemetastaycategory()[$model->package->stay_category_id]) ? GeneralModel::packagemetastaycategory()[$model->package->stay_category_id] : 'Not Included' ?></p>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 text-end pb-2 pt-3">
-                            <h5 class="cost_price">Rs. 90,000/Per Person</h5>
+                            <h5 class="cost_price">Rs. <?= $model->package ? GeneralModel::formatIndianCurrency($model->package->cost_per_person) : '' ?>/Per Person</h5>
                         </div>
                     </div>
                 <?php } ?>
