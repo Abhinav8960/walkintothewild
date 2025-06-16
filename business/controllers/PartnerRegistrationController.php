@@ -543,7 +543,7 @@ class PartnerRegistrationController extends Controller
         $model = new MobileVerification();
         $model->user_id = Yii::$app->user->id;
         $model->otp = rand(100000, 999999);
-        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+3 minutes'));
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
         $model->status = 1;
 
         $partner_model  = $this->findModel();
@@ -565,7 +565,7 @@ class PartnerRegistrationController extends Controller
         $cache = Yii::$app->cache;
         $rateLimitKey = 'mobile_verification_' . $model->user_id;
         $rateLimitDuration = 300; // 5 minutes in seconds
-        $rateLimitMaxRequests = 4; // Maximum allowed requests in the time window
+        $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
         $blockDuration = 10800; // 3 hours in seconds
 
         // Check rate limit
@@ -711,7 +711,7 @@ class PartnerRegistrationController extends Controller
         $model = new EmailVerification();
         $model->user_id = Yii::$app->user->id;
         $model->otp = rand(100000, 999999);
-        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+3 minutes'));
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
         $model->status = 1;
 
         $partner_model  = $this->findModel();
