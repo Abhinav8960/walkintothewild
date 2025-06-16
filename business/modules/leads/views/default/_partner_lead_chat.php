@@ -44,7 +44,7 @@
         ?>
                  <div class="d-flex justify-content-end">
 
-                     <?php if ($chat_message->message != 'Gallery') { ?>
+                     <?php if ($chat_message->message != 'Gallery' && $chat_message->is_quotation_message == 0) { ?>
                          <div class="sentChat">
                              <p><?= $chat_message->message ?></p>
                              <div class="timeingNotified d-flex justify-content-end pe-2">
@@ -59,7 +59,24 @@
                              </div>
                          </div>
 
-                         <?php } else {
+                     <?php } else if ($chat_message->is_quotation_message == 1) { ?>
+                         <div class="d-flex justify-content-center mt-5">
+                             <div class="ItineraryQuotationarea">
+                                 <div class="topTitle pb-3">
+                                     <h3 class="text-center">Itinerary & Quotation</h3>
+                                 </div>
+                                 <div class="discriptionsCenter">
+                                     <p class="pb-2"><span>Park:</span> <?= $chat_message->quote->park_label ?? '' ?> </p>
+                                     <p class="pb-2"><span>Safaris:</span> <?= $chat_message->quote->safaris ?? '' ?></p>
+                                     <p class="pb-2"><span>Travelers:</span> <?= $chat_message->quote->travelers ?? '' ?></p>
+                                     <p class="pb-2"><span>Stay Category:</span> <?= $chat_message->quote->staycatgory_lable ?? '' ?></p>
+                                     <p class="pb-2"><span>Start Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></p>
+                                     <p class="pb-2"><span>End Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></p>
+                                     <p class="pb-0"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                 </div>
+                             </div>
+                         </div>
+                         <?php } else if ($chat_message->message == 'Gallery') {
                             $gallery_data = json_decode($chat_message->gallery, true);
                             if ($gallery_data) { ?>
                              <div class="sentChat">
