@@ -21,12 +21,14 @@ class PostCommentByUser extends Event
     public $user;
     public $host_user;
     public $host_user_id;
+    public $post_id;
 
 
 
     public $admin_mail;
     protected $sent_data = [];
     protected $objective;
+    protected $user_handle;
     protected $engine;
     protected $master_notification_template;
 
@@ -38,13 +40,13 @@ class PostCommentByUser extends Event
     protected $mail_template_code = 'THOS';  // To Host on Comment 
     protected $var2_name = 'post';
 
-    public function __construct($post_id, $user, $host_user_id, $host_user)
+    public function __construct($post_id, $user, $user_handle, $host_user_id, $host_user)
     {
-
         $this->user = $user;
         $this->userId = $host_user_id;
         $this->host_user = $host_user;
         $this->post_id = $post_id;
+        $this->user_handle = $user_handle;
         $this->objective = UserPosts::OBJECTIVE;
         // $this->email =$email;
         $this->engine = \Yii::$app->engine;
