@@ -482,3 +482,29 @@
   position: static !important;
   overflow: hidden;
 }
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: end;
+}
+
+.gallery-container .single-image {
+  display: block;
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* .gallery-container a:hover {
+  transform: scale(1.03);
+} */
+
+.gallery-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
