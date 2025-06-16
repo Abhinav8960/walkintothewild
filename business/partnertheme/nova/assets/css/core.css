@@ -588,7 +588,12 @@
   border-radius: 50%;
   background-color: #00000033;
 }
+.chatuserProfile img{
 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .chatUserName a {
   font-size: 16px;
   font-weight: 700;
