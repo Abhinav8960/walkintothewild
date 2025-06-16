@@ -167,6 +167,19 @@
 		.load($(this).attr('value'));
 	});
 
+    (function () {
+    const chatBody = document.querySelector('.chatWriteBody');
+    if (!chatBody) return;
+    chatBody.scrollTop = chatBody.scrollHeight;             */
+    const observer = new MutationObserver(() => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+    observer.observe(chatBody, { childList: true });
+    $(document).on('pjax:end', '#chat-pjax', () => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+    })();
+
 JS;
     $this->registerJs($script);
 
@@ -204,3 +217,5 @@ JS;
     // JS;
     //     $this->registerJs($script);
     ?>
+
+  
