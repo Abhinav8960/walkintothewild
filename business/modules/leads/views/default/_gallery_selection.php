@@ -4,28 +4,32 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<?php $form = ActiveForm::begin([
-    'id' => 'gallery-selection-form',
-    'options' => ['class' => 'gallery-form'],
-]); ?>
+<?php if ($dataProvider->getCount() > 0) { ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'gallery-selection-form',
+        'options' => ['class' => 'gallery-form'],
+    ]); ?>
 
-<div class="gallery-container row">
-    <?php foreach ($dataProvider->getModels() as $gallery) { ?>
-        <div class="col-md-3 mb-3">
-            <div class="gallery-item border rounded p-2 text-center" data-slug="<?= $gallery->slug ?>" style="cursor:pointer;">
-                <img src="<?= $gallery->thumbnail ?>" alt="<?= $gallery->title ?>" class="img-fluid">
-                <div class="mt-2"><?= $gallery->title ?></div>
+    <div class="gallery-container row">
+        <?php foreach ($dataProvider->getModels() as $gallery) { ?>
+            <div class="col-md-3 mb-3">
+                <div class="gallery-item border rounded p-2 text-center" data-slug="<?= $gallery->slug ?>" style="cursor:pointer;">
+                    <img src="<?= $gallery->thumbnail ?>" alt="<?= $gallery->title ?>" class="img-fluid">
+                    <div class="mt-2"><?= $gallery->title ?></div>
+                </div>
             </div>
-        </div>
-    <?php } ?>
-</div>
+        <?php } ?>
+    </div>
 
 
-<?= $form->field($gallery_selection_model, 'gallery_slug')->hiddenInput(['id' => 'selected-gallery-slug'])->label(false) ?>
+    <?= $form->field($gallery_selection_model, 'gallery_slug')->hiddenInput(['id' => 'selected-gallery-slug'])->label(false) ?>
 
-<?= Html::submitButton('Send Gallery', ['class' => 'btn btn-primary mt-2']) ?>
+    <?= Html::submitButton('Send Gallery', ['class' => 'btn btn-primary mt-2']) ?>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
+<?php } else { ?>
+    No Gallery Found
+<?php } ?>
 
 <?php
 $js = <<<JS
