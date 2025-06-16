@@ -28,7 +28,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/leads/default/create",
                                                                 "/leads/default/view",
                                                             )) ? "active" : "" ?>" href="/leads/default/index">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame.svg" alt="" width="25" height="25"></span>
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame_new.svg" alt="" width="25" height="25"></span>
                 <span class="hide-slide-menu"> Leads</span>
             </a>
         </li>
