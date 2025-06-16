@@ -135,7 +135,7 @@ $this->title = 'Leads';
                                         src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-taxi.png">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0">Pick & Drop</p>
+                                    <p class="mb-0"><?= $model->package ? $model->package->pickanddrop : '' ?></p>
                                 </div>
                             </div>
                         </div>
@@ -165,23 +165,26 @@ $this->title = 'Leads';
                                         src="<?= $this->params['baseurl'] ?>/images/path.png">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0">All Meals</p>
+                                    <p class="mb-0"><?= $model->package ? $model->package->meals : '' ?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 mb-2 col-sm-6">
                             <div class="safridetails_form d-flex gap-2 ">
-                                <div class="iconImage">
-                                    <img
-                                        alt="Night Mode"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Trip Duration"
-                                        src="<?= $this->params['baseurl'] ?>/images/camera.png">
-                                </div>
-                                <div class="text-form">
-                                    <p class="mb-0">Photography Special</p>
-                                </div>
+                                <?php if ($package = $model->package) { ?>
+                                    <div class="iconImage">
+                                        <?php if ($package->package_agenda_id && $package->package_agenda_id == 1) { ?>
+                                            <img src="<?= $this->params['baseurl'] ?>/images/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                        <?php } else if ($package->package_agenda_id && $package->package_agenda_id == 3) { ?>
+                                            <img src="<?= $this->params['baseurl'] ?>/images/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                        <?php } else { ?>
+                                            <img src="<?= $this->params['baseurl'] ?>/images/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                        <?php } ?>
+                                    </div>
+                                    <div class="text-form">
+                                        <p class="mb-0"> <?= isset(GeneralModel::agendaoption()[$package->package_agenda_id]) ? GeneralModel::agendaoption()[$package->package_agenda_id] : 'Not Included' ?></p>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-12 mb-2 col-sm-6">
