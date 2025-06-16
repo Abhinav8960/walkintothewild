@@ -10,7 +10,14 @@ $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = 'Leads('. $model->sourceLabel .')';
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
+if($model->status == 1){
+
+    $this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
+}
+if($model->status == 0){
+
+    $this->params['buttons'][] = Html::a('Active', [Url::toRoute(['/leads/default/active', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
+}
 AppAsset::register($this);
 
 

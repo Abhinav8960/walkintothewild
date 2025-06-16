@@ -385,4 +385,16 @@ class DefaultController extends  Controller
             }
         }
     }
+
+    public function actionActive($id)
+    {
+        $model = $this->findModel($id);
+        if ($model) {
+            $model->status = Lead::STATUS_ACTIVE;
+            if ($model->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                return  $this->redirect(['index']);
+            }
+        }
+    }
 }
