@@ -2,7 +2,7 @@
     border-spacing: inherit;
   }
 
-  .tablecustoms thead {
+  .tablecustoms thead tr th{
     background-color: #C4E3BD;
   }
 
@@ -147,12 +147,16 @@
 
 .details-packages{
 
-    background-color: #F8F8F8;
+    background-color: #F8F8F8 !important;
     border-radius: 10px 10px 0px 0px;
     font-family: "Poppins", sans-serif;
 }
+
+.table{
+  --bs-table-bg: #F8F8F8 !important;
+}
 .thead-details{
-    background-color: #009FFF;
+    background-color: #009FFF !important;
  
 }
 .thead-details th{
@@ -161,6 +165,7 @@
     border-spacing: inherit;
     padding: 10px 14px;
     text-align: left;
+    background-color: #009FFF !important;
    
 }
 
@@ -193,6 +198,7 @@ font-size: 14px;
 
     padding: 5px 14px;
     font-size: 14px;
+    border: none !important;
 }
 .tbody-leads td p{
 
@@ -201,6 +207,10 @@ font-size: 14px;
 .tbody-leads tr:first-child td{
 
     padding-top: 20px;
+}
+.tbody-leads{
+
+  background-color: #d8d8d8 !important;
 }
 .titles_s{
     font-size: 18px;
@@ -411,4 +421,8 @@ color: #fff;
     border: 0;
     isolation: auto;
     border-radius: 0;
+  }
+  .summary{
+
+    padding: 0px 20px;
   }

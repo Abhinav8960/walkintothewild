@@ -522,6 +522,10 @@
   color: #09422D;
   font-size: 22px;
 }
+.callHere.image-button{
+
+  border: none !important;
+}
 .chatWriteBody{
 
   padding: 15px 30px;
@@ -620,6 +624,7 @@
     right: 45px;
     top: 50%;
     transform: translateY(-50%);
+    border: none !important;
 }
 
 .recievedTime span {
