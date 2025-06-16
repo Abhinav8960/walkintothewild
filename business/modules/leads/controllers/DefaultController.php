@@ -78,9 +78,9 @@ class DefaultController extends  Controller
 
         /**Chat Section*/
         $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
-        // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
-        //     Chat::MarkChatSeen($chat->id);
-        // }
+        if ($chat->chat_type == 2 && $chat->user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
         $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat->chat_hash, 'chat_type' => 2])->one();
         $chat_message_model = new ChatForm();
         if ($this->request->isPost) {
@@ -184,9 +184,9 @@ class DefaultController extends  Controller
 
         /**Chat Section*/
         $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
-        // if ($chat->chat_type == 2 && $chat->user_id == $this->userinfo->id) {
-        //     Chat::MarkChatSeen($chat->id);
-        // }
+        if ($chat->chat_type == 2 && $chat->user_id == Yii::$app->user->identity->id) {
+            Chat::MarkChatSeen($chat->id);
+        }
         $chat_model = Chat::find()->andWhere(['or', ['user_id' => Yii::$app->user->identity->id, 'recipient_user_id' => $model->user_id], ['user_id' => $model->user_id, 'recipient_user_id' => Yii::$app->user->identity->id]])->andWhere(['chat_hash' => $chat->chat_hash, 'chat_type' => 2])->one();
         $gallery_selection_model = new GalleryChatForm();
         if ($this->request->isPost) {
