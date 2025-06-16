@@ -21,7 +21,9 @@
                 ]) ?>
          </div>
          <div class="callOption">
-             <a href="<?= Url::toRoute(['make-call-on-chat', 'id' => $model->id]) ?>" class="callHere"><i class="fa-solid fa-phone"></i></a>
+             <?php if ($chat->operator->is_phone_no_verified == 1 || !empty($chat->operator->phone_no) || $chat->user->is_mobile_no_verified == 1 || !empty($chat->user->mobile_no)) { ?>
+                 <a href="<?= Url::toRoute(['make-call-on-chat', 'id' => $model->id, 'chat_hash' => $chat->chat_hash]) ?>" class="callHere"><i class="fa-solid fa-phone"></i></a>
+             <?php } ?>
          </div>
          <div class="callOption">
              <?= Html::button('<i class="fa-solid fa-image"></i>', [
