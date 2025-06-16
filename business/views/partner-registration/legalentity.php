@@ -45,11 +45,23 @@ $this->params['title'] = $this->title;
                 <?php ;} ?>
                 <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#formAccordion">
                     <div class="accordion-body">
-                        <?= $this->render('_legalentity_form', ['currentStep' => 1, 'model' => $model]) ?>
+                        <?= $this->render('_legalentity_form', ['currentStep' => 1, 'model' => $model ,'verification_model'=>$verification_model,'isLegalEntitySaved'=>$isLegalEntitySaved]) ?>
                     </div>
                 </div>
             </div>
         
+
+            <?php if ($isLegalEntitySaved && $model->partner_model->is_phone_no_verified != 1){?>
+                <div class="card border-dark mt-4">
+                    <div class="card-body">
+                        <h4 class="mb-3 mt-2 ms-3 text-success fw-bold">VERIFICATION</h4>
+                        <div class="accordion-body">
+                            <?= $this->render('_verification_form', ['currentStep' => 1,'model' => $model,'verification_model' => $verification_model])?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
 
           <!-- Registration Proof -->
 

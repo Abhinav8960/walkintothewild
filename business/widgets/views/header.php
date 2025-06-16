@@ -1,54 +1,59 @@
-<!-- main-header -->
-<div class="main-header side-header sticky nav nav-item" style="background: #09422D !important;color:#fff !important;">
-    <div class=" main-container container-fluid">
-        <div class="main-header-left ">
-            <div class="responsive-logo">
-                <a href="/" class="header-logo">
-                    <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="mobile-logo logo-1" alt="logo">
-                    <img src="<?= $this->params['baseurl'] ?>/img/logo-white.png" class="mobile-logo dark-logo-1" alt="logo">
-                </a>
-            </div>
-            <div class="app-sidebar__toggle" data-bs-toggle="sidebar">
-                <a class="open-toggle" href="javascript:void(0);"><i class="header-icon fe fe-align-left"></i></a>
-                <a class="close-toggle" href="javascript:void(0);"><i class="header-icon fe fe-x"></i></a>
-            </div>
-            <div class="logo-horizontal">
-                <a href="/" class="header-logo">
-                    <img src="<?= $this->params['baseurl'] ?>/img/partner_logo.png" class="mobile-logo logo-1" alt="logo">
-                    <img src="<?= $this->params['baseurl'] ?>/img/logo-white.png" class="mobile-logo dark-logo-1" alt="logo">
-                </a>
-            </div>
-        </div>
-        <div class="main-header-right">
-            <?php if (\Yii::$app->params['environment']) { ?>
-                <strong>
-                    <span style="letter-spacing: 1.4px;font-weight: 900;font-size: 17px;text-transform: uppercase;margin-right: 20px;color: yellow;"><?= \Yii::$app->params['environment'] != "production" ? \Yii::$app->params['environment'] : '' ?></span>
-                </strong>
-            <?php } ?>
-            <button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon fe fe-more-vertical "></span>
-            </button>
-            <div class="mb-0 navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                    <ul class="nav nav-item header-icons navbar-nav-right ms-auto">
-                        <li class="dropdown main-profile-menu nav nav-item nav-link ps-lg-2">
-                            <a class="new nav-link profile-user d-flex" href="" data-bs-toggle="dropdown"><img alt="" src="<?= $this->params['baseurl'] ?>/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></a>
-                            <div class="dropdown-menu" style="left:-194px !important;">
-                                <div class="menu-header-content p-3 border-bottom">
-                                    <div class="d-flex wd-100p">
-                                        <div class="main-img-user"><img alt="" src="<?= $this->params['baseurl'] ?>/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></div>
-                                        <div class="ms-3 my-auto">
-                                            <h6 class="tx-15 font-weight-semibold mb-0"><?= Yii::$app->user->identity->name ?></h6></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Log Out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /main-header -->
+ <nav class="navbar fixed-top d-flex flex-row">
+   <div class="navbar-menu-wrapper d-flex ">
+     <div class="sidebar-brand-wrapper  px-3 py-3 d-lg-none d-block">
+       <a href="/" class="header-logo">
+         <img src="<?= $this->params['baseurl'] ?>/images/logo-mini.svg" alt="logo">
+       </a>
+     </div>
+     <button class="navbar-toggler navbar-toggler align-self-center d-lg-block d-none" type="button"
+       data-toggle="minimize" id="hider-sidebar">
+       <span class="mdi mdi-menu"></span>
+     </button>
+
+     <ul class="nav-right d-flex align-items-center justify-content-center">
+       <!-- <li class="nav-item dropdown">
+             <a class="nav-link count-indicator ">
+               <i class="mdi mdi-email"></i>
+             </a>
+           </li>
+           <li class="nav-item dropdown">
+             <a class="nav-link count-indicator ">
+               <i class="mdi mdi-bell"></i>
+             </a>
+           </li> -->
+       <li class="nav-item " id="dropdown-pro">
+         <div class="d-flex align-items-center">
+           <div class="dorpdown-profile me-2">
+             <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" alt="logo">
+           </div>
+           <div class="d-lg-block d-none">
+             <div class="dropdoen-detail-profile d-flex ">
+               <p><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p>
+               <!-- <i class="mdi mdi-menu-down d-none d-sm-block"></i> -->
+             </div>
+           </div>
+           <!-- <div class="profile-dropdown-navigate">
+                 <ul class="profile-listing">
+                   <li class="pb-2">
+                     <a href="/settings/default/index">Profile</a>
+                   </li>
+                   <div class="dvider"></div>
+                   <li><a href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post" class="d-flex align-items-center">
+                       <div class="icons-pro rounded-circle">
+                         <i class="mdi mdi-logout text-danger"></i>
+                       </div>
+                       Logout
+                     </a></li>
+                 </ul>
+               </div> -->
+         </div>
+       </li>
+       <li class="d-lg-none d-block nav-item">
+         <button class="navbar-toggler navbar-toggler align-self-center menutoggle" type="button"
+           data-toggle="minimize">
+           <span class="mdi mdi-menu"></span>
+         </button>
+       </li>
+     </ul>
+   </div>
+ </nav>

@@ -450,14 +450,14 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->name;
     }
 
-    public function getProfileimage()
+    public function getProfile_display_image()
     {
-        if ($this->operator && $this->operator->user_id == $this->id) {
-            return $this->operator->imagepath;
+        if ($this->profile_image != '') {
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->profile_image;
         }
 
-        if ($this->profile_image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/user/' . $this->id . '/' . $this->profile_image;
+        if ($this->google_avatar_image != '') {
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->google_avatar_image;
         }
 
         if ($this->avatar != '') {
@@ -465,10 +465,10 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
-    public function getCoverimage()
+    public function getCover_display_image()
     {
         if ($this->cover_image != '') {
-            return \Yii::$app->params['s3_endpoint'] . '/user_cover_image/' . $this->id . '/' . $this->cover_image;
+            return \Yii::$app->params['s3_endpoint'] . '/user/profile/' . $this->cover_image;
         }
     }
 
@@ -535,5 +535,10 @@ class User extends ActiveRecord implements IdentityInterface
             $roles[] = "Community Manager";
         }
         return implode(', ', $roles);
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
 }

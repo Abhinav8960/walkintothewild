@@ -2,7 +2,9 @@
 
 namespace business\modules\leads;
 
+use common\models\operator\SafariOperator;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
 /**
  * leads module definition class
@@ -25,5 +27,13 @@ class Module extends \yii\base\Module
             return Yii::$app->getResponse()->redirect('/site/login')->send();
             exit;
         }
+    }
+
+     public function operatormodel()
+    {
+        if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+            return $operator;
+        }
+        throw new ForbiddenHttpException('You are not Allowed to access this Page');
     }
 }

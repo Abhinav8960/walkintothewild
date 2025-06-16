@@ -7,9 +7,6 @@ $this->title = 'My Business Profile';
 $this->params['title'] = $this->title;
 ?>
 
-<div class="d-flex justify-content-between align-items-center mt-5">
-    <h3 class="mt-5">Profile</h3>
-</div>
 
 <div class="row d-flex justify-content-center">
     <div class="col col-md-12 col-lg-12 col-xl-12">

@@ -2,6 +2,7 @@
 
 namespace business\widgets;
 
+use common\models\operator\SafariOperator;
 use Yii;
 use yii\base\Widget;
 
@@ -22,8 +23,12 @@ class Header extends Widget
             $this->display = false;
         }
 
+        $safarioperator = SafariOperator::find()->where(['user_id'=>Yii::$app->user->identity->id,'status'=>SafariOperator::STATUS_ACTIVE])->one();
+
         if ($this->display) {
-            return $this->render('header');
+            return $this->render('header',[
+                'safarioperator'=>$safarioperator
+            ]);
         }
     }
 }

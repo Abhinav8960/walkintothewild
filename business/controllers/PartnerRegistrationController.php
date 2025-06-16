@@ -2,6 +2,8 @@
 
 namespace business\controllers;
 
+use common\models\EmailVerification;
+use common\models\MobileVerification;
 use common\models\operator\SafariOperator;
 use common\models\partnerregistration\form\PartnerGstDetailsForm;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
@@ -12,6 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use Yii;
+use yii\helpers\Json;
 
 class PartnerRegistrationController extends Controller
 {
@@ -37,6 +40,9 @@ class PartnerRegistrationController extends Controller
         $model->user_id = Yii::$app->user->identity->id;
         $model->setScenario(PartnerRegistrationForm::SCENARIO_STEP1);
         $model->form1_status = PartnerRegistration::FORM_FILLED;
+        $verification_model = new MobileVerification();
+        $verification_model->user_id = $model->user_id;
+        $isLegalEntitySaved = false; //flag 
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 $model->logo_file_upload = UploadedFile::getInstance($model, 'logo_file_upload');
@@ -49,14 +55,20 @@ class PartnerRegistrationController extends Controller
                     }
                     $model->form1_status = PartnerRegistration::FORM_FILLED;
 
+                    if ($model->partner_model->getOldAttribute('legal_entity_phone') != $model->partner_model->legal_entity_phone) {
+                        $model->partner_model->is_phone_no_verified = 0;
+                    }
+
                     if ($model->partner_model->save()) {
+                        $isLegalEntitySaved = true;  //flag
                         $model->uploadFiles();
-                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
+                        if ($model->partner_model != null && ($model->partner_model->is_phone_no_verified == 1) && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
                             return $this->redirect(['final-view']);
                         }
-                        // else{
-                        return $this->redirect(['step-2']);
-                        // }
+                        $this->actionSendOtpMobile();
+                        if ($model->partner_model->is_phone_no_verified == 1) {
+                            return $this->redirect(['step-2']);
+                        }
                     } else {
                         // print_r($model->partner_model->getErrors());
                         // die();
@@ -71,7 +83,9 @@ class PartnerRegistrationController extends Controller
         return $this->render('legalentity', [
             'model' => $model,
             'partner_model' => $partner_model,
-            'currentStep' => 1
+            'currentStep' => 1,
+            'verification_model' => $verification_model,
+            'isLegalEntitySaved' => $isLegalEntitySaved
         ]);
     }
 
@@ -155,6 +169,11 @@ class PartnerRegistrationController extends Controller
         $gstForm->action_url = '/partner-registration/step-3';
         $gstForm->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerGstDetailsForm::SCENARIO_STEP3;
 
+
+        $verification_model = new EmailVerification();
+        $verification_model->user_id = $model->user_id;
+        $isbusinessSaved = false; //flag 
+
         if (Yii::$app->request->isPost) {
             $isModelLoaded = $model->load(Yii::$app->request->post());
             $isGstLoaded = $gstForm->load(Yii::$app->request->post());
@@ -179,12 +198,19 @@ class PartnerRegistrationController extends Controller
                         $model->partner_model->final_approved = 0;
                     }
                     $model->form3_status = PartnerRegistration::FORM_FILLED;
-
+                    if ($model->partner_model->getOldAttribute('billing_mail') != $model->partner_model->billing_mail) {
+                        $model->partner_model->is_billing_mail_verified = 0;
+                    }
                     if ($model->partner_model->save(false)) {
-                        if ($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)) {
+                        $isbusinessSaved = true; //flag 
+
+                        if ($model->partner_model != null && ($model->partner_model->is_billing_mail_verified == 1) && ($model->partner_model->form1_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED && $model->partner_model->is_billing_mail_verified == 1)) {
                             return $this->redirect(['final-view']);
                         }
-                        return $this->redirect(['step-4']);
+                        $this->actionSendOtpMobile();
+                        if ($model->partner_model->is_billing_mail_verified == 1) {
+                            return $this->redirect(['step-4']);
+                        }
                     }
                 }
             }
@@ -195,6 +221,8 @@ class PartnerRegistrationController extends Controller
             'partner_model' => $partner_model,
             'gst_model' => $gstForm,
             'currentStep' => 3,
+            'verification_model' => $verification_model,
+            'isbusinessSaved' => $isbusinessSaved
         ]);
     }
 
@@ -262,6 +290,11 @@ class PartnerRegistrationController extends Controller
         $model->form5_status = PartnerRegistration::FORM_FILLED;
         $model->action_url = '/partner-registration/step-5';
         $model->action_validate_url = '/partner-registration/validate-create?scenario=' . PartnerRegistrationForm::SCENARIO_STEP5;
+
+        $verification_model = new MobileVerification();
+        $verification_model->user_id = $model->user_id;
+        $isUserKycSaved = false; //flag 
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 // if (Yii::$app->request->post('same_as_previous')) {
@@ -282,12 +315,21 @@ class PartnerRegistrationController extends Controller
                     }
                     $model->form5_status = PartnerRegistration::FORM_FILLED;
                     $model->partner_model->loadDefaultValues();
+
+                    if ($model->partner_model->getOldAttribute('kyc_phone') != $model->partner_model->kyc_phone) {
+                        $model->partner_model->is_kyc_phone_verified = 0;
+                    }
+
                     if ($model->partner_model->save(false)) {
+                        $isUserKycSaved = true; //flag 
                         $model->uploadFiles();
                         //     if($model->partner_model != null && ($model->partner_model->form1_status == PartnerRegistration:: FORM_FILLED && $model->partner_model->form2_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form3_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form4_status == PartnerRegistration::FORM_FILLED && $model->partner_model->form5_status == PartnerRegistration::FORM_FILLED)){
                         //         return $this->redirect(['final-view']);
                         //  }
-                        return $this->redirect(['final-view']);
+                        $this->actionSendOtpMobile();
+                        if ($model->partner_model->is_kyc_phone_verified == 1) {
+                            return $this->redirect(['final-view']);
+                        }
                     }
                 }
             }
@@ -297,7 +339,9 @@ class PartnerRegistrationController extends Controller
         return $this->render('userkyc', [
             'model' => $model,
             'partner_model' => $partner_model,
-            'currentStep' => 5
+            'currentStep' => 5,
+            'verification_model' => $verification_model,
+            'isUserKycSaved' => $isUserKycSaved
         ]);
     }
 
@@ -341,26 +385,31 @@ class PartnerRegistrationController extends Controller
     public function actionSendApproval($id)
     {
         $model = $this->findModel($id);
-        $model->is_sendforapproval = 1;
-        $model->status = 1;
-
+        if ($model->is_phone_no_verified && $model->is_billing_mail_verified && $model->is_kyc_phone_verified) {
+            $model->is_sendforapproval = 1;
+            $model->status = 1;
+        }
 
         if (($model->form1_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_1 !== null) ||
             ($model->form2_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_2 !== null) ||
             ($model->form3_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_3 !== null) ||
             ($model->form4_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_4 !== null) ||
-            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null))
-        {
+            ($model->form5_status == PartnerRegistration::FORM_FILLED && $model->updated_time_form_5 !== null)
+        ) {
             $model->resent_after_rejection = 1;
         }
 
 
         if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
-            return $this->redirect(['thank-you']);
+            if (!($model->is_phone_no_verified && $model->is_billing_mail_verified && $model->is_kyc_phone_verified)) {
+                Yii::$app->session->setFlash('error', 'Phone or Email is Not Verified!');
+                return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
+            } else {
+                Yii::$app->session->setFlash('success', 'Send For Approval Successfully.');
+                return $this->redirect(['thank-you']);
+            }
         } else {
             Yii::$app->session->setFlash('error', 'There was an error while sending for approval.');
-
             return $this->redirect(Yii::$app->request->referrer ?: ['final-view']);
         }
     }
@@ -482,5 +531,263 @@ class PartnerRegistrationController extends Controller
             return $this->redirect(['site/login']);
         }
         return $this->render('deactivate');
+    }
+
+
+
+
+
+
+    public function actionSendOtpMobile()
+    {
+        $model = new MobileVerification();
+        $model->user_id = Yii::$app->user->id;
+        $model->otp = rand(100000, 999999);
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+        $model->status = 1;
+
+        $partner_model  = $this->findModel();
+
+        // if (($partner_model->is_phone_no_verified == true && $partner_model->legal_entity_phone == $model->mobile_no) || ($partner_model->is_kyc_phone_verified == true && $partner_model->kyc_phone == $model->mobile_no)) {
+        //     $headers = Yii::$app->response->headers;
+        //     if (!$headers->has('X-Rate-Limit-Remaining')) {
+        //         $headers->add('X-Rate-Limit-Remaining', 0);
+        //     }
+        //     if (!$headers->has('X-Rate-Limit-Reset')) {
+        //         $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
+        //     }
+        //     return \yii\helpers\Json::encode([
+        //         'success' => true,
+        //         'message' => 'Mobile No. already verified'
+        //     ]);
+        // }
+
+        $cache = Yii::$app->cache;
+        $rateLimitKey = 'mobile_verification_' . $model->user_id;
+        $rateLimitDuration = 300; // 5 minutes in seconds
+        $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
+        $blockDuration = 10800; // 3 hours in seconds
+
+        // Check rate limit
+        $requestCount = $cache->get($rateLimitKey);
+        $headers = Yii::$app->response->headers;
+
+        if ($requestCount === false) {
+            $cache->set($rateLimitKey, 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        } elseif ($requestCount >= $rateLimitMaxRequests) {
+            $blockKey = 'mobile_verification_block_' . $model->user_id;
+            $blockStatus = $cache->get($blockKey);
+
+            if ($blockStatus === false) {
+                $cache->set($blockKey, true, $blockDuration);
+            }
+            if (!$headers->has('Retry-After')) {
+                $headers->add('Retry-After', $blockDuration);
+            }
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
+            }
+
+            return \yii\helpers\Json::encode([
+                'error' => true,
+                'message' => 'Rate limit exceeded. Please try again later.'
+            ]);
+        } else {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        }
+
+        if (Yii::$app->request->isPost) {
+            $mobileNo = Yii::$app->request->post('mobile_no');
+
+            if ($mobileNo) {
+                if ($mobileNo != $partner_model->legal_entity_phone && $mobileNo != $partner_model->kyc_phone) {
+                    return \yii\helpers\Json::encode([
+                        'error' => true,
+                        'message' => 'Number is Invalid or Not Matched !!'
+                    ]);
+                }
+                $model->mobile_no = $mobileNo;
+
+                $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+                if (!$headers->has('X-Rate-Limit-Remaining')) {
+                    $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+                }
+                if (!$headers->has('X-Rate-Limit-Reset')) {
+                    $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+                }
+
+                if ($model->save(false)) {
+                    $to_be_send = MobileVerification::find()->where(['mobile_no' => $mobileNo, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
+                    if ($to_be_send != null) {
+                        new \common\events\user\MobileNoVerification($model->user_id, $model->mobile_no, $to_be_send->otp, $partner_model->legal_entity_name);
+                    }
+                    return \yii\helpers\Json::encode([
+                        'success' => true,
+                        'message' => 'OTP sent to ' . $mobileNo
+                    ]);
+                }
+            }
+        }
+    }
+
+
+
+    public function actionOtpVerificationMobile()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $otpByUser = Yii::$app->request->post('otp_by_user');
+        if (!$otpByUser) {
+            return [
+                'success' => false,
+                'message' => 'Missing OTP'
+            ];
+        }
+
+        $model = MobileVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
+        if (!$model) {
+            return [
+                'success' => false,
+                'message' => 'OTP record not found'
+            ];
+        }
+        if ($model->otp != $otpByUser) {
+            return [
+                'success' => false,
+                'message' => 'Incorrect OTP'
+            ];
+        }
+
+        if (strtotime($model->exp_datetime) < time()) {
+            return [
+                'success' => false,
+                'message' => 'OTP has expired'
+            ];
+        }
+
+        $partner_model  = $this->findModel();
+        $model->status = 2;
+        $model->otp_by_user = $otpByUser;
+        $model->source_type = MobileVerification::CALLING_NUMBER;
+        $model->save(false);
+        if ($partner_model->legal_entity_phone == $model->mobile_no) {
+            $partner_model->is_phone_no_verified = 1;
+            if ($model->status == 2) {
+                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
+            }
+            $partner_model->save(false);
+        }
+
+        if ($partner_model->kyc_phone == $model->mobile_no) {
+            $partner_model->is_kyc_phone_verified = 1;
+            if ($model->status == 2) {
+                Yii::$app->session->setFlash('success', 'Phone Number verified successfully');
+            }
+            $partner_model->save(false);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
+
+    public function actionSendOtpEmail()
+    {
+        $model = new EmailVerification();
+        $model->user_id = Yii::$app->user->id;
+        $model->otp = rand(100000, 999999);
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+        $model->status = 1;
+
+        $partner_model  = $this->findModel();
+
+        if (Yii::$app->request->isPost) {
+            $email = Yii::$app->request->post('email');
+
+            if ($email) {
+                if ($email != $partner_model->billing_mail) {
+                    return \yii\helpers\Json::encode([
+                        'error' => true,
+                        'message' => 'Email is Invalid or Not Matched !!'
+                    ]);
+                }
+                $model->email = $email;
+
+                if ($model->save(false)) {
+                    $to_be_send = EmailVerification::find()->where(['email' => $email, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
+                    if ($to_be_send != null) {
+                        new \common\events\user\EmailVerification($model->user_id, $model->email, $partner_model->legal_entity_name, $to_be_send->otp, $model->exp_datetime);
+                    }
+                    return \yii\helpers\Json::encode([
+                        'success' => true,
+                        'message' => 'OTP sent to ' . $email
+                    ]);
+                }
+            }
+        }
+    }
+
+
+    public function actionOtpVerificationEmail()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $otpByUser = Yii::$app->request->post('otp_by_user');
+        if (!$otpByUser) {
+            return [
+                'success' => false,
+                'message' => 'Missing OTP'
+            ];
+        }
+
+        $model = EmailVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
+        if (!$model) {
+            return [
+                'success' => false,
+                'message' => 'OTP record not found'
+            ];
+        }
+        if ($model->otp != $otpByUser) {
+            return [
+                'success' => false,
+                'message' => 'Incorrect OTP'
+            ];
+        }
+
+        if (strtotime($model->exp_datetime) < time()) {
+            return [
+                'success' => false,
+                'message' => 'OTP has expired'
+            ];
+        }
+
+        $partner_model  = $this->findModel();
+        if ($partner_model->billing_mail == $model->email) {
+            $model->status = 2;
+            $model->otp_by_user = $otpByUser;
+            $model->source_type = EmailVerification::BILLING_MAIL;
+            $model->save(false);
+            $partner_model->is_billing_mail_verified = 1;
+            if ($model->status == 2) {
+                Yii::$app->session->setFlash('success', 'Email verified successfully');
+            }
+            $partner_model->save(false);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

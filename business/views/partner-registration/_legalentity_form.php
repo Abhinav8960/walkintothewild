@@ -67,12 +67,13 @@ $form = ActiveForm::begin([
     </div>
 
     <div class="col-md-4">
+        <?php $verificationIcon = $model->is_phone_no_verified ? ' <i class="bi bi-patch-check-fill text-success fs-6 ms-2"></i>' : ''; ?>
         <?= $form->field($model, 'legal_entity_phone')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Legal Entity Phone',
             'readonly' => $readOnly,
             'onkeypress' => 'return /[0-9]/i.test(event.key)',
-        ]) ?>
+        ])->label('Legal Entity Phone'.$verificationIcon) ?>
     </div>
 
     <div class="col-md-4">
@@ -107,8 +108,10 @@ $form = ActiveForm::begin([
     <?= Html::hiddenInput('step', 1) ?>
     <?php if($model->is_sendforapproval != 1 && ($model->form1_status == PartnerRegistration :: FORM_FILLED && $model->form2_status == PartnerRegistration :: FORM_FILLED && $model->form3_status == PartnerRegistration :: FORM_FILLED && $model->form4_status == PartnerRegistration :: FORM_FILLED && $model->form5_status == PartnerRegistration :: FORM_FILLED)){ ?>
          <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
-    <?php }elseif ($model->form1_status == PartnerRegistration :: FORM_REJECTED || $model->form2_status == PartnerRegistration :: FORM_REJECTED || $model->form3_status == PartnerRegistration :: FORM_REJECTED || $model->form4_status == PartnerRegistration :: FORM_REJECTED || $model->form5_status == PartnerRegistration :: FORM_REJECTED){?>
+    <?php }elseif($model->form1_status == PartnerRegistration :: FORM_REJECTED || $model->form2_status == PartnerRegistration :: FORM_REJECTED || $model->form3_status == PartnerRegistration :: FORM_REJECTED || $model->form4_status == PartnerRegistration :: FORM_REJECTED || $model->form5_status == PartnerRegistration :: FORM_REJECTED){?>
         <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
+    <?php }elseif($isLegalEntitySaved && $model->is_phone_no_verified){?>
+            <?= Html::submitButton('Next', ['class' => 'btn btn-orange']) ?>
     <?php }else{?>
     <?= Html::submitButton('Save & Next', ['class' => 'btn btn-orange']) ?>
     <?php }?>

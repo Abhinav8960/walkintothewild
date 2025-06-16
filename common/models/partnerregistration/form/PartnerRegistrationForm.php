@@ -102,6 +102,11 @@ class PartnerRegistrationForm extends Model
     public $park_list;
     public $created_at;
 
+    public $is_phone_no_verified;
+    public $is_billing_mail_verified;
+    public $is_kyc_phone_verified;
+
+
     public function __construct(PartnerRegistration $partner_model = null)
     {
         $this->partner_model = Yii::createObject([
@@ -166,6 +171,10 @@ class PartnerRegistrationForm extends Model
             $this->status = $this->partner_model->status;
             $this->final = $this->partner_model->final;
             $this->updated_time_final = $this->partner_model->updated_time_final;
+
+            $this->is_phone_no_verified = $this->partner_model->is_phone_no_verified;
+            $this->is_billing_mail_verified = $this->partner_model->is_billing_mail_verified;
+            $this->is_kyc_phone_verified = $this->partner_model->is_kyc_phone_verified;
 
             $this->park_list =  PartnerParkList::find()->select('park_id')->where(['partner_registration_id' => $this->partner_model->id, 'status' => 1])->column();
             $this->created_at = $this->partner_model->created_at;
@@ -289,7 +298,7 @@ class PartnerRegistrationForm extends Model
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'default', 'value' => 0],
             [['gst_id', 'user_id', 'current_step', 'form1_status', 'form2_status', 'form3_status', 'form4_status'], 'integer'],
             [['form1_status', 'form2_status', 'form3_status', 'form4_status', 'is_sendforapproval'], 'safe'],
-            [['legal_entity_phone', 'legal_entity_whatsapp', 'billing_phone', 'kyc_phone', 'kyc_whatsapp'], 'match', 'pattern' => '/^\d{10}$/', 'message' => 'Contact Number should have 10 digits.'],
+            [['legal_entity_phone', 'legal_entity_whatsapp', 'billing_phone', 'kyc_phone', 'kyc_whatsapp'], 'match', 'pattern' => '/^[6-9]\d{9}$/', 'message' => 'Contact Number is Invalid.'],
             [['kyc_pan', 'pan_number'], 'match', 'pattern' => '/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/', 'message' => 'PAN must be in format AAAAA9999A'],
             [['address', 'about_business', 'bank_name', 'account_holder_name', 'owner_name', 'kyc_email', 'kyc_pan', 'ifsc_number', 'legal_entity_name', 'brand_name',], 'string', 'max' => 255, 'tooLong' => 'should not exceed 255 characters'],
             ['aadhaar_number', 'match', 'pattern' => '/^[2-9]{1}[0-9]{11}$/', 'message' => 'Aadhaar number must be 12 digits and not start with 0 or 1'],
@@ -299,6 +308,7 @@ class PartnerRegistrationForm extends Model
 
             [['park_list'], 'safe'],
             [['created_at','resent_after_rejection'], 'safe'],
+            [['created_at','is_phone_no_verified'], 'safe'],
 
 
         ];
@@ -414,6 +424,9 @@ class PartnerRegistrationForm extends Model
         $this->partner_model->final = $this->final;
         $this->partner_model->updated_time_final = $this->updated_time_final;
 
+        $this->partner_model->is_phone_no_verified = $this->is_phone_no_verified;
+        $this->partner_model->is_billing_mail_verified = $this->is_billing_mail_verified;
+        $this->partner_model->is_kyc_phone_verified = $this->is_kyc_phone_verified;
 
 
         if ($this->park_list) {

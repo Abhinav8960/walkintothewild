@@ -96,11 +96,12 @@ $readOnly = false;
     </div>
 
     <div class="col-md-3">
+        <?php $verificationIcon = $model->is_billing_mail_verified ? ' <i class="bi bi-patch-check-fill text-success fs-6 ms-2"></i>' : ''; ?>
         <?= $form->field($model, 'billing_mail')->textInput([
             'class' => 'form-control',
             'placeholder' => 'Enter Billing Mail',
             'readonly' => $readOnly,
-        ]) ?>
+        ])->label('Billing Mail'.$verificationIcon) ?>
     </div>
 
 

@@ -210,6 +210,29 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         }
     }
 
+    public function getDisplayImage()
+    {
+        if ($this->source == 1) {
+            return $this->package ? $this->package->imagepath : '';
+        } else if ($this->source == 2) {
+            return $this->park ? $this->park->Logoimagepath : '';
+        } else if ($this->source == 3) {
+            return $this->operator ? $this->operator->imagepath : '';
+        }
+    }
+
+
+    public function getDisplayOverview()
+    {
+        if ($this->source == 1) {
+            return $this->package ? $this->package->package_description : '';
+        } else if ($this->source == 2) {
+            return $this->park ? $this->park->short_description : '';
+        } else if ($this->source == 3) {
+            return $this->operator ? $this->operator->about_business : '';
+        }
+    }
+
     public function getPackage()
     {
         return $this->hasOne(Package::className(), ['id' => 'package_id', 'live_version' => 'package_version']);
