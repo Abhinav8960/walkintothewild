@@ -83,7 +83,7 @@ class LeadSearch extends Lead
             'user_id' => $this->user_id,
             'is_booking_for_login_user' => $this->is_booking_for_login_user,
             'is_seen_by_admin' => $this->is_seen_by_admin,
-            'status' => $this->status,
+            Lead::getTableSchema()->fullName . '.status' => $this->status,
             'is_payment_received' => $this->is_payment_received,
             'booked_operator_id' => $this->booked_operator_id,
             'transaction_datetime' => $this->transaction_datetime,

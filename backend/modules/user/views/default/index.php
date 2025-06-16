@@ -42,6 +42,18 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         }
                     ],
                     [
+                        'label' => 'Verified User',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->is_mobile_no_verified == 1) {
+                                return 'Yes';
+                            } else {
+                                return 'No';
+                            }
+                        }
+                    ],
+                    [
                         'label' => 'Role',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',

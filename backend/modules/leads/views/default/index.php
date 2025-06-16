@@ -38,18 +38,23 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->sourceLabel;
+                            $str = $model->sourceLabel;
+                            if (isset($model->displayLabel)) {
+                                $str .= "<br>";
+                                $str .= isset($model->displayLabel) ? $model->displayLabel : '';
+                            }
+                            return $str;
                         }
                     ],
 
-                    [
-                        'label' => 'Detail',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->displayLabel) ? $model->displayLabel : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Detail',
+                    //     'headerOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->displayLabel) ? $model->displayLabel : '';
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Safaris',
@@ -68,14 +73,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
-                    [
-                        'label' => 'Accomodation',
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return !empty($model->staycatgory) ? $model->staycatgory->title : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Accomodation',
+                    //     'contentOptions' => ['style' => 'text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return !empty($model->staycatgory) ? $model->staycatgory->title : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Travel Date looking',
                         'headerOptions' => ['style' => 'width: 15%;'],
@@ -97,21 +102,21 @@ $this->params['title'] = $this->title;
                             return date('d M, Y h:i A', $model->created_at);
                         }
                     ],
+                    // [
+                    //     'label' => 'Is payment received',
+                    //     'headerOptions' => ['style' => 'width: 15%;'],
+                    //     'contentOptions' => ['style' => 'text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         if ($model->is_payment_received) {
+                    //             return '<span class="badge badge-success">Yes</span>';
+                    //         } else {
+                    //             return '<span class="badge badge-danger">No</span>';
+                    //         }
+                    //     }
+                    // ],
                     [
-                        'label' => 'Is payment received',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            if ($model->is_payment_received) {
-                                return '<span class="badge badge-success">Yes</span>';
-                            } else {
-                                return '<span class="badge badge-danger">No</span>';
-                            }
-                        }
-                    ],
-                    [
-                        'label' => 'payment Information',
+                        'label' => 'Payment Information',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'contentOptions' => ['style' => 'text-align: left;'],
                         'format' => 'raw',
@@ -140,6 +145,15 @@ $this->params['title'] = $this->title;
                             return $model->quotation_count;
                         }
                     ],
+                    [
+                        'label' => 'Operator Count',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->assigned_operator_count;
+                        }
+                    ],
+                    
 
                     [
                         'label' => 'Is Chat Started',
@@ -154,7 +168,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{view}&nbsp{inactive}',
+                        'template' => '{view}',
                         'buttons' => [
 
                             'view' => function ($url, $model) {
@@ -165,13 +179,12 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
 
-                            'inactive' => function($url,$model)
-                            {
-                                return  Html::a('Inactive', ['/leads/default/inactive', 'id' => $model->id], [
-                                    'class' => 'btn btn-info p-1',
-                                    'title' => 'Inactive',
-                                ]);
-                            }
+                            // 'inactive' => function ($url, $model) {
+                            //     return  Html::a('Inactive', ['/leads/default/inactive', 'id' => $model->id], [
+                            //         'class' => 'btn btn-info p-1',
+                            //         'title' => 'Inactive',
+                            //     ]);
+                            // }
 
 
                         ]

@@ -24,7 +24,7 @@ class PackageLeadReceived extends Event
 
     protected $channels = [
         'email',
-        'firebase',
+        // 'firebase',
     ];
     protected $mail_template_code = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST; // New User Registration
 

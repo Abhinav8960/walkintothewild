@@ -381,7 +381,7 @@ class DefaultController extends  Controller
             $model->status = Lead::STATUS_SUSPEND;
             if ($model->save(false)) {
                 \Yii::$app->session->setFlash('success', 'Inactive Successfully!!!');
-                return  $this->redirect(Yii::$app->request->referrer);
+                return  $this->redirect(['index']);
             }
         }
     }
