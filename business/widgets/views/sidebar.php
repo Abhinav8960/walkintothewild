@@ -7,7 +7,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
             <div class="profile-ditails d-flex justify-content-around align-items-center">
                 <div class="pro-img me-3">
                     <a href="/">
-                        <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" alt="">
+                        <img src="<?= $this->params['baseurl'] ?>/images/partner.jpg" alt="">
                         <span class="success-online"></span>
                     </a>
                 </div>
@@ -25,7 +25,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
                                                                 "/leads/default/create",
                                                                 "/leads/default/view",
                                                             )) ? "active" : "" ?>" href="/leads/default/index">
-                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame.svg" alt="" width="25" height="25"></span>
                 <span class="hide-slide-menu"> Leads</span>
             </a>
         </li>
