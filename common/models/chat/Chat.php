@@ -25,6 +25,10 @@ class Chat extends \yii\db\ActiveRecord
 {
     const CHAT_TYPE_DIRECT = 1;
     const CHAT_TYPE_QUOTE = 2;
+
+    const OBJECTIVE_DIRECT = "direct_chat";
+    const OBJECTIVE_QUOTE = "quote_chat";
+
     /**
      * {@inheritdoc}
      */
@@ -134,4 +138,15 @@ class Chat extends \yii\db\ActiveRecord
     //     }
     //     return false;
     // }
+
+    public function callpossible()
+    {
+        if ($this->chat_type == 2) {
+
+            if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

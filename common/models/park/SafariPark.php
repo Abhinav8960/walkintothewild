@@ -49,6 +49,8 @@ use common\models\UserExperience;
 class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const OBJECTIVE = "park";
+
     /**
      * {@inheritdoc}
      */
@@ -99,8 +101,8 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
             [['slug'], 'unique'],
-            [['show_in_filter','is_published_on_web','is_published_on_api'], 'boolean'],
-            [['is_published_on_web','is_published_on_api'], 'safe'],
+            [['show_in_filter', 'is_published_on_web', 'is_published_on_api'], 'boolean'],
+            [['is_published_on_web', 'is_published_on_api'], 'safe'],
         ];
     }
 

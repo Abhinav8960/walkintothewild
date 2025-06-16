@@ -59,7 +59,7 @@ class ShareSafariComment extends \yii\db\ActiveRecord implements \common\interfa
             [['comment'], 'string'],
             // [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
             // [['user_ip_address'], 'string', 'max' => 20],
-            [['version'],'integer'],
+            [['version'], 'integer'],
         ];
     }
 
@@ -123,8 +123,8 @@ class ShareSafariComment extends \yii\db\ActiveRecord implements \common\interfa
 
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->status == Self::STATUS_ACTIVE){
-            return new \common\events\sharesafari\SafariCommentByUser($this->user->name,$this->sharesafari->id) ;
+        if ($this->status == Self::STATUS_ACTIVE) {
+            return new \common\events\sharesafari\SafariCommentByUser($this->sharesafari->slug, $this->user->name, $this->sharesafari->id);
         }
     }
 }

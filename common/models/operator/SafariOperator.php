@@ -61,12 +61,14 @@ use common\models\UserFollow;
 class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const OBJECTIVE = "safari_operator";
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'safari_operator';
+        return 'operator';
     }
 
     public function behaviors()

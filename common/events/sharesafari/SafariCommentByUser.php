@@ -21,6 +21,8 @@ class SafariCommentByUser extends Event
     public $shared_safari_id;
     public $shared_safari_name;
     public $shared_safari_url;
+    public $objective;
+    public $slug;
     protected $sent_data = [];
     protected $shared_safari;
     protected $engine;
@@ -33,11 +35,13 @@ class SafariCommentByUser extends Event
 
     protected $mail_template_code = 'THOS';  // To Host on Comment Safari
 
-    public function __construct($interested_user, $shared_safari_id)
+    public function __construct($sharesafarislug, $interested_user, $shared_safari_id)
     {
-        
+
         $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
+        $this->slug = $sharesafarislug;
+        $this->objective = ShareSafari::OBJECTIVE;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
         $this->broadcastHandle();
@@ -79,7 +83,7 @@ class SafariCommentByUser extends Event
                         'shared_safari' => $this->shared_safari_name,
                         'shared_safari_url' => $this->shared_safari_url,
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'],  
+                    'to_mail' => \Yii::$app->params['adminEmail'],
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -87,13 +91,14 @@ class SafariCommentByUser extends Event
             'firebase' => [
                 [
                     'master_notification_template_id' => $this->firebaseTemplateId(),
+                    'title' => $this->title(),
                     'message' => $this->message(),
-                    'sent_data' => NULL,
+                    'sent_data' => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'slug' => $this->slug]),
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
                 ],
-                
+
             ],
         ];
         return $arr;
@@ -142,7 +147,7 @@ class SafariCommentByUser extends Event
             $this->email = $this->shared_safari->user->email;
             $this->name =  $this->shared_safari->user->name;
         }
-        $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
+        $this->shared_safari_url = urlencode("http://walkintothewild.io" . $this->shared_safari['slug']);
         $this->sent_data = [
             'share_safari_title' => $this->shared_safari->share_safari_title,
             'slug' => $this->shared_safari->slug

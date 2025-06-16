@@ -2,6 +2,7 @@
 
 namespace common\events\leads;
 
+use api\models\package\Package;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -34,7 +35,7 @@ class PackageLeadReceived extends Event
         $this->package = $package;
         $this->partner = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
         $this->to_mail = $this->partner->email;
-        $this->chat_url  = \Yii::$app->params['frontend_url'] .'/'. $this->user->user_handle . "/" . $chat_hash;
+        $this->chat_url  = \Yii::$app->params['frontend_url'] . '/' . $this->user->user_handle . "/" . $chat_hash;
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
@@ -74,10 +75,10 @@ class PackageLeadReceived extends Event
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title'                             => $this->title(),
                     'message'                           => $this->message(),
-                    'sent_data' => NULL,
-                    'user_id' => $this->package->owned_by_id,
-                    'image_url' => NULL,
-                    'action' => NULL,
+                    'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => Package::OBJECTIVE, 'package_slug' => $this->package->package_slug]),
+                    'user_id'                           => $this->package->owned_by_id,
+                    'image_url'                         => NULL,
+                    'action'                            => NULL,
                 ]
             ],
             // Add more templates for other channels as needed

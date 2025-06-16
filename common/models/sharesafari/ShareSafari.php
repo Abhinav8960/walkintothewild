@@ -47,7 +47,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     const STATUS_DELETE_BY_USER = -2;
 
-
+    const OBJECTIVE = "share_safari";
     /**
      * {@inheritdoc}
      */

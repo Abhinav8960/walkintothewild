@@ -140,10 +140,10 @@ class SafariUpdatedByUser extends Event
             $this->email = $this->shared_safari->user->email;
             $this->name =  $this->shared_safari->user->name;
         }
-        $this->sent_data = [
-            'share_safari_title' => $this->shared_safari->share_safari_title,
-            'slug' => $this->shared_safari->slug
-        ];
+        // $this->sent_data = [
+        //     'share_safari_title' => $this->shared_safari->share_safari_title,
+        //     'slug' => $this->shared_safari->slug
+        // ];
     }
 
 
@@ -155,7 +155,7 @@ class SafariUpdatedByUser extends Event
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
+                'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'slug' => $this->shared_safari->slug]),
                 'user_id'                           => $userId,
                 'image_url'                         => NULL,
                 'action'                            => NULL,

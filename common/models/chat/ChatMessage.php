@@ -103,7 +103,7 @@ class ChatMessage extends \yii\db\ActiveRecord
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             if ($this->is_call_message == false || $this->is_call_request == false) {
-                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
+                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, $this->message, $this->chat->chat_hash, $this->chatType(), $this->chat->chat_hash);
             }
         }
 
@@ -159,6 +159,16 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         if (!empty($this->quote)) {
             return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->asArray()->orderBy(['id' => SORT_DESC]);
+        }
+    }
+
+    public function chatType()
+    {
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
+            return Chat::OBJECTIVE_DIRECT;
+        }
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_QUOTE) {
+            return Chat::OBJECTIVE_QUOTE;
         }
     }
 }

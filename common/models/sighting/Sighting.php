@@ -15,6 +15,8 @@ use Yii;
 class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const OBJECTIVE = "sighting";
+
     /**
      * {@inheritdoc}
      */

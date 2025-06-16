@@ -98,9 +98,9 @@ class ShareSafariIntrested extends \yii\db\ActiveRecord implements \common\inter
     public function afterSave($insert, $changedAttributes)
     {
         if($this->status == 1){
-            return  new \common\events\sharesafari\SafariJoinedByuser($this->user->name,$this->sharesafari->id);
+            return  new \common\events\sharesafari\SafariJoinedByuser($this->sharesafari->slug,$this->user->name,$this->sharesafari->id);
         }elseif($this->status == 0){
-            return  new \common\events\sharesafari\SafariUnjoinedByuser($this->user->name,$this->sharesafari->id);
+            return  new \common\events\sharesafari\SafariUnjoinedByuser($this->sharesafari->slug,$this->user->name,$this->sharesafari->id);
         }
     }
 }

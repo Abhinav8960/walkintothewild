@@ -120,11 +120,11 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
     {
         $this->updatePostCommentCount();
         parent::afterSave($insert, $changedAttributes);
-        if($this->status == Self ::STATUS_ACTIVE){
-            $host = UserPosts::find()->where(['id'=>$this->user_posts_id,'status'=>UserPosts::STATUS_ACTIVE])->one();
-            $host_user = User::find()->where(['id'=>$host->user_id,'status'=>User::STATUS_ACTIVE])->one();
-            if(!empty($host && $host_user)){
-            return new \common\events\post\PostCommentByUser($this->user->name,$host_user->id,$host_user->name);
+        if ($this->status == Self::STATUS_ACTIVE) {
+            $host = UserPosts::find()->where(['id' => $this->user_posts_id, 'status' => UserPosts::STATUS_ACTIVE])->one();
+            $host_user = User::find()->where(['id' => $host->user_id, 'status' => User::STATUS_ACTIVE])->one();
+            if (!empty($host && $host_user)) {
+                return new \common\events\post\PostCommentByUser($this->id,$this->user->name, $this->user->user_handle, $host_user->id, $host_user->name);
             }
         }
     }
@@ -140,5 +140,4 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
             }
         }
     }
-    
 }

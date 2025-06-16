@@ -238,7 +238,7 @@ class Chat extends \common\models\chat\Chat
         return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
     }
 
-    private function callpossible()
+    public function callpossible()
     {
         if ($this->chat_type == 2) {
 
@@ -248,6 +248,8 @@ class Chat extends \common\models\chat\Chat
         }
         return false;
     }
+
+    
 
     // public function beforeSave($insert)
     // {

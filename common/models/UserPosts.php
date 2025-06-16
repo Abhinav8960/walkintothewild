@@ -26,6 +26,7 @@ use Yii;
 class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const OBJECTIVE = 'posts';
     /**
      * {@inheritdoc}
      */
@@ -74,8 +75,8 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             [['caption', 'filepath', 'etag'], 'string'],
             [['file', 'delete_reason'], 'string', 'max' => 512],
             [['version'], 'integer'],
-            [['original_filename'],'string', 'max' => 512],
-            [['comment_count','like_count'],'integer'],
+            [['original_filename'], 'string', 'max' => 512],
+            [['comment_count', 'like_count'], 'integer'],
 
         ];
     }
@@ -94,7 +95,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
             'caption' => 'Caption',
             'status' => 'Status',
             'comment_count' => 'Comment Count',
-            'like_count'=>'Like Count',
+            'like_count' => 'Like Count',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -166,7 +167,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         }
     }
 
-      // public function afterSave($insert, $changedAttributes)
+    // public function afterSave($insert, $changedAttributes)
     // {
     //     parent::afterSave($insert, $changedAttributes);
 

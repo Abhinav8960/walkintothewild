@@ -28,6 +28,8 @@ class Feeds extends \yii\db\ActiveRecord
     const STATUS_SUSPEND = 0;
     const STATUS_DELETE = -1;
 
+    const OBJECTIVE = "feeds";
+
     /**
      * {@inheritdoc}
      */

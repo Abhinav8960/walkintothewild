@@ -2,6 +2,7 @@
 
 namespace common\events\chat;
 
+use api\models\chat\Chat;
 use common\broadcast\services\BroadcastService;
 use common\models\master\notification\MasterNotificationTemplate;
 use yii\base\Event;
@@ -10,10 +11,12 @@ class NewChatMessageSend extends Event
 {
     public $receiverUserIds = [];
     public $sender;
+    public $sender_user_handle;
     public $message;
+    public $objective;
     public $chat_hash;
+    public $chat;
     public $templates;
-    public $sent_data;
     public $channelName;
     protected $engine;
     protected $master_notification_template;
@@ -22,13 +25,15 @@ class NewChatMessageSend extends Event
         'firebase',
     ];
 
-    public function __construct(array $receiverUserIds, $sender, $message, $chat_hash, $sent_data)
+    public function __construct(array $receiverUserIds, $sender, $sender_user_handle, $message, $chat_hash, $chat, $objective)
     {
-        $this->receiverUserIds       = $receiverUserIds;
+        $this->receiverUserIds      = $receiverUserIds;
         $this->sender               = $sender;
+        $this->sender_user_handle   = $sender_user_handle;
         $this->message              = $message;
+        $this->objective            = $objective;
         $this->chat_hash            = $chat_hash;
-        $this->sent_data            = $sent_data;
+        $this->chat                 = $chat;
         $this->engine               = \Yii::$app->engine;
         $this->broadcastHandle();
     }
@@ -80,7 +85,8 @@ class NewChatMessageSend extends Event
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
+                // 'sent_data'                         => $this->sent_data,
+                'sent_data'                         => $this->preparesenddata(),
                 'user_id'                           => $userId,
                 'image_url'                         => NULL,
                 'action'                            => NULL,
@@ -88,5 +94,14 @@ class NewChatMessageSend extends Event
         }
 
         return $arr;
+    }
+
+    private function preparesenddata()
+    {
+        if ($this->chat->chat_type = Chat::CHAT_TYPE_DIRECT) {
+
+            return MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'chat_hash' => $this->chat_hash, 'sender_name' => $this->sender, 'user_handle' => $this->sender_user_handle]);
+        }
+        return MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'chat_hash' => $this->chat_hash, 'sender_name' => $this->sender, 'user_handle' => $this->sender_user_handle, 'lead_id' => $this->chat->lead_id, 'can_call' => $this->chat->callpossible()]);
     }
 }
