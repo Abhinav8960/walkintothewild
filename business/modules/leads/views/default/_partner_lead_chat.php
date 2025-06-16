@@ -31,9 +31,10 @@
                     'class' => 'callHere image-button',
                 ]) ?>
          </div>
+<!--          
          <div class="callOption">
              <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>
-         </div>
+         </div> -->
      </div>
  </div>
  <div class="chatWriteBody">
@@ -171,39 +172,6 @@
 JS;
     $this->registerJs($script);
 
-    //     $script = <<< JS
-    // $(document).ready(function() {
-
-    //     function sendmessage(){
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: '/leads/default/send-message',
-    //             data:$("#chatmessageform").serialize(),
-    //             success:function(data){
-    //                 $('#chat-message').val('');
-    //                 location.reload();
-    //             },
-    //             dataType:'html'
-    //         });   
-    //     }
-
-    //     $('#message_sent_btn').click(function(){
-    //         sendmessage();
-    //     });
-
-    //     $('#chat-message').keydown(function(e) {
-    //         if (e.keyCode === 13) { 
-    //             if (e.shiftKey) {
-    //                 return ;
-    //             } else {
-    //                 e.preventDefault(); 
-    //                 sendmessage();
-    //             }
-    //         }
-    //     });
-    // });
-    // JS;
-    //     $this->registerJs($script);
     ?>
 
 <?php
