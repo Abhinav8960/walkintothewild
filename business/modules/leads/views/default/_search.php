@@ -20,7 +20,7 @@ use common\models\GeneralModel;
         <?= $form->field($model, 'source')->dropDownList(
             GeneralModel::leadSource(),
             [
-                'prompt' => 'Select Source',
+                'prompt' => 'All Source',
             ]
         ) ?>
     </div>
@@ -29,7 +29,7 @@ use common\models\GeneralModel;
         <?= $form->field($model, 'park_id')->dropDownList(
             GeneralModel::safariparkoption(),
             [
-                'prompt' => 'Select Park',
+                'prompt' => 'All Park',
             ]
         ) ?>
     </div>
