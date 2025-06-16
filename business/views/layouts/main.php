@@ -7,8 +7,8 @@ use business\assets\AppAsset;
 use business\assets\PartnerAppAsset;
 use common\assets\NotifyAsset;
 
-PartnerAppAsset::register($this);
 AppAsset::register($this);
+PartnerAppAsset::register($this);
 NotifyAsset::register($this);
 
 ?>

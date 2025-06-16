@@ -60,7 +60,6 @@ class DefaultController extends  Controller
     {
         $searchModel = new LeadSearch();
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
-        // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, 87);
 
         return $this->render(
             'index',
@@ -276,7 +275,7 @@ class DefaultController extends  Controller
                 return $this->redirect(['view', 'id' => $id]);
             }
 
-      
+
             $chat_id = $chat_model->id;
             $lead_id = $chat_model->lead_id;
             $call_initiated_user_id = Yii::$app->user->identity->id; // Example user ID who initiated the call
@@ -287,7 +286,7 @@ class DefaultController extends  Controller
             $request_caller_2_no = $chat_model->operator->phone_no; // Optional
             $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
-           
+
             // Instantiate the CallingService
             $callingService = new \common\calling\services\CallingService(
                 $chat_id,
