@@ -1,5 +1,8 @@
 <?php
 $active_url = "/" . Yii::$app->requestedRoute;
+
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <nav class="side_bar sidebar-offcanvas d-flex justify-content-center">
     <ul class="nav">
