@@ -180,6 +180,7 @@ class DefaultController extends  Controller
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['not', ['live_images' => null]]);
 
         /**Chat Section*/
         $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => \Yii::$app->user->identity->id], ['recipient_user_id' => \Yii::$app->user->identity->id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
