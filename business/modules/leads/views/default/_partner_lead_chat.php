@@ -167,18 +167,6 @@
 		.load($(this).attr('value'));
 	});
 
-    (function () {
-    const chatBody = document.querySelector('.chatWriteBody');
-    if (!chatBody) return;
-    chatBody.scrollTop = chatBody.scrollHeight;             */
-    const observer = new MutationObserver(() => {
-        chatBody.scrollTop = chatBody.scrollHeight;
-    });
-    observer.observe(chatBody, { childList: true });
-    $(document).on('pjax:end', '#chat-pjax', () => {
-        chatBody.scrollTop = chatBody.scrollHeight;
-    });
-    })();
 
 JS;
     $this->registerJs($script);
@@ -217,5 +205,32 @@ JS;
     // JS;
     //     $this->registerJs($script);
     ?>
+
+<?php
+$js = <<<JS
+(function () {
+    const chatBody = document.querySelector('.chatWriteBody');
+    if (!chatBody) return;
+
+    /* scroll to last message right away */
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    /* keep jumping to the bottom whenever a new
+       node is inserted (works for AJAX / Pjax /
+       WebSocket updates, etc.)                       */
+    const observer = new MutationObserver(() => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+    observer.observe(chatBody, { childList: true });
+
+    /* optional: if you use Pjax to refresh the chat list */
+    $(document).on('pjax:end', '#chat-pjax', () => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+})();
+JS;
+
+$this->registerJs($js, \yii\web\View::POS_READY);
+?>
 
   
