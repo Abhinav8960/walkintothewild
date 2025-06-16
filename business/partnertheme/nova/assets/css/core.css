@@ -588,13 +588,15 @@
   border-radius: 50%;
   background-color: #00000033;
 }
-.chatuserProfile img{
+
+.chatuserProfile img {
 
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
+
 .chatUserName a {
   font-size: 16px;
   font-weight: 700;
@@ -794,4 +796,94 @@
 .innerBg.innerincomingCall {
 
   background-color: #1D1E1E !important;
+}
+
+
+
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  background: #f8f9fb;
+  border-radius: 8px;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.filterItem label {
+  font-weight: 500;
+  font-size: 18px;
+  color: #92929D;
+}
+
+.filterItem select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-weight: 600;
+  color: #44444F;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 18px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.searchInputBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.searchInputBox input[type="search"] {
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  min-width: 180px;
+  background-color: #0b2f1a;
+  color: #fff !important;
+}
+
+.searchInputBox input::placeholder {
+
+  color: #fff !important;
+}
+
+.searchBtn {
+  background-color: #0b2f1a;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.sortDropdown {
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 500;
+  cursor: pointer;
 }
