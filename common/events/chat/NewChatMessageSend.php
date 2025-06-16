@@ -98,7 +98,7 @@ class NewChatMessageSend extends Event
 
     private function preparesenddata()
     {
-        if ($this->chat->chat_type = Chat::CHAT_TYPE_DIRECT) {
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
 
             return MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'chat_hash' => $this->chat_hash, 'sender_name' => $this->sender, 'user_handle' => $this->sender_user_handle]);
         }
