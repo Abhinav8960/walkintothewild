@@ -1871,4 +1871,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
     }
+
+    public static function mobileVerfied(){
+        return [
+            1 => 'Yes',
+            0 => 'No',
+        ];
+    }
 }

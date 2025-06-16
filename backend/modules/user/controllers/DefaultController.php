@@ -25,7 +25,7 @@ class DefaultController extends Controller
     {
         $searchModel = new UserSearch();
         $searchModel->status = User::STATUS_ACTIVE;
-        $searchModel->is_mobile_no_verified = 1;
+        // $searchModel->is_mobile_no_verified = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->post());
         return $this->render('index', [
             'dataProvider' => $dataProvider,
