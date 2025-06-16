@@ -32,7 +32,7 @@ class NewChatMessageSend extends Event
         $this->sender_user_handle   = $sender_user_handle;
         $this->message              = $message;
         $this->objective            =   Chat::OBJECTIVE_QUOTE;
-        if ($this->chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
+        if ($chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
             $this->objective            =  Chat::OBJECTIVE_DIRECT;
         }
         $this->chat_hash            = $chat_hash;
