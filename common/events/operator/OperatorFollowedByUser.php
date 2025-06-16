@@ -25,6 +25,8 @@ class OperatorFollowedByUser extends Event
     protected $sent_data = [];
     protected $safari_operator;
     protected $engine;
+    protected $objective;
+    protected $user_handle;
     protected $master_notification_template;
 
     protected $channels = [
@@ -34,13 +36,15 @@ class OperatorFollowedByUser extends Event
 
     protected $mail_template_code = 'SOFR';  // To Follow OPERATOR
 
-    public function __construct($user_name, $safari_operator,$safari_operator_email)
+    public function __construct($user_name, $user_handle, $safari_operator, $safari_operator_email)
     {
-        
+
         $this->user_name = $user_name;
         $this->safari_operator = $safari_operator;
         $this->safari_operator_email = $safari_operator_email;
+        $this->user_handle = $user_handle;
         $this->engine = \Yii::$app->engine;
+        $this->objective = User::OBJECTIVE;
         $this->broadcastHandle();
     }
 
@@ -52,8 +56,7 @@ class OperatorFollowedByUser extends Event
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
             // $broadcastService->send($this);
-            $broadcastService->send($this,true);
-
+            $broadcastService->send($this, true);
         }
     }
 
@@ -62,7 +65,7 @@ class OperatorFollowedByUser extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => $this->user_name.' '.' followed you',
+                    'subject' => $this->user_name . ' ' . ' followed you',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
                         'username' => $this->safari_operator,
@@ -76,10 +79,10 @@ class OperatorFollowedByUser extends Event
                     'subject' => 'New Update !! ' . $this->user_name . ' has followed ' . $this->safari_operator,
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' =>$this->safari_operator,
+                        'username' => $this->safari_operator,
                         'name' => $this->user_name
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'] ,
+                    'to_mail' => \Yii::$app->params['adminEmail'],
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -97,7 +100,8 @@ class OperatorFollowedByUser extends Event
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title' => $this->title(),
                     'message' => $this->message(),
-                    'sent_data' => $this->sent_data,
+                    // 'sent_data' => $this->sent_data,
+                    'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'user_handle' => $this->user_handle]),
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
@@ -119,7 +123,7 @@ class OperatorFollowedByUser extends Event
 
     protected function firebaseTemplateId()
     {
-        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate:: FOLLOW_OPERATOR, 'status' => 1])->limit(1)->one();
+        $this->master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::FOLLOW_OPERATOR, 'status' => 1])->limit(1)->one();
         if ($this->master_notification_template) {
             return $this->master_notification_template->id;
         }

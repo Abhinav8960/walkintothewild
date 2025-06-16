@@ -25,7 +25,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     const UNFOLLOW_OPERATOR = 10;
     const PACKAGE_QUOTATION_RECEIVED = 11;
     const PARTNER_QUOTATION_RECEIVED = 12;
-    const NEW_SAFARI_CREATED = 13 ;
+    const NEW_SAFARI_CREATED = 13;
     const SAFARI_UPDATED = 14;
     const FIXED_DEPARTURE_CREATED = 15;
     const FIXED_DEPARTURE_UPDATED = 16;
@@ -70,9 +70,9 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     public function rules()
     {
         return [
-            [['id','module_type','message', 'title'], 'required'],
+            [['id', 'module_type', 'message', 'title'], 'required'],
             [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message','module_type','type'], 'string'],
+            [['message', 'module_type', 'type'], 'string'],
             [['type'], 'safe'],
         ];
     }
@@ -84,7 +84,7 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     {
         return [
             'id' => 'ID',
-            'module_type'=>'Module Type',
+            'module_type' => 'Module Type',
             'title' => 'Title',
             'message' => 'Message',
             'status' => 'Status',
@@ -93,5 +93,21 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
             'updated_at' => 'Updated At',
             'updated_b' => 'Updated B',
         ];
+    }
+
+    public static function prepareSendData($title, $body, $additional_data = [])
+    {
+        $arr =  [
+            'title' => $title,
+            'body' => $body,
+        ];
+
+        if (count($additional_data) > 0) {
+            foreach ($additional_data as $key => $value) {
+                $arr[$key] = $value;
+            }
+        }
+
+        return $arr;
     }
 }

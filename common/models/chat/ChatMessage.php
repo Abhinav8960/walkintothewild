@@ -71,7 +71,7 @@ class ChatMessage extends \yii\db\ActiveRecord
             [['sender_id'], 'safe'],
             [['gallery'], 'safe'],
             [['is_call_message', 'is_quotation_message', 'is_quotation_active'], 'boolean'],
-          
+
         ];
     }
 
@@ -98,18 +98,18 @@ class ChatMessage extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-        if ($insert) {
-            if ($this->is_call_message == false || $this->is_call_request == false) {
-                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->prepareData());
-            }
-        }
+    // public function afterSave($insert, $changedAttributes)
+    // {
+    //     parent::afterSave($insert, $changedAttributes);
+    //     if ($insert) {
+    //         if ($this->is_call_message == false || $this->is_call_request == false) {
+    //             return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+    //         }
+    //     }
 
-        // anurag's testing line
-        // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
-    }
+    //     // anurag's testing line
+    //     // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
+    // }
 
     public function prepareData()
     {
@@ -159,6 +159,16 @@ class ChatMessage extends \yii\db\ActiveRecord
     {
         if (!empty($this->quote)) {
             return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->asArray()->orderBy(['id' => SORT_DESC]);
+        }
+    }
+
+    public function chatType()
+    {
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
+            return Chat::OBJECTIVE_DIRECT;
+        }
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_QUOTE) {
+            return Chat::OBJECTIVE_QUOTE;
         }
     }
 }

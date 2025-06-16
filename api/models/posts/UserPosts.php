@@ -11,6 +11,7 @@ class UserPosts extends \common\models\UserPosts
     {
         $fields = parent::fields();
 
+        $fields[] = 'id';
         $fields[] = 'full_image_path';
         $fields[] = 'comments';
         $fields[] = 'is_liked';

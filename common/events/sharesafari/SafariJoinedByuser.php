@@ -23,6 +23,8 @@ class SafariJoinedByuser extends Event
     public $shared_safari_url;
     protected $sent_data = [];
     protected $shared_safari;
+    public $objective;
+    public $sharesafari_slug;
     protected $engine;
     protected $master_notification_template;
     // public $safariOperatorId;
@@ -34,11 +36,13 @@ class SafariJoinedByuser extends Event
 
     protected $mail_template_code = 'THJS';  // To Host Join Safari
 
-    public function __construct($interested_user, $shared_safari_id)
+    public function __construct($sharesafari_slug, $interested_user, $shared_safari_id)
     {
 
+        $this->sharesafari_slug = $sharesafari_slug;
         $this->interested_user = $interested_user;
         $this->shared_safari_id = $shared_safari_id;
+        $this->objective = ShareSafari::OBJECTIVE;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
         $this->broadcastHandle();
@@ -98,7 +102,7 @@ class SafariJoinedByuser extends Event
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title' => $this->title(),
                     'message' => $this->message(),
-                    'sent_data' => $this->sent_data,
+                    'sent_data' => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'slug' => $this->sharesafari_slug]),
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
@@ -153,9 +157,9 @@ class SafariJoinedByuser extends Event
             $this->name =  $this->shared_safari->user->name;
         }
         // $this->shared_safari_url = urlencode("http://walkintothewild.io". $this->shared_safari['slug']);
-        $this->sent_data = [
-            'share_safari_title' => $this->shared_safari->share_safari_title,
-            'slug' => $this->shared_safari->slug
-        ];
+        // $this->sent_data = [
+        //     'share_safari_title' => $this->shared_safari->share_safari_title,
+        //     'slug' => $this->shared_safari->slug
+        // ];
     }
 }

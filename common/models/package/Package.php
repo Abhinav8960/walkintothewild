@@ -37,6 +37,7 @@ use yii\db\ActiveQuery;
 class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
+    const OBJECTIVE = "package";
 
 
     use \common\traits\CommanRelationship;

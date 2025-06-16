@@ -73,10 +73,10 @@ class PartnerLeadReceived extends Event
                     'master_notification_template_id' => $this->firebaseTemplateId(),
                     'title'                             => $this->title(),
                     'message'                           => $this->message(),
-                    'sent_data' => NULL,
-                    'user_id' => $this->partner->user_id,
-                    'image_url' => NULL,
-                    'action' => NULL,
+                    // 'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => SafariOperator::OBJECTIVE, 'slug' => $this->partner->slug]),
+                    'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), []),
+                    'image_url'                         => NULL,
+                    'action'                            => NULL,
                 ]
             ],
             // Add more templates for other channels as needed

@@ -83,9 +83,9 @@ class UserFollow extends \yii\db\ActiveRecord
             $operator = SafariOperator::find()->where(['safari_operator_request_id' => $partner_request->id, 'status' => SafariOperator::STATUS_ACTIVE])->one();
             if (!empty($operator)) {
                 if ($this->status == 1) {
-                    return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$operator->business_name,$operator->operator_email);
+                    return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
                 } elseif ($this->status == 0) {
-                    return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$operator->business_name,$operator->operator_email);
+                    return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
                 }
             }
         }

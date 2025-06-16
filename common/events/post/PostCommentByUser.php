@@ -6,6 +6,7 @@ use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\User;
+use common\models\UserPosts;
 use yii\base\Event;
 
 class PostCommentByUser extends Event
@@ -20,14 +21,15 @@ class PostCommentByUser extends Event
     public $user;
     public $host_user;
     public $host_user_id;
-  
+
 
 
     public $admin_mail;
     protected $sent_data = [];
+    protected $objective;
     protected $engine;
     protected $master_notification_template;
-    
+
     protected $channels = [
         // 'email',
         'firebase',
@@ -36,12 +38,14 @@ class PostCommentByUser extends Event
     protected $mail_template_code = 'THOS';  // To Host on Comment 
     protected $var2_name = 'post';
 
-    public function __construct($user,$host_user_id,$host_user)
+    public function __construct($post_id, $user, $host_user_id, $host_user)
     {
-        
+
         $this->user = $user;
         $this->userId = $host_user_id;
         $this->host_user = $host_user;
+        $this->post_id = $post_id;
+        $this->objective = UserPosts::OBJECTIVE;
         // $this->email =$email;
         $this->engine = \Yii::$app->engine;
         $this->broadcastHandle();
@@ -49,14 +53,14 @@ class PostCommentByUser extends Event
 
     public function broadcastHandle()
     {
-        
+
         foreach ($this->channels as $channel) {
             $this->channelName = $channel;
             $this->templates = $this->getTemplates()[$channel];
             // $this->template['channel'] = $channel;
             $broadcastService = new BroadcastService();
             // $broadcastService->send($this);
-            $broadcastService->send($this,true);
+            $broadcastService->send($this, true);
         }
     }
 
@@ -80,7 +84,7 @@ class PostCommentByUser extends Event
                     'params' => [
                         'username' => $this->user,
                     ],
-                    'to_mail' => \Yii::$app->params['adminEmail'],  
+                    'to_mail' => \Yii::$app->params['adminEmail'],
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -88,13 +92,15 @@ class PostCommentByUser extends Event
             'firebase' => [
                 [
                     'master_notification_template_id' => $this->firebaseTemplateId(),
+                    'title' => $this->title(),
                     'message' => $this->message(),
-                    'sent_data' => NULL,
+                    // 'sent_data' => NULL,
+                    'sent_data' => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'id' => $this->post_id, 'user_name' => $this->user, 'user_handle' => $this->user_handle]),
                     'user_id' => $this->userId,
                     'image_url' => NULL,
                     'action' => NULL,
                 ],
-                
+
             ],
         ];
         return $arr;
@@ -119,7 +125,11 @@ class PostCommentByUser extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['var1'=>$this->user,'var2'=>$this->var2_name]);
+        return $this->engine->render($this->master_notification_template->message, ['var1' => $this->user, 'var2' => $this->var2_name]);
     }
 
+    private function title()
+    {
+        return $this->engine->render($this->master_notification_template->title, []);
+    }
 }

@@ -61,6 +61,8 @@ use common\models\UserFollow;
 class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
+    const OBJECTIVE = "operator";
+
     /**
      * {@inheritdoc}
      */

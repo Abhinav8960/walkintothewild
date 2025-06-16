@@ -29,6 +29,7 @@ class FixedDepartureUpdatedByOperator extends Event
     protected $sent_data = [];
     protected $shared_safari;
     protected $engine;
+    protected $objective;
     protected $master_notification_template;
 
     protected $channels = [
@@ -38,13 +39,14 @@ class FixedDepartureUpdatedByOperator extends Event
 
     protected $mail_template_code = 'UFCU';  //  Fixed Departure Updated By Operator
 
-    public function __construct(array $receiverUserIds,$userId, $email, $name ,$shared_safari_id)
+    public function __construct(array $receiverUserIds, $userId, $email, $name, $shared_safari_id)
     {
         $this->receiverUserIds = $receiverUserIds;
         $this->userId = $userId;
         $this->email = $email;
         $this->name = $name;
         $this->shared_safari_id = $shared_safari_id;
+        $this->objective = ShareSafari::OBJECTIVE;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
         $this->broadcast();
@@ -73,7 +75,7 @@ class FixedDepartureUpdatedByOperator extends Event
                         'operator_name' => $this->name,
                         'email' => $this->email,
                         'shared_safari' => $this->shared_safari_name,
-                        'shared_safari_title'=>$this->shared_safari_title,
+                        'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
                         'start_date' => $this->start_date,
                         'end_date' => $this->end_date,
@@ -115,7 +117,7 @@ class FixedDepartureUpdatedByOperator extends Event
 
     private function message()
     {
-        return $this->engine->render($this->master_notification_template->message, ['operator_name'=>$this->name]);
+        return $this->engine->render($this->master_notification_template->message, ['operator_name' => $this->name]);
     }
 
     public function prepareData()
@@ -125,18 +127,19 @@ class FixedDepartureUpdatedByOperator extends Event
         $this->shared_safari_title = $this->shared_safari->share_safari_title;
         $this->no_of_safari = $this->shared_safari->no_of_safari;
         $this->start_date = $this->shared_safari->start_date;
-        $this->end_date = $this->shared_safari-> end_date;
+        $this->end_date = $this->shared_safari->end_date;
         $this->total_seat = $this->shared_safari->total_seat;
-        $this->type =$this->shared_safari->type;
-        $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
+        $this->type = $this->shared_safari->type;
+        // $this->shared_safari_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $this->shared_safari->slug, 'organized_slug' => $this->shared_safari->organizedslug ? $this->shared_safari->organizedslug : '']));
+        $this->shared_safari_url = urlencode(\Yii::$app->params['frontend_url'] . '/sharedsafari/' . $this->shared_safari->organizedslug . '/' . $this->shared_safari->slug);
         if ($this->shared_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->email = $this->shared_safari->safarioperator->email;
             $this->name =  $this->shared_safari->safarioperator->business_name;
-        } 
-        $this->sent_data = [
-            'share_safari_title' => $this->shared_safari->share_safari_title,
-            'slug' => $this->shared_safari->slug
-        ];
+        }
+        // $this->sent_data = [
+        //     'share_safari_title' => $this->shared_safari->share_safari_title,
+        //     'slug' => $this->shared_safari->slug
+        // ];
     }
 
 
@@ -147,7 +150,8 @@ class FixedDepartureUpdatedByOperator extends Event
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
-                'sent_data'                         => $this->sent_data,
+                // 'sent_data'                         => $this->sent_data,
+                'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective, 'slug' => $this->shared_safari->slug]),
                 'user_id'                           => $userId,
                 'image_url'                         => NULL,
                 'action'                            => NULL,
