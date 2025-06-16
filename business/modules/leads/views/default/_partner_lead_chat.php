@@ -67,7 +67,9 @@
                 } else { ?>
                  <div class="receivedChat">
                      <p><?= $chat_message->message ?></p>
-                     <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                     <div class="recievedTime">
+                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                     </div>
                  </div>
      <?php }
             }

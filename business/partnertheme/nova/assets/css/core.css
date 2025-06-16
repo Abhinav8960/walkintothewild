@@ -621,3 +621,8 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+.recievedTime span {
+    color: #000000;
+    font-size: 12px;
+}
