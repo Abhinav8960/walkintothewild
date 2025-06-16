@@ -15,9 +15,10 @@
      </div>
      <div class="UserInfobx d-flex align-items-center gap-4">
          <div class="sharBtn">
-             <button type="btn" class="">
-                 Share Itinerary & Quotation
-             </button>
+             <?= Html::button('Share Itinerary & Quotation', [
+                    'value' => Url::to(['quotation', 'id' => $model->id]),
+                    'class' => 'quotation-button',
+                ]) ?>
          </div>
          <div class="callOption">
              <a href="<?= Url::toRoute(['make-call-on-chat', 'id' => $model->id]) ?>" class="callHere"><i class="fa-solid fa-phone"></i></a>
@@ -96,12 +97,37 @@
  </div>
 
 
+ <div class="modal fade" id="quotationAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-xl modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Quotation Form
+                 </h6>
+             </div>
+
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
+
+
  <?php
     $script = <<< JS
 
 
     $('.image-button').on('click', function () {
         $('#galleryAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+     $('.quotation-button').on('click', function () {
+        $('#quotationAction').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
