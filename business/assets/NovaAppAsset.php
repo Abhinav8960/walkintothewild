@@ -23,7 +23,7 @@ class NovaAppAsset extends AssetBundle
         
     ];
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $js = [
         'js/script.js',
