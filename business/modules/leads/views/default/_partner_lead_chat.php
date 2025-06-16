@@ -60,7 +60,19 @@
                          <?php } else {
                             $gallery_data = json_decode($chat_message->gallery, true);
                             if ($gallery_data) { ?>
-
+                             <div class="sentChat">
+                                 <p>Gallery In Progress</p>
+                                 <div class="timeingNotified d-flex justify-content-end pe-2">
+                                     <div class="d-flex gap-3">
+                                         <div class="currentTime">
+                                             <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                         </div>
+                                         <div class="tiknotified">
+                                             <i class="fa-solid fa-check-double"></i>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
                      <?php }
                         } ?>
                  </div>
