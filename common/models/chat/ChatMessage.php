@@ -71,7 +71,7 @@ class ChatMessage extends \yii\db\ActiveRecord
             [['sender_id'], 'safe'],
             [['gallery'], 'safe'],
             [['is_call_message', 'is_quotation_message', 'is_quotation_active'], 'boolean'],
-          
+
         ];
     }
 
@@ -103,7 +103,7 @@ class ChatMessage extends \yii\db\ActiveRecord
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
             if ($this->is_call_message == false || $this->is_call_request == false) {
-                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, $this->message, $this->chat->chat_hash, $this->chatType(), $this->chat->chat_hash);
+                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
         }
 

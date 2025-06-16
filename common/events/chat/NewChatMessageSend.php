@@ -25,13 +25,16 @@ class NewChatMessageSend extends Event
         'firebase',
     ];
 
-    public function __construct(array $receiverUserIds, $sender, $sender_user_handle, $message, $chat_hash, $chat, $objective)
+    public function __construct(array $receiverUserIds, $sender, $sender_user_handle, $message, $chat_hash, $chat)
     {
         $this->receiverUserIds      = $receiverUserIds;
         $this->sender               = $sender;
         $this->sender_user_handle   = $sender_user_handle;
         $this->message              = $message;
-        $this->objective            = $objective;
+        $this->objective            =   Chat::OBJECTIVE_QUOTE;
+        if ($this->chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
+            $this->objective            =  Chat::OBJECTIVE_DIRECT;
+        }
         $this->chat_hash            = $chat_hash;
         $this->chat                 = $chat;
         $this->engine               = \Yii::$app->engine;
