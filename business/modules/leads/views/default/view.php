@@ -95,113 +95,115 @@ AppAsset::register($this);
                 <div class="row pt-3">
                     <div class="col-lg-4">
                         <div class="images-safari">
-                            <img src="<?= $this->params['baseurl'] ?>images/safraiimg.jpg" alt="" class="w-100">
+                            <img src="<?= $model->displayImage ?>" alt="" class="w-100">
                         </div>
                     </div>
                     <div class="col-lg-8">
                         <div class="text-wrpas">
                             <h6>Overview</h6>
-                            <p>Corbett is the only major national park in India offering options to stay miles inside the deep dense forest in govt run guest houses aka the Forest Rest Houses. Packages for Dhikala Forest Rest Houses comes all inclusive with gypsy & guide as your personal vehicle is not allowed inside the national park. Often known as the Mecca of Indian wildlife, Dhikala FRH consists of the following...</p>
+                            <p><?= $model->displayOverview ?></p>
                         </div>
                     </div>
                 </div>
-                <div class="row pt-3">
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/night-mode_9554519.png">
+                <?php if ($model->sourceLabel == 'Package') { ?>
+                    <div class="row pt-3">
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/night-mode_9554519.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">2 Nights , 3 Days</p>
+                                </div>
                             </div>
-                            <div class="text-form">
-                                <p class="mb-0">2 Nights , 3 Days</p>
+                        </div>
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-taxi.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">Pick & Drop</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/newicon.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">4 Shared Gypsy Safari</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/path.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">All Meals</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/camera.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">Photography Special</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2 col-sm-6">
+                            <div class="safridetails_form d-flex gap-2 ">
+                                <div class="iconImage">
+                                    <img
+                                        alt="Night Mode"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Trip Duration"
+                                        src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-hotel.png">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0">Premium</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-taxi.png">
-                            </div>
-                            <div class="text-form">
-                                <p class="mb-0">Pick & Drop</p>
-                            </div>
+                    <div class="row">
+                        <div class="col-12 text-end pb-2 pt-3">
+                            <h5 class="cost_price">Rs. 90,000/Per Person</h5>
                         </div>
                     </div>
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/newicon.png">
-                            </div>
-                            <div class="text-form">
-                                <p class="mb-0">4 Shared Gypsy Safari</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/path.png">
-                            </div>
-                            <div class="text-form">
-                                <p class="mb-0">All Meals</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/camera.png">
-                            </div>
-                            <div class="text-form">
-                                <p class="mb-0">Photography Special</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-2 col-sm-6">
-                        <div class="safridetails_form d-flex gap-2 ">
-                            <div class="iconImage">
-                                <img
-                                    alt="Night Mode"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Trip Duration"
-                                    src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-hotel.png">
-                            </div>
-                            <div class="text-form">
-                                <p class="mb-0">Premium</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-end pb-2 pt-3">
-                        <h5 class="cost_price">Rs. 90,000/Per Person</h5>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
         <div class="col-lg-7">
