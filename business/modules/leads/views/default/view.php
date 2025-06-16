@@ -7,6 +7,7 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 AppAsset::register($this);
 
+$this->title = 'Leads';
 ?>
 <div class="wrapper_inner">
     <div class="row">
