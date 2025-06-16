@@ -45,23 +45,7 @@
         ?>
 
 
-                 <?php if ($chat_message->message != 'Gallery' && $chat_message->is_quotation_message == 0) { ?>
-                     <div class="d-flex justify-content-end">
-                         <div class="sentChat">
-                             <p><?= $chat_message->message ?></p>
-                             <div class="timeingNotified d-flex justify-content-end pe-2">
-                                 <div class="d-flex gap-3">
-                                     <div class="currentTime">
-                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                                     </div>
-                                     <div class="tiknotified">
-                                         <i class="fa-solid fa-check-double"></i>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 <?php } else if ($chat_message->is_quotation_message == 1) { ?>
+                 <?php if ($chat_message->is_quotation_message == 1) { ?>
                      <div class="d-flex justify-content-center mt-5">
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-3">
@@ -81,7 +65,7 @@
                              </div>
                          </div>
                      </div>
-                     <?php } else if ($chat_message->message == 'Gallery') {
+                     <?php } else if ($chat_message->gallery != null) {
                         $gallery_data = json_decode($chat_message->gallery, true);
                         if ($gallery_data) { ?>
 
@@ -104,18 +88,71 @@
 
                              </div>
                          </div>
-                 <?php }
-                    } ?>
+                     <?php }
+                    } else if ($chat_message->is_call_message == 1) { ?>
+                     <div class="d-flex justify-content-end">
+                         <div class="sentChat himselfVoiceCall">
+                             <div class="innerBg d-flex align-items-center gap-3">
+                                 <div class="callIcons">
+                                     <a href=""><i class="fa-solid fa-phone"></i></a>
+                                 </div>
+                                 <div class="voiceText">
+                                     <h3 class="pb-2"><?= $chat_message->message ?></h3>
+                                     <div class="currentTime">
+                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                     </div>
+                                 </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 <?php } else { ?>
+                     <div class="d-flex justify-content-end">
+                         <div class="sentChat">
+                             <p><?= $chat_message->message ?></p>
+                             <div class="timeingNotified d-flex justify-content-end pe-2">
+                                 <div class="d-flex gap-3">
+                                     <div class="currentTime">
+                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                     </div>
+                                     <div class="tiknotified">
+                                         <i class="fa-solid fa-check-double"></i>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 <?php } ?>
 
              <?php
                 } else { ?>
-                 <div class="receivedChat">
-                     <p><?= $chat_message->message ?></p>
-                     <div class="recievedTime">
-                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                 <?php if ($chat_message->is_call_request == 1) { ?>
+                     <div class="d-flex justify-content-start">
+                         <div class="sentChat incomingVoiceCall">
+                             <div class="innerBg innerincomingCall d-flex align-items-center gap-3">
+                                 <div class="callIcons">
+                                     <a href=""><i class="fa-solid fa-phone"></i></a>
+                                 </div>
+                                 <div class="voiceText">
+                                     <h3 class="pb-2"><?= $chat_message->message ?></h3>
+                                     <div class="recievedTime">
+                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                     </div>
+                                 </div>
+                             </div>
+
+                         </div>
                      </div>
-                 </div>
+                 <?php } else { ?>
+                     <div class="receivedChat">
+                         <p><?= $chat_message->message ?></p>
+                         <div class="recievedTime">
+                             <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                         </div>
+                     </div>
+
      <?php }
+                }
             }
         }
         ?>

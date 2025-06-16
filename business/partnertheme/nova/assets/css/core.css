@@ -2,6 +2,7 @@
   background-color: #fff !important;
   border: 1px solid #e7e7e7;
 }
+
 .container-scroller .nav .nav-icon {
   background-color: transparent !important;
 }
@@ -9,28 +10,36 @@
 .container-scroller .nav {
   background-color: #fff !important;
 }
+
 .container-scroller .main-header .navbar {
   background-color: #fff !important;
 }
+
 .nav-right .nav-item i {
   color: #000000 !important;
 }
+
 .nav-right .nav-item .dropdoen-detail-profile p {
   color: #152f1b !important;
 }
+
 .container-scroller .main-header .navbar .navbar-menu-wrapper button {
   color: #152f1b !important;
 }
+
 .nav-right .nav-item .dorpdown-profile img {
   width: 30px !important;
   height: 30px !important;
 }
+
 .container-scroller .main-header .main-pannel {
   background-color: #f5f7fb !important;
 }
+
 .container-scroller .nav .nav-item {
   color: #000000 !important;
 }
+
 .container-scroller .nav {
   overflow: hidden;
   flex-wrap: nowrap;
@@ -41,6 +50,7 @@
   width: 100% !important;
   background: #191c24;
 }
+
 .collapsed-sidebar .nav {
   padding-left: 2px !important;
 }
@@ -54,6 +64,7 @@
   border-radius: 16px;
   color: #99ff33;
 }
+
 .navItems .navLinks {
   padding: 8px 16px;
   color: #848a90;
@@ -61,16 +72,20 @@
   font-weight: 600;
   width: 100%;
 }
+
 .navItems i {
   color: #99ff33 !important;
 }
+
 .nav-right .nav-item .nav-link {
   margin-left: 0rem !important;
 }
+
 .mainCard {
   background-color: #fff;
   border-radius: 16px;
 }
+
 .iconsDiv {
   width: 25px;
   height: 25px;
@@ -82,59 +97,71 @@
   color: #0959e2;
   font-size: 10px;
 }
+
 .text-card p {
   font-size: 14px;
   font-weight: 600;
   color: #848a90;
 }
+
 .numbwrCount h3 {
   font-size: 25px;
   font-weight: 600;
   color: #111111;
 }
+
 .mainParent {
   border-radius: 12px !important;
   background-color: #fff;
   padding: 10px;
 }
+
 .mainParent img {
   border-radius: 12px;
 }
+
 .topHead p {
   color: #111111;
   font-size: 16px;
   font-weight: 600;
 }
+
 .topHead a {
   font-size: 14px;
   font-weight: 600;
   color: #111111;
 }
+
 .subtitle p {
   color: #111111;
   font-size: 16px;
   font-weight: 600;
 }
+
 .coLike a {
   font-size: 14px;
   font-weight: 600;
   color: #848a90;
 }
+
 .cadplaform {
   background-color: #c4e3bd;
   padding: 15px;
   border-radius: 16px;
 }
+
 .cadplaform .headbg {
   font-size: 16px;
   font-weight: 700;
   color: #111111;
 }
+
 .cadplaform p {
   font-size: 12px;
   font-weight: 600;
   color: #111111;
 }
+
 .cadplaform a {
   padding: 5px 10px;
   background-color: #fff;
@@ -143,38 +170,46 @@
   color: #111111;
   border-radius: 8px;
 }
+
 .progressBar {
   background: #fff;
   border-radius: 16px;
 }
+
 .montlyQouteHeader p {
   font-size: 16px;
   font-weight: 700;
   color: #111111;
 }
+
 .bodySectionParent .sideNumbers .sideQuteno {
   font-size: 12px;
   color: #848a90;
 }
+
 .boradUserParent {
   background: #fff;
   border-radius: 16px;
 }
+
 .userMain .userProfile {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: #000000;
 }
+
 .userName a {
   font-size: 14px;
   font-weight: 700;
   color: #111111;
 }
+
 .userName p {
   font-size: 12px;
   color: #848a90;
 }
+
 .quote-chart {
   padding: 0px 16px 16px 16px;
   border-radius: 12px;
@@ -235,6 +270,7 @@
   font-size: 12px;
   color: #848a90;
 }
+
 .edinBtn button {
   background-color: #152f1b;
   color: #ffffff;
@@ -244,6 +280,7 @@
   font-weight: 700;
   padding: 10px 50px;
 }
+
 .versions a {
   background-color: #f4b400;
   color: #152f1b;
@@ -254,6 +291,7 @@
   font-weight: 700;
   padding: 10px 50px;
 }
+
 .package-banner-dummy {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
@@ -261,18 +299,23 @@
   color: #666;
   height: 300px;
 }
+
 .package-banner-dummy img {
   object-fit: cover;
 }
+
 .wrapper-skybgsafri {
   padding: 30px 20px;
 }
+
 .border_bottom2 {
   border-bottom: 1px solid #0000004d;
 }
+
 .border-right {
   border-right: 1.5px solid #0000004d;
 }
+
 .images_tour {
   align-items: center;
   border: 1px solid #09422d4d;
@@ -281,41 +324,51 @@
   justify-content: center;
   overflow: hidden;
 }
+
 .images_tour img {
   object-fit: cover;
 }
+
 .safrititles div {
   color: #09422d;
   font-size: 23px;
 }
+
 .titler_safari {
   font-size: 18px !important;
   font-style: italic;
 }
+
 .safrititles h6 {
   color: #4b4b4b;
   font-size: 20px;
   font-weight: 700;
 }
+
 .titler_safari a {
   color: #4b4b4b;
   display: flex;
   font-weight: 500;
   gap: 5px;
 }
+
 .wrapper-skybgsafri .safrititles p a {
   color: #09422d;
 }
+
 .safrititles p {
   color: #09422d;
 }
+
 .safridetails_form .iconImg {
   width: 19px;
 }
+
 .mark_area {
   color: #777;
   font-size: 14px !important;
 }
+
 .social-share p {
   font-size: 16px;
   margin-bottom: 0;
@@ -329,9 +382,11 @@
   margin-bottom: 0;
   padding-left: 0;
 }
+
 .iconSize .fa-facebook-f {
   background-color: #395196;
 }
+
 .iconSize i {
   align-items: center;
   border-radius: 50%;
@@ -342,47 +397,56 @@
   justify-content: center;
   width: 30px;
 }
+
 .iconSize i.fa-x-twitter {
   color: #fff !important;
 }
+
 .iconSize .fa-x-twitter {
   background-color: #000;
 }
+
 .iconSize .fa-instagram {
-  background: radial-gradient(
-    circle at 30% 107%,
-    #fdf497 0,
-    #fdf497 5%,
-    #fd5949 45%,
-    #d6249f 60%,
-    #285aeb 90%
-  );
+  background: radial-gradient(circle at 30% 107%,
+      #fdf497 0,
+      #fdf497 5%,
+      #fd5949 45%,
+      #d6249f 60%,
+      #285aeb 90%);
 }
+
 .iconSize .fa-whatsapp {
   background-color: #00b456;
 }
+
 .iconSize .fa-linkedin-in {
   background: #257bb8;
 }
+
 .iconSize .fa-paper-plane {
   background: #08c;
 }
+
 .iconSize .fa-link {
   background: #f9d600;
   cursor: pointer;
 }
+
 .perpersonText {
   font-size: 14px;
   font-weight: 500;
   text-align: center;
 }
+
 .itenary_tabs .safartabs .nav-tabs.myPackagetab {
   gap: 50px !important;
 }
+
 .nav.nav-tabs.myPackagetab {
   border-bottom: 0;
   margin-bottom: 0.3px;
 }
+
 .itenary_tabs .safartabs .nav-tabs.myPackagetab .nav-link.active {
   background-color: initial !important;
   border: 0 !important;
@@ -391,6 +455,7 @@
   font-weight: 600 !important;
   padding-bottom: 10px !important;
 }
+
 .itenary_tabs .safartabs .nav-tabs.myPackagetab .nav-link {
   background: #fff !important;
   border: 0 !important;
@@ -399,41 +464,51 @@
   opacity: 1 !important;
   padding: 0 0 10px !important;
 }
+
 .itenary_tabs .nav-tabs.myPackagetab .nav-link {
   font-size: 16px;
 }
+
 .safartabs .tab-content {
   --bs-accordion-bg: #f5f5f5 !important;
   border-radius: 0 10px 10px 10px;
 }
+
 .nav-link {
   color: #000;
 }
+
 .packageSfari {
   background-color: #fff;
   padding: 0px 20px !important;
   border: 1px solid #7070704d;
   border-radius: 5px;
 }
+
 .packageTabMain .nav.nav-tabs {
   border: none !important;
   gap: 80px;
 }
+
 .packageTabMain .nav {
   padding: 0 !important;
   margin: 0 !important;
 }
+
 .nav {
   padding: 0 !important;
   margin: 0 !important;
 }
+
 .packageTabMain .nav-item {
   width: 0px !important;
 }
+
 .packageTabMain .nav-item .nav-link {
   padding: 0 !important;
   cursor: pointer;
 }
+
 .packageTabMain .nav.nav-tabs .nav-link.active {
   background-color: transparent !important;
   color: #000 !important;
@@ -441,12 +516,14 @@
   border-bottom: 5px solid #09422d !important;
   border-radius: 0px !important;
 }
+
 .packageTabMain .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
   isolation: auto !important;
   border-radius: 0 !important;
   border: none !important;
 }
+
 .tabContent {
   padding: 0px 60px !important;
   background-color: #fff;
@@ -454,6 +531,7 @@
   border: 1px solid #7070704d;
   border-radius: 5px;
 }
+
 .accordionItems .accordion .accordion-button {
   background-color: #d7d7d8 !important;
   box-shadow: none !important;
@@ -463,25 +541,31 @@
   font-weight: 900;
   color: #152f1b;
 }
+
 .accordionItems .accordion .accordion-button:focus {
   border-color: transparent !important;
   border: none !important;
 }
+
 .accordionMianBox .accordionItems .accordion-body {
   background-color: #f5f7fb;
 }
+
 .policyInfo p {
   color: #464a53;
   font-size: 12px;
 }
+
 .policyInfo a {
   color: #004eff;
 }
+
 .clsHeadings p {
   font-size: 16px;
   font-weight: 400;
   color: #464a53;
 }
+
 .form_boxes .inclabel {
   font-size: 16px !important;
   color: #abafb3;
@@ -492,21 +576,25 @@
   margin-right: 6px;
   margin-top: 6px;
 }
+
 .chatMainParent {
   padding: 15px 30px;
   border-bottom: 1px solid #d8d8d8;
 }
+
 .chatuserProfile {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   background-color: #00000033;
 }
+
 .chatUserName a {
   font-size: 16px;
   font-weight: 700;
   color: #000000;
 }
+
 .sharBtn button {
   background-color: #f4b400;
   color: #152f1b;
@@ -517,117 +605,187 @@
   font-weight: 700;
   padding: 12px 20px;
 }
-.callOption .callHere i{
+
+.callOption .callHere i {
 
   color: #09422D;
   font-size: 22px;
 }
-.callHere.image-button{
+
+.callHere.image-button {
 
   border: none !important;
 }
-.chatWriteBody{
+
+.chatWriteBody {
 
   padding: 15px 30px;
   height: 600px;
   overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
 }
+
 .chatWriteBody::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
+  /* Chrome, Safari */
 }
-.receivedChat p{
+
+.receivedChat p {
 
   font-size: 14px;
   color: #131313;
 }
-.receivedChat{
+
+.receivedChat {
 
   max-width: 380px;
   background: #fff;
   padding: 15px 12px;
   border-radius: 0px 15px 15px 15px;
 }
-.sentChat{
+
+.sentChat {
 
   max-width: 340px;
   background-color: #09432D;
   padding: 7px 7px 20px 10px;
   border-radius: 15px 0px 15px 15px;
 }
-.sentChat{
+
+.sentChat {
 
   margin-top: 50px;
 }
-.sentChat p{
+
+.sentChat p {
   color: #fff;
   font-size: 12px;
- 
+
 }
-.clickOption i{
+
+.clickOption i {
 
   color: #fff;
   font-size: 20px;
 }
-.currentTime span{
+
+.currentTime span {
 
   color: #fff;
   font-size: 12px;
- 
+
 }
-.tiknotified i{
+
+.tiknotified i {
   color: #fff;
   font-size: 12px;
 }
-.ItineraryQuotationarea{
+
+.ItineraryQuotationarea {
 
   max-width: 480px;
   background-color: #fff;
   padding: 15px;
   border-radius: 15px;
 }
-.toptital h3{
+
+.toptital h3 {
 
   font-size: 18px;
   color: #1E1E1E;
 }
-.discriptionsCenter p{
+
+.discriptionsCenter p {
 
   font-size: 12px;
   color: #421421;
 }
-.typeingField{
+
+.typeingField {
 
   padding: 15px 30px;
 }
-.typeingField input{
+
+.typeingField input {
 
   padding: 20px;
   outline: none;
   border: none;
   border-radius: 50px;
 }
-.typeingField input::placeholder{
+
+.typeingField input::placeholder {
 
   font-size: 14px;
   font-weight: 700;
   color: #919191;
 }
-.sentimg img{
+
+.sentimg img {
 
   width: 30px;
 }
-.sentimg{
+
+.sentimg {
 
   position: absolute;
-    right: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none !important;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none !important;
 }
 
 .recievedTime span {
-    color: #000000;
-    font-size: 12px;
+  color: #000000;
+  font-size: 12px;
+}
+
+
+.sentChat.himselfVoiceCall {
+
+  max-width: 300px !important;
+  background-color: #144D37 !important;
+}
+
+.innerBg {
+  background-color: #0F3E2C;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.voiceText h3 {
+
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.callIcons {
+
+  width: 35px;
+  height: 35px;
+  background-color: #242626;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.callIcons a i {
+
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.sentChat.incomingVoiceCall {
+  max-width: 300px !important;
+  background-color: #242626 !important;
+  border-radius: 0px 15px 15px 15px !important;
+}
+
+.innerBg.innerincomingCall {
+
+  background-color: #1D1E1E !important;
 }
