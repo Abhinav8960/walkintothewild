@@ -67,7 +67,8 @@ class CallLog extends \common\models\CallLog
                 return $this->getCallstatuslabel();
             },
             'datetime' => function () {
-                return strtotime($this->datetime);
+                return $this->created_at;
+                // return !empty($this->datetime) ?  strtotime($this->datetime) : $this->created_at;
             },
             'duration',
             // 'operator_user_id',
