@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\operator\SafariOperator;
 use Yii;
 
 /**
@@ -213,6 +214,6 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
 
     public function getPartner()
     {
-        return $this->hasOne(User::className(), ['id' => 'call_initiated_partner_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'call_initiated_partner_id']);
     }
 }
