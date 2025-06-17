@@ -35,8 +35,12 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="bg-infor ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
-                            $str .= "<br>";
+                            $str = "";
+                            if(!empty($model->partner)){
+
+                                $str =  '<a class="bg-infor ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
+                                $str .= "<br>";
+                            }
                             return $str .= $model->request_caller_2_no;                       
                         }
                     ],
