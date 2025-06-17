@@ -101,7 +101,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->datetime) ? Yii::$app->formatter->asDatetime($model->datetime, 'php:d-m-Y H:i:s') : '';
+                            return isset($model->datetime) ? Yii::$app->formatter->asDatetime($model->datetime, 'php:d M, Y, h:i A') : '';
                         }
                     ],
                     [
