@@ -15,6 +15,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </a>
                 </div>
             </div>
+            <button class="navbar-toggler navbar-toggler align-self-center d-lg-block d-none" type="button"
+                data-toggle="minimize" id="hider-sidebar">
+                <span class="mdi mdi-menu"></span>
+            </button>
         </li>
         <li class="navItems mb-2">
             <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>">
@@ -28,7 +32,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/leads/default/create",
                                                                 "/leads/default/view",
                                                             )) ? "active" : "" ?>" href="/leads/default/index">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame_new.svg" alt="" width="25" height="25"></span>
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame_new.svg" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Leads</span>
             </a>
         </li>
@@ -90,11 +94,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li> -->
         <?php } ?>
-        <li class="navItems mb-2">
-            <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
-                <span class="hide-slide-menu"> Logout</span>
-            </a>
-        </li>
+        
     </ul>
 </nav>

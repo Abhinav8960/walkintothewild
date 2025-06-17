@@ -34,6 +34,12 @@ NotifyAsset::register($this);
         <div>
             <!-- main-sidebar -->
             <?= \business\widgets\Sidebar::widget() ?>
+            <li class="navItems mb-2 ms-4">
+                <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
+                    <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
+                    <span class="hide-slide-menu"> Logout</span>
+                </a>
+            </li>
             <!-- main-sidebar -->
         </div>
         <!-- START #content -->

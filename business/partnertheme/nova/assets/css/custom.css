@@ -1,7 +1,10 @@
 .tablecustoms {
   border-spacing: inherit;
 }
+li{
 
+  list-style: none !important;
+}
 .tablecustoms thead tr th {
   background-color: #C4E3BD;
 }
@@ -10,7 +13,7 @@
   padding: 10px;
   border: 0 !important;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
   text-align: justify;
 }
@@ -481,6 +484,7 @@
 .container-scroller .nav .nav-item-profile .profile-ditails .pro-img img {
 
   position: absolute;
+  padding: 20px 0px 0px 20px;
   width: 180px !important;
   height: auto !important;
   object-fit: cover;

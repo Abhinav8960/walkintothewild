@@ -5,10 +5,7 @@
          <img src="<?= $this->params['baseurl'] ?>/images/logo-mini.svg" alt="logo">
        </a>
      </div>
-     <button class="navbar-toggler navbar-toggler align-self-center d-lg-block d-none" type="button"
-       data-toggle="minimize" id="hider-sidebar">
-       <span class="mdi mdi-menu"></span>
-     </button>
+    
 
      <ul class="nav-right d-flex align-items-center justify-content-center">
        <!-- <li class="nav-item dropdown">
@@ -28,7 +25,7 @@
            </div>
            <div class="d-lg-block d-none">
              <div class="dropdoen-detail-profile d-flex ">
-               <p><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p>
+               <p class="pt-1"><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p>
                <!-- <i class="mdi mdi-menu-down d-none d-sm-block"></i> -->
              </div>
            </div>

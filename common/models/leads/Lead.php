@@ -238,7 +238,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         if ($this->source == 1) {
             $style .= 'background-color: #009FFF !important;';
         } else if ($this->source == 2) {
-            $style .= 'background-color: #00A50B !important;';
+            $style .= 'background-color: #C4E3BD !important;';
         } else if ($this->source == 3) {
             $style .= 'background-color:rgb(175, 175, 175) !important;';
         }
