@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
                             $str = "";
                             if(!empty($model->partner)){
 
-                                $str =  '<a class="bg-primary ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
+                                $str =  '<a class="text-primary ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
                                 $str .= "<br>";
                             }
                             return $str .= $model->request_caller_2_no;                       
@@ -39,7 +39,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="bg-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
+                            $str =  '<a class="text-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
                             $str .= "<br>";
                             return $str .= $model->request_caller_1_no;
                         }
