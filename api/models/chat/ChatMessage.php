@@ -5,6 +5,7 @@ namespace api\models\chat;
 use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use api\models\User;
+use common\models\chat\ChatMessageHistory;
 use common\models\partnergallery\PartnerGallery;
 
 /**
@@ -168,11 +169,33 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+
+        $history = new ChatMessageHistory();
+        $history->chat_message_id = $this->id;
+        $history->chat_id = $this->chat_id;
+        $history->message = $this->message;
+        $history->is_quotation_message = $this->is_quotation_message == 1 ? 1 : 0;
+        $history->quotation_id = $this->quotation_id;
+        $history->is_quotation_active = $this->is_quotation_active == 1 ? 1 : 0;
+        $history->is_call_message = $this->is_call_message == 1 ? 1 : 0;
+        $history->call_id = $this->call_id;
+        $history->is_call_request = $this->is_call_request == 1 ? 1 : 0;
+        $history->data = $this->data;
+        $history->gallery = $this->gallery;
+        $history->created_at = $this->created_at;
+        $history->created_by = $this->created_by;
+        $history->updated_at = $this->updated_at;
+        $history->updated_by = $this->updated_by;
+        $history->save(false);
+
         if ($insert) {
-            if ($this->is_call_message != true || $this->status != 0 ) {
+            if ($this->is_call_message != true || $this->status != 0) {
                 return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
         }
+        return true;
+
+
 
         // anurag's testing line
         // return  new \common\events\chat\NewChatMessageSend([748], $this->createduser->name, $this->message, $this->chat->chat_hash, $this->data);
