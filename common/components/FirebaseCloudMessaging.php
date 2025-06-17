@@ -66,7 +66,7 @@ class FirebaseCloudMessaging extends Component
         // $message = CloudMessage::new();
         if (!empty($data)) {
 
-            $message = $message->withData($data);
+            $message = $message->withData($data)->withHighestPossiblePriority();
         }
         if (!empty($topic)) {
             $message = $message->toTopic($topic);
