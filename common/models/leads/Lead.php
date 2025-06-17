@@ -210,6 +210,17 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         }
     }
 
+    public function getSourceLabelWithBadge()
+    {
+        if ($this->source == 1) {
+            return '<div style="display:flex; gap:14px; align-items:center"><span class="package-badge"></span>' . ' ' . 'Package</div>';
+        } else if ($this->source == 2) {
+            return '<div style="display:flex; gap:14px;align-items:center"><span class="park-badge"></span>' . ' ' . 'Park</div>';
+        } else if ($this->source == 3) {
+            return '<div style="display:flex; gap:14px;align-items:center"><span class="operator-badge"></span>' . ' ' . 'Operator</div>';
+        }
+    }
+
     public function getDisplayImage()
     {
         if ($this->source == 1) {

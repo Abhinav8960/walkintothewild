@@ -887,3 +887,24 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+.package-badge {
+  background-color: #009FFF;
+  border-radius: 42%;
+  width: 28px;
+  height: 28px;
+}
+
+.park-badge {
+  background-color: #00A50B;
+  border-radius: 42%;
+  width: 28px;
+  height: 28px;
+}
+
+.operator-badge {
+  background: #4A4A4A;
+  border-radius: 42%;
+  width: 28px;
+  height: 28px;
+}
