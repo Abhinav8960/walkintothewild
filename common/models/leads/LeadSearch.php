@@ -136,7 +136,7 @@ class LeadSearch extends Lead
             'query' => $query,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
             'pagination' => [
-                'pageSize' => 15,
+                'pageSize' => 10,
             ],
 
         ]);
