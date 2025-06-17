@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <?= Html::img($user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:100%; height:auto;"]) ?>
+                        <?= Html::img($user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:100%; height:auto;"]) ?>
                     </div>
                     <div class="col-md-6">
                         <p><strong>Login ID :</strong> <?= $user->username ?></p>
@@ -83,7 +83,7 @@ $this->params['title'] = $this->title;
                                                 'contentOptions' => ['style' => 'width: 30%;'],
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a(Html::img($model->follower->profileimage ? $model->follower->profileimage : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->follower->name, ['profile', 'user_id' => $model->follower->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
+                                                    return Html::a(Html::img($model->follower->profile_display_image ? $model->follower->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->follower->name, ['profile', 'user_id' => $model->follower->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
                                                 }
                                             ],
                                             'created_at:dateTime:Following Start at',
