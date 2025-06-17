@@ -290,4 +290,10 @@ class TestController extends Controller
         }
         echo "Done";
     }
+
+    public function actionQuoteUserNotify(){
+
+        $leads = Lead::find()->where(['status'=>1])->all();
+
+    }
 }

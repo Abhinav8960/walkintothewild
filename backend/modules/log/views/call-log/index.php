@@ -70,14 +70,14 @@ $this->params['title'] = $this->title;
                             return isset($model->dial_status) ? $model->dial_status : '';
                         }
                     ],
-                    [
-                        'label' => 'Recording Duration',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->rec_duration) ? $model->rec_duration : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Recording Duration',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->rec_duration) ? $model->rec_duration : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Call Type',
                         'contentOptions' => ['style' => 'width: 10%;'],
