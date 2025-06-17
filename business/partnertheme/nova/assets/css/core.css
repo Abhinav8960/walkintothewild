@@ -905,12 +905,14 @@
 .park-badge {
   background-color: #00A50B;
   border-radius: 5px;
+  border-radius: 42%;
   width: 28px;
   height: 28px;
 }
 
 .operator-badge {
   background: rgb(175, 175, 175);
+  border-radius: 42%;
   border-radius: 42%;
   width: 28px;
   height: 28px;
