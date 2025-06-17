@@ -541,7 +541,7 @@ class DefaultController extends RestController
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 // $message = "Call Request raised by " . $this->userinfo->name;
-                $message = "Call Request raised";
+                $message = "Call Requested";
                 $chat_message = new ChatMessage();
                 $chat_message->chat_id = $chat_model->id;
                 $chat_message->message = $message;
@@ -564,7 +564,7 @@ class DefaultController extends RestController
                     $chat->created_at = time();
                     $chat->save(false);
                     $transaction->commit();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call request raised successfully.']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call Requested.']);
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
@@ -606,7 +606,7 @@ class DefaultController extends RestController
                 // Call the callNow method
                 $result = $callingService->callNow();
                 $transaction->commit();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated.']);
             } catch (\Exception $e) {
                 $transaction->rollBack();
                 return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
