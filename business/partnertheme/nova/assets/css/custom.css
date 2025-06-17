@@ -87,6 +87,16 @@
   text-align: center;
 }
 
+.pagination .page-item.active {
+  background-color: #d4dbd8 !important;
+  width: 30px;
+  border-radius: 30%;
+}
+
+.page-text a{
+  color: #000
+}
+
 .count_sowing span {
 
   color: #92929D;
@@ -129,7 +139,12 @@
   border-radius: 8px;
   background-color: #D5D5DC;
   font-size: 14px;
+  border: none;
 
+}
+
+.button_prve {
+  color: #000;
 }
 
 .button_nextprve.active {
@@ -508,3 +523,4 @@
   height: auto;
   display: block;
 }
+
