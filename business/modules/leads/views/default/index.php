@@ -38,7 +38,7 @@ $this->title = 'Leads';
                     ],
 
                     [
-                        'label' => 'Display Label',
+                        'label' => 'Name',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
