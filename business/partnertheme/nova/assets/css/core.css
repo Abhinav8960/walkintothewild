@@ -1,6 +1,3 @@
-
-
-
 .container-scroller .side_bar {
   background-color: #fff !important;
   border-top: 1px solid #e7e7e7;
@@ -898,6 +895,7 @@
 .package-badge {
   background-color: #009FFF;
   border-radius: 42%;
+  border-radius: 5px;
   width: 28px;
   height: 28px;
 }
@@ -912,24 +910,28 @@
 
 .operator-badge {
   background: rgb(175, 175, 175);
-  border-radius: 42%;
+  border-radius: 5px;
   border-radius: 42%;
   width: 28px;
   height: 28px;
 }
-.nav-icon img{
+
+.nav-icon img {
 
   width: 17px;
 }
-.container-scroller .main-header .navbar .navbar-menu-wrapper{
+
+.container-scroller .main-header .navbar .navbar-menu-wrapper {
 
   justify-content: end !important;
   align-items: center !important;
 }
-.nav-right{
+
+.nav-right {
   margin: 10px 0px 0px 0px !important;
 }
-.table-responsive{
+
+.table-responsive {
 
   overflow-x: hidden !important;
 }
