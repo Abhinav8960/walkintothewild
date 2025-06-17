@@ -21,17 +21,7 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Caller 1 (User)',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str =  '<a class="bg-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
-                            $str .= "<br>";
-                            return $str .= $model->request_caller_1_no;
-                        }
-                    ],
-                    [
-                        'label' => 'Caller 2 (Operator)',
+                        'label' => 'Operator',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -44,6 +34,17 @@ $this->params['title'] = $this->title;
                             return $str .= $model->request_caller_2_no;                       
                         }
                     ],
+                    [
+                        'label' => 'User',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str =  '<a class="bg-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
+                            $str .= "<br>";
+                            return $str .= $model->request_caller_1_no;
+                        }
+                    ],
+                    
                     [
                         'label' => 'Recording',
                         'contentOptions' => ['style' => 'width: 10%;'],
