@@ -2,6 +2,7 @@
 
 use business\assets\AppAsset;
 use common\models\GeneralModel;
+use Google\Service\Docs\Background;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -16,11 +17,11 @@ $this->title = 'Leads';
                 <table class="table w-100 border-0 border_o">
                     <thead class="thead-details">
                         <tr>
-                            <th style="width: 40%;">
+                            <th style="<?= $model->DisplayColor ?>">
                                 <p>Source</p>
                                 <p><?= $model->sourceLabel ?></p>
                             </th>
-                            <th>
+                            <th style="<?= $model->DisplayColor ?>">
                                 <p><?= $model->sourceLabel . ' ' . 'Name' ?></p>
                                 <p><?= $model->displayLabel ?></p>
                             </th>
