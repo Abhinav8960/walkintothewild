@@ -53,7 +53,7 @@ $this->params['title'] = $this->title;
                                                 'contentOptions' => ['style' => 'width: 30%;'],
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a(Html::img($model->user->profileimage ? $model->user->profileimage : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->user->name, ['profile', 'user_id' => $model->user->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
+                                                    return Html::a(Html::img($model->user->profile_display_image ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->user->name, ['profile', 'user_id' => $model->user->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
                                                 }
                                             ],
                                             'created_at:dateTime:Following Start at',
