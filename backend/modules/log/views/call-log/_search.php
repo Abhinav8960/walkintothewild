@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,7 +23,12 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-2">
-        <?= $form->field($model, 'reference_id')->textInput(['placeholder' => 'Enter Refernce id']) ?>
+        <?= $form->field($model, 'call_initiated_partner_id')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->all(),'id','business_name'),
+            [
+                'prompt' => 'Select Operator',
+            ]
+        ) ?>
     </div>
 
     <div class="col-md-3">

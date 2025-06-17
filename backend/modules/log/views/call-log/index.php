@@ -1,6 +1,7 @@
 <?php
 
-
+use Google\Api\ResourceDescriptor\Style;
+use yii\bootstrap5\Html;
 use yii\grid\GridView;
 
 $this->title = 'Call Log';
@@ -20,67 +21,111 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'request_caller_1_no',
+                        'label' => 'Operator',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="btn btn-link text-primary" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
+                            $str = "";
+                            if(!empty($model->partner)){
+
+                                $str =  '<a class="bg-primary ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
+                                $str .= "<br>";
+                            }
+                            return $str .= $model->request_caller_2_no;                       
+                        }
+                    ],
+                    [
+                        'label' => 'User',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str =  '<a class="bg-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
                             $str .= "<br>";
                             return $str .= $model->request_caller_1_no;
                         }
                     ],
+                    
                     [
-                        'label' => '	request_caller_2_no',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'Recording',
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->request_caller_2_no;
+
+                            $url = !empty($model->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $model->file_path : $model->recording_url;
+                            if ($url != '' || $url != NULL) {
+                                return '<audio controls>
+                                <source src="'.$url.'" type="audio/ogg" style="width:20px">
+                                <source src="'.$url.'" type="audio/mpeg" style="width:20px">
+                                audio not supported.
+                              </audio>';                             
+                            } 
+                            return '';
                         }
                     ],
-                    // [
-                    //     'label' => 'Template',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         if($model->template != null){
-                    //         return isset($model->template_id) ? $model->template->name : '';
-                    //         }
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Data',
-                    //     'contentOptions' => ['style' => 'width: 20%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->params;
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'User Id',
-                    //     'contentOptions' => ['style' => 'width: 20%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->user_id;
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Is Deliver',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->is_deliver == 1 ? 'Yes' : 'No';
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Send Date Time',
-                    //     'contentOptions' => ['style' => 'width: 20%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->sms_send_time;
-                    //     }
-                    // ],
-
-
+                    [
+                        'label' => 'Dial Status',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->dial_status) ? $model->dial_status : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Recording Duration',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->rec_duration) ? $model->rec_duration : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Call Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->call_type) ? $model->call_type : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Call Status',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->call_status) ? $model->call_status : '';
+                        }
+                    ],
+                    [
+                        'label' => 'DateTime',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->datetime) ? Yii::$app->formatter->asDatetime($model->datetime, 'php:d M Y, h:i A') : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Duration',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->duration) ? $model->duration : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Call Request Status',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->call_request_status) ? $model->call_request_status : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Call Request Message',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->call_request_message) ? $model->call_request_message : '';
+                        }
+                    ],
                 ],
             ]); ?>
         </div>
