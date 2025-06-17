@@ -200,4 +200,19 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
 
         return $mimeMap[$mimeType] ?? null;
     }
+
+    public function getCallerUser1()
+    {
+        return $this->hasOne(User::className(), ['id' => 'request_caller_1_user_id']);
+    }
+
+    public function getCallerUser2()
+    {
+        return $this->hasOne(User::className(), ['id' => 'request_caller_2_user_id']);
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(User::className(), ['id' => 'call_initiated_partner_id']);
+    }
 }
