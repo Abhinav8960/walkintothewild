@@ -13,6 +13,7 @@ class LeadSearch extends Lead
 {
     public $user_name;
     public $safari_operator_id;
+    public $lead_month;
 
 
 
@@ -24,9 +25,10 @@ class LeadSearch extends Lead
     {
         return [
             [['id', 'source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'safaris', 'travelers', 'stay_category_id', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'is_payment_received', 'booked_operator_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count','is_chat_started'], 'safe'],
+            [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count', 'is_chat_started'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
+            [['lead_month'], 'safe'],
         ];
     }
 
@@ -133,6 +135,9 @@ class LeadSearch extends Lead
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+            'pagination' => [
+                'pageSize' => 15,
+            ],
 
         ]);
 
@@ -181,6 +186,10 @@ class LeadSearch extends Lead
             ->andFilterWhere(['like', 'budget', $this->budget])
             ->andFilterWhere(['like', 'transaction_id', $this->transaction_id])
             ->andFilterWhere(['like', 'addional_notes', $this->addional_notes]);
+
+        if ($this->lead_month) {
+            $query->andWhere(['MONTH(FROM_UNIXTIME(lead.created_at))' => $this->lead_month]);
+        }
 
         return $dataProvider;
     }

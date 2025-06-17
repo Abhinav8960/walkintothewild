@@ -26,7 +26,6 @@ use yii\helpers\Html;
                         [
                             'prompt' => 'All Source',
                         ],
-                        ['class' => 'filterItem']
                     ) ?>
                 </div>
                 <div class="filterItem">
@@ -38,8 +37,15 @@ use yii\helpers\Html;
                         ],
                     ) ?>
                 </div>
-
-
+                <div class="filterItem">
+                    <label>Month:</label>
+                    <?= $form->field($model, 'lead_month')->dropDownList(
+                        GeneralModel::monthoption(),
+                        [
+                            'prompt' => 'All Month',
+                        ],
+                    ) ?>
+                </div>
             </div>
         </div>
     </div>
