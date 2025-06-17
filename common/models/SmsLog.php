@@ -100,6 +100,6 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
 
     public function getTemplate()
     {
-        return $this->hasOne(MasterSmsTemplate::className(), ['id' => 'template_id']);
+        return $this->hasOne(MasterSmsTemplate::className(), ['template_id' => 'template_id']);
     }
 }

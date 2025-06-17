@@ -1,6 +1,6 @@
 <?php
 
-
+use yii\bootstrap5\Html;
 use yii\grid\GridView;
 
 $this->title = 'SMS Log';
@@ -19,23 +19,20 @@ $this->params['title'] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'label' => 'Message Id',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->message_id;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Message Id',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->message_id;
+                    //     }
+                    // ],
                     [
                         'label' => 'Template',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if($model->template != null){
-                            return isset($model->template_id) ? $model->template->name : '';
-                            }
-                        }
+                            return isset($model->template_id) ? $model->template->name : '';                        }
                     ],
                     [
                         'label' => 'Data',
@@ -46,12 +43,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'User Id',
+                        'label' => 'User',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->user_id;
-                        }
+                            $params = is_string($model->params) ? json_decode($model->params, true) : $model->params;
+                            $name = isset($params['name']) ? $params['name'] : '(no name)';
+                            return Html::a($name, ['/user/default/profile', 'user_id' => $model->id], ['style' => 'color:black !important;']);
+                        },
                     ],
                     [
                         'label' => 'Is Deliver',
@@ -66,7 +65,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->sms_send_time;
+                            return Yii::$app->formatter->asDatetime($model->sms_send_time, 'php:d-m-Y H:i:s');
                         }
                     ],
                     [
@@ -77,7 +76,6 @@ $this->params['title'] = $this->title;
                             return $model->statuslabel;
                         }
                     ],                    
-
                 ],
             ]); ?>
         </div>
