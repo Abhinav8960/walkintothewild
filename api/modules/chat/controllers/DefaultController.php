@@ -93,11 +93,10 @@ class DefaultController extends RestController
 
     public function actionQuatationChat()
     {
-        if(isset($this->userinfo->partner) && !empty($this->userinfo->partner)){
+        if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
             $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
-        }else{
-            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user'=>1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
-
+        } else {
+            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -635,8 +634,21 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => 'You can only edit messages within 10 minutes.'], 403);
         }
 
+        $previous_message = $chat_message->message;
+
         $chat_message->message = $message;
         if ($chat_message->save()) {
+
+            // Check if the chat message is the last message of the chat
+            $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();
+            if ($chat->last_message == $previous_message) {
+                $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+                $chat->is_call_request = 0;
+                $chat->call_id = NULL;
+                $chat->sender_id = $this->userinfo->id;
+                $chat->save(false);
+            }
+
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message updated successfully']);
         } else {
             return Yii::$app->api->sendResponse([], ['message' => 'Failed to update message'], 500);
@@ -665,6 +677,13 @@ class DefaultController extends RestController
         // Change the status to 0 instead of deleting
         $chat_message->status = 0;
         if ($chat_message->save(false)) {
+            $message = "This Message is deleted.";
+            $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+            $chat->is_call_request = 0;
+            $chat->call_id = NULL;
+            $chat->sender_id = $this->userinfo->id;
+            $chat->save(false);
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message deleted successfully']);
         } else {
             return Yii::$app->api->sendResponse([], ['message' => 'Failed to delete '], 500);
