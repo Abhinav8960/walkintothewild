@@ -903,7 +903,7 @@
 }
 
 .operator-badge {
-  background: #4A4A4A;
+  background: rgb(175, 175, 175);
   border-radius: 42%;
   width: 28px;
   height: 28px;
