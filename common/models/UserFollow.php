@@ -75,19 +75,29 @@ class UserFollow extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'follow_user_id']);
     }
 
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'follow_user_id']);
+    }
+
 
     public function afterSave($insert, $changedAttributes)
     {
-        $partner_request = PartnerRegistration::find()->where(['status' => PartnerRegistration::STATUS_ACTIVE])->one();
-        if (!empty($partner_request)) {
-            $operator = SafariOperator::find()->where(['safari_operator_request_id' => $partner_request->id, 'status' => SafariOperator::STATUS_ACTIVE])->one();
-            if (!empty($operator)) {
-                if ($this->status == 1) {
-                    return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
-                } elseif ($this->status == 0) {
-                    return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
-                }
-            }
+        // $partner_request = PartnerRegistration::find()->where(['status' => PartnerRegistration::STATUS_ACTIVE])->one();
+        // if (!empty($partner_request)) {
+        //     $operator = SafariOperator::find()->where(['safari_operator_request_id' => $partner_request->id, 'status' => SafariOperator::STATUS_ACTIVE])->one();
+        //     if (!empty($operator)) {
+        //         if ($this->status == 1) {
+        //             return  new \common\events\operator\OperatorFollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
+        //         } elseif ($this->status == 0) {
+        //             return  new \common\events\operator\OperatorUnfollowedByUser($this->follower->name,$this->follower->user_handle,$operator->business_name,$operator->operator_email);
+        //         }
+        //     }
+        // }
+        if ($this->status == 1 && !empty($this->operator) && $this->operator->status == SafariOperator::STATUS_ACTIVE) {
+            return  new \common\events\operator\OperatorFollowedByUser($this->user->name, $this->user->user_handle, $this->operator->user_id, $this->operator->business_name, $this->operator->operator_email);
+        } elseif ($this->status == 0) {
+            return  new \common\events\operator\OperatorUnfollowedByUser($this->user->name, $this->user->user_handle, $this->operator->user_id, $this->operator->business_name, $this->operator->operator_email);
         }
     }
 }
