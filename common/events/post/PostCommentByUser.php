@@ -34,7 +34,7 @@ class PostCommentByUser extends Event
 
     protected $channels = [
         // 'email',
-        'firebase',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'THOS';  // To Host on Comment 

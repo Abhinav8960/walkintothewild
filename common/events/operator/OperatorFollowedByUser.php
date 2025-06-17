@@ -36,9 +36,10 @@ class OperatorFollowedByUser extends Event
 
     protected $mail_template_code = 'SOFR';  // To Follow OPERATOR
 
-    public function __construct($user_name, $user_handle, $safari_operator, $safari_operator_email)
+    public function __construct($user_name, $user_handle, $user_id, $safari_operator, $safari_operator_email)
     {
 
+        $this->userId = $user_id;
         $this->user_name = $user_name;
         $this->safari_operator = $safari_operator;
         $this->safari_operator_email = $safari_operator_email;

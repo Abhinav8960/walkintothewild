@@ -23,6 +23,7 @@ class SafariUnjoinedByuser extends Event
     public $shared_safari_url;
     protected $sent_data = [];
     protected $shared_safari;
+    protected $objective;
     protected $sharesafari_slug;
     protected $engine;
     protected $master_notification_template;
