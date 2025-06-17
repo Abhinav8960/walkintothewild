@@ -22,20 +22,20 @@ $this->params['title'] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Caller 1 ',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="btn btn-link text-dark" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
+                            $str =  '<a class="bg-primary ml-1 m-3" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
                             $str .= "<br>";
                             return $str .= $model->request_caller_1_no;
                         }
                     ],
                     [
                         'label' => 'Caller 2',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="btn btn-link text-dark" href="/user/default/profile?user_id=' . $model->callerUser2->id . '">' . $model->callerUser2->name . '</a>';
+                            $str =  '<a class="bg-infor ml-1 m-3" href="/operator/safari-operator/view?id=' . $model->partner->id . '">' . $model->partner->business_name . '</a>';
                             $str .= "<br>";
                             return $str .= $model->request_caller_2_no;                       
                         }
