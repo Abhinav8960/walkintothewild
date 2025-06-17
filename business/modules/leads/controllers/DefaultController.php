@@ -58,6 +58,7 @@ class DefaultController extends  Controller
      */
     public function actionIndex()
     {
+        $safari_operator = $this->module->operatormodel();
         $searchModel = new LeadSearch();
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
 
@@ -66,6 +67,7 @@ class DefaultController extends  Controller
             [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
+                'safari_operator' => $safari_operator,
             ]
         );
     }

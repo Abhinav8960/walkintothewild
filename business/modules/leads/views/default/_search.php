@@ -32,7 +32,7 @@ use yii\helpers\Html;
                 <div class="filterItem">
                     <label>Park:</label>
                     <?= $form->field($model, 'park_id')->dropDownList(
-                        GeneralModel::safariparkoption(),
+                        GeneralModel::operatorpark($safari_operator->id),
                         [
                             'prompt' => 'All Park',
                         ],

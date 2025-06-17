@@ -11,7 +11,7 @@ $this->title = 'Leads';
 
 
 
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php echo $this->render('_search', ['model' => $searchModel, 'safari_operator' => $safari_operator]); ?>
 <div class="table-wrapper">
     <div class="table-responsive">
         <?= GridView::widget([
