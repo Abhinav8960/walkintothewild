@@ -21,7 +21,7 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Caller 1 ',
+                        'label' => 'Caller 1 (User)',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -31,7 +31,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Caller 2',
+                        'label' => 'Caller 2 (Operator)',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
