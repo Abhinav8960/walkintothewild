@@ -144,7 +144,7 @@
                          </div>
                      </div>
                  <?php } else { ?>
-                     <div class="receivedChat">
+                     <div class="receivedChat mt-5">
                          <p><?= $chat_message->message ?></p>
                          <div class="recievedTime">
                              <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>

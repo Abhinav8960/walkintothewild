@@ -232,6 +232,20 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         }
     }
 
+    public function getDisplayColor()
+    {
+        $style = 'width: 40%;';
+        if ($this->source == 1) {
+            $style .= 'background-color: #009FFF !important;';
+        } else if ($this->source == 2) {
+            $style .= 'background-color: #00A50B !important;';
+        } else if ($this->source == 3) {
+            $style .= 'background-color: #4A4A4A !important;';
+        }
+
+        return $style;
+    }
+
 
     public function getDisplayOverview()
     {

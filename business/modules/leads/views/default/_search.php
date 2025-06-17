@@ -29,15 +29,6 @@ use yii\helpers\Html;
                     ) ?>
                 </div>
                 <div class="filterItem">
-                    <label>Park:</label>
-                    <?= $form->field($model, 'park_id')->dropDownList(
-                        GeneralModel::operatorpark($safari_operator->id),
-                        [
-                            'prompt' => 'All Park',
-                        ],
-                    ) ?>
-                </div>
-                <div class="filterItem">
                     <label>Month:</label>
                     <?= $form->field($model, 'lead_month')->dropDownList(
                         GeneralModel::monthoption(),
@@ -46,6 +37,16 @@ use yii\helpers\Html;
                         ],
                     ) ?>
                 </div>
+                <div class="filterItem">
+                    <label>Park:</label>
+                    <?= $form->field($model, 'park_id')->dropDownList(
+                        GeneralModel::operatorpark($safari_operator->id),
+                        [
+                            'prompt' => 'All Park',
+                        ],
+                    ) ?>
+                </div>
+
             </div>
         </div>
     </div>
