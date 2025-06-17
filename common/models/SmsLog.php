@@ -102,4 +102,9 @@ class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\
     {
         return $this->hasOne(MasterSmsTemplate::className(), ['template_id' => 'template_id']);
     }
+
+    public function getuser(){
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+
+    }
 }

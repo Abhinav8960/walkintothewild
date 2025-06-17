@@ -47,9 +47,8 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $params = is_string($model->params) ? json_decode($model->params, true) : $model->params;
-                            $name = isset($params['name']) ? $params['name'] : '(no name)';
-                            return Html::a($name, ['/user/default/profile', 'user_id' => $model->id], ['style' => 'color:black !important;']);
+                            $name = isset($model->user->name) ? $model->user->name : '';
+                            return Html::a($name, ['/user/default/profile', 'user_id' => $model->user_id], ['style' => 'color:black !important;']);
                         },
                     ],
                     [
