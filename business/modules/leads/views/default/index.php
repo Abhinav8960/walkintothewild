@@ -16,7 +16,10 @@ $this->title = 'Leads';
     <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'layout' => "{items}\n{pager}\n{summary}",
+            'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start'>{summary}</div>
+                            <div class='col-md-4 text-center'>{pager}</div>
+                        </div>",
             'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
             'columns' => [
                 [
