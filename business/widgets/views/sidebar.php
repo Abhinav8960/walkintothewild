@@ -22,7 +22,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
         <li class="navItems mb-2">
             <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ["/"]) ? "active" : "" ?>">
-                <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/",
+                                                                                                )) ? 'Home2.svg' : 'home.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Dashboard</span>
             </a>
         </li>
@@ -32,7 +34,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                 "/leads/default/create",
                                                                 "/leads/default/view",
                                                             )) ? "active" : "" ?>" href="/leads/default/index">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Frame_new.svg" alt="" width="17" height="20"></span>
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/leads/default/index",
+                                                                                                    "/leads/default/create",
+                                                                                                    "/leads/default/view",
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Leads</span>
             </a>
         </li>
@@ -94,6 +100,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li> -->
         <?php } ?>
-        
+
     </ul>
 </nav>
