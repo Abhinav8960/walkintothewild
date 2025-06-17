@@ -50,19 +50,16 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if (!empty($model->recording_url)) {
-                                $url = $model->recording_url;
+
+                            $url = !empty($model->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $model->file_path : $model->recording_url;
+                            if ($url != '' || $url != NULL) {
                                 return '<audio controls>
                                 <source src="'.$url.'" type="audio/ogg" style="width:20px">
                                 <source src="'.$url.'" type="audio/mpeg" style="width:20px">
                                 audio not supported.
                               </audio>';                             
-                            } else {
-                                if ($model->file_path) {
-                                    return $model->file_path;
-                                }
-                            }
-                            return 'No Recording Available';
+                            } 
+                            return '';
                         }
                     ],
                     [
