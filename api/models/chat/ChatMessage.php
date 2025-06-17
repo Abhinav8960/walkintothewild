@@ -169,7 +169,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            if ($this->is_call_message != true) {
+            if ($this->is_call_message != true || $this->status != 0 ) {
                 return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $this->createduser->name, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
         }
