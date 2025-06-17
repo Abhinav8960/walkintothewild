@@ -78,22 +78,22 @@ $this->params['title'] = $this->title;
                     //         return isset($model->rec_duration) ? $model->rec_duration : '';
                     //     }
                     // ],
-                    [
-                        'label' => 'Call Type',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->call_type) ? $model->call_type : '';
-                        }
-                    ],
-                    [
-                        'label' => 'Call Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->call_status) ? $model->call_status : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Call Type',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->call_type) ? $model->call_type : '';
+                    //     }
+                    // ],
+                    // [
+                    //     'label' => 'Call Status',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->call_status) ? $model->call_status : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'DateTime',
                         'contentOptions' => ['style' => 'width: 10%;'],
