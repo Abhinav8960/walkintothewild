@@ -634,16 +634,20 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse([], ['message' => 'You can only edit messages within 10 minutes.'], 403);
         }
 
+        $previous_message = $chat_message->message;
+
         $chat_message->message = $message;
         if ($chat_message->save()) {
 
+            // Check if the chat message is the last message of the chat
             $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();
-            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
-            $chat->is_call_request = 0;
-            $chat->call_id = NULL;
-            $chat->sender_id = $this->userinfo->id;
-            $chat->created_at = time();
-            $chat->save(false);
+            if ($chat->last_message == $previous_message) {
+                $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+                $chat->is_call_request = 0;
+                $chat->call_id = NULL;
+                $chat->sender_id = $this->userinfo->id;
+                $chat->save(false);
+            }
 
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message updated successfully']);
         } else {
@@ -679,7 +683,6 @@ class DefaultController extends RestController
             $chat->is_call_request = 0;
             $chat->call_id = NULL;
             $chat->sender_id = $this->userinfo->id;
-            $chat->created_at = time();
             $chat->save(false);
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message deleted successfully']);
         } else {
