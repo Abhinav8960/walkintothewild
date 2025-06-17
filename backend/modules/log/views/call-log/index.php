@@ -21,21 +21,23 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'request_caller_1_no',
+                        'label' => 'Caller 1 ',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str =  '<a class="btn btn-link text-primary" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
+                            $str =  '<a class="btn btn-link text-dark" href="/user/default/profile?user_id=' . $model->callerUser1->id . '">' . $model->callerUser1->name . '</a>';
                             $str .= "<br>";
                             return $str .= $model->request_caller_1_no;
                         }
                     ],
                     [
-                        'label' => '	request_caller_2_no',
+                        'label' => 'Caller 2',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->request_caller_2_no;
+                            $str =  '<a class="btn btn-link text-dark" href="/user/default/profile?user_id=' . $model->callerUser2->id . '">' . $model->callerUser2->name . '</a>';
+                            $str .= "<br>";
+                            return $str .= $model->request_caller_2_no;                       
                         }
                     ],
                     [

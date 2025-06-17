@@ -20,28 +20,13 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-<!-- 
+
     <div class="col-md-2">
-        <?= $form->field($model, 'request_caller_1_no')->textInput(['placeholder' => 'Caller Number 1']) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'request_caller_2_no')->textInput(['placeholder' => 'Caller Number 2']) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'dial_status')->textInput(['placeholder' => 'Enter Dial Status']) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'call_type')->textInput(['placeholder' => 'Enter Call Type']) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'call_status')->textInput(['placeholder' => 'Enter Call Status']) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'call_request_status')->textInput(['placeholder' => 'Enter Call Request Status']) ?>
+        <?= $form->field($model, 'request_caller_2_no')->textInput(['placeholder' => 'Enter Operator Number']) ?>
     </div>
 
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-    </div> -->
+    </div>
 </div>
 <?php ActiveForm::end(); ?>
