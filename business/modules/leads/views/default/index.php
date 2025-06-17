@@ -28,7 +28,16 @@ $this->title = 'Leads';
                     'headerOptions' => ['style' => 'width: 15%;'],
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return $model->sourceLabel;
+                        return $model->sourceLabelWithBadge;
+                    }
+                ],
+
+                [
+                    'label' => 'Display Label',
+                    'headerOptions' => ['style' => 'width: 15%;'],
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return $model->displayLabel;
                     }
                 ],
 
@@ -58,7 +67,7 @@ $this->title = 'Leads';
                     }
                 ],
                 [
-                    'label' => 'Travel Date looking For',
+                    'label' => 'Travel Date',
                     'headerOptions' => ['style' => 'width: 15%;'],
                     'format' => 'raw',
                     'value' => function ($model) {
@@ -71,7 +80,7 @@ $this->title = 'Leads';
                 ],
 
                 [
-                    'label' => 'Lead Received Date',
+                    'label' => 'Lead Received',
                     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                     'format' => 'raw',
                     'value' => function ($model) {
