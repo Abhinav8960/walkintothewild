@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
                                 'placeholder' => 'Enter Minimum Price'
                             ])->label(false) ?>
                         </div>
-                        <p class="align-items-center">to</p>
+                         <label>to</label>
                         <div class="col-md-4">
                             <?= $form->field($model, 'cost_per_person_max')->textInput([
                                 'placeholder' => 'Enter Maximum Price'
