@@ -9,7 +9,7 @@ use yii\helpers\Url;
 <?= $this->render('view', ['model' => $model, 'quotations' => $quotations, 'safari_operator_id' => $safari_operator_model->id]) ?>
 
 <div class="messaging">
-    <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'user_id' => $model->user_id, 'chat_hash' => $chat->chat_hash]), 'class' => 'btn btn-info pop-up mb-2']) ?>
+    <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'btn btn-info pop-up mb-2']) ?>
     <div class="inbox_msg">
         <div class="mesgs">
             <div class="msg_history">

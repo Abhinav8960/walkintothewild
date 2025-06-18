@@ -398,14 +398,21 @@ class DefaultController extends  Controller
         }
     }
 
-    public function actionSendNotification($user_id, $chat_hash)
+    public function actionSendNotification($chat_hash)
     {
         if (Yii::$app->request->isPost) {
+            $chat = Chat::find()->where(['chat_hash' => $chat_hash])->one();
+            $reciverId = $chat->user_id;
+            $sender_user_id = $chat->recipient_user_id;
+            $sender_user_handle = User::find()->where(['id' => $sender_user_id])->one();
             $message = Yii::$app->request->post('message');
-            if (!empty($message)) {
-                echo $message . '<br>' . $user_id . '<br>' . $chat_hash;
+
+            if (empty($message)) {
+                Yii::$app->session->setFlash('error', 'Message cannot be empty.');
+                return $this->redirect(Yii::$app->request->referrer);
             }
-            die();
+            new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $sender_user_handle->name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
+            Yii::$app->session->setFlash('success', 'Notification sent successfully.');
             return $this->redirect(Yii::$app->request->referrer);
         }
 
