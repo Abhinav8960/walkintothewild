@@ -286,33 +286,37 @@ class TestController extends Controller
 
     public function actionQuoteUserNotify()
     {
-
+        $count = 0;
         $leads = Lead::find()->where(['status' => 1])->all();
         foreach ($leads as $lead) {
-            $chats = Chat::find()->where(['status' => 1, 'lead_id' => $lead->id, 'type' => 2])->all();
+            $chats = Chat::find()->where(['status' => 1, 'lead_id' => $lead->id, 'chat_type' => 2])->all();
             foreach ($chats as $chat) {
-                $chatmessages = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->andWhere(['>', 'quotation_id', 0])->orderBy(['id' => SORT_DESC])->one();
-                if (!empty($chatmessages)) {
-
-                    // Check if there are no messages from user_id after quotation_id
+                // echo "Chat ID: {$chat->id}\n";
+                // $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->andWhere(['>', 'quotation_id', 0])->orderBy(['id' => SORT_DESC])->one();
+                // $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id, 'is_quotation_message' => 1])->orderBy(['id' => SORT_DESC])->one();
+                $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['id' => SORT_DESC])->one();
+                if (!empty($chatmessage)) {
+                    // echo "Chat Message ID: {$chatmessage->id}\n";
                     $userMessagesAfterQuotation = ChatMessage::find()
-                        ->where(['chat_id' => $chatmessages->chat_id, 'created_by' => $chat->user_id])
+                        ->where(['chat_id' => $chatmessage->chat_id, 'created_by' => $chat->recipient_user_id])
                         ->andWhere(['status' => 1])
-                        ->andWhere(['>', 'id', $chatmessages->id])
+                        ->andWhere(['>', 'id', $chatmessage->id])
                         ->count();
 
-                    if ($userMessagesAfterQuotation == 0) {
+                    if ($chatmessage->created_by == $chat->recipient_user_id && $userMessagesAfterQuotation == 0) {
+                        echo "No user messages after quotation for Chat ID: {$chat->id}\n";
+                        $count++;
                         $master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE, 'status' => 1])->limit(1)->one();
-                        $title = \Yii::$app->engine->render($master_notification_template->title, ['sender' => $chat->createduser->name]);
-                        $body = \Yii::$app->engine->render($master_notification_template->message, ['message' => strip_tags($chat->message)]);
+                        $title = \Yii::$app->engine->render($master_notification_template->title, ['sender' => $chat->sender->name]);
+                        $body = \Yii::$app->engine->render($master_notification_template->message, ['message' => strip_tags($chat->last_message)]);
                         $data = MasterNotificationTemplate::prepareSendData(
                             $title,
                             $body,
                             [
                                 'objective' => Chat::OBJECTIVE_QUOTE,
                                 'chat_hash' => $chat->chat_hash,
-                                'sender_name' => $chat->createduser->name,
-                                'user_handle' => $chat->createduser->user_handle,
+                                'sender_name' => $chat->sender->name,
+                                'user_handle' => $chat->sender->user_handle,
                                 'lead_id' => $chat->lead_id,
                                 'can_call' => $chat->callpossible()
                             ]
@@ -320,7 +324,16 @@ class TestController extends Controller
                         $receiver_id = $chat->user_id;
                         $token = $this->firebaseTokens($receiver_id);
                         if ($token) {
-                            \Yii::$app->firebase->sendMulticastNotification($title, $body, $imageUrl = NULL, $token, $data, $topic = NULL, $condition = NULL);
+                            print_r([
+                                "count" => $count,
+                                "chat" => $chat->id,
+                                "chat_message" => $chatmessage->id,
+                                "receiver_id" => $receiver_id,
+                                "tokens" => $token,
+                                "title" => $title,
+                                "body" => $body,
+                            ]);
+                            // \Yii::$app->firebase->sendMulticastNotification($title, $body, $imageUrl = NULL, $token, $data, $topic = NULL, $condition = NULL);
                         }
                     }
                 }

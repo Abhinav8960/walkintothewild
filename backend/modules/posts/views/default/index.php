@@ -48,7 +48,7 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $imageUrl = isset($model->user) ? $model->user->profileImage : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $imageUrl = isset($model->user) ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/NewBanner_big.png';
                             $name = isset($model->user) ? $model->user->name : '';
                             return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
                         },

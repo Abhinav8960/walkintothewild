@@ -149,4 +149,14 @@ class Chat extends \yii\db\ActiveRecord
         }
         return false;
     }
+
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'recipient_user_id']);
+    }
+
+    public function getSender()
+    {
+        return $this->hasOne(User::className(), ['id' => 'sender_id']);
+    }
 }
