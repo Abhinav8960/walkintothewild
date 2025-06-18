@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <div class="col-12 mb-3">
         <div class="filterBar">
             <div class="filters">
-                <div class="filterItem">
+                <div class="filterItem position-relative">
                     <label>Source:</label>
                     <?= $form->field($model, 'source')->dropDownList(
                         GeneralModel::leadSource(),
@@ -27,8 +27,9 @@ use yii\helpers\Html;
                             'prompt' => 'All Source',
                         ],
                     ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div class="filterItem">
+                <div class="filterItem position-relative">
                     <label>Month:</label>
                     <?= $form->field($model, 'lead_month')->dropDownList(
                         GeneralModel::monthoption(),
@@ -36,8 +37,9 @@ use yii\helpers\Html;
                             'prompt' => 'All Month',
                         ],
                     ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div class="filterItem">
+                <div class="filterItem position-relative">
                     <label>Park:</label>
                     <?= $form->field($model, 'park_id')->dropDownList(
                         GeneralModel::operatorpark($safari_operator->id),
@@ -45,6 +47,7 @@ use yii\helpers\Html;
                             'prompt' => 'All Park',
                         ],
                     ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
 
             </div>
