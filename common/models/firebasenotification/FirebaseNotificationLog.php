@@ -43,7 +43,7 @@ class FirebaseNotificationLog extends \common\models\firebasenotification\Active
             [['status', 'created_at', 'master_notification_template_id'], 'required'],
             [['message', 'action'], 'string'],
             [['sent_data','send_datetime'], 'safe'],
-            [['status', 'is_send', 'created_by', 'created_at', 'is_cron_run'], 'integer'],
+            [['status', 'is_send', 'created_by', 'created_at', 'is_cron_run','is_system_notification'], 'integer'],
             [['image_url', 'action'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 250],
         ];
@@ -63,6 +63,7 @@ class FirebaseNotificationLog extends \common\models\firebasenotification\Active
             'image_url' => 'Image Url',
             'action' => 'Action',
             'is_cron_run' => 'Cron Run',
+            'is_system_notification'=> 'Is System Notification',
             'status' => 'Status',
             'send_datetime' => 'Send Date Time',
             'created_by' => 'Created By',
