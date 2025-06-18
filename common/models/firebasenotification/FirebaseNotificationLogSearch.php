@@ -17,9 +17,9 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'created_at', 'status', 'created_at'], 'integer'],
+            [['id', 'status', 'created_by', 'created_at', 'status', 'created_at', 'is_system_notification'], 'integer'],
             [['message', 'image_url'], 'string'],
-            [['master_notification_template_id','sent_data'], 'safe'],
+            [['master_notification_template_id', 'sent_data'], 'safe'],
         ];
     }
 
@@ -68,6 +68,7 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
             'message' => $this->message,
             'action' => $this->action,
             'status' => $this->status,
+            'is_system_notification' => $this->is_system_notification,
             'created_by' => $this->created_by,
         ]);
         // echo $this->created_at;
