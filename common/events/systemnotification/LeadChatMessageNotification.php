@@ -73,7 +73,7 @@ class LeadChatMessageNotification extends Event
 
     private function title()
     {
-        return $this->engine->render($this->master_notification_template->title, ['sender' => $this->sender]);
+        return $this->engine->render($this->master_notification_template->title, ['sender' => "Walk Into The Wild"]);
     }
     private function message()
     {

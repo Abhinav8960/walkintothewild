@@ -405,13 +405,14 @@ class DefaultController extends  Controller
             $reciverId = $chat->user_id;
             $sender_user_id = $chat->recipient_user_id;
             $sender_user_handle = User::find()->where(['id' => $sender_user_id])->one();
+            $safari_operator_model = SafariOperator::find()->where(['user_id' => $sender_user_id])->one();
             $message = Yii::$app->request->post('message');
 
             if (empty($message)) {
                 Yii::$app->session->setFlash('error', 'Message cannot be empty.');
                 return $this->redirect(Yii::$app->request->referrer);
             }
-            new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $sender_user_handle->name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
+            new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $safari_operator_model->business_name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
             Yii::$app->session->setFlash('success', 'Notification sent successfully.');
             return $this->redirect(Yii::$app->request->referrer);
         }
