@@ -126,6 +126,9 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'show_in_filter')->dropDownList(['1' => 'Yes', '0' => 'No'], ['prompt' => 'Select'])->label('Show in Filter') ?>
     </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'notes')->textarea(['maxlength' => true, 'placeholder' => 'Enter Additional Notes']) ?>
+    </div>
     <hr>
 
     <h5>Address</h5>
