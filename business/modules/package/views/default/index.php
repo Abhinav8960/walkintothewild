@@ -6,19 +6,23 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Package';
-$this->params['title'] = $this->title;
+// $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange float-end', 'title' => 'Create']);
 ?>
 
 
-<div class="card">
-    <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-        <div id="w1-button" class="mb-3"></div>
-
-        <div class="table-responsive">
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
@@ -35,7 +39,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'label' => 'Cost Per Person',
                         'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'contentOptions' => ['style' => 'text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return GeneralModel::number_format_indian($model->cost_per_person);
@@ -52,6 +56,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                     [
                         'label' => 'Feature',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';

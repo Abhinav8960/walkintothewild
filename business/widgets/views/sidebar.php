@@ -42,16 +42,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Leads</span>
             </a>
         </li>
+
+        <li class="navItems mb-2">
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/package/default/index",
+                                                                "/package/default/create",
+                                                            )) ? "active" : "" ?>" href="/package/default/index">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/package/default/index",
+                                                                                                    "/package/default/create",
+                                                                                                )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> My Packages</span>
+            </a>
+        </li>
         <?php if (false) { ?>
-            <li class="navItems mb-2">
-                <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
-                                                                    "/package/default/index",
-                                                                    "/package/default/create",
-                                                                )) ? "active" : "" ?>" href="/package/default/index">
-                    <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
-                    <span class="hide-slide-menu"> My Packages</span>
-                </a>
-            </li>
+
             <!-- <li class="navItems mb-2">
             <a href="" class="navLinks  d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
