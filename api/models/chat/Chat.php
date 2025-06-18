@@ -116,7 +116,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by','is_lead_chat_open_for_user'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_lead_chat_open_for_user'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -249,7 +249,7 @@ class Chat extends \common\models\chat\Chat
         return false;
     }
 
-    
+
 
     // public function beforeSave($insert)
     // {
@@ -261,9 +261,20 @@ class Chat extends \common\models\chat\Chat
     //         if ($insert && empty($this->is_call_request)) {
     //             $this->is_call_request = null;
     //         }
-           
+
     //         return true;
     //     }
     //     return false;
     // }
+
+    public static function lastMessageUpdate($chat, $last_message)
+    {
+        $chat->last_message = \common\models\GeneralModel::strMaxlength($last_message->message);
+        $chat->last_message_at = $last_message->created_at;
+        $chat->call_id = $last_message->call_id;
+        $chat->is_call_request = $last_message->is_call_request;
+        $chat->quote_id = $last_message->quotation_id  ? $last_message->quotation_id : $chat->quote_id ;
+        $chat->sender_id = $last_message->created_by;
+        $chat->save(false);
+    }
 }
