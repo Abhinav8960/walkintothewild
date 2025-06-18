@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+            <?= Html::submitButton('Send', ['class' => 'btn btn-orange text-white']) ?>
         </div>
     </div>
 </div>
