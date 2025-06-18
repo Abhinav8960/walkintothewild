@@ -1,9 +1,9 @@
 .container-scroller .side_bar {
   background-color: #fff !important;
-  border-top: 1px solid #e7e7e7;
+  /* border-top: 1px solid #e7e7e7;
   border-left: 1px solid #e7e7e7;
   border-right: 1px solid #e7e7e7;
-  /* width: 270px; */
+  width: 270px; */
 }
 
 .container-scroller .nav .nav-icon {
@@ -51,8 +51,14 @@
   margin-bottom: 60px;
   padding: 14px !important;
   padding-top: 40px !important;
-  width: 100% !important;
+  /* width: 100% !important; */
   background: #191c24;
+  position: fixed !important;
+  height: 100vh;
+   background-color: #fff !important;
+  border-top: 1px solid #e7e7e7;
+  border-left: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
 }
 
 .collapsed-sidebar .nav {
@@ -64,13 +70,13 @@
 }
 
 .navItems .navLinks.active {
-  padding: 8px 16px;
+  padding: 8px 80px 8px 10px;
   border-radius: 16px !important;
   color: #99ff33;
 }
 
 .navItems .navLinks {
-  padding: 8px 16px;
+  padding: 8px 80px 8px 10px;
   color: #848a90;
   font-size: 16px;
   font-weight: 600;
@@ -832,6 +838,7 @@
   font-weight: 500;
   font-size: 16px;
   color: #92929D;
+      margin-left: 30px;
 }
 
 .filterItem select {
@@ -841,7 +848,7 @@
   font-weight: 600;
   color: #44444F;
   cursor: pointer;
-  padding: 4px 8px;
+      padding: 4px 50px 4px 8px;
   font-size: 16px;
 }
 
@@ -932,3 +939,46 @@
 
   overflow-x: hidden !important;
 }
+.filterItem .form-control:focus{
+
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+.collapsed-sidebar .nav {
+    padding-left: 2px !important;
+    position: fixed !important;
+    width: 72px !important;
+        border-top: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7;
+    border-right: 1px solid #e7e7e7;
+    z-index: 9999;
+}
+.container-scroller .nav .nav-item-profile .profile-ditails .pro-img .success-online{
+
+     background-color: transparent;
+}
+.side_bar .nav .navItems.navitemLogout{
+position: absolute;
+    bottom: 0;
+
+}
+.collapsed-sidebar .nav .nav-item-profile .profile-ditails .pro-img img{
+
+  display: none;
+}
+.side_bar .nav .nav-item-profile button{
+
+  position: absolute;
+  top: 18px;
+  right: 30px;
+}
+.filterItem i{
+
+      position: absolute;
+    right: 5px;
+        cursor: pointer;
+        color:#92929D;
+}
+
+
+
