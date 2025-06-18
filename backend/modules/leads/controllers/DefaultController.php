@@ -326,7 +326,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
 
         return $this->render(
             '_operator_lead_chat',
@@ -396,5 +396,27 @@ class DefaultController extends  Controller
                 return  $this->redirect(['index']);
             }
         }
+    }
+
+    public function actionSendNotification($chat_hash)
+    {
+        if (Yii::$app->request->isPost) {
+            $chat = Chat::find()->where(['chat_hash' => $chat_hash])->one();
+            $reciverId = $chat->user_id;
+            $sender_user_id = $chat->recipient_user_id;
+            $sender_user_handle = User::find()->where(['id' => $sender_user_id])->one();
+            $safari_operator_model = SafariOperator::find()->where(['user_id' => $sender_user_id])->one();
+            $message = Yii::$app->request->post('message');
+
+            if (empty($message)) {
+                Yii::$app->session->setFlash('error', 'Message cannot be empty.');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            new \common\events\systemnotification\LeadChatMessageNotification([$reciverId], $safari_operator_model->business_name, $sender_user_handle->user_handle, \common\models\GeneralModel::strMaxWord($message), $chat->chat_hash, $chat);
+            Yii::$app->session->setFlash('success', 'Notification sent successfully.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        return $this->renderAjax('_notification_form');
     }
 }

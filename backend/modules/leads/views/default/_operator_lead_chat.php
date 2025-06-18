@@ -1,38 +1,39 @@
 <?php
 
 use common\models\chat\ChatMessage;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
 <?= $this->render('view', ['model' => $model, 'quotations' => $quotations, 'safari_operator_id' => $safari_operator_model->id]) ?>
 
 <div class="messaging">
+    <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'btn btn-info pop-up mb-2']) ?>
     <div class="inbox_msg">
         <div class="mesgs">
             <div class="msg_history">
                 <?php if ($chat) {
-                    foreach ($chat as $chatcontact) {
-                        if ($chats = $chatcontact->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
-                            foreach ($chats as $chat_message) {
-                                if ($chat_message->created_by == $safari_operator_model->user_id) {
+                    if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
+                        foreach ($chats as $chat_message) {
+                            if ($chat_message->created_by == $safari_operator_model->user_id) {
                 ?>
-                                    <div class="incoming_msg">
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg">
-                                                <p><?= $chat_message->message ?></p>
-                                                <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="outgoing_msg">
-                                        <div class="sent_msg">
+                                <div class="incoming_msg">
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
                                             <p><?= $chat_message->message ?></p>
                                             <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
                                         </div>
                                     </div>
+                                </div>
+                            <?php } else { ?>
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
+                                        <p><?= $chat_message->message ?></p>
+                                        <span class="time_date"><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                    </div>
+                                </div>
                 <?php }
-                            }
                         }
                     }
                 } ?>
@@ -41,7 +42,22 @@ use common\models\chat\ChatMessage;
     </div>
 </div>
 
+<div class="modal fade" id="notificationAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Form
+                </h6>
+            </div>
 
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <style>
     .inbox_msg {
@@ -128,3 +144,18 @@ use common\models\chat\ChatMessage;
         overflow-y: auto;
     }
 </style>
+
+
+<?php
+$script = <<< JS
+    $('.pop-up').on('click', function () {
+        $('#notificationAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+
+JS;
+$this->registerJs($script);
+
+?>

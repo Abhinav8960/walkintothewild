@@ -15,7 +15,7 @@ class QueueService
      */
     public function addToQueue($channelName, $template)
     {
-        
+
         if ($channelName == 'email') {
             $log =  $this->emailLog($template);
         } elseif ($channelName == 'firebase') {
@@ -28,7 +28,7 @@ class QueueService
 
     private function emailLog($template)
     {
-    
+
         // $mail_from = 'no-reply@walkintothewild.in';
         $log = new \common\models\MailLog();
         $log->subject = $template['subject'];
@@ -84,11 +84,12 @@ class QueueService
     }
 
     private function firebaseLog($template)
-    {   
+    {
         $user_id = $template['user_id'];
         $master_notification_template_id = $template['master_notification_template_id'];
         $title = $template['title'] ?? NULL;
         $message = $template['message'] ?? NULL;
+        $is_system_notification = $template['is_system_notification'] ?? 0;
         $sent_data = NULL;
         // if (is_array($template['sent_data'])) {
         // } else {
@@ -102,10 +103,11 @@ class QueueService
         $model = new FirebaseNotificationLog();
         $model->master_notification_template_id = $master_notification_template_id;
         $model->title = ($title !== null) ? $title :  NULL;
-        $model->message = ($message !== null) ? trim($message) : NULL;        
+        $model->message = ($message !== null) ? trim($message) : NULL;
         $model->sent_data = ($sent_data !== null) ? $sent_data :  NULL;
         $model->image_url = ($image_url !== null) ? $image_url :  NULL;
         $model->action = ($action !== null) ? $action : NULL;
+        $model->is_system_notification = $is_system_notification;
         $model->user_id = $user_id;
         $model->is_send = 0;
         $model->is_cron_run = 0;
@@ -132,7 +134,7 @@ class QueueService
         $log->status = 0; // Mail Not Send
         $log->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
         $log->updated_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
-        
+
         $log->save(false);
         return $log;
     }
