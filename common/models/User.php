@@ -465,6 +465,8 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+    
+
     public function getCover_display_image()
     {
         if ($this->cover_image != '') {
@@ -541,4 +543,5 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
+    
 }

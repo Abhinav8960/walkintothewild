@@ -67,7 +67,8 @@ class CallLog extends \common\models\CallLog
                 return $this->getCallstatuslabel();
             },
             'datetime' => function () {
-                return strtotime($this->datetime);
+                return $this->created_at;
+                // return !empty($this->datetime) ?  strtotime($this->datetime) : $this->created_at;
             },
             'duration',
             // 'operator_user_id',
@@ -102,6 +103,6 @@ class CallLog extends \common\models\CallLog
 
             return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated';
         }
-        return 'Call Initiated, But call not connected';
+        return 'Call Initiated';
     }
 }

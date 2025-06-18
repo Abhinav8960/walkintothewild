@@ -326,7 +326,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->all();
+        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
 
         return $this->render(
             '_operator_lead_chat',
@@ -396,5 +396,19 @@ class DefaultController extends  Controller
                 return  $this->redirect(['index']);
             }
         }
+    }
+
+    public function actionSendNotification($user_id, $chat_hash)
+    {
+        if (Yii::$app->request->isPost) {
+            $message = Yii::$app->request->post('message');
+            if (!empty($message)) {
+                echo $message . '<br>' . $user_id . '<br>' . $chat_hash;
+            }
+            die();
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        return $this->renderAjax('_notification_form');
     }
 }

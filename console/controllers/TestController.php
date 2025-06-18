@@ -8,6 +8,7 @@ use common\models\cms\banner\Banner;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\leads\Lead;
 use common\models\master\animal\MasterAnimal;
+use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\postscomment\UserPostComment;
 use common\models\postscomment\UserPostLike;
@@ -15,6 +16,7 @@ use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingLike;
 use common\models\UserPosts;
+use common\models\UserSession;
 use Yii;
 use yii\console\Controller;
 
@@ -23,7 +25,7 @@ use yii\console\Controller;
  */
 class TestController extends Controller
 {
-    
+
 
     public function actionLeadDisable()
     {
@@ -121,11 +123,9 @@ class TestController extends Controller
     public function actionBannerImage()
     {
         $banner_model = Banner::find()->all();
-        foreach($banner_model as $model)
-        {
-            if($model->image != null)
-            {
-                $model->image_path = 'banner/2506/'.$model->image;
+        foreach ($banner_model as $model) {
+            if ($model->image != null) {
+                $model->image_path = 'banner/2506/' . $model->image;
                 $model->save(false);
             }
         }
@@ -159,11 +159,9 @@ class TestController extends Controller
     public function actionFrontendBannerImage()
     {
         $banner_model = FrontendBanner::find()->all();
-        foreach($banner_model as $model)
-        {
-            if($model->frontend_banner != null)
-            {
-                $model->frontend_banner_path = 'frontend_banner/2506/'. $model->frontend_banner;
+        foreach ($banner_model as $model) {
+            if ($model->frontend_banner != null) {
+                $model->frontend_banner_path = 'frontend_banner/2506/' . $model->frontend_banner;
                 $model->save(false);
             }
         }
@@ -197,11 +195,9 @@ class TestController extends Controller
     public function actionMasterVehicle()
     {
         $master_model = MasterVehicle::find()->all();
-        foreach($master_model as $model)
-        {
-            if($model->icon != null)
-            {
-                $model->icon_path = 'icon/2506/'. $model->icon;
+        foreach ($master_model as $model) {
+            if ($model->icon != null) {
+                $model->icon_path = 'icon/2506/' . $model->icon;
                 $model->save(false);
             }
         }
@@ -235,17 +231,14 @@ class TestController extends Controller
     public function actionRareAnimal()
     {
         $master_model = MasterAnimal::find()->all();
-        foreach($master_model as $model)
-        {
-            if($model->banner != null)
-            {
-                $model->banner_path = 'rareanimal/2506/'. $model->banner;
+        foreach ($master_model as $model) {
+            if ($model->banner != null) {
+                $model->banner_path = 'rareanimal/2506/' . $model->banner;
                 $model->save(false);
             }
 
-            if($model->feature_image != null)
-            {
-                $model->feature_image_path = 'rareanimal/2506/'. $model->feature_image;
+            if ($model->feature_image != null) {
+                $model->feature_image_path = 'rareanimal/2506/' . $model->feature_image;
                 $model->save(false);
             }
         }
@@ -289,5 +282,83 @@ class TestController extends Controller
             }
         }
         echo "Done";
+    }
+
+    public function actionQuoteUserNotify()
+    {
+        $count = 0;
+        $leads = Lead::find()->where(['status' => 1])->all();
+        foreach ($leads as $lead) {
+            $chats = Chat::find()->where(['status' => 1, 'lead_id' => $lead->id, 'chat_type' => 2])->all();
+            foreach ($chats as $chat) {
+                // echo "Chat ID: {$chat->id}\n";
+                // $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->andWhere(['>', 'quotation_id', 0])->orderBy(['id' => SORT_DESC])->one();
+                // $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id, 'is_quotation_message' => 1])->orderBy(['id' => SORT_DESC])->one();
+                $chatmessage = ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['id' => SORT_DESC])->one();
+                if (!empty($chatmessage)) {
+                    // echo "Chat Message ID: {$chatmessage->id}\n";
+                    $userMessagesAfterQuotation = ChatMessage::find()
+                        ->where(['chat_id' => $chatmessage->chat_id, 'created_by' => $chat->recipient_user_id])
+                        ->andWhere(['status' => 1])
+                        ->andWhere(['>', 'id', $chatmessage->id])
+                        ->count();
+
+                    if ($chatmessage->created_by == $chat->recipient_user_id && $userMessagesAfterQuotation == 0) {
+                        echo "No user messages after quotation for Chat ID: {$chat->id}\n";
+                        $count++;
+                        $master_notification_template = MasterNotificationTemplate::find()->where(['id' => MasterNotificationTemplate::CHAT_MESSAGE_RECEIVED_REGISTRATION_TEMPLATE, 'status' => 1])->limit(1)->one();
+                        $title = \Yii::$app->engine->render($master_notification_template->title, ['sender' => $chat->sender->name]);
+                        $body = \Yii::$app->engine->render($master_notification_template->message, ['message' => strip_tags($chat->last_message)]);
+                        $data = MasterNotificationTemplate::prepareSendData(
+                            $title,
+                            $body,
+                            [
+                                'objective' => Chat::OBJECTIVE_QUOTE,
+                                'chat_hash' => $chat->chat_hash,
+                                'sender_name' => $chat->sender->name,
+                                'user_handle' => $chat->sender->user_handle,
+                                'lead_id' => $chat->lead_id,
+                                'can_call' => $chat->callpossible()
+                            ]
+                        );
+                        $receiver_id = $chat->user_id;
+                        $token = $this->firebaseTokens($receiver_id);
+                        if ($token) {
+                            print_r([
+                                "count" => $count,
+                                "chat" => $chat->id,
+                                "chat_message" => $chatmessage->id,
+                                "receiver_id" => $receiver_id,
+                                "tokens" => $token,
+                                "title" => $title,
+                                "body" => $body,
+                            ]);
+                            // \Yii::$app->firebase->sendMulticastNotification($title, $body, $imageUrl = NULL, $token, $data, $topic = NULL, $condition = NULL);
+                        }
+                    }
+                }
+            }
+        }
+        echo "done";
+    }
+
+
+
+    private function firebaseTokens($userId)
+    {
+        $uds =  UserSession::find()
+            // ->where(['user_id1' => $userId, 'app_name' => 'Api'])
+            ->where(['user_id' => $userId])
+            ->andWhere(['not', ['firebase_token' => null]])
+            ->andWhere(['!=', 'firebase_token', ''])
+            ->andWhere(['is_firebase_token_active' => 1])
+            ->all();
+        $tokens = [];
+        foreach ($uds as $ud) {
+            $tokens[] = $ud->firebase_token;
+        }
+        $array = array_unique($tokens);
+
+        return $array;
     }
 }
