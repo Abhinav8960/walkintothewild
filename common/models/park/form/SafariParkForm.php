@@ -91,6 +91,7 @@ class SafariParkForm extends model
     public $is_most_demanding;
     public $is_shared_safari;
 
+    public $notes;
 
 
     public function __construct(SafariPark $safari_park_model = null)
@@ -159,6 +160,10 @@ class SafariParkForm extends model
             $this->is_most_demanding = $this->safari_park_model->is_most_demanding;
             $this->is_shared_safari = $this->safari_park_model->is_shared_safari;
             $this->status = $this->safari_park_model->status;
+
+            $this->notes = $this->safari_park_model->notes;
+
+
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
 
             //$this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id', 'master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -234,7 +239,8 @@ class SafariParkForm extends model
                 'nearest_railway_station_five',
                 'nearest_airport_three',
                 'nearest_airport_four',
-                'nearest_airport_five'
+                'nearest_airport_five',
+                'notes',
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
@@ -498,7 +504,8 @@ class SafariParkForm extends model
             'longitude',
             'month_note',
             'safri_cost_note',
-            'animal_text'
+            'animal_text',
+            'notes'
         ];
         $scenarios['update'] = [
             'show_in_filter',
@@ -543,7 +550,8 @@ class SafariParkForm extends model
             'safri_cost_note',
             'animal_text',
             'is_most_demanding',
-            'is_shared_safari'
+            'is_shared_safari',
+            'notes',
         ];
         $scenarios['howtoreach'] = [
             'status',
@@ -647,6 +655,7 @@ class SafariParkForm extends model
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'status' => 'Status',
+            'notes'=>'Notes',
         ];
     }
     /**
@@ -713,6 +722,9 @@ class SafariParkForm extends model
         $this->safari_park_model->is_most_demanding = $this->is_most_demanding;
         $this->safari_park_model->is_shared_safari = $this->is_shared_safari;
         $this->safari_park_model->status = $this->status;
+
+        $this->safari_park_model->notes = $this->notes;
+
     }
 
 
