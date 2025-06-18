@@ -106,7 +106,6 @@ class QueueService
         $model->message = ($message !== null) ? trim($message) : NULL;
         $model->sent_data = ($sent_data !== null) ? $sent_data :  NULL;
         $model->image_url = ($image_url !== null) ? $image_url :  NULL;
-        $model->imagis_system_notificatione_url = ($image_url !== null) ? $image_url :  NULL;
         $model->action = ($action !== null) ? $action : NULL;
         $model->is_system_notification = $is_system_notification;
         $model->user_id = $user_id;
