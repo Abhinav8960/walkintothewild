@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs flex-row">
+<ul class="mynav nav-tabs flex-row mt-4">
     <li class="nav-item" role="presentation">
         <a href="/package/default/update?id=<?= $package->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
     </li>
