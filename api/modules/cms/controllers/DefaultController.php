@@ -4,13 +4,11 @@ namespace api\modules\cms\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\cms\faqs\FaqsSearch;
 use api\models\cms\mastertag\MasterTag;
 use api\models\cms\mastertag\MasterTagSearch;
-
 
 /**
  * Site controller
@@ -50,6 +48,4 @@ class DefaultController extends RestController
         $searchModel->status =  FaqsSearch::STATUS_ACTIVE;
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "Faqs");
     }
-
- 
 }

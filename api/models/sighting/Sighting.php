@@ -8,10 +8,8 @@ use api\models\park\SafariPark;
 use api\models\User;
 use Yii;
 
-
 class Sighting extends \common\models\sighting\Sighting
 {
-
     public function fields()
     {
         $fields = parent::fields();

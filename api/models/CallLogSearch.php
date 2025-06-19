@@ -68,7 +68,7 @@ class CallLogSearch extends CallLog
             'call_initiated_user_id' => $this->call_initiated_user_id,
             'call_initiated_partner_id' => $this->call_initiated_partner_id,
             'status' => $this->status,
-            'is_detail_fetched'=> $this->is_detail_fetched,
+            'is_detail_fetched' => $this->is_detail_fetched,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -83,7 +83,7 @@ class CallLogSearch extends CallLog
             ->andFilterWhere(['like', 'ivr_number', $this->ivr_number])
             ->andFilterWhere(['like', 'recording_url', $this->recording_url])
             ->andFilterWhere(['like', 'rec_duration', $this->rec_duration])
-            ->andFilterWhere(['like', 'dial_status', $this->dial_status])            
+            ->andFilterWhere(['like', 'dial_status', $this->dial_status])
             ->andFilterWhere(['like', 'call_type', $this->call_type])
             ->andFilterWhere(['like', 'call_status', $this->call_status])
             ->andFilterWhere(['like', 'datetime', $this->datetime])

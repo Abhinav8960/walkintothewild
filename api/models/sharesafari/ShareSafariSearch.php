@@ -8,7 +8,6 @@ use yii\data\ActiveDataProvider;
 use common\models\User;
 use yii\db\Expression;
 
-
 class ShareSafariSearch extends ShareSafari
 {
     public $month_id;
@@ -146,23 +145,21 @@ class ShareSafariSearch extends ShareSafari
                 $dataProvider->sort = [
                     'defaultOrder' => ['created_at' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == '2') {
+            } elseif ($this->custom_sort_by == '2') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['no_of_safari' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == '3') {
+            } elseif ($this->custom_sort_by == '3') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['no_of_safari' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == '4') {
-
-
+            } elseif ($this->custom_sort_by == '4') {
                 $query->orderBy((new \yii\db\Expression('CASE WHEN type=1 THEN estimate_price_min WHEN type=2 THEN cost_per_person END ASC')));
-            } else if ($this->custom_sort_by == '5') {
+            } elseif ($this->custom_sort_by == '5') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['start_date' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == '6') {
+            } elseif ($this->custom_sort_by == '6') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['start_date' => SORT_DESC]
                 ];
@@ -190,7 +187,7 @@ class ShareSafariSearch extends ShareSafari
         return GeneralModel::safariparklist();
     }
 
-    public function managesearch($params,  $safari_operator_id)
+    public function managesearch($params, $safari_operator_id)
     {
         $query = ShareSafari::find()->where(['host_user_id' => $safari_operator_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
 

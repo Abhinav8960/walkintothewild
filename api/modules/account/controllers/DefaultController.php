@@ -29,7 +29,6 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends RestController
 {
-
     public function behaviors()
     {
 
@@ -261,7 +260,7 @@ class DefaultController extends RestController
         $packageIds =  array_column($wishlist_items, 'item_id');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Package::find()->where(['id' => $packageIds, 'status'=> Package::STATUS_ACTIVE]),
+            'query' => Package::find()->where(['id' => $packageIds, 'status' => Package::STATUS_ACTIVE]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "packages");

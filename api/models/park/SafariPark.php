@@ -26,7 +26,6 @@ use common\models\park\SafariParkMonth;
 
 class SafariPark extends \common\models\park\SafariPark
 {
-
     public function fields()
     {
         // $hold_fields = parent::fields();
@@ -53,15 +52,15 @@ class SafariPark extends \common\models\park\SafariPark
             'is_followed',
         ];
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_WITH_TOP_OPERATORS])) {
             $fields[] = 'top_operators';
         }
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK, SELF::OPERATOR_API_LAYOUT_FULL, SELF::SHARE_SAFARI_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FOR_FILTER_PARK, self::OPERATOR_API_LAYOUT_FULL, self::SHARE_SAFARI_API_LAYOUT_FULL, self::PACKAGE_API_LAYOUT_FULL])) {
             $fields = ['id', 'title', 'slug', 'feature_image_path'];
         }
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FULL])) {
             $fields[] = 'latitude';
             $fields[] = 'longitude';
             $fields[] = 'official_website';

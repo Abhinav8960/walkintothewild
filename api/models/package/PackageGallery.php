@@ -20,7 +20,6 @@ use Yii;
  */
 class PackageGallery extends \common\models\package\PackageGallery
 {
-
     public function fields()
     {
         $fields = parent::fields();
@@ -33,7 +32,7 @@ class PackageGallery extends \common\models\package\PackageGallery
     public function getImage_path()
     {
         if ($this->image != '') {
-            return \Yii::$app->params['s3_endpoint'] .'/package_gallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['s3_endpoint'] . '/package_gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

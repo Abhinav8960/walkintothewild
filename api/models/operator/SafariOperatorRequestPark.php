@@ -6,8 +6,6 @@ use api\models\park\SafariPark;
 
 class SafariOperatorRequestPark extends \frontend\models\registration\SafariOperatorRequestPark
 {
-
-
     // public function getPark()
     // {
     //     return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);

@@ -41,9 +41,8 @@ class OtpVerificationSocialLoginForm extends Model
     public function validateOtp()
     {
         // we need to setup with otp expiry
-        $model = SocialLoginVerification::find()->where(['source' => $this->source, 'source_id' => $this->source_id, 'otp' => $this->otp, 'status' => 0])->orderBy(['id'=>SORT_DESC])->one();
+        $model = SocialLoginVerification::find()->where(['source' => $this->source, 'source_id' => $this->source_id, 'otp' => $this->otp, 'status' => 0])->orderBy(['id' => SORT_DESC])->one();
         if ($model) {
-
             $model->status = 1;
             $model->save(false);
             $this->HandleAuth();
@@ -60,12 +59,11 @@ class OtpVerificationSocialLoginForm extends Model
             $user->setPassword(rand(10000000, 99999999));
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();
-            $user->name = isset($this->name) ? $this->name : NULL;
+            $user->name = isset($this->name) ? $this->name : null;
             $user->username = $this->email;
             $user->email = $this->email;
             $user->status = User::STATUS_ACTIVE;
             // $user->avatar = $model->avatar;
-
         }
 
         $source_id_col = strtolower($this->source . '_source_id');

@@ -32,7 +32,7 @@ class UserMobileNoVerificationForm extends Model
     public function proceedforverification($auth_token, $userinfo)
     {
         $this->otp = rand(100000, 999999);
-        $this->expiry_datetime = time() + 300; // 5 min 
+        $this->expiry_datetime = time() + 300; // 5 min
 
         $UserSession = \common\models\UserSession::find()->where(['token' => $auth_token])->one();
         $UserSession->verification_mobile_no = $this->mobile_no;

@@ -7,7 +7,6 @@ use api\models\User;
 
 class ShareSafariIntrested extends \common\models\sharesafari\ShareSafariIntrested
 {
-
     public function fields()
     {
 

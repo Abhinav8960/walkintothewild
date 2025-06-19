@@ -4,7 +4,6 @@ namespace api\models\account\form;
 
 use yii\base\Model;
 
-
 class SafaritourRegistrationForm extends \frontend\models\registration\form\SafaritourRegistrationForm
 {
     public function rules()

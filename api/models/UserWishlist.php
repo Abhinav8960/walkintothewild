@@ -6,7 +6,6 @@ use api\models\package\PackageVersion;
 use api\models\sharesafari\ShareSafari;
 use Yii;
 
-
 class UserWishlist extends \common\models\UserWishlist
 {
     public function fields()

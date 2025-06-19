@@ -131,7 +131,7 @@ class ChatSearch extends \Yii\base\Model
             // $query->where('0=1');
             return $dataProvider;
         }
-        
+
 
         $query->andFilterWhere(['like', 'user.name', $this->name]);
         return $dataProvider;

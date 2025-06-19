@@ -15,11 +15,11 @@ class ShareSafariGallery extends \common\models\sharesafari\ShareSafariGallery
         return array_diff($fields, $hold_fields);
         return $fields;
     }
-   
+
     public function getImage_path()
     {
         if ($this->image != '') {
-            return \Yii::$app->params['s3_endpoint'] .'/share_safari/gallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['s3_endpoint'] . '/share_safari/gallery/' . $this->id . '/' . $this->image;
         }
     }
 }

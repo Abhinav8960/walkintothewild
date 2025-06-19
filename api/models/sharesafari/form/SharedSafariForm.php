@@ -4,7 +4,6 @@ namespace api\models\sharesafari\form;
 
 use yii\base\Model;
 
-
 class SharedSafariForm extends \frontend\models\form\SharedSafariForm
 {
     public function rules()

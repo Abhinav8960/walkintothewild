@@ -76,15 +76,15 @@ class SafariOperatorSearch extends SafariOperator
                 $dataProvider->sort = [
                     'defaultOrder' => ['google_rating' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == 2) {
+            } elseif ($this->custom_sort_by == 2) {
                 $dataProvider->sort = [
                     'defaultOrder' => ['google_rating' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == 3) {
+            } elseif ($this->custom_sort_by == 3) {
                 $dataProvider->sort = [
                     'defaultOrder' => ['business_name' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == 4) {
+            } elseif ($this->custom_sort_by == 4) {
                 $dataProvider->sort = [
                     'defaultOrder' => ['business_name' => SORT_DESC]
                 ];
@@ -108,19 +108,19 @@ class SafariOperatorSearch extends SafariOperator
             'updated_by' => $this->updated_by,
             'safari_operator.status' => $this->status,
         ]);
-       
+
         if ($this->google_rating) {
             $rating_query = "";
             foreach ((array)$this->google_rating as $google_rating) {
                 if ($google_rating == 1) {
                     $rating_query .= "google_rating between 0 and 1 OR ";
-                } else if ($google_rating == 2) {
+                } elseif ($google_rating == 2) {
                     $rating_query .= "google_rating between 2 and 2.99 OR ";
-                } else if ($google_rating == 3) {
+                } elseif ($google_rating == 3) {
                     $rating_query .= "google_rating between 3 and 3.99 OR ";
-                } else if ($google_rating == 4) {
+                } elseif ($google_rating == 4) {
                     $rating_query .= "google_rating between 4 and 4.99 OR ";
-                } else if ($google_rating == 5) {
+                } elseif ($google_rating == 5) {
                     $rating_query .= "google_rating between 5 and 5.99 OR ";
                 }
             }

@@ -2,10 +2,8 @@
 
 namespace api\models\sharesafari;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 
 class ShareSafariFaqSearch extends ShareSafariFaq
 {

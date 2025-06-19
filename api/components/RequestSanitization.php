@@ -7,14 +7,13 @@ use Yii;
 
 class RequestSanitization extends \yii\base\Component
 {
-
     public $tokenParam = 'access-token';
 
     public $user;
 
     public function init()
     {
-        \Yii::$app->params['active_user_id']  = NULL;
+        \Yii::$app->params['active_user_id']  = null;
 
 
         $excludedArrayForAuthentication = [
@@ -41,14 +40,12 @@ class RequestSanitization extends \yii\base\Component
         $intersect_array_for_authentication =  array_intersect($excludedArrayForAuthentication, $request_array);
 
         if (empty($intersect_array_for_authentication) && \Yii::$app->request->isPost) {
-
-            $accessToken = NULL;
+            $accessToken = null;
             $authorizationHeader = $headers->get('Authorization');
 
             if (!empty($authorizationHeader) && preg_match('/Bearer\s(\S+)/', $authorizationHeader, $matches)) {
                 $accessToken = $matches[1];
-            } 
-            elseif (isset($_GET['access_token'])) {
+            } elseif (isset($_GET['access_token'])) {
                 $accessToken = $_GET['access_token'];
             } elseif (isset($_GET['access-token'])) {
                 $accessToken = $_GET['access-token'];
@@ -62,7 +59,6 @@ class RequestSanitization extends \yii\base\Component
             // }
 
             if (!empty($accessToken)) {
-
                 $this->user =  \common\models\User::findIdentityByAccessToken($accessToken);
                 if ($this->user == false) {
                     return \Yii::$app->api->sendFailedStringResponse(['Token is invalid or expired'], 401);

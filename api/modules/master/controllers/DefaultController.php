@@ -4,7 +4,6 @@ namespace api\modules\master\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\master\airport\MasterAirportSearch;
@@ -63,7 +62,7 @@ class DefaultController extends RestController
                     'suggestion-category' => ['GET'],
                     'vehicle' => ['GET'],
                     'privacy-options' => ['GET'],
-                    
+
                 ],
             ],
         ];
@@ -198,9 +197,10 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "master_vehicle");
     }
 
-    public function actionPrivacyOptions(){
+    public function actionPrivacyOptions()
+    {
         $options = GeneralModel::privacyoptions();
 
-       return $this->dataSender($options, 'privacy_options');
+        return $this->dataSender($options, 'privacy_options');
     }
 }

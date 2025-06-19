@@ -84,7 +84,7 @@ class PackageVersion extends \common\models\package\PackageVersion
         $fields[] = 'can_comment';
         $fields[] = 'can_reply';
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL, SELF::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL, self::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
             $fields[] = 'package_itinerary_overview';
             $fields[] = 'master_package_with_included';
             $fields[] = 'package_inclusion';
@@ -112,7 +112,7 @@ class PackageVersion extends \common\models\package\PackageVersion
             $fields[] = 'stay_category_id';
             $fields[] = 'status';
         }
-        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL_WITH_VERSION])) {
             $fields[] = 'package_versions';
         }
         return $fields;
@@ -252,7 +252,6 @@ class PackageVersion extends \common\models\package\PackageVersion
         if (isset($this->package_image)) {
             $image_path = \Yii::$app->params['s3_endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
         } else {
-
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;
@@ -274,7 +273,6 @@ class PackageVersion extends \common\models\package\PackageVersion
         if (isset($this->package_banner_image)) {
             $image_path = \Yii::$app->params['s3_endpoint'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
         } else {
-
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;

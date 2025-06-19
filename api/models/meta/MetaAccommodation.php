@@ -17,7 +17,6 @@ use Yii;
  */
 class MetaAccommodation extends \common\models\meta\MetaAccommodation
 {
-
     public function fields()
     {
         $fields = parent::fields();

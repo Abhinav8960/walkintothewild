@@ -17,7 +17,6 @@ use Yii;
  */
 class MetaAnimalType extends \common\models\meta\MetaAnimalType
 {
-
     public function fields()
     {
         $fields = parent::fields();
@@ -26,6 +25,4 @@ class MetaAnimalType extends \common\models\meta\MetaAnimalType
         return array_diff($fields, $hold_fields);
         return $fields;
     }
-
-   
 }

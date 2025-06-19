@@ -4,7 +4,6 @@ namespace api\modules\feeds\controllers;
 
 use api\behaviours\Apiauth;
 use Yii;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\feeds\Feeds;

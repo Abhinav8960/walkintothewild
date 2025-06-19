@@ -5,7 +5,6 @@ namespace api\models;
 use Yii;
 use api\models\park\SafariPark;
 
-
 class UserExperience extends \common\models\UserExperience
 {
     // public function fields()

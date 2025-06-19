@@ -63,7 +63,7 @@ class UserPostSearch extends UserPosts
             'id' => $this->id,
             'status' => $this->status,
         ]);
-        
+
 
         return $dataProvider;
     }

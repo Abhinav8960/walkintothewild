@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -218,7 +219,7 @@ return [
                 'chat/edit-message'   => 'chat/default/edit-message',
                 'chat/delete-message'   => 'chat/default/delete-message',
                 'chat/make-call-on-chat/<user_handle>'   => 'chat/default/make-call-on-chat',
-                
+
 
 
                 'notification-history' => 'notification-history',

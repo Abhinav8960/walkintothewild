@@ -24,7 +24,6 @@ use api\models\park\SafariPark;
  */
 class Chat extends \common\models\chat\Chat
 {
-
     public function fields()
     {
 
@@ -214,7 +213,7 @@ class Chat extends \common\models\chat\Chat
     public function getPayment_details()
     {
         if (!empty($this->quote)) {
-            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quote_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quote_id'])->where(['IS NOT', 'payment_link', null])->orderBy(['id' => SORT_DESC]);
         }
     }
 
@@ -241,7 +240,6 @@ class Chat extends \common\models\chat\Chat
     public function callpossible()
     {
         if ($this->chat_type == 2) {
-
             if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
                 return true;
             }
