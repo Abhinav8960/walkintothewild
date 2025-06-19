@@ -11,7 +11,7 @@ AppAsset::register($this);
 $this->title = 'Leads';
 ?>
 <div class="wrapper_inner">
-    <div class="row">
+    <div class="row position-relative">
         <div class="col-lg-5">
             <div class="details-packages mb-3">
                 <table class="table w-100 border-0 border_o">
@@ -214,7 +214,7 @@ $this->title = 'Leads';
                 <?php } ?>
             </div>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-7 position-fixed end-0 w-50">
             <div class="chats_wrapper">
                 <?= $this->render('_partner_lead_chat', ['model' => $model, 'chat' => $chat]) ?>
                 <div class="row">
