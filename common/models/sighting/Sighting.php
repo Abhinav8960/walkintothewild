@@ -72,7 +72,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             [['video_thumbnail_path', 'video_thumbnail_etag', 'delete_reason'], 'string', 'max' => 512],
             [['show_in_front'], 'integer'],
             [['original_filename', 'original_thumbnail'], 'string', 'max' => 255],
-            [['comment_count','like_count'],'integer'],
+            [['comment_count', 'like_count'], 'integer'],
         ];
     }
 
@@ -103,7 +103,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
             'v_size' => 'V Size',
             'v_duration' => 'V Duration',
             'comment_count' => 'Comment Count',
-            'like_count'=>'Like Count',
+            'like_count' => 'Like Count',
             'status' => 'Status',
             'total_view' => 'Total View',
             'created_at' => 'Created At',
@@ -135,8 +135,12 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
 
     public function getThumbnail()
     {
-        $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
-        return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        if ($this->video_thumbnail) {
+            return Yii::$app->params['s3_endpoint'] . '/' . $this->video_thumbnail_path;
+        } else {
+            $this->filepath = \common\models\GeneralModel::extentionRemove($this->filepath);
+            return Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath . '.jpg';
+        }
     }
 
     public function getStandardThumbnail()

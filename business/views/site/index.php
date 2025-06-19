@@ -2,33 +2,39 @@
 
 /** @var yii\web\View $this */
 
+use business\assets\AppAsset;
 use common\models\GeneralModel;
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Dashboard';
 // $this->params['breadcrumbs'][] = $this->title;
 // $this->params['title'] = $this->title;
 ?>
-<?php if (false) { ?>
-  <div class="row">
-    <div class="col-xxl-10 mb-3">
-      <div class="row">
-        <div class="col-xxl-12">
-          <div class="row">
-            <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-              <div class="mainCard py-3 px-3">
-                <div class="cardChild">
-                  <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-clone"></i>
-                  </div>
-                  <div class="text-card mb-2">
-                    <p>Total Leads</p>
-                  </div>
-                  <div class="numbwrCount">
-                    <h3><?= isset($leads) ? $leads : '' ?></h3>
-                  </div>
+
+<div class="row">
+  <div class="col-xxl-10 mb-3">
+    <div class="row">
+      <div class="col-xxl-12">
+        <div class="row">
+          <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+            <div class="mainCard py-3 px-3">
+              <div class="cardChild">
+                <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                  <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg" alt="Lead">
+                </div>
+                <div class="text-card mb-2">
+                  <p>Total Leads</p>
+                </div>
+                <div class="numbwrCount">
+                  <h3><?= isset($leads) ? $leads : 0 ?></h3>
                 </div>
               </div>
             </div>
+          </div>
+          <?php if (false) { ?>
             <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
               <div class="mainCard py-3 px-3">
                 <div class="cardChild">
@@ -59,93 +65,100 @@ $this->title = 'Dashboard';
                 </div>
               </div>
             </div>
-            <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-              <div class="mainCard py-3 px-3">
-                <div class="cardChild">
-                  <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
-                    <i class="fa-solid fa-clone"></i>
-                  </div>
-                  <div class="text-card mb-2">
-                    <p>Average Rating</p>
-                  </div>
-                  <div class="numbwrCount">
-                    <h3>4.5</h3>
-                  </div>
+          <?php } ?>
+          <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+            <div class="mainCard py-3 px-3">
+              <div class="cardChild">
+                <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                  <img src="<?= $this->params['baseurl'] ?>/images/Icon feather-star.svg" alt="Lead">
+                </div>
+                <div class="text-card mb-2">
+                  <p>Average Rating</p>
+                </div>
+                <div class="numbwrCount">
+                  <h3><?= round($safari_operator->google_rating, 1) ?></h3>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-12 mb-4">
-          <div class="row">
-            <div class="col-xxl-6 col-xl-12 col-12 mb-3">
-              <div class="h-100">
-                <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
-                  <p>Recent Posts</p>
-                  <a href="/posts/default/index">See All</a>
-                </div>
-                <div class="row">
-                  <?php if (!empty($posts)) { ?>
-                    <?php foreach ($posts as $post) { ?>
-                      <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 h-100">
-                        <div class="mainParent ">
-                          <div class="card h-100 d-flex">
-                            <img class="w-100" style="height: 170px; object-fit: cover;" src="<?= isset($post->full_image_path) ? $post->full_image_path : $this->params['baseurl'] . "/images/Article-7.jpg" ?>" alt="Card image cap">
-                            <div class="card-body p-2">
-                              <div class="cardBodyTitle">
-                                <div class="subtitle pb-2">
-                                  <p><?= isset($post->caption) ? $post->caption : '' ?></p>
-                                </div>
-                                <div class="coLike d-flex justify-content-between">
-                                  <a href=""><?= isset($post->comment_count) ? $post->comment_count : '' ?> Comments</a>
-                                  <a href=""><?= isset($post->like_count) ? $post->like_count : '' ?> Likes</a>
-                                </div>
+      </div>
+      <div class="col-xl-12 mb-4">
+        <div class="row">
+          <div class="col-xxl-6 col-xl-12 col-12 mb-3">
+            <div class="h-100">
+              <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
+                <p>Recent Posts</p>
+                <?php if (false) { ?>
+                  <a href="<?= Url::toRoute(['posts/default/index']) ?>">See All</a>
+                <?php } ?>
+              </div>
+              <div class="row">
+                <?php if ($posts) { ?>
+                  <?php foreach ($posts as $post) { ?>
+                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 h-100">
+                      <div class="mainParent ">
+                        <div class="card h-100 d-flex">
+                          <img class="w-100" style="height: 170px; object-fit: cover;" src="<?= isset($post->full_image_path) ? $post->full_image_path : $this->params['baseurl'] . "/images/Article-7.jpg" ?>" alt="Post">
+                          <div class="card-body p-2">
+                            <div class="cardBodyTitle">
+                              <div class="subtitle pb-2">
+                                <p><?= isset($post->caption) ? $post->caption : '' ?></p>
+                              </div>
+                              <div class="coLike d-flex justify-content-between">
+                                <a href=""><?= isset($post->comment_count) ? $post->comment_count : '' ?> Comments</a>
+                                <a href=""><?= isset($post->like_count) ? $post->like_count : '' ?> Likes</a>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    <?php } ?>
+                    </div>
                   <?php } ?>
-                </div>
+                <?php } ?>
               </div>
             </div>
-            <div class="col-xxl-6 col-xl-12 col-12 mb-3">
-              <div class="h-100">
-                <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
-                  <p>Recent Sightings</p>
-                  <a href="/sightings/default/index">See All</a>
-                </div>
-                <div class="row">
-                  <?php if (!empty($sightings)) { ?>
-                    <?php foreach ($sightings as $sighting) { ?>
-                      <div class="col-xl-4 col-md-6 col-12 h-100">
-                        <div class="mainParent ">
-                          <div class="card h-100 d-flex">
+          </div>
+          <div class="col-xxl-6 col-xl-12 col-12 mb-3">
+            <div class="h-100">
+              <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
+                <p>Recent Sightings</p>
+                <?php if (false) { ?>
+                  <a href="<?= Url::toRoute(['sightings/default/index']) ?>">See All</a>
+                <?php } ?>
 
-                            <img class="w-100" style="height: 145px; object-fit: cover;" src="<?= isset($sighting->thumbnail) ? $sighting->thumbnail : $this->params['baseurl'] . "/images/Article-2.jpg" ?>" alt="Card image cap">
+              </div>
+              <div class="row">
+                <?php if ($sightings) { ?>
+                  <?php foreach ($sightings as $sighting) { ?>
+                    <div class="col-xl-4 col-md-6 col-12 h-100">
+                      <div class="mainParent ">
+                        <div class="card h-100 d-flex">
 
-                            <div class="card-body p-2">
-                              <div class="cardBodyTitle">
-                                <div class="subtitle pb-2">
-                                  <p><?= isset($sighting->description) ? $sighting->description : '' ?></p>
-                                </div>
-                                <div class="coLike d-flex flex-column">
-                                  <a href="" class="pb-2"><?= isset($sighting->comment_count) ? $sighting->comment_count : '' ?> Comments</a>
-                                  <a href=""><?= isset($sighting->like_count) ? $sighting->like_count : '' ?> Likes</a>
-                                </div>
+                          <img class="w-100" style="height: 145px; object-fit: cover;" src="<?= isset($sighting->thumbnail) ? $sighting->thumbnail : $this->params['baseurl'] . "/images/Article-2.jpg" ?>" alt="Sighting">
+
+                          <div class="card-body p-2">
+                            <div class="cardBodyTitle">
+                              <div class="subtitle pb-2">
+                                <p><?= isset($sighting->description) ? $sighting->description : '' ?></p>
+                              </div>
+                              <div class="coLike d-flex flex-column">
+                                <a href="" class="pb-2"><?= isset($sighting->comment_count) ? $sighting->comment_count : '' ?> Comments</a>
+                                <a href=""><?= isset($sighting->like_count) ? $sighting->like_count : '' ?> Likes</a>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    <?php } ?>
+                    </div>
                   <?php } ?>
-                </div>
+                <?php } ?>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <?php if (false) { ?>
         <div class="col-xxl-12">
           <div class="row">
             <div class="col-xxl-6 col-xl-12 col-12 mb-3">
@@ -218,75 +231,76 @@ $this->title = 'Dashboard';
             </div>
           </div>
         </div>
-      </div>
+      <?php } ?>
     </div>
+  </div>
 
-    <div class="col-xxl-2 mb-3">
-      <div class="row">
-        <div class="col-xl-12 mb-3">
-          <div class="rightSidebar">
-            <div class="cadplaform">
-              <p class="mb-2 headbg">Platform Usage & Ethics</p>
-              <p class="mb-3">The platform must be used strictly for genuine bookings. Direct...</p>
-              <a href="">Read Partner Handbook</a>
+  <div class="col-xxl-2 mb-3">
+    <div class="row">
+      <div class="col-xl-12 mb-3">
+        <div class="rightSidebar">
+          <div class="cadplaform">
+            <p class="mb-2 headbg">Platform Usage & Ethics</p>
+            <p class="mb-3">The platform must be used strictly for genuine bookings. Direct...</p>
+            <!-- <a href="">Read Partner Handbook</a> -->
+            <a href="">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12 mb-3">
+        <div class="progressBar">
+          <div class="qout">
+            <div class="montlyQouteHeader mb-2 px-4 pt-3">
+              <p>Monthly Quote Requests</p>
+            </div>
+            <?php if (false) { ?>
+              <div class="bodySectionParent">
+                <div class="sideNumbers">
+                  <p class="sideQuteno pb-3">300</p>
+                  <p class="sideQuteno pb-3">300</p>
+                  <p class="sideQuteno pb-3">300</p>
+                  <p class="sideQuteno pb-3">300</p>
+                  <p class="sideQuteno pb-3">300</p>
+                </div>
+                <div class="quote-chart">
+                  <div class="chart-area">
+                    <div class="y-axis-labels">
+                      <span style="bottom: 25px;">0</span>
+                      <span style="bottom: 70px;">50</span>
+                      <span style="bottom: 115px;">100</span>
+                      <span style="bottom: 170px;">200</span>
+                      <span style="bottom: 220px;">300</span>
+                    </div>
+                    <div class="bars">
+                      <div class="bar">
+                        <div class="fill" style="height: 100px;"></div>
+                        <span>Jan</span>
+                      </div>
+                      <div class="bar">
+                        <div class="fill" style="height: 160px;"></div>
+                        <span>Feb</span>
+                      </div>
+                      <div class="bar">
+                        <div class="fill" style="height: 120px;"></div>
+                        <span>Mar</span>
+                      </div>
+                      <div class="bar">
+                        <div class="fill active" style="height: 240px;"></div>
+                        <span>Apr</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+            <div class="mb-5 px-5 pt-3 text-fade">
+              <p>Comming Soon</p>
             </div>
           </div>
         </div>
-        <div class="col-xl-12 mb-3">
-          <div class="progressBar">
-            <div class="qout">
-              <div class="montlyQouteHeader mb-2 px-4 pt-3">
-                <p>Monthly Quote Requests</p>
-              </div>
-              <!-- <div class="bodySectionParent"> -->
-              <!-- <div class="sideNumbers">
-                          <p class="sideQuteno pb-3">300</p>
-                          <p class="sideQuteno pb-3">300</p>
-                          <p class="sideQuteno pb-3">300</p>
-                          <p class="sideQuteno pb-3">300</p>
-                          <p class="sideQuteno pb-3">300</p>
-                        </div> -->
-              <!-- <div class="quote-chart"> -->
+      </div>
+      <?php if (false) { ?>
 
-
-              <!-- <div class="chart-area">
-                  <div class="y-axis-labels">
-                    <span style="bottom: 25px;">0</span>
-                    <span style="bottom: 70px;">50</span>
-                    <span style="bottom: 115px;">100</span>
-                    <span style="bottom: 170px;">200</span>
-                    <span style="bottom: 220px;">300</span>
-                  </div>
-                  <div class="bars">
-                    <div class="bar">
-                      <div class="fill" style="height: 100px;"></div>
-                      <span>Jan</span>
-                    </div>
-                    <div class="bar">
-                      <div class="fill" style="height: 160px;"></div>
-                      <span>Feb</span>
-                    </div>
-                    <div class="bar">
-                      <div class="fill" style="height: 120px;"></div>
-                      <span>Mar</span>
-                    </div>
-                    <div class="bar">
-                      <div class="fill active" style="height: 240px;"></div>
-                      <span>Apr</span>
-                    </div>
-                  </div>
-                </div> -->
-              <!-- </div>
-
-
-
-            </div> -->
-              <div class="mb-2 px-5 pt-3 text-fade">
-                <p>Comming Soon</p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-xl-12 mb-3">
           <div class="boradUserParent">
             <div class="topHead d-flex justify-content-between align-items-center pt-3 px-3">
@@ -340,11 +354,8 @@ $this->title = 'Dashboard';
             </div>
           </div>
         </div>
-      </div>
+      <?php } ?>
+
     </div>
   </div>
-<?php } ?>
-
-<center>
-  <h1>Upcoming</h1>
-</center>
+</div>
