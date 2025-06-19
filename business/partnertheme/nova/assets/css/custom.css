@@ -290,9 +290,12 @@ li{
   background: #C4E3BD !important;
   border-radius: 15px 15px 0px 0px !important;
   margin-bottom: 0;
-  padding: 3px 20px !important;
+  padding: 10px 20px !important;
   align-items: center;
   text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
 
 .tabs-formswrapper .mynav.nav-tabs .nav-item {
@@ -314,6 +317,7 @@ li{
   border-radius: 0;
   padding: 0 !important;
   border: 0;
+  color: #fff;
 }
 
 .tabs-content-wraps {

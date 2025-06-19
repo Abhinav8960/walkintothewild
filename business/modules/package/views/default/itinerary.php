@@ -9,7 +9,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 
 <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
-<div class="tabs-formswrapper">
+<div class="tabs-formswrapper mx-3">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'itinerary_active' => 'active']) ?>
     <div class="tabs-content-wraps">
         <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
