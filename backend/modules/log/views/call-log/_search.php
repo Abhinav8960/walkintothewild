@@ -1,7 +1,8 @@
 <?php
 
-use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
+use common\models\GeneralModel;
+use kartik\daterange\DateRangePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -24,12 +25,32 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-2">
         <?= $form->field($model, 'call_initiated_partner_id')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->all(),'id','business_name'),
+            \yii\helpers\ArrayHelper::map(SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->all(), 'id', 'business_name'),
             [
                 'prompt' => 'Select Operator',
             ]
         ) ?>
     </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'date_range', [
+            'options' => ['class' => 'drp-container mb-2']
+        ])->widget(DateRangePicker::class, [
+            'convertFormat' => true,
+            'options' => ['placeholder' => 'Enter Date Range'],
+            'pluginOptions' => [
+                // 'singleDatePicker' => true,
+                'showDropdowns' => true,
+                // 'minDate' =>date('2024-01-01'),
+                'maxDate' =>date('Y-m-d'),
+                'locale' => [
+                    'format' => 'Y-m-d',
+                ],
+            ]
+        ]);
+        ?>
+    </div>
+
 
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>

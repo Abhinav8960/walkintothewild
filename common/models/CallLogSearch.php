@@ -14,11 +14,14 @@ class CallLogSearch extends CallLog
     /**
      * {@inheritdoc}
      */
+    public $date_range;
+
     public function rules()
     {
         return [
             [['id', 'chat_id', 'lead_id', 'request_caller_1_user_id', 'request_caller_2_user_id', 'operator_user_id', 'call_initiated_user_id', 'status', 'created_at', 'updated_at','is_detail_fetched','call_initiated_partner_id'], 'integer'],
             [['reference_id', 'unique_id', 'request_vnm', 'request_caller_1_no', 'request_caller_2_no', 'caller_id', 'received_id', 'ivr_number', 'recording_url', 'rec_duration', 'call_type', 'call_status', 'datetime', 'duration', 'file_path', 'call_request_status', 'call_request_message','is_detail_fetched','dial_status','call_initiated_partner_id'], 'safe'],
+            [['date_range'], 'safe'],
         ];
     }
 
@@ -92,6 +95,12 @@ class CallLogSearch extends CallLog
             ->andFilterWhere(['like', 'file_path', $this->file_path])
             ->andFilterWhere(['like', 'call_request_status', $this->call_request_status])
             ->andFilterWhere(['like', 'call_request_message', $this->call_request_message]);
+
+            if (!is_null($this->date_range) && strpos($this->date_range, ' - ') !== false) {
+                list($start_date, $end_date) = explode(' - ', $this->date_range);
+                $query->andFilterWhere(['between', 'datetime', $start_date, $end_date]);
+                $this->date_range = null;
+            }
 
         return $dataProvider;
     }

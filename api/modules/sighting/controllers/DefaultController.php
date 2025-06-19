@@ -107,6 +107,11 @@ class DefaultController extends RestController
                 $model->uploadFile();
                 $model->sighting_model->v_size = $model->file->size;
                 $model->sighting_model->v_duration = $this->getVideoDuration($model->file);
+
+                $resolution = $this->getVideoResolution($model->file);
+                $model->sighting_model->width  = $resolution['width'];
+                $model->sighting_model->height = $resolution['height'];
+
                 if ($model->sighting_model->save()) {
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting added successfully"]);
                 }
@@ -219,7 +224,7 @@ class DefaultController extends RestController
         $tempFilePath = $tempFile->tempName;
         $getID3 = new getID3();
         $fileInfo = $getID3->analyze($tempFilePath);
-        if (isset($fileInfo['playtime_seconds'])) {
+        if (isset($fileInfo['video'])) {
             return (int) $fileInfo['playtime_seconds'];
         }
         return 0;
@@ -355,5 +360,17 @@ class DefaultController extends RestController
             return false;
         }
         return false;
+    }
+
+    private function getVideoResolution($tempFile)
+    {
+        $tempFilePath = $tempFile->tempName;
+        $getID3 = new \getID3();
+        $fileInfo = $getID3->analyze($tempFilePath);
+
+        $width = !empty($fileInfo['video']['resolution_x']) ? $fileInfo['video']['resolution_x'] : 0;
+        $height = !empty($fileInfo['video']['resolution_y']) ? $fileInfo['video']['resolution_y'] : 0;
+
+        return ['width' => $width, 'height' => $height];
     }
 }

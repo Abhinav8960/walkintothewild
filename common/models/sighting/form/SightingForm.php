@@ -101,7 +101,7 @@ class SightingForm extends Model
             ['zone_id', 'exist', 'targetClass' => MetaZoneType::class, 'targetAttribute' => ['zone_id' => 'id']],
             // ['location', 'exist', 'targetClass' => SafariPark::class, 'targetAttribute' => ['location' => 'id']],
             ['location', 'validateOperatorPark'],
-            ['created_at','safe'],
+            ['created_at', 'safe'],
         ];
     }
 
@@ -163,7 +163,8 @@ class SightingForm extends Model
             // file_put_contents(Yii::getAlias('@runtime/logs/custom.log'), $fileName);
 
             $storagePath = 'watchpost' . '/' . date('ym', $this->created_at);
-            $fileName = $this->sighting_model->user_id . '_' . time() . '.' . $this->file->extension;
+            $fm = $this->sighting_model->user_id . '_' . time();
+            $fileName = $fm . '.' . $this->file->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($fileName) {
@@ -189,8 +190,11 @@ class SightingForm extends Model
             // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
             // $fileName = FsHelper::UserPostUploadFile($this->video_thumbnail, $filePath, $fileName, $caption = NULL, $this->user_id);
 
-            $storagePath = 'watchpost' . '/' . date('ym', $this->created_at);
-            $fileName = 'thumbnail_' . $this->sighting_model->user_id . '_' . time() . '.' . $this->file->extension;
+            $storagePath = 'watchpost' . '/' . date('ym', $this->created_at) . '/thumbnail';
+            $fileName = $this->sighting_model->user_id . '_' . time() . '.' . $this->video_thumbnail->extension;
+            if (isset($fm) && !empty($fm)) {
+                $fileName = $fm . '.' . $this->video_thumbnail->extension;
+            }
             $filePath = $storagePath . '/' . $fileName;
 
             if ($fileName) {

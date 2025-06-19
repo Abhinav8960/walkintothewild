@@ -12,6 +12,7 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_card', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
@@ -67,6 +68,14 @@ $this->params['title'] = $this->title;
                             return Yii::$app->formatter->asDatetime($model->sms_send_time, 'php:d-m-Y H:i:s');
                         }
                     ],
+                    [
+                        'label' => 'Report Status',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->report_status ?? '';
+                        }
+                    ],   
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
