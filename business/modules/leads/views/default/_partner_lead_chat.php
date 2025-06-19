@@ -61,7 +61,7 @@
                                  <p class="pb-0"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
                              </div>
                              <div class="recievedTime">
-                                 <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                 <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                              </div>
                          </div>
                      </div>
@@ -99,7 +99,7 @@
                                  <div class="voiceText">
                                      <h3 class="pb-2"><?= $chat_message->message ?></h3>
                                      <div class="currentTime">
-                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                         <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                      </div>
                                  </div>
                              </div>
@@ -113,7 +113,7 @@
                              <div class="timeingNotified d-flex justify-content-end pe-2">
                                  <div class="d-flex gap-3">
                                      <div class="currentTime">
-                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                         <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                      </div>
                                      <div class="tiknotified">
                                          <i class="fa-solid fa-check-double"></i>
@@ -136,7 +136,7 @@
                                  <div class="voiceText">
                                      <h3 class="pb-2"><?= $chat_message->message ?></h3>
                                      <div class="recievedTime">
-                                         <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                                         <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                      </div>
                                  </div>
                              </div>
@@ -147,7 +147,7 @@
                      <div class="receivedChat mt-5">
                          <p><?= $chat_message->message ?></p>
                          <div class="recievedTime">
-                             <span><?= date('Y-m-d H:i:s', $chat_message->created_at) ?></span>
+                             <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                          </div>
                      </div>
 

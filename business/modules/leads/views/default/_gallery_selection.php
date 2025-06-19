@@ -23,8 +23,12 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($gallery_selection_model, 'gallery_slug')->hiddenInput(['id' => 'selected-gallery-slug'])->label(false) ?>
+    <div class="col-2">
+        <div class="santBtn">
+            <?= Html::submitButton('Send Gallery') ?>
+        </div>
+    </div>
 
-    <?= Html::submitButton('Send Gallery', ['class' => 'btn btn-primary mt-2']) ?>
 
     <?php ActiveForm::end(); ?>
 <?php } else { ?>
@@ -49,5 +53,13 @@ $this->registerJs($js);
     .gallery-item.selected {
         border: 2px solid #007bff;
         background-color: #eef5ff;
+    }
+
+    .santBtn button {
+        border: 1px solid #000;
+        padding: 8px 20px;
+        background-color: #09422d;
+        border-radius: 4px;
+        color: #fff;
     }
 </style>
