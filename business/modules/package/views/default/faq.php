@@ -12,10 +12,10 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
 
 <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
-<div class="panel panel-primary tabs-style-2">
+<div class="tabs-formswrapper">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'faq_active' => 'active']) ?>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
+    <div class="tabs-content-wraps">
         <div class="tab-content">
             <div class="tab-pane active">
                 <div class="card">
@@ -65,8 +65,8 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
                                         'contentOptions' => ['style' => 'width: 15%;'],
                                         'template' => '{update}&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                                         'buttons' => [
-                                            'update' => function ($url, $model) use($package_version_model) {
-                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toRoute(['update-faq','id' => $package_version_model->id, 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn update-action btn-orange me-2', 'title' => 'Update FAQ']);
+                                            'update' => function ($url, $model) use ($package_version_model) {
+                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toRoute(['update-faq', 'id' => $package_version_model->id, 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn update-action btn-orange me-2', 'title' => 'Update FAQ']);
                                             },
                                         ]
                                     ],

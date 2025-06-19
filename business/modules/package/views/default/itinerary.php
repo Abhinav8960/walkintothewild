@@ -9,139 +9,247 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 
 <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
-<div class="panel panel-primary tabs-style-2">
+<div class="tabs-formswrapper">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'itinerary_active' => 'active']) ?>
+    <div class="tabs-content-wraps">
+        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="accordionMianBox">
+                <div class="accordionItems">
+                    <div class="accordion" id="accordionExample">
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
-        <div class="tab-content">
-            <div class="tab-pane active">
-                <div aria-multiselectable="true" class="accordion" id="accordion" role="tablist">
-                    <?php
-                    $no_of_day = $package_version_model->no_of_day;
-                    for ($i = 1; $i <= $no_of_day; $i++) { ?>
-                        <div class="card mb-0">
-                            <div class="card-header" id="heading<?= $i ?>" role="tab">
-                                <a class="day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>" href="#" style="text-decoration:none;">Day <?= $i ?></a>
-                            </div>
-                            <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
-                                <div class="card-body">
-                                    <?php $form = ActiveForm::begin(); ?>
+                        <?php
+                        $no_of_day = $package_version_model->no_of_day;
+                        for ($i = 1; $i <= $no_of_day; $i++) { ?>
+                            <div class="accordion-item mb-3">
+                                <h2 class="accordion-header" id="heading<?= $i ?>">
+                                    <a class="accordion-button day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>">Day <?= $i ?></a>
+                                </h2>
+                                <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
+                                    <div class="accordion-body">
+                                        <?php $form = ActiveForm::begin(); ?>
 
 
-                                    <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'day')->textInput([
-                                                'maxlength' => true,
-                                                'value' => $i,
-                                                'placeholder' => 'Enter Day',
-                                                'id' => 'dayitineraryform-day' . $i,
-                                                'readOnly' => true,
-                                            ])->label('DAY'); ?>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <?= $form->field($model, 'day_title')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter Day Title',
-                                                'id' => 'dayitineraryform-day_title' . $i,
-                                            ])->label('DAY TITLE'); ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'day_description')->textarea([
-                                                'rows' => '2',
-                                                'placeholder' => 'Description Detail',
-                                                'id' => 'dayitineraryform-day_description' . $i,
-                                            ])->label('Description') ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <?= $form->field($model, 'start_location')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter',
-                                                'id' => 'dayitineraryform-start_location' . $i,
-                                            ])->label('START LOCATION'); ?>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <?= $form->field($model, 'end_location')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter',
-                                                'id' => 'dayitineraryform-end_location' . $i,
-                                            ])->label('END LOCATION'); ?>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <?= $form->field($model, 'hotel_name')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter',
-                                                'id' => 'dayitineraryform-hotel_name' . $i,
-                                            ])->label('ACCOMODATION') ?>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('ACCOMODATION LATITUDE') ?>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('ACCOMODATION LONGITUDE') ?>
-                                        </div>
-                                        <?php
-
-                                        $latitude = $model->latitude;
-                                        $longitude = $model->longitude;
-
-                                        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
-
-                                        if (!empty($latitude) && !empty($longitude)) {
-                                        ?>
-                                            <div class="col-md-4">
-
-                                                <iframe width="500" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
-                                                </iframe>
+                                        <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Day</label>
+                                                    <?= $form->field($model, 'day')->textInput([
+                                                        'maxlength' => true,
+                                                        'value' => $i,
+                                                        'placeholder' => 'Enter Day',
+                                                        'id' => 'dayitineraryform-day' . $i,
+                                                        'readOnly' => true,
+                                                        'class' => 'form-control'
+                                                    ])->label(false); ?>
+                                                </div>
                                             </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="row">
-                                        <?php if ($model->package_day_model->day_image) { ?>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="col-md-4">
-                                                <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Day Title</label>
+                                                    <?= $form->field($model, 'day_title')->textInput([
+                                                        'maxlength' => true,
+                                                        'placeholder' => 'Enter Day Title',
+                                                        'id' => 'dayitineraryform-day_title' . $i,
+                                                        'class' => 'form-control'
 
-                                    <?php ActiveForm::end(); ?>
+                                                    ])->label(false); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Overview <span>*</span></label>
+                                                    <?= $form->field($model, 'day_description')->textarea([
+                                                        'rows' => '2',
+                                                        'placeholder' => 'Description Detail',
+                                                        'id' => 'dayitineraryform-day_description' . $i,
+                                                        'class' => 'form-control'
+                                                    ])->label(false) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <div class="row">
+                                                    <?php if ($model->package_day_model->day_image) { ?>
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="form_boxes mb-3">
+                                                                    <label for="">Package Image (JPEG / JPG
+                                                                        / PNG / 250kb)
+                                                                        <span>*</span></label>
+                                                                    <div class="form-group mt-2">
+                                                                        <label for="fileField<?= $i ?>"
+                                                                            class="attachment">
+                                                                            <div class="row btn-file">
+                                                                                <div
+                                                                                    class="btn-file__preview">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="btn-file__actions">
+                                                                                    <div
+                                                                                        class="btn-file__actions__item col-xs-12 text-center rounded-0">
+                                                                                        <div
+                                                                                            class="btn-file__actions__item--shadow">
+                                                                                            <i class="fa fa-plus fa-lg fa-fw"
+                                                                                                aria-hidden="true"></i>
+                                                                                            <div
+                                                                                                class="visible-xs-block">
+                                                                                            </div>
+                                                                                            Select file
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
+                                                        </div>
+                                                    <?php } else { ?>
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="form_boxes mb-3">
+                                                                    <label for="">Package Image (JPEG / JPG
+                                                                        / PNG / 250kb)
+                                                                        <span>*</span></label>
+                                                                    <div class="form-group mt-2">
+                                                                        <label for="fileField<?= $i ?>"
+                                                                            class="attachment">
+                                                                            <div class="row btn-file">
+                                                                                <div
+                                                                                    class="btn-file__preview">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="btn-file__actions">
+                                                                                    <div
+                                                                                        class="btn-file__actions__item col-xs-12 text-center rounded-0">
+                                                                                        <div
+                                                                                            class="btn-file__actions__item--shadow">
+                                                                                            <i class="fa fa-plus fa-lg fa-fw"
+                                                                                                aria-hidden="true"></i>
+                                                                                            <div
+                                                                                                class="visible-xs-block">
+                                                                                            </div>
+                                                                                            Select file
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Start Location</label>
+                                                            <?= $form->field($model, 'start_location')->textInput([
+                                                                'maxlength' => true,
+                                                                'placeholder' => 'Enter',
+                                                                'id' => 'dayitineraryform-start_location' . $i,
+                                                                'class' => 'form-control'
+                                                            ])->label(false); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">End Location</label>
+                                                            <?= $form->field($model, 'end_location')->textInput([
+                                                                'maxlength' => true,
+                                                                'placeholder' => 'Enter',
+                                                                'id' => 'dayitineraryform-end_location' . $i,
+                                                                'class' => 'form-control'
+                                                            ])->label(false); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Accommodation
+                                                                <span>*</span></label>
+                                                            <?= $form->field($model, 'hotel_name')->textInput([
+                                                                'maxlength' => true,
+                                                                'placeholder' => 'Enter',
+                                                                'id' => 'dayitineraryform-hotel_name' . $i,
+                                                                'class' => 'form-control'
+                                                            ])->label(false) ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Accommodation
+                                                                Latitude</label>
+                                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Accommodation
+                                                                Longitude</label>
+                                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+
+                                                    $latitude = $model->latitude;
+                                                    $longitude = $model->longitude;
+
+                                                    $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+
+                                                    if (!empty($latitude) && !empty($longitude)) {
+                                                    ?>
+                                                        <div class="col-md-4">
+                                                            <iframe width="200" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+                                                            </iframe>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group float-end">
+                                                <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+                                            </div>
+                                        </div>
+                                        <?php ActiveForm::end(); ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php
-                        $script = <<< JS
-                            editor('dayitineraryform-day_description{$i}');
+                            <?php
+                            $script = <<< JS
+                            // editor('dayitineraryform-day_description{$i}');
                             JS;
-                        $this->registerJs($script);
-                        ?>
-                    <?php } ?>
+                            $this->registerJs($script);
+                            ?>
+                        <?php } ?>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<style>
-    .ck-editor__editable {
-        min-height: 150px;
-    }
-</style>
+
+        <style>
+            .ck-editor__editable {
+                min-height: 150px;
+            }
+        </style>
 
 
 <?php
@@ -159,7 +267,7 @@ $(document).ready(function() {
         window.history.pushState({ path: url }, '', url);
 
         // Collapse all accordions
-        $('.card-header').attr('aria-expanded', 'false');
+        $('.accordion-header').attr('aria-expanded', 'false');
         $('.collapse').removeClass('show');
 
         // Expand the clicked accordion

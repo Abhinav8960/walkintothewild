@@ -7,10 +7,10 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
 ?>
 <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
-<div class="panel panel-primary tabs-style-2">
+<div class="tabs-formswrapper">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'inclusions_active' => 'active']) ?>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
+    <div class="tabs-content-wraps">
         <div class="tab-content">
             <div class="tab-pane active">
                 <?= $this->render('_inclusion_form', [
