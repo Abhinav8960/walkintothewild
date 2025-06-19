@@ -309,7 +309,7 @@ use yii\helpers\Url;
                             <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
                                 data-bs-target="#Exclusions" type="button" role="tab"
                                 aria-controls="contact"
-                                aria-selected="false">Exclusions</button>
+                                aria-selected="false">Getting There</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="contact-tab" data-bs-toggle="tab"

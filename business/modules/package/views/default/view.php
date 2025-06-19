@@ -13,33 +13,25 @@ AppAsset::register($this);
 ?>
 
 <!-- <div class="main-pannel mt-0"> -->
-    <?= $this->render('_upper_view', ['package' => $package]) ?>
-    <section class="safari_wrapper  pt-sm-4 pt-0">
-        <div class="container-fluid">
+<?= $this->render('_upper_view', ['package' => $package]) ?>
+<section class="safari_wrapper  pt-sm-4 pt-0">
+    <div class="container-fluid">
 
-            <div class="row py-4">
-                <div class="col-xl-9">
+        <div class="row py-4">
+            <div class="col-xl-9">
 
-                    <div class="tabContent mx-3">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="Itinerary" role="tabpanel"
-                                aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-xl-12 mb-4">
-                                        <div class="itrnTextCard py-4">
-                                            <h6 class="pb-3">About Trip / Overview</h6>
-                                            <p>Five Tiger Reserve Tour covers all the tiger reserves of
-                                                Madhya Pradesh and is ideal for a wildlife enthusiast not
-                                                wanting to miss out anything. This tour covers Panna -
-                                                Bandhavgarh - Kanha - Pench – Satpura national parks
-                                                spreading across the complete length & breadth of the state.
-                                                This is a holistic wildlife experience offering the very
-                                                best of Central India. Trip not only offers high chance of
-                                                Royal Bengal Tiger but also provides with an opportunity to
-                                                explore the diverse flora & fauna of Central India with each
-                                                park offering a unique habitat.</p>
-                                        </div>
+                <div class="tabContent mx-3">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Itinerary" role="tabpanel"
+                            aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-xl-12 mb-4">
+                                    <div class="itrnTextCard py-4">
+                                        <h6 class="pb-3">About Trip / Overview</h6>
+                                        <p><?= $package->package_description ?></p>
                                     </div>
+                                </div>
+                                <?php if (false) { ?>
                                     <div class="col-xl-12">
                                         <div class="itrnTextCard py-4">
                                             <h6>2 Comments</h6>
@@ -131,33 +123,35 @@ AppAsset::register($this);
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                             </div>
-                            <div class="tab-pane fade" id="Inclusions" role="tabpanel"
-                                aria-labelledby="profile-tab">...2</div>
-                            <div class="tab-pane fade" id="Exclusions" role="tabpanel"
-                                aria-labelledby="contact-tab">...3</div>
-                            <div class="tab-pane fade" id="Accomodation" role="tabpanel"
-                                aria-labelledby="contact-tab">...4</div>
-                            <div class="tab-pane fade" id="common" role="tabpanel"
-                                aria-labelledby="contact-tab">...5</div>
-                            <div class="tab-pane fade" id="FAQ" role="tabpanel"
-                                aria-labelledby="contact-tab">...6</div>
                         </div>
+                        <div class="tab-pane fade" id="Inclusions" role="tabpanel"
+                            aria-labelledby="profile-tab"><?= $this->render('_inclusion', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="Exclusions" role="tabpanel"
+                            aria-labelledby="contact-tab"><?= $this->render('_getting_there', ['package' => $package]) ?>
+                        </div>
+                        <div class="tab-pane fade" id="Accomodation" role="tabpanel"
+                            aria-labelledby="contact-tab"> <?= $this->render('_getting_there', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="common" role="tabpanel"
+                            aria-labelledby="contact-tab"> <?= $this->render('_policy', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="FAQ" role="tabpanel"
+                            aria-labelledby="contact-tab"><?= $this->render('_faqs', ['package' => $package, 'faqs' => $faqs]) ?></div>
                     </div>
-
                 </div>
-                <div class="col-xl-2">
-                    <div class="request_quote mb-4"><button type="button"
-                            class="intested_btn interestBtn d-flex justify-content-between btn btn-primary"
-                            style="background-color: #09422D; cursor: default; border: none;">Edit
-                            History</button>
-                        <div class="interst_wrapper px-3 bg-white text-center">
-                            <p class="mb-0">Nobody has shared any review about</p>
-                        </div>
+
+            </div>
+            <div class="col-xl-2">
+                <div class="request_quote mb-4"><button type="button"
+                        class="intested_btn interestBtn d-flex justify-content-between btn btn-primary"
+                        style="background-color: #09422D; cursor: default; border: none;">Edit
+                        History</button>
+                    <div class="interst_wrapper px-3 bg-white text-center">
+                        <p class="mb-0">Nobody has shared any review about</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 <!-- </div> -->
