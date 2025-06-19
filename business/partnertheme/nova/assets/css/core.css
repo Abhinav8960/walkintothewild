@@ -1,3 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@font-face {
+  font-family: "Devator Exp";
+  src: url("/assets/fonts/Devator-BoldExpanded.ttf");
+  src: url("/assets/fonts/Devator-BoldExpanded.ttf");
+}
+
+/* @font-face {
+        font-family: "Allrox";
+        src: url("/assets/allrox/OpenType-PS/Allrox.otf");
+        src: url("/assets/allrox/OpenType-TT/Allrox.ttf"),
+        } */
+
+body {
+  font-family: "Roboto", sans-serif !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Devator Exp" !important;
+}
+h6 {
+  font-family: "Roboto", sans-serif !important;
+}
+p {
+  font-family: "Roboto", sans-serif !important;
+}
+
 .container-scroller .side_bar {
   background-color: #fff !important;
   /* border-top: 1px solid #e7e7e7;
@@ -290,7 +320,12 @@
   font-weight: 700;
   padding: 10px 50px;
 }
-
+.edinBtn.saveBtn button {
+  background-color: #237f40;
+}
+.edinBtn.copyBtn button {
+  background-color: #7b7b7b;
+}
 .versions a {
   background-color: #f4b400;
   color: #152f1b;
@@ -312,6 +347,7 @@
 
 .package-banner-dummy img {
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .wrapper-skybgsafri {
@@ -339,9 +375,9 @@
   object-fit: cover;
 }
 
-.safrititles div {
+.safrititles h2 {
   color: #09422d;
-  font-size: 23px;
+  font-size: 26px;
 }
 
 .titler_safari {
@@ -495,7 +531,7 @@
   border-radius: 5px;
 }
 
-.packageTabMain .nav.nav-tabs {
+.packageTabMain .nav-tabs {
   border: none !important;
   gap: 80px;
 }
@@ -519,7 +555,7 @@
   cursor: pointer;
 }
 
-.packageTabMain .nav.nav-tabs .nav-link.active {
+.packageTabMain .nav-tabs .nav-link.active {
   background-color: transparent !important;
   color: #000 !important;
   border: none !important;
@@ -534,13 +570,13 @@
   border: none !important;
 }
 
-.tabContent {
+/* .tabContent {
   padding: 0px 60px !important;
   background-color: #fff;
   padding: 0px 20px !important;
   border: 1px solid #7070704d;
   border-radius: 5px;
-}
+} */
 
 .accordionItems .accordion .accordion-button {
   background-color: #d7d7d8 !important;
@@ -980,5 +1016,114 @@ position: absolute;
         color:#92929D;
 }
 
+.interst_wrapper {
+  background-color: #fff !important;
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
+  border: 1px solid #7070704d;
+}
+.intested_btn.interestBtn {
+  border-radius: 10px 10px 0 0 !important;
+  text-align: left;
+  width: 100%;
+}
+.itrnTextCard {
+  background-color: #fff;
+  padding: 30px 20px !important;
+  border: 1px solid #7070704d;
+  border-radius: 5px;
+}
+.avatar {
+  border-radius: 50%;
+  height: 30px;
+  position: relative;
+  width: 30px;
+  border: 2px solid #000000;
+}
+.avatar img {
+  border-radius: 50% !important;
+  height: 100%;
+  left: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.postcomment .text_com {
+  flex: 1 1;
+  margin-bottom: -5px;
+}
+.requestContact {
+  margin-bottom: 9px;
+}
+.font-color a {
+  color: #000000 !important;
+  font-size: 14px;
+  font-weight: 500;
+}
 
+.itrnTextCard p {
+  font-size: 14px;
+  color: #151c2c;
+  font-weight: 400;
+}
+.text_com p {
+  font-size: 14px;
 
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.itrnTextCard h6 {
+  font-size: 26px;
+  color: #151c2c;
+}
+.comments-persons {
+  padding: 8px 6px;
+}
+.text-area {
+  width: 100%;
+}
+.text-area textarea.form-control {
+  border-radius: 10px;
+  font-family: Roboto, sans-serif !important;
+  height: 100px;
+  width: 100% !important;
+}
+.form-control {
+  border: 1px solid #0000004d;
+  font-size: 14px;
+}
+.comments-persons {
+  padding: 8px 6px;
+}
+.padding_ad {
+  padding-left: 47px;
+}
+.post-comment {
+  background-color: #09422d;
+  font-size: 14px;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 28px;
+}
+.container-scroller .nav .nav-item {
+  padding: 0px !important;
+}
+
+.edinBtn  a{
+    background-color: #152f1b;
+    color: #ffffff;
+    border: 0;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px 50px;
+}
+
+.edinBtn.copyBtn a {
+    background-color: #7b7b7b;
+}

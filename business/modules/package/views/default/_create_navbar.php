@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs flex-row">
+<ul class="mynav nav-tabs flex-row">
     <li class="nav-item" role="presentation">
         <a class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
     </li>
