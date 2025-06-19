@@ -123,8 +123,8 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="float-start w-auto gap-2">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-info']) ?>
+        <div class="float-start santBtn w-auto gap-2">
+            <?= Html::submitButton('Submit') ?>
         </div>
     </div>
 </div>
@@ -159,3 +159,15 @@ $('#quotation-form').on('input', '#partner_selling_price', function() {
 JS;
 $this->registerJs($script);
 ?>
+
+
+
+<style>
+    .santBtn button {
+        border: 1px solid #000;
+        padding: 8px 20px;
+        background-color:#09422d;
+        border-radius: 4px;
+        color: #fff;
+    }
+</style>
