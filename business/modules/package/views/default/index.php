@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 $this->title = 'Package';
 // $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange float-end', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created create float-end mt-3', 'title' => 'Create']);
 ?>
 
 

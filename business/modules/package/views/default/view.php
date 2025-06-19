@@ -12,7 +12,7 @@ AppAsset::register($this);
 
 ?>
 
-<div class="main-pannel mt-0">
+<!-- <div class="main-pannel mt-0"> -->
     <?= $this->render('_upper_view', ['package' => $package]) ?>
     <section class="safari_wrapper  pt-sm-4 pt-0">
         <div class="container-fluid">
@@ -160,4 +160,4 @@ AppAsset::register($this);
             </div>
         </div>
     </section>
-</div>
+<!-- </div> -->
