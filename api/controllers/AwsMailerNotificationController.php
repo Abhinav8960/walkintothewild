@@ -39,11 +39,11 @@ class AwsMailerNotificationController extends Controller
             throw new \yii\web\NotFoundHttpException();
         }
         $req_arr = json_decode($request, true);
-        $this->NotificationType(strtolower($req_arr['Message']['notificationType']), $req_arr);
+        $this->notificationType(strtolower($req_arr['Message']['notificationType']), $req_arr);
         return;
     }
 
-    private function NotificationType($type, $request)
+    private function notificationType($type, $request)
     {
         if (isset($request['mail'])) {
             if ($type == 'delivery') {
