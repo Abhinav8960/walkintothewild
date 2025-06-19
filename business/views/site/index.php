@@ -98,9 +98,9 @@ $this->title = 'Dashboard';
                   <?php foreach ($posts as $post) { ?>
                     <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 h-100">
                       <div class="mainParent ">
-                        <div class="card h-100 d-flex">
+                        <div class="card border-0 h-100 d-flex">
                           <img class="w-100" style="height: 170px; object-fit: cover;" src="<?= isset($post->full_image_path) ? $post->full_image_path : $this->params['baseurl'] . "/images/Article-7.jpg" ?>" alt="Post">
-                          <div class="card-body p-2">
+                          <div class="card-body border-0 p-2">
                             <div class="cardBodyTitle">
                               <div class="subtitle pb-2">
                                 <p><?= isset($post->caption) ? $post->caption : '' ?></p>
@@ -133,11 +133,11 @@ $this->title = 'Dashboard';
                   <?php foreach ($sightings as $sighting) { ?>
                     <div class="col-xl-4 col-md-6 col-12 h-100">
                       <div class="mainParent ">
-                        <div class="card h-100 d-flex">
+                        <div class="card h-100 border-0 d-flex">
 
                           <img class="w-100" style="height: 145px; object-fit: cover;" src="<?= isset($sighting->thumbnail) ? $sighting->thumbnail : $this->params['baseurl'] . "/images/Article-2.jpg" ?>" alt="Sighting">
 
-                          <div class="card-body p-2">
+                          <div class="card-body border-0 p-2">
                             <div class="cardBodyTitle">
                               <div class="subtitle pb-2">
                                 <p><?= isset($sighting->description) ? $sighting->description : '' ?></p>
