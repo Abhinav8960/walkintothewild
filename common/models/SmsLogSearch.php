@@ -14,11 +14,15 @@ class SmsLogSearch extends SmsLog
     /**
      * {@inheritdoc}
      */
+    public $date_range;
+
     public function rules()
     {
         return [
             [['id', 'user_id', 'sms_send_time', 'service_id', 'is_cron_run', 'is_ok', 'is_deliver', 'response_code', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['template_id', 'params', 'message_id'], 'safe'],
+            [['date_range'],'safe'],
+
         ];
     }
 
@@ -58,6 +62,15 @@ class SmsLogSearch extends SmsLog
             return $dataProvider;
         }
 
+        if (!is_null($this->date_range) && strpos($this->date_range, ' - ') !== false) {
+            list($start, $end) = explode(' - ', $this->date_range);
+            $start_date = strtotime($start . ' 00:00:00');
+            $end_date = strtotime($end . ' 23:59:59');        
+            $query->andFilterWhere(['between', 'sms_send_time', $start_date, $end_date]);
+            $this->date_range = null;
+        }
+        
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -80,7 +93,7 @@ class SmsLogSearch extends SmsLog
             ->andFilterWhere(['like', 'message_id', $this->message_id])
             ->andFilterWhere(['like', 'report_status', $this->report_status])
             ->andFilterWhere(['like', 'params', $this->params]);
-
+            
         return $dataProvider;
     }
 }
