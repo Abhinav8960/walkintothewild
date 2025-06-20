@@ -295,7 +295,7 @@ $('.approve-btn').on('click', function() {
     var percentage = $(this).data('percentage');
     var partnerSellingPrice = $(this).data('partner-selling-price');
     $('#approve-quotation-id').val(quotationId);
-    $('#plateform-partner-fees-percentage').val(percentage);
+    // $('#plateform-partner-fees-percentage').val(percentage);
     $('#partner-selling-price').val(partnerSellingPrice);
     updateNetPaymentPriceHint();
 });
@@ -307,7 +307,7 @@ $('#plateform-partner-fees-percentage').on('input', function() {
 
 function updateNetPaymentPriceHint() {
     var partnerSellingPrice = parseFloat($('#partner-selling-price').val()) || 0;
-    var percentage = parseFloat($('#plateform-partner-fees-percentage').val()) || 0;
+    var percentage =  0;
     var partnerFees = (partnerSellingPrice * percentage) / 100;
     var netPaymentPrice = partnerSellingPrice + partnerFees;
     $('#net-payment-price-hint').text('Net Payment Price: ₹' + netPaymentPrice.toFixed(2));
