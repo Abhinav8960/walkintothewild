@@ -161,7 +161,7 @@ use kartik\datetime\DateTimePicker;
                     </div>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-lg-5 mt-5">
                 <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
             </div>
         <?php } else { ?>
@@ -219,7 +219,7 @@ use kartik\datetime\DateTimePicker;
                     </div>
                 </div>
             </div>
-            <div class="col-md-1">
+            <div class="col-lg-5 mt-5">
                 <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
             </div>
         <?php } else { ?>

@@ -12,7 +12,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package: ' . $package_version_model->package_name;
 ?>
+
 <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+
 
 <div class="tabs-formswrapper mx-3">
 

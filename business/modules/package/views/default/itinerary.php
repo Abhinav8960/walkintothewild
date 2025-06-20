@@ -10,7 +10,9 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
-<?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+
+    <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+
 
 <div class="tabs-formswrapper mx-3">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'itinerary_active' => 'active']) ?>
@@ -255,8 +257,8 @@ $this->title = 'Package : ' . $package_version_model->package_name;
         </style>
 
 
-<?php
-$script = <<< JS
+        <?php
+        $script = <<< JS
 $(document).ready(function() {
     // Handle accordion link clicks
     $('.day-accordion-link').on('click', function(e) {
@@ -282,5 +284,5 @@ $(document).ready(function() {
     });
 });
 JS;
-$this->registerJs($script);
-?>
+        $this->registerJs($script);
+        ?>
