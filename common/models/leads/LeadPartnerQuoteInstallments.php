@@ -25,7 +25,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
     const STATUS_NOT_RECEIVED = 0;

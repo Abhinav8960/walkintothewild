@@ -48,7 +48,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     const IS_APPROVED_BY_ADMIN_PENDING = 0;
     const IS_APPROVED_BY_ADMIN_APPROVED = 1;
