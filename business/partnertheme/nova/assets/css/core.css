@@ -986,9 +986,10 @@ position: absolute;
 .filterItem i{
 
       position: absolute;
-    right: 5px;
+    right: 4px;
         cursor: pointer;
         color:#92929D;
+        font-size: 20px;
 }
 
 .form-group .search-border
