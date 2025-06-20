@@ -150,7 +150,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         style="background-color: #09422D; cursor: default; border: none;">Edit
                         History</button>
                     <div class="interst_wrapper px-3 bg-white text-center">
-                        <p class="mb-0">Nobody has shared any review about</p>
+                        <p class="mb-0">
+                            <?php if ($package->versions) {
+                                foreach ($package->versions as $v) { ?>
+                                <div>
+                                    <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
+                                        <?= $v->version ?>-<?= $v->statusLabel ?>
+                                    </a>
+                                </div>
+                            <?php }
+                            } ?></p>
                     </div>
                 </div>
             </div>
