@@ -17,7 +17,7 @@ class ApiRequestLogSearch extends ApiRequestLog
     {
         return [
             [['id', 'user_id', 'request_code', 'is_server_error', 'is_client_error', 'is_count', 'is_reqeust_trace'], 'integer'],
-            [['user_ip', 'request_group', 'slug', 'route', 'request_url', 'request_full_url', 'request_type', 'request_parameter', 'request_data', 'response_error', 'device', 'system', 'platform', 'browser', 'browser_version', 'created_at'], 'safe'],
+            [['user_ip','platform_version', 'request_group', 'slug', 'route', 'request_url', 'request_full_url', 'request_type', 'request_parameter', 'request_data', 'response_error', 'device', 'system', 'platform', 'browser', 'browser_version', 'created_at','application_version'], 'safe'],
         ];
     }
 
@@ -80,6 +80,8 @@ class ApiRequestLogSearch extends ApiRequestLog
             ->andFilterWhere(['like', 'request_data', $this->request_data])
             ->andFilterWhere(['like', 'response_error', $this->response_error])
             ->andFilterWhere(['like', 'device', $this->device])
+            ->andFilterWhere(['like', 'device', $this->platform_version])  
+            ->andFilterWhere(['like', 'application_version', $this->application_version])          
             ->andFilterWhere(['like', 'system', $this->system])
             ->andFilterWhere(['like', 'platform', $this->platform])
             ->andFilterWhere(['like', 'browser', $this->browser])

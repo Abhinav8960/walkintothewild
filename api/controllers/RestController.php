@@ -333,7 +333,11 @@ class RestController extends Controller
     {
         parent::afterAction($action, $result);
 
-
+        $headers = Yii::$app->getRequest()->getHeaders();
+        $device = strtolower($headers->get('x-device')) ?? NULL;
+        $platform = strtolower($headers->get('x-platform')) ?? NULL;
+        $platform_version = strtolower($headers->get('x-platform-version')) ?? NULL;
+        $application_version = strtolower($headers->get('x-application-version')) ?? NULL;
         //start code to each request trace by sonu shokeen
         $request = Yii::$app->request;
         $user = $this->userinfo;
@@ -341,6 +345,8 @@ class RestController extends Controller
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         // $refer_url = Yii::$app->request->referrer;
         $response = Yii::$app->response;
+
+
 
 
         // $system_type = '';
@@ -385,7 +391,6 @@ class RestController extends Controller
             $model->is_server_error = $response->isServerError;
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
-            $model->device = NULL; //$agent->device();
 
             // if(is_array($result)){
             //     $result =  json_encode($result);
@@ -393,7 +398,11 @@ class RestController extends Controller
             $model->response =  json_encode($result);
 
             $model->system = NULL; //$system_type;
-            $model->platform = NULL; //$agent->platform();
+
+            $model->device = $device; //$agent->device();
+            $model->platform = $platform; //$agent->platform();
+            $model->platform_version = $platform_version; //$agent->platform();
+            $model->application_version = $application_version; //$agent->platform();            
             $model->browser = NULL; //$agent->browser();
             $model->browser_version = NULL; //$agent->version($agent->browser());
             $model->save(false);

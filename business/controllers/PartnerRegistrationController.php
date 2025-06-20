@@ -548,68 +548,22 @@ class PartnerRegistrationController extends Controller
 
         $partner_model  = $this->findModel();
 
-        // if (($partner_model->is_phone_no_verified == true && $partner_model->legal_entity_phone == $model->mobile_no) || ($partner_model->is_kyc_phone_verified == true && $partner_model->kyc_phone == $model->mobile_no)) {
-        //     $headers = Yii::$app->response->headers;
-        //     if (!$headers->has('X-Rate-Limit-Remaining')) {
-        //         $headers->add('X-Rate-Limit-Remaining', 0);
-        //     }
-        //     if (!$headers->has('X-Rate-Limit-Reset')) {
-        //         $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
-        //     }
-        //     return \yii\helpers\Json::encode([
-        //         'success' => true,
-        //         'message' => 'Mobile No. already verified'
-        //     ]);
-        // }
-
         $cache = Yii::$app->cache;
-        $rateLimitKey = 'mobile_verification_' . $model->user_id;
-        $rateLimitDuration = 300; // 5 minutes in seconds
+        $headers = Yii::$app->response->headers;
+        // $rateLimitKey = 'mobile_verification_' . $model->user_id;
+        // $rateLimitKeykyc = 'kyc_phone_verification_' . $model->user_id;
+        $rateLimitDuration = 30; // 5 minutes in seconds
         $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
         $blockDuration = 10800; // 3 hours in seconds
 
         // Check rate limit
-        $requestCount = $cache->get($rateLimitKey);
-        $headers = Yii::$app->response->headers;
+        $rateLimitKeys = [];
 
-        if ($requestCount === false) {
-            $cache->set($rateLimitKey, 1, $rateLimitDuration);
-            if (!$headers->has('X-Rate-Limit-Remaining')) {
-                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
-            }
-            if (!$headers->has('X-Rate-Limit-Reset')) {
-                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
-            }
-        } elseif ($requestCount >= $rateLimitMaxRequests) {
-            $blockKey = 'mobile_verification_block_' . $model->user_id;
-            $blockStatus = $cache->get($blockKey);
-
-            if ($blockStatus === false) {
-                $cache->set($blockKey, true, $blockDuration);
-            }
-            if (!$headers->has('Retry-After')) {
-                $headers->add('Retry-After', $blockDuration);
-            }
-            if (!$headers->has('X-Rate-Limit-Remaining')) {
-                $headers->add('X-Rate-Limit-Remaining', 0);
-            }
-            if (!$headers->has('X-Rate-Limit-Reset')) {
-                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
-            }
-
-            return \yii\helpers\Json::encode([
-                'error' => true,
-                'message' => 'Rate limit exceeded. Please try again later.'
-            ]);
-        } else {
-            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
-            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
-            if (!$headers->has('X-Rate-Limit-Remaining')) {
-                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
-            }
-            if (!$headers->has('X-Rate-Limit-Reset')) {
-                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
-            }
+        if ($partner_model->legal_entity_phone) {
+            $rateLimitKeys[] = 'mobile_verification_' . $model->user_id;
+        }
+        if ($partner_model->kyc_phone) {
+            $rateLimitKeys[] = 'kyc_phone_verification_' . $model->user_id;
         }
 
         if (Yii::$app->request->isPost) {
@@ -624,12 +578,12 @@ class PartnerRegistrationController extends Controller
                 }
                 $model->mobile_no = $mobileNo;
 
-                $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
-                if (!$headers->has('X-Rate-Limit-Remaining')) {
-                    $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
-                }
-                if (!$headers->has('X-Rate-Limit-Reset')) {
-                    $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+                foreach ($rateLimitKeys as $key) {
+                    $requestCount = $cache->get($key);
+                    $rateCheck = $this->RateLimit($key, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration);
+                    if ($rateCheck !== true) {
+                        return $rateCheck;
+                    }
                 }
 
                 if ($model->save(false)) {
@@ -789,5 +743,59 @@ class PartnerRegistrationController extends Controller
             $partner_model->save(false);
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    private function RateLimit($rateLimitKey, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration)
+    {
+        $cache = Yii::$app->cache;
+        $headers = Yii::$app->response->headers;
+
+        if ($requestCount === false) {
+            $cache->set($rateLimitKey, 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', $rateLimitMaxRequests - 1);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        } elseif ($requestCount >= $rateLimitMaxRequests) {
+            $blockKey = 'mobile_verification_block_' . $model->user_id;
+            $blockStatus = $cache->get($blockKey);
+
+            if ($blockStatus === false) {
+                $cache->set($blockKey, true, $blockDuration);
+            }
+            if (!$headers->has('Retry-After')) {
+                $headers->add('Retry-After', $blockDuration);
+            }
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', 0);
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
+            }
+
+            return \yii\helpers\Json::encode([
+                'error' => true,
+                'message' => 'Rate limit exceeded. Please try again later.'
+            ]);
+        } else {
+            $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+            $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
+            if (!$headers->has('X-Rate-Limit-Remaining')) {
+                $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+            }
+            if (!$headers->has('X-Rate-Limit-Reset')) {
+                $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+            }
+        }
+        $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
+        if (!$headers->has('X-Rate-Limit-Remaining')) {
+            $headers->add('X-Rate-Limit-Remaining', max($remainingRequests, 0)); // Ensure it doesn't go below 0
+        }
+        if (!$headers->has('X-Rate-Limit-Reset')) {
+            $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
+        }
+        return true;
     }
 }
