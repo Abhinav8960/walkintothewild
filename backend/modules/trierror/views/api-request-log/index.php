@@ -121,6 +121,26 @@ $this->params['title'] = $this->title;
                     //     }
                     // ],
                     [
+                        'label' => 'Source Info',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str = '';
+                            if (!empty($model->device)) {
+                                $str .= '<b>Device: </b>' . $model->device . '<br>';
+                            }
+                            if (!empty($model->platform)) {
+                                $str .= '<b>Platform: </b>' . $model->platform . '<br>';
+                            }
+                            if (!empty($model->platform_version)) {
+                                $str .= '<b>Platform Version: </b>' . $model->platform_version . '<br>';
+                            }
+                            if (!empty($model->application_version)) {
+                                $str .= '<b>Application Version: </b>' . $model->application_version . '<br>';
+                            }
+                            return $str;
+                        }
+                    ],
+                    [
                         'label' => 'Created At',
                         'format' => 'raw',
                         'value' => function ($model) {
