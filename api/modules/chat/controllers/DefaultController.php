@@ -444,67 +444,7 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
     }
 
-    // public function actionMakeCall($user_handle, $chat_hash)
-    public function actionMakeCall()
-    {
-
-        // $login_user = $this->userinfo;
-        // $individual_user = $this->individualuser($user_handle);
-        // if (!$individual_user) {
-        //     // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-        //     return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
-        // }
-
-        // if (!empty($chat_hash)) {
-
-        //     // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-        //     $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-        //     if (empty($chat_model)) {
-        //         return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
-        //     }
-        // } else {
-        //     return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
-        // };
-
-        // if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
-        //     return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
-        // }
-
-        // Example parameters
-        $chat_id = '84';
-        $lead_id = '16';
-        $operator_user_id = 2015; // Example operator user ID
-        $call_initiated_user_id = 2015; // Example user ID who initiated the call
-        $call_initiated_partner_id = 3; // can be null
-        $request_caller_1_no = '9958858979';
-        $request_caller_1_user_id = 2014;
-        $request_caller_2_no = 9650901148; // Optional
-        $request_caller_2_user_id = 2015; // Optional
-
-        // Instantiate the CallingService
-        $callingService = new \common\calling\services\CallingService(
-            $chat_id,
-            $lead_id,
-            $operator_user_id,
-            $call_initiated_user_id,
-            $call_initiated_partner_id,
-            $request_caller_1_no,
-            $request_caller_1_user_id,
-            // $request_caller_2_no,
-            // $request_caller_2_user_id
-        );
-
-
-        // Call the callNow method
-        $result = $callingService->callNow();
-
-        // Handle the result
-        if ($result) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated successfully.']);
-        } else {
-            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
-        }
-    }
+    
 
 
     public function actionMakeCallOnChat($user_handle, $chat_hash)
