@@ -46,7 +46,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
     const SOURCE_PACKAGE = 1;

@@ -15,7 +15,7 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $updated_at
  */
-class MailAttachments extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
+class MailAttachments extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\NewStatusInterface
 {
 
     const SOURCE_FILE_SYSTEM_FS = 1; // File System
