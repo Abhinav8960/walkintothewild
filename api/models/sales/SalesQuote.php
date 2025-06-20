@@ -29,7 +29,6 @@ use Yii;
  */
 class SalesQuote extends \common\models\sales\SalesQuote
 {
-
     public function fields()
     {
         // $hold_fields = parent::fields();

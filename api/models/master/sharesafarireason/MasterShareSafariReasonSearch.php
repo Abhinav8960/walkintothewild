@@ -6,7 +6,6 @@ use api\models\master\sharesafarireason\MasterShareSafariReason;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-
 /**
  * MasterShareSafariReasonSearch represents the model behind the search form of `api\models\master\vehicle\MasterShareSafariReason`.
  */

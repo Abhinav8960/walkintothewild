@@ -2,7 +2,6 @@
 
 namespace api\modules\account;
 
-
 /**
  * account module definition class
  */

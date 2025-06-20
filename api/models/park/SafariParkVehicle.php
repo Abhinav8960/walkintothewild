@@ -19,8 +19,6 @@ use Yii;
  */
 class SafariParkVehicle extends \common\models\park\SafariParkVehicle
 {
-    
-
     public function getMastervehicle()
     {
         return $this->hasOne(MasterVehicle::className(), ['id' => 'vehicle_id']);

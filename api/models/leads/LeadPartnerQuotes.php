@@ -40,7 +40,6 @@ use Yii;
  */
 class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 {
-
     public function fields()
     {
         $fields = [
@@ -63,7 +62,6 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             },
             'permit_booking_date' => function () {
                 return !empty($this->permit_booking_date) ? date('M d, Y', strtotime($this->permit_booking_date)) : null;
-
             },
             // 'partner_selling_price',
             // 'plateform_partner_fees_percentage',
@@ -174,7 +172,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 
     public function getPark_label()
     {
-        return $this->park->title ?? NULL;
+        return $this->park->title ?? null;
     }
 
     public function getLead()
@@ -194,13 +192,13 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
 
     public function getDue_quatation()
     {
-        return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['IS NOT', 'payment_link', null])->orderBy(['id' => SORT_DESC]);
         // return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 
     public function getStaycatgory_lable()
     {
-        return $this->staycatgory->title ?? NULL;
+        return $this->staycatgory->title ?? null;
     }
 
     // public function getPreparedata()

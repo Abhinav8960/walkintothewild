@@ -21,7 +21,6 @@ use yii\web\UploadedFile;
  */
 class GalleryController extends RestController
 {
-
     public function behaviors()
     {
 

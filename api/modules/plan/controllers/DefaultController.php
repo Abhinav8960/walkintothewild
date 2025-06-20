@@ -14,7 +14,6 @@ use yii\filters\AccessControl;
 
 class DefaultController extends RestController
 {
-
     /**
      * @inheritdoc
      */
@@ -36,7 +35,7 @@ class DefaultController extends RestController
 
 
     /**
-     * 
+     *
      * @return string
      */
     public function actionFeaturedPark()

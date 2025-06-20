@@ -20,7 +20,6 @@ use Yii;
  */
 class SafariParkGallery extends \common\models\park\SafariParkGallery
 {
-
     public function fields()
     {
         $fields = parent::fields();

@@ -4,7 +4,6 @@ namespace api\modules\meta\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\meta\MetaAccommodationSearch;

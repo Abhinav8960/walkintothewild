@@ -13,5 +13,4 @@ class UserPostLike extends \common\models\postscomment\UserPostLike
         return array_diff($fields, $hold_fields);
         return $fields;
     }
-
 }

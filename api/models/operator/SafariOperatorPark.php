@@ -20,8 +20,7 @@ class SafariOperatorPark extends \common\models\operator\SafariOperatorPark
     public function fields()
     {
         $fields = parent::fields();
-        if(!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/user-rating-parklist']))
-        {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/user-rating-parklist'])) {
             // $fields[] = 'park';
             $hold_fields = [
                 'id',
@@ -34,7 +33,7 @@ class SafariOperatorPark extends \common\models\operator\SafariOperatorPark
                 'created_at',
                 'updated_at'
             ];
-        }else{
+        } else {
             $hold_fields = [
                 'id',
                 'safari_operator_id',
@@ -45,7 +44,7 @@ class SafariOperatorPark extends \common\models\operator\SafariOperatorPark
                 'updated_at'
             ];
         }
-       
+
         return array_diff($fields, $hold_fields);
         return $fields;
     }

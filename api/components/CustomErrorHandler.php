@@ -1,4 +1,5 @@
 <?php
+
 namespace api\components;
 
 use Yii;
@@ -39,12 +40,5 @@ class CustomErrorHandler extends ErrorHandler
         }
 
         $response->send();
-
-
-
-
-
-
-        
     }
 }

@@ -3,7 +3,6 @@
 namespace api\modules\profile\controllers;
 
 use Yii;
-
 use api\behaviours\Verbcheck;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
@@ -26,8 +25,6 @@ use yii\web\ForbiddenHttpException;
  */
 class DefaultController extends RestController
 {
-
-
     /**
      * @inheritdoc
      */
@@ -245,7 +242,7 @@ class DefaultController extends RestController
     // }
 
     public function actionFollowingsList($user_handle)
-    {  
+    {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sent to Operator Profile"]);

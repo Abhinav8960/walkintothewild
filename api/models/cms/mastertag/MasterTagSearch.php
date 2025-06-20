@@ -10,7 +10,6 @@ use api\models\cms\mastertag\MasterTag;
  */
 class MasterTagSearch extends MasterTag
 {
-
     /**
      * {@inheritdoc}
      */

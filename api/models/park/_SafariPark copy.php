@@ -26,14 +26,13 @@ use common\models\park\SafariParkMonth;
 
 class _SafariPark extends \common\models\park\SafariPark
 {
-
     public function fields()
     {
         $fields = parent::fields();
 
-      
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FULL])) {
+
+        if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FULL])) {
             $fields[] = 'months';
             $fields[] = 'bufferzones';
             $fields[] = 'corezones';
@@ -99,8 +98,7 @@ class _SafariPark extends \common\models\park\SafariPark
             $hold_fields[] = 'updated_by';
             $hold_fields[] = 'created_at';
             $hold_fields[] = 'updated_at';
-        } elseif (in_array(\Yii::$app->controller->layout, [SELF::PARK_API_LAYOUT_FOR_FILTER_PARK])) {
-
+        } elseif (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FOR_FILTER_PARK])) {
             $hold_fields[] = 'show_in_filter';
             $hold_fields[] = 'short_description';
             $hold_fields[] = 'official_website';

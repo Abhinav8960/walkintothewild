@@ -46,7 +46,7 @@ class MasterFaqSearch extends MasterFaq
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['position' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['position' => SORT_ASC]],
         ]);
 
         $this->load($params);

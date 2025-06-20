@@ -19,9 +19,8 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterRailwayStation extends  \common\models\master\railwaystation\MasterRailwayStation
+class MasterRailwayStation extends \common\models\master\railwaystation\MasterRailwayStation
 {
-
     public function fields()
     {
         $fields = parent::fields();

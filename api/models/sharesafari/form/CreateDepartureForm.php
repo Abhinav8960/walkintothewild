@@ -4,7 +4,6 @@ namespace api\models\sharesafari\form;
 
 class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
 {
-
     public function rules()
     {
         return [

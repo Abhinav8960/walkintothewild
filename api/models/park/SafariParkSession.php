@@ -19,8 +19,6 @@ use Yii;
  */
 class SafariParkSession extends \common\models\park\SafariParkSession
 {
-   
-
     public function getMetasession()
     {
         return $this->hasOne(MetaSafariSession::className(), ['id' => 'session_id']);

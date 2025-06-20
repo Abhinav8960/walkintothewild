@@ -9,8 +9,6 @@ use api\models\park\SafariPark;
 
 class SafariOperatorRatingReport extends \common\models\operator\SafariOperatorRatingReport
 {
-
-
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);

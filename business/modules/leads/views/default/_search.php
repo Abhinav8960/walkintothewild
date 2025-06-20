@@ -25,6 +25,7 @@ use yii\helpers\Html;
                         GeneralModel::leadSource(),
                         [
                             'prompt' => 'All Source',
+                            'class' => 'search-border'
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
@@ -35,6 +36,8 @@ use yii\helpers\Html;
                         GeneralModel::monthoption(),
                         [
                             'prompt' => 'All Month',
+                            'class' => 'search-border'
+
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
@@ -45,6 +48,8 @@ use yii\helpers\Html;
                         GeneralModel::operatorpark($safari_operator->id),
                         [
                             'prompt' => 'All Park',
+                            'class' => 'search-border'
+
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>

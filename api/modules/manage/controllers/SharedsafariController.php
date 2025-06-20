@@ -136,7 +136,7 @@ class SharedsafariController extends RestController
                 // }
 
                 if (!empty($model->shared_safari_departure_model->safarioperator)) {
-                    new \common\events\operator\FixedDepartureCreatedByOperator($this->userinfoId,$model->shared_safari_departure_model->id);
+                    new \common\events\operator\FixedDepartureCreatedByOperator($this->userinfoId, $model->shared_safari_departure_model->id);
                 }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->shared_safari_departure_model->slug], ['message' => "Fixed Departure created successfully"]);
@@ -253,7 +253,6 @@ class SharedsafariController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->share_safari_day_model->save(false)) {
-
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Itinerary updated successfully"]);
             }
 
@@ -378,7 +377,7 @@ class SharedsafariController extends RestController
 
     /**
      * Create ShareSafariFaqForm.
-     * 
+     *
      * @return mixed
      */
     public function actionCreateFaq($slug)

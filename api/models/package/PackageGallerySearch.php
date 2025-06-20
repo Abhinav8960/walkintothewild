@@ -2,10 +2,8 @@
 
 namespace api\models\package;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 
 class PackageGallerySearch extends PackageGallery
 {

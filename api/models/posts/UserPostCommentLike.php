@@ -19,5 +19,4 @@ class UserPostCommentLike extends \common\models\postscomment\UserPostCommentLik
     {
         return $this->hasOne(UserPostComment::class, ['id' => 'user_post_comment_id']);
     }
-
 }

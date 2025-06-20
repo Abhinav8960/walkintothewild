@@ -4,7 +4,6 @@ namespace api\models\master\country;
 
 use Yii;
 
-
 class MasterCountry extends \common\models\master\country\MasterCountry
 {
     public function fields()

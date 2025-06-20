@@ -25,9 +25,8 @@ class UserFollow extends \common\models\UserFollow
             if ($this->user) {
                 foreach ($this->user->toArray() as $key => $value) {
                     $fields[$key] = function () use ($key) {
-                        if($key == 'is_safari_operator') {
+                        if ($key == 'is_safari_operator') {
                             return (bool) $this->user->is_safari_operator;
-
                         }
                         return $this->user->{$key};
                     };
@@ -39,9 +38,8 @@ class UserFollow extends \common\models\UserFollow
             if ($this->follower) {
                 foreach ($this->follower->toArray() as $key => $value) {
                     $fields[$key] = function () use ($key) {
-                        if($key == 'is_safari_operator') {
+                        if ($key == 'is_safari_operator') {
                             return (bool) $this->user->is_safari_operator;
-
                         }
                         return $this->follower->{$key};
                     };

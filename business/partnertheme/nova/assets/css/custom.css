@@ -220,7 +220,7 @@ li{
 
 .tbody-leads td {
 
-  padding: 5px 14px;
+  padding: 0px 14px;
   font-size: 14px;
   border: none !important;
 }
@@ -232,7 +232,7 @@ li{
 
 .tbody-leads tr:first-child td {
 
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .tbody-leads {

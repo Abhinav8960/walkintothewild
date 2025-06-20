@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $updated_at
  */
-class PackageIncluded  extends \common\models\package\PackageIncluded
+class PackageIncluded extends \common\models\package\PackageIncluded
 {
     public function fields()
     {
@@ -42,7 +42,7 @@ class PackageIncluded  extends \common\models\package\PackageIncluded
 
     public function getPackage_include()
     {
-        
+
         return $this->hasOne(MasterPackageInclude::class, ['id' => 'include_id'])->andWhere(['master_package_include.status' => MasterPackageInclude::STATUS_ACTIVE]);
     }
 

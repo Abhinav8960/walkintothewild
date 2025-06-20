@@ -5,13 +5,10 @@ namespace api\models\master\airport;
 use api\models\master\city\MasterCity;
 use api\models\master\country\MasterCountry;
 use api\models\master\state\MasterState;
-
 use Yii;
 
 class MasterAirport extends \common\models\master\airport\MasterAirport
 {
-
-
     public function fields()
     {
         $fields = parent::fields();

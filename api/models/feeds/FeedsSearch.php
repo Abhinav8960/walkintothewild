@@ -2,7 +2,6 @@
 
 namespace api\models\feeds;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

@@ -19,8 +19,6 @@ use Yii;
  */
 class LeadPartners extends \common\models\leads\LeadPartners
 {
-
-
     /**
      * {@inheritdoc}
      */
@@ -62,7 +60,5 @@ class LeadPartners extends \common\models\leads\LeadPartners
     public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
-
     }
-
 }

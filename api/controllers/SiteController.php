@@ -4,7 +4,6 @@ namespace api\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-
 use api\behaviours\Verbcheck;
 use api\behaviours\Apiauth;
 use api\models\CanSocialLoginForm;
@@ -123,7 +122,7 @@ class SiteController extends RestController
                 "line"  => $exception->getLine(),
                 // "stack-trace"  => $exception->getTrace(),
             ];
-            return Yii::$app->api->sendResponse($data, NULL, $exception->statusCode ?? 500);
+            return Yii::$app->api->sendResponse($data, null, $exception->statusCode ?? 500);
         }
     }
 
@@ -363,9 +362,7 @@ class SiteController extends RestController
         $model->attributes = $this->request;
 
         if ($model->validate()) {
-
             if (!$model->can_login()) {
-
                 if ($model->verify_login()) {
                     $data = ['can_login' => false, 'is_otp_send' => true, 'otp' => $model->otp];
                     // $data = ['can_login' => false, 'is_otp_send' => true];
@@ -390,7 +387,6 @@ class SiteController extends RestController
 
         if ($model->validate()) {
             if ($model->validateOtp()) {
-
                 $data = ['can_login' => true];
                 return Yii::$app->api->sendResponse($data);
             }
@@ -458,7 +454,6 @@ class SiteController extends RestController
         $model = UserSession::findOne(['token' => $access_token]);
 
         if ($model->delete()) {
-
             return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
         } else {
             return Yii::$app->api->sendResponse([], "Invalid Request");
@@ -600,8 +595,7 @@ class SiteController extends RestController
                 $headers->add('X-Rate-Limit-Reset', time() + $blockDuration);
             }
             // return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Rate limit exceeded. Please try again later."],429);
-
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Rate limit exceeded. Please try again later."], 429);
         } else {
             $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
             $cache->set($rateLimitKey, $requestCount + 1, $rateLimitDuration);
@@ -666,7 +660,6 @@ class SiteController extends RestController
         }
         if ($model->validate()) {
             if ($model->validateOtp($this->auth_token)) {
-
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Mobile No Verified Successfully"]);
             }
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Mobile No  not verified, check mobile no and otp."]);

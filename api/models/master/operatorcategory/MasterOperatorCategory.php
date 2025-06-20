@@ -28,6 +28,6 @@ class MasterOperatorCategory extends \common\models\master\operatorcategory\Mast
 
     public function getType()
     {
-       return isset(SELF::OperatorCategoryType()[$this->type_id]) ? SELF::OperatorCategoryType()[$this->type_id] : NULL;
+        return isset(self::OperatorCategoryType()[$this->type_id]) ? self::OperatorCategoryType()[$this->type_id] : null;
     }
 }

@@ -39,6 +39,10 @@ p {
 .container-scroller .nav .nav-icon {
   background-color: transparent !important;
 }
+/* .collapsed-sidebar .nav .nav-icon{
+
+  background-color: #191c24 !important;
+} */
 
 .container-scroller .nav {
   background-color: #fff !important;
@@ -95,8 +99,14 @@ p {
   padding-left: 2px !important;
 }
 
-.collapsed-sidebar .navLinks.active {
-  background: transparent;
+.collapsed-sidebar .navItems .navLinks.active {
+  background: #0f1015;
+    padding: 8px 31px 8px 10px;
+    /* border-radius: 16px !important; */
+    border-radius: 50% !important;
+    color: #99ff33;
+  /* padding: 9px !important;
+  border-radius: 50% !important; */
 }
 
 .navItems .navLinks.active {
@@ -164,6 +174,7 @@ p {
   color: #111111;
   font-size: 16px;
   font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .topHead a {
@@ -739,7 +750,7 @@ p {
 
 .ItineraryQuotationarea {
 
-  max-width: 480px;
+  min-width: 480px;
   background-color: #fff;
   padding: 15px;
   border-radius: 15px;
@@ -1126,4 +1137,13 @@ position: absolute;
 
 .edinBtn.copyBtn a {
     background-color: #7b7b7b;
+}
+.form-group .search-border
+{
+  border: 1px solid #ededed;
+}
+.topTitle h3{
+
+  font-size: 18px;
+  font-weight: 700;
 }

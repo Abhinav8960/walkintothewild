@@ -13,5 +13,4 @@ use Yii;
  */
 class MasterMonth extends \common\models\master\month\MasterMonth
 {
-    
 }
