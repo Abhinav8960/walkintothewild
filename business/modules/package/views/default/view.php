@@ -6,9 +6,9 @@ use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-AppAsset::register($this);
+
 
 ?>
 
@@ -22,7 +22,7 @@ AppAsset::register($this);
 
                 <div class="tabContent mx-3">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="Itinerary" role="tabpanel"
+                        <div class="tab-pane fade show active" id="Overview" role="tabpanel"
                             aria-labelledby="home-tab">
                             <div class="row">
                                 <div class="col-xl-12 mb-4">
@@ -125,6 +125,9 @@ AppAsset::register($this);
                                     </div>
                                 <?php } ?>
                             </div>
+                        </div>
+                        <div class="tab-pane fade" id="Itinerary" role="tabpanel"
+                            aria-labelledby="itinerary-tab"><?= $this->render('_overview', ['package' => $package]) ?>
                         </div>
                         <div class="tab-pane fade" id="Inclusions" role="tabpanel"
                             aria-labelledby="profile-tab"><?= $this->render('_inclusion', ['package' => $package]) ?></div>

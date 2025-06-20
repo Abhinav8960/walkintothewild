@@ -5,6 +5,8 @@ use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+
+
 ?>
 <section class="topHead mx-3">
     <div class="container-fluid">
@@ -32,7 +34,7 @@ use yii\helpers\Url;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-heart"></i>
+                                <img src="<?= $this->params['baseurl'] ?>/images/Icon-feather-heart.svg" alt="Wishlist">
                             </div>
                             <div class="text-card">
                                 <p>Wishlist</p>
@@ -50,7 +52,7 @@ use yii\helpers\Url;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-heart"></i>
+                                <img src="<?= $this->params['baseurl'] ?>/images/quote.svg" alt="Quotes">
                             </div>
                             <div class="text-card">
                                 <p>Quote Requests</p>
@@ -68,7 +70,7 @@ use yii\helpers\Url;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-heart"></i>
+                                <img src="<?= $this->params['baseurl'] ?>/images/Icon material-twotone-currency-rupee.svg" alt="Quotes">
                             </div>
                             <div class="text-card">
                                 <p>Bookings</p>
@@ -86,7 +88,7 @@ use yii\helpers\Url;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <i class="fa-solid fa-heart"></i>
+                                <img src="<?= $this->params['baseurl'] ?>/images/comment.svg" alt="Comment">
                             </div>
                             <div class="text-card">
                                 <p>Comments</p>
@@ -123,8 +125,7 @@ use yii\helpers\Url;
                         </div>
                         <div class="d-flex flex-column pt-3 col-lg-8 col-md-9">
                             <div class="safrititles ">
-                                <h2 class="m-0 lh-1 d-inline font-devator"><?= $package->package_name ?><i
-                                        class="fa-regular fa-heart"></i></h2>
+                                <h2 class="m-0 lh-1 d-inline font-devator"><?= $package->package_name ?></h2>
                                 <h6 class="titler_safari my-3"><a href=""
                                         data-discover="true"><i
                                             class="fa-solid fa-location-dot me-1"></i> Kanha
@@ -141,7 +142,7 @@ use yii\helpers\Url;
                     <div class="ps-1 row">
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
-                                <div class="iconImg"><img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration"></div>
+                                <div class="iconImg"><img src="<?= $this->params['baseurl'] ?>/images/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration"></div>
                                 <div class="text-form">
                                     <!-- <span class="mark_area">Trip
                                                                 Duration</span> -->
@@ -151,7 +152,7 @@ use yii\helpers\Url;
                         </div>
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
-                                <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
+                                <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                 </div>
                                 <div class="text-form">
                                     <!-- <span class="mark_area">Trip
@@ -162,7 +163,7 @@ use yii\helpers\Url;
                         </div>
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
-                                <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
+                                <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/images/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?= $package->no_of_safari ?> <?php
@@ -180,32 +181,37 @@ use yii\helpers\Url;
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
                                 <div class="iconImg"><img
-                                        src="assets/images/night-mode_9554519.png" alt=""></div>
-                                <div class="text-form">
-                                    <!-- <span class="mark_area">Trip
-                                                                Duration</span> -->
-                                    <p class="mb-0">3 Nights , 4 Days</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="  mb-3 col-sm-6 col-12">
-                            <div class="safridetails_form d-flex align-items-center gap-4 ">
-                                <div class="iconImg"><img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals"></div>
-                                <div class="text-form">
-                                    <!-- <span class="mark_area">Trip
-                                                                Duration</span> -->
-                                    <p class="mb-0">3 Nights , 4 Days</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="  mb-3 col-sm-6 col-12">
-                            <div class="safridetails_form d-flex align-items-center gap-4 ">
-                                <div class="iconImg"><img
-                                        src="assets/images/night-mode_9554519.png" alt=""></div>
+                                        src="<?= $this->params['baseurl'] ?>/images/path.png" alt=""></div>
                                 <div class="text-form">
                                     <!-- <span class="mark_area">Trip
                                                                 Duration</span> -->
                                     <p class="mb-0"><?= $package->meals ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="  mb-3 col-sm-6 col-12">
+                            <div class="safridetails_form d-flex align-items-center gap-4 ">
+                                <div class="iconImg">
+                                    <?php if ($package->package_agenda_id && $package->package_agenda_id == 1) { ?>
+                                        <img src="<?= $this->params['baseurl'] ?>/images/camera.png" alt="">
+                                    <?php } else if ($package->package_agenda_id && $package->package_agenda_id == 3) { ?>
+                                        <img src="<?= $this->params['baseurl'] ?>/images/elephant.png" alt="">
+                                    <?php } else { ?>
+                                        <img src="<?= $this->params['baseurl'] ?>/images/camera.png" alt="">
+                                    <?php } ?>
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0"> <?= isset(GeneralModel::agendaoption()[$package->package_agenda_id]) ? GeneralModel::agendaoption()[$package->package_agenda_id] : 'Not Included' ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="  mb-3 col-sm-6 col-12">
+                            <div class="safridetails_form d-flex align-items-center gap-4 ">
+                                <div class="iconImg"><img src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-hotel.png" alt=""></div>
+                                <div class="text-form">
+                                    <!-- <span class="mark_area">Trip
+                                                                Duration</span> -->
+                                    <p class="mb-0"><?= isset(GeneralModel::packageStayOption()[$package->stay_category_id]) ? GeneralModel::packageStayOption()[$package->stay_category_id] : 'Not Included' ?></p>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +257,7 @@ use yii\helpers\Url;
                     <div
                         class="d-flex justify-content-md-center align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
                         <div class="pakageCost mb-xxl-0 mb-2">
-                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>
+                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>
                             </h6>
                         </div>
                     </div>
