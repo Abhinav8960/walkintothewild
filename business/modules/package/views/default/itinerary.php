@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 $this->title = 'Package : ' . $package_version_model->package_name;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>

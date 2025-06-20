@@ -7,6 +7,9 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 $this->title = 'Package : ' . $package_version_model->package_name . '';
 ?>
 
@@ -22,7 +25,7 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
                     <div class="card-body">
                         <div>
 
-                            <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_version_model->id]), 'class' => 'btn create-action btn-orange me-2', 'title' => 'Create FAQ']); ?>
+                            <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_version_model->id]), 'class' => 'button-created create create-action me-2', 'title' => 'Create FAQ']); ?>
                         </div>
                         <div class="table-responsive">
                             <?= GridView::widget([
