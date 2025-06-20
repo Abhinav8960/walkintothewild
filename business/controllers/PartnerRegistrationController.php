@@ -589,7 +589,7 @@ class PartnerRegistrationController extends Controller
                 if ($model->save(false)) {
                     $to_be_send = MobileVerification::find()->where(['mobile_no' => $mobileNo, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
                     if ($to_be_send != null) {
-                        // new \common\events\user\MobileNoVerification($model->user_id, $model->mobile_no, $to_be_send->otp, $partner_model->legal_entity_name);
+                        new \common\events\user\MobileNoVerification($model->user_id, $model->mobile_no, $to_be_send->otp, $partner_model->legal_entity_name);
                     }
                     return \yii\helpers\Json::encode([
                         'success' => true,
