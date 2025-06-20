@@ -127,14 +127,14 @@ use yii\helpers\Url;
 </section>
 
 <div class="row packageSfari mx-3">
-    <div class="col-12 my-4">
+    <div class="col-12 mt-4">
         <div class="imagesSafari d-sm-block d-none">
             <div class="package-banner-dummy">
                 <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
             </div>
         </div>
         <div class="wrapper-skybgsafri pb-0">
-            <div class="row border_bottom2 pb-4">
+            <div class="row pb-4">
                 <div class="border-right col-lg-8 col-md-12 col-sm-12">
                     <div class="row h-100">
                         <div
@@ -238,7 +238,7 @@ use yii\helpers\Url;
                         </div>
                     </div>
                 </div>
-                <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
+                <div class="row mt-2 pt-md-3 align-items-center justify-content-end border-top border-bottom gx-4 pb-3">
                     <?php if (false) { ?>
                         <div class="col-lg-8">
                             <div
@@ -293,7 +293,7 @@ use yii\helpers\Url;
 
             </div>
         </div>
-        <div class="col-12 pt-4">
+        <div class="col-12 pt-3">
             <div class="row">
                 <div class="col-6">
                     <div class="packageTabMain">
