@@ -155,10 +155,10 @@ class Api extends Component
 
         $headers = Yii::$app->getRequest()->getHeaders();
 
-        $device = strtolower($headers->get('x-device')) ?? NULL;
-        $platform = strtolower($headers->get('x-platform')) ?? NULL;
-        $platform_version = strtolower($headers->get('x-platform-version')) ?? NULL;
-        $application_version = strtolower($headers->get('x-application-version')) ?? NULL;
+        $device = strtolower($headers->get('x-device')) ?? null;
+        $platform = strtolower($headers->get('x-platform')) ?? null;
+        $platform_version = strtolower($headers->get('x-platform-version')) ?? null;
+        $application_version = strtolower($headers->get('x-application-version')) ?? null;
 
         $model = new UserSession();
         $toekn = hash('SHA512', $user->id . '-' . $user->auth_key . '-' . time());
@@ -167,7 +167,7 @@ class Api extends Component
         $model->id                          = $toekn;
         $model->user_id                     = $user->id;
         $model->ip_address                  = \Yii::$app->request->getUserIP();
-        $model->firebase_token              = isset($params->firebase_token) ? $params->firebase_token : NULL;
+        $model->firebase_token              = isset($params->firebase_token) ? $params->firebase_token : null;
         // $model->platform_version    = isset($params->platform_version) ? $params->platform_version : NULL;
         $model->user_browser                = isset($params->browser) ? $params->browser : null;
         // $model->browser_version     = isset($params->browser_version) ? $params->browser : NULL;
