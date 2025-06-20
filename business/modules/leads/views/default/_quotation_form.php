@@ -101,6 +101,14 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price'])->hint('<div class="text-muted">Platform fees in percentage: ' . $model->plateform_partner_fees_percentage . ' %</div>') ?>
     </div>
 
+    <div class="col-md-6 col-lg-6">
+        <?= $form->field($model, 'addional_notes')->textarea([
+            // 'maxlength' => true,
+            'row' => 5,
+            'placeholder' => 'Enter Additional Notes',
+        ])->label('Additional Notes') ?>
+    </div>
+
 
     <table id="calculation-table" class="table table-responsive d-none text-center">
         <thead>
