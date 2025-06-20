@@ -3,9 +3,12 @@
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
 
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+$faq_count = 1;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -19,62 +22,31 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
     <?= $this->render('_navbar', ['package' => $package_version_model, 'faq_active' => 'active']) ?>
 
     <div class="tabs-content-wraps">
-        <div class="tab-content">
-            <div class="tab-pane active">
-                <div class="card">
-                    <div class="card-body">
-                        <div>
 
-                            <?= Html::Button('+ Add FAQ', ['value' => Url::toRoute(['create-faq', 'id' => $package_version_model->id]), 'class' => 'button-created create create-action me-2', 'title' => 'Create FAQ']); ?>
+        <div class="tab-pane" id="FAQ" role="tabpanel" aria-labelledby="FAQ-tab">
+            <div class="accordionMianBox">
+                <?php if ($faqs) {
+                    foreach ($faqs as $i => $faq) { ?>
+                        <div class="accordionItems">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item mb-3">
+                                    <?php
+                                    echo $this->render('faq_form', ['model' => $faq, 'question_no' => $faq_count, 'url' => Url::toRoute(['update-faq', 'id' => $package_version_model->id, 'package_id' => $package_version_model->package_id, 'faq_id' => $faq->id])]);
+                                    ?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <?= GridView::widget([
-                                'dataProvider' => $dataProvider,
-                                'columns' => [
-                                    [
-                                        'class' => 'yii\grid\SerialColumn',
-                                        'contentOptions' => ['style' => 'width: 5%;'],
-                                    ],
-                                    [
-                                        'label' => 'Question',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->question;
-                                        }
-                                    ],
-                                    [
-                                        'label' => 'Answer',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->answer;
-                                        }
-                                    ],
+                <?php
+                        $faq_count++;
+                    }
+                } ?>
+                <div class="accordionItems">
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item mb-3">
+                            <?php
+                            echo $this->render('faq_form', ['model' => $model, 'question_no' => $faq_count]);
+                            ?>
 
-                                    'created_at:dateTime:Created at',
-                                    'updated_at:dateTime:Last Updated at',
-                                    [
-                                        'label' => 'Status',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->statuslabel;
-                                        }
-                                    ],
-                                    [
-                                        'class' => 'yii\grid\ActionColumn',
-                                        'header' => "Actions",
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{update}&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                                        'buttons' => [
-                                            'update' => function ($url, $model) use ($package_version_model) {
-                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toRoute(['update-faq', 'id' => $package_version_model->id, 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn update-action btn-orange me-2', 'title' => 'Update FAQ']);
-                                            },
-                                        ]
-                                    ],
-                                ],
-                            ]); ?>
                         </div>
                     </div>
                 </div>
@@ -82,57 +54,3 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
         </div>
     </div>
 </div>
-
-
-<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header flageHeader">
-                <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Create Faq
-                </h6>
-            </div>
-
-            <div class="modal-body modal_form">
-                <div id='modalContent'></div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header flageHeader">
-                <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Update Faq
-                </h6>
-            </div>
-
-            <div class="modal-body modal_form">
-                <div id='modalContent'></div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<?php
-$script = <<< JS
-
-    $('.create-action').on('click', function () {
-        $('#modalCreate').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-
-    $('.update-action').on('click', function () {
-        $('#modalUpdate').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-
-JS;
-$this->registerJs($script);
-?>

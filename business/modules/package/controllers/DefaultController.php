@@ -397,12 +397,42 @@ class DefaultController extends Controller
         $searchModel->package_id = $package_version_model->package_id;
         $searchModel->version = $package_version_model->version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $faqs = $dataProvider->getModels();
 
+
+        $model = new PackageFaqForm();
+        $model->package_id = $package_version_model->package_id;
+        $model->version = $package_version_model->version;
+        $model->status = PackageFaq::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = MasterFaq::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->package_faq_model->faq_id = $faq->id;
+                            $model->package_faq_model->save(false);
+                        }
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_faq_model->loadDefaultValues();
+        }
 
         return $this->render('faq', [
             'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'faqs' => $faqs,
+            'model' => $model,
         ]);
     }
 
@@ -482,13 +512,9 @@ class DefaultController extends Controller
         }
 
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create_faq', [
-                'model' => $model,
-                'package_version_model' => $package_version_model,
-            ]);
-        }
+        return $this->redirect(['faq', 'id' => $package_version_model->id]);
     }
+
 
 
 
