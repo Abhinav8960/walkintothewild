@@ -4,7 +4,6 @@ namespace api\models\feeds;
 
 use Yii;
 
-
 class Feeds extends \common\models\feeds\Feeds
 {
     public function fields()
@@ -27,16 +26,15 @@ class Feeds extends \common\models\feeds\Feeds
 
     public function GetFeed()
     {
-        if ($this->collection == Self::MODEL_SHARESFARI) {
+        if ($this->collection == self::MODEL_SHARESFARI) {
             return $this->hasOne(\api\models\sharesafari\ShareSafari::className(), ['id' => 'collection_id']);
-        } elseif ($this->collection == Self::MODEL_PACKAGE) {
+        } elseif ($this->collection == self::MODEL_PACKAGE) {
             return $this->hasOne(\api\models\package\Package::className(), ['id' => 'collection_id']);
-        } elseif ($this->collection == Self::MODEL_POSTS) {
+        } elseif ($this->collection == self::MODEL_POSTS) {
             return $this->hasOne(\api\models\posts\UserPosts::className(), ['id' => 'collection_id']);
-        } elseif ($this->collection == Self::MODEL_SIGHTING) {
+        } elseif ($this->collection == self::MODEL_SIGHTING) {
             return $this->hasOne(\api\models\sighting\Sighting::className(), ['id' => 'collection_id']);
         }
         return [];
     }
-
 }

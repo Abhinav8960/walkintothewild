@@ -2,9 +2,7 @@
 
 namespace api\models\cms\contentmanagement;
 
-
 use Yii;
-
 
 class ContentManagement extends \common\models\cms\contentmanagement\ContentManagement
 {

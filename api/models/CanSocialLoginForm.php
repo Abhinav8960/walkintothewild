@@ -42,7 +42,7 @@ class CanSocialLoginForm extends Model
             if (!empty($auth)) {
                 $user = User::find()->where(['id' => $auth->user_id])->one();
                 $col = $this->source . '_' . 'source_id';
-                $user->$col = NULL;
+                $user->$col = null;
                 $user->save(false);
                 $auth->delete();
                 return true;

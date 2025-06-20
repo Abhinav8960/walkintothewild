@@ -23,7 +23,6 @@ use yii\filters\AccessControl;
 
 class DefaultController extends RestController
 {
-
     /**
      * @inheritdoc
      */
@@ -79,7 +78,7 @@ class DefaultController extends RestController
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function actionIndex()
@@ -123,7 +122,7 @@ class DefaultController extends RestController
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
     /**
-     * 
+     *
      * @return string
      */
     public function actionView($id)

@@ -2,7 +2,6 @@
 
 namespace api\modules\operator;
 
-
 /**
  * admin module definition class
  */

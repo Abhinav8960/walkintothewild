@@ -71,7 +71,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
             'updated_at',
             'host_type'
         ];
-        if (in_array(\Yii::$app->controller->layout, [SELF::SHARE_SAFARI_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::SHARE_SAFARI_API_LAYOUT_FULL])) {
             $fields[] = 'types';
             $fields[] = 'sharesafariagenda';
             $fields[] = 'budget';
@@ -266,7 +266,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->name : 'N/A';
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
     }
@@ -275,7 +275,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->user_handle : 'N/A';
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
     }
@@ -283,7 +283,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->profileimage : '';
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return $this->partner &&  $this->partner->logo  ? $this->partner->imagepath : '';
         }
     }
@@ -291,7 +291,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user ? $this->user->user_handle : '']);
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->partner ? $this->partner->slug : '']);
         }
     }
@@ -322,7 +322,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->user_handle : 'N/A';
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->slug : "N/A";
         }
     }
@@ -437,7 +437,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
             if ($this->partner) {
                 return UserFollow::find()->where(['follow_user_id' => $this->partner->user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
             }
-        } else if ($this->type == ShareSafari::TYPE_SAFARI) {
+        } elseif ($this->type == ShareSafari::TYPE_SAFARI) {
             return UserFollow::find()->where(['follow_user_id' => $this->host_user_id])->andWhere(['user_id' => \Yii::$app->params['active_user_id']])->andWhere(['user_follower.status' => 1])->limit(1)->one();
         }
     }
@@ -463,7 +463,7 @@ class ___ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             return $this->user ? $this->user->id : '';
-        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+        } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->user->id : '';
         }
     }

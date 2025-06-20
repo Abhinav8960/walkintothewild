@@ -37,7 +37,6 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends RestController
 {
-
     /**
      * @inheritdoc
      */
@@ -262,7 +261,7 @@ class DefaultController extends RestController
         if ($this->userinfo->is_mobile_no_verified == 0) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
         }
-        
+
         if ($this->userinfo) {
             $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId])->limit(1)->one();
             if ($safari_operator) {

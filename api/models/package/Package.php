@@ -72,7 +72,7 @@ class Package extends \common\models\package\Package
         // $fields[] = 'banner_thumbnail';
         $fields[] = 'banner_thumbnails';
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::PACKAGE_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL])) {
             $fields[] = 'package_itinerary_overview';
             $fields[] = 'master_package_with_included';
             $fields[] = 'package_inclusion';
@@ -193,7 +193,6 @@ class Package extends \common\models\package\Package
             // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
             $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_image;
         } else {
-
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;
@@ -216,7 +215,6 @@ class Package extends \common\models\package\Package
             // $image_path = \Yii::$app->params['endpoint'] . '/package/' . $this->id . '/' . $this->package_banner_image;
             $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_banner_image;
         } else {
-
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
                     $image_path = $this->singlepark->park->logoimagepath;

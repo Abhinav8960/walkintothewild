@@ -3,17 +3,14 @@
 namespace api\modules\sharesafari\controllers;
 
 use Yii;
-
 use api\controllers\RestController;
 use api\models\sharesafari\ShareSafari;
-
 
 /**
  * Site controller
  */
 class SafariController extends RestController
 {
-
     public $slug;
     public $sharesafari;
 

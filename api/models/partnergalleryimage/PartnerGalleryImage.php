@@ -4,10 +4,8 @@ namespace api\models\partnergalleryimage;
 
 use Yii;
 
-
 class PartnerGalleryImage extends \common\models\partnergalleryimage\PartnerGalleryImage
 {
-
     public function fields()
     {
 

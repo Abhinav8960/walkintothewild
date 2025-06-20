@@ -23,7 +23,7 @@ class PackageSafariPark extends \common\models\package\PackageSafariPark
     {
         $fields = parent::fields();
 
-        if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/view'])) {
             $fields[] = 'park';
             $hold_fields = [
                 'id',

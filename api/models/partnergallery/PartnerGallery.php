@@ -8,7 +8,6 @@ use Yii;
 
 class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 {
-
     public function fields()
     {
 
@@ -43,12 +42,12 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
                 return (bool) $this->can_send_for_approval;
             },
             'gallery_status_label' => function () {
-                return $this->can_send_for_approval == 1 ? "Send for Approval" : NULL;
+                return $this->can_send_for_approval == 1 ? "Send for Approval" : null;
             }
         ];
 
         // Add images field if the layout matches
-        if (in_array(\Yii::$app->controller->layout, [SELF::PARTNER_GALLERY_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::PARTNER_GALLERY_API_LAYOUT_FULL])) {
             $fields['images'] = $this->galleryActiveImages;
             unset($fields['private_url']);
             unset($fields['status']);

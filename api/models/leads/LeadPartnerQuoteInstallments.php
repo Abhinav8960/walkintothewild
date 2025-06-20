@@ -27,7 +27,6 @@ use Yii;
  */
 class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuoteInstallments
 {
-
     public function fields()
     {
         $fields = [

@@ -49,7 +49,6 @@ class NotificationHistoryController extends RestController
     public function actionIndex()
     {
         if ($this->userinfo) {
-
             $dataProvider = new ActiveDataProvider([
                 'query' => FirebaseNotificationLog::find()->where([
                     'user_id' => $this->userinfoId,

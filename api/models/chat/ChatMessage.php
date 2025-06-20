@@ -22,8 +22,6 @@ use common\models\partnergallery\PartnerGallery;
  */
 class ChatMessage extends \common\models\chat\ChatMessage
 {
-
-
     public function behaviors()
     {
         return [
@@ -241,7 +239,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
     public function getPayment_details()
     {
         if (!empty($this->quote)) {
-            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', NULL])->orderBy(['id' => SORT_DESC]);
+            return $this->hasOne(\api\models\leads\LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'quotation_id'])->where(['IS NOT', 'payment_link', null])->orderBy(['id' => SORT_DESC]);
         }
     }
 
@@ -265,6 +263,4 @@ class ChatMessage extends \common\models\chat\ChatMessage
     //         return NULL;
     //     }
     // }
-
-
 }

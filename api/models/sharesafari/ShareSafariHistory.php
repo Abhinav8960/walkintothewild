@@ -8,8 +8,6 @@ use Yii;
 
 class ShareSafariHistory extends \common\models\sharesafari\ShareSafariHistory
 {
-   
-
     public function getPark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);

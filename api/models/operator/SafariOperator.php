@@ -15,7 +15,6 @@ use common\traits\CommanRelationship;
 
 class SafariOperator extends \common\models\operator\SafariOperator
 {
-
     public function fields()
     {
 
@@ -29,7 +28,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
         },];
         $fields[] = 'review_url';
 
-        if (in_array(\Yii::$app->controller->layout, [SELF::OPERATOR_API_LAYOUT_FULL])) {
+        if (in_array(\Yii::$app->controller->layout, [self::OPERATOR_API_LAYOUT_FULL])) {
             $fields[] = 'park';
             $fields['is_approved'] = function () {
                 return (bool)$this->is_approved;

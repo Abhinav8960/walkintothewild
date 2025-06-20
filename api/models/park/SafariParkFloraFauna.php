@@ -19,5 +19,4 @@ use Yii;
  */
 class SafariParkFloraFauna extends \common\models\park\SafariParkFloraFauna
 {
-    
 }

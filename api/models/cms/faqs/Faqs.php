@@ -6,7 +6,6 @@ use Yii;
 
 class Faqs extends \common\models\cms\faqs\Faqs
 {
-
     public function fields()
     {
         $fields = parent::fields();

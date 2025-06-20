@@ -46,7 +46,7 @@ class MasterMonthSearch extends MasterMonth
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['month' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['month' => SORT_ASC]],
 
         ]);
 

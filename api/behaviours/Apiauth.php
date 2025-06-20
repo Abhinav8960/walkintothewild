@@ -42,7 +42,6 @@ class Apiauth extends AuthMethod
             in_array($action->id, $this->exclude) &&
             !isset($_GET['access-token'])
         ) {
-
             return true;
         }
 
@@ -89,11 +88,10 @@ class Apiauth extends AuthMethod
     {
         $headers = Yii::$app->getRequest()->getHeaders();
 
-        $accessToken = NULL;
+        $accessToken = null;
         if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
             $accessToken = $matches[1];
-        } 
-        elseif (isset($_GET['access_token'])) {
+        } elseif (isset($_GET['access_token'])) {
             $accessToken = $_GET['access_token'];
         } elseif (isset($_GET['access-token'])) {
             $accessToken = $_GET['access-token'];
@@ -102,7 +100,7 @@ class Apiauth extends AuthMethod
         } else {
             $accessToken = $headers->get('x-access_token');
         }
-        
+
         if (is_string($accessToken)) {
             $identity = $user->loginByAccessToken($accessToken, get_class($this));
             if ($identity !== null) {
@@ -113,7 +111,6 @@ class Apiauth extends AuthMethod
         }
 
         if ($accessToken !== null) {
-
             return \Yii::$app->api->sendFailedStringResponse(['Access token not found'], 400);
 
             // $this->handleFailure($response);

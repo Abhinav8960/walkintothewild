@@ -12,7 +12,7 @@ class ShareSafariCommentReport extends \common\models\sharesafari\ShareSafariCom
     public function fields()
     {
         $fields = parent::fields();
-       
+
         // $fields[] = 'sharesafari';
         $fields[] = 'comment';
         $fields[] = 'park';
