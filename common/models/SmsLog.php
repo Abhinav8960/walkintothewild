@@ -27,7 +27,7 @@ use Yii;
  * @property int $updated_at
  * @property int|null $updated_by
  */
-class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
+class SmsLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\NewStatusInterface
 {
 
     const STATUS_PENDING = 0;

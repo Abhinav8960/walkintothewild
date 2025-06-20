@@ -26,11 +26,11 @@ $this->title = 'Leads';
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'headerOptions' => ['style' => 'width: 3%;'],
+                        'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
                         'label' => 'Source',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 2%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->sourceLabelWithBadge;
@@ -39,7 +39,7 @@ $this->title = 'Leads';
 
                     [
                         'label' => 'Name',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->displayLabel;
@@ -48,7 +48,7 @@ $this->title = 'Leads';
 
                     [
                         'label' => 'Safaris',
-                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 1%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->safaris) ? $model->safaris : '';
@@ -56,7 +56,7 @@ $this->title = 'Leads';
                     ],
                     [
                         'label' => 'Travelers',
-                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 1%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->travelers) ? $model->travelers : '';
@@ -65,7 +65,7 @@ $this->title = 'Leads';
 
                     [
                         'label' => 'Accomodation',
-                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 1%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return !empty($model->staycatgory) ? $model->staycatgory->title : '';
@@ -73,7 +73,7 @@ $this->title = 'Leads';
                     ],
                     [
                         'label' => 'Travel Date',
-                        'headerOptions' => ['style' => 'width: 8%;'],
+                        'contentOptions' => ['style' => 'width: 8%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str =  date('d M, Y', strtotime($model->from_date));
@@ -86,7 +86,7 @@ $this->title = 'Leads';
 
                     [
                         'label' => 'Lead Received',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return date('d M, Y h:i A', $model->created_at);

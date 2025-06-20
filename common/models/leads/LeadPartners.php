@@ -17,7 +17,7 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  */
-class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
     public function behaviors()
