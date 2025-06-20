@@ -46,36 +46,48 @@ $this->title = 'Leads';
                                     ?></p>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>Park Name</td>
                             <td>
                                 <p>Pench Tiger Reserve</p>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>Safaris</td>
-                            <td>
-                                <p><?= !empty($model->safaris) ? $model->safaris : ''; ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Travelers</td>
-                            <td>
-                                <p><?= !empty($model->travelers) ? $model->travelers : '' ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Accomodation</td>
-                            <td>
-                                <p><?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>User Notes</td>
-                            <td>
-                                <p><?= !empty($model->user_notes) ? $model->user_notes : '' ?></p>
-                            </td>
-                        </tr>
+                        </tr> -->
+                        <?php if ($model->safaris) { ?>
+                            <tr>
+                                <td>Safaris</td>
+                                <td>
+                                    <p><?= !empty($model->safaris) ? $model->safaris : ''; ?></p>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <?php if ($model->travelers) { ?>
+
+                            <tr>
+                                <td>Travelers</td>
+                                <td>
+                                    <p><?= !empty($model->travelers) ? $model->travelers : '' ?></p>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <?php if ($model->staycatgory) { ?>
+
+                            <tr>
+                                <td>Accomodation</td>
+                                <td>
+                                    <p><?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?></p>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <?php if ($model->user_notes) { ?>
+
+                            <tr>
+                                <td>User Notes</td>
+                                <td>
+                                    <p><?= !empty($model->user_notes) ? $model->user_notes : '' ?></p>
+                                </td>
+                            </tr>
+                        <?php } ?>
+
                         <!-- <tr>
                             <td>Days</td>
                             <td>

@@ -82,6 +82,14 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'validity_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Validity date') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'permit_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Permit Booking date') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'installment')->textInput([
             'maxlength' => true,
             'disabled' => true,
@@ -91,6 +99,14 @@ use yii\bootstrap5\ActiveForm;
 
     <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price'])->hint('<div class="text-muted">Platform fees in percentage: ' . $model->plateform_partner_fees_percentage . ' %</div>') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-6">
+        <?= $form->field($model, 'addional_notes')->textarea([
+            // 'maxlength' => true,
+            'row' => 5,
+            'placeholder' => 'Enter Additional Notes',
+        ])->label('Additional Notes') ?>
     </div>
 
 
@@ -166,7 +182,7 @@ $this->registerJs($script);
     .santBtn button {
         border: 1px solid #000;
         padding: 8px 20px;
-        background-color:#09422d;
+        background-color: #09422d;
         border-radius: 4px;
         color: #fff;
     }

@@ -30,7 +30,7 @@ $this->title = 'Leads';
                     ],
                     [
                         'label' => 'Source',
-                        'contentOptions' => ['style' => 'width: 2%;'],
+                        'contentOptions' => ['style' => 'width: 1%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->sourceLabelWithBadge;

@@ -1,5 +1,6 @@
  <?php
 
+    use common\models\GeneralModel;
     use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
@@ -52,13 +53,29 @@
                                  <h3 class="text-center">Itinerary & Quotation</h3>
                              </div>
                              <div class="discriptionsCenter">
-                                 <p class="pb-2"><span>Park:</span> <?= $chat_message->quote->park_label ?? '' ?> </p>
-                                 <p class="pb-2"><span>Safaris:</span> <?= $chat_message->quote->safaris ?? '' ?></p>
-                                 <p class="pb-2"><span>Travelers:</span> <?= $chat_message->quote->travelers ?? '' ?></p>
-                                 <p class="pb-2"><span>Stay Category:</span> <?= $chat_message->quote->staycatgory_lable ?? '' ?></p>
-                                 <p class="pb-2"><span>Start Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></p>
-                                 <p class="pb-2"><span>End Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></p>
-                                 <p class="pb-0"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                 <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
+                                 <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Start Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></b></p>
+                                 <p class="mb-1"><span>End Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></b></p>
+                                 <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                 <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                                     <div>
+                                         <p>
+                                             <span style="color: red;"><i>Quotation Valid Until:</i></span>
+                                             <b><i><?= $chat_message->quote->validity_date ?? '' ?></i></b>
+                                         </p>
+                                     </div>
+                                     <div class="d-flex align-items-center gap-1">
+
+                                         <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20" height="20">
+                                         <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote->net_payment_price) ?? '' ?></b></span>
+
+                                     </div>
+                                 </div>
+                                 <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
+
                              </div>
                              <div class="recievedTime">
                                  <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
