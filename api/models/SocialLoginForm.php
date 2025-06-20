@@ -27,6 +27,8 @@ class SocialLoginForm extends Model
     public $platform_version;
     public $browser;
     public $browser_version;
+    public $user_platform_version;
+    public $application_version;
     public $firebase_token;
     public $otp;
 
@@ -38,7 +40,7 @@ class SocialLoginForm extends Model
     {
         return [
             // username and password are both required
-            [['device', 'platform', 'platform_version', 'browser', 'browser_version', 'firebase_token', 'avatar', 'otp'], 'safe'],
+            [['device', 'platform', 'platform_version', 'browser', 'user_platform_version', 'application_version', 'browser_version', 'firebase_token', 'avatar', 'otp'], 'safe'],
             [['source', 'source_id', 'email', 'name'], 'required'],
             ['email', 'email'],
             // ['source_id', 'sourceIdvalidators'],
