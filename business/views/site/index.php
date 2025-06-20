@@ -69,7 +69,7 @@ $this->title = 'Dashboard';
           <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
             <div class="mainCard py-3 px-3">
               <div class="cardChild">
-                <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #FFEEEE;">
                   <img src="<?= $this->params['baseurl'] ?>/images/Icon feather-star.svg" alt="Lead">
                 </div>
                 <div class="text-card mb-2">
@@ -87,7 +87,7 @@ $this->title = 'Dashboard';
         <div class="row">
           <div class="col-xxl-6 col-xl-12 col-12 mb-3">
             <div class="h-100">
-              <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
+              <div class="topHead d-flex justify-content-between align-items-center mx-4">
                 <p>Recent Posts</p>
                 <?php if (false) { ?>
                   <a href="<?= Url::toRoute(['posts/default/index']) ?>">See All</a>
@@ -103,7 +103,7 @@ $this->title = 'Dashboard';
                           <div class="card-body border-0 p-2">
                             <div class="cardBodyTitle">
                               <div class="subtitle pb-2">
-                                <p><?= isset($post->caption) ? $post->caption : '' ?></p>
+                                <p><?= isset($post->caption) ? mb_strimwidth($post->caption, 0, 30, "...") : '' ?></p>
                               </div>
                               <div class="coLike d-flex justify-content-between">
                                 <a href=""><?= isset($post->comment_count) ? $post->comment_count : '' ?> Comments</a>
@@ -121,7 +121,7 @@ $this->title = 'Dashboard';
           </div>
           <div class="col-xxl-6 col-xl-12 col-12 mb-3">
             <div class="h-100">
-              <div class="topHead d-flex justify-content-between align-items-center pb-2 mx-4">
+              <div class="topHead d-flex justify-content-between align-items-center mx-4">
                 <p>Recent Sightings</p>
                 <?php if (false) { ?>
                   <a href="<?= Url::toRoute(['sightings/default/index']) ?>">See All</a>
@@ -140,7 +140,7 @@ $this->title = 'Dashboard';
                           <div class="card-body border-0 p-2">
                             <div class="cardBodyTitle">
                               <div class="subtitle pb-2">
-                                <p><?= isset($sighting->description) ? $sighting->description : '' ?></p>
+                                <p><?= isset($sighting->description) ? mb_strimwidth($sighting->description, 0, 20, "...") : '' ?></p>
                               </div>
                               <div class="coLike d-flex flex-column">
                                 <a href="" class="pb-2"><?= isset($sighting->comment_count) ? $sighting->comment_count : '' ?> Comments</a>
@@ -241,27 +241,22 @@ $this->title = 'Dashboard';
         <div class="rightSidebar">
           <div class="cadplaform">
             <p class="mb-2 headbg">Platform Usage & Ethics</p>
-            <p class="mb-3">The platform must be used strictly for genuine bookings. Direct...</p>
+            <p class="mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting..</p>
             <!-- <a href="">Read Partner Handbook</a> -->
-            <a href="">Coming Soon</a>
+            <!-- <a href="">Coming Soon</a> -->
           </div>
         </div>
       </div>
       <div class="col-xl-12 mb-3">
         <div class="progressBar">
           <div class="qout">
-            <div class="montlyQouteHeader mb-2 px-4 pt-3">
+            <!-- <div class="montlyQouteHeader mb-2 px-4 pt-3">
               <p>Monthly Quote Requests</p>
-            </div>
-            <?php if (false) { ?>
-              <div class="bodySectionParent">
-                <div class="sideNumbers">
-                  <p class="sideQuteno pb-3">300</p>
-                  <p class="sideQuteno pb-3">300</p>
-                  <p class="sideQuteno pb-3">300</p>
-                  <p class="sideQuteno pb-3">300</p>
-                  <p class="sideQuteno pb-3">300</p>
-                </div>
+            </div> -->
+            <img src="<?= $this->params['baseurl'] ?>/images/Monthly Quote Request.svg" alt="" class="w-100 object-fit-cover">
+
+            <div class="bodySectionParent">
+              <?php if (false) { ?>
                 <div class="quote-chart">
                   <div class="chart-area">
                     <div class="y-axis-labels">
@@ -291,11 +286,9 @@ $this->title = 'Dashboard';
                     </div>
                   </div>
                 </div>
-              </div>
-            <?php } ?>
-            <div class="mb-5 px-5 pt-3 text-fade">
-              <p>Comming Soon</p>
+              <?php } ?>
             </div>
+
           </div>
         </div>
       </div>

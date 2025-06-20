@@ -52,12 +52,12 @@
                                  <h3 class="text-center">Itinerary & Quotation</h3>
                              </div>
                              <div class="discriptionsCenter">
-                                 <p class="pb-2"><span>Park:</span> <?= $chat_message->quote->park_label ?? '' ?> </p>
-                                 <p class="pb-2"><span>Safaris:</span> <?= $chat_message->quote->safaris ?? '' ?></p>
-                                 <p class="pb-2"><span>Travelers:</span> <?= $chat_message->quote->travelers ?? '' ?></p>
-                                 <p class="pb-2"><span>Stay Category:</span> <?= $chat_message->quote->staycatgory_lable ?? '' ?></p>
-                                 <p class="pb-2"><span>Start Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></p>
-                                 <p class="pb-2"><span>End Date:</span> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></p>
+                                 <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
+                                 <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
+                                 <p class="mb-1"><span>Start Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></b></p>
+                                 <p class="mb-1"><span>End Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></b></p>
                                  <p class="pb-0"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
                              </div>
                              <div class="recievedTime">

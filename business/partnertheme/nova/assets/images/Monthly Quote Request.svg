@@ -1,0 +1,38 @@
+<svg id="Learning_Hours_Container" data-name="Learning Hours Container" xmlns="http://www.w3.org/2000/svg" width="299" height="282" viewBox="0 0 299 282">
+  <rect id="Learning_Hours_Container_Frame_Background_" data-name="Learning Hours Container [Frame Background]" width="299" height="282" rx="16" fill="#fff"/>
+  <g id="Learning_Hours_Content" data-name="Learning Hours Content" transform="translate(16 15.801)">
+    <g id="Learning_Hours_Title" data-name="Learning Hours Title">
+      <text id="Learning_Hours" data-name="Learning Hours" fill="#111" font-size="16" font-family="Inter-Bold, Inter" font-weight="700" letter-spacing="-0.015em"><tspan x="0" y="16">Monthly Quote Requests</tspan></text>
+    </g>
+    <g id="Learning_Hours_Chart_Container" data-name="Learning Hours Chart Container" transform="translate(0 35.199)">
+      <g id="Learning_Hours_Chart" data-name="Learning Hours Chart">
+        <g id="Learning_Hours_Bars_Container" data-name="Learning Hours Bars Container">
+          <g id="Learning_Hours_Indicator" data-name="Learning Hours Indicator" transform="translate(0 0.153)">
+            <g id="Indicator">
+              <text id="Text" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-24.43" y="12">300</tspan></text>
+              <text id="Text-2" data-name="Text" transform="translate(0 39)" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-24.077" y="12">200</tspan></text>
+              <text id="Text-3" data-name="Text" transform="translate(0 78)" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-22.389" y="12">100</tspan></text>
+              <text id="Text-4" data-name="Text" transform="translate(0 117)" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-15.993" y="12">50</tspan></text>
+              <text id="Text-5" data-name="Text" transform="translate(0 156)" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-8.259" y="12">0</tspan></text>
+            </g>
+          </g>
+          <g id="Learning_Hours_Bars" data-name="Learning Hours Bars" transform="translate(44)">
+            <rect id="Bar" width="49.75" height="94" rx="12" transform="translate(0 85)" fill="#e6e6e6"/>
+            <rect id="Bar-2" data-name="Bar" width="49.75" height="160" rx="12" transform="translate(57.75 19)" fill="#e6e6e6"/>
+            <rect id="Bar-3" data-name="Bar" width="49.75" height="126" rx="12" transform="translate(115.5 53)" fill="#e6e6e6"/>
+            <rect id="Bar-4" data-name="Bar" width="49.75" height="179" rx="12" transform="translate(173.25)" fill="#e6e6e6"/>
+          </g>
+        </g>
+        <g id="X-Labels" transform="translate(0 179)">
+          <g id="Learning_Hours_Labels_Container" data-name="Learning Hours Labels Container" transform="translate(60.375 12.153)">
+            <g id="Learning_Hours_Labels" data-name="Learning Hours Labels">
+              <g id="Learning_Hours_Label_Container" data-name="Learning Hours Label Container" transform="translate(0 0.119)">
+                <text id="Learning_Hours_Label" data-name="Learning Hours Label" transform="translate(-5)" fill="#848a90" font-size="12" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="-44.041" y="12">Coming soon...</tspan></text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
