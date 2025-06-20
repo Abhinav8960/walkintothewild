@@ -46,7 +46,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
     const SOURCE_PACKAGE = 1;
@@ -250,11 +250,11 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     public function getDisplayOverview()
     {
         if ($this->source == 1) {
-            return $this->package ? $this->package->package_description : '';
+            return $this->package ? mb_strimwidth($this->package->package_description, 0, 400, "...") : '';
         } else if ($this->source == 2) {
-            return $this->park ? $this->park->short_description : '';
+            return $this->park ? mb_strimwidth($this->park->short_description, 0, 400, "...") : '';
         } else if ($this->source == 3) {
-            return $this->operator ? $this->operator->about_business : '';
+            return $this->operator ? mb_strimwidth($this->operator->about_business, 0, 400, "...") : '';
         }
     }
 

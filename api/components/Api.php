@@ -153,22 +153,28 @@ class Api extends Component
     public function createAccesstoken($user, $params = null)
     {
 
+        $headers = Yii::$app->getRequest()->getHeaders();
 
+        $device = strtolower($headers->get('x-device')) ?? NULL;
+        $platform = strtolower($headers->get('x-platform')) ?? NULL;
+        $platform_version = strtolower($headers->get('x-platform-version')) ?? NULL;
+        $application_version = strtolower($headers->get('x-application-version')) ?? NULL;
 
         $model = new UserSession();
         $toekn = hash('SHA512', $user->id . '-' . $user->auth_key . '-' . time());
         $model->token =  $toekn;
 
-
         $model->id                          = $toekn;
         $model->user_id                     = $user->id;
         $model->ip_address                  = \Yii::$app->request->getUserIP();
-        $model->user_platform               = isset($params->platform) ? $params->platform : null;
-        $model->firebase_token              = isset($params->firebase_token) ? $params->firebase_token : null;
+        $model->firebase_token              = isset($params->firebase_token) ? $params->firebase_token : NULL;
         // $model->platform_version    = isset($params->platform_version) ? $params->platform_version : NULL;
         $model->user_browser                = isset($params->browser) ? $params->browser : null;
         // $model->browser_version     = isset($params->browser_version) ? $params->browser : NULL;
-        $model->user_device                 = isset($params->device) ? $params->device : null;
+        $model->user_device                 = isset($params->device) ? $params->device : $device;
+        $model->user_platform               = isset($params->platform) ? $params->platform : $platform;
+        $model->user_platform_version       = isset($params->platform_version) ? $params->platform_version : $platform_version;
+        $model->application_version         = isset($params->application_version) ? $params->application_version : $application_version;
         $model->app_name                    = Yii::$app->params['app_name'];
         $model->created_at                  =  date('Y-m-d H:i:s');
         // $model->updated_at = date('Y-m-d H:i:s');

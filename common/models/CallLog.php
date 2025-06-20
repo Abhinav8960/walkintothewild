@@ -37,7 +37,7 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $updated_at
  */
-class CallLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\StatusInterface
+class CallLog extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\NewStatusInterface
 {
 
     const STATUS_FAILED = 0;

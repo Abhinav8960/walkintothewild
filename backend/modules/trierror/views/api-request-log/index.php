@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             if (!empty($model->user_id)) {
                                 return Html::a(
-                                    $model->user->name,
+                                    isset($model->user->name) ? $model->user->name : '',
                                     [
                                         '/user/default/profile',
                                         'user_id' => $model->user_id

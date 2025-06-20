@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use Yii;
 use common\models\trierror\ApiRequestLog;
 use common\models\trierror\ApiRequestLogSearch;
+use common\models\User;
 
 /**
  * ApiRequestLogController implements the CRUD actions for ApiRequestLog model.
@@ -161,5 +162,15 @@ class ApiRequestLogController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUserList($q = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $users = User::find()
+        ->select(['id', 'text' => new \yii\db\Expression("CONCAT(name, ' (', email, ')')")])
+        ->where(['or',['like', 'name', $q],['like', 'mobile_no', $q],['like', 'username', $q],['like', 'email', $q]])
+        ->limit(20)->asArray()->all();
+        return ['results' => $users];
     }
 }
