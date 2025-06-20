@@ -1,6 +1,8 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -22,13 +24,21 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
-        <?= $form->field($model, 'user_id')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
-            [
-                'prompt' => 'Select User',
-            ]
-        ) ?>
+    <div class="col-md-4 select2-selection--single">
+        <?= $form->field($model, 'user_id')->widget(Select2::class, [
+            'initValueText' => $model->user ? $model->user->name.'('.$model->user->email.')' : '', 
+            'options' => ['placeholder' => 'Select User'],
+            'pluginOptions' => [
+                'allowClear' => true,
+                'minimumInputLength' => 1,
+                'ajax' => [
+                    'url' => \yii\helpers\Url::to(['api-request-log/user-list']),
+                    'dataType' => 'json',
+                    'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                    'processResults' => new JsExpression('function(data) { return data; }'),
+                ],
+            ],
+        ]); ?>
     </div>
     <!-- <div class="col-md-2">
         <?= $form->field($model, 'request_group')->dropDownList(
@@ -86,3 +96,8 @@ $script = <<<JS
 JS;
 $this->registerJs($script);
 ?>
+<style>
+    .select2-selection--single {
+        height: 38px !important;
+    }
+</style>
