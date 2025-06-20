@@ -1,5 +1,6 @@
  <?php
 
+    use common\models\GeneralModel;
     use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
@@ -67,10 +68,10 @@
                                          </p>
                                      </div>
                                      <div class="d-flex align-items-center gap-1">
-                                         <p>
-                                             <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20" height="20">
-                                             <span><b style="font-size: 20px;"><?= $chat_message->quote->net_payment_price ?? '' ?></b></span>
-                                         </p>
+
+                                         <img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20" height="20">
+                                         <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote->net_payment_price) ?? '' ?></b></span>
+
                                      </div>
                                  </div>
                                  <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
