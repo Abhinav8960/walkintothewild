@@ -95,7 +95,7 @@ class DefaultController extends  Controller
     {
         $id = Yii::$app->request->post('id');
         $paymentUrl = Yii::$app->request->post('payment_url');
-        $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage');
+        $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage') ?? 0;
         $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
         // print_r($qr_code_file);
@@ -107,7 +107,8 @@ class DefaultController extends  Controller
             if ($quotation) {
                 // Calculate platform partner fees
                 $partnerSellingPrice = $quotation->partner_selling_price;
-                $platformPartnerFees = ($partnerSellingPrice * $partnerFeesPercentage) / 100;
+                // $platformPartnerFees = ($partnerSellingPrice * $partnerFeesPercentage) / 100;
+                $platformPartnerFees = 0;
                 $netSellingPrice = $partnerSellingPrice + $platformPartnerFees;
 
                 // Update quotation details
