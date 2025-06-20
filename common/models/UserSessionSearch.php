@@ -16,7 +16,7 @@ class UserSessionSearch extends UserSession
     public function rules()
     {
         return [
-            [['user_id', 'app_name'], 'safe'],
+            [['user_id', 'app_name','user_platform_version','application_version'], 'safe'],
         ];
     }
 
@@ -57,6 +57,8 @@ class UserSessionSearch extends UserSession
             'app_name' => $this->app_name,
 
         ]);
+        $query->andFilterWhere(['like', 'user_session.user_platform_version', $this->user_platform_version])
+        ->andFilterWhere(['like', 'user_session.application_version', $this->application_version]);
 
         return $dataProvider;
     }
