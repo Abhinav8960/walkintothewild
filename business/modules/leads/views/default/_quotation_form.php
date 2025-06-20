@@ -82,6 +82,10 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'validity_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Validity date') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'installment')->textInput([
             'maxlength' => true,
             'disabled' => true,
@@ -166,7 +170,7 @@ $this->registerJs($script);
     .santBtn button {
         border: 1px solid #000;
         padding: 8px 20px;
-        background-color:#09422d;
+        background-color: #09422d;
         border-radius: 4px;
         color: #fff;
     }
