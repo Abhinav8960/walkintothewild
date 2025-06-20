@@ -46,12 +46,12 @@ $this->title = 'Leads';
                                     ?></p>
                             </td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>Park Name</td>
                             <td>
                                 <p>Pench Tiger Reserve</p>
                             </td>
-                        </tr>
+                        </tr> -->
                         <?php if ($model->safaris) { ?>
                             <tr>
                                 <td>Safaris</td>

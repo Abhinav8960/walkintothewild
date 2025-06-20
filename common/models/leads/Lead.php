@@ -250,13 +250,14 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     public function getDisplayOverview()
     {
         if ($this->source == 1) {
-            return $this->package ? mb_strimwidth($this->package->package_description, 0, 400, "...") : '';
+            return $this->package ? mb_strimwidth($this->package->package_description, 0, 300, "...") : '';
         } else if ($this->source == 2) {
-            return $this->park ? mb_strimwidth($this->park->short_description, 0, 400, "...") : '';
+            return $this->park ? mb_strimwidth($this->park->short_description, 0, 300, "...") : '';
         } else if ($this->source == 3) {
-            return $this->operator ? mb_strimwidth($this->operator->about_business, 0, 400, "...") : '';
+            return $this->operator ? mb_strimwidth($this->operator->about_business, 0, 300, "...") : '';
         }
     }
+    
 
     public function getPackage()
     {
