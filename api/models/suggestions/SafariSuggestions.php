@@ -2,7 +2,6 @@
 
 namespace api\models\suggestions;
 
-
 class SafariSuggestions extends \common\models\suggestions\SafariSuggestions
 {
     /**
@@ -18,5 +17,4 @@ class SafariSuggestions extends \common\models\suggestions\SafariSuggestions
             [['phone'], 'string', 'max' => 10],
         ];
     }
-
 }

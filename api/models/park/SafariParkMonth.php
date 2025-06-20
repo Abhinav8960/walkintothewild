@@ -19,8 +19,6 @@ use Yii;
  */
 class SafariParkMonth extends \common\models\park\SafariParkMonth
 {
-
-
     public function getMastermonth()
     {
         return $this->hasOne(MasterMonth::className(), ['month' => 'month_id']);

@@ -7,6 +7,7 @@ use yii\base\Component;
 use yii\httpclient\Client; // Or GuzzleHttp\Client, etc.
 use Google\Client as GoogleClient; // If using google/apiclient
 use Google\Service\PlayIntegrity;
+
 // Potentially use libraries for iOS CBOR/COSE validation, e.g., from web-auth/webauthn-lib
 // use Cose\Algorithm\Manager as CoseAlgorithmManager;
 // use Cose\Algorithm\Signature\ECDSA\ES256;
@@ -163,7 +164,7 @@ class AttestationValidator extends Component
             $verdict = $deviceIntegrity->getDeviceRecognitionVerdict()[0] ?? 'NONE'; // Get the first verdict
             // Decide acceptable level - MEETS_DEVICE_INTEGRITY is recommended.
             // Avoid allowing 'MEETS_BASIC_INTEGRITY' unless you understand the risks (emulators, basic root).
-            if ($verdict !== 'MEETS_DEVICE_INTEGRITY' /* && $verdict !== 'MEETS_STRONG_INTEGRITY' */ ) {
+            if ($verdict !== 'MEETS_DEVICE_INTEGRITY' /* && $verdict !== 'MEETS_STRONG_INTEGRITY' */) {
                 Yii::warning("Play Integrity: Device integrity verdict ($verdict) not met.", __METHOD__);
                 return false;
             }
@@ -174,7 +175,6 @@ class AttestationValidator extends Component
 
             Yii::info("Play Integrity Validation Successful.", __METHOD__);
             return true;
-
         } catch (\Google\Service\Exception $e) {
              Yii::error("Google API Error: " . $e->getMessage(), __METHOD__);
              // Log details like $e->getErrors() if needed
@@ -248,7 +248,6 @@ class AttestationValidator extends Component
 
             Yii::info("iOS Initial Attestation Validation Successful for keyId: $keyId", __METHOD__);
             // return true; // Uncomment when placeholder logic is replaced
-
         } catch (\Exception $e) {
             Yii::error("Error validating iOS initial attestation: " . $e->getMessage(), __METHOD__);
             return false;
@@ -272,10 +271,10 @@ class AttestationValidator extends Component
          Yii::info("Attempting iOS Assertion validation for keyId: $keyId", __METHOD__);
          // 1. Decode Base64 assertion object
          $assertionObject = base64_decode($assertionObjectBase64);
-         if ($assertionObject === false) {
-             Yii::warning("iOS Assertion: Failed to base64 decode object.", __METHOD__);
-             return false;
-         }
+        if ($assertionObject === false) {
+            Yii::warning("iOS Assertion: Failed to base64 decode object.", __METHOD__);
+            return false;
+        }
 
          // 2. Retrieve Stored Public Key and Counter for $keyId
          // $storedData = $this->getStoredKeyData($keyId); // Fetch from DB/storage
@@ -290,42 +289,41 @@ class AttestationValidator extends Component
 
          // 3. Decode CBOR Assertion Object
          //    Requires a CBOR/COSE library. Contains 'signature' and 'authenticatorData'.
-         try {
-             // $decodedAssertion = CborDecoder::decode($assertionObject);
-             // $signature = $decodedAssertion['signature'] ?? null; // Signature bytes
-             // $authData = $decodedAssertion['authenticatorData'] ?? null; // Authenticator Data bytes
+        try {
+            // $decodedAssertion = CborDecoder::decode($assertionObject);
+            // $signature = $decodedAssertion['signature'] ?? null; // Signature bytes
+            // $authData = $decodedAssertion['authenticatorData'] ?? null; // Authenticator Data bytes
 
-             // Placeholder: Parse 'signature', 'authData' from CBOR $assertionObject
+            // Placeholder: Parse 'signature', 'authData' from CBOR $assertionObject
 
-             // 4. Verify Authenticator Data (`authData`)
-             //    - Parse authData (RP ID Hash, Flags, Counter).
-             //    - Verify RP ID Hash matches SHA256 of your $this->appleAppId.
-             //    - Verify Flags (User Present bit must be set).
-             //    - Verify Counter is strictly greater than $lastSeenCounter (prevents replay).
+            // 4. Verify Authenticator Data (`authData`)
+            //    - Parse authData (RP ID Hash, Flags, Counter).
+            //    - Verify RP ID Hash matches SHA256 of your $this->appleAppId.
+            //    - Verify Flags (User Present bit must be set).
+            //    - Verify Counter is strictly greater than $lastSeenCounter (prevents replay).
 
-             // Placeholder: Perform authData validation including counter check
+            // Placeholder: Perform authData validation including counter check
 
-             // 5. Verify Signature
-             //    - Calculate clientDataHash = hash('sha256', $clientData, true); // Binary hash
-             //    - Concatenate $authData and $clientDataHash.
-             //    - Calculate challengeToSign = hash('sha256', $authData . $clientDataHash, true);
-             //    - Use the retrieved $publicKey to verify the $signature against the $challengeToSign.
-             //      Requires crypto library supporting ES256/PS256 signature verification.
+            // 5. Verify Signature
+            //    - Calculate clientDataHash = hash('sha256', $clientData, true); // Binary hash
+            //    - Concatenate $authData and $clientDataHash.
+            //    - Calculate challengeToSign = hash('sha256', $authData . $clientDataHash, true);
+            //    - Use the retrieved $publicKey to verify the $signature against the $challengeToSign.
+            //      Requires crypto library supporting ES256/PS256 signature verification.
 
-             // Placeholder: Perform signature verification
+            // Placeholder: Perform signature verification
 
-             // 6. Update Counter if validation passes
-             //    If signature and counter checks are successful:
-             //    - Update the stored counter for $keyId to the new counter value from $authData.
-             //    Example: $this->updateCounter($keyId, $newCounter);
+            // 6. Update Counter if validation passes
+            //    If signature and counter checks are successful:
+            //    - Update the stored counter for $keyId to the new counter value from $authData.
+            //    Example: $this->updateCounter($keyId, $newCounter);
 
-             Yii::info("iOS Assertion Validation Successful for keyId: $keyId", __METHOD__);
-             // return true; // Uncomment when placeholder logic is replaced
-
-         } catch (\Exception $e) {
-             Yii::error("Error validating iOS assertion: " . $e->getMessage(), __METHOD__);
-             return false;
-         }
+            Yii::info("iOS Assertion Validation Successful for keyId: $keyId", __METHOD__);
+            // return true; // Uncomment when placeholder logic is replaced
+        } catch (\Exception $e) {
+            Yii::error("Error validating iOS assertion: " . $e->getMessage(), __METHOD__);
+            return false;
+        }
 
         Yii::warning("iOS Assertion validation logic not fully implemented.", __METHOD__);
         return false; // Return false until fully implemented

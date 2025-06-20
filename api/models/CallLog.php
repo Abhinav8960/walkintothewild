@@ -38,7 +38,6 @@ use Yii;
  */
 class CallLog extends \common\models\CallLog
 {
-
     public function fields()
     {
 
@@ -100,7 +99,6 @@ class CallLog extends \common\models\CallLog
             'BUSY' => 'Busy',
         ];
         if ($this->call_request_status == "success") {
-
             return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated';
         }
         return 'Call Initiated';

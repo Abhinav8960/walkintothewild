@@ -4,9 +4,8 @@ namespace api\models\cms\mastertag;
 
 use Yii;
 
-class MasterTag extends  \common\models\cms\mastertag\MasterTag
+class MasterTag extends \common\models\cms\mastertag\MasterTag
 {
-
     public function fields()
     {
         $fields = parent::fields();

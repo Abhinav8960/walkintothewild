@@ -33,7 +33,6 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends RestController
 {
-
     /**
      * @inheritdoc
      */
@@ -156,12 +155,12 @@ class DefaultController extends RestController
             //     'page' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->count() / 10 - 1, // Calculate the last page
             // ],
         ]);
-        return $this->querySender($dataProvider, $rootIndexName = "chat_messages", $singleRecord = false,  $in_reverse = true);
+        return $this->querySender($dataProvider, $rootIndexName = "chat_messages", $singleRecord = false, $in_reverse = true);
     }
 
 
 
-    public function actionSendMessage($user_handle, $chat_hash = NULL)
+    public function actionSendMessage($user_handle, $chat_hash = null)
     {
         $login_user = $this->userinfo;
         $individual_user = $this->individualuser($user_handle);
@@ -171,7 +170,6 @@ class DefaultController extends RestController
         }
 
         if (!empty($chat_hash)) {
-
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
@@ -205,7 +203,7 @@ class DefaultController extends RestController
 
         $message = Yii::$app->request->post('message') ?? null;
         $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
-        $gallery = NULL;
+        $gallery = null;
         if (empty($message) && empty($gallery_slug)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
@@ -220,7 +218,7 @@ class DefaultController extends RestController
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = NULL, $login_user);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user);
     }
 
     private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
@@ -382,7 +380,6 @@ class DefaultController extends RestController
         $model->partner_id = $lead_partner->partner_id;
 
         if ($model->validate()) {
-
             if ($model->request($this->userinfo)) {
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quatation Send for approval to admin"]);
             }
@@ -395,10 +392,12 @@ class DefaultController extends RestController
     protected function findLeadModel($id, $partner)
     {
 
-        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use ($partner) {
-            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
+        if (
+            ($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use ($partner) {
+                $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
             // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
-        }])->one()) !== null) {
+            }])->one()) !== null
+        ) {
             return $model;
         }
 
@@ -519,7 +518,6 @@ class DefaultController extends RestController
         }
 
         if (!empty($chat_hash)) {
-
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
@@ -546,17 +544,16 @@ class DefaultController extends RestController
                 $chat_message->chat_id = $chat_model->id;
                 $chat_message->message = $message;
                 $chat_message->is_call_request = true;
-                $chat_message->call_id = NULL;
+                $chat_message->call_id = null;
                 $chat_message->status = 1;
                 $chat_message->sender_id = $this->userinfo->id;
 
                 if ($chat_message->save(false)) {
-
                     $chat = Chat::find()->where(['id' => $chat_model->id])->one();
                     $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
                     $chat->last_message_at = time();
                     $chat->is_call_request = true;
-                    $chat->call_id = NULL;
+                    $chat->call_id = null;
                     $chat->sender_id = $this->userinfo->id;
                     $chat->is_lead_chat_open_for_user = 1;
                     $chat->status = 1;
@@ -574,7 +571,6 @@ class DefaultController extends RestController
             // Example parameters
             $transaction = Yii::$app->db->beginTransaction();
             try {
-
                 if (!$chat_model->user->is_mobile_no_verified) {
                     return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
                 }
@@ -638,7 +634,6 @@ class DefaultController extends RestController
 
         $chat_message->message = $message;
         if ($chat_message->save()) {
-
             // Check if the chat message is the last message of the chat
             $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();
             $last_message = ChatMessage::find()->where(['chat_id' => $chat->id, 'status' => 1])->orderBy(['id' => SORT_DESC])->one();

@@ -12,7 +12,6 @@ use common\models\trierror\FrontendRequestLog;
 
 class RestController extends Controller
 {
-
     public $request;
     public $queryRequest;
     public $query_params;
@@ -42,7 +41,7 @@ class RestController extends Controller
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::className(),
             'cors' => [
-                'Origin' => SELF::allowedDomains(),
+                'Origin' => self::allowedDomains(),
                 // 'Access-Control-Allow-Origin' => static::allowedDomains(),
                 'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                 'Access-Control-Request-Headers' => ['*'],
@@ -87,7 +86,6 @@ class RestController extends Controller
         }
         $this->getUser();
         if (isset($this->queryRequest['pageSize'])) {
-
             if ($this->queryRequest['pageSize'] < 10) {
                 $this->pageSize = 10;
             } elseif ($this->queryRequest['pageSize'] > 30) {
@@ -104,9 +102,9 @@ class RestController extends Controller
     {
 
         $headers = Yii::$app->getRequest()->getHeaders();
-        $this->userinfo =  NULL;
+        $this->userinfo =  null;
 
-        $accessToken = NULL;
+        $accessToken = null;
         if (!empty($headers->get('Authorization')) && preg_match('/Bearer\s(\S+)/', $headers->get('Authorization'), $matches)) {
             $accessToken = $matches[1];
         } elseif (isset($_GET['access_token'])) {
@@ -120,7 +118,6 @@ class RestController extends Controller
         }
 
         if (!empty($accessToken)) {
-
             $access_token = UserSession::findOne(['token' => $accessToken]);
 
             if ($access_token) {
@@ -159,7 +156,6 @@ class RestController extends Controller
 
         // die();
         if ($dataProvider->pagination && $singleRecord == false) {
-
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
@@ -202,7 +198,6 @@ class RestController extends Controller
 
         // die();
         if ($dataProvider->pagination && $singleRecord == false) {
-
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
@@ -226,11 +221,10 @@ class RestController extends Controller
     }
 
 
-    protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false,  $in_reverse = false)
+    protected function querySender($dataProvider, $rootIndexName = 0, $singleRecord = false, $in_reverse = false)
     {
         $data = [];
         if ($dataProvider->pagination && $singleRecord == false) {
-
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
@@ -290,7 +284,7 @@ class RestController extends Controller
     }
 
 
-    protected function dataProviderSenderWithCondition($searchModel, $rootIndexName = 0, $condition = NULL, $defaultsort = NULL,  $singleRecord = false, $paginationNeededAsPerQuery = 1)
+    protected function dataProviderSenderWithCondition($searchModel, $rootIndexName = 0, $condition = null, $defaultsort = null, $singleRecord = false, $paginationNeededAsPerQuery = 1)
     {
         $data = [];
         $searchModel->load(\Yii::$app->request->queryParams);
@@ -314,7 +308,6 @@ class RestController extends Controller
 
         // die();
         if ($dataProvider->pagination && $singleRecord == false) {
-
             $dataProvider->pagination->pageSize = $this->pageSize;
             $dataProvider->pagination->validatePage = false;
 
@@ -334,10 +327,10 @@ class RestController extends Controller
         parent::afterAction($action, $result);
 
         $headers = Yii::$app->getRequest()->getHeaders();
-        $device = strtolower($headers->get('x-device')) ?? NULL;
-        $platform = strtolower($headers->get('x-platform')) ?? NULL;
-        $platform_version = strtolower($headers->get('x-platform-version')) ?? NULL;
-        $application_version = strtolower($headers->get('x-application-version')) ?? NULL;
+        $device = strtolower($headers->get('x-device')) ?? null;
+        $platform = strtolower($headers->get('x-platform')) ?? null;
+        $platform_version = strtolower($headers->get('x-platform-version')) ?? null;
+        $application_version = strtolower($headers->get('x-application-version')) ?? null;
         //start code to each request trace by sonu shokeen
         $request = Yii::$app->request;
         $user = $this->userinfo;
@@ -380,7 +373,7 @@ class RestController extends Controller
             $model = new ApiRequestLog();
             $model->user_id = $userid;
             $model->slug = $slug;
-            $model->route = NULL; //$route;
+            $model->route = null; //$route;
             $model->request_url = $request->pathInfo;
             $model->request_full_url = $request->absoluteUrl;
             $model->request_type = $request->method;
@@ -397,14 +390,14 @@ class RestController extends Controller
             // }
             $model->response =  json_encode($result);
 
-            $model->system = NULL; //$system_type;
+            $model->system = null; //$system_type;
 
             $model->device = $device; //$agent->device();
             $model->platform = $platform; //$agent->platform();
             $model->platform_version = $platform_version; //$agent->platform();
-            $model->application_version = $application_version; //$agent->platform();            
-            $model->browser = NULL; //$agent->browser();
-            $model->browser_version = NULL; //$agent->version($agent->browser());
+            $model->application_version = $application_version; //$agent->platform();
+            $model->browser = null; //$agent->browser();
+            $model->browser_version = null; //$agent->version($agent->browser());
             $model->save(false);
         }
         //end code to each request trace by sonu shokeen

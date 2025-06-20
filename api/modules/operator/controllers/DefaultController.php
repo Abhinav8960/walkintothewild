@@ -4,7 +4,6 @@ namespace api\modules\operator\controllers;
 
 use api\behaviours\Apiauth;
 use Yii;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
@@ -83,7 +82,7 @@ class DefaultController extends RestController
                     'flag' => ['POST'],
                     'operator-park-dropdown' => ['GET'],
                     'report-operator' => ['POST'],
-                   
+
                 ],
             ],
         ];
@@ -122,7 +121,7 @@ class DefaultController extends RestController
         if ($this->userinfo->is_mobile_no_verified == 0) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
         }
-        
+
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$operator) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Operator Not Found!!!"]);
@@ -139,7 +138,6 @@ class DefaultController extends RestController
         $model->attributes = $this->request;
         if ($model->validate()) {
             if ($operator_quote = $model->request($operator, $this->userinfo)) {
-
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!']);
             }
         }
@@ -168,7 +166,6 @@ class DefaultController extends RestController
             $follower->status = 1;
 
             if ($follower->save(false)) {
-
                 // $to_mail = $operator->email;
                 // $subject = 'Follow Request';
                 // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
@@ -198,7 +195,6 @@ class DefaultController extends RestController
             $my_follower->status = 0;
 
             if ($my_follower->save(false)) {
-
                 // $to_mail = $operator->email;
                 // $subject = 'UnFollow Request';
                 // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;

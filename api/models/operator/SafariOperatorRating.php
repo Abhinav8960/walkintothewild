@@ -9,18 +9,15 @@ use common\models\operator\SafariOperatorRatingReport;
 
 class SafariOperatorRating extends \common\models\operator\SafariOperatorRating
 {
-
     public function fields()
     {
         $fields = parent::fields();
-        if(!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/user-rating-parklist']))
-        {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/user-rating-parklist'])) {
             $fields[] = 'user';
             $fields[] = 'park';
             $hold_fields = ['safari_operator_id', 'park_id', 'parent_id', 'user_id', 'flaged', 'is_deleted', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-        }else{
+        } else {
             $hold_fields = ['id', 'safari_operator_id','parent_id', 'user_id', 'flaged', 'is_deleted', 'user_device', 'user_agent', 'user_platform', 'user_platform_version', 'user_browser', 'user_browser_version', 'user_ip_address', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
-
         }
         return array_diff($fields, $hold_fields);
     }

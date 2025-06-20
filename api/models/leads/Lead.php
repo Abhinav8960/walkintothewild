@@ -13,7 +13,7 @@ use Yii;
  * This is the model class for table "lead".
  *
  * @property int $id
- * @property int $source 1=>package,2=>park,3=>operator 
+ * @property int $source 1=>package,2=>park,3=>operator
  * @property int|null $package_id
  * @property string|null $package_version
  * @property int|null $park_id
@@ -48,8 +48,6 @@ use Yii;
  */
 class Lead extends \common\models\leads\Lead
 {
-
-
     public function fields()
     {
         $fields = [
@@ -80,12 +78,12 @@ class Lead extends \common\models\leads\Lead
         if ($this->source == self::SOURCE_PARK) {
             $fields[] = 'park';
         }
-       
+
         return $fields;
     }
 
 
-    
+
     public function rules()
     {
         return [
@@ -177,9 +175,9 @@ class Lead extends \common\models\leads\Lead
     public function getSources()
     {
         return $arr = [
-            SELF::SOURCE_PACKAGE => 'Package',
-            SELF::SOURCE_PARK => 'Park',
-            SELF::SOURCE_PARTNER => 'Operator',
+            self::SOURCE_PACKAGE => 'Package',
+            self::SOURCE_PARK => 'Park',
+            self::SOURCE_PARTNER => 'Operator',
         ];
     }
 

@@ -4,7 +4,6 @@ namespace api\modules\package\controllers;
 
 use api\behaviours\Apiauth;
 use Yii;
-
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
@@ -111,7 +110,7 @@ class DefaultController extends RestController
     public function actionView($slug)
     {
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
-        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['IS NOT', 'live_version', NULL])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->andWhere(['IS NOT', 'live_version', null])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"], 404);
         }
@@ -136,7 +135,6 @@ class DefaultController extends RestController
         $model = new PackageCommentForm();
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($package)) {
-
             // if ($this->userinfo) {
             //     /**login User info */
             //     $user = $this->userinfo;
@@ -178,7 +176,6 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($package)) {
-
                 $reply_comment = $replymodel->commentbyParent();
                 // if ($reply_comment) {
                 //     if ($this->userinfo) {
@@ -265,7 +262,7 @@ class DefaultController extends RestController
         if ($this->userinfo->is_mobile_no_verified == 0) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
         }
-        
+
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
@@ -418,7 +415,6 @@ class DefaultController extends RestController
         $data['PackageFaq']['summary']['query_params'] = $this->query_params;
 
         if ($dataProvider->getTotalCount() > 0) {
-
             $data['PackageFaq']['data'] = $this->serializeData($dataProvider->getModels());
         } else {
             $data['PackageFaq']['data'] = $this->serializeData($this->prepareDefaultQuestionAnswer($package));

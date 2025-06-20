@@ -19,5 +19,4 @@ use Yii;
  */
 class SafariParkFollower extends \common\models\park\SafariParkFollower
 {
-    
 }

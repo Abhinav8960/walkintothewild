@@ -12,8 +12,6 @@ use Yii;
  */
 class Verbcheck extends \yii\filters\VerbFilter
 {
-
-
     /**
      * @param ActionEvent $event
      * @return boolean

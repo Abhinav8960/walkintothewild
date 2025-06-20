@@ -6,7 +6,6 @@ use api\models\park\SafariPark;
 use api\models\User;
 use Yii;
 
-
 class ShareSafariParklist extends \common\models\sharesafari\ShareSafariParklist
 {
     public function fields()

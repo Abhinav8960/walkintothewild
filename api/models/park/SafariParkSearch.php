@@ -85,7 +85,7 @@ class SafariParkSearch extends SafariPark
             $dataProvider->sort = [
                 'defaultOrder' => ['title' => SORT_ASC]
             ];
-        } else if ($this->custom_sort_by == 3) {
+        } elseif ($this->custom_sort_by == 3) {
             $dataProvider->sort = [
                 'defaultOrder' => ['title' => SORT_DESC]
             ];
@@ -176,7 +176,7 @@ class SafariParkSearch extends SafariPark
             'safari_park.status' => $this->status,
         ]);
 
-        
+
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         if ($this->master_location_id && $this->master_location_id != 0) {
@@ -190,7 +190,7 @@ class SafariParkSearch extends SafariPark
 
 
         // If Rare EXOTIC ANIMAL Selected
-        if ($this->is_single!=1  && $this->master_rare_animal_id == '' && empty($this->master_animal_slug)) {
+        if ($this->is_single != 1  && $this->master_rare_animal_id == '' && empty($this->master_animal_slug)) {
             $query->andWhere("safari_park.id IN (SELECT distinct safari_park_id from safari_parks_animal WHERE status=1)");
             // $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
             $query->andWhere(['show_in_filter' => 1]);

@@ -6,7 +6,6 @@ use api\models\master\country\MasterCountry;
 use api\models\master\state\MasterState;
 use Yii;
 
-
 class MasterCity extends \common\models\master\city\MasterCity
 {
     public function fields()

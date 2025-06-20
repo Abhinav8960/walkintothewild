@@ -44,7 +44,7 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
             },
             'total_view',
         ];
-        
+
         $fields[] = 'image_path';
         $fields[] = 'banner_image_path';
         // $fields[] = 'rareparkanimals';

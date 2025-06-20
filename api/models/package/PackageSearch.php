@@ -7,7 +7,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use DateTime;
 
-
 class PackageSearch extends Package
 {
     public $park_id;
@@ -111,9 +110,9 @@ class PackageSearch extends Package
             'package.is_published_on_web' => $this->is_published_on_web,
             'package.is_published_on_api' => $this->is_published_on_api,
             'package.owned_by_id' => $this->owned_by_id,
-            
+
         ]);
-        
+
 
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
@@ -176,19 +175,19 @@ class PackageSearch extends Package
                 $dataProvider->sort = [
                     'defaultOrder' => ['created_at' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == '2') {
+            } elseif ($this->custom_sort_by == '2') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['no_of_safari' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == '3') {
+            } elseif ($this->custom_sort_by == '3') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['no_of_safari' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == '4') {
+            } elseif ($this->custom_sort_by == '4') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['cost_per_person' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == '5') {
+            } elseif ($this->custom_sort_by == '5') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['popular_package' => SORT_DESC]
                 ];
@@ -196,8 +195,7 @@ class PackageSearch extends Package
         }
 
         if ($this->report_days) {
-
-            // 
+            //
             $query->andWhere($this->rawdatequery);
         }
 
@@ -263,24 +261,24 @@ class PackageSearch extends Package
             $start = $now->setTime(0, 0, 0)->getTimestamp();
             $end = $now->setTime(23, 59, 59)->getTimestamp();
             $query .= " AND created_at BETWEEN $start AND $end";
-        } else if ($this->report_days == 'yesterday') { // Yesterday
+        } elseif ($this->report_days == 'yesterday') { // Yesterday
             $yesterday = (new DateTime('yesterday'));
             $start = $yesterday->setTime(0, 0, 0)->getTimestamp();
             $end = $yesterday->setTime(23, 59, 59)->getTimestamp();
             $query .= " AND created_at BETWEEN $start AND $end";
-        } else if ($this->report_days == 'tw') { // This Week
+        } elseif ($this->report_days == 'tw') { // This Week
             $start = (new DateTime('monday this week'))->setTime(0, 0, 0)->getTimestamp();
             $end = (new DateTime('sunday this week'))->setTime(23, 59, 59)->getTimestamp();
             $query .= " AND created_at BETWEEN $start AND $end";
-        } else if ($this->report_days == 'tm') { // This Month
+        } elseif ($this->report_days == 'tm') { // This Month
             $start = (new DateTime('first day of this month'))->setTime(0, 0, 0)->getTimestamp();
             $end = (new DateTime('last day of this month'))->setTime(23, 59, 59)->getTimestamp();
             $query .= " AND created_at BETWEEN $start AND $end";
-        } else if ($this->report_days == 'lm') { // Last Month
+        } elseif ($this->report_days == 'lm') { // Last Month
             $start = (new DateTime('first day of last month'))->setTime(0, 0, 0)->getTimestamp();
             $end = (new DateTime('last day of last month'))->setTime(23, 59, 59)->getTimestamp();
             $query .= " AND created_at BETWEEN $start AND $end";
-        } else if ($this->report_days == 'tfy') { // This Financial Year
+        } elseif ($this->report_days == 'tfy') { // This Financial Year
             $financialYearStart = new DateTime('April ' . $now->format('Y'));
             if ($now < $financialYearStart) {
                 $financialYearStart = new DateTime('April ' . $now->format('Y', strtotime('-1 year')));

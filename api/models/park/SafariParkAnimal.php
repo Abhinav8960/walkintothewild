@@ -16,8 +16,6 @@ use Yii;
  */
 class SafariParkAnimal extends \common\models\park\SafariParkAnimal
 {
-
-
     public function getSafaripark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);

@@ -3,7 +3,6 @@
 namespace api\modules\sharesafari\controllers;
 
 use Yii;
-
 use api\behaviours\Verbcheck;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
@@ -37,8 +36,6 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends SafariController
 {
-
-
     /**
      * @inheritdoc
      */

@@ -70,11 +70,11 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
                 $dataProvider->sort = [
                     'defaultOrder' => ['created_at' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == 'highest') {
+            } elseif ($this->custom_sort_by == 'highest') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['rating' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == 'lowest') {
+            } elseif ($this->custom_sort_by == 'lowest') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['rating' => SORT_ASC]
                 ];

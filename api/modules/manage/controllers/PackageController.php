@@ -146,7 +146,6 @@ class PackageController extends RestController
                 if ($package_feature) {
                     PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
                     foreach ($package_feature as $feature) {
-
                         $packagefeature = new PackageFeature();
                         $packagefeature->package_id = $model->package_version_model->package_id;
                         $packagefeature->version = $model->package_version_model->version;
@@ -193,7 +192,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -252,7 +250,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -279,7 +276,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -306,7 +302,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -369,7 +364,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -416,14 +410,13 @@ class PackageController extends RestController
 
     /**
      * Create PackageFaqForm.
-     * 
+     *
      * @return mixed
      */
     public function actionCreateFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -461,7 +454,6 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
 
@@ -505,7 +497,6 @@ class PackageController extends RestController
 
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
 
@@ -655,7 +646,6 @@ class PackageController extends RestController
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
             if (!$isNewRecord) {
-
                 $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
             }
             // $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
@@ -733,7 +723,7 @@ class PackageController extends RestController
 
     private function CopyPackageIncluded($old_package_id, $old_version, $new_package_id)
     {
-        // package_included_approval;         
+        // package_included_approval;
         $model = PackageIncluded::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $included) {
@@ -750,7 +740,7 @@ class PackageController extends RestController
     }
     private function CopyPackageFeature($old_package_id, $old_version, $new_package_id)
     {
-        // package_feature_approval;      
+        // package_feature_approval;
 
         $model = PackageFeature::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
@@ -768,7 +758,7 @@ class PackageController extends RestController
 
     private function CopyPackageSafariPark($old_package_id, $old_version, $new_package_id)
     {
-        // package_safari_park_approval; 
+        // package_safari_park_approval;
         $model = PackageSafariPark::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $safari) {
@@ -785,7 +775,8 @@ class PackageController extends RestController
     }
 
     private function CopyPackageFaq($old_package_id, $old_version, $new_package_id)
-    {        // package_faq_approval;
+    {
+        // package_faq_approval;
         $model = PackageFaq::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $faq) {
@@ -818,7 +809,6 @@ class PackageController extends RestController
             $this->terminatePackage($package_id);
         }
         if ($status == PackageVersion::EDIATBLE_STATUS) {
-
             $model->editable_version = $version;
         }
         if ($model->save(false)) {
@@ -874,7 +864,6 @@ class PackageController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL_WITH_VERSION;
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);

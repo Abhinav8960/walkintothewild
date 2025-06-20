@@ -6,7 +6,6 @@ use api\models\sighting\Sighting;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-
 class SightingSearch extends Sighting
 {
     /**

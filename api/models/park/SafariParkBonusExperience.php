@@ -18,5 +18,4 @@ use Yii;
  */
 class SafariParkBonusExperience extends \common\models\park\SafariParkBonusExperience
 {
-    
 }

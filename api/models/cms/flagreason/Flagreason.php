@@ -1,8 +1,8 @@
 <?php
 
 namespace api\models\cms\flagreason;
-use Yii;
 
+use Yii;
 
 class Flagreason extends \common\models\cms\flagreason\Flagreason
 {

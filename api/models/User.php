@@ -18,7 +18,6 @@ use api\models\sharesafari\ShareSafariIntrested;
 
 class User extends \common\models\User
 {
-
     public function fields()
     {
         $fields = parent::fields();
@@ -203,7 +202,7 @@ class User extends \common\models\User
         ];
         if (!empty($this->partner)) {
             $arr['status'] = $this->partner->status;
-            $arr['title'] = $this->partner->categorytitle ?? NULL;
+            $arr['title'] = $this->partner->categorytitle ?? null;
         }
         return $arr;
     }

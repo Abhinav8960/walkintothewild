@@ -1,10 +1,13 @@
 <?php
+
 namespace api\filters;
 
 use Yii;
 use yii\base\ActionFilter;
 use yii\web\UnauthorizedHttpException;
-use app\components\AttestationValidator; // Your component to talk to Google/Apple
+use app\components\AttestationValidator;
+
+// Your component to talk to Google/Apple
 
 class AppAttestationFilter extends ActionFilter
 {

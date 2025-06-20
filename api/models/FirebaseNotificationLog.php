@@ -4,7 +4,6 @@ namespace api\models;
 
 use Yii;
 
-
 class FirebaseNotificationLog extends \common\models\firebasenotification\FirebaseNotificationLog
 {
     public function fields()

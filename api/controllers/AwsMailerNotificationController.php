@@ -13,7 +13,6 @@ use yii\web\Response;
  */
 class AwsMailerNotificationController extends Controller
 {
-
     public $enableCsrfValidation = false;
     /**
      * Displays homepage.
@@ -23,8 +22,8 @@ class AwsMailerNotificationController extends Controller
     public function actionIndex()
     {
         // die('tyui');
-        // $request = file_get_contents('php://input'); 
-        // // $request = Yii::$app->request->getRawBody(); 
+        // $request = file_get_contents('php://input');
+        // // $request = Yii::$app->request->getRawBody();
         // $jsonfile= '/home/betahrms/www/apps/web/assets/sns.php';
         // $fp = fopen($jsonfile, 'w+');
         // fwrite($fp, $request);
@@ -47,7 +46,6 @@ class AwsMailerNotificationController extends Controller
     private function NotificationType($type, $request)
     {
         if (isset($request['mail'])) {
-
             if ($type == 'delivery') {
                 $this->delivery($request);
             } elseif ($type == 'bounce') {
@@ -63,10 +61,9 @@ class AwsMailerNotificationController extends Controller
     {
         $m = MailLog::find()->where(['aws_message_id' => $messageId])->one();
         if (!empty($m)) {
-
             return $m->id;
         }
-        return NULL;
+        return null;
     }
 
     private function delivery($request)
@@ -117,7 +114,6 @@ class AwsMailerNotificationController extends Controller
     private function updateMailLog($logid, $recipients, $col)
     {
         foreach ($recipients as $recipient) {
-
             $m = MailLogRecipients::find()->where(['mail_log_id' => $logid, 'recipient' => $recipient])->one();
 
             if (!empty($m)) {

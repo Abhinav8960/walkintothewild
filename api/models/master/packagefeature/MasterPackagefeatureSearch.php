@@ -5,7 +5,6 @@ namespace api\models\master\packagefeature;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-
 /**
  * MasterPackagefeatureSearch represents the model behind the search form of `api\models\master\vehicle\MasterPackagefeature`.
  */

@@ -6,10 +6,8 @@ use api\models\meta\MetaStayCategory;
 use common\traits\CommanRelationship;
 use Yii;
 
-
 class ParkStayCategory extends \common\models\park\ParkStayCategory
 {
-
     public function fields()
     {
         $fields = [

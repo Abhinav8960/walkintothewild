@@ -20,7 +20,7 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'post_user_detail';
         $fields[] = 'resource_uri';
         $fields[] = 'thumbnails';
-        
+
         $hold_fields = ['etag', 'size', 'height', 'width', 'filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by','comment_count','like_count'];
 
         return array_diff($fields, $hold_fields);
@@ -108,7 +108,7 @@ class UserPosts extends \common\models\UserPosts
 
     public function getThumbnails()
     {
-        if(!empty($this->filepath)){
+        if (!empty($this->filepath)) {
             return $arr = [
                 'high' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/high/' . $this->filepath,
                 'standard' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/standard/' . $this->filepath,
@@ -116,6 +116,6 @@ class UserPosts extends \common\models\UserPosts
                 'low' => Yii::$app->params['s3_thumbnail_endpoint'] . '/thumbnail/low/' . $this->filepath,
             ];
         }
-        return NULL;
+        return null;
     }
 }

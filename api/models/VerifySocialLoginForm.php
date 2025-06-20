@@ -48,8 +48,7 @@ class VerifySocialLoginForm extends Model
         $model->name = $this->name;
         $model->expiry_datetime = strtotime('+5 minutes', time());
         $model->status = 0;
-        if($model->save(false)){
-
+        if ($model->save(false)) {
             new \common\events\user\SocialLoginEmailVerification($this->email, $this->name, $this->otp);
             return true;
         }
