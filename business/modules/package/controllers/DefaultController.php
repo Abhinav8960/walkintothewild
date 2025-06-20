@@ -480,6 +480,41 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
+    // public function actionUpdateFaq($id, $package_id, $faq_id)
+    // {
+    //     $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
+    //     $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
+    //     $model = new PackageFaqForm($faq_model);
+    //     $model->package_id = $package_version_model->package_id;
+    //     $model->version = $package_version_model->version;
+    //     $model->status = PackageFaq::STATUS_ACTIVE;
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->package_faq_model->save(false)) {
+    //                     $faq = new MasterFaq();
+    //                     $faq->question = $model->question;
+    //                     $faq->answer = $model->answer;
+    //                     $faq->position = 0;
+    //                     $faq->status = MasterFaq::STATUS_ACTIVE;
+    //                     if ($faq->save(false)) {
+    //                         $model->package_faq_model->faq_id = $faq->id;
+    //                         $model->package_faq_model->save(false);
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+    //                     return $this->redirect(['faq', 'id' => $package_version_model->id]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->package_faq_model->loadDefaultValues();
+    //     }
+
+
+    //     return $this->redirect(['faq', 'id' => $package_version_model->id]);
+    // }
+
     public function actionUpdateFaq($id, $package_id, $faq_id)
     {
         $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
@@ -489,22 +524,23 @@ class DefaultController extends Controller
         $model->version = $package_version_model->version;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->package_faq_model->faq_id = $faq->id;
-                            $model->package_faq_model->save(false);
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
+            if ($model->validate()) {
+                $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
+                $model = new PackageFaqForm($faq_model);
+                $model->initializeForm();
+                $faq_model->load($this->request->post());
+                if ($model->package_faq_model->save(false)) {
+                    $faq = new MasterFaq();
+                    $faq->question = $model->question;
+                    $faq->answer = $model->answer;
+                    $faq->position = 0;
+                    $faq->status = MasterFaq::STATUS_ACTIVE;
+                    if ($faq->save(false)) {
+                        $model->package_faq_model->faq_id = $faq->id;
+                        $model->package_faq_model->save(false);
                     }
+                    \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                    return $this->redirect(['faq', 'id' => $package_version_model->id]);
                 }
             }
         } else {
