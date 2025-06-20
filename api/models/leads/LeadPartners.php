@@ -61,4 +61,14 @@ class LeadPartners extends \common\models\leads\LeadPartners
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
     }
+
+
+    public static function quotationCount($lead_id, $partner_id)
+    {
+        $count = LeadPartners::find()->where(['lead_id' => $lead_id, 'partner_id' => $partner_id])->limit(1)->one();
+        if ($count && $count->quotation_count > 0) {
+            return $count->quotation_count;
+        }
+        return 0;
+    }
 }
