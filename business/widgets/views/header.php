@@ -5,7 +5,7 @@
          <img src="<?= $this->params['baseurl'] ?>/images/logo-mini.svg" alt="logo">
        </a>
      </div>
-    
+
 
      <ul class="nav-right d-flex align-items-center justify-content-center">
        <!-- <li class="nav-item dropdown">
@@ -21,7 +21,7 @@
        <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center">
            <div class="dorpdown-profile me-2">
-             <img src="<?= $this->params['baseurl'] ?>/images/default_witw.png" alt="logo">
+             <img src="<?= isset($safarioperator) && $safarioperator->imagepath ? $safarioperator->imagepath : $this->params['baseurl'] . '/images/default_witw.png' ?>" alt="logo">
            </div>
            <div class="d-lg-block d-none">
              <div class="dropdoen-detail-profile d-flex ">
