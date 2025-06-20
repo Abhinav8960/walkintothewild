@@ -86,6 +86,10 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
+        <?= $form->field($model, 'permit_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Permit Booking date') ?>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
         <?= $form->field($model, 'installment')->textInput([
             'maxlength' => true,
             'disabled' => true,
