@@ -63,7 +63,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="float-start">
                                         <div class="d-flex gap-2">
                                             <?php if ($model->form1_status == PartnerRegistration::FORM_FILLED) { ?>
-                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-success">Approved</a>
+                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-success">Approve</a>
                                                 <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 1]) ?>" class="btn btn-danger reject-action">Reject</button>
                                         </div>
                                     <?php } ?>
@@ -133,7 +133,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="float-start">
                                         <div class="d-flex gap-2">
                                             <?php if ($model->form2_status == PartnerRegistration::FORM_FILLED) { ?>
-                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-success">Approved</a>
+                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-success">Approve</a>
                                                 <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 2]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
@@ -205,7 +205,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="float-start">
                                         <div class="d-flex gap-2">
                                             <?php if ($model->form3_status == PartnerRegistration::FORM_FILLED) { ?>
-                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-success">Approved</a>
+                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-success">Approve</a>
                                                 <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 3]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
@@ -267,7 +267,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="float-start">
                                         <div class="d-flex gap-2">
                                             <?php if ($model->form4_status == PartnerRegistration::FORM_FILLED) { ?>
-                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-success">Approved</a>
+                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-success">Approve</a>
                                                 <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 4]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
@@ -346,7 +346,7 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                     <div class="float-start">
                                         <div class="d-flex gap-2">
                                             <?php if ($model->form5_status == PartnerRegistration::FORM_FILLED) { ?>
-                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 5]) ?>" class="btn btn-success">Approved</a>
+                                                <a href="<?= Url::toRoute(['step-approved', 'id' => $model->id, 'step' => 5]) ?>" class="btn btn-success">Approve</a>
                                                 <button value="<?= Url::toRoute(['step-reject', 'id' => $model->id, 'step' => 5]) ?>" class="btn btn-danger reject-action">Reject</button>
                                             <?php } ?>
                                         </div>
