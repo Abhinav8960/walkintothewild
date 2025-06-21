@@ -76,7 +76,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{view}&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                        'template' => '{view}',
                         // 'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
 
                         'buttons' => [
