@@ -48,7 +48,7 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package','park-stay-category'],
+                'exclude' => ['index', 'view', 'filter-parklist', 'reviewlist', 'park-operator', 'park-shared-safari', 'park-package', 'park-stay-category'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -353,4 +353,30 @@ class DefaultController extends RestController
         $searchModel->status = SafariParkAccomodation::STATUS_ACTIVE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "stay_category_options");
     }
+
+    // public function actionParkStayCategory($slug)
+    // {
+    //     $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (!$model) {
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+    //     }
+
+    //     $searchModel = new SafariParkAccomodationSearch();
+    //     $searchModel->safari_park_id = $model->id;
+    //     $searchModel->status = SafariParkAccomodation::STATUS_ACTIVE;
+
+    //     $data = [];
+    //     $searchModel->load(\Yii::$app->request->queryParams);
+    //     $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+    //     $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+
+
+
+    //     $dataProvider->pagination = false;
+
+    //     $data['stay_category_options']['summary']['query_params'] = $this->query_params;
+    //     $data['stay_category_options']['data'] = $this->serializeData($dataProvider->getModels());
+    //     return Yii::$app->api->sendResponse($data);
+    // }
 }

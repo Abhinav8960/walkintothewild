@@ -19,16 +19,31 @@ use Yii;
  */
 class SafariParkAccomodation extends \common\models\park\SafariParkAccomodation
 {
+    // public function fields()
+    // {
+    //     $fields = [
+    //         'stay_category',
+    //         'status' => function () {
+    //             return (bool)$this->status;
+    //         }
+    //     ];
+
+    //     return $fields;
+    // }
+
     public function fields()
     {
-        $fields = [
-            'stay_category',
-            'status' => function () {
-                return (bool)$this->status;
-            }
+        return [
+            'id' => function () {
+                return $this->stay_category->id ?? null;
+            },
+            'title' => function () {
+                return $this->stay_category->title ?? null;
+            },
+            // 'status' => function () {
+            //     return (bool)$this->status;
+            // }
         ];
-
-        return $fields;
     }
 
 
