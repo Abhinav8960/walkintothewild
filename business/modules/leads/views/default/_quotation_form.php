@@ -110,7 +110,7 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
 
-    <table id="calculation-table" class="table table-responsive d-none text-center">
+    <!-- <table id="calculation-table" class="table table-responsive d-none text-center">
         <thead>
             <th>Plateform Partner Fees Percentage</th>
             <th>Plateform Partner Fees</th>
@@ -127,7 +127,7 @@ use yii\bootstrap5\ActiveForm;
                 <td id="net_payment_price"></td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 
 
 
@@ -149,29 +149,29 @@ use yii\bootstrap5\ActiveForm;
 
 <?php
 $script = <<< JS
-$('#quotation-form').on('input', '#partner_selling_price', function() {
-    var sellingPrice = parseFloat($(this).val());
-    var feesPercentage = parseFloat($('#plateform_partner_fees_percentage').text().replace('%', ''));
+// $('#quotation-form').on('input', '#partner_selling_price', function() {
+//     var sellingPrice = parseFloat($(this).val());
+//     var feesPercentage = parseFloat($('#plateform_partner_fees_percentage').text().replace('%', ''));
 
-    if (!isNaN(sellingPrice) && sellingPrice > 0 && !isNaN(feesPercentage)) {
-        // Calculate platform fees
-        var platformFees = (sellingPrice * feesPercentage) / 100;
-        $('#plateform_partner_fees').text('₹'+platformFees.toFixed(2)); // Display calculated fees
+//     if (!isNaN(sellingPrice) && sellingPrice > 0 && !isNaN(feesPercentage)) {
+//         // Calculate platform fees
+//         var platformFees = (sellingPrice * feesPercentage) / 100;
+//         $('#plateform_partner_fees').text('₹'+platformFees.toFixed(2)); // Display calculated fees
 
-        // Calculate partner net selling price
-        var netSellingPrice = sellingPrice + platformFees;
-        $('#partner_net_selling_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
-        $('#net_payment_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
-        // $('#calculation-table').removeClass('d-none');
-    } else {
-        // Clear values if input is invalid
-        $('#plateform_partner_fees').text('');
-        $('#partner_net_selling_price').text('');
-        $('#net_payment_price').text('');
-        $('#calculation-table').addClass('d-none');
+//         // Calculate partner net selling price
+//         var netSellingPrice = sellingPrice + platformFees;
+//         $('#partner_net_selling_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
+//         $('#net_payment_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
+//         // $('#calculation-table').removeClass('d-none');
+//     } else {
+//         // Clear values if input is invalid
+//         $('#plateform_partner_fees').text('');
+//         $('#partner_net_selling_price').text('');
+//         $('#net_payment_price').text('');
+//         $('#calculation-table').addClass('d-none');
 
-    }
-});
+//     }
+// });
 JS;
 $this->registerJs($script);
 ?>
