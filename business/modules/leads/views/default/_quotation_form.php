@@ -162,7 +162,7 @@ $('#quotation-form').on('input', '#partner_selling_price', function() {
         var netSellingPrice = sellingPrice + platformFees;
         $('#partner_net_selling_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
         $('#net_payment_price').text('₹'+netSellingPrice.toFixed(2)); // Display net selling price
-        $('#calculation-table').removeClass('d-none');
+        // $('#calculation-table').removeClass('d-none');
     } else {
         // Clear values if input is invalid
         $('#plateform_partner_fees').text('');
