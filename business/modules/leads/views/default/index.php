@@ -1,5 +1,6 @@
 <?php
 
+use api\models\leads\LeadPartners;
 use common\models\GeneralModel;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -90,6 +91,16 @@ $this->title = 'Leads';
                         'format' => 'raw',
                         'value' => function ($model) {
                             return date('d M, Y h:i A', $model->created_at);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Quotation Count',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) use($safari_operator) {
+                            $count = LeadPartners::quotationCount($model->id,$safari_operator->id);
+                            return $count;
                         }
                     ],
 
