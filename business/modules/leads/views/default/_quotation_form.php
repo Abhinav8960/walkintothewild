@@ -98,7 +98,7 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price'])->hint('<div class="text-muted">Platform fees in percentage: ' . $model->plateform_partner_fees_percentage . ' %</div>') ?>
+        <?= $form->field($model, 'partner_selling_price')->textInput(['placeholder' => 'Enter selling price', 'id' => 'partner_selling_price']) ?>
     </div>
 
     <div class="col-md-6 col-lg-6">
