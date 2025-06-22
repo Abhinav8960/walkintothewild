@@ -35,7 +35,7 @@ class SafariPark extends \common\models\park\SafariPark
             'slug',
             'feature_image_path',
             'animal_text',
-            'notes',
+            'quotation_form_note',
             'short_description',
             'avg_safari_price_min' => function () {
                 return (int)$this->avg_safari_price_min;
@@ -57,7 +57,7 @@ class SafariPark extends \common\models\park\SafariPark
         }
 
         if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FOR_FILTER_PARK, self::OPERATOR_API_LAYOUT_FULL, self::SHARE_SAFARI_API_LAYOUT_FULL, self::PACKAGE_API_LAYOUT_FULL])) {
-            $fields = ['id', 'title', 'slug', 'feature_image_path'];
+            $fields = ['id', 'title', 'slug', 'feature_image_path','quotation_form_note'];
         }
 
         if (in_array(\Yii::$app->controller->layout, [self::PARK_API_LAYOUT_FULL])) {
@@ -75,7 +75,7 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'module_description';
             $fields[] = 'florafauna';
             $fields[] = 'animal_text';
-            $fields[] = 'notes';
+            $fields[] = 'quotation_form_note';
 
             // $fields[] = 'animal_type_sequence';
             // $fields[] = 'safri_cost_note';
