@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\feeds\Feeds;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
 use common\models\SmsLog;
@@ -216,5 +217,22 @@ class ScheduleController extends Controller
         ];
 
         return $mimeMap[$mimeType] ?? null;
+    }
+
+
+    public function actionDisable()
+    {
+        $currentDateTime = date('Y-m-d H:i:s');
+        $feedModels = Feeds::find()
+            ->where(['status' => 1])
+            ->andWhere(['<=', 'date_time', $currentDateTime])
+            ->all();
+
+        foreach ($feedModels as $feed) {
+            $feed->status = 0;
+            $feed->save(false);
+        }
+
+        echo "Successfully updated feeds based on start date!";
     }
 }

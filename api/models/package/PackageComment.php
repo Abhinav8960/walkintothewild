@@ -42,6 +42,9 @@ class PackageComment extends \common\models\package\PackageComment
         $fields['comment'] = function ($model) {
             return GeneralModel::apicommentConversion($model->comment);
         };
+        $fields['timestamp'] = function ($model) {
+            return  strtotime($this->created_at);
+        };
         return $fields;
     }
 
