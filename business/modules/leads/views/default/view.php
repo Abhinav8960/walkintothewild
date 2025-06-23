@@ -13,6 +13,7 @@ $this->title = 'Leads';
 <div class="wrapper_inner">
     <div class="row">
         <div class="col-lg-5">
+            <div class="be-scroller">
             <div class="details-packages mb-3">
                 <table class="table w-100 border-0 border_o">
                     <thead class="thead-details">
@@ -225,6 +226,7 @@ $this->title = 'Leads';
                     </div>
                 <?php } ?>
             </div>
+           </div>
         </div>
         <div class="col-lg-7">
             <div class="chats_wrapper">
