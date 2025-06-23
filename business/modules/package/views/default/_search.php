@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="filterItem position-relative">
                     <label>Stay Category:</label>
-                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'All Stay Category'])->label(false) ?>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'All Stay Category', 'class' => 'search-border'])->label(false) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
                 <div class="filterItem">

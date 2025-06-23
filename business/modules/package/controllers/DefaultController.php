@@ -525,22 +525,21 @@ class DefaultController extends Controller
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->validate()) {
-                $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
-                $model = new PackageFaqForm($faq_model);
                 $model->initializeForm();
-                $faq_model->load($this->request->post());
-                if ($model->package_faq_model->save(false)) {
-                    $faq = new MasterFaq();
-                    $faq->question = $model->question;
-                    $faq->answer = $model->answer;
-                    $faq->position = 0;
-                    $faq->status = MasterFaq::STATUS_ACTIVE;
-                    if ($faq->save(false)) {
-                        $model->package_faq_model->faq_id = $faq->id;
-                        $model->package_faq_model->save(false);
+                if ($faq_model->load($this->request->post())) {
+                    if ($model->package_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = MasterFaq::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->package_faq_model->faq_id = $faq->id;
+                            $model->package_faq_model->save(false);
+                        }
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
-                    \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                    return $this->redirect(['faq', 'id' => $package_version_model->id]);
                 }
             }
         } else {

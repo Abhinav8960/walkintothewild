@@ -81,7 +81,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
         <div class="col-lg-6">
             <div class="form_boxes mb-3">
-                <label for="">Package Inclusion <span>*</span></label>
+                <label for="">Package Exclusion <span>*</span></label>
                 <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'List what is not included'])->label(false) ?>
             </div>
         </div>
