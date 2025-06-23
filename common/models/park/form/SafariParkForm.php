@@ -91,7 +91,7 @@ class SafariParkForm extends model
     public $is_most_demanding;
     public $is_shared_safari;
 
-    public $notes;
+    public $quotation_form_note;
 
 
     public function __construct(SafariPark $safari_park_model = null)
@@ -161,7 +161,7 @@ class SafariParkForm extends model
             $this->is_shared_safari = $this->safari_park_model->is_shared_safari;
             $this->status = $this->safari_park_model->status;
 
-            $this->notes = $this->safari_park_model->notes;
+            $this->quotation_form_note = $this->safari_park_model->quotation_form_note;
 
 
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -240,7 +240,7 @@ class SafariParkForm extends model
                 'nearest_airport_three',
                 'nearest_airport_four',
                 'nearest_airport_five',
-                'notes',
+                'quotation_form_note',
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
@@ -505,7 +505,7 @@ class SafariParkForm extends model
             'month_note',
             'safri_cost_note',
             'animal_text',
-            'notes'
+            'quotation_form_note'
         ];
         $scenarios['update'] = [
             'show_in_filter',
@@ -551,7 +551,7 @@ class SafariParkForm extends model
             'animal_text',
             'is_most_demanding',
             'is_shared_safari',
-            'notes',
+            'quotation_form_note',
         ];
         $scenarios['howtoreach'] = [
             'status',
@@ -655,7 +655,7 @@ class SafariParkForm extends model
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'status' => 'Status',
-            'notes'=>'Notes',
+            'quotation_form_note'=>'Quotation Note',
         ];
     }
     /**
@@ -723,7 +723,7 @@ class SafariParkForm extends model
         $this->safari_park_model->is_shared_safari = $this->is_shared_safari;
         $this->safari_park_model->status = $this->status;
 
-        $this->safari_park_model->notes = $this->notes;
+        $this->safari_park_model->quotation_form_note = $this->quotation_form_note;
 
     }
 

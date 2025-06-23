@@ -127,7 +127,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-6">
-                <?= $form->field($model, 'notes')->textarea(['maxlength' => true, 'placeholder' => 'Enter Additional Notes']) ?>
+                <?= $form->field($model, 'quotation_form_note')->textarea(['maxlength' => true, 'placeholder' => 'Enter Quotation Note']) ?>
             </div>
         </div>
         <hr>

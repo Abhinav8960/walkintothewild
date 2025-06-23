@@ -29,7 +29,7 @@ class LeadPartnerQuotationForm extends Model
     public $phone;
     public $start_date;
     public $partner_selling_price;
-    public $plateform_partner_fees_percentage = 10;
+    public $plateform_partner_fees_percentage = 0;
     public $plateform_partner_fees;
     public $partner_net_selling_price;
     public $plateform_customer_discount = 0;

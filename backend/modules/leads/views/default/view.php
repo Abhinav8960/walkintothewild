@@ -92,11 +92,11 @@ AppAsset::register($this);
                         <th>Accomodation</th>
                         <th>Travel Date looking For</th>
                         <th>Info</th>
-                        <th>Partner selling price</th>
+                        <!-- <th>Partner selling price</th>
                         <th>Platform Partner Fees Percentage</th>
                         <th>Platform Partner Fees</th>
                         <th>Partner net selling price</th>
-                        <th>Platform customer discount</th>
+                        <th>Platform customer discount</th> -->
                         <th>Net payment price</th>
                         <th>No of installment</th>
                         <th>Lead Received Date</th>
@@ -127,11 +127,11 @@ AppAsset::register($this);
                                         <?= $quotation->email ?>
                                         <?= $quotation->phone ?>
                                     </td>
-                                    <td>₹<?= $quotation->partner_selling_price ?></td>
+                                    <!-- <td>₹<?= $quotation->partner_selling_price ?></td>
                                     <td><?= $quotation->plateform_partner_fees_percentage ?>%</td>
                                     <td>₹<?= $quotation->plateform_partner_fees ?></td>
                                     <td>₹<?= $quotation->partner_net_selling_price ?></td>
-                                    <td>₹<?= $quotation->plateform_customer_discount ?></td>
+                                    <td>₹<?= $quotation->plateform_customer_discount ?></td> -->
                                     <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
@@ -205,8 +205,8 @@ AppAsset::register($this);
                     <div class="mb-3">
                         <label for="payment-url" class="form-label">Payment URL</label>
                         <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
-                        <label for="plateform-partner-fees-percentage" class="form-label">Platform Partner Fees Percentage</label>
-                        <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required>
+                        <!-- <label for="plateform-partner-fees-percentage" class="form-label">Platform Partner Fees Percentage</label>
+                        <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required> -->
                         <small id="net-payment-price-hint" class="form-text text-muted"></small>
                         <label for="approval-file" class="form-label">Upload QR Code File</label>
                         <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
@@ -295,7 +295,7 @@ $('.approve-btn').on('click', function() {
     var percentage = $(this).data('percentage');
     var partnerSellingPrice = $(this).data('partner-selling-price');
     $('#approve-quotation-id').val(quotationId);
-    $('#plateform-partner-fees-percentage').val(percentage);
+    // $('#plateform-partner-fees-percentage').val(percentage);
     $('#partner-selling-price').val(partnerSellingPrice);
     updateNetPaymentPriceHint();
 });
@@ -307,7 +307,7 @@ $('#plateform-partner-fees-percentage').on('input', function() {
 
 function updateNetPaymentPriceHint() {
     var partnerSellingPrice = parseFloat($('#partner-selling-price').val()) || 0;
-    var percentage = parseFloat($('#plateform-partner-fees-percentage').val()) || 0;
+    var percentage =  0;
     var partnerFees = (partnerSellingPrice * percentage) / 100;
     var netPaymentPrice = partnerSellingPrice + partnerFees;
     $('#net-payment-price-hint').text('Net Payment Price: ₹' + netPaymentPrice.toFixed(2));
