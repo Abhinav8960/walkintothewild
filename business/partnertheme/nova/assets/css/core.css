@@ -152,12 +152,14 @@ p {
   font-size: 14px;
   font-weight: 600;
   color: #848a90;
+  margin-bottom: 0px !important;
 }
 
 .numbwrCount h3 {
   font-size: 25px;
   font-weight: 600;
   color: #111111;
+  margin-bottom: 0px !important;
 }
 
 .mainParent {
