@@ -61,10 +61,15 @@ use yii\helpers\Url;
                                 <p>Wishlist</p>
                             </div>
                         </div>
-
-                        <div class="numbwrCount">
-                            <h3>300</h3>
-                        </div>
+                        <?php if ($package->live_version) { ?>
+                            <div class="numbwrCount">
+                                <h3><?= $package->whislistCount ?></h3>
+                            </div>
+                        <?php } else {  ?>
+                            <div class="numbwrCount">
+                                <h3>0</h3>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -80,30 +85,44 @@ use yii\helpers\Url;
                             </div>
                         </div>
 
-                        <div class="numbwrCount">
-                            <h3>90</h3>
-                        </div>
+                        <?php if ($package->live_version) { ?>
+                            <div class="numbwrCount">
+                                <h3>300</h3>
+                            </div>
+                        <?php } else {  ?>
+                            <div class="numbwrCount">
+                                <h3><?= $package->leadCount ?></h3>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-                <div class="mainCard py-3 px-3">
-                    <div class="cardChild d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-2 align-items-center">
-                            <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/Icon material-twotone-currency-rupee.svg" alt="Quotes">
+            <?php if (false) { ?>
+                <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
+                    <div class="mainCard py-3 px-3">
+                        <div class="cardChild d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-2 align-items-center">
+                                <div class="iconsDiv d-flex justify-content-center align-items-center">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/Icon material-twotone-currency-rupee.svg" alt="Quotes">
+                                </div>
+                                <div class="text-card">
+                                    <p>Bookings</p>
+                                </div>
                             </div>
-                            <div class="text-card">
-                                <p>Bookings</p>
-                            </div>
-                        </div>
 
-                        <div class="numbwrCount">
-                            <h3>54</h3>
+                            <?php if ($package->live_version) { ?>
+                                <div class="numbwrCount">
+                                    <h3>300</h3>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="numbwrCount">
+                                    <h3>0</h3>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
             <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
                 <div class="mainCard py-3 px-3">
                     <div class="cardChild d-flex justify-content-between align-items-center">
@@ -116,9 +135,15 @@ use yii\helpers\Url;
                             </div>
                         </div>
 
-                        <div class="numbwrCount">
-                            <h3>35</h3>
-                        </div>
+                        <?php if ($package->live_version) { ?>
+                            <div class="numbwrCount">
+                                <h3><?= $package->commentCount ?></h3>
+                            </div>
+                        <?php } else {  ?>
+                            <div class="numbwrCount">
+                                <h3>0</h3>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

@@ -3,11 +3,13 @@
 namespace common\models\package;
 
 use common\models\feeds\Feeds;
+use common\models\leads\Lead;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\UserWishlist;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 
@@ -439,5 +441,35 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             SELF::TERMINATED_STATUS => "Terminated",
         ];
         return $arr[$this->status] ?? "";
+    }
+
+    public function getWhislistCount()
+    {
+        $whislist_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($whislist_package) {
+            return UserWishlist::find()->where(['item_type_id' => 1, 'item_id' => $whislist_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getLeadCount()
+    {
+        $lead_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($lead_package) {
+            return Lead::find()->where(['source' => Lead::SOURCE_PACKAGE, 'package_id' => $lead_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getCommentCount()
+    {
+        $comment_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($comment_package) {
+            $count = PackageComment::find()->where(['package_id' => $comment_package->id])->andWhere(['status' => 1])->count();
+            if ($count > 0) {
+                return $count;
+            }
+        }
+        return 0;
     }
 }
