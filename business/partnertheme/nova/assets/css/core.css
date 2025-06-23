@@ -122,12 +122,14 @@
   font-size: 14px;
   font-weight: 600;
   color: #848a90;
+  margin-bottom: 0px !important;
 }
 
 .numbwrCount h3 {
   font-size: 25px;
   font-weight: 600;
   color: #111111;
+  margin-bottom: 0px !important;
 }
 
 .mainParent {
@@ -1012,4 +1014,26 @@ position: absolute;
 .be-scroller::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari */
+}
+ 
+ 
+@media (max-width:1200px){
+  .filterItem{
+    width: 100% !important;
+  }
+ .field-leadsearch-source, .field-leadsearch-lead_month, .field-leadsearch-park_id{
+
+    width:100% !important;
+  }
+   .filters, .form-group .search-border{
+
+    width:100% !important;
+  }
+  .filterItem label{
+
+    margin-left:0px !important;
+  }
+  .filterBar{
+    padding:10px !important;
+  }
 }
