@@ -103,7 +103,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['slug'], 'unique'],
             [['show_in_filter', 'is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
-            [['notes'], 'string'],
+            [['quotation_form_note'], 'string'],
 
         ];
     }
@@ -141,7 +141,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             'longitude' => 'Longitude',
             'is_published_on_web' => 'Is Published On web',
             'is_published_on_api' => 'Is Published On Api',
-            'notes'=>'Notes',
+            'quotation_form_note'=>'Quotation Note',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

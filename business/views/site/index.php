@@ -253,7 +253,7 @@ $this->title = 'Dashboard';
             <!-- <div class="montlyQouteHeader mb-2 px-4 pt-3">
               <p>Monthly Quote Requests</p>
             </div> -->
-            <img src="<?= $this->params['baseurl'] ?>/images/Monthly Quote Request.svg" alt="" class="w-100 object-fit-cover">
+            <img src="<?= $this->params['baseurl'] ?>/images/Learning Hours Container.png" alt="" class="w-100 object-fit-cover">
 
             <div class="bodySectionParent">
               <?php if (false) { ?>
@@ -292,9 +292,13 @@ $this->title = 'Dashboard';
           </div>
         </div>
       </div>
-      <?php if (false) { ?>
 
-        <div class="col-xl-12 mb-3">
+      <div class="col-xl-12 mb-3">
+
+        <img src="<?= $this->params['baseurl'] ?>/images/Leaderboard Container.png" alt="" class="w-100 object-fit-cover">
+
+        <?php if (false) { ?>
+
           <div class="boradUserParent">
             <div class="topHead d-flex justify-content-between align-items-center pt-3 px-3">
               <p>Recent Requests</p>
@@ -346,8 +350,9 @@ $this->title = 'Dashboard';
               </div>
             </div>
           </div>
-        </div>
-      <?php } ?>
+        <?php } ?>
+
+      </div>
 
     </div>
   </div>
