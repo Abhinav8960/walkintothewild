@@ -22,7 +22,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
             return GeneralModel::apicommentConversion($model->comment);
         }, 'dateTime', 'flaged' => function () {
             return (bool) $this->flaged;
-        }, 'user', 'replies', 'is_liked', 'liked_count'];
+        }, 'user', 'replies', 'is_liked', 'liked_count', 'date_time'];
 
         return $fields;
     }
@@ -65,5 +65,10 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
     public function getLiked_count()
     {
         return $this->getLike()->count();
+    }
+
+    public function getDate_time()
+    {
+        return strtotime($this->dateTime);
     }
 }
