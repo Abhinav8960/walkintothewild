@@ -31,7 +31,7 @@ $this->title = 'Package : ' . $package_version_model->package_name . '';
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item mb-3">
                                     <?php
-                                    echo $this->render('faq_form', ['model' => $faq, 'question_no' => $faq_count, 'url' => Url::toRoute(['update-faq', 'id' => $package_version_model->id, 'package_id' => $package_version_model->package_id, 'faq_id' => $faq->id])]);
+                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'url' => Url::toRoute(['update-faq', 'id' => $package_version_model->id, 'package_id' => $package_version_model->package_id, 'faq_id' => $faq->id])]);
                                     ?>
                                 </div>
                             </div>

@@ -11,7 +11,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 
-    <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+<?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
 
 
 <div class="tabs-formswrapper mx-3">
@@ -229,7 +229,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group float-end">
-                                                <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+                                                <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>

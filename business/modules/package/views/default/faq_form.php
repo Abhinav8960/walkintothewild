@@ -45,7 +45,11 @@ $form = ActiveForm::begin([
             <div class="col-12">
                 <div
                     class="d-flex gap-3 justify-content-end align-items-center">
-                    <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+                    <?php if (isset($faq_model) && $faq_model->id) { ?>
+                        <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                    <?php } else { ?>
+                        <?= Html::submitButton('Create', ['class' => 'button-created create']) ?>
+                    <?php } ?>
 
                 </div>
             </div>

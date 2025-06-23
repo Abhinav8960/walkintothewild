@@ -34,7 +34,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+                    <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
                 </div>
             </div>
         </div>

@@ -90,7 +90,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="row pt-2">
         <div class="col-12">
             <div class="d-flex gap-3 justify-content-end">
-                <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+                <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
             </div>
         </div>
     </div>
