@@ -17,3 +17,6 @@ INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `cre
 <!-- notes change to quotation_form_note -->
 ALTER TABLE `safari_park` ADD `notes` TEXT NULL DEFAULT NULL AFTER `safri_cost_note`;
 ALTER TABLE `safari_park` CHANGE `notes` `quotation_form_note` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+
+<!-- june 23,2025 -->
+ALTER TABLE `chat_message` ADD `is_edited` BOOLEAN NOT NULL DEFAULT FALSE AFTER `gallery`;
