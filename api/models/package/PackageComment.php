@@ -37,13 +37,11 @@ class PackageComment extends \common\models\package\PackageComment
         $fields[] = 'date_time';
         $fields[] = 'replies';
         $fields[] = 'will_flag';
+        $fields[] = 'timestamp';
         $hold_fields = ['user_id', 'safari_operator_id', 'package_id', 'comment_id', 'flaged', 'deleted_by', 'park_id',  'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         $fields = array_diff($fields, $hold_fields);
         $fields['comment'] = function ($model) {
             return GeneralModel::apicommentConversion($model->comment);
-        };
-        $fields['timestamp'] = function ($model) {
-            return  strtotime($model->created_at);
         };
         return $fields;
     }
@@ -81,6 +79,11 @@ class PackageComment extends \common\models\package\PackageComment
     public function getDate_time()
     {
         return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
+    }
+
+    public function getTimestamp()
+    {
+        return $this->created_at;
     }
 
     public function getSafari_operator()

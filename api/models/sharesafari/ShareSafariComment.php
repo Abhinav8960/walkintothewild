@@ -19,6 +19,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         // $fields[] = 'parent';
         $fields[] = 'will_flag';
         $fields[] = 'replies';
+        $fields[] = 'timestamp';
         
        
         $hold_fields = ['user_id','flaged', 'deleted_by', 'share_safari_id', 'park_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
@@ -27,9 +28,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         $fields['comment'] = function ($model) {
             return GeneralModel::apicommentConversion($model->comment);
         };
-        $fields['timestamp'] = function ($model) {
-            return  strtotime($model->created_at);
-        };
+       
         return $fields;
     }
 
@@ -78,5 +77,10 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     public function getDate_time()
     {
         return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
+    }
+
+    public function getTimestamp()
+    {
+        return $this->created_at;
     }
 }
