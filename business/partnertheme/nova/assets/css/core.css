@@ -1001,3 +1001,15 @@ position: absolute;
   font-size: 18px;
   font-weight: 700;
 }
+.be-scroller{
+
+  height: 800px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+}
+.be-scroller::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
