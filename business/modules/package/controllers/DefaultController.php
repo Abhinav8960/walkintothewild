@@ -138,7 +138,8 @@ class DefaultController extends Controller
                         }
 
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
-                        return $this->redirect(['update', 'id' => $model->package_version_model->id]);
+                        // return $this->redirect(['update', 'id' => $model->package_version_model->id]);
+                        return $this->redirect(['itinerary', 'id' => $model->package_version_model->id]);
                     } else {
                         print_r($model->getErrors());
                         print_r($model->package_version_model->getErrors());
