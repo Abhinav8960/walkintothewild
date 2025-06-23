@@ -28,7 +28,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
             return GeneralModel::apicommentConversion($model->comment);
         };
         $fields['timestamp'] = function ($model) {
-            return  strtotime($this->created_at);
+            return  strtotime($model->created_at);
         };
         return $fields;
     }
