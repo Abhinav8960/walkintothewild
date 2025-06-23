@@ -24,6 +24,9 @@ class SightingComment extends \common\models\sighting\SightingComment
             return (bool) $this->flaged;
         }, 'user', 'replies', 'is_liked', 'liked_count'];
 
+        $fields['timestamp'] = function ($model) {
+            return  strtotime($this->dateTime);
+        };
         return $fields;
     }
 
