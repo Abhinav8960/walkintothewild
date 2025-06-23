@@ -141,16 +141,27 @@ use yii\helpers\Url;
                             class="maxWidth pb-md-3 pb-lg-0 col-lg-3 col-md-12 col-sm-12 col-12">
                             <div class="images_tour select_safrai ">
                                 <img class="w-100 h-100" alt="Partner"
-                                    src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>">
+                                    src="<?= isset($package->imagepath) ? $package->imagepath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>">
                             </div>
                         </div>
                         <div class="d-flex flex-column pt-3 col-lg-8 col-md-9">
                             <div class="safrititles ">
                                 <h2 class="m-0 lh-1 d-inline font-devator"><?= $package->package_name ?></h2>
-                                <h6 class="titler_safari my-3"><a href=""
-                                        data-discover="true"><i
-                                            class="fa-solid fa-location-dot me-1"></i> Kanha
-                                        Tiger Reserve</a></h6>
+
+                                <?php
+                                $package_parks = $package->getPackagepark()->andWhere(['status' => 1])->all();
+                                if ($package_parks) {
+                                    echo '<h6 class="titler_safari my-3">';
+                                    foreach ($package_parks as $package_park) {
+                                        if (!$package_park->park) {
+                                            continue;
+                                        }
+                                ?>
+                                        <i class="fa-solid fa-location-dot me-1"></i> <?= $package_park->park->title ?><br>
+                                <?php }
+                                    echo '</h6>';
+                                }
+                                ?>
                                 <p class="mb-0 ">Organized by <a href=""
                                         data-discover="true"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
                             </div>
