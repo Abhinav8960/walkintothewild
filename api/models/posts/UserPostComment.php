@@ -28,7 +28,7 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
             'flaged' => function () {
                 return (bool) $this->flaged;
             },
-            'time_stamp' => function () {
+            'timestamp' => function () {
                 return strtotime($this->dateTime);
             },
             'user',
