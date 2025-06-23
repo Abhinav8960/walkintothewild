@@ -4,6 +4,7 @@ use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirportSearch $model */
@@ -25,17 +26,22 @@ use kartik\select2\Select2;
 ]); ?>
 <div class="row">
     <div class="col-md-2 select_width">
-        <?= $form->field($model, 'user_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => [
-                'placeholder' => 'Select User',
-                'multiple' => false
-            ],
+
+
+        <?= $form->field($model, 'user_id')->widget(Select2::class, [
+            'initValueText' => $model->user ? $model->user->name . '(' . $model->user->email . ')' : '',
+            'options' => ['placeholder' => 'Select User'],
             'pluginOptions' => [
-                'allowClear' => true
+                'allowClear' => true,
+                'minimumInputLength' => 1,
+                'ajax' => [
+                    'url' => \yii\helpers\Url::to(['user-list']),
+                    'dataType' => 'json',
+                    'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                    'processResults' => new JsExpression('function(data) { return data; }'),
+                ],
             ],
-        ])->label(false) ?>
+        ]); ?>
     </div>
 
     <div class="col-md-2">

@@ -78,7 +78,7 @@ class PackageComment extends \common\models\package\PackageComment
 
     public function getDate_time()
     {
-        return date("F j, Y", $this->created_at) . ' at ' . date("H:i A", $this->created_at);
+        return date("F j, Y", $this->created_at) . ' at ' . date("h:i A", $this->created_at);
     }
 
     public function getTimestamp()
