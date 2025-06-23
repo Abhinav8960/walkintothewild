@@ -1148,3 +1148,37 @@ position: absolute;
   font-size: 18px;
   font-weight: 700;
 }
+.be-scroller{
+
+  height: 800px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+}
+.be-scroller::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
+ 
+ 
+@media (max-width:1200px){
+  .filterItem{
+    width: 100% !important;
+  }
+ .field-leadsearch-source, .field-leadsearch-lead_month, .field-leadsearch-park_id{
+
+    width:100% !important;
+  }
+   .filters, .form-group .search-border{
+
+    width:100% !important;
+  }
+  .filterItem label{
+
+    margin-left:0px !important;
+  }
+  .filterBar{
+    padding:10px !important;
+  }
+}

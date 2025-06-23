@@ -176,10 +176,10 @@ li{
   --bs-table-bg: #F8F8F8 !important;
 }
 
-.thead-details {
+/* .thead-details {
   background-color: #009FFF !important;
 
-}
+} */
 
 .thead-details th {
 
