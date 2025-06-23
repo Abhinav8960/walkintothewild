@@ -25,7 +25,7 @@ class SightingComment extends \common\models\sighting\SightingComment
         }, 'user', 'replies', 'is_liked', 'liked_count'];
 
         $fields['timestamp'] = function ($model) {
-            return  strtotime($this->dateTime);
+            return  strtotime($model->dateTime);
         };
         return $fields;
     }
