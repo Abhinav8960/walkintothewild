@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\UserSession;
 use common\models\GeneralModel;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\animal\MasterAnimalSearch $model */
@@ -22,8 +24,24 @@ use common\models\GeneralModel;
 ]); ?>
 <div class="row">
 
-    <div class="col-md-2">
-        <?= $form->field($model, 'user_id')->dropDownList(\yii\helpers\ArrayHelper::map(UserSession::find()->joinwith(['user'])->orderby(['name' => SORT_ASC])->all(), 'user_id', 'user.name'), ['prompt' => 'Select User'])->label(false) ?>
+    <div class="col-md-4">
+
+        <?= $form->field($model, 'user_id')->widget(Select2::class, [
+            'initValueText' => $model->user ? $model->user->name .'('.$model->user->email.')' : '',
+            'options' => ['placeholder' => 'Select User', 'mulitple' => false],
+            'pluginOptions' => [
+                'allowClear' => true,
+                'minimumInputLength' => 1,
+                'ajax' => [
+                    'url' => \yii\helpers\Url::to(['login-user/user-list']),
+                    'dataType' => 'json',
+                    'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                    'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
+                ],
+                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            ],
+        ]); ?>
+
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'app_name')->dropDownList(['Frontend' => 'Frontend', 'Backend' => 'Backend'], ['prompt' => 'Select Application'])->label(false) ?>
