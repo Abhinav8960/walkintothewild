@@ -34,7 +34,7 @@ class FixedDepartureUpdatedByOperator extends Event
 
     protected $channels = [
         // 'email',
-        'firebase',
+        // 'firebase',
     ];
 
     protected $mail_template_code = 'UFCU';  //  Fixed Departure Updated By Operator

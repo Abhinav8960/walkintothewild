@@ -63,6 +63,15 @@ class AppBootstrap implements BootstrapInterface
                 Yii::$app->user->logout();
                 Yii::$app->session->setFlash('Your Session is Expired! Please Login to Continue');
             }
+
+            // if ($currentToken !== $sessionRecord) {
+            //     // Regenerate token and update the database
+            //     $newToken = Yii::$app->security->generateRandomString();
+            //     $session->set('session_token', $newToken);
+            //     Yii::$app->db->createCommand()
+            //         ->update('user_session', ['token' => $newToken], ['id' => $sessionId])
+            //         ->execute();
+            // }
         }
     }
 }
