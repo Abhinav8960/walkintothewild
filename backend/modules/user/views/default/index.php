@@ -61,8 +61,6 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         'value' => function ($model) {
                             $device_count = UserSession::find()
                                 ->where(['user_id' => $model->id])
-                                ->andWhere(['not', ['firebase_token' => null]])
-                                ->andWhere(['is_firebase_token_active' => 1])
                                 ->count();
                             if ($device_count) {
                                 return Html::button($device_count, [
@@ -71,7 +69,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                                     'title' => 'View',
                                 ]);
                             }
-                            return 0;
+                            return '';
                         }
                     ],
                     [
