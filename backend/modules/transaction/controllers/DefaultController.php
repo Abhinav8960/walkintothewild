@@ -38,45 +38,53 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        // Prepare CCAvenue payment request
         $merchantId = Yii::$app->params['ccavenue']['merchantId'];
-        $accessCode = Yii::$app->params['ccavenue']['accessCode'];
-        $workingKey = Yii::$app->params['ccavenue']['workingKey']; // Encryption key
+       echo $accessCode = Yii::$app->params['ccavenue']['accessCode'];
+        $workingKey = Yii::$app->params['ccavenue']['workingKey'];
         $redirectUrl = Yii::$app->params['ccavenue']['redirectUrl'];
+        $api_url = Yii::$app->params['ccavenue']['api_url'];
 
-        $orderId = $model->id; // Use LeadPartnerQuotes ID as order ID
-        $amount = $model->partner_selling_price; // Example: use selling price as amount
-        $currency = 'INR'; // Example: Indian Rupee
-
-        // Encrypt payment request
-        $paymentData = [
+        $orderId = 'O-' . date('ym') . '-' . time() . '-' . $model->id . '-' . uniqid();
+        $amount = $model->partner_selling_price;
+        $currency = 'INR';
+        die();
+        $data = [
             'merchant_id' => $merchantId,
             'order_id' => $orderId,
             'amount' => $amount,
             'currency' => $currency,
             'redirect_url' => $redirectUrl,
-            'cancel_url' => $redirectUrl,
+            'cancel_url' => Yii::$app->params['ccavenue']['cancelUrl'],
             'language' => 'EN',
+            'billing_name' => $model->name,
+            // 'billing_tel' => $model->phone,
+            'billing_tel' => '9650901148',
+            'billing_email' => $model->email,
+            'merchant_param1' => $model->lead->id,
+            'merchant_param2' => $model->partner->id,
+            'tid' => time() . '-' . $model->id,
         ];
-        $encryptedData = $this->encryptCCAvenueData(http_build_query($paymentData), $workingKey);
 
-        // Send request to CCAvenue
-        $client = new \yii\httpclient\Client();
-        $response = $client->createRequest()
-            ->setMethod('POST')
-            ->setUrl('https://secure.ccavenue.com/transaction/initTrans')
-            ->setData(['encRequest' => $encryptedData, 'access_code' => $accessCode])
-            ->send();
+        // print_r($data);
+        // die();
 
-        if ($response->isOk) {
-            $responseData = $response->getData();
-            // Handle the response (e.g., log transaction details, update database)
-            Yii::$app->session->setFlash('success', 'Transaction initiated successfully.');
-        } else {
-            Yii::$app->session->setFlash('error', 'Failed to initiate transaction.');
+        $dataString = http_build_query($data);
+
+        try {
+             $encryptedData = $this->encryptCCAvenueData($dataString, $workingKey);
+            if ($encryptedData === false) {
+                throw new \yii\base\InvalidArgumentException('Encryption failed.');
+            }
+            $paymentUrl = $api_url . '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
+
+            Yii::info('Encrypted Data: ' . $encryptedData, 'transaction');
+            Yii::info('Payment URL: ' . $paymentUrl, 'transaction');
+
+            return $this->redirect($paymentUrl);
+        } catch (\yii\base\InvalidArgumentException $e) {
+            Yii::$app->session->setFlash('error', 'Encryption failed: ' . $e->getMessage());
+            return $this->redirect(['index']);
         }
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -84,9 +92,27 @@ class DefaultController extends Controller
      * @param string $data
      * @param string $workingKey
      * @return string
+     * @throws yii\base\InvalidArgumentException if encryption fails
      */
     private function encryptCCAvenueData($data, $workingKey)
     {
-        return openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $workingKey);
+        if (empty($data)) {
+            throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
+        }
+
+        if (empty($workingKey) || strlen($workingKey) < 16) {
+            throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
+        }
+
+        // Ensure the IV is 16 bytes long
+        $iv = substr($workingKey, 0, 16);
+
+        $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
+
+        if ($encryptedData === false) {
+            throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
+        }
+
+        return $encryptedData;
     }
 }
