@@ -1778,7 +1778,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return [
             1 => 'PayU',
-            2 => 'HDFC',
+            2 => 'ICICI',
+            3 => 'HDFC',
         ];
     }
 
