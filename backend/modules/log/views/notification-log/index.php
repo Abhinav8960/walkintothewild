@@ -40,15 +40,20 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->sent_data;
+                            return ($model->sent_data) ? json_encode($model->sent_data) : '';
                         }
                     ],
                     [
-                        'label' => 'User Id',
+                        'label' => 'User',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->user_id;
+                            if (isset($model->reciever->name)) {
+                                return '<a href="/user/default/profile?user_id=' . $model->user_id . '" class="text-primary" style="color: green !important;">' . $model->reciever->name . '</a>';
+                            }
+                            else{
+                                return '';
+                            }
                         }
                     ],
                     [

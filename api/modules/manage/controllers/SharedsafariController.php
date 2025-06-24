@@ -213,15 +213,18 @@ class SharedsafariController extends RestController
                 //         }
                 //     }
                 // }
-                $operator_followers = $shared_safari_departure_model->getFixeddeparturefollowerlist()->asArray()->all();
-                if ($operator_followers) {
-                    new \common\events\operator\FixedDepartureUpdatedByOperator(
-                        $operator_followers,
-                        $this->userinfoId,
-                        $model->shared_safari_departure_model->user->name,
-                        $model->shared_safari_departure_model->user->email,
-                        $model->shared_safari_departure_model->id
-                    );
+                if($shared_safari_departure_model->status == ShareSafari::STATUS_ACTIVE) {                    
+                    
+                    $operator_followers = $shared_safari_departure_model->getFixeddeparturefollowerlist()->asArray()->all();
+                    if ($operator_followers) {
+                        new \common\events\operator\FixedDepartureUpdatedByOperator(
+                            $operator_followers,
+                            $this->userinfoId,
+                            $model->shared_safari_departure_model->user->name,
+                            $model->shared_safari_departure_model->user->email,
+                            $model->shared_safari_departure_model->id
+                        );
+                    }
                 }
 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Fixed Departure updated successfully"]);

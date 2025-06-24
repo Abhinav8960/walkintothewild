@@ -2,6 +2,7 @@
 
 namespace backend\modules\leads\controllers;
 
+use api\models\chat\Chat as ApiChat;
 use common\models\chat\Chat;
 use api\models\chat\ChatMessage;
 use common\models\leads\form\LeadPartnerQuotationForm;
@@ -327,7 +328,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = Chat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
+        $chat = ApiChat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
 
         return $this->render(
             '_operator_lead_chat',
