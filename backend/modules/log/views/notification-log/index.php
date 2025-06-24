@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->sent_data;
+                            return ($model->sent_data) ? json_encode($model->sent_data) : '';
                         }
                     ],
                     [

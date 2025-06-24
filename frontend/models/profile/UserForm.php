@@ -136,7 +136,7 @@ class UserForm extends Model
     public function initializeForm()
     {
         $this->user_model->name = $this->name;
-        $this->user_model->mobile_no = $this->mobile_no;
+        // $this->user_model->mobile_no = $this->mobile_no;
         $this->user_model->user_handle = $this->user_handle;
         $this->user_model->facebook_url = $this->facebook_url;
         $this->user_model->whatsapp_url = $this->whatsapp_url;

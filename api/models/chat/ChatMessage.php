@@ -270,4 +270,12 @@ class ChatMessage extends \common\models\chat\ChatMessage
     //         return NULL;
     //     }
     // }
+
+    public function getRecordingUrl()
+    {
+        if ($call = $this->call) {
+            return $call->recording_url;
+        }
+        return '';
+    }
 }
