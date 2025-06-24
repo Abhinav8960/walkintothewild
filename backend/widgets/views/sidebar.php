@@ -1287,6 +1287,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
+														"/user/user-device/index",
+													)) ? "active" : "" ?>" href="/user/user-device/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users Devices</span></a>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
 														"/contact",
 														"/contact/default/index",
 													)) ? "active" : "" ?>" href="/contact/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>

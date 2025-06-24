@@ -23,17 +23,15 @@ use yii\web\JsExpression;
     ],
 ]); ?>
 <div class="row">
-
     <div class="col-md-4">
-
-        <?= $form->field($model, 'user_id')->widget(Select2::class, [
-            'initValueText' => $model->user ? $model->user->name .'('.$model->user->email.')' : '',
-            'options' => ['placeholder' => 'Select User', 'multiple' => false],
+        <?= $form->field($model, 'id')->widget(Select2::class, [
+            'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
+            'options' => ['placeholder' => 'Select User', 'mulitple' => false],
             'pluginOptions' => [
                 'allowClear' => true,
                 'minimumInputLength' => 1,
                 'ajax' => [
-                    'url' => \yii\helpers\Url::to(['login-user/user-list']),
+                    'url' => \yii\helpers\Url::to(['user-device/user-list']),
                     'dataType' => 'json',
                     'data' => new JsExpression('function(params) { return {q:params.term}; }'),
                     'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
@@ -42,9 +40,6 @@ use yii\web\JsExpression;
             ],
         ]); ?>
 
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'app_name')->dropDownList(['Frontend' => 'Frontend', 'Backend' => 'Backend'], ['prompt' => 'Select Application'])->label(false) ?>
     </div>
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>

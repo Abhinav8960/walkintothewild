@@ -1873,10 +1873,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_package' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function mobileVerfied(){
+    public static function mobileVerfied()
+    {
         return [
             1 => 'Yes',
             0 => 'No',
         ];
+    }
+
+    public static function name_with_email($id)
+    {
+        $user = User::find()->where(['id' => $id])->limit(1)->one();
+        return $user->name . '(' . $user->email . ')';
     }
 }
