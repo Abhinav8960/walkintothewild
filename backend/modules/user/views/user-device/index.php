@@ -1,6 +1,7 @@
 <?php
 
 use common\models\User;
+use common\models\UserSession;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -36,6 +37,16 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->username;
+                        }
+                    ],
+                    [
+                        'label' => 'No of Device',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $device_count = UserSession::find()
+                                ->where(['user_id' => $model->id])
+                                ->andWhere(['not', ['firebase_token' => null]])->count();
+                            return isset($device_count) ? $device_count : 0;
                         }
                     ],
                     [
