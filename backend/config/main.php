@@ -124,6 +124,9 @@ return [
         'gallery' => [
             'class' => 'backend\modules\gallery\Module',
         ],
+        'transaction' => [
+            'class' => 'backend\modules\transaction\Module',
+        ],
 
     ],
     'components' => [
