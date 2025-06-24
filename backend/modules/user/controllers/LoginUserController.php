@@ -68,4 +68,30 @@ class LoginUserController extends Controller
         Yii::$app->session->setFlash($user_affected . ' User Session Destoryed');
         return $this->redirect(Yii::$app->request->referrer ? Yii::$app->request->referrer : '/');
     }
+
+    public function actionUserList($q = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $users = UserSession::find()
+            ->select(['user_id', 'user.name', 'user.email'])
+            ->joinWith('user')
+            ->andFilterWhere(['like', 'user.name', $q])
+            ->orFilterWhere(['like', 'user.email', $q])
+            ->limit(20)
+            ->asArray()
+            ->distinct()
+            ->all();
+
+        $results = [];
+
+        foreach ($users as $user) {
+            $results[] = [
+                'id' => $user['user_id'],
+                'text' => $user['name'] . ' (' . $user['email'] . ')',
+            ];
+        }
+
+        return ['results' => $results];
+    }
 }
