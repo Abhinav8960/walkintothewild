@@ -109,6 +109,7 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 'site/test' => 'site/test',
+                'site/clear-cache' => 'site/clear-cache',
                 'mobile-no-verification' => 'site/mobile-no-verification',
                 'verify-mobile-no' => 'site/verify-mobile-no',
                 'deactivate-account' => 'site/deactivate-account',
@@ -230,6 +231,14 @@ return [
 
         ],
 
+        'api' => [
+            'class' => 'api\components\Api',
+             'messageManager' => [
+                'class' => 'api\components\MessageManager',
+                'messageFile' => '@api/config/messages.php', 
+                'cacheDuration' => 3600,
+            ],
+        ],
 
         /*
         'urlManager' => [
