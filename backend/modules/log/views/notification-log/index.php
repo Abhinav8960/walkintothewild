@@ -48,7 +48,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->user_id;
+                            return isset($model->reciever->name) ? $model->reciever->name : '';
                         }
                     ],
                     [
