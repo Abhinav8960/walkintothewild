@@ -24,6 +24,7 @@ class UserSearch extends User
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['is_mobile_no_verified'],'integer'],
+            [['id'],'integer'],
         ];
     }
 
