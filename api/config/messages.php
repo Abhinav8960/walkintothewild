@@ -3,18 +3,18 @@
 return [
     // Common Messages can be used as globally
     'common' => [
-        'succ' => 'Success!!',
-        'udsc' => 'Updated Succesfully!!',
-        'nof' => '{var} Not Found!!',
-        'invalid_req' => 'Invalid Request!!',
-        'notinuse' => '{var} Not In Use',
+        'success' => 'Success!!',
+        'updated' => 'Updated Succesfully!!',
+        'not_found' => '{var} Not Found!!',
+        'invalid_request' => 'Invalid Request!!',
+        'not_in_use' => '{var} Not In Use',
         'submit' => '{var} Submitted Successfully!!',
         'not_submit' => '{var} Not Submitted!',
         'followed' => 'Follow Successfully!!',
         'unfollowed' => 'Unfollow Successfully!!',
         'not_followed' => 'Oops! Not Follow Successfully!!',
         'not_login' => 'You are not logged in!!',
-        'exp' => '{var} Expired!!',
+        'expired' => '{var} Expired!!',
 
     ],
     //
@@ -100,7 +100,6 @@ return [
             'updated' => "Shared safari updated successfully",
             'can_not_updated' => "You cannot Update this safari!!!",
             'not_updated' => "Shared safari not updated successfully",
-
         ]
     ]
 ];

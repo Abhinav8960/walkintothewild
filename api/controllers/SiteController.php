@@ -462,7 +462,7 @@ class SiteController extends RestController
             $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.logout');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         } else {
-            $message = Yii::$app->api->messageManager->getMessage('common.invalid_req');
+            $message = Yii::$app->api->messageManager->getMessage('common.invalid_request');
             return Yii::$app->api->sendResponse([], $message);
         }
     }
@@ -472,10 +472,10 @@ class SiteController extends RestController
     {
         $term_of_use = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
         if ($term_of_use) {
-            $message = Yii::$app->api->messageManager->getMessage('common.succ');
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $term_of_use->content], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.nof');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
         return Yii::$app->api->sendResponse($data = [], ['message' =>$message]);
     }
 
@@ -483,10 +483,10 @@ class SiteController extends RestController
     {
         $privacy_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
         if ($privacy_policy) {
-            $message = Yii::$app->api->messageManager->getMessage('common.succ');
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $privacy_policy->content], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.nof');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
@@ -494,10 +494,10 @@ class SiteController extends RestController
     {
         $refund_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_REFUND_POLICY]);
         if ($refund_policy) {
-            $message = Yii::$app->api->messageManager->getMessage('common.succ');
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $refund_policy->content], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.nof');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
@@ -505,10 +505,10 @@ class SiteController extends RestController
     {
         $cancellation = ContentManagement::findOne(['id' => ContentManagement::CMS_CANCELLATION]);
         if ($cancellation) {
-            $message = Yii::$app->api->messageManager->getMessage('common.succ');
+            $message = Yii::$app->api->messageManager->getMessage('common.success');
             return \Yii::$app->api->sendResponse($data = ['content' => $cancellation->content], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.nof');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
         return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
     }
 
@@ -520,13 +520,13 @@ class SiteController extends RestController
                 $model->firebase_token = $firebase_token;
                 $model->is_firebase_token_active = true;
                 $model->save(false);
-                $message = Yii::$app->api->messageManager->getMessage('common.udsc');
+                $message = Yii::$app->api->messageManager->getMessage('common.updated');
                 return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.nof');
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found');
             return Yii::$app->api->sendResponse([], $message);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.invalid_req');
+        $message = Yii::$app->api->messageManager->getMessage('common.invalid_request');
         return Yii::$app->api->sendResponse([], $message);
     }
 

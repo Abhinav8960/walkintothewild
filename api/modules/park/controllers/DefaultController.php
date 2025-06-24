@@ -121,12 +121,12 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
         $model = SafariPark::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($model->status != SafariPark::STATUS_ACTIVE) {
-            $message = Yii::$app->api->messageManager->getMessage('common.notinuse',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['data' => $model]);
@@ -147,7 +147,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -166,7 +166,7 @@ class DefaultController extends RestController
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$safari_park) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
@@ -198,7 +198,7 @@ class DefaultController extends RestController
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$safari_park) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $my_review = SafariParkRating::find()->where(['safari_park_id' => $safari_park->id, 'user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
@@ -229,7 +229,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $operatorsearchModel = new SafariOperatorSearch();
@@ -243,7 +243,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -257,7 +257,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -286,7 +286,7 @@ class DefaultController extends RestController
 
         $sf = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$sf) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -318,7 +318,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -346,7 +346,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -371,7 +371,7 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.nof',['{var}'=> 'Park']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
