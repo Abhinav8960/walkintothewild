@@ -34,7 +34,8 @@ class UserDeviceController extends Controller
     {
         $query = UserSession::find()
             ->where(['user_id' => $user_id])
-            ->andWhere(['not', ['firebase_token' => null]]);
+            ->andWhere(['not', ['firebase_token' => null]])
+            ->andWhere(['is_firebase_token_active' => 1]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
