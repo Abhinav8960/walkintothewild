@@ -25,7 +25,7 @@ use yii\web\JsExpression;
 <div class="row">
     <div class="col-md-4">
         <?= $form->field($model, 'id')->widget(Select2::class, [
-            'initValueText' => $model->id ? $model->name . '(' . $model->email . ')' : '',
+            'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
             'options' => ['placeholder' => 'Select User', 'mulitple' => false],
             'pluginOptions' => [
                 'allowClear' => true,
