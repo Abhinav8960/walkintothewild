@@ -31,7 +31,7 @@ use yii\web\JsExpression;
                 'allowClear' => true,
                 'minimumInputLength' => 1,
                 'ajax' => [
-                    'url' => \yii\helpers\Url::to(['login-user/user-list']),
+                    'url' => \yii\helpers\Url::to(['user-device/user-list']),
                     'dataType' => 'json',
                     'data' => new JsExpression('function(params) { return {q:params.term}; }'),
                     'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
