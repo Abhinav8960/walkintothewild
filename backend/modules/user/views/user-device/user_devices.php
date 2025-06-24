@@ -65,6 +65,13 @@ $this->params['title'] = $this->title;
                             return isset($model->application_version) ? $model->application_version : '';
                         }
                     ],
+                    [
+                        'label' => 'Created At',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->created_at) ? $model->created_at : '';
+                        }
+                    ],
 
                 ],
             ]); ?>
