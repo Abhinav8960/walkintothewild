@@ -12,7 +12,7 @@ $this->title = 'Leads(' . $model->sourceLabel . ')';
 $this->params['title'] = $this->title;
 
 if ($model->status == 1 && $model->source == 2) {
-    // $this->params['buttons'][] = Html::button('Assign', ['value' => Url::toRoute(['/leads/default/assign', 'id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'Assign']);
+    $this->params['buttons'][] = Html::button('Assign', ['value' => Url::toRoute(['/leads/default/assign', 'id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'Assign']);
 }
 if ($model->status == 1) {
     $this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
