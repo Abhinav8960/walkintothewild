@@ -212,15 +212,15 @@ class DefaultController extends RestController
                 if ($model->rating_model->save(false)) {
                     $model->updateRatingintoTable($safari_park);
                     Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
-                    $message = Yii::$app->api->messageManager->getMessage('park.review.review_sent');
+                    $message = Yii::$app->api->messageManager->getMessage('park.review.review_submitted');
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                $message = Yii::$app->api->messageManager->getMessage('park.review.review_not_sent');
+                $message = Yii::$app->api->messageManager->getMessage('park.review.review_failed');
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
             return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         } else {
-            $message = Yii::$app->api->messageManager->getMessage('park.review.review_already');
+            $message = Yii::$app->api->messageManager->getMessage('park.review.review_already_submitted');
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
     }
@@ -272,14 +272,14 @@ class DefaultController extends RestController
     public function actionQuotesrequest($slug)
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
-            $message = Yii::$app->api->messageManager->getMessage('park.quoterequest.not_allowed');
+            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
         }
 
         if ($this->userinfo) {
             $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId])->limit(1)->one();
             if ($safari_operator) {
-                $message = Yii::$app->api->messageManager->getMessage('park.quoterequest.cant_send_req');
+                $message = Yii::$app->api->messageManager->getMessage('park.quote_request.operator_restricted');
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
@@ -306,11 +306,11 @@ class DefaultController extends RestController
         }
 
         if (count($sf->operator) < 1) {
-            $message = Yii::$app->api->messageManager->getMessage('park.quoterequest.zero_count_verified_operator');
+            $message = Yii::$app->api->messageManager->getMessage('park.quote_request.no_verified_operators');
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        $message = Yii::$app->api->messageManager->getMessage('park.quoterequest.quote_req_sent');
+        $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
@@ -332,13 +332,13 @@ class DefaultController extends RestController
             $park_follower->follow_datetime = time();
             $park_follower->status = 1;
             if ($park_follower->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.followed');
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.not_followed');
+            $message = Yii::$app->api->messageManager->getMessage('common.follow_failed');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.not_login');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_logged_in');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -356,14 +356,14 @@ class DefaultController extends RestController
                 $park_follower->unfollow_datetime = time();
                 $park_follower->status = 0;
                 if ($park_follower->save(false)) {
-                    $message = Yii::$app->api->messageManager->getMessage('common.unfollowed');
+                    $message = Yii::$app->api->messageManager->getMessage('common.unfollow_success');
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                $message = Yii::$app->api->messageManager->getMessage('common.not_followed');
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_failed');
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.not_login');
+        $message = Yii::$app->api->messageManager->getMessage('common.not_logged_in');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 

@@ -144,7 +144,7 @@ class SiteController extends RestController
 
             // Check if the column exists in the User model
             if (!$user_form->hasAttribute($source_id_col)) {
-                $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.no_source');
+                $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.source_not_exist');
                 return Yii::$app->api->sendFailedStringResponse([$message], 400);
             }
 
@@ -152,7 +152,7 @@ class SiteController extends RestController
 
             if ($user) {
                 if ($user->status != User::STATUS_ACTIVE) {
-                    $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.inactive_user');
+                    $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.inactive_profile');
                     return Yii::$app->api->sendFailedStringResponse([$message], 423);
                 }
 
@@ -164,7 +164,7 @@ class SiteController extends RestController
                     $user = User::find()->where(['email' => $model->email, 'status' => User::STATUS_ACTIVE])->one();
 
                     if (!empty($user->$source_id_col)) {
-                        $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.incorrect_social_login');
+                        $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.source_id_mismatch');
                         return Yii::$app->api->sendFailedStringResponse([$message]);
                     }
 
@@ -394,7 +394,7 @@ class SiteController extends RestController
                 $data = ['can_login' => true];
                 return Yii::$app->api->sendResponse($data);
             }
-            $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.unmatched_otp');
+            $message = Yii::$app->api->messageManager->getMessage('common.not_matched_otp');
             $data = ['can_login' => false, "message" => $message];
         } else {
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -459,7 +459,7 @@ class SiteController extends RestController
         $model = UserSession::findOne(['token' => $access_token]);
 
         if ($model->delete()) {
-            $message = Yii::$app->api->messageManager->getMessage('authrization.social_login.logout');
+            $message = Yii::$app->api->messageManager->getMessage('common.logout_success');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         } else {
             $message = Yii::$app->api->messageManager->getMessage('common.invalid_request');
@@ -536,10 +536,10 @@ class SiteController extends RestController
         $response = WhatsappHelper::SendDataUsingWithTemplateSurvey($phone, $case_id);
 
         if ($response->isOk) {
-            $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_send');
+            $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_send_success');
             return Yii::$app->api->sendResponse(['status' => 1, 'response' => $response->getData()], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_failed');
+        $message = Yii::$app->api->messageManager->getMessage('authrization.convergent_survey.message_send_failed');
         return Yii::$app->api->sendResponse(['status' => 0, 'response' => $response->getData()], ['message' => $message]);
     }
 
@@ -555,11 +555,11 @@ class SiteController extends RestController
                     $safari_operator->status = SafariOperator::STATUS_DELETE;
                     $safari_operator->save(false);
                 }
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivate');
+                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
             }
         }
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.not_deactivate');
+        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -578,7 +578,7 @@ class SiteController extends RestController
             if (!$headers->has('X-Rate-Limit-Reset')) {
                 $headers->add('X-Rate-Limit-Reset', time() + 3600); // Reset after 1 hour
             }
-            $message = Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.mobile_already_verified');
+            $message = Yii::$app->api->messageManager->getMessage('common.already_verified_mobile');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message]);
         }
 
@@ -618,7 +618,7 @@ class SiteController extends RestController
             }
             \Yii::$app->api->messageManager->clearCache();
             // return Yii::$app->api->sendFailedStringResponse(['Rate limit exceeded. Please try again later.'], 429);
-            $message = Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.rate_limit');
+            $message = Yii::$app->api->messageManager->getMessage('common.rate_limit_exceeded');
             return Yii::$app->api->sendResponse($data = [], ['message' =>$message], 429);
         } else {
             $remainingRequests = $rateLimitMaxRequests - $requestCount - 1;
@@ -641,7 +641,7 @@ class SiteController extends RestController
             }
             $model->proceedforverification($this->auth_token, $user_model);
 
-            $message = Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.otp_sent');
+            $message = Yii::$app->api->messageManager->getMessage('common.otp_sent');
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
         }
 
@@ -683,15 +683,15 @@ class SiteController extends RestController
         $model->scenario = 'validateOtp';
         $model->attributes = $this->request;
         if ($user_model->is_mobile_no_verified == true && $user_model->mobile_no == $model->mobile_no) {
-            $message =  Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.mobile_already_verified');
+            $message =  Yii::$app->api->messageManager->getMessage('common.already_verified_mobile');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message]);
         }
         if ($model->validate()) {
             if ($model->validateOtp($this->auth_token)) {
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.success');
+                $message =  Yii::$app->api->messageManager->getMessage('common.mobile_verification_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message =  Yii::$app->api->messageManager->getMessage('authrization.mobile_verification.mobile_not_verified');
+            $message =  Yii::$app->api->messageManager->getMessage('common.not_verified_mobile');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' =>$message ]);
         }
         if ($model->hasErrors()) {
@@ -727,11 +727,11 @@ class SiteController extends RestController
                     $op->save(false);
                 }
                 OperatorSafariOperator::updateAll(['status' => OperatorSafariOperator::STATUS_SUSPEND], ['user_id' => $user_model->id]);
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivate');
+                $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
             }
         }
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.not_deactivate');
+        $message =  Yii::$app->api->messageManager->getMessage('authrization.deactivate_account.deactivation_failed');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -751,11 +751,11 @@ class SiteController extends RestController
                     $op->save(false);
                 }
                 UserSession::deleteAll(['user_id' => $user_model->id]);
-                $message =  Yii::$app->api->messageManager->getMessage('authrization.request_delete_account.delete_request');
+                $message =  Yii::$app->api->messageManager->getMessage('authrization.request_delete_account.delete_in_90_days');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.request_delete_account.facing_issue');
+        $message =  Yii::$app->api->messageManager->getMessage('common.issue_occurred');
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -802,7 +802,7 @@ class SiteController extends RestController
      public function actionClearCache()
     {
         \Yii::$app->api->messageManager->clearCache();
-        $message =  Yii::$app->api->messageManager->getMessage('authrization.clear_cache.success');
+        $message =  Yii::$app->api->messageManager->getMessage('common.cache_cleared');
         return Yii::$app->api->sendResponse(['message' => $message]);
     }
 
