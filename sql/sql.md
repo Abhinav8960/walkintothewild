@@ -20,3 +20,7 @@ ALTER TABLE `safari_park` CHANGE `notes` `quotation_form_note` TEXT CHARACTER SE
 
 <!-- june 23,2025 -->
 ALTER TABLE `chat_message` ADD `is_edited` BOOLEAN NOT NULL DEFAULT FALSE AFTER `gallery`;
+
+<!-- 25 June 2025 -->
+
+ALTER TABLE `lead_partners` ADD `is_assign_by_admin` INT NULL DEFAULT NULL AFTER `is_chat_started`;
