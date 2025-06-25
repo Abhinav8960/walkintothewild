@@ -153,6 +153,14 @@ $this->params['title'] = $this->title;
                             return $model->assigned_operator_count;
                         }
                     ],
+                     [
+                        'label' => 'Partner Chat Started Count',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->partner_chat_started_count;
+                        }
+                    ],
 
 
                     [
