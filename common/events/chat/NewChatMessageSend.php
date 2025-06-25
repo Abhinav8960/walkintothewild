@@ -34,11 +34,8 @@ class NewChatMessageSend extends Event
         $this->objective            =   Chat::OBJECTIVE_QUOTE;
         if ($chat->chat_type == Chat::CHAT_TYPE_DIRECT) {
             $this->objective            =  Chat::OBJECTIVE_DIRECT;
-        }else{
-            if ($chat->sender_id == $chat->recipient_user_id) {
-                $this->sender   = $chat->operator->business_name ?? $sender;
-            }
         }
+        
         $this->chat_hash            = $chat_hash;
         $this->chat                 = $chat;
         $this->engine               = \Yii::$app->engine;
