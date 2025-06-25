@@ -149,6 +149,7 @@ class DefaultController extends RestController
 
         $dataProvider = new ActiveDataProvider([
             'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
+            // 'query' => ChatMessage::find()->where(['chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             // 'pagination' => [
             //     'pageSize' => 5, // Adjust the page size as needed
@@ -395,7 +396,7 @@ class DefaultController extends RestController
         if (
             ($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->joinWith(['assignOperator' => function ($q) use ($partner) {
                 $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $partner->id]);
-            // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
+                // $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => 87]);
             }])->one()) !== null
         ) {
             return $model;
@@ -444,7 +445,7 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
     }
 
-    
+
 
 
     public function actionMakeCallOnChat($user_handle, $chat_hash)
@@ -609,7 +610,7 @@ class DefaultController extends RestController
 
         // Change the status to 0 instead of deleting
         $chat_message->status = 0;
-        $chat_message->message = "This Message is deleted.";
+        $chat_message->message = "This message has been deleted";
         if ($chat_message->save(false)) {
             $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();
             $last_message = ChatMessage::find()->where(['chat_id' => $chat->id, 'status' => 1])->orderBy(['id' => SORT_DESC])->one();

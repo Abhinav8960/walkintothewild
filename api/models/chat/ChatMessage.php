@@ -58,6 +58,13 @@ class ChatMessage extends \common\models\chat\ChatMessage
             'message' => function () {
                 return $this->message;
             },
+            'is_edited' => function () {
+                return (bool) $this->is_edited;
+            },
+            'is_deleted' => function () {
+                return (bool) $this->status == 0 ? true : false;
+            },
+
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
             },
@@ -263,4 +270,12 @@ class ChatMessage extends \common\models\chat\ChatMessage
     //         return NULL;
     //     }
     // }
+
+    public function getRecordingUrl()
+    {
+        if ($call = $this->call) {
+            return $call->recording_url;
+        }
+        return '';
+    }
 }

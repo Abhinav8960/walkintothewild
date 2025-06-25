@@ -25,6 +25,7 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/editor/latest/toastui-editor.min.css',
         'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css',
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css',
     ];
     public $publishOptions = [
         'forceCopy' => false,

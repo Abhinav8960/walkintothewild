@@ -18,11 +18,24 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         // $hold_fields = ['user_posts_id', 'user_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         // return array_diff($fields, $hold_fields);
         // return $fields;
-        $fields = ['id', 'safari_operator_id', 'comment' => function ($model) {
-            return GeneralModel::apicommentConversion($model->comment);
-        }, 'dateTime', 'flaged' => function () {
-            return (bool) $this->flaged;
-        }, 'user', 'replies', 'is_liked', 'liked_count', 'date_time'];
+        $fields = [
+            'id',
+            'safari_operator_id',
+            'comment' => function ($model) {
+                return GeneralModel::apicommentConversion($model->comment);
+            },
+            'dateTime',
+            'flaged' => function () {
+                return (bool) $this->flaged;
+            },
+            'timestamp' => function () {
+                return strtotime($this->dateTime);
+            },
+            'user',
+            'replies',
+            'is_liked',
+            'liked_count',
+        ];
 
         return $fields;
     }
@@ -67,8 +80,8 @@ class UserPostComment extends \common\models\postscomment\UserPostComment
         return $this->getLike()->count();
     }
 
-    public function getDate_time()
-    {
-        return strtotime($this->dateTime);
-    }
+    // public function getTime_stamp()
+    // {
+    //     return strtotime($this->dateTime);
+    // }
 }

@@ -150,4 +150,9 @@ class FirebaseNotificationLog extends \common\models\firebasenotification\Active
     {
         return $this->hasOne(User::classname(), ['id' => 'created_by']);
     }
+
+    public function getReciever()
+    {
+        return $this->hasOne(User::classname(), ['id' => 'user_id']);
+    }
 }
