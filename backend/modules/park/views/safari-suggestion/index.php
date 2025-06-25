@@ -47,7 +47,8 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset(GeneralModel::operatorcategory()[$model->you_are_id]) ? GeneralModel::operatorcategory()[$model->you_are_id] : '';
+                            // return isset(GeneralModel::operatorcategory()[$model->you_are_id]) ? GeneralModel::operatorcategory()[$model->you_are_id] : '';
+                            return $model->name;
                         }
                     ],
                     [
