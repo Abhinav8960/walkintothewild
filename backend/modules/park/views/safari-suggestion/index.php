@@ -60,14 +60,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     'created_at:dateTime:Created at',
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
+                  
                 ],
             ]); ?>
         </div>
