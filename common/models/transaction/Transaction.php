@@ -127,7 +127,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         ];
     }
 
-     /**
+    /**
      * {@inheritdoc}
      */
     public function attributeLabels()
@@ -189,4 +189,13 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         ];
     }
 
+    public static function orderId($identifier)
+    {
+        return 'O-' . date('ym') . '-' . time() . '-' . $identifier . '-' . uniqid();
+    }
+
+    public function referenceId($identifier)
+    {
+        return 'R-' . date('ym') . '-' . time() . '-' . $identifier . '-' . uniqid();
+    }
 }

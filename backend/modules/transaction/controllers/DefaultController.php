@@ -2,7 +2,9 @@
 
 namespace backend\modules\transaction\controllers;
 
+use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
+use common\models\transaction\Transaction;
 use common\models\transaction\TransactionSearch;
 use yii\web\Controller;
 use yii;
@@ -26,28 +28,113 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionInitiate($lead_partner_quotes_id)
+    public function actionInitiate($lead_partner_quotes_id, $payment_gateway)
+    {
+
+        if ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI) {
+            return $this->icici($lead_partner_quotes_id);
+        } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU) {
+            return $this->payu($lead_partner_quotes_id);
+        } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC) {
+            return $this->redirect(['hdfc', 'lead_partner_quotes_id' => $lead_partner_quotes_id]);
+        } else {
+            Yii::$app->session->setFlash('error', 'Invalid payment gateway selected.');
+            return $this->redirect(['index']);
+        }
+    }
+
+    protected function findModel($lead_partner_quotes_id)
     {
         $model = LeadPartnerQuotes::find()->andWhere(['id' => $lead_partner_quotes_id])->one();
         if (!$model) {
             Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
-            return $this->redirect(['index']);
+            return  $this->redirect(Yii::$app->request->referrer);
         }
         if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
             Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $model;
+    }
+
+    private function payu($lead_partner_quotes_id)
+    {
+        $model = $this->findModel($lead_partner_quotes_id);
+
+        // Fetch PayU configuration parameters
+        $merchantKey = Yii::$app->params['payu']['merchantId'];
+        $salt = Yii::$app->params['payu']['salt'];
+        $payuBaseUrl = Yii::$app->params['payu']['host_url'];
+
+        // Prepare transaction details
+        $orderId = Transaction::orderId($model->id);
+        $reference_id = Transaction::orderId($model->id);
+        $amount = $model->partner_selling_price;
+        $currency = 'INR';
+
+        // Prepare data for PayU
+        $data = [
+            'key' => $merchantKey,
+            'txnid' => $orderId,
+            'amount' => $amount,
+            'productinfo' => 'Lead Partner Quote Payment',
+            'firstname' => $model->name,
+            'email' => $model->email,
+            'phone' => $model->phone,
+            'surl' => Yii::$app->params['payu']['successUrl'],
+            'furl' => Yii::$app->params['payu']['failureUrl'],
+            'udf1' => $reference_id,
+            'udf2' => $orderId,
+        ];
+
+        // Generate hash for PayU
+        $data['hash'] = $this->generatePayuHash($data, $salt);
+
+        // Build the PayU payment URL
+        $queryString = http_build_query($data);
+        $paymentUrl = $payuBaseUrl . '/_payment?' . $queryString;
+
+        // Log the payment URL for debugging purposes
+        Yii::info('PayU Payment URL: ' . $paymentUrl, 'transaction');
+
+        // Redirect to the PayU payment gateway
+        return $this->redirect($paymentUrl);
+    }
+
+    private function generatePayuHash($data, $salt)
+    {
+        // Define the order of fields for the hash string
+
+        $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone', 'surl', 'furl', 'udf1', 'udf2'];
+
+        // Initialize the hash string
+        $hashString = '';
+
+        // Append values from $data based on the order
+        foreach ($fieldsOrder as $field) {
+            $hashString .= isset($data[$field]) ? $data[$field] . '|' : '|';
         }
 
+        // Append empty fields and the salt
+        $hashString .= str_repeat('|', 10) . $salt;
+
+        // Generate and return the hash
+        return strtolower(hash('sha512', $hashString));
+    }
+
+    private function icici($lead_partner_quotes_id)
+    {
+        $model = $this->findModel($lead_partner_quotes_id);
+
         $merchantId = Yii::$app->params['ccavenue']['merchantId'];
-       echo $accessCode = Yii::$app->params['ccavenue']['accessCode'];
+        $accessCode = Yii::$app->params['ccavenue']['accessCode'];
         $workingKey = Yii::$app->params['ccavenue']['workingKey'];
         $redirectUrl = Yii::$app->params['ccavenue']['redirectUrl'];
         $api_url = Yii::$app->params['ccavenue']['api_url'];
 
-        $orderId = 'O-' . date('ym') . '-' . time() . '-' . $model->id . '-' . uniqid();
+        $orderId = Transaction::orderId($model->id);
         $amount = $model->partner_selling_price;
         $currency = 'INR';
-        die();
         $data = [
             'merchant_id' => $merchantId,
             'order_id' => $orderId,
@@ -71,7 +158,7 @@ class DefaultController extends Controller
         $dataString = http_build_query($data);
 
         try {
-             $encryptedData = $this->encryptCCAvenueData($dataString, $workingKey);
+            $encryptedData = $this->encryptCCAvenueData($dataString, $workingKey);
             if ($encryptedData === false) {
                 throw new \yii\base\InvalidArgumentException('Encryption failed.');
             }
