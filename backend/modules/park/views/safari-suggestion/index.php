@@ -51,6 +51,15 @@ $this->params['title'] = $this->title;
                             return $model->name;
                         }
                     ],
+
+                    [
+                        'label' => 'Email',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->email;
+                        }
+                    ],
                     [
                         'label' => 'Details',
                         'contentOptions' => ['style' => 'width: 40%;'],  // Adjust width here
@@ -60,7 +69,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     'created_at:dateTime:Created at',
-                  
+
                 ],
             ]); ?>
         </div>
