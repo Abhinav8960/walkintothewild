@@ -58,9 +58,9 @@ class FirebaseNotificationLogSearch extends FirebaseNotificationLog
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->andFilterWhere([
-            'created_by' => \Yii::$app->user->id
-        ]);
+        // $query->andFilterWhere([
+        //     'created_by' => \Yii::$app->user->id
+        // ]);
 
         // grid filtering conditions
         $query->andFilterWhere([

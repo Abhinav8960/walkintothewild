@@ -28,7 +28,7 @@ use yii\web\JsExpression;
 
         <?= $form->field($model, 'user_id')->widget(Select2::class, [
             'initValueText' => $model->user ? $model->user->name .'('.$model->user->email.')' : '',
-            'options' => ['placeholder' => 'Select User', 'mulitple' => false],
+            'options' => ['placeholder' => 'Select User', 'multiple' => false],
             'pluginOptions' => [
                 'allowClear' => true,
                 'minimumInputLength' => 1,
