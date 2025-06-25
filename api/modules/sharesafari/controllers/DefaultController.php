@@ -470,7 +470,7 @@ class DefaultController extends SafariController
         if ($this->userinfo) {
             if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                 if ($this->userinfo->partner) {
-                    $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.comment_restricted');
+                    $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
                     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
@@ -478,7 +478,7 @@ class DefaultController extends SafariController
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
                 if ($this->userinfo->partner) {
                     if ($this->userinfo->partner->id != $share_safari->host_user_id) {
-                        $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.comment_restricted');
+                        $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
                         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 } else {
@@ -510,7 +510,7 @@ class DefaultController extends SafariController
                 // FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
                 // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
                 // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.comment_success');
+                $message = Yii::$app->api->messageManager->getMessage('common.comment_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
@@ -531,7 +531,7 @@ class DefaultController extends SafariController
         if ($this->userinfo) {
             if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                 if ($this->userinfo->partner) {
-                    $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.reply_restricted');
+                    $message = Yii::$app->api->messageManager->getMessage('common.operator_reply_restricted');
                     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
@@ -539,7 +539,7 @@ class DefaultController extends SafariController
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
                 if ($this->userinfo->partner) {
                     if ($this->userinfo->partner->id != $share_safari->host_user_id) {
-                        $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.reply_restricted');
+                        $message = Yii::$app->api->messageManager->getMessage('common.operator_reply_restricted');
                         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 } else {
@@ -609,7 +609,7 @@ class DefaultController extends SafariController
                     $replymodel->NotifyUser($reply, []);
                 }
 
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.reply_success');
+                $message = Yii::$app->api->messageManager->getMessage('common.reply_success');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
@@ -628,7 +628,7 @@ class DefaultController extends SafariController
 
         $comments = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->limit(1)->one();
         if ($comments->user_id == $this->userinfoId) {
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.flag_restricted');
+            $message = Yii::$app->api->messageManager->getMessage('common.flag_restricted');
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
@@ -653,7 +653,7 @@ class DefaultController extends SafariController
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
 
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.comment_reply.report_success'); 
+                $message = Yii::$app->api->messageManager->getMessage('common.report_success'); 
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }

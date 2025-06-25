@@ -5,6 +5,9 @@ return [
     'common' => [
         'success' => 'Success!',
         'updated' => 'Updated Successfully!',
+        'deleted' => 'Deleted successfully!',
+        'delete_failed' => 'Deletion failed!',
+        'delete_restricted' => 'You cannot delete this post!',
         'not_found' => '{var} Not Found!',
         'invalid_request' => 'Invalid Request!',
         'not_in_use' => '{var} Not In Use!',
@@ -33,6 +36,18 @@ return [
         'issue_occurred' => 'Facing some issues. Please try again later.',
         'cache_cleared' => 'Cache Cleared Successfully!',
 
+        'operator_comment_restricted' => 'You are an operator. You cannot comment on this safari!',
+        'comment_success' => 'Comment Submitted Successfully!',
+        'comment_failed' => "Comment Not Submitted!",
+        'operator_reply_restricted' => 'You are an operator. You cannot reply to this safari!',
+        'reply_success' => 'Reply Submitted Successfully!',
+        'reply_failed' => 'Reply Not Submitted!',
+        'flag_restricted' => 'You cannot flag your own comment/reply!',
+        'flag_success'=>'Flaged successfully!',
+        'report_success' => 'Reported Successfully!',
+
+        'like_success' => '{var} Liked Successfully!',
+        'like_removed' => 'Remove Liked Successfully!'
 
     ],
 
@@ -43,7 +58,7 @@ return [
             'source_id_mismatch' => 'Source ID is already available in records and does not match the given ID.',
             'otp_mismatch' => 'OTP Not Matched!',
         ],
-         // 'convergent_survey' => [
+        // 'convergent_survey' => [
         //     'message_send_success' => 'Message accepted Successfully, if contact number has whatsaapp account, it will deliver soon',
         //     'message_send_failed' => 'Message Sending Failed',
         // ],
@@ -54,7 +69,7 @@ return [
             'deactivation_success' => 'Deactivated Successfully! We will miss you.',
             'deactivation_failed' => 'Not Deactivated Successfully!',
         ],
-        
+
     ],
 
     'park' => [
@@ -62,7 +77,7 @@ return [
             'review_submitted' => 'Thanks for your review! Your review has been sent for approval.',
             'review_failed' => 'Your review has not been sent for approval.',
             'review_already_submitted' => 'Review Already Submitted!',
-            
+
         ],
         'quote_request' => [
             'operator_restricted' => 'Operators cannot send Quote Requests!',
@@ -95,20 +110,25 @@ return [
             'wishlist_remove_failed' => 'Not removed the shared safari from your wishlist!',
 
         ],
-        'comment_reply' => [
-            'comment_restricted' => 'You are an operator. You cannot comment on this safari!',
-            'comment_success' => 'Comment Submitted Successfully!',
-            'reply_restricted' => 'You are an operator. You cannot reply to this safari!',
-            'reply_success' => 'Reply Submitted Successfully!',
-            'flag_restricted' => 'You cannot flag your own comment/reply!',
-            'report_success' => 'Reported Successfully!',
-
-        ],
         'update' => [
             'update_success' => 'Shared Safari Updated Successfully!',
             'update_restricted' => 'You cannot update this safari!',
             'update_failed' => 'Shared Safari Not Updated Successfully!',
-            
+
         ],
     ],
+
+    'post' => [
+        'create_post' => [
+            'post_added' => 'Post added successfully',
+            'post_not_added' => 'Failed to add post!',
+        ],
+        'edit_post' => [
+            'edit_restricted' => 'You cannot edit this post!',
+            'edit_success' => 'Post edited successfully!',
+            'edit_failed' => 'Post edit failed!',
+        ]
+
+    ]
+
 ];
