@@ -374,10 +374,10 @@ class DefaultController extends SafariController
         $wishlist->item_type = 'share-safari';
         $wishlist->status = 1;
         if ($wishlist->save(false)) {
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.wishlist_unwishlist.wishlist_added');
+            $message = Yii::$app->api->messageManager->getMessage('common.wishlist_added',['{var}'=>'Share Safari']);
             return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-        $message = Yii::$app->api->messageManager->getMessage('share_safari.wishlist_unwishlist.wishlist_add_failed');
+        $message = Yii::$app->api->messageManager->getMessage('common.wishlist_add_failed',['{var}'=>'Share Safari']);
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
@@ -390,7 +390,7 @@ class DefaultController extends SafariController
         }
 
         if ($this->userinfo && $this->userinfo->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.wishlist_unwishlist.action_restricted');
+            $message = Yii::$app->api->messageManager->getMessage('common.not_allowed');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -398,10 +398,10 @@ class DefaultController extends SafariController
         if ($wishlist) {
             $wishlist->status = 0;
             if ($wishlist->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.wishlist_unwishlist.wishlist_removed');
+                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_removed',['{var}'=>'Share Safari']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.wishlist_unwishlist.wishlist_remove_failed');
+            $message = Yii::$app->api->messageManager->getMessage('common.wishlist_remove_failed',['{var}'=> 'Share Safari']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
     }

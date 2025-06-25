@@ -36,18 +36,24 @@ return [
         'issue_occurred' => 'Facing some issues. Please try again later.',
         'cache_cleared' => 'Cache Cleared Successfully!',
 
-        'operator_comment_restricted' => 'You are an operator. You cannot comment on this safari!',
+        'operator_comment_restricted' => 'You are an operator. You cannot comment!',
         'comment_success' => 'Comment Submitted Successfully!',
         'comment_failed' => "Comment Not Submitted!",
-        'operator_reply_restricted' => 'You are an operator. You cannot reply to this safari!',
+        'operator_reply_restricted' => 'You are an operator. You cannot reply!',
         'reply_success' => 'Reply Submitted Successfully!',
         'reply_failed' => 'Reply Not Submitted!',
         'flag_restricted' => 'You cannot flag your own comment/reply!',
         'flag_success' => 'Flaged successfully!',
         'report_success' => 'Reported Successfully!',
+        'report_failed' => 'Report submission failed!',
 
         'like_success' => '{var} Liked Successfully!',
-        'like_removed' => 'Remove Liked Successfully!'
+        'like_removed' => 'Remove Liked Successfully!',
+
+        'wishlist_added' => 'You added the {var} to your wishlist!',
+        'wishlist_add_failed' => 'Not added the {var} to your wishlist!',
+        'wishlist_removed' => 'You removed the {var} from your wishlist!',
+        'wishlist_remove_failed' => 'Not removed the {var} from your wishlist!',
 
     ],
 
@@ -100,15 +106,6 @@ return [
             'unjoin_success' => 'You unjoined this shared safari!',
             'unjoin_failed' => 'Not Unjoined!',
             'join_restricted' => 'You cannot join this safari!',
-
-        ],
-        'wishlist_unwishlist' => [
-            'action_restricted' => 'You are not allowed to perform this action!',
-            'wishlist_added' => 'You added the shared safari to your wishlist!',
-            'wishlist_add_failed' => 'Not added the shared safari to your wishlist!',
-            'wishlist_removed' => 'You removed the shared safari from your wishlist!',
-            'wishlist_remove_failed' => 'Not removed the shared safari from your wishlist!',
-
         ],
         'update' => [
             'update_success' => 'Shared Safari Updated Successfully!',
@@ -136,6 +133,14 @@ return [
             'sighting_added' => 'Sighting added successfully!',
             'sighting_not_added' => 'Failed to add sighting!',
 
+        ]
+    ],
+
+    'package' => [
+        'package_quote' => [
+            'quote_restricted' => 'You cannot request a quote for your own package!',
+            'quote_request_submitted' => 'Quote request submitted successfully!',
+            'quote_request_failed' => 'Quote request submission failed!',
         ]
     ]
 
