@@ -5,8 +5,10 @@ namespace backend\modules\leads\controllers;
 use api\models\chat\Chat as ApiChat;
 use common\models\chat\Chat;
 use api\models\chat\ChatMessage;
+use common\models\GeneralModel;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\leads\Lead;
+use common\models\leads\LeadAssignForm;
 use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
@@ -15,6 +17,7 @@ use common\models\operator\SafariOperator;
 use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -420,5 +423,38 @@ class DefaultController extends  Controller
         }
 
         return $this->renderAjax('_notification_form');
+    }
+
+
+    public function actionAssign($id)
+    {
+        $model = $this->findModel($id);
+
+        $existingPartners = LeadPartners::find()->select('partner_id')->where(['lead_id' => $id])->asArray()->all();
+        $existingPartnerIds = ArrayHelper::getColumn($existingPartners, 'partner_id');
+
+        $dropdown_list = ArrayHelper::map(
+            SafariOperator::find()
+                ->where(['status' => SafariOperator::STATUS_ACTIVE])
+                ->andFilterWhere(['NOT IN', 'id', $existingPartnerIds])
+                ->all(),
+            'id',
+            'business_name'
+        );
+
+        $lead_assign_form = new LeadAssignForm();
+
+        if ($lead_assign_form->load(Yii::$app->request->post()) && $lead_assign_form->validate()) {
+
+            $lead_assign_form->assign($model, $lead_assign_form->partner_id);
+
+            Yii::$app->session->setFlash('success', 'Assigned Successfully!');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        return $this->renderAjax('_assign_form', [
+            'dropdown_list' => $dropdown_list,
+            'lead_assign_form' => $lead_assign_form
+        ]);
     }
 }
