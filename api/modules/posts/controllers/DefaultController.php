@@ -168,7 +168,7 @@ class DefaultController extends RestController
         }
         if ($this->userinfo) {
             if ($this->userinfoId != $userpost->user_id) {
-                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted');
+                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted',['{var}'=>'Post']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }

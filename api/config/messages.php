@@ -7,7 +7,7 @@ return [
         'updated' => 'Updated Successfully!',
         'deleted' => 'Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
-        'delete_restricted' => 'You cannot delete this post!',
+        'delete_restricted' => 'You cannot delete this {var}!',
         'not_found' => '{var} Not Found!',
         'invalid_request' => 'Invalid Request!',
         'not_in_use' => '{var} Not In Use!',
@@ -43,7 +43,7 @@ return [
         'reply_success' => 'Reply Submitted Successfully!',
         'reply_failed' => 'Reply Not Submitted!',
         'flag_restricted' => 'You cannot flag your own comment/reply!',
-        'flag_success'=>'Flaged successfully!',
+        'flag_success' => 'Flaged successfully!',
         'report_success' => 'Reported Successfully!',
 
         'like_success' => '{var} Liked Successfully!',
@@ -129,6 +129,14 @@ return [
             'edit_failed' => 'Post edit failed!',
         ]
 
+    ],
+
+    'sighting' => [
+        'create_sighting' => [
+            'sighting_added' => 'Sighting added successfully!',
+            'sighting_not_added' => 'Failed to add sighting!',
+
+        ]
     ]
 
 ];
