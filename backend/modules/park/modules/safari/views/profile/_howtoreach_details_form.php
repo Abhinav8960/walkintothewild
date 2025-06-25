@@ -18,11 +18,7 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'module_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Module Title']) ?>
             </div>
             <div class="col-md-12">
-                <?= $form->field($model, 'module_description')->widget(CKEditor::className(), [
-                    'options' => ['rows' => 4],
-                    'preset' => 'full',
-
-                ]) ?>
+                <?= $form->field($model, 'module_description')->textarea() ?>
             </div>
         </div>
         <hr>
@@ -198,3 +194,10 @@ use yii\bootstrap5\ActiveForm;
         display: block !important;
     }
 </style>
+
+<?php
+$script = <<< JS
+editor('safariparkform-module_description');
+JS;
+$this->registerJs($script);
+?>
