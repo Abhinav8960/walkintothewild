@@ -193,7 +193,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     {
         $quotation = LeadPartnerQuotes::find()->where(['status' => LeadPartnerQuotes::STATUS_ACTIVE, 'id' => $this->id])->one();
         if ($quotation != null) {
-            return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id, $this->partner->user_id);
+            return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id);
         }
     }
 }
