@@ -25,5 +25,6 @@ ALTER TABLE `chat_message` ADD `is_edited` BOOLEAN NOT NULL DEFAULT FALSE AFTER 
 
 ALTER TABLE `lead_partners` ADD `is_assign_by_admin` INT NULL DEFAULT NULL AFTER `is_chat_started`;
 ALTER TABLE `lead` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `assigned_operator_count`;
+ALTER TABLE lead_partners ADD assign_by_admin_date_time INT NULL DEFAULT NULL AFTER is_assign_by_admin;
 ALTER TABLE `lead_partners` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `assign_by_admin_date_time`;
 ALTER TABLE `lead_partner_quotes` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `payment_gateway`;
