@@ -7,6 +7,7 @@ return [
         'updated' => 'Updated Successfully!',
         'deleted' => 'Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
+        'inactive' => '{var} is either inactive or deleted!',
         'delete_restricted' => 'You cannot delete this {var}!',
         'not_found' => '{var} Not Found!',
         'invalid_request' => 'Invalid Request!',
@@ -14,7 +15,9 @@ return [
         'submitted' => '{var} Submitted Successfully!',
         'not_submitted' => '{var} Not Submitted!',
         'follow_success' => 'Followed Successfully!',
+        'follow_restricted' => 'You can not follow {var}!',
         'unfollow_success' => 'Unfollowed Successfully!',
+        'unfollow_restricted' => 'You can not unfollow {var}!',
         'follow_failed' => 'Oops! Not Followed Successfully!',
         'not_logged_in' => 'You are not logged in!',
         'expired' => '{var} Expired!',
@@ -54,6 +57,13 @@ return [
         'wishlist_add_failed' => 'Not added the {var} to your wishlist!',
         'wishlist_removed' => 'You removed the {var} from your wishlist!',
         'wishlist_remove_failed' => 'Not removed the {var} from your wishlist!',
+
+        'quote_restricted' => 'You cannot request a quote for your own {var}!',
+        'quote_request_sent' => 'Quote request sent successfully!',
+        'quote_request_failed' => 'Failed to send the quote request!',
+
+        'rating_restricted' => 'You cannot rate yourself!',
+        'thank_you_for_review' => 'Thank you for your {var} review!',
 
     ],
 
@@ -135,13 +145,5 @@ return [
 
         ]
     ],
-
-    'package' => [
-        'package_quote' => [
-            'quote_restricted' => 'You cannot request a quote for your own package!',
-            'quote_request_submitted' => 'Quote request submitted successfully!',
-            'quote_request_failed' => 'Quote request submission failed!',
-        ]
-    ]
 
 ];

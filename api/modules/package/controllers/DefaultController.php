@@ -283,7 +283,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
-            $message = Yii::$app->api->messageManager->getMessage('package.package_quote.quote_restricted');
+            $message = Yii::$app->api->messageManager->getMessage('common.quote_restricted',['{var}'=>'package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $packagemodel = new PackageLeadForm();
@@ -291,10 +291,10 @@ class DefaultController extends RestController
         if ($packagemodel->validate()) {
             if ($packagemodel->request($package->id, $this->userinfo)) {
                 // FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
-                $message = Yii::$app->api->messageManager->getMessage('package.package_quote.quote_request_submitted');
+                $message = Yii::$app->api->messageManager->getMessage('common.quote_request_sent');
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('package.package_quote.quote_request_failed');
+            $message = Yii::$app->api->messageManager->getMessage('common.quote_request_failed');
             return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
