@@ -1,8 +1,10 @@
 <?php
 
 use common\models\User;
+use common\models\UserSession;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 $this->title = 'List of Users';
 $this->params['breadcrumbs_home_url'] = '/user/default/index';
@@ -51,6 +53,23 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             } else {
                                 return 'No';
                             }
+                        }
+                    ],
+                    [
+                        'label' => 'No of Device',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $device_count = UserSession::find()
+                                ->where(['user_id' => $model->id])
+                                ->count();
+                            if ($device_count) {
+                                return Html::button($device_count, [
+                                    'value' => Url::to(['/user/user-device/user-device', 'user_id' => $model->id]),
+                                    'class' => 'btn btn-info pop-up change-menuicon',
+                                    'title' => 'View',
+                                ]);
+                            }
+                            return '';
                         }
                     ],
                     [
@@ -127,3 +146,36 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deviceAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    List of Devices
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+
+    $('.pop-up').on('click', function () {
+        $('#deviceAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+
+JS;
+$this->registerJs($script);
+
+?>

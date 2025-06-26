@@ -4,6 +4,7 @@ use common\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 $this->title = 'List of Users With Devices';
 $this->params['title'] = $this->title;
@@ -13,6 +14,8 @@ $this->params['title'] = $this->title;
     <div class="card-body">
 
         <div class="table-responsive">
+            <?php Pjax::begin(['id' => 'user-device-grid', 'timeout' => 10000, 'enablePushState' => false]); ?>
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -62,9 +65,17 @@ $this->params['title'] = $this->title;
                             return isset($model->application_version) ? $model->application_version : '';
                         }
                     ],
+                    [
+                        'label' => 'Created At',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->created_at) ? $model->created_at : '';
+                        }
+                    ],
 
                 ],
             ]); ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 </div>

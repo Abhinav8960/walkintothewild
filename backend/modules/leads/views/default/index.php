@@ -153,7 +153,15 @@ $this->params['title'] = $this->title;
                             return $model->assigned_operator_count;
                         }
                     ],
-                    
+                     [
+                        'label' => 'Partner Chat Started Count',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->partner_chat_started_count;
+                        }
+                    ],
+
 
                     [
                         'label' => 'Is Chat Started',
@@ -167,7 +175,7 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'headerOptions' => ['style' => 'width:15%; text-align: left;'],
                         'template' => '{view}',
                         'buttons' => [
 
@@ -179,12 +187,6 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
 
-                            // 'inactive' => function ($url, $model) {
-                            //     return  Html::a('Inactive', ['/leads/default/inactive', 'id' => $model->id], [
-                            //         'class' => 'btn btn-info p-1',
-                            //         'title' => 'Inactive',
-                            //     ]);
-                            // }
 
 
                         ]

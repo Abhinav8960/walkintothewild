@@ -7,6 +7,7 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\operator\SafariOperator;
 use api\models\package\PackageVersionSearch;
+use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\operator\form\SafariOperatorRequestForm;
@@ -187,5 +188,26 @@ class DefaultController extends RestController
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
         }
+    }
+
+    public function actionView($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+        $share_safari = ShareSafari::find()->where(['slug' => $slug, 'host_user_id' => $safari_operator->id])->limit(1)->one();
+        
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Share Safari Not Found!!!"]);
+        }
+
+        if (!in_array($share_safari->status, [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT])) {
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
+        }
+
+        if ($share_safari->start_date < date('Y-m-d')) {
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari Expired!!!"]);
+        }
+
+        return Yii::$app->api->sendResponse($data = ['data' => $share_safari]);
     }
 }
