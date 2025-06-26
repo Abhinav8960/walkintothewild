@@ -62,9 +62,16 @@ class DefaultController extends Controller
         $model = $this->findModel($lead_partner_quotes_id);
 
         // Fetch PayU configuration parameters
-        $merchantKey = Yii::$app->params['payu']['merchantId'];
+        $merchantKey = Yii::$app->params['payu']['merchantKey'];
         $salt = Yii::$app->params['payu']['salt'];
         $payuBaseUrl = Yii::$app->params['payu']['host_url'];
+
+        // Validate merchantKey
+        if (empty($merchantKey)) {
+            Yii::error('Merchant Key is missing in PayU configuration.', 'transaction');
+            Yii::$app->session->setFlash('error', 'Payment gateway configuration error: Merchant Key is missing.');
+            return $this->redirect(['index']);
+        }
 
         // Prepare transaction details
         $orderId = Transaction::orderId($model->id);
