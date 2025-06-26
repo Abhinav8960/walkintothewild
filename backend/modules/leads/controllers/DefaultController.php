@@ -175,11 +175,19 @@ class DefaultController extends  Controller
                 }
 
                 $quotation->quotation_filepath = $filePath;
+                $quotation->is_payment_link_send = 1;
 
                 // Save quotation and installment
                 $quotation->save(false);
                 $installment->save(false);
 
+                $lead_partner = LeadPartners::find()->where(['id' => $quotation->lead_partner_id])->one();
+                $lead_partner->is_payment_link_send = 1;
+                $lead_partner->save(false);
+
+                $lead = Lead::find()->where(['id' => $quotation->lead_id])->one();
+                $lead->is_payment_link_send = 1;
+                $lead->save(false);
                 // Trigger events and prepare chat
                 new \common\events\operator\QuotationApprovatedByAdmin($quotation, $paymentUrl, $quotation->lead->user_id, $quotation->partner->user_id);
                 $this->prepareChat($quotation);
