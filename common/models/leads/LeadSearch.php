@@ -29,7 +29,7 @@ class LeadSearch extends Lead
             [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count', 'is_chat_started'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
-            [['lead_month', 'custom_status'], 'safe'],
+            [['lead_month', 'custom_status','is_payment_link_send'], 'safe'],
         ];
     }
 
@@ -97,6 +97,7 @@ class LeadSearch extends Lead
             'updated_by' => $this->updated_by,
             'quotation_count' => $this->quotation_count,
             'is_chat_started' => $this->is_chat_started,
+            'is_payment_link_send' => $this->is_payment_link_send,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
