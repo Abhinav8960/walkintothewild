@@ -191,11 +191,11 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public static function orderId($identifier)
     {
-        return 'O-' . date('ym') . '-' . time() . '-' . $identifier . '-' . uniqid();
+        return 'O-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 
-    public function referenceId($identifier)
+    public static function referenceId($identifier)
     {
-        return 'R-' . date('ym') . '-' . time() . '-' . $identifier . '-' . uniqid();
+        return 'R-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 }

@@ -75,7 +75,7 @@ class DefaultController extends Controller
 
         // Prepare transaction details
         $orderId = Transaction::orderId($model->id);
-        $reference_id = Transaction::orderId($model->id);
+        $reference_id = Transaction::referenceId($model->id);
         $amount = $model->partner_selling_price;
         $currency = 'INR';
 
@@ -97,23 +97,29 @@ class DefaultController extends Controller
         // Generate hash for PayU
         $data['hash'] = $this->generatePayuHash($data, $salt);
 
-        // Build the PayU payment URL
-        $queryString = http_build_query($data);
-        $paymentUrl = $payuBaseUrl . '/_payment?' . $queryString;
+        // Log the payment data for debugging purposes
+        Yii::info('PayU Payment Data: ' . json_encode($data), 'transaction');
 
-        // Log the payment URL for debugging purposes
-        Yii::info('PayU Payment URL: ' . $paymentUrl, 'transaction');
+        // Build the HTML form for POST request
+        $formHtml = '<form id="payuForm" action="' . $payuBaseUrl . '/_payment" method="POST">';
+        foreach ($data as $key => $value) {
+            $formHtml .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '">';
+        }
+        $formHtml .= '</form>';
+        $formHtml .= '<script>document.getElementById("payuForm").submit();</script>';
 
-        // Redirect to the PayU payment gateway
-        return $this->redirect($paymentUrl);
+
+        // Output the form to the browser
+        return $formHtml;
     }
 
     private function generatePayuHash($data, $salt)
     {
         // Define the order of fields for the hash string
-
-        $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone', 'surl', 'furl', 'udf1', 'udf2'];
-
+        // $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone', 'surl', 'furl', 'udf1', 'udf2'];
+        // $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone',  'udf1', 'udf2', 'udf3', 'udf4', 'udf5', 'udf6', 'udf7', 'udf8', 'udf9', 'udf10'];
+        $hashPattern = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
+        $fieldsOrder = explode('|', $hashPattern);
         // Initialize the hash string
         $hashString = '';
 
@@ -122,9 +128,10 @@ class DefaultController extends Controller
             $hashString .= isset($data[$field]) ? $data[$field] . '|' : '|';
         }
 
-        // Append empty fields and the salt
-        $hashString .= str_repeat('|', 10) . $salt;
-
+        // Append the salt at the end
+        $hashString .= $salt;
+        // echo $hashString;
+        // die();
         // Generate and return the hash
         return strtolower(hash('sha512', $hashString));
     }
@@ -159,8 +166,9 @@ class DefaultController extends Controller
             'tid' => time() . '-' . $model->id,
         ];
 
-        // print_r($data);
-        // die();
+        echo "<pre>";
+        print_r($data);
+        die();
 
         $dataString = http_build_query($data);
 
