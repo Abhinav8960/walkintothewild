@@ -95,7 +95,14 @@ class SiteController extends Controller
 
         $safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id, 'status' => SafariOperator::STATUS_ACTIVE])->one();
 
-        $leads = Lead::find()->where(['operator_id' => $safarioperator->id, 'status' => Lead::STATUS_ACTIVE])->count();
+        $leads = Lead::find()
+            ->joinWith('assignOperator')
+            ->where([
+                'lead_partners.partner_id' => $safarioperator->id,
+                'lead_partners.status' => 1,
+            ])
+            ->count();
+
         $posts = UserPosts::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => UserPosts::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
         $sightings = Sighting::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => Sighting::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(3)->all();
         $packages = Package::find()->where(['owned_by_id' => $safarioperator->id, 'status' => Package::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
