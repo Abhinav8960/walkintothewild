@@ -49,7 +49,7 @@ class LoginUserController extends Controller
     public function actionDestoryinactive()
     {
         $user_affected = Yii::$app->db->createCommand()
-            ->delete('user_session', 'last_activity < NOW() - INTERVAL 120 MINUTE')
+            ->delete('user_session', 'last_activity < NOW() - INTERVAL 720 MINUTE') // Extend to 12 hours
             ->execute();
 
         Yii::$app->session->setFlash($user_affected . ' User Session Destoryed');

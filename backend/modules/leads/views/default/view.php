@@ -212,7 +212,7 @@ AppAsset::register($this);
                         <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required> -->
                         <small id="net-payment-price-hint" class="form-text text-muted"></small>
                         <label for="approval-file" class="form-label">Upload QR Code File</label>
-                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
+                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png,.jpeg">
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>
