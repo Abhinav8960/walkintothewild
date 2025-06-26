@@ -14,6 +14,7 @@ class LeadSearch extends Lead
     public $user_name;
     public $safari_operator_id;
     public $lead_month;
+    public $custom_status;
 
 
 
@@ -28,7 +29,7 @@ class LeadSearch extends Lead
             [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count', 'is_chat_started'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
-            [['lead_month'], 'safe'],
+            [['lead_month', 'custom_status','is_payment_link_send'], 'safe'],
         ];
     }
 
@@ -96,6 +97,7 @@ class LeadSearch extends Lead
             'updated_by' => $this->updated_by,
             'quotation_count' => $this->quotation_count,
             'is_chat_started' => $this->is_chat_started,
+            'is_payment_link_send' => $this->is_payment_link_send,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
@@ -129,7 +131,7 @@ class LeadSearch extends Lead
         // add conditions that should always apply here
 
         $query->joinWith(['assignOperator' => function ($q) use ($operator_id) {
-            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, 'partner_id' => $operator_id]);
+            $q->where([LeadPartners::getTableSchema()->fullName . '.status' => LeadPartners::STATUS_ACTIVE, LeadPartners::getTableSchema()->fullName . '.partner_id' => $operator_id]);
         }]);
 
         $dataProvider = new ActiveDataProvider([
@@ -165,7 +167,7 @@ class LeadSearch extends Lead
             'user_id' => $this->user_id,
             'is_booking_for_login_user' => $this->is_booking_for_login_user,
             'is_seen_by_admin' => $this->is_seen_by_admin,
-            'status' => $this->status,
+            'lead.status' => $this->status,
             'is_payment_received' => $this->is_payment_received,
             'booked_operator_id' => $this->booked_operator_id,
             'transaction_datetime' => $this->transaction_datetime,
@@ -189,6 +191,21 @@ class LeadSearch extends Lead
 
         if ($this->lead_month) {
             $query->andWhere(['MONTH(FROM_UNIXTIME(lead.created_at))' => $this->lead_month]);
+        }
+
+        if ($this->custom_status) {
+            switch ($this->custom_status) {
+                case 1:
+                    $query->andWhere(['>=', 'lead.from_date', date('Y-m-d')])->andWhere(['lead.status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere([
+                        'or',
+                        ['<', 'lead.from_date', date('Y-m-d')],
+                        ['lead.status' => 0],
+                    ]);
+                    break;
+            };
         }
 
         return $dataProvider;

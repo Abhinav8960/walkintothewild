@@ -54,15 +54,16 @@ class AppBootstrap implements BootstrapInterface
             }
 
 
-            $currentToken = $session->get('session_token');
-            $sessionRecord = Yii::$app->db->createCommand('SELECT token FROM user_session WHERE app_name="' . Yii::$app->params['app_name'] . '" and  id = :id')
-                ->bindValue(':id', $sessionId)
-                ->queryScalar();
+            // $currentToken = $session->get('session_token');
+            // $sessionRecord = Yii::$app->db->createCommand('SELECT token FROM user_session WHERE app_name="' . Yii::$app->params['app_name'] . '" and  id = :id')
+            //     ->bindValue(':id', $sessionId)
+            //     ->queryScalar();
 
-            if ($currentToken !== $sessionRecord) {
-                Yii::$app->user->logout();
-                Yii::$app->session->setFlash('Your Session is Expired! Please Login to Continue');
-            }
+            // if ($currentToken !== $sessionRecord) {
+                // Yii::error("Session expired for user ID: $userId, Session ID: $sessionId");
+            //     Yii::$app->user->logout();
+            //     Yii::$app->session->setFlash('Your Session is Expired! Please Login to Continue');
+            // }
 
             // if ($currentToken !== $sessionRecord) {
             //     // Regenerate token and update the database
