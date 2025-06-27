@@ -1,7 +1,8 @@
  <?php
 
     use common\models\GeneralModel;
-    use yii\bootstrap5\Html;
+use common\models\leads\Lead;
+use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
     ?>
@@ -15,6 +16,7 @@
          </div>
      </div>
      <div class="UserInfobx d-flex align-items-center gap-4">
+         <?php if($model->status == Lead::STATUS_ACTIVE){ ?>
          <div class="sharBtn">
              <?= Html::button('Share Itinerary & Quotation', [
                     'value' => Url::to(['quotation', 'id' => $model->id]),
@@ -32,6 +34,7 @@
                     'class' => 'callHere image-button',
                 ]) ?>
          </div>
+         <?php }?>
          <!--          
          <div class="callOption">
              <a href="" class="callHere"><i class="fas fa-ellipsis-v"></i></a>

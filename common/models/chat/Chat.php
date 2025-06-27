@@ -21,7 +21,7 @@ use common\models\operator\SafariOperator;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class Chat extends \yii\db\ActiveRecord
+class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     const CHAT_TYPE_DIRECT = 1;
     const CHAT_TYPE_QUOTE = 2;
