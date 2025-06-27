@@ -194,7 +194,7 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
     public function getFull_file_path()
     {
         if ($this->file) {
-            return  Yii::$app->params['s3_endpoint'] . '/watchpost/' . $this->user_id . '/media/' . $this->file;
+            return  Yii::$app->params['s3_endpoint'] . '/' . $this->filepath;
         }
         return null;
     }

@@ -12,6 +12,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = 'Sighting';
 $this->params['title'] = $this->title;
 
+$this->params['buttons'][] = Html::a('Download',  [Url::toRoute(['download', 'url' => $model->full_file_path])], ['class' => 'btn btn-orange', 'title' => 'Download']);
+
 ?>
 
 <div class="card">
