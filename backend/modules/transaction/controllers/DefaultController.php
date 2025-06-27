@@ -204,23 +204,48 @@ class DefaultController extends Controller
      */
     private function encryptCCAvenueData($data, $workingKey)
     {
-        if (empty($data)) {
-            throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
+
+        $key = $this->hextobin(md5($workingKey));
+        $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+        $openMode = openssl_encrypt($data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $initVector);
+        $encryptedText = bin2hex($openMode);
+        return $encryptedText;
+        // if (empty($data)) {
+        //     throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
+        // }
+
+        // if (empty($workingKey) || strlen($workingKey) < 16) {
+        //     throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
+        // }
+
+        // // Ensure the IV is 16 bytes long
+        // $iv = substr($workingKey, 0, 16);
+
+        // $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
+
+        // if ($encryptedData === false) {
+        //     throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
+        // }
+
+        // return $encryptedData;
+    }
+
+    private function  hextobin($hexString)
+    {
+        $length = strlen($hexString);
+        $binString = "";
+        $count = 0;
+        while ($count < $length) {
+            $subString = substr($hexString, $count, 2);
+            $packedString = pack("H*", $subString);
+            if ($count == 0) {
+                $binString = $packedString;
+            } else {
+                $binString .= $packedString;
+            }
+
+            $count += 2;
         }
-
-        if (empty($workingKey) || strlen($workingKey) < 16) {
-            throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
-        }
-
-        // Ensure the IV is 16 bytes long
-        $iv = substr($workingKey, 0, 16);
-
-        $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
-
-        if ($encryptedData === false) {
-            throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
-        }
-
-        return $encryptedData;
+        return $binString;
     }
 }
