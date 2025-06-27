@@ -21,7 +21,7 @@ interface NewStatusInterface
     const PARTNER_GALLERY_API_LAYOUT_FULL = "partnergalleryfull";
 
 
-    
+
 
     // ... other constants ...
 
@@ -67,4 +67,5 @@ interface NewStatusInterface
     const TYPE_JSON = 'json';
 
 
+    
 }

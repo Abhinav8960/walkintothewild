@@ -31,8 +31,9 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
     const STATUS_NOT_RECEIVED = 0;
     const STATUS_RECEIVED = 1;
 
-    const PAYMENT_GATEWAY_PAYU = 1;
-    const PAYMENT_GATEWAY_HDFC = 2;
+    public const PAYMENT_GATEWAY_PAYU = 1;
+    public const PAYMENT_GATEWAY_ICICI = 2;
+    public const PAYMENT_GATEWAY_HDFC = 3;
 
     public function behaviors()
     {
