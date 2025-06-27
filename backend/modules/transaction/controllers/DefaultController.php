@@ -166,17 +166,23 @@ class DefaultController extends Controller
             'tid' => time() . '-' . $model->id,
         ];
 
-        echo "<pre>";
-        print_r($data);
-        die();
+        // echo "<pre>";
+        // print_r($data);
+        // die();
 
         $dataString = http_build_query($data);
 
         try {
             $encryptedData = $this->encryptCCAvenueData($dataString, $workingKey);
+
             if ($encryptedData === false) {
                 throw new \yii\base\InvalidArgumentException('Encryption failed.');
             }
+            echo "Encrypted Data: " . $encryptedData;
+            echo "<br>";
+            echo "accessCode Data: " . $accessCode;
+            die();
+            $paymentUrl = '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
             $paymentUrl = $api_url . '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
 
             Yii::info('Encrypted Data: ' . $encryptedData, 'transaction');
