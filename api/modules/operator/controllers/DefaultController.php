@@ -416,7 +416,7 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->rating_model->save(false)) {
                 $model->updateRatingintoTable($operator);
-                $message = Yii::$app->api->messageManager->getMessage('common.thank_you_for_review',['{var}'=> 'edit']);
+                $message = Yii::$app->api->messageManager->getMessage('common.thank_you_for_review');
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }

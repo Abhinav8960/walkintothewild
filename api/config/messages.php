@@ -4,12 +4,14 @@ return [
     // Common Messages can be used globally
     'common' => [
         'success' => 'Success!',
-        'updated' => 'Updated Successfully!',
-        'deleted' => 'Deleted successfully!',
+        'updated' => '{var} Updated Successfully!',
+        'update_failed' => '{var} was not updated!',
+        'deleted' => '{var} Deleted successfully!',
         'delete_failed' => 'Deletion failed!',
         'inactive' => '{var} is either inactive or deleted!',
         'delete_restricted' => 'You cannot delete this {var}!',
         'not_found' => '{var} Not Found!',
+        'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
         'invalid_request' => 'Invalid Request!',
         'not_in_use' => '{var} Not In Use!',
         'submitted' => '{var} Submitted Successfully!',
@@ -19,6 +21,7 @@ return [
         'unfollow_success' => 'Unfollowed Successfully!',
         'unfollow_restricted' => 'You can not unfollow {var}!',
         'follow_failed' => 'Oops! Not Followed Successfully!',
+        'unfollow_failed' => 'Oops! Not Unfollowed Successfully!',
         'not_logged_in' => 'You are not logged in!',
         'expired' => '{var} Expired!',
         'rate_limit_exceeded' => 'Rate limit exceeded. Please try again later.',
@@ -63,8 +66,15 @@ return [
         'quote_request_failed' => 'Failed to send the quote request!',
 
         'rating_restricted' => 'You cannot rate yourself!',
-        'thank_you_for_review' => 'Thank you for your {var} review!',
+        'thank_you_for_review' => 'Thank you for your review!',
 
+        'about_us'=>'About Us',
+        'sent_to_operator'=>'Sent dasd to Operator {var}',
+
+        'registration_successful' => 'Business registered successfully!',
+        'registration_failed' => 'Business registration failed!',
+
+        
     ],
 
     'authorization' => [
@@ -145,5 +155,4 @@ return [
 
         ]
     ],
-
 ];
