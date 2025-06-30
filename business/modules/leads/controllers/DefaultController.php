@@ -60,6 +60,7 @@ class DefaultController extends  Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new LeadSearch();
+        $searchModel->custom_status = 1;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
 
         return $this->render(

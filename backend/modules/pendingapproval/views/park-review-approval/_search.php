@@ -16,24 +16,24 @@ use common\models\GeneralModel;
 ]); ?>
 <div class="row">
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'safari_park')->textInput(['placeholder' => 'Search Park'])->label(false) ?>
-    </div>
-    <div class="col-md-3">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'park_id')->dropDownList(
+            GeneralModel::safariparkoption(),
+            [
+                'prompt' => 'Select Park',
+            ]
+        ) ?>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
 
-<?php
 
-$script = <<< JS
-          
-    $('form').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
-       
-    }); 
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
 JS;
-$this->registerJs($script);
+$this->registerJs($js);
 ?>

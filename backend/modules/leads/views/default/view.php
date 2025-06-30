@@ -8,13 +8,16 @@ use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = 'Leads('. $model->sourceLabel .')';
+$this->title = 'Leads(' . $model->sourceLabel . ')';
 $this->params['title'] = $this->title;
-if($model->status == 1){
 
+if ($model->status == 1 && $model->source == 2) {
+    // $this->params['buttons'][] = Html::button('Assign', ['value' => Url::toRoute(['/leads/default/assign', 'id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'Assign']);
+}
+if ($model->status == 1) {
     $this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
 }
-if($model->status == 0){
+if ($model->status == 0) {
 
     $this->params['buttons'][] = Html::a('Active', [Url::toRoute(['/leads/default/active', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
 }
@@ -209,7 +212,7 @@ AppAsset::register($this);
                         <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required> -->
                         <small id="net-payment-price-hint" class="form-text text-muted"></small>
                         <label for="approval-file" class="form-label">Upload QR Code File</label>
-                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png">
+                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png,.jpeg">
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>
@@ -281,12 +284,32 @@ AppAsset::register($this);
 </div>
 
 
+<div class="modal fade" id="assignAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Assign
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 <?php
 $script = <<< JS
 
-
+  $('.pop-up').on('click', function () {
+        $('#assignAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
 
 
 // Handle Approve Button Click

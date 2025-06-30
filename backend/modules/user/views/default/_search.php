@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
     <div class="col-md-2">
         <?= $form->field($model, 'id')->widget(Select2::class, [
             'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
-            'options' => ['placeholder' => 'Select User', 'mulitple' => false],
+            'options' => ['placeholder' => 'Select User', 'multiple' => false],
             'pluginOptions' => [
                 'allowClear' => true,
                 'minimumInputLength' => 1,

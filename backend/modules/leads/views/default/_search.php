@@ -26,19 +26,13 @@ $names = ArrayHelper::getColumn(
 <div class="row">
 
     <div class="col-md-2">
-        <?= $form->field($model, 'source')->dropDownList(
-            GeneralModel::leadSource(),
+        <?= $form->field($model, 'is_chat_started')->dropDownList(
             [
-                'prompt' => 'Select Source',
-            ]
-        ) ?>
-    </div>
-
-    <div class="col-md-2">
-        <?= $form->field($model, 'park_id')->dropDownList(
-            GeneralModel::safariparkoption(),
+                '1' => 'Yes',
+                '0' => 'No'
+            ],
             [
-                'prompt' => 'Select Park',
+                'prompt' => 'Select Chat Status',
             ]
         ) ?>
     </div>
@@ -52,20 +46,38 @@ $names = ArrayHelper::getColumn(
         ) ?>
     </div>
 
-    
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'park_id')->dropDownList(
+            GeneralModel::safariparkoption(),
+            [
+                'prompt' => 'Select Park',
+            ]
+        ) ?>
+    </div>
+
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_payment_link_send')->dropDownList(
+            [
+                '1' => 'Payment Link Send',
+                '0' => 'Payment Link Not Send'
+            ],
+            [
+                'prompt' => 'Select Payment Status',
+            ]
+        ) ?>
+    </div>
 
     <div class="col-md-2">
         <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
     </div>
 
     <div class="col-md-2">
-        <?= $form->field($model, 'is_chat_started')->dropDownList(
+        <?= $form->field($model, 'source')->dropDownList(
+            GeneralModel::leadSource(),
             [
-                '1' => 'Yes',
-                '0' => 'No'
-            ],
-            [
-                'prompt' => 'Is Chat Started',
+                'prompt' => 'Select Source',
             ]
         ) ?>
     </div>

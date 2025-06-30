@@ -109,6 +109,6 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
 
     public static function getOperatorlist()
     {
-        return ArrayHelper::map(SafariOperator::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct safari_operator_id FROM safari_operator_rating)")->all(), 'id', 'business_name');
+        return ArrayHelper::map(SafariOperator::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct safari_operator_id FROM safari_operator_rating)")->orderBy(['business_name'=>SORT_ASC])->all(), 'id', 'business_name');
     }
 }

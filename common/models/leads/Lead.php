@@ -257,7 +257,7 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
             return $this->operator ? mb_strimwidth($this->operator->about_business, 0, 300, "...") : '';
         }
     }
-    
+
 
     public function getPackage()
     {
@@ -267,5 +267,15 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     public function getBookedpartner()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'booked_operator_id']);
+    }
+
+
+    public function getPartner_chat_started_count()
+    {
+        $count = LeadPartners::find()->where(['lead_id' => $this->id])->andWhere(['is_chat_started' => 1])->count();
+        if ($count) {
+            return $count;
+        }
+        return '';
     }
 }
