@@ -93,8 +93,8 @@ class DefaultController extends RestController
             'firstname' => $model->name,
             'email' => $model->email,
             'phone' => $model->phone,
-            // 'surl' => Yii::$app->params['payu']['successUrl'],
-            // 'furl' => Yii::$app->params['payu']['failureUrl'],
+            'surl' => Yii::$app->params['payu']['successUrl'],
+            'furl' => Yii::$app->params['payu']['failureUrl'],
             'udf1' => $reference_id,
             'udf2' => $orderId,
         ];
