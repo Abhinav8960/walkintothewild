@@ -489,4 +489,19 @@ class DefaultController extends Controller
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+    public function actionShareSafariActive($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        if ($share_safari) {
+            $share_safari->status = ShareSafari::STATUS_ACTIVE;
+            if ($share_safari->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        \Yii::$app->session->setFlash('danger', 'Not Found!!!');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }
