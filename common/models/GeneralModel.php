@@ -1153,7 +1153,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '1' => 'Active',
             '0' => 'Inactive',
             '2' => 'Seat Full',
-            '-2' => 'Delete by User'
+            '-1' => 'Delete by User'
         ];
         return $return;
     }
