@@ -96,7 +96,8 @@ class DefaultController extends Controller
     {
         $sighting_delete_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_delete_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new SightingDeleteForm($sighting_delete_model);
@@ -228,7 +229,8 @@ class DefaultController extends Controller
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new SightingThumbnailForm();
