@@ -78,6 +78,7 @@ class LoginUserController extends Controller
             ->joinWith('user')
             ->andFilterWhere(['like', 'user.name', $q])
             ->orFilterWhere(['like', 'user.email', $q])
+            ->orderBy(['user.name'=>SORT_ASC])
             ->limit(20)
             ->asArray()
             ->distinct()
