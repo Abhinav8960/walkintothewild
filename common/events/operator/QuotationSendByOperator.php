@@ -23,11 +23,10 @@ class QuotationSendByOperator extends Event
     ];
     protected $mail_template_code = 'QSBO';// New Quote Raised by Safari Operator 
 
-    public function __construct($quotation, $user_id, $partner_user_id)
+    public function __construct($quotation, $user_id)
     {
         $this->quotation = $quotation;
         $this->user = User::find()->where(['id' => $user_id])->one();
-        $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
@@ -56,7 +55,7 @@ class QuotationSendByOperator extends Event
                         'user_email' => $this->user->email,
                         'accomodation'=>$this->quotation->staycatgory->title,
                         'parkname' =>  @$this->quotation->park_label,
-                        'partner_user' =>$this->partner_user->name,
+                        'partner_user' =>$this->quotation->partner->business_name,
                         'no_of_safari' => $this->quotation->safaris,
                         'no_of_travelers'=>$this->quotation->travelers,
                         'start_date'=>$this->quotation->start_date,

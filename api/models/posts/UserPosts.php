@@ -21,9 +21,13 @@ class UserPosts extends \common\models\UserPosts
         $fields[] = 'resource_uri';
         $fields[] = 'thumbnails';
 
-        $hold_fields = ['etag', 'size', 'height', 'width', 'filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by','comment_count','like_count'];
+        $hold_fields = ['etag', 'size', 'height', 'width', 'filepath', 'file', 'total_view', 'status', 'created_by', 'updated_by', 'comment_count', 'like_count', 'caption'];
 
-        return array_diff($fields, $hold_fields);
+        $fields = array_diff($fields, $hold_fields);
+        $fields['caption'] = function () {
+            return trim($this->caption);
+        };
+        return $fields;
     }
 
 

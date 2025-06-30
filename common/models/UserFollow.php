@@ -96,7 +96,7 @@ class UserFollow extends \yii\db\ActiveRecord
         // }
         if ($this->status == 1 && !empty($this->operator) && $this->operator->status == SafariOperator::STATUS_ACTIVE) {
             return  new \common\events\operator\OperatorFollowedByUser($this->user->name, $this->user->user_handle, $this->operator->user_id, $this->operator->business_name, $this->operator->operator_email);
-        } elseif ($this->status == 0) {
+        } elseif ($this->status == 0 && !empty($this->operator) && $this->operator->status == SafariOperator::STATUS_ACTIVE) {
             return  new \common\events\operator\OperatorUnfollowedByUser($this->user->name, $this->user->user_handle, $this->operator->user_id, $this->operator->business_name, $this->operator->operator_email);
         }
     }
