@@ -25,20 +25,13 @@ $names = ArrayHelper::getColumn(
 ]); ?>
 <div class="row">
 
+
+
     <div class="col-md-2">
         <?= $form->field($model, 'source')->dropDownList(
             GeneralModel::leadSource(),
             [
                 'prompt' => 'Select Source',
-            ]
-        ) ?>
-    </div>
-
-    <div class="col-md-2">
-        <?= $form->field($model, 'park_id')->dropDownList(
-            GeneralModel::safariparkoption(),
-            [
-                'prompt' => 'Select Park',
             ]
         ) ?>
     </div>
@@ -68,6 +61,10 @@ $names = ArrayHelper::getColumn(
                 'prompt' => 'Select Payment Status',
             ]
         ) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
     </div>
 
     <div class="col-md-2">
