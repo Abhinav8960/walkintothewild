@@ -299,7 +299,7 @@ class ShareSafariSearch extends ShareSafari
                     $query->andWhere(['status' => 2]);
                     break;
                 case 3:
-                    $query->andWhere(['>=', 'start_date', date('Y-m-d')])->andWhere(['status' => -1]);
+                    $query->andWhere(['>=', 'start_date', date('Y-m-d')])->andWhere(['status' => 1]);
                     break;
             };
         }
