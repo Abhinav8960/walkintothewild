@@ -233,7 +233,7 @@ class ShareSafariSearch extends ShareSafari
 
     public function sharedsafarisearch($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_SAFARI])->andWhere("status <>" . ShareSafari::STATUS_DELETE);
+        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_SAFARI]);
 
         // add conditions that should always apply here
 
