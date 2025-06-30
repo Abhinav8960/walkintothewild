@@ -60,6 +60,9 @@ return [
         'chat' => [
             'class' => 'api\modules\chat\Module',
         ],
+        'transaction' => [
+            'class' => 'api\modules\transaction\Module',
+        ],
 
     ],
     'components' => [
@@ -223,6 +226,7 @@ return [
 
 
                 'notification-history' => 'notification-history',
+                'transaction/initiate/<lead_partner_quotes_id>/<payment_gateway>' => 'transaction/default/initiate',
 
 
 
