@@ -20,10 +20,10 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
 
         <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
