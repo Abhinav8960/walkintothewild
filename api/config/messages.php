@@ -193,6 +193,11 @@ return [
             'id_message_required'=>'Chat message ID and message are required!',
             'chat_permission_denied'=>'Chat message not found or you do not have permission to edit it.',
             'edit_time_limit'=>'You can only edit messages within 10 minutes.',
+        ],
+        'delete_message'=>[
+            'chat_permission_denied'=>'Chat message not found or you do not have permission to delete it',
+            'can_not_delete'=>'You can not delete messages.',
+            
         ]
     ]
 ];
