@@ -111,7 +111,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $searchModel = new PackageVersionSearch();
         $searchModel->status = PackageVersion::EDIATBLE_STATUS;
@@ -124,7 +125,8 @@ class PackageController extends RestController
 
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new PackageVersionForm();
         $model->status = PackageVersion::EDIATBLE_STATUS;
@@ -177,11 +179,11 @@ class PackageController extends RestController
                 // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => "Package create successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.creation_success',['{var}'=>'Package']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not create successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed',['{var}'=>'Package']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -192,7 +194,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -236,11 +239,11 @@ class PackageController extends RestController
                         $packagesafaripark->save(false);
                     }
                 }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package update successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Package']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Package not update successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Package']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -250,7 +253,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -262,10 +266,11 @@ class PackageController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->package_version_model->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Policy info updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Policy Info']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Policy info not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Policy Info']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -276,7 +281,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -289,10 +295,11 @@ class PackageController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->package_version_model->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Getting there updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Getting There']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Getting there not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Getting There']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -302,7 +309,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -327,7 +335,8 @@ class PackageController extends RestController
                         }
                         $packageIncluded->selection = $selection;
                         if (!$packageIncluded->save()) {
-                            throw new \Exception('Failed to save package inclusion option ' . $optionId);
+                            $message = Yii::$app->api->messageManager->getMessage('package.inclusion.fail_to_save');
+                            throw new \Exception($message . $optionId);
                         }
 
                         if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
@@ -347,13 +356,16 @@ class PackageController extends RestController
                     }
 
                     $transaction->commit();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Inclusion updated successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Inclusion']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 } else {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Failed to update package details."]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Inclusion']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while updating data"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.error_occurred');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
@@ -364,7 +376,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -385,10 +398,11 @@ class PackageController extends RestController
             $model->initializeForm();
             if ($model->package_day_model->save(false)) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Itinerary updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Itinerary']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Itinerary not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Itinerary']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -398,7 +412,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -417,7 +432,8 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
@@ -440,10 +456,11 @@ class PackageController extends RestController
                     $model->package_faq_model->faq_id = $faq->id;
                     $model->package_faq_model->save(false);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq submitted successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.submitted',['{var}'=>'Faq']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faq not submitted successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted',['{var}'=>'Faq']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -454,14 +471,16 @@ class PackageController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $package_model = $this->findModel($slug, $safari_operator->id);
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
         if (!$faq_model) {
-            throw new NotFoundHttpException('Faq Not Found.');
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Faq']);
+            throw new NotFoundHttpException($message);
         }
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
@@ -482,10 +501,11 @@ class PackageController extends RestController
                     $model->package_faq_model->faq_id = $faq->id;
                     $model->package_faq_model->save(false);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq update successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Faq']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq not update successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Faq']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -497,7 +517,8 @@ class PackageController extends RestController
 
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $package_model = $this->findModel($slug, $safari_operator->id);
@@ -511,13 +532,13 @@ class PackageController extends RestController
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while sending for approval"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval_failed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $transaction->commit();
 
-
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Package sent for approval successfully"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval',['{var}'=>'Package']);
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
 
@@ -580,8 +601,8 @@ class PackageController extends RestController
         if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findPackageVersionModel($package_id, $version)
@@ -589,8 +610,8 @@ class PackageController extends RestController
         if (($model = PackageVersion::findOne(['package_id' => $package_id, 'version' => $version])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findPackageVersionModelWithStatus($package_id, $status)
@@ -598,8 +619,8 @@ class PackageController extends RestController
         if (($model = PackageVersion::findOne(['package_id' => $package_id, 'status' => $status])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findModelfaq($id)
@@ -607,8 +628,8 @@ class PackageController extends RestController
         if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
 
@@ -625,8 +646,8 @@ class PackageController extends RestController
         if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     private function copyPackageNow($id, $isNewRecord = false)
@@ -864,7 +885,8 @@ class PackageController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL_WITH_VERSION;
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $package_model = $this->findModel($slug, $safari_operator->id);
         if (empty($version)) {

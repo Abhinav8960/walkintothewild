@@ -233,10 +233,10 @@ class DefaultController extends SafariController
                 //     );
                 //     }
                 // }
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.organize_safari.creation_success');
+                $message = Yii::$app->api->messageManager->getMessage('common.creation_success',['{var}'=>'Shared Safari']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.organize_safari.creation_failed');
+            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed',['{var}'=>'Shared Safari']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -818,7 +818,7 @@ class DefaultController extends SafariController
     {
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if ($shared_safari_model->host_user_id != $this->userinfoId) {
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.update.update_restricted');
+            $message = Yii::$app->api->messageManager->getMessage('common.update_restricted',['{var}'=> 'Safari']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new SharedSafariForm($shared_safari_model);
@@ -863,10 +863,10 @@ class DefaultController extends SafariController
                     //     $model->shared_safari_model->id
                     // );
                 }
-                $message = Yii::$app->api->messageManager->getMessage('share_safari.update.update_success');
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Shared Safari']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('share_safari.update.update_failed');
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Shared Safari']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);

@@ -5,11 +5,13 @@ return [
     'common' => [
         'success' => 'Success!',
         'updated' => '{var} Updated Successfully!',
-        'update_failed' => '{var} was not updated!',
-        'deleted' => '{var} Deleted successfully!',
+        'update_failed' => '{var} not updated!',
+        'update_restricted' => 'You cannot update this {var}!',
+        'deleted' => '{var} Deleted Successfully!',
         'delete_failed' => 'Deletion failed!',
         'inactive' => '{var} is either inactive or deleted!',
         'delete_restricted' => 'You cannot delete this {var}!',
+        'found'=>'{var} Found!',
         'not_found' => '{var} Not Found!',
         'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
         'invalid_request' => 'Invalid Request!',
@@ -68,13 +70,33 @@ return [
         'rating_restricted' => 'You cannot rate yourself!',
         'thank_you_for_review' => 'Thank you for your review!',
 
-        'about_us'=>'About Us',
-        'sent_to_operator'=>'Sent dasd to Operator {var}',
+        'about_us' => 'About Us',
+        'sent_to_operator' => 'Sent to Operator {var}',
 
         'registration_successful' => 'Business registered successfully!',
         'registration_failed' => 'Business registration failed!',
 
-        
+        'creation_success' => '{var} created Successfully!',
+        'creation_failed' => 'Failed to create {var}!',
+
+        'error_occurred' => 'An error occurred while updating data',
+        'page_not_exist' => 'The requested page does not exist.',
+        'not_operator' => 'You are not operator',
+        'send_for_approval_failed' => 'An error occurred while sending for approval.',
+        'send_for_approval' => '{var} sent for approval successfully!',
+        'already_send_for_approval' => '{var} already sent for approval successfully!',
+
+        'upload_success'=>'Uploaded Successfully',
+        'upload_failed'=>'Failed to upload',
+        'try_again'=>'Please Try Again!',
+
+        'set_success'=>'{var} set Successfully!',
+        'set_failed'=>'Failed to set {var}!',
+
+        'message_required'=>'Message is required!',
+        'message_send'=>'Message Send',
+        'message_not_sent'=>'Message not sent',
+
     ],
 
     'authorization' => [
@@ -127,12 +149,6 @@ return [
             'unjoin_failed' => 'Not Unjoined!',
             'join_restricted' => 'You cannot join this safari!',
         ],
-        'update' => [
-            'update_success' => 'Shared Safari Updated Successfully!',
-            'update_restricted' => 'You cannot update this safari!',
-            'update_failed' => 'Shared Safari Not Updated Successfully!',
-
-        ],
     ],
 
     'post' => [
@@ -155,4 +171,28 @@ return [
 
         ]
     ],
+    'fixed_departure' => [
+        'inclusion' => [
+            'fail_to_save' => 'Failed to save share safari inclusion option ',
+        ]
+    ],
+    'package' => [
+        'inclusion' => [
+            'fail_to_save' => 'Failed to save package inclusion option ',
+        ]
+        ],
+    'chat'=>[
+        'make_call_on_chat'=>[
+            'phone_unavailable_or_unverified'=>'You cannot perform this action, as phone is not available or verified for any of the chat members',
+            'call_requested'=>'Call Requested.',
+            'call_initiated'=>'Call initiated.',
+            'call_initiation_failed'=>'Failed to initiate the call.',
+            'user_number_not_verified'=>'User number is not verified.'            
+        ],
+        'edit_message'=>[
+            'id_message_required'=>'Chat message ID and message are required!',
+            'chat_permission_denied'=>'Chat message not found or you do not have permission to edit it.',
+            'edit_time_limit'=>'You can only edit messages within 10 minutes.',
+        ]
+    ]
 ];
