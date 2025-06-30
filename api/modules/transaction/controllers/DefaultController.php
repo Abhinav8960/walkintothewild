@@ -6,13 +6,14 @@ use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\transaction\Transaction;
 use common\models\transaction\TransactionSearch;
-use yii\rest\Controller;
+use api\controllers\RestController;
+
 use yii;
 
 /**
  * Default controller for the `error` module
  */
-class DefaultController extends Controller
+class DefaultController extends RestController
 {
     /**
      * Renders the index view for the module
