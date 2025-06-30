@@ -6,6 +6,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 $this->title = 'Leads';
 // $this->params['title'] = $this->title;
 ?>
@@ -37,7 +40,23 @@ $this->title = 'Leads';
                             return $model->sourceLabelWithBadge;
                         }
                     ],
-
+                    [
+                        'label' => 'User Name',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($user = $model->user) {
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?:  $this->params['baseurl'] . '/images/dpmain.png';
+                                return
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name);
+                            }
+                            return '';
+                        }
+                    ],
                     [
                         'label' => 'Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -98,8 +117,8 @@ $this->title = 'Leads';
                         'label' => 'Quotation Count',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
-                        'value' => function ($model) use($safari_operator) {
-                            $count = LeadPartners::quotationCount($model->id,$safari_operator->id);
+                        'value' => function ($model) use ($safari_operator) {
+                            $count = LeadPartners::quotationCount($model->id, $safari_operator->id);
                             return $count;
                         }
                     ],
