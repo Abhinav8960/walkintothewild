@@ -85,7 +85,7 @@ class DefaultController extends RestController
 
         // Prepare data for PayU
         $data = [];
-        $data['payu'] = [
+        $data['payu']['params'] = [
             'key' => $merchantKey,
             'txnid' => $orderId,
             'amount' => $amount,
