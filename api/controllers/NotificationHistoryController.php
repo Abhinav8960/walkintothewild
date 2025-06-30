@@ -64,7 +64,7 @@ class NotificationHistoryController extends RestController
 
             return $this->querySender($dataProvider, $rootIndexName = "notification_history");
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.not_logged_in');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 }
