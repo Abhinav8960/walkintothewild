@@ -49,10 +49,15 @@ class Sighting extends \common\models\sighting\Sighting
             'video_thumbnail_path',
             'video_thumbnail_etag',
             'comment_count',
+            'description',
         ];
 
 
-        return array_diff($fields, $hold_fields);
+        $fields = array_diff($fields, $hold_fields);
+        $fields['description'] = function () {
+            return trim($this->description);
+        };
+        return $fields;
     }
 
 

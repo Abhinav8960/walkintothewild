@@ -55,6 +55,23 @@ use yii\helpers\Html;
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
 
+                <div class="filterItem position-relative">
+                    <label>Quotes Status:</label>
+                    <?= $form->field($model, 'custom_status')->dropDownList(
+                        [
+                            '1' => 'Active',
+                            '2' => 'Expired',
+                        ],
+                        [
+                            // 'prompt' => 'Select Status',
+                            'class' => 'search-border'
+
+                        ],
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+               
+
             </div>
         </div>
     </div>

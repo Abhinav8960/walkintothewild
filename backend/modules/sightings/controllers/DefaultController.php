@@ -259,4 +259,38 @@ class DefaultController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionDownload($url)
+    {
+        $fileName = basename(parse_url($url, PHP_URL_PATH));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        
+        $out = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            Yii::$app->session->setFlash('error', 'Download failed: ' . curl_error($ch));
+            curl_close($ch);
+            return;
+        }
+
+        curl_close($ch);
+
+        if (!$out || stripos($out, '<html') !== false) {
+            Yii::$app->session->setFlash('error', 'Invalid file content received.');
+            return;
+        }
+
+        header('Content-Type: video/mp4');
+        header("Content-Disposition: attachment; filename=\"{$fileName}\"");
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . strlen($out));
+
+        echo $out;
+        Yii::$app->end();
+    }
 }

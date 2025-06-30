@@ -58,6 +58,18 @@ $names = ArrayHelper::getColumn(
         <?= $form->field($model, 'quotation_count')->textInput(['placeholder' => 'Enter Quotation Count']) ?>
     </div>
 
+      <div class="col-md-2">
+        <?= $form->field($model, 'is_payment_link_send')->dropDownList(
+            [
+                '1' => 'Payment Link Send',
+                '0' => 'Payment Link Not Send'
+            ],
+            [
+                'prompt' => 'Select Payment Status',
+            ]
+        ) ?>
+    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'is_chat_started')->dropDownList(
             [
@@ -65,7 +77,7 @@ $names = ArrayHelper::getColumn(
                 '0' => 'No'
             ],
             [
-                'prompt' => 'Is Chat Started',
+                'prompt' => 'Select Chat Status',
             ]
         ) ?>
     </div>
