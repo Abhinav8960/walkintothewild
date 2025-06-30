@@ -36,8 +36,8 @@ use yii\widgets\ActiveForm;
     <div class="col-md-3">
         <?= $form->field($model, 'type')->dropDownList(
             [
+                'b' => 'Block',
                 'p' => 'Page',
-                'b' => 'Block'
             ],
             [
                 'prompt' => 'Select Type'
