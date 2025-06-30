@@ -30,8 +30,15 @@ use yii\widgets\ActiveForm;
     <!-- <div class="col-md-2">
         <?= $form->field($model, 'comment')->textInput(['placeholder' => 'Search by Comments']) ?>
     </div> -->
-    <div class="col-md-2">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-    </div>
+   
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
+JS;
+$this->registerJs($js);
+?>
