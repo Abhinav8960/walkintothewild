@@ -33,14 +33,6 @@ $this->title = 'Leads';
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
-                        'label' => 'Source',
-                        'contentOptions' => ['style' => 'width: 1%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->sourceLabelWithBadge;
-                        }
-                    ],
-                    [
                         'label' => 'User Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -58,7 +50,16 @@ $this->title = 'Leads';
                         }
                     ],
                     [
-                        'label' => 'Name',
+                        'label' => 'Source',
+                        'contentOptions' => ['style' => 'width: 1%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->sourceLabelWithBadge;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Display Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
