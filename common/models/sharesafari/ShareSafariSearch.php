@@ -284,7 +284,7 @@ class ShareSafariSearch extends ShareSafari
             }]);
         }
 
-        if ($this->custom_status) {
+        if ($this->custom_status !== null) {
             switch ($this->custom_status) {
                 case -1:
                     $query->andWhere(['status' => -1]);
