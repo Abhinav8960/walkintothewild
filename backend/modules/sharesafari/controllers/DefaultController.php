@@ -41,7 +41,7 @@ class DefaultController extends Controller
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
         $searchModel->report_days = 'all';
-        $searchModel->status = 1;
+        $searchModel->custom_status = 3;
         $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [

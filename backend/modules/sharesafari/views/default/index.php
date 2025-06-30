@@ -174,7 +174,7 @@ if (Yii::$app->user->identity) {
 
                                 return $model->newstatuslabel;
                             }
-                            return 'Seat Full';
+                            return '<span class="badge badge-info" style="border-radius:50px;">Seat Full</span>';
                         }
                     ],
                     [
