@@ -1,6 +1,6 @@
 <?php
 
-namespace api\modules\transaction\controllers;
+namespace backend\modules\transaction\controllers;
 
 use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
