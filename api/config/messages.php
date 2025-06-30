@@ -130,7 +130,7 @@ return [
         'quote_request' => [
             'operator_restricted' => 'Operators cannot send Quote Requests!',
             'request_sent' => 'Quote Request Sent!',
-            'no_verified_operators' => 'Thank you for sending the request. Unfortunately, we currently don’t have any verified operators for this park. We’re working to onboard trusted partners soon and will notify you once services become available.',
+            'no_verified_operators' => 'Thank you for sending the request. Unfortunately, we currently do not have any verified operators for this park. We are working to onboard trusted partners soon and will notify you once services become available.',
         ],
     ],
 
