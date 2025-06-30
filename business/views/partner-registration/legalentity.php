@@ -10,14 +10,38 @@ $this->params['title'] = $this->title;
 ?>
 <?php if ($model->partner_model->final_approved != 1) { ?>
 
+    <?php if ($model->partner_model->form1_status == PartnerRegistration::FORM_EMPTY) { ?>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+            <div class="modal fade" id="myModal" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center  w-100">Welcome to Partner Portal</h4>
+                            <!-- <button type="button" class="close" onclick="$('#myModal').removeClass('show').addClass('fade');" data-dismiss="modal">&times;</button> -->
+                        </div>
+                        <div class="modal-body text-center">
+                            <i class="bi bi-person-check-fill fs-1 text-success mb-2"></i><br>
+                            <p>You are already a user.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="$('#myModal').modal('hide');" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <script>
+            $(window).on('load', function() {
+                $('#myModal').modal('show');
+            });
+        </script>
+    <?php } ?>
+    
     <?= $this->render('card', ['currentStep' => 1]) ?>
 
     <div class="container mt-5">
         <div class="accordion" id="formAccordion">
-
-
-
-
             <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">
