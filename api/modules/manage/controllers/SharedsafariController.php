@@ -342,10 +342,10 @@ class SharedsafariController extends RestController
             $model->initializeForm();
             if ($model->shared_safari_departure_model->save(false)) {
                 $model->shared_safari_departure_model->savehistory();
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Getting There']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Getting there']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Getting There']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Getting there']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
