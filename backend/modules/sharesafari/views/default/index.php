@@ -116,7 +116,8 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
                                 'value' => Url::toRoute(['intrested', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
                                 'class' => 'intrested',
                                 'title' => 'Intrested',
                             ]) : '';
@@ -129,7 +130,8 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
                                 'value' => Url::toRoute(['leaved', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
                                 'class' => 'leaved',
                                 'title' => 'Leaved',
                             ]) : '';
@@ -168,7 +170,11 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            if ($model->status != 2) {
+
+                                return $model->newstatuslabel;
+                            }
+                            return '<span class="badge badge-info" style="border-radius:50px;">Seat Full</span>';
                         }
                     ],
                     [

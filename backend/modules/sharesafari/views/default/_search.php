@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'type')->dropDownList(GeneralModel::sharedsafaritype(), ['prompt' => 'Select Type'])->label(false) ?>
     </div> -->
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptionswithdelete(), ['prompt' => 'Select Status'])->label(false) ?>
+        <?= $form->field($model, 'custom_status')->dropDownList(GeneralModel::sharesafarioptionswithdelete(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>
 
 </div>

@@ -17,6 +17,7 @@ class ShareSafariSearch extends ShareSafari
     public $date_filter;
     public $title;
     public $report_days;
+    public $custom_status;
 
 
     public $report_days_option = [
@@ -39,6 +40,7 @@ class ShareSafariSearch extends ShareSafari
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'report_days', 'type'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web'], 'safe'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
+            ['custom_status', 'safe']
         ];
     }
 
@@ -280,6 +282,26 @@ class ShareSafariSearch extends ShareSafari
             $query->joinwith(['park' => function ($title_query) {
                 $title_query->andWhere(['like', 'title', $this->title]);
             }]);
+        }
+
+        if ($this->custom_status) {
+            switch ($this->custom_status) {
+                case -1:
+                    $query->andWhere(['status' => -1]);
+                    break;
+                case 0:
+                    $query->andWhere(['status' => 0]);
+                    break;
+                case 1:
+                    $query->andWhere(['status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere(['status' => 2]);
+                    break;
+                case 3:
+                    $query->andWhere(['>=', 'start_date', date('Y-m-d')])->andWhere(['status' => -1]);
+                    break;
+            };
         }
 
         if ($this->report_days) {

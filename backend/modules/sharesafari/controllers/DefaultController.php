@@ -41,7 +41,7 @@ class DefaultController extends Controller
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
         $searchModel->report_days = 'all';
-        $searchModel->status = 1;
+        $searchModel->custom_status = 3;
         $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -487,6 +487,21 @@ class DefaultController extends Controller
         } else {
             \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
         }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionShareSafariActive($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        if ($share_safari) {
+            $share_safari->status = ShareSafari::STATUS_ACTIVE;
+            if ($share_safari->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        \Yii::$app->session->setFlash('danger', 'Not Found!!!');
         return $this->redirect(Yii::$app->request->referrer);
     }
 }
