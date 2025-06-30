@@ -1,58 +1,61 @@
 <?php
 
-namespace backend\modules\transaction\controllers;
+namespace api\modules\transaction\controllers;
 
 use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\transaction\Transaction;
 use common\models\transaction\TransactionSearch;
-use yii\web\Controller;
+use api\controllers\RestController;
+
 use yii;
 
 /**
  * Default controller for the `error` module
  */
-class DefaultController extends Controller
+class DefaultController extends RestController
 {
     /**
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
-    {
-        $searchModel = new TransactionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    // public function actionIndex()
+    // {
+    //     $searchModel = new TransactionSearch();
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    //     return $this->render('index', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
     public function actionInitiate($lead_partner_quotes_id, $payment_gateway)
     {
 
-        if ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI) {
+        if (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI_LABEL])) {
             return $this->icici($lead_partner_quotes_id);
-        } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU) {
+        } elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {
             return $this->payu($lead_partner_quotes_id);
-        } elseif ($payment_gateway == LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC) {
-            return $this->redirect(['hdfc', 'lead_partner_quotes_id' => $lead_partner_quotes_id]);
-        } else {
-            Yii::$app->session->setFlash('error', 'Invalid payment gateway selected.');
-            return $this->redirect(['index']);
         }
+        // elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_HDFC_LABEL])) {
+        //     return $this->redirect(['hdfc', 'lead_partner_quotes_id' => $lead_partner_quotes_id]);
+        // } else {
+        //     Yii::$app->session->setFlash('error', 'Invalid payment gateway selected.');
+        //     return $this->redirect(['index']);
+        // }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Invalid payment gateway selected."]);
     }
 
     protected function findModel($lead_partner_quotes_id)
     {
         $model = LeadPartnerQuotes::find()->andWhere(['id' => $lead_partner_quotes_id])->one();
         if (!$model) {
-            Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
-            return  $this->redirect(Yii::$app->request->referrer);
+            // Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote not found."]);
         }
         if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
             Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
-            return $this->redirect(Yii::$app->request->referrer);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
         }
         return $model;
     }
@@ -69,8 +72,9 @@ class DefaultController extends Controller
         // Validate merchantKey
         if (empty($merchantKey)) {
             Yii::error('Merchant Key is missing in PayU configuration.', 'transaction');
-            Yii::$app->session->setFlash('error', 'Payment gateway configuration error: Merchant Key is missing.');
-            return $this->redirect(['index']);
+            // Yii::$app->session->setFlash('error', 'Payment gateway configuration error: Merchant Key is missing.');
+            // return $this->redirect(['index']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faced payment gateway Technical error, please try again later."]);
         }
 
         // Prepare transaction details
@@ -80,7 +84,8 @@ class DefaultController extends Controller
         // $currency = 'INR';
 
         // Prepare data for PayU
-        $data = [
+        $data = [];
+        $data['payu'] = [
             'key' => $merchantKey,
             'txnid' => $orderId,
             'amount' => $amount,
@@ -95,22 +100,24 @@ class DefaultController extends Controller
         ];
 
         // Generate hash for PayU
-        $data['hash'] = $this->generatePayuHash($data, $salt);
+        $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
 
-        // Log the payment data for debugging purposes
-        Yii::info('PayU Payment Data: ' . json_encode($data), 'transaction');
+        return Yii::$app->api->sendResponse($data);
 
-        // Build the HTML form for POST request
-        $formHtml = '<form id="payuForm" action="' . $payuBaseUrl . '/_payment" method="POST">';
-        foreach ($data as $key => $value) {
-            $formHtml .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '">';
-        }
-        $formHtml .= '</form>';
-        $formHtml .= '<script>document.getElementById("payuForm").submit();</script>';
+        // // Log the payment data for debugging purposes
+        // Yii::info('PayU Payment Data: ' . json_encode($data), 'transaction');
+
+        // // Build the HTML form for POST request
+        // $formHtml = '<form id="payuForm" action="' . $payuBaseUrl . '/_payment" method="POST">';
+        // foreach ($data as $key => $value) {
+        //     $formHtml .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '">';
+        // }
+        // $formHtml .= '</form>';
+        // $formHtml .= '<script>document.getElementById("payuForm").submit();</script>';
 
 
-        // Output the form to the browser
-        return $formHtml;
+        // // Output the form to the browser
+        // return $formHtml;
     }
 
     private function generatePayuHash($data, $salt)
@@ -178,20 +185,30 @@ class DefaultController extends Controller
             if ($encryptedData === false) {
                 throw new \yii\base\InvalidArgumentException('Encryption failed.');
             }
-            echo "Encrypted Data: " . $encryptedData;
-            echo "<br>";
-            echo "accessCode Data: " . $accessCode;
-            die();
-            $paymentUrl = '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
-            $paymentUrl = $api_url . '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
+            // echo "Encrypted Data: " . $encryptedData;
+            // echo "<br>";
+            // echo "accessCode Data: " . $accessCode;
+            // die();
+            // $paymentUrl = '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
+            // $paymentUrl = $api_url . '?encRequest=' . urlencode($encryptedData) . '&access_code=' . $accessCode;
+            $paymentUrl = $api_url;
 
             Yii::info('Encrypted Data: ' . $encryptedData, 'transaction');
             Yii::info('Payment URL: ' . $paymentUrl, 'transaction');
+            $output = [];
+            $output['icici'] = [
+                'encRequest' => $encryptedData,
+                'access_code' => $accessCode,
+                'payment_url' => $paymentUrl,
+            ];
+            return Yii::$app->api->sendResponse($output);
 
-            return $this->redirect($paymentUrl);
+            // return $this->redirect($paymentUrl);
         } catch (\yii\base\InvalidArgumentException $e) {
-            Yii::$app->session->setFlash('error', 'Encryption failed: ' . $e->getMessage());
-            return $this->redirect(['index']);
+            // Yii::$app->session->setFlash('error', 'Encryption failed: ' . $e->getMessage());
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faced payment gateway Technical error, please try again later."]);
+
+            // return $this->redirect(['index']);
         }
     }
 
@@ -204,48 +221,23 @@ class DefaultController extends Controller
      */
     private function encryptCCAvenueData($data, $workingKey)
     {
-
-        $key = $this->hextobin(md5($workingKey));
-        $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
-        $openMode = openssl_encrypt($data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $initVector);
-        $encryptedText = bin2hex($openMode);
-        return $encryptedText;
-        // if (empty($data)) {
-        //     throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
-        // }
-
-        // if (empty($workingKey) || strlen($workingKey) < 16) {
-        //     throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
-        // }
-
-        // // Ensure the IV is 16 bytes long
-        // $iv = substr($workingKey, 0, 16);
-
-        // $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
-
-        // if ($encryptedData === false) {
-        //     throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
-        // }
-
-        // return $encryptedData;
-    }
-
-    private function  hextobin($hexString)
-    {
-        $length = strlen($hexString);
-        $binString = "";
-        $count = 0;
-        while ($count < $length) {
-            $subString = substr($hexString, $count, 2);
-            $packedString = pack("H*", $subString);
-            if ($count == 0) {
-                $binString = $packedString;
-            } else {
-                $binString .= $packedString;
-            }
-
-            $count += 2;
+        if (empty($data)) {
+            throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
         }
-        return $binString;
+
+        if (empty($workingKey) || strlen($workingKey) < 16) {
+            throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
+        }
+
+        // Ensure the IV is 16 bytes long
+        $iv = substr($workingKey, 0, 16);
+
+        $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
+
+        if ($encryptedData === false) {
+            throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
+        }
+
+        return $encryptedData;
     }
 }
