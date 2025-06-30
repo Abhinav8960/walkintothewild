@@ -28,15 +28,39 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\SerialColumn',
                     ],
+                    // [
+                    //     'label' => 'User Name',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         if ($user = $model->user) {
+                    //             return Html::a($user->name, ['/user/default/profile', 'user_id' => $user->id], ['style' => 'color:black !important;']);
+                    //         }
+                    //         return '';
+                    //     }
+                    // ],
                     [
                         'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
+
                             if ($user = $model->user) {
-                                return Html::a($user->name, ['/user/default/profile', 'user_id' => $user->id], ['style' => 'color:black !important;']);
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+
+                                return Html::a(
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name),
+                                    ['/user/default/profile', 'user_id' => $user->id],
+                                    ['style' => 'color:black !important;']
+                                );
                             }
+
+
                             return '';
-                        }
+                        },
                     ],
 
                     [

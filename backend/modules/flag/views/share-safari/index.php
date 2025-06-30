@@ -40,7 +40,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return   isset($model->park) ? $model->park->title : '';
+                            return   isset($model->share_safari_title) ? $model->share_safari_title : '';
                         }
                     ],
                     [

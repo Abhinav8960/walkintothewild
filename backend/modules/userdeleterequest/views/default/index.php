@@ -16,7 +16,10 @@ $this->params['title'] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'headerOptions' => ['style' => 'width: 1%;'],
+                    ],
                     [
                         'label' => 'Email',
                         'contentOptions' => ['style' => 'width: 20%;'],
