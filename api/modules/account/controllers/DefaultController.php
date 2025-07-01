@@ -75,7 +75,8 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new UserForm($user_model);
 
@@ -83,9 +84,11 @@ class DefaultController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_model->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Information Updated Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Information']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Information not Updated Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Information']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
@@ -94,7 +97,8 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $model = new UserForm($user_model);
@@ -105,9 +109,11 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_model->save(false)) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Profile Photo Update Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Profile Photo']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Profile Photo not Update Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Profile Photo']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
@@ -116,7 +122,8 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new UserForm($user_model);
         $model->attributes = $this->request;
@@ -125,9 +132,11 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_model->save(false)) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Cover Photo Update Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Cover Photo']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Cover Photo not Update Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Cover Photo']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
@@ -137,7 +146,8 @@ class DefaultController extends RestController
         if ($this->userinfo) {
             $registration_model = SafariOperator::findOne(['user_id' => $this->userinfoId]);
             if ($registration_model) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
@@ -207,7 +217,8 @@ class DefaultController extends RestController
                         // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                         //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                         // }
-                        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Bussiness Registered Successfully"]);
+                        $message = Yii::$app->api->messageManager->getMessage('common.registration_successful');
+                        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                     }
                 }
             }
@@ -219,7 +230,8 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = new PrivacyForm($user_model);
 
@@ -227,9 +239,11 @@ class DefaultController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_model->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Privacy Updated Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Privacy']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Privacy not Updated Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Privacy']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
@@ -288,14 +302,17 @@ class DefaultController extends RestController
     {
         $user_model = $this->userinfo;
         if ($user_model && $user_model->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Sent to operator Manage"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'Manage']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $model = User::find()->where(['id' => $user_model->id])->limit(1)->one();
         $model->status = User::STATUS_DELETED;
 
         if ($model->save(false)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Profile Deleted Successfully!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted',['{var}'=>'Profile']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Profile Not Deleted!!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.delete_failed',['{var}'=>'Profile']);
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 }

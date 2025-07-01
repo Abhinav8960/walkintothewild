@@ -82,6 +82,15 @@ return [
         ],
         'engine' => [
             'class' => 'lubosdz\yii2\TemplateEngine',
-        ]
+        ],
+        
+        'api' => [
+            'class' => 'api\components\Api',
+             'messageManager' => [
+                'class' => 'api\components\MessageManager',
+                'messageFile' => '@api/config/messages.php', 
+                'cacheDuration' => 3600,
+            ],
+        ],
     ],
 ];

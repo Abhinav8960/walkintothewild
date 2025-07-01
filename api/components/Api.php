@@ -14,6 +14,18 @@ use common\models\UserSession;
  */
 class Api extends Component
 {
+
+    public $messageManager;
+
+    public function init()
+    {
+        parent::init();
+        if (is_array($this->messageManager)) {
+            $this->messageManager = Yii::createObject($this->messageManager);
+        }
+    }
+
+
     public function sendResponse($data = false, $additional_info = false, $code = 200)
     {
 
