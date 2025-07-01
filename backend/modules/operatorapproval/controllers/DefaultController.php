@@ -30,6 +30,7 @@ class DefaultController extends Controller
         $searchModel->status = 1;
         $searchModel->is_sendforapproval == 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'final_approved', 1]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
