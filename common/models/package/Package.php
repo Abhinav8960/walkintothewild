@@ -57,7 +57,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 'objective' => 'package',
                 'collection' => Feeds::MODEL_PACKAGE,
 
-            ],         
+            ],
             // [
             //     'class' => SluggableBehavior::className(),
             //     'attribute' => 'package_slug',
@@ -73,7 +73,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                     return time();
                 },
             ],
-            
+
         ];
     }
 
@@ -106,15 +106,16 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['total_price'], 'default', 'value' => 0.00],
             [['is_published_on_api'], 'default', 'value' => 1],
             // [['status'], 'default', 'value' => 3],
-            [[ 'package_name'], 'required'],
+            [['package_name'], 'required'],
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
-            [['start_date', 'end_date', 'status','package_slug','max_booking_date'], 'safe'],
+            [['start_date', 'end_date', 'status', 'package_slug', 'max_booking_date'], 'safe'],
             [['live_version', 'pending_for_approval_version', 'editable_version'], 'safe'],
             [['cost_per_person', 'total_price'], 'number'],
-            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
-            [[ 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
+            [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
+            [['start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
             [['package_name'], 'string', 'max' => 512],
             ['cancellation_reason', 'required', 'on' => 'reject'],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
 
         ];
     }
@@ -170,25 +171,25 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id', 'version' => 'live_version'])->andWhere([PackageIncluded::tableName() . '.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version'=> 'live_version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id', 'version' => 'live_version'])->andWhere([PackageFeature::tableName() . '.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
     public function getPackageIncludeds()
     {
-        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version'=> 'live_version']);
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id', 'version' => 'live_version']);
     }
 
     public function getPackagedays()
     {
-        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version'=> 'live_version']);
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id', 'version' => 'live_version']);
     }
 
     public function getImagepath()
@@ -410,5 +411,4 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         }
         return $slug;
     }
-
 }
