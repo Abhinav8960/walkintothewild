@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-2">
         <?= $form->field($model, 'call_initiated_partner_id')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->all(), 'id', 'business_name'),
+            \yii\helpers\ArrayHelper::map(SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->orderBy(['business_name' => SORT_ASC])->all(), 'id', 'business_name'),
             [
                 'prompt' => 'Select Operator',
             ]
@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
                 // 'singleDatePicker' => true,
                 'showDropdowns' => true,
                 // 'minDate' =>date('2024-01-01'),
-                'maxDate' =>date('Y-m-d'),
+                'maxDate' => date('Y-m-d'),
                 'locale' => [
                     'format' => 'Y-m-d',
                 ],

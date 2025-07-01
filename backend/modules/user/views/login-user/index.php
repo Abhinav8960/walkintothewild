@@ -19,16 +19,40 @@ $this->params['title'] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // [
+                    //     'label' => 'Full Name',
+                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $user = $model->user;
+                    //         if ($user) {
+                    //             return '<a href="' . Yii::$app->params['frontend_url'] . '/profile/user/' . $model->user->user_handle . '" class="text-primary" style="color: green !important;"><img src="' . ($user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px; width:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";">' . $model->user->name . '</a>';
+                    //         }
+                    //     }
+                    // ],
                     [
-                        'label' => 'Full Name',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $user = $model->user;
-                            if ($user) {
-                                return '<a href="' . Yii::$app->params['frontend_url'] . '/profile/user/' . $model->user->user_handle . '" class="text-primary" style="color: green !important;"><img src="' . ($user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px; width:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";">' . $model->user->name . '</a>';
+
+                            if ($user = $model->user) {
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+
+                                return Html::a(
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name),
+                                    ['/user/default/profile', 'user_id' => $user->id],
+                                    ['style' => 'color:black !important;']
+                                );
                             }
-                        }
+
+
+                            return '';
+                        },
                     ],
                     [
                         'label' => 'Application',

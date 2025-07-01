@@ -1,7 +1,9 @@
 <?php
 
 use common\models\GeneralModel;
+use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -20,10 +22,29 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
 
         <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
+    </div> -->
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'host_user_id')->widget(Select2::class, [
+            'initValueText' => $model->user ? $model->user->name . '(' . $model->user->email . ')' : '',
+            'options' => ['placeholder' => 'Select User', 'multiple' => false],
+            'pluginOptions' => [
+                'allowClear' => true,
+                'minimumInputLength' => 1,
+                'ajax' => [
+                    'url' => \yii\helpers\Url::to(['default/user-list']),
+                    'dataType' => 'json',
+                    'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                    'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
+                ],
+                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            ],
+        ]); ?>
     </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
@@ -31,7 +52,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'type')->dropDownList(GeneralModel::sharedsafaritype(), ['prompt' => 'Select Type'])->label(false) ?>
     </div> -->
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptionswithdelete(), ['prompt' => 'Select Status'])->label(false) ?>
+        <?= $form->field($model, 'custom_status')->dropDownList(GeneralModel::sharesafarioptionswithdelete(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>
 
 </div>

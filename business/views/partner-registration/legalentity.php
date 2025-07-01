@@ -14,10 +14,6 @@ $this->params['title'] = $this->title;
 
     <div class="container mt-5">
         <div class="accordion" id="formAccordion">
-
-
-
-
             <div class="accordion-item mb-3">
                 <?php if ($partner_model != null && $partner_model->form1_status == PartnerRegistration::FORM_REJECTED) { ?>
                     <h2 class="accordion-header d-flex align-items-stretch justify-content-between" id="heading1">

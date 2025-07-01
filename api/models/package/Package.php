@@ -113,10 +113,11 @@ class Package extends \common\models\package\Package
             [['package_name'], 'required'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
             [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['package_description',  'package_itinerary_overview', 'package_terms_condtition'], 'string'],
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
         ];
     }
 
