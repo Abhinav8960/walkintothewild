@@ -189,6 +189,12 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 
+    public function getInstallmentDue()
+    {
+        // return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'transaction_id', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
         $quotation = LeadPartnerQuotes::find()->where(['status' => LeadPartnerQuotes::STATUS_ACTIVE, 'id' => $this->id])->one();
