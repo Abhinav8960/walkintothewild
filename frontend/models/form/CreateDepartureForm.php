@@ -113,9 +113,10 @@ class CreateDepartureForm extends \yii\base\Model
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
-            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included','mail_sent'], 'default', 'value' => 0],
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['version'], 'integer'],
+            [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
 
         ];
     }
