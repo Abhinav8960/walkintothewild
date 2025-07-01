@@ -59,7 +59,7 @@ $this->title = 'Leads';
                     ],
 
                     [
-                        'label' => 'Display Name',
+                        'label' => 'Travel Interest',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
