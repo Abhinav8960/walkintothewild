@@ -113,10 +113,12 @@ class DefaultController extends RestController
                 $model->sighting_model->height = $resolution['height'];
 
                 if ($model->sighting_model->save()) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting added successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('sighting.create_sighting.sighting_added');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('sighting.create_sighting.sighting_not_added');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -129,7 +131,8 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $searchModel = new SightingSearch();
         $searchModel->id = $sighting->id;
@@ -141,16 +144,18 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new SightingCommentForm();
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($sighting)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.comment_success');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment Not Submitted!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.comment_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
 
@@ -158,7 +163,8 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $replymodel = new SightingReplyForm();
@@ -168,11 +174,12 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($sighting)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.reply_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply Not Submitted!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.reply_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
 
@@ -187,11 +194,13 @@ class DefaultController extends RestController
             $like->sighting_comment_id = $sighting_comment_id;
             $like->status = SightingCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Liked Comment or Reply"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Comment or Reply']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.like_removed');
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => $message]);
         }
     }
 
@@ -200,7 +209,8 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $like = SightingLike::find()->where(['user_id' => $this->userinfoId, 'sighting_id' => $id, 'status' => SightingLike::STATUS_ACTIVE])->one();
@@ -211,11 +221,13 @@ class DefaultController extends RestController
             $like->sighting_id = $id;
             $like->status = SightingLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Sighting Liked Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Sighting']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.like_removed');
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => $message]);
         }
     }
 
@@ -234,7 +246,8 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new SightingReportForm();
@@ -247,9 +260,11 @@ class DefaultController extends RestController
             $model->initializeForm();
 
             if ($model->sighting_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting Report Submitted"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.report_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -259,37 +274,43 @@ class DefaultController extends RestController
     {
         $sighting = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId != $sighting->user_id) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot delete this sighting!!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted',['{var}'=> 'Sighting']);
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
         $sighting->status = Sighting::STATUS_DELETE;
         if ($sighting->save(false)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete Successfully!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.delete_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionFlag($id, $sighting_comment_id)
     {
         $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $flag_comment = SightingComment::find()->where(['id' => $sighting_comment_id])->limit(1)->one();
 
         if (!$flag_comment) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Comment Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Comment']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($flag_comment->user_id == $this->userinfoId) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.flag_restricted');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new SightingCommentFlagForm();
@@ -303,8 +324,8 @@ class DefaultController extends RestController
             if ($model->sighting_flag_model->save(false)) {
                 $flag_comment->flaged = 1;
                 $flag_comment->save(false);
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Flaged successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.flag_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -340,7 +361,8 @@ class DefaultController extends RestController
     {
         $sighting_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Sighting']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $dataProvider = new ActiveDataProvider([

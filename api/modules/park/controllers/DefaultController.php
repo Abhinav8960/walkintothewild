@@ -121,11 +121,13 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PARK_API_LAYOUT_FULL;
         $model = SafariPark::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($model->status != SafariPark::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => "Park Not in use!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['data' => $model]);
     }
@@ -145,7 +147,8 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         // $my_review = SafariParkRating::find()->where(['safari_park_id' => $model->id, 'user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->one();
@@ -163,7 +166,8 @@ class DefaultController extends RestController
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$safari_park) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
             $model = new SafariSuggestionsForm();
@@ -179,9 +183,11 @@ class DefaultController extends RestController
             if ($model->validate()) {
                 $model->initializeForm();
                 if ($model->safari_suggestion_model->save(false)) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Suggestion Submitted Successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.submit',['{var}'=> 'Suggestion']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Suggestion Not Submitted"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.not_submit',['{var}'=> 'Suggestion']);
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -192,7 +198,8 @@ class DefaultController extends RestController
     {
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$safari_park) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $my_review = SafariParkRating::find()->where(['safari_park_id' => $safari_park->id, 'user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
         if (!$my_review) {
@@ -205,13 +212,16 @@ class DefaultController extends RestController
                 if ($model->rating_model->save(false)) {
                     $model->updateRatingintoTable($safari_park);
                     Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Thanks for Review! Your review sent for approval"]);
+                    $message = Yii::$app->api->messageManager->getMessage('park.review.review_submitted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Your review not sent for approval"]);
+                $message = Yii::$app->api->messageManager->getMessage('park.review.review_failed');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
             return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         } else {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Review Already submitted"]);
+            $message = Yii::$app->api->messageManager->getMessage('park.review.review_already_submitted');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
     }
 
@@ -219,7 +229,8 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $operatorsearchModel = new SafariOperatorSearch();
         $operatorsearchModel->status = 1;
@@ -232,7 +243,8 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $searchModel = new ShareSafariSearch();
@@ -245,7 +257,8 @@ class DefaultController extends RestController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $safaripackages = PackageSafariPark::find()->where(['park_id' => $model->id, 'status' => 1])->all();
@@ -259,19 +272,22 @@ class DefaultController extends RestController
     public function actionQuotesrequest($slug)
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
         }
 
         if ($this->userinfo) {
             $safari_operator = SafariOperator::find()->where(['user_id' => $this->userinfoId])->limit(1)->one();
             if ($safari_operator) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator Can't do Quote Request!!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('park.quote_request.operator_restricted');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
         $sf = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$sf) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
 
@@ -290,17 +306,20 @@ class DefaultController extends RestController
         }
 
         if (count($sf->operator) < 1) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Thank you for sending the request. Unfortunately, we currently don’t have any verified operators for this park. We’re working to onboard trusted partners soon and will notify you once services become available.']);
+            $message = Yii::$app->api->messageManager->getMessage('park.quote_request.no_verified_operators');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' =>$message]);
         }
         // return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Quote request sent!!!']);
+        $message = Yii::$app->api->messageManager->getMessage('park.quote_request.request_sent');
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
     public function actionParkFollow($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($this->userinfo) {
@@ -313,18 +332,22 @@ class DefaultController extends RestController
             $park_follower->follow_datetime = time();
             $park_follower->status = 1;
             if ($park_follower->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Follow Successfully!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Follow Successfully!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.follow_failed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.not_logged_in');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionParkUnfollow($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($this->userinfo) {
@@ -333,19 +356,23 @@ class DefaultController extends RestController
                 $park_follower->unfollow_datetime = time();
                 $park_follower->status = 0;
                 if ($park_follower->save(false)) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Unfollow Successfully!!"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.unfollow_success');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Oops! Not Unfollow Successfully!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_failed');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not logged in!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.not_logged_in');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionParkStayCategory($slug)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Park Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $searchModel = new SafariParkAccomodationSearch();

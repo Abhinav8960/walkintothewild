@@ -53,7 +53,8 @@ class StaticPageController extends RestController
     public function actionAboutUs()
     {
         $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT_US]);
-        return Yii::$app->api->sendResponse($data = ['content' => $content['content']], ['message' => "About Us"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.about_us');
+        return Yii::$app->api->sendResponse($data = ['content' => $content['content']], ['message' => $message]);
     }
 
     public function actionFaqs()
@@ -70,7 +71,8 @@ class StaticPageController extends RestController
         $model->attributes = $this->request;
         if ($model->validate()) {
             $model->contactquery();
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Query Successfully submitted"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.submitted',['{var}'=> 'Query']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
     }
 }
