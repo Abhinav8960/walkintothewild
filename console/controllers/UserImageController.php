@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\operator\SafariOperator;
 use common\models\User;
 use Yii;
 use yii\console\Controller;
@@ -104,7 +105,7 @@ class UserImageController extends Controller
 
                 $tempPath = tempnam(sys_get_temp_dir(), $user->id . '_google_avatar') . '.jpg';
                 file_put_contents($tempPath, $content);
-               
+
                 $uploadedFile = new \yii\web\UploadedFile([
                     'name' => $fileName,
                     'tempName' => $tempPath,
@@ -124,6 +125,72 @@ class UserImageController extends Controller
             }
         }
 
+        echo "Done";
+    }
+
+
+    public function actionOperatorLogo()
+    {
+        $operators = SafariOperator::find()->all();
+        $result = [];
+
+        foreach ($operators as $operator) {
+            if ($operator->logo != NULL) {
+                $sourcePath = 'safarioperator/' . $operator->id . '/' . $operator->logo;
+                $extension = pathinfo($operator->logo, PATHINFO_EXTENSION);
+
+                $fileName = $operator->user_id . '_logo_' . time() . '.' . $extension;
+                $destinationPath = 'operator-registration/' . date('Y-m', $operator->created_at) . '/' . $fileName;
+
+                $exists = Yii::$app->fs->has($sourcePath);
+                if (!empty($exists)) {
+
+                    $copy = Yii::$app->fs->copy($sourcePath, $destinationPath);
+                    $result[] = [
+                        'id' => $operator->id,
+                        'exists' => $exists,
+                        'sourcePath' => $sourcePath,
+                        'destinationPath' => $destinationPath,
+                        'copy' => $copy,
+                        'fileName' => $fileName,
+                    ];
+
+                    $operator->logo = $destinationPath;
+                    $operator->save(false);
+                }
+            }
+        }
+        print_r($result);
+        echo "Done";
+
+        return true;
+    }
+
+    public function actionCopyOperatorLogo()
+    {
+        $operators = SafariOperator::find()->all();
+        $result = [];
+
+        foreach ($operators as $operator) {
+            if (!empty($operator->logo)) {
+                $sourcePath = $operator->logo;
+                $destinationPath = $operator->logo;
+                if (Yii::$app->rfs->has($sourcePath)) {
+                    $fileContent = Yii::$app->rfs->read($sourcePath);
+                    $writeSuccess = Yii::$app->fs->write($destinationPath, $fileContent);
+                    $result[] = [
+                        'id' => $operator->id,
+                        'exists' => true,
+                        'sourcePath' => $sourcePath,
+                        'destinationPath' => $destinationPath,
+                        'copied' => $writeSuccess ? true : false,
+                    ];
+                } 
+            }
+        }
+
+        echo "<pre>";
+        print_r($result);
         echo "Done";
     }
 }

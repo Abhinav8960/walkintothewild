@@ -339,7 +339,7 @@ class DefaultController extends  Controller
         $model = $this->findModel($id);
         $quotations = $model->quotation;
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $chat = ApiChat::find()->where(['status' => 1, 'lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
+        $chat = ApiChat::find()->where(['lead_id' => $id])->andwhere(['or', ['user_id' => $safari_operator_model->user_id], ['recipient_user_id' => $safari_operator_model->user_id]])->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC])->limit(1)->one();
 
         return $this->render(
             '_operator_lead_chat',
@@ -393,6 +393,11 @@ class DefaultController extends  Controller
         if ($model) {
             $model->status = Lead::STATUS_SUSPEND;
             if ($model->save(false)) {
+                $chats = Chat::find()->where(['lead_id' => $model->id])->all();
+                foreach ($chats as $chat) {
+                    $chat->status = Chat::STATUS_SUSPEND;
+                    $chat->save(false);
+                }
                 \Yii::$app->session->setFlash('success', 'Inactive Successfully!!!');
                 return  $this->redirect(['index']);
             }
@@ -405,6 +410,11 @@ class DefaultController extends  Controller
         if ($model) {
             $model->status = Lead::STATUS_ACTIVE;
             if ($model->save(false)) {
+                $chats = Chat::find()->where(['lead_id' => $model->id])->all();
+                foreach ($chats as $chat) {
+                    $chat->status = Chat::STATUS_ACTIVE;
+                    $chat->save(false);
+                }
                 \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
                 return  $this->redirect(['index']);
             }

@@ -11,7 +11,7 @@ class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'status', 'type'], 'integer'],
             [['start_date', 'end_date', 'park_list', 'rand_text'], 'safe'],
             [['share_safari_title'], 'string', 'max' => 255],
-            [['getting_there', 'share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy','share_safari_inclusion','share_safari_exclusion','share_safari_terms_condtition','privacy_policy'], 'string', 'max' => 1000],
+            [['getting_there', 'share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'share_safari_terms_condtition', 'privacy_policy'], 'string', 'max' => 1000],
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
@@ -23,6 +23,7 @@ class CreateDepartureForm extends \frontend\models\form\CreateDepartureForm
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             ['cut_off_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
             [['version'], 'integer'],
+            [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
 
         ];
     }
