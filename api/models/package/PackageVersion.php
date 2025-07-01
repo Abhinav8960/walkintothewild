@@ -178,10 +178,10 @@ class PackageVersion extends \common\models\package\PackageVersion
         $arr = [];
         $i = 0;
         foreach ($this->packageincluded as $key => $mgi) {
-            if (isset($mgi->packageInclude)) {
-                $arr[$i]['id'] = $mgi->packageInclude->id;
-                $arr[$i]['title'] = $mgi->packageInclude->title;
-                $arr[$i]['option'] = $mgi->getIncludeoption();
+            if (isset($mgi->package_include)) {
+                $arr[$i]['id'] = $mgi->package_include->id;
+                $arr[$i]['title'] = $mgi->package_include->title;
+                $arr[$i]['option'] = $mgi->getInclude_option();
                 $i++;
             }
         }

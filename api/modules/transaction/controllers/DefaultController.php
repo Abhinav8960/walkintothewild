@@ -101,6 +101,7 @@ class DefaultController extends RestController
 
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
+        \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
 
         return Yii::$app->api->sendResponse($data);
 
@@ -132,7 +133,7 @@ class DefaultController extends RestController
 
         // Append values from $data based on the order
         foreach ($fieldsOrder as $field) {
-            $hashString .= isset($data[$field]) ? $data[$field] . '|' : '|';
+            $hashString .= isset($data['payu'][$field]) ? $data['payu'][$field] . '|' : '|';
         }
 
         // Append the salt at the end
