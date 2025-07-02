@@ -278,4 +278,16 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         }
         return '';
     }
+
+    public function closeChat()
+    {
+        // $this->is_seen_by_admin = 1;
+        // $this->status = self::STATUS_CLOSED;
+        // if ($this->save()) {
+        //     return true;
+        // }
+        // return false;
+        return true;
+
+    }
 }
