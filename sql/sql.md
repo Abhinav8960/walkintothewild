@@ -40,3 +40,6 @@ ALTER TABLE `lead_partners` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT F
 ALTER TABLE `lead_partners` ADD `transaction_id` INT NULL DEFAULT NULL AFTER `is_payment_received`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`;
 ALTER TABLE `lead_partners` ADD `payment_gateway` INT NULL DEFAULT NULL AFTER `is_payment_link_send`;
 ALTER TABLE `lead_partner_quote_installments` ADD `is_payment_received` INT NOT NULL DEFAULT '0' AFTER `status`;
+
+
+ALTER TABLE `booking` ADD `lead_partner_quotes_id` INT NOT NULL AFTER `id`;
