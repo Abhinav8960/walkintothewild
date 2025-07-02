@@ -188,7 +188,7 @@ return [
             'rules' => [
                 '/re/<short_id>' => 'site/redirect-url',
                 '/aws-mailer-notification' => '/aws-mailer-notification/index',
-                'payu-response' => 'site/payu-response',
+                'payu-response' => 'payment-response/payu-response',
             ],
         ],
 

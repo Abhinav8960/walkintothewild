@@ -40,7 +40,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url', 'payu-response'],
+                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url'],
                         'allow' => true,
                     ],
                     [
@@ -60,15 +60,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function beforeAction($action)
-    {
-        if ($action->id === 'payu-response') {
-            // Disable CSRF validation for the payu-response action
-            $this->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
-    }
-
+  
     /**
      * {@inheritdoc}
      */
@@ -439,23 +431,4 @@ class SiteController extends Controller
     // 'failureUrl' => 'http://admin.walkintothewild.io/payu/failure',
     // 'cancelUrl' => 'http://app.walkintothewild.io/payu/cancel',
 
-    public function actionPayuResponse()
-    {
-        $data = Yii::$app->request->isPost ? Yii::$app->request->post() : Yii::$app->request->get();
-
-        \Yii::info('PayU Response: ' . json_encode($data), 'payu');
-
-        if (isset($data['status']) && $data['status'] === 'success') {
-            // Handle success response
-            Yii::$app->session->setFlash('success', 'Payment successful!');
-        } elseif (isset($data['status']) && $data['status'] === 'failure') {
-            // Handle failure response
-            Yii::$app->session->setFlash('error', 'Payment failed or cancelled.');
-        } else {
-            // Handle unknown response
-            Yii::$app->session->setFlash('error', 'Invalid payment response received.');
-        }
-
-        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu-response/' . ($data['txnid'] ?? ''));
-    }
 }
