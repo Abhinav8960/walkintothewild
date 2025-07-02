@@ -1945,22 +1945,23 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 // Remove all non-digit characters to get a clean number
                 $digitsOnly = preg_replace('/\D/', '', $phoneNumber);
 
-                // Check if the phone number has at least 5 digits to mask properly.
-                // If it's too short, return the original matched string.
-                if (strlen($digitsOnly) < 5) {
+                // If no digits are found or the number is empty, return original
+                if (strlen($digitsOnly) === 0) {
                     return $phoneNumber;
                 }
 
-                // Extract the first three and last two digits
-                $firstThree = substr($digitsOnly, 0, 3);
-                $lastTwo = substr($digitsOnly, -2);
+                // Determine how many initial digits to keep unmasked
+                $unmaskedLength = max(0, strlen($digitsOnly) - 8);
+
+                // Extract the unmasked part
+                $unmaskedPart = substr($digitsOnly, 0, $unmaskedLength);
 
                 // Calculate the number of 'X's needed for the masked part
-                $maskedPartLength = strlen($digitsOnly) - 5;
-                $maskedPart = str_repeat('X', $maskedPartLength > 0 ? $maskedPartLength : 0); // Ensure non-negative length
+                $maskedPartLength = strlen($digitsOnly) - $unmaskedLength;
+                $maskedPart = str_repeat('X', $maskedPartLength);
 
                 // Reconstruct the masked phone number
-                return $firstThree . $maskedPart . $lastTwo;
+                return $unmaskedPart . $maskedPart;
             },
             $text
         );
