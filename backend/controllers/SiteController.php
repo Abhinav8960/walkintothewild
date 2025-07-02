@@ -60,6 +60,15 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        if ($action->id === 'payu-response') {
+            // Disable CSRF validation for the payu-response action
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -448,6 +457,5 @@ class SiteController extends Controller
         }
 
         return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu-response/' . ($data['txnid'] ?? ''));
-
     }
 }
