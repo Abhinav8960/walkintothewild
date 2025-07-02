@@ -45,7 +45,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'auth','clear-cache'],
+                        'actions' => ['logout', 'index', 'auth', 'clear-cache'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -426,25 +426,29 @@ class SiteController extends Controller
         throw new NotFoundHttpException('Short URL not found.');
     }
 
+    // public function actionClearCache()
+    // {
+    //     MessageManager::clearAllCache();
+    //     Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+    //     return $this->redirect(['index']);
+    // }
+
     public function actionClearCache()
     {
-        MessageManager::clearAllCache();
+        $cachePaths = [
+            '@api/runtime/cache',
+            // '@business/runtime/cache',
+            // '@backend/runtime/cache',
+        ];
+        foreach ($cachePaths as $path) {
+            $cache = new \yii\caching\FileCache([
+                'cachePath' => Yii::getAlias($path),
+            ]);
+            $manager = new \api\components\MessageManager();
+            $manager->clearCache($cache);
+        }
+
         Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
         return $this->redirect(['index']);
     }
-
 }
-// i have two site controllers @backend/sitecontroller and @api/sitecontrollrer 
-// I am using message management dynamically for @api and want to clear cache for the messages .
-// now my problem is i am not able to clear-cache from @backend but the code is working for @Api
-// i have the code snippets in 
-// @backend/SiteController
-// public function actionClearCache()
-//     {
-//         MessageManager::clearAllCache();
-//         Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
-//         return $this->redirect(['index']);
-//     }
-
-//   in  @api/
- 

@@ -4,7 +4,7 @@ return [
     // Common Messages can be used globally
     'common' => [
         'success' => 'Success!',
-        'updated' => '{var} Updated successfully!',
+        'updated' => '{var} asdfa Updated successfully!',
         'update_failed' => '{var} not updated!',
         'update_restricted' => 'You cannot update this {var}!',
         'deleted' => '{var} Deleted successfully!',
@@ -12,7 +12,7 @@ return [
         'inactive' => '{var} is either inactive or deleted!',
         'delete_restricted' => 'You cannot delete this {var}!',
         'found'=>'{var} Found!',
-        'not_found' => '{var} fsdfsdfs Not Found!',
+        'not_found' => '{var} Not Found!',
         'user_not_accessible' => 'User Not Found or User Account may be Blocked!',
         'invalid_request' => 'Invalid Request!',
         'not_in_use' => '{var} Not In Use!',
