@@ -257,7 +257,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         $booking->installment = $this->installment;
         $booking->received_amount = $this->received_amount;
         $booking->addtional_data = $this->addtional_data;
-        $booking->datetime_of_approval_by_admin = $this->datetime_of_approval_by;
+        $booking->datetime_of_approval_by_admin = $this->datetime_of_approval_by_admin;
         $booking->quotation_filepath = $this->quotation_filepath;
         $booking->is_payment_received = 1;
         $booking->transaction_datetime = $this->transaction_datetime;
