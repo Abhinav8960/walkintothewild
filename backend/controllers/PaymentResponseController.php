@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\transaction\controllers;
+namespace backend\controllers;
 
 use yii\web\Controller;
 use yii\filters\AccessControl;
