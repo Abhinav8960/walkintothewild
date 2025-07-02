@@ -1915,8 +1915,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 $username = $parts[0];
                 $domain = $parts[1];
 
-                // Mask username: first character + asterisks for the rest
-                $maskedUsername = substr($username, 0, 1) . str_repeat('*', strlen($username) - 1);
+                // Mask username: first character + 'X' for the rest
+                $maskedUsername = substr($username, 0, 1) . str_repeat('X', strlen($username) - 1);
 
                 // Reconstruct the masked email address
                 return $maskedUsername . '@' . $domain;
@@ -1955,9 +1955,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 $firstThree = substr($digitsOnly, 0, 3);
                 $lastTwo = substr($digitsOnly, -2);
 
-                // Calculate the number of asterisks needed for the masked part
+                // Calculate the number of 'X's needed for the masked part
                 $maskedPartLength = strlen($digitsOnly) - 5;
-                $maskedPart = str_repeat('*', $maskedPartLength > 0 ? $maskedPartLength : 0); // Ensure non-negative length
+                $maskedPart = str_repeat('X', $maskedPartLength > 0 ? $maskedPartLength : 0); // Ensure non-negative length
 
                 // Reconstruct the masked phone number
                 return $firstThree . $maskedPart . $lastTwo;
