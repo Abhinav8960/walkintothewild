@@ -214,4 +214,69 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     {
         return 'R-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        // if ststus is 1 the create a row in booking table
+        if ($this->status == self::STATUS_SUCCESS) {
+            $this->makebooking();
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    private function makebooking()
+    {
+        $booking = new \common\models\bookings\Booking();
+        $booking->transaction_id = $this->id;
+        $booking->order_id = $this->order_id;
+        $booking->currency = $this->currency;
+        $booking->reference_id = $this->reference_id; // use the same
+        $booking->lead_partner_quotes_id = $this->lead_partner_quotes_id;
+        $booking->lead_partner_quote_installments_id = $this->lead_partner_quote_installments_id;
+        $booking->lead_partner_id = $this->lead_partner_id;
+        $booking->lead_id = $this->lead_id;
+        $booking->partner_id = $this->partner_id;
+        $booking->park_id = $this->park_id;
+        $booking->addional_notes = $this->addional_notes;
+        $booking->safaris = $this->safaris;
+        $booking->travelers = $this->travelers;
+        $booking->stay_category_id = $this->stay_category_id;
+        $booking->name = $this->name;
+        $booking->email = $this->email;
+        $booking->phone = $this->phone;
+        $booking->start_date = $this->start_date;
+        $booking->end_date = $this->end_date;
+        $booking->validity_date = $this->validity_date;
+        $booking->permit_booking_date = $this->permit_booking_date;
+        $booking->partner_selling_price = $this->partner_selling_price;
+        $booking->plateform_partner_fees_percentage = $this->plateform_partner_fees;
+        $booking->plateform_partner_fees = $this->plateform_partner_fees;
+        $booking->partner_net_selling_price = $this->partner_net_selling_price;
+        $booking->plateform_customer_discount = $this->plateform_customer_discount;
+        $booking->net_payment_price = $this->net_payment_price;
+        $booking->installment = $this->installment;
+        $booking->received_amount = $this->received_amount;
+        $booking->addtional_data = $this->addtional_data;
+        $booking->datetime_of_approval_by_admin = $this->datetime_of_approval_by;
+        $booking->quotation_filepath = $this->quotation_filepath;
+        $booking->is_payment_received = 1;
+        $booking->transaction_datetime = $this->transaction_datetime;
+        $booking->billing_name = $this->billing_name;
+        $booking->billing_address = $this->billing_address;
+        $booking->billing_city = $this->billing_city;
+        $booking->billing_state = $this->billing_state;
+        $booking->billing_zip = $this->billing_zip;
+        $booking->billing_country = $this->billing_country;
+        $booking->billing_tel = $this->billing_tel;
+        $booking->billing_email = $this->billing_email;
+        $booking->param1 = $this->param1;
+        $booking->param2 = $this->param2;
+        $booking->param3 = $this->param3;
+        $booking->param4 = $this->param4;
+        $booking->param5 = $this->param5;
+        $booking->status = 1; // initial status is 0 (initiated)
+        // set the status to 1
+        $booking->status = 1;
+        return $booking->save(false);
+    }
 }

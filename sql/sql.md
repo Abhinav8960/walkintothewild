@@ -33,3 +33,10 @@ ALTER TABLE `lead_partner_quotes` ADD `is_payment_link_send` BOOLEAN NOT NULL DE
 ALTER TABLE `transaction` CHANGE `installment` `installment` INT NOT NULL DEFAULT '1' COMMENT 'Installment_id';
 ALTER TABLE `transaction` ADD `user_id` INT NOT NULL AFTER `id`;
 ALTER TABLE `transaction` CHANGE `status` `status` INT NULL DEFAULT '1' COMMENT '0=>initiated,1=>Success,2=>Failed,3=>Hold,4=>Refunded';
+
+
+<!-- 02072025 -->
+ALTER TABLE `lead_partners` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_payment_link_send`;
+ALTER TABLE `lead_partners` ADD `transaction_id` INT NULL DEFAULT NULL AFTER `is_payment_received`, ADD `transaction_datetime` DATETIME NULL DEFAULT NULL AFTER `transaction_id`;
+ALTER TABLE `lead_partners` ADD `payment_gateway` INT NULL DEFAULT NULL AFTER `is_payment_link_send`;
+ALTER TABLE `lead_partner_quote_installments` ADD `is_payment_received` INT NOT NULL DEFAULT '0' AFTER `status`;
