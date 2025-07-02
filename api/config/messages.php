@@ -51,12 +51,12 @@ return [
         'reply_success' => 'Reply Submitted successfully!',
         'reply_failed' => 'Reply Not Submitted!',
         'flag_restricted' => 'You cannot flag your own comment/reply!',
-        'flag_success' => 'Flaged successfully!',
+        'flag_success' => 'Flagged successfully!',
         'report_success' => 'Reported successfully!',
         'report_failed' => 'Report submission failed!',
 
         'like_success' => '{var} Liked successfully!',
-        'like_removed' => 'Remove Liked successfully!',
+        'like_removed' => 'Like removed successfully!',
 
         'wishlist_added' => 'You added the {var} to your wishlist!',
         'wishlist_add_failed' => 'Not added the {var} to your wishlist!',
@@ -94,7 +94,7 @@ return [
         'set_failed'=>'Failed to set {var}!',
 
         'message_required'=>'Message is required!',
-        'message_send'=>'Message Send!',
+        'message_send'=>'Message Sent!',
         'message_not_sent'=>'Message not sent!',
 
     ],
