@@ -36,21 +36,35 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->filepath) {
-                                return Html::tag('div', Html::img(Yii::$app->params['s3_endpoint'] .'/'. $model->filepath, [
+                                return Html::tag('div', Html::img(Yii::$app->params['s3_endpoint'] . '/' . $model->filepath, [
                                     'alt' => 'Uploaded Image',
                                 ]), ['style' => 'text-align: center;']);
                             }
                             return '';
                         }
                     ],
+
                     [
                         'label' => 'User Name',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $imageUrl = isset($model->user) ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/NewBanner_big.png';
-                            $name = isset($model->user) ? $model->user->name : '';
-                            return '<img src="' . $imageUrl . '" alt="" style="max-height:30px;"> ' . Html::encode($name);
+
+                            if ($user = $model->user) {
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+
+                                return Html::a(
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name),
+                                    ['/user/default/profile', 'user_id' => $user->id],
+                                    ['style' => 'color:black !important;']
+                                );
+                            }
+
+                            return '';
                         },
                     ],
 

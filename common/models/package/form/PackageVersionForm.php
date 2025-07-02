@@ -158,7 +158,7 @@ class PackageVersionForm extends \yii\base\Model
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'master_vehicle_id'], 'integer'],
             [['cost_per_person', 'total_price'], 'number'],
-            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
+            [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there', 'package_agenda_id'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
@@ -174,7 +174,8 @@ class PackageVersionForm extends \yii\base\Model
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
             ['created_at', 'safe'],
-            [['max_booking_date'], 'date', 'format' => 'php:Y-m-d']
+            [['max_booking_date'], 'date', 'format' => 'php:Y-m-d'],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
 
         ];
     }

@@ -106,7 +106,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
             [['start_date', 'end_date', 'status'], 'safe'],
             [['cost_per_person', 'total_price'], 'number'],
-            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
+            [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
             [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
             [['package_name'], 'string', 'max' => 512],
@@ -114,6 +114,8 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['final_approved_at'], 'integer'],
             [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512],
             [['max_booking_date'], 'safe'],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+
 
         ];
     }

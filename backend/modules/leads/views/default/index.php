@@ -28,9 +28,22 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            // $imageUrl = isset($model->user) ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/NewBanner_big.png';
-                            $name = isset($model->user) ? $model->user->name : '';
-                            return  Html::encode($name);
+
+                            if ($user = $model->user) {
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+
+                                return Html::a(
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name),
+                                    ['/user/default/profile', 'user_id' => $user->id],
+                                    ['style' => 'color:black !important;']
+                                );
+                            }
+
+                            return '';
                         },
                     ],
                     [
@@ -153,7 +166,7 @@ $this->params['title'] = $this->title;
                             return $model->assigned_operator_count;
                         }
                     ],
-                     [
+                    [
                         'label' => 'Partner Chat Started Count',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',

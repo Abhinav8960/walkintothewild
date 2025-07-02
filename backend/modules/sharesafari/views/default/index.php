@@ -34,16 +34,36 @@ if (Yii::$app->user->identity) {
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
+
                     [
-                        'label' => 'Title',
-                        // 'contentOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
 
-                            // return Html::a(($model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled'), ['view', 'id' => $model->id], [
-                            //     'style' => 'color: black !important;',
-                            //     'title' => 'View',
-                            // ]);
+                            if ($user = $model->user) {
+                                $name = $user->name ?? '';
+                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+
+                                return Html::a(
+                                    Html::img($imageUrl, [
+                                        'class' => "rounded profile-picture",
+                                        'style' => "width:28px;"
+                                    ]) . ' ' . Html::encode($name),
+                                    ['/user/default/profile', 'user_id' => $user->id],
+                                    ['style' => 'color:black !important;']
+                                );
+                            }
+
+
+                            return '';
+                        },
+                    ],
+
+                    [
+                        'label' => 'Title',
+                        'format' => 'raw',
+                        'value' => function ($model) {
 
                             return $model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled';
                         }
@@ -60,7 +80,7 @@ if (Yii::$app->user->identity) {
                     [
                         'label' => 'End Date',
                         'headerOptions' => ['style' => 'width: 10%;'],
-                    
+
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
@@ -80,15 +100,15 @@ if (Yii::$app->user->identity) {
                             return $model->share_seat;
                         }
                     ],
-                    [
-                        'label' => 'Organizer',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                    // [
+                    //     'label' => 'Organizer',
+                    //     'headerOptions' => ['style' => 'width: 10%;'],
 
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->user->name) ? $model->user->name : '';
-                        }
-                    ],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->user->name) ? $model->user->name : '';
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Joined',
@@ -96,8 +116,9 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
                                 'value' => Url::toRoute(['intrested', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
-                                'class' => 'intrested btn-danger',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
+                                'class' => 'intrested',
                                 'title' => 'Intrested',
                             ]) : '';
                         }
@@ -109,8 +130,9 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
                                 'value' => Url::toRoute(['leaved', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
-                                'class' => 'leaved btn-info',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
+                                'class' => 'leaved',
                                 'title' => 'Leaved',
                             ]) : '';
                         }
@@ -127,7 +149,7 @@ if (Yii::$app->user->identity) {
                             return $str;
                         }
                     ],
-                   
+
 
                     [
                         'header' => 'Pin',
@@ -148,7 +170,11 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            if ($model->status != 2) {
+
+                                return $model->newstatuslabel;
+                            }
+                            return '<span class="badge badge-info" style="border-radius:50px;">Seat Full</span>';
                         }
                     ],
                     [

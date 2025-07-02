@@ -148,7 +148,7 @@ class DefaultController extends RestController
         // ]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
+            'query' => ChatMessage::find()->where(['chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
             // 'query' => ChatMessage::find()->where(['chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             // 'pagination' => [
@@ -574,6 +574,7 @@ class DefaultController extends RestController
         // $previous_message = $chat_message->message;
 
         $chat_message->message = $message;
+        $chat_message->is_edited = 1; // Mark the message as edited
         if ($chat_message->save()) {
             // Check if the chat message is the last message of the chat
             $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();

@@ -1,6 +1,7 @@
 <?php
 
 use backend\assets\AppAsset;
+use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 
 use frontend\assets\FrontAppAsset;
@@ -14,7 +15,12 @@ $webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Share Safari';
-$this->params['title'] = $this->title;
+if ($share_safari->status != ShareSafari::STATUS_DELETE) {
+    $this->params['title'] = $this->title;
+} else {
+    $this->params['title'] = $this->title . ' <span style="color:red;">(' . htmlspecialchars($share_safari->delete_reason) . ')</span>';
+}
+
 ?>
 
 <div class="row my-4">
@@ -122,13 +128,24 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             </div>
-            <div class="row ">
-                <div class="col-12">
-                    <div class="btn-delet float-end pt-4">
-                        <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/sharesafari/default/share-safari-delete', 'id' => $share_safari->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
+            <?php
+            if ($share_safari->status != ShareSafari::STATUS_DELETE) { ?>
+                <div class="row ">
+                    <div class="col-12">
+                        <div class="btn-delet float-end pt-4">
+                            <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/sharesafari/default/share-safari-delete', 'id' => $share_safari->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } else { ?>
+                <div class="row ">
+                    <div class="col-12">
+                        <div class="float-end pt-2 m-2">
+                            <a class="btn_userarticle" style="background:#09422d !important;color:white !important;padding: 10px 16px !important; border:0; border-radius:10px" href="<?= \yii\helpers\Url::toRoute(['/sharesafari/default/share-safari-active', 'id' => $share_safari->id]) ?>"><i class="fas fa-edit me-1"></i>Active</a>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>

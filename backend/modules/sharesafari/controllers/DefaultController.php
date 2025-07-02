@@ -17,6 +17,7 @@ use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
+use common\models\User;
 use frontend\models\form\SharedSafariRequestForm;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -41,7 +42,7 @@ class DefaultController extends Controller
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
         $searchModel->report_days = 'all';
-        $searchModel->status = 1;
+        $searchModel->custom_status = 3;
         $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -488,5 +489,52 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionShareSafariActive($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        if ($share_safari) {
+            $share_safari->status = ShareSafari::STATUS_ACTIVE;
+            if ($share_safari->save(false)) {
+                \Yii::$app->session->setFlash('success', 'Active Successfully!!!');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        \Yii::$app->session->setFlash('danger', 'Not Found!!!');
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
+    public function actionUserList($q = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $users = User::find()
+            ->select(['id', 'name', 'email'])
+            ->where(['status' => User::STATUS_ACTIVE])
+            ->andFilterWhere([
+                'or',
+                ['like', 'name', $q],
+                ['like', 'mobile_no', $q],
+                ['like', 'username', $q],
+                ['like', 'email', $q]
+            ])
+            ->orderBy(['name' => SORT_ASC])
+            ->limit(20)
+            ->asArray()
+            ->all();
+
+        $results = [];
+
+        foreach ($users as $user) {
+            $results[] = [
+                'id' => $user['id'],
+                'text' => $user['name'] . ' (' . $user['email'] . ')', // Show name with email in brackets
+            ];
+        }
+
+        return ['results' => $results];
     }
 }

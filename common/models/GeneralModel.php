@@ -229,7 +229,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function pages()
     {
-        return [
+        $arr = [
             1 => 'Home',
             2 => 'Park List',
             3 => 'Park View',
@@ -243,6 +243,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             11 => 'Package List',
             12 => 'Package View',
         ];
+
+        asort($arr);
+        return $arr;
     }
 
     public static function messagetype()
@@ -1146,11 +1149,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function sharesafarioptionswithdelete()
     {
-        $return = [
+          $return = [
+            '3' => 'Live',
             '1' => 'Active',
-            '0' => 'Inactive',
+            '0' => 'Inactive By User',
             '2' => 'Seat Full',
-            '-2' => 'Delete by User'
+            '-1' => 'Delete by Admin'
         ];
         return $return;
     }
@@ -1706,7 +1710,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function operatorslist()
     {
-        $safari_operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE]);
+        $safari_operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->orderBy(['business_name' => SORT_ASC]);
         return ArrayHelper::map($safari_operator->all(), 'id', 'business_name');
     }
 
@@ -1755,6 +1759,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             7 => 'Comment/Review',
             8 => 'Quote',
         ];
+        asort($module_type);
         return $module_type;
     }
 

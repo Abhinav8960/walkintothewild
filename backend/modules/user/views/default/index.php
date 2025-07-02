@@ -35,13 +35,31 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             return $model->username;
                         }
                     ],
+                    // [
+                    //     'label' => 'Full Name',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return Html::a(Html::img($model->avatar != '' ? $model->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->name, ['profile', 'user_id' => $model->id], ['style' => 'color:black !important;']);
+                    //     }
+                    // ],
                     [
-                        'label' => 'Full Name',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a(Html::img($model->avatar != '' ? $model->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->name, ['profile', 'user_id' => $model->id], ['style' => 'color:black !important;']);
-                        }
+                            $name = $model->name ?? '';
+                            $imageUrl = $model->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
+                            return Html::a(
+                                Html::img($imageUrl, [
+                                    'class' => "rounded profile-picture",
+                                    'style' => "width:28px;"
+                                ]) . ' ' . Html::encode($name),
+                                ['/user/default/profile', 'user_id' => $model->id],
+                                ['style' => 'color:black !important;']
+                            );
+
+                        },
                     ],
                     [
                         'label' => 'Mobile Verified User',
