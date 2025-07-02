@@ -9,7 +9,11 @@ $this->title = 'Partner Registration';
 $this->params['title'] = $this->title;
 ?>
 <?php if ($model->partner_model->final_approved != 1) { ?>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> main
     <?= $this->render('card', ['currentStep' => 1]) ?>
 
     <div class="container mt-5">

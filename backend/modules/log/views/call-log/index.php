@@ -27,12 +27,12 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "";
-                            if(!empty($model->partner)){
+                            if (!empty($model->partner)) {
 
                                 $str = '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
                                 $str .= "<br>";
                             }
-                            return $str .= $model->request_caller_2_no;                       
+                            return $str .= $model->request_caller_2_no;
                         }
                     ],
                     [
@@ -45,7 +45,7 @@ $this->params['title'] = $this->title;
                             return $str .= $model->request_caller_1_no;
                         }
                     ],
-                    
+
                     [
                         'label' => 'Recording',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -55,11 +55,11 @@ $this->params['title'] = $this->title;
                             $url = !empty($model->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $model->file_path : $model->recording_url;
                             if ($url != '' || $url != NULL) {
                                 return '<audio controls>
-                                <source src="'.$url.'" type="audio/ogg" style="width:20px">
-                                <source src="'.$url.'" type="audio/mpeg" style="width:20px">
+                                <source src="' . $url . '" type="audio/ogg" style="width:20px">
+                                <source src="' . $url . '" type="audio/mpeg" style="width:20px">
                                 audio not supported.
-                              </audio>';                             
-                            } 
+                              </audio>';
+                            }
                             return '';
                         }
                     ],
@@ -100,7 +100,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->datetime) ? Yii::$app->formatter->asDatetime($model->datetime, 'php:d M Y, h:i A') : '';
+                            return isset($model->datetime) ? date('Y-m-d h:i A', strtotime($model->datetime)) : '';
                         }
                     ],
                     [
