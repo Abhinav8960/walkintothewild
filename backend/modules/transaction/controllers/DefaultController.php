@@ -248,4 +248,6 @@ class DefaultController extends Controller
         }
         return $binString;
     }
+
+    
 }

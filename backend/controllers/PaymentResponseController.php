@@ -64,16 +64,16 @@ class PaymentResponseController extends Controller
             Yii::info('Payment verified successfully.', 'transaction');
             $this->transactionupdate();
             if ($data['status'] == 'success') {
-                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/success/' . ($data['txnid'] ?? ''));
+                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/success/' . ($data['udf1'] ?? ''));
             } elseif ($data['status'] == 'failure') {
-                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/cancel/' . ($data['txnid'] ?? ''));
+                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/cancel/' . ($data['udf1'] ?? ''));
             } elseif ($data['status'] == 'pending') {
-                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/pending/' . ($data['txnid'] ?? ''));
+                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/pending/' . ($data['udf1'] ?? ''));
             }
-            return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['txnid'] ?? ''));
+            return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['udf1'] ?? ''));
         }
 
-        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['txnid'] ?? '') . '?error=Payment verification failed. Please try again.');
+        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['udf1'] ?? '') . '?error=Payment verification failed. Please try again.');
     }
 
     private function transactionupdate()
@@ -94,7 +94,6 @@ class PaymentResponseController extends Controller
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
-            Yii::error('Transaction not found for txnid: ' . $data['txnid'], 'transaction');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Transaction not found."]);
         }
     }
@@ -162,7 +161,7 @@ class PaymentResponseController extends Controller
 
 
         // Save the response
-        if ($payuResponse->save()) {
+        if ($payuResponse->save(false)) {
             Yii::info('PayU response saved successfully.', 'transaction');
             return true;
         } else {
