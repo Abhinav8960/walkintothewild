@@ -58,7 +58,7 @@ class PackageSearch extends PackageVersion
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
             [['business_name'], 'string'],
-            [['cost_per_person_min','cost_per_person_max'],'safe'],
+            [['cost_per_person_min', 'cost_per_person_max'], 'safe'],
         ];
     }
 
@@ -86,7 +86,8 @@ class PackageSearch extends PackageVersion
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+            // 'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'id' => SORT_DESC]],
             'pagination' => [
                 'pageSize' => 50,
             ],

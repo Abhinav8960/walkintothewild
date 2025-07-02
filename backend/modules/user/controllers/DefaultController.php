@@ -198,7 +198,7 @@ class DefaultController extends Controller
         return $user;
     }
 
-     public function actionUserList($q = null)
+    public function actionUserList($q = null)
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
@@ -212,6 +212,7 @@ class DefaultController extends Controller
                 ['like', 'username', $q],
                 ['like', 'email', $q]
             ])
+            ->orderBy(['name' => SORT_ASC])
             ->limit(20)
             ->asArray()
             ->all();

@@ -30,29 +30,53 @@ $this->params['title'] = $this->title;
                 //'options' => ['style' => 'table-layout:fixed;'],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // [
+                    //     'label' => 'User',
+                    //     'format' => 'raw',
+                    //     'contentOptions' => ['style' => 'color:#000;'],
+                    //     'value' => function ($model) {
+                    //         if (!empty($model->user_id)) {
+                    //             return Html::a(
+                    //                 isset($model->user->name) ? $model->user->name : '',
+                    //                 [
+                    //                     '/user/default/profile',
+                    //                     'user_id' => $model->user_id
+                    //                 ],
+                    //                 [
+                    //                     'class' => 'btn p-0 change-menuicon',
+                    //                     'title' => 'View',
+                    //                     'target' => '_blank'
+
+                    //                 ]
+                    //             );
+                    //         } else {
+                    //             return '-';
+                    //         }
+                    //     }
+                    // ],
                     [
-                        'label' => 'User',
+                        'label' => 'User Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
-                        'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
                             if (!empty($model->user_id)) {
-                                return Html::a(
-                                    isset($model->user->name) ? $model->user->name : '',
-                                    [
-                                        '/user/default/profile',
-                                        'user_id' => $model->user_id
-                                    ],
-                                    [
-                                        'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'View',
-                                        'target' => '_blank'
+                                if ($user = $model->user) {
+                                    $name = $user->name ?? '';
+                                    $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
 
-                                    ]
-                                );
-                            } else {
-                                return '-';
+                                    return Html::a(
+                                        Html::img($imageUrl, [
+                                            'class' => "rounded profile-picture",
+                                            'style' => "width:28px;"
+                                        ]) . ' ' . Html::encode($name),
+                                        ['/user/default/profile', 'user_id' => $user->id],
+                                        ['style' => 'color:black !important;']
+                                    );
+                                }
                             }
-                        }
+
+                            return '';
+                        },
                     ],
                     // [
                     //     'label' => 'Module',

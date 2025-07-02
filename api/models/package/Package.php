@@ -113,10 +113,11 @@ class Package extends \common\models\package\Package
             [['package_name'], 'required'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
             [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['package_description',  'package_itinerary_overview', 'package_terms_condtition'], 'string'],
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
         ];
     }
 
@@ -141,18 +142,49 @@ class Package extends \common\models\package\Package
 
     public function getMaster_package_with_included()
     {
+    
+        $arr = [
+            1 => [
+                'id' => 1,
+                'title' => 'Accommodation',
+                'option' => 'Optional',
+            ],
+            3 => [
+                'id' => 3,
+                'title' => 'Pick & Drop',
+                'option' => 'Optional',
+            ],
+            4 => [
+                'id' => 4,
+                'title' => 'Camera Fee',
+                'option' => 'Optional',
+            ],
+            5 => [
+                'id' => 5,
+                'title' => 'Permit',
+                'option' => 'Optional',
+            ],
+            6 => [
+                'id' => 6,
+                'title' => 'Guide Fee',
+                'option' => 'Optional',
+            ],
+        ];
 
-        $arr = [];
-        $i = 0;
-        foreach ($this->packageincluded as $key => $mgi) {
-            if (isset($mgi->package_include)) {
-                $arr[$i]['id'] = $mgi->package_include->id;
-                $arr[$i]['title'] = $mgi->package_include->title;
-                $arr[$i]['option'] = $mgi->getInclude_option();
-                $i++;
+        if ($this->packageincluded) {
+            foreach ($this->packageincluded as $mgi) {
+                if (isset($mgi->package_include)) {
+                    $id = $mgi->package_include->id;
+                    $arr[$id] = [
+                        'id' => $id,
+                        'title' => $mgi->package_include->title,
+                        'option' => $mgi->getInclude_option(),
+                    ];
+                }
             }
         }
-        return $arr;
+
+        return array_values($arr);
     }
 
     // public function getLivePackage()

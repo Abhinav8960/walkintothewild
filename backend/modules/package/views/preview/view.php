@@ -3,6 +3,8 @@
 use common\models\GeneralModel;
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -11,6 +13,10 @@ AppAsset::register($this);
 
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
+if ($package->popular_package != 1) {
+    $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn btn-orange', 'title' => 'Mark as Popular']);
+}
+
 ?>
 
 

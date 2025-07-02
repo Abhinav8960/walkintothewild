@@ -25,14 +25,13 @@ $names = ArrayHelper::getColumn(
 ]); ?>
 <div class="row">
 
+
+
     <div class="col-md-2">
-        <?= $form->field($model, 'is_chat_started')->dropDownList(
+        <?= $form->field($model, 'source')->dropDownList(
+            GeneralModel::leadSource(),
             [
-                '1' => 'Yes',
-                '0' => 'No'
-            ],
-            [
-                'prompt' => 'Select Chat Status',
+                'prompt' => 'Select Source',
             ]
         ) ?>
     </div>
@@ -74,10 +73,13 @@ $names = ArrayHelper::getColumn(
     </div>
 
     <div class="col-md-2">
-        <?= $form->field($model, 'source')->dropDownList(
-            GeneralModel::leadSource(),
+        <?= $form->field($model, 'is_chat_started')->dropDownList(
             [
-                'prompt' => 'Select Source',
+                '1' => 'Yes',
+                '0' => 'No'
+            ],
+            [
+                'prompt' => 'Select Chat Status',
             ]
         ) ?>
     </div>

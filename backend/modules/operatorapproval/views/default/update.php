@@ -384,11 +384,34 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
     </div>
 </div>
 
+<div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Document Preview
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<<JS
 
         \$('.reject-action').on('click', function () {
             \$('#modalReject').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
+     
+    \$('.file-view').on('click', function () {
+            \$('#modalfileview').modal('show')
     \t\t.find('#modalContent')
     \t\t.load(\$(this).attr('value'));
     \t});
