@@ -1,17 +1,16 @@
 <?php
 
-namespace api\modules\transaction\controllers;
+namespace backend\modules\transaction\controllers;
 
-use api\controllers\RestController;
-use api\behaviours\Apiauth;
-use api\behaviours\Verbcheck;
+use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii;
 
 /**
  * Default controller for the `error` module
  */
-class PaymentResponseController extends RestController
+class PaymentResponseController extends Controller
 {
 
     /**
@@ -20,27 +19,19 @@ class PaymentResponseController extends RestController
     public function behaviors()
     {
 
-        $behaviors = parent::behaviors();
-
-        return $behaviors += [
-            'apiauth' => [
-                'class' => Apiauth::className(),
-                'exclude' => [],
-            ],
+        return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['payu-verify'],
                 'rules' => [
                     [
                         'actions' => ['payu-verify', 'payu-response'],
                         'allow' => true,
-                        'roles' => ['@'],
                     ],
-
+                    
                 ],
             ],
             'verbs' => [
-                'class' => Verbcheck::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'payu-verify' => ['POST'],
                     'payu-response' => ['POST', 'GET'],
@@ -52,7 +43,7 @@ class PaymentResponseController extends RestController
 
     public function beforeAction($action)
     {
-        if ($action->id === 'payu-response') {
+        if ($action->id === 'payu-response' || $action->id === 'payu-verify') {
             // Disable CSRF validation for the payu-response action
             $this->enableCsrfValidation = false;
         }
