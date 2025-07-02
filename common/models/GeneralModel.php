@@ -1926,13 +1926,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         // --- 2. Mask Phone Numbers ---
         // Regex to find common phone number patterns:
-        // - Optional country code (e.g., +1, +91)
-        // - Optional parentheses around area code
-        // - Digits separated by hyphens, spaces, or dots
-        // - Or just a sequence of 10 or more digits (for simpler cases)
-        // This regex is designed to be reasonably comprehensive without being overly complex.
+        // This regex is designed to be very flexible, capturing sequences of digits
+        // and common separators (spaces, hyphens, dots, parentheses) that resemble
+        // phone numbers. It then relies on the callback to strip non-digits for masking.
+        // - \b: word boundary
+        // - (?:\+?\d{1,4}[-.\s]*)?: Optional country code (e.g., +1) followed by separators.
+        // - (?:\(\d{2,5}\)|\d{2,5})?: Optional area code in parentheses or just digits.
+        // - [-.\s]*: Flexible separators between number groups.
+        // - \d{4,}: Ensures at least 4 digits at the end.
+        // - |: OR
+        // - \b\d[\d\s\-\(\).]{7,}\d\b: A broader catch-all for sequences starting and ending
+        //   with a digit, and containing at least 7 more digits/separators in between.
         $text = preg_replace_callback(
-            '/\b(?:\+\d{1,3}[-.\s]?)?(?:\(\d{2,4}\)|\d{2,4})[-.\s]?\d{2,4}[-.\s]?\d{4}\b|\b\d{10,}\b/',
+            '/\b(?:\+?\d{1,4}[-.\s]*)?(?:\(\d{2,5}\)|\d{2,5})[-.\s]*\d{2,5}[-.\s]*\d{4,}\b|\b\d[\d\s\-\(\).]{7,}\d\b/',
             function ($matches) {
                 $phoneNumber = $matches[0];
 
