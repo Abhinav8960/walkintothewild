@@ -86,4 +86,12 @@ class MessageManager extends Component
         \Yii::$app->cache->delete($this->cacheKey);
         return true;
     }
+
+    public static function clearAllCache()
+    {
+        $manager = new self();
+        return $manager->clearCache();
+    }
+
+
 }

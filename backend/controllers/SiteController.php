@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use api\components\Api;
 use api\components\MessageManager;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
@@ -425,9 +426,25 @@ class SiteController extends Controller
         throw new NotFoundHttpException('Short URL not found.');
     }
 
-    // public function actionClearCache()
-    // {
-    //     \Yii::$app->api->messageManager->clearCache();
-    //     return $this->redirect(['index']);
-    // }
+    public function actionClearCache()
+    {
+        MessageManager::clearAllCache();
+        Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+        return $this->redirect(['index']);
+    }
+
 }
+// i have two site controllers @backend/sitecontroller and @api/sitecontrollrer 
+// I am using message management dynamically for @api and want to clear cache for the messages .
+// now my problem is i am not able to clear-cache from @backend but the code is working for @Api
+// i have the code snippets in 
+// @backend/SiteController
+// public function actionClearCache()
+//     {
+//         MessageManager::clearAllCache();
+//         Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+//         return $this->redirect(['index']);
+//     }
+
+//   in  @api/
+ 
