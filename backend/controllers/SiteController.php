@@ -40,7 +40,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url'],
+                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url', 'payu-response'],
                         'allow' => true,
                     ],
                     [
@@ -54,6 +54,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
+                    'payu-response' => ['post'],
                 ],
             ],
         ];
@@ -425,9 +426,25 @@ class SiteController extends Controller
         throw new NotFoundHttpException('Short URL not found.');
     }
 
-    // public function actionClearCache()
-    // {
-    //     \Yii::$app->api->messageManager->clearCache();
-    //     return $this->redirect(['index']);
-    // }
+    // 'successUrl' => 'http://admin.walkintothewild.io/payu/success',
+    // 'failureUrl' => 'http://admin.walkintothewild.io/payu/failure',
+    // 'cancelUrl' => 'http://app.walkintothewild.io/payu/cancel',
+
+    public function actionPayuResponse()
+    {
+        $data = Yii::$app->request->post();
+
+        \Yii::info('PayU Response: ' . json_encode($data), 'payu');
+
+        if (isset($data['status']) && $data['status'] == 'success') {
+            // Handle success response
+            // You can process the payment details here
+            Yii::$app->session->setFlash('success', 'Payment successful!');
+        } else {
+            // Handle failure response
+            Yii::$app->session->setFlash('error', 'Payment failed or cancelled.');
+        }
+
+        return $this->redirect(Yii::$app->params['partner_url'] . '/payu-response/' . $data['txnid']);
+    }
 }
