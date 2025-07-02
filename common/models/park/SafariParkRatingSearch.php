@@ -13,13 +13,14 @@ class SafariParkRatingSearch extends SafariParkRating
 {
     public $custom_sort_by;
     public $safari_park;
+    public $park_id;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['user_id', 'safari_park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['user_id', 'safari_park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'park_id'], 'integer'],
             [['rating'], 'number'],
             [['review', 'user_agent', 'safari_park'], 'string', 'max' => 512],
             [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
@@ -103,6 +104,12 @@ class SafariParkRatingSearch extends SafariParkRating
         if ($this->safari_park) {
             $query->joinwith(['park' => function ($query) {
                 $query->andFilterWhere(['like', 'safari_park.title', $this->safari_park]);
+            }]);
+        }
+
+        if ($this->park_id) {
+            $query->joinwith(['park' => function ($query) {
+                $query->andFilterWhere(['safari_park.id'=> $this->park_id]);
             }]);
         }
 
