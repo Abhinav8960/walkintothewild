@@ -1894,7 +1894,53 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function maskContactInfoInString(string $text): string
     {
 
-        // --- 1. Mask Email Addresses ---
+        // Define a mapping for number words to digits
+        $numberWordMap = [
+            'zero'  => '0',
+            'one'   => '1',
+            'two'   => '2',
+            'three' => '3',
+            'four'  => '4',
+            'five'  => '5',
+            'six'   => '6',
+            'seven' => '7',
+            'eight' => '8',
+            'nine'  => '9'
+        ];
+
+        // Create a regex pattern for number words (case-insensitive)
+        $numberWordPattern = implode('|', array_keys($numberWordMap));
+
+        // --- 1. Mask Natural Language Email Addresses ---
+        // Regex to find patterns like "username at domain dot com"
+        // It captures the parts to reconstruct the email.
+        $text = preg_replace_callback(
+            '/\b([A-Za-z0-9._%+-]+)\s+at\s+([A-Za-z0-9.-]+)\s+dot\s+([A-Za-z]{2,})\b/i', // 'i' for case-insensitive
+            function ($matches) {
+                // Reconstruct the email in a standard format
+                $email = $matches[1] . '@' . $matches[2] . '.' . $matches[3];
+
+                // Basic validation to ensure it's a valid email before masking
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    // If the reconstructed email is not valid, return the original matched string
+                    return $matches[0];
+                }
+
+                $parts = explode('@', $email);
+                $username = $parts[0];
+                $domain = $parts[1];
+
+                // Mask username: first character + 'X' for the rest
+                $maskedUsername = substr($username, 0, 1) . str_repeat('X', strlen($username) - 1);
+
+                // Reconstruct the masked email address
+                return $maskedUsername . '@' . $domain;
+            },
+            $text
+        );
+
+
+        // --- 2. Mask Standard Email Addresses ---
         // Regex to find common email patterns.
         // \b for word boundaries, [A-Za-z0-9._%+-]+ for username, @, [A-Za-z0-9.-]+ for domain, \.[A-Za-z]{2,} for TLD.
         $text = preg_replace_callback(
@@ -1924,19 +1970,52 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             $text
         );
 
-        // --- 2. Mask Phone Numbers ---
-        // Regex to find common phone number patterns:
-        // This regex is designed to be very flexible, capturing sequences of digits
-        // and common separators (spaces, hyphens, dots, parentheses) that resemble
-        // phone numbers. It then relies on the callback to strip non-digits for masking.
-        // - \b: word boundary
-        // - (?:\+?\d{1,4}[-.\s]*)?: Optional country code (e.g., +1) followed by separators.
-        // - (?:\(\d{2,5}\)|\d{2,5})?: Optional area code in parentheses or just digits.
-        // - [-.\s]*: Flexible separators between number groups.
-        // - \d{4,}: Ensures at least 4 digits at the end.
-        // - |: OR
-        // - \b\d[\d\s\-\(\).]{7,}\d\b: A broader catch-all for sequences starting and ending
-        //   with a digit, and containing at least 7 more digits/separators in between.
+        // --- 3. Mask Phone Numbers (Word-based and Mixed) ---
+        // This regex looks for sequences of number words or digits, potentially separated by spaces.
+        // It's designed to capture patterns like "nine eight three", "nine 8 seven", "123 four five six".
+        // The callback will then extract only the numerical digits before masking.
+        $text = preg_replace_callback(
+            '/\b(?:' . $numberWordPattern . '|\d+)(?:\s*(?:' . $numberWordPattern . '|\d+))*\b/i',
+            function ($matches) use ($numberWordMap) {
+                $matchedString = $matches[0];
+                $digitsOnly = '';
+
+                // Split the matched string into individual words/numbers
+                $parts = preg_split('/\s+/', $matchedString);
+
+                foreach ($parts as $part) {
+                    // Check if the part is a number word
+                    $lowerPart = strtolower($part);
+                    if (isset($numberWordMap[$lowerPart])) {
+                        $digitsOnly .= $numberWordMap[$lowerPart];
+                    } elseif (is_numeric($part)) {
+                        // If it's a numeric digit string
+                        $digitsOnly .= $part;
+                    }
+                    // Ignore other non-numeric words or symbols for phone number construction
+                }
+
+                // Only proceed with masking if we extracted a reasonable number of digits
+                // A typical phone number has at least 7 digits (e.g., local number) up to 15 (international)
+                if (strlen($digitsOnly) < 7 || strlen($digitsOnly) > 15) {
+                    return $matchedString; // Return original if not enough digits for a phone number
+                }
+
+                // Apply the same masking logic as for standard phone numbers
+                $unmaskedLength = max(0, strlen($digitsOnly) - 8);
+                $unmaskedPart = substr($digitsOnly, 0, $unmaskedLength);
+                $maskedPartLength = strlen($digitsOnly) - $unmaskedLength;
+                $maskedPart = str_repeat('X', $maskedPartLength);
+
+                return $unmaskedPart . $maskedPart;
+            },
+            $text
+        );
+
+        // --- 4. Mask Phone Numbers (Standard Digit-based) ---
+        // This step remains to catch any digit-based phone numbers that might not
+        // have been caught by the more specific word-based regex (e.g., due to different spacing or formats).
+        // It's important to run this *after* the word-based one to prioritize word conversion.
         $text = preg_replace_callback(
             '/\b(?:\+?\d{1,4}[-.\s]*)?(?:\(\d{2,5}\)|\d{2,5})[-.\s]*\d{2,5}[-.\s]*\d{4,}\b|\b\d[\d\s\-\(\).]{7,}\d\b/',
             function ($matches) {
