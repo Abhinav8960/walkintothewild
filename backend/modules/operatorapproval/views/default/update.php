@@ -101,9 +101,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Registration Number :</strong> <?= $model->registration_number ?></p>
                                         <p><strong>Registration File : </strong>
                                         <?php if (!empty($model->registration_copy_upload_path)){?>
-                                            <button value="<?= Url::to(['file-view', 'path' => $model->registration_copy_upload_path]) ?>" class="file-view" style ="border: 0; background-color: transparent;">
+                                            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </button>
+                                            </a>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>

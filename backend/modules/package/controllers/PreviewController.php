@@ -162,4 +162,14 @@ class PreviewController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionMarkAsPopular($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model->popular_package = 1;
+        if ($model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Mark Popular Successfully!!!');
+            return $this->redirect(\Yii::$app->request->referrer);
+        }
+    }
 }

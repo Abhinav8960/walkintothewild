@@ -88,7 +88,7 @@ class DefaultController extends RestController
     {
         $searchModel = new PackageSearch();
         $searchModel->status = Package::STATUS_ACTIVE;
-        $searchModel->custom_sort_by = 5;
+        // $searchModel->custom_sort_by = 5;
         $condition = "owned_by_id IN (SELECT id from safari_operator WHERE status=1)";
 
         return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "packages", $condition);
