@@ -162,7 +162,7 @@ class PaymentResponseController extends Controller
 
 
         // Save the response
-        if ($payuResponse->save()) {
+        if ($payuResponse->save(false)) {
             Yii::info('PayU response saved successfully.', 'transaction');
             return true;
         } else {
