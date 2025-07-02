@@ -54,7 +54,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
-                    'payu-response' => ['post'],
+                    'payu-response' => ['post', 'get'],
                 ],
             ],
         ];
@@ -432,19 +432,22 @@ class SiteController extends Controller
 
     public function actionPayuResponse()
     {
-        $data = Yii::$app->request->post();
+        $data = Yii::$app->request->isPost ? Yii::$app->request->post() : Yii::$app->request->get();
 
         \Yii::info('PayU Response: ' . json_encode($data), 'payu');
 
-        if (isset($data['status']) && $data['status'] == 'success') {
+        if (isset($data['status']) && $data['status'] === 'success') {
             // Handle success response
-            // You can process the payment details here
             Yii::$app->session->setFlash('success', 'Payment successful!');
-        } else {
+        } elseif (isset($data['status']) && $data['status'] === 'failure') {
             // Handle failure response
             Yii::$app->session->setFlash('error', 'Payment failed or cancelled.');
+        } else {
+            // Handle unknown response
+            Yii::$app->session->setFlash('error', 'Invalid payment response received.');
         }
 
-        return $this->redirect(Yii::$app->params['partner_url'] . '/payu-response/' . $data['txnid']);
+        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu-response/' . ($data['txnid'] ?? ''));
+
     }
 }
