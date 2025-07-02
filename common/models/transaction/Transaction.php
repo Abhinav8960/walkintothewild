@@ -91,9 +91,9 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
-                'value' => function () {
-                    return $this->getActiveUserId();
-                },
+                // 'value' => function () {
+                //     return $this->getActiveUserId();
+                // },
             ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
