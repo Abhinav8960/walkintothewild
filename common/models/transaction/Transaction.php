@@ -64,6 +64,21 @@ use Yii;
 class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
+    public const STATUS_INITIATED = 0;
+    public const STATUS_SUCCESS = 1;
+    public const STATUS_FAILED = 2;
+    public const STATUS_HOLD = 3;
+    public const STATUS_REFUNDED = 4;
+    public const STATUS_CONFLICT = 5;
+
+
+    public const PAYMENT_GATEWAY_PAYU = 1;
+    public const PAYMENT_GATEWAY_ICICI = 2;
+    public const PAYMENT_GATEWAY_HDFC = 3;
+
+    public const PAYMENT_GATEWAY_PAYU_LABEL = "payu";
+    public const PAYMENT_GATEWAY_ICICI_LABEL = "icici";
+    public const PAYMENT_GATEWAY_HDFC_LABEL = "hdfc";
 
 
     /**
@@ -110,7 +125,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function rules()
     {
         return [
-            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
+            [['park_id', 'addional_notes', 'user_id', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
@@ -134,6 +149,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     {
         return [
             'id' => 'ID',
+            'user_id' => 'User ID',
             'reference_id' => 'Reference ID',
             'lead_partner_quotes_id' => 'Lead Partner Quotes ID',
             'lead_partner_quote_installments_id' => 'Lead Partner Quotes Lead Partner Quote Installments     ID',

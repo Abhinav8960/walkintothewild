@@ -28,3 +28,8 @@ ALTER TABLE `lead` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFT
 ALTER TABLE lead_partners ADD assign_by_admin_date_time INT NULL DEFAULT NULL AFTER is_assign_by_admin;
 ALTER TABLE `lead_partners` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `assign_by_admin_date_time`;
 ALTER TABLE `lead_partner_quotes` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `payment_gateway`;
+
+<!-- 01 july 2025 -->
+ALTER TABLE `transaction` CHANGE `installment` `installment` INT NOT NULL DEFAULT '1' COMMENT 'Installment_id';
+ALTER TABLE `transaction` ADD `user_id` INT NOT NULL AFTER `id`;
+ALTER TABLE `transaction` CHANGE `status` `status` INT NULL DEFAULT '1' COMMENT '0=>initiated,1=>Success,2=>Failed,3=>Hold,4=>Refunded';
