@@ -1149,7 +1149,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function sharesafarioptionswithdelete()
     {
-          $return = [
+        $return = [
             '3' => 'Live',
             '1' => 'Active',
             '0' => 'Inactive By User',
@@ -1889,5 +1889,76 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $user = User::find()->where(['id' => $id])->limit(1)->one();
         return $user->name . '(' . $user->email . ')';
+    }
+
+    public static function maskContactInfoInString(string $text): string
+    {
+
+        // --- 1. Mask Email Addresses ---
+        // Regex to find common email patterns.
+        // \b for word boundaries, [A-Za-z0-9._%+-]+ for username, @, [A-Za-z0-9.-]+ for domain, \.[A-Za-z]{2,} for TLD.
+        $text = preg_replace_callback(
+            '/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/',
+            function ($matches) {
+                $email = $matches[0];
+                // Basic validation to ensure it's a valid email before masking
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    return $email; // Return original if not a valid email format
+                }
+
+                $parts = explode('@', $email);
+                // Ensure there are exactly two parts (username and domain)
+                if (count($parts) !== 2) {
+                    return $email;
+                }
+
+                $username = $parts[0];
+                $domain = $parts[1];
+
+                // Mask username: first character + asterisks for the rest
+                $maskedUsername = substr($username, 0, 1) . str_repeat('*', strlen($username) - 1);
+
+                // Reconstruct the masked email address
+                return $maskedUsername . '@' . $domain;
+            },
+            $text
+        );
+
+        // --- 2. Mask Phone Numbers ---
+        // Regex to find common phone number patterns:
+        // - Optional country code (e.g., +1, +91)
+        // - Optional parentheses around area code
+        // - Digits separated by hyphens, spaces, or dots
+        // - Or just a sequence of 10 or more digits (for simpler cases)
+        // This regex is designed to be reasonably comprehensive without being overly complex.
+        $text = preg_replace_callback(
+            '/\b(?:\+\d{1,3}[-.\s]?)?(?:\(\d{2,4}\)|\d{2,4})[-.\s]?\d{2,4}[-.\s]?\d{4}\b|\b\d{10,}\b/',
+            function ($matches) {
+                $phoneNumber = $matches[0];
+
+                // Remove all non-digit characters to get a clean number
+                $digitsOnly = preg_replace('/\D/', '', $phoneNumber);
+
+                // Check if the phone number has at least 5 digits to mask properly.
+                // If it's too short, return the original matched string.
+                if (strlen($digitsOnly) < 5) {
+                    return $phoneNumber;
+                }
+
+                // Extract the first three and last two digits
+                $firstThree = substr($digitsOnly, 0, 3);
+                $lastTwo = substr($digitsOnly, -2);
+
+                // Calculate the number of asterisks needed for the masked part
+                $maskedPartLength = strlen($digitsOnly) - 5;
+                $maskedPart = str_repeat('*', $maskedPartLength > 0 ? $maskedPartLength : 0); // Ensure non-negative length
+
+                // Reconstruct the masked phone number
+                return $firstThree . $maskedPart . $lastTwo;
+            },
+            $text
+        );
+
+        return $text;
     }
 }

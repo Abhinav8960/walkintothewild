@@ -148,7 +148,7 @@ class DefaultController extends RestController
         // ]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => ChatMessage::find()->where(['chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
+            'query' => ChatMessage::find()->where(['status' => 1, 'chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
             // 'query' => ChatMessage::find()->where(['chat_id' => $chat->id])->orderBy(['created_at' => SORT_ASC]),
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             // 'pagination' => [
