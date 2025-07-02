@@ -386,4 +386,16 @@ class DefaultController extends Controller
             return $this->redirect(['update', 'id' => $model->id]);
         }
     }
+
+    public function actionFileView($path)
+    {
+        $path = Yii::$app->request->get('path');
+        $decodedPath = urldecode($path);
+        $urlParts = parse_url($decodedPath);
+        $relativePath = $urlParts['path'] ?? '';
+        $fileUrl = 'http://business.walkintothewild.io' . $relativePath;
+        Yii::$app->response->headers->set('Content-Disposition', 'inline; filename= $fileurl');
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        return $this->renderAjax('_file_view', ['path' => $path]);
+    }
 }
