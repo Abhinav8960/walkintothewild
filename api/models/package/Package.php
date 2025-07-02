@@ -142,7 +142,7 @@ class Package extends \common\models\package\Package
 
     public function getMaster_package_with_included()
     {
-
+    
         $arr = [
             1 => [
                 'id' => 1,
@@ -170,17 +170,21 @@ class Package extends \common\models\package\Package
                 'option' => 'Optional',
             ],
         ];
-        $i = 0;
+
         if ($this->packageincluded) {
-            foreach ($this->packageincluded as $key => $mgi) {
+            foreach ($this->packageincluded as $mgi) {
                 if (isset($mgi->package_include)) {
-                    $arr[$mgi->package_include->id]['id'] = $mgi->package_include->id;
-                    $arr[$mgi->package_include->id]['title'] = $mgi->package_include->title;
-                    $arr[$mgi->package_include->id]['option'] = $mgi->getInclude_option();
+                    $id = $mgi->package_include->id;
+                    $arr[$id] = [
+                        'id' => $id,
+                        'title' => $mgi->package_include->title,
+                        'option' => $mgi->getInclude_option(),
+                    ];
                 }
             }
         }
-        return $arr;
+
+        return array_values($arr);
     }
 
     // public function getLivePackage()
