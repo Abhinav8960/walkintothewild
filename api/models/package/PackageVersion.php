@@ -174,19 +174,51 @@ class PackageVersion extends \common\models\package\PackageVersion
 
     public function getMaster_package_with_included()
     {
+    
+        $arr = [
+            1 => [
+                'id' => 1,
+                'title' => 'Accommodation',
+                'option' => 'Optional',
+            ],
+            3 => [
+                'id' => 3,
+                'title' => 'Pick & Drop',
+                'option' => 'Optional',
+            ],
+            4 => [
+                'id' => 4,
+                'title' => 'Camera Fee',
+                'option' => 'Optional',
+            ],
+            5 => [
+                'id' => 5,
+                'title' => 'Permit',
+                'option' => 'Optional',
+            ],
+            6 => [
+                'id' => 6,
+                'title' => 'Guide Fee',
+                'option' => 'Optional',
+            ],
+        ];
 
-        $arr = [];
-        $i = 0;
-        foreach ($this->packageincluded as $key => $mgi) {
-            if (isset($mgi->package_include)) {
-                $arr[$i]['id'] = $mgi->package_include->id;
-                $arr[$i]['title'] = $mgi->package_include->title;
-                $arr[$i]['option'] = $mgi->getInclude_option();
-                $i++;
+        if ($this->packageincluded) {
+            foreach ($this->packageincluded as $mgi) {
+                if (isset($mgi->package_include)) {
+                    $id = $mgi->package_include->id;
+                    $arr[$id] = [
+                        'id' => $id,
+                        'title' => $mgi->package_include->title,
+                        'option' => $mgi->getInclude_option(),
+                    ];
+                }
             }
         }
-        return $arr;
+
+        return array_values($arr);
     }
+
 
 
 
@@ -250,7 +282,8 @@ class PackageVersion extends \common\models\package\PackageVersion
     {
         $image_path = '';
         if (isset($this->package_image)) {
-            $image_path = \Yii::$app->params['s3_endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
+            // $image_path = \Yii::$app->params['s3_endpoint'] . '/package/' . $this->id . '/' . $this->package_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_image;
         } else {
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
@@ -271,7 +304,8 @@ class PackageVersion extends \common\models\package\PackageVersion
     {
         $image_path = '';
         if (isset($this->package_banner_image)) {
-            $image_path = \Yii::$app->params['s3_endpoint'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
+            // $image_path = \Yii::$app->params['s3_endpoint'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
+            $image_path = \Yii::$app->params['s3_endpoint'] . '/' . $this->package_banner_image;
         } else {
             if (isset($this->singlepark)) {
                 if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {

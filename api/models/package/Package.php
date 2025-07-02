@@ -143,14 +143,41 @@ class Package extends \common\models\package\Package
     public function getMaster_package_with_included()
     {
 
-        $arr = [];
+        $arr = [
+            1 => [
+                'id' => 1,
+                'title' => 'Accommodation',
+                'option' => 'Optional',
+            ],
+            3 => [
+                'id' => 3,
+                'title' => 'Pick & Drop',
+                'option' => 'Optional',
+            ],
+            4 => [
+                'id' => 4,
+                'title' => 'Camera Fee',
+                'option' => 'Optional',
+            ],
+            5 => [
+                'id' => 5,
+                'title' => 'Permit',
+                'option' => 'Optional',
+            ],
+            6 => [
+                'id' => 6,
+                'title' => 'Guide Fee',
+                'option' => 'Optional',
+            ],
+        ];
         $i = 0;
-        foreach ($this->packageincluded as $key => $mgi) {
-            if (isset($mgi->package_include)) {
-                $arr[$i]['id'] = $mgi->package_include->id;
-                $arr[$i]['title'] = $mgi->package_include->title;
-                $arr[$i]['option'] = $mgi->getInclude_option();
-                $i++;
+        if ($this->packageincluded) {
+            foreach ($this->packageincluded as $key => $mgi) {
+                if (isset($mgi->package_include)) {
+                    $arr[$mgi->package_include->id]['id'] = $mgi->package_include->id;
+                    $arr[$mgi->package_include->id]['title'] = $mgi->package_include->title;
+                    $arr[$mgi->package_include->id]['option'] = $mgi->getInclude_option();
+                }
             }
         }
         return $arr;
