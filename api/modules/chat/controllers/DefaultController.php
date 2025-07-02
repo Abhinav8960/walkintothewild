@@ -596,7 +596,7 @@ class DefaultController extends RestController
         // $previous_message = $chat_message->message;
 
         $chat_message->message = $message;
-        $chat_message->is_edited = true;
+        $chat_message->is_edited = 1; // Mark the message as edited
         if ($chat_message->save()) {
             // Check if the chat message is the last message of the chat
             $chat = Chat::find()->where(['id' => $chat_message->chat_id])->one();

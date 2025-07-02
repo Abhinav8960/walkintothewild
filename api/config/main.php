@@ -228,8 +228,7 @@ return [
 
                 'notification-history' => 'notification-history',
                 'transaction/initiate/<lead_partner_quotes_id>/<payment_gateway>' => 'transaction/default/initiate',
-
-
+                'transaction/payu/verify' => 'transaction/payment-response/payu-verify',
 
             ],
 

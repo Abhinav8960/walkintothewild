@@ -15,19 +15,7 @@ use yii;
  */
 class DefaultController extends RestController
 {
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    // public function actionIndex()
-    // {
-    //     $searchModel = new TransactionSearch();
-    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-    //     return $this->render('index', [
-    //         'searchModel' => $searchModel,
-    //         'dataProvider' => $dataProvider,
-    //     ]);
-    // }
+
 
     public function actionInitiate($lead_partner_quotes_id, $payment_gateway)
     {
@@ -85,7 +73,7 @@ class DefaultController extends RestController
 
         // Prepare data for PayU
         $data = [];
-        $data['payu'] = [
+        $store = $data['payu'] = [
             'key' => $merchantKey,
             'txnid' => $orderId,
             'amount' => $amount,
@@ -102,30 +90,14 @@ class DefaultController extends RestController
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
-
+        // store the transaction in the database
+        $this->storePayu($lead_partner_quotes_id,  $store);
         return Yii::$app->api->sendResponse($data);
-
-        // // Log the payment data for debugging purposes
-        // Yii::info('PayU Payment Data: ' . json_encode($data), 'transaction');
-
-        // // Build the HTML form for POST request
-        // $formHtml = '<form id="payuForm" action="' . $payuBaseUrl . '/_payment" method="POST">';
-        // foreach ($data as $key => $value) {
-        //     $formHtml .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '">';
-        // }
-        // $formHtml .= '</form>';
-        // $formHtml .= '<script>document.getElementById("payuForm").submit();</script>';
-
-
-        // // Output the form to the browser
-        // return $formHtml;
     }
 
     private function generatePayuHash($data, $salt)
     {
-        // Define the order of fields for the hash string
-        // $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone', 'surl', 'furl', 'udf1', 'udf2'];
-        // $fieldsOrder = ['key', 'txnid', 'amount', 'productinfo', 'firstname', 'email', 'phone',  'udf1', 'udf2', 'udf3', 'udf4', 'udf5', 'udf6', 'udf7', 'udf8', 'udf9', 'udf10'];
+
         $hashPattern = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
         $fieldsOrder = explode('|', $hashPattern);
         // Initialize the hash string
@@ -202,6 +174,8 @@ class DefaultController extends RestController
                 'access_code' => $accessCode,
                 'payment_url' => $paymentUrl,
             ];
+            // store the transaction in the database
+            $this->store($payment_gateway = LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI, $lead_partner_quotes_id, $data);
             return Yii::$app->api->sendResponse($output);
 
             // return $this->redirect($paymentUrl);
@@ -240,5 +214,80 @@ class DefaultController extends RestController
         }
 
         return $encryptedData;
+    }
+
+    private function storePayu($lead_partner_quotes_id, $data = [])
+    {
+
+
+        // db transaction begin
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $model = $this->findModel($lead_partner_quotes_id);
+            // Store the transaction in the database
+            $t = new Transaction();
+            $t->user_id = $this->userinfoId;
+            $t->lead_partner_quotes_id = $model->id;
+
+            $t->lead_partner_quote_installments_id = $model->installmentDue->id ?? null;
+            $t->safaris = $model->safaris;
+            $t->travelers = $model->travelers;
+            $t->stay_category_id = $model->stay_category_id;
+            $t->billing_name = $model->name;
+
+            $t->lead_partner_id = $model->lead_partner_id;
+            $t->lead_id = $model->lead_id;
+            $t->partner_id = $model->partner_id;
+            $t->park_id = $model->park_id;
+            $t->order_id = $data['txnid'];
+            $t->reference_id = $data['udf1'];
+            $t->currency = 'INR'; // Assuming INR
+            $t->received_amount = $data['amount'];
+            $t->payment_gateway = Transaction::PAYMENT_GATEWAY_PAYU;
+            $t->name = $model->name;
+            $t->email = $model->email;
+            $t->phone = $model->phone;
+            $t->start_date = $model->start_date;
+            $t->end_date = $model->end_date;
+            $t->validity_date = $model->validity_date;
+            $t->permit_booking_date = $model->permit_booking_date;
+            $t->partner_selling_price = $model->partner_selling_price;
+            $t->plateform_partner_fees_percentage = $model->plateform_partner_fees_percentage;
+            $t->plateform_partner_fees = $model->plateform_partner_fees;
+            $t->partner_net_selling_price = $model->partner_net_selling_price;
+            $t->plateform_customer_discount = $model->plateform_customer_discount;
+            $t->net_payment_price = $model->net_payment_price;
+            $t->installment = $model->installment->id ?? 0;
+            $t->addional_notes = $model->addional_notes;
+            $t->addtional_data = json_encode($data);
+            // $t->billing_name = $model->name;
+            // $t->billing_address = $model->billing_address;
+            // $t->billing_city = $model->billing_city;
+            // $t->billing_state = $model->billing_state;
+            // $t->billing_zip = $model->billing_zip;
+            // $t->billing_country = $model->billing_country;
+            // $t->billing_tel = $model->phone;
+            // $t->billing_email = $model->email;
+            $t->param1 = $data['udf1'];
+            $t->param2 = $data['udf2'];
+            // $t->param3 = $model->id;
+            // $t->param4 = $model->installment->id ?? null;
+            // $t->param5 = $model->installment->installment ?? 0;
+            $t->status = Transaction::STATUS_INITIATED;
+            $t->created_at = time();
+            $t->updated_at = time();
+            $t->created_by = $this->userinfoId;
+            $t->updated_by = $this->userinfoId;
+            if (!$t->save()) {
+                Yii::error('Transaction save failed: ' . json_encode($transaction->getErrors()), 'transaction');
+                $transaction->rollBack();
+                return false;
+            }
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return false;
+        }
     }
 }

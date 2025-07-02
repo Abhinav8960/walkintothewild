@@ -365,6 +365,14 @@ class DefaultController extends Controller
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {
                 $safari_operator = $this->makeoperator($model);
+                if (!empty($safari_operator->logo)) {
+                    $sourcePath = $safari_operator->logo;
+                    $destinationPath = $safari_operator->logo;
+                    if (Yii::$app->rfs->has($sourcePath)) {
+                        $fileContent = Yii::$app->rfs->read($sourcePath);
+                        Yii::$app->fs->write($destinationPath, $fileContent);
+                    }
+                }
                 $this->approvedparks($model, $safari_operator);
                 $model_user = User::findOne(['id' => $model->user_id]);
                 $model_user->is_safari_operator = 1;
