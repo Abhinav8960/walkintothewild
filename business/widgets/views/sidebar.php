@@ -55,44 +55,53 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> My Packages</span>
             </a>
         </li>
-        <?php if (false) { ?>
 
-            <!-- <li class="navItems mb-2">
+
+        <!-- <li class="navItems mb-2">
             <a href="" class="navLinks  d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> My Fixed Departures</span>
             </a>
         </li> -->
-            <li class="navItems mb-2">
-                <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
-                                                                    "/sightings/default/index",
-                                                                    "/sightings/default/create",
-                                                                )) ? "active" : "" ?>" href="/sightings/default/index">
-                    <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
-                    <span class="hide-slide-menu"> Sightings</span>
-                </a>
-            </li>
-            <li class="navItems mb-2">
-                <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                    "/posts/default/index",
-                                                                    "/posts/default/create",
+        <li class="navItems mb-2">
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/sightings/default/index",
+                                                                "/sightings/default/create",
+                                                            )) ? "active" : "" ?>" href="/sightings/default/index">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/sightings/default/index",
+                                                                                                    "/sightings/default/create",
+                                                                                                )) ? 'Sighting_active.svg' : 'Sighting.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Sightings</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/posts/default/index",
+                                                                "/posts/default/create",
 
-                                                                )) ? "active" : "" ?>" href="/posts/default/index">
-                    <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
-                    <span class="hide-slide-menu"> Posts</span>
-                </a>
-            </li>
-            <li class="navItems mb-2">
-                <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                    "/gallery/default/index",
-                                                                    "/gallery/default/create",
+                                                            )) ? "active" : "" ?>" href="/posts/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/posts/default/index",
+                                                                                                    "/posts/default/create",
+                                                                                                )) ? 'Post_active.svg' : 'Post.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Posts</span>
+            </a>
+        </li>
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/gallery/default/index",
+                                                                "/gallery/default/create",
 
-                                                                )) ? "active" : "" ?>" href="/gallery/default/index">
-                    <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
-                    <span class="hide-slide-menu"> Gallery</span>
-                </a>
-            </li>
-            <!-- <li class="navItems mb-2">
+                                                            )) ? "active" : "" ?>" href="/gallery/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/gallery/default/index",
+                                                                                                    "/gallery/default/create",
+                                                                                                )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Gallery</span>
+            </a>
+        </li>
+        <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
                 <span class="hide-slide-menu"> Reports</span>
@@ -104,12 +113,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Settings</span>
             </a>
         </li> -->
-        <?php } ?>
-            <li class="navItems navitemLogout mb-2 ms-0">
-                <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
-                    <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
-                    <span class="hide-slide-menu"> Logout</span>
-                </a>
-            </li>
+
+        <li class="navItems navitemLogout mb-2 ms-0">
+            <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
+                <span class="hide-slide-menu"> Logout</span>
+            </a>
+        </li>
     </ul>
 </nav>
