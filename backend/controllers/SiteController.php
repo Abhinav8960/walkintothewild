@@ -41,7 +41,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url', 'payu-response'],
+                        'actions' => ['login', 'error', 'auth', 'redirect', 'redirect-url'],
                         'allow' => true,
                     ],
                     [
@@ -55,12 +55,13 @@ class SiteController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
-                    'payu-response' => ['post'],
+                    'payu-response' => ['post', 'get'],
                 ],
             ],
         ];
     }
 
+  
     /**
      * {@inheritdoc}
      */
