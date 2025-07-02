@@ -232,7 +232,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         $booking->currency = $this->currency;
         $booking->reference_id = $this->reference_id; // use the same
         $booking->lead_partner_quotes_id = $this->lead_partner_quotes_id;
-        $booking->lead_partner_quote_installments_id = $this->lead_partner_quote_installments_id;
+        // $booking->lead_partner_quote_installments_id = $this->lead_partner_quote_installments_id;
         $booking->lead_partner_id = $this->lead_partner_id;
         $booking->lead_id = $this->lead_id;
         $booking->partner_id = $this->partner_id;
