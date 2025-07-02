@@ -13,7 +13,9 @@ AppAsset::register($this);
 
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn btn-orange', 'title' => 'Mark as Popular']);
+if ($package->popular_package != 1) {
+    $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn btn-orange', 'title' => 'Mark as Popular']);
+}
 
 ?>
 
