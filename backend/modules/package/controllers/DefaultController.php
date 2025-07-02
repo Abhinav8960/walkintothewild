@@ -42,7 +42,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    
+
     public function actionActive($id)
     {
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
