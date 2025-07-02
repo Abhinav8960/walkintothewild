@@ -365,6 +365,14 @@ class DefaultController extends Controller
             $model->updated_time_final_approved = date('Y-m-d H:i:s');
             if ($model->save(false)) {
                 $safari_operator = $this->makeoperator($model);
+                if (!empty($safari_operator->logo)) {
+                    $sourcePath = $safari_operator->logo;
+                    $destinationPath = $safari_operator->logo;
+                    if (Yii::$app->rfs->has($sourcePath)) {
+                        $fileContent = Yii::$app->rfs->read($sourcePath);
+                        Yii::$app->fs->write($destinationPath, $fileContent);
+                    }
+                }
                 $this->approvedparks($model, $safari_operator);
                 $model_user = User::findOne(['id' => $model->user_id]);
                 $model_user->is_safari_operator = 1;
@@ -377,5 +385,17 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Reject Finally');
             return $this->redirect(['update', 'id' => $model->id]);
         }
+    }
+
+    public function actionFileView($path)
+    {
+        $path = Yii::$app->request->get('path');
+        $decodedPath = urldecode($path);
+        $urlParts = parse_url($decodedPath);
+        $relativePath = $urlParts['path'] ?? '';
+        $fileUrl = 'http://business.walkintothewild.io' . $relativePath;
+        Yii::$app->response->headers->set('Content-Disposition', 'inline; filename= $fileurl');
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        return $this->renderAjax('_file_view', ['path' => $path]);
     }
 }
