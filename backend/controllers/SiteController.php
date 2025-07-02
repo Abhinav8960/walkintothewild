@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use api\components\Api;
 use api\components\MessageManager;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
@@ -44,7 +45,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'auth','clear-cache'],
+                        'actions' => ['logout', 'index', 'auth', 'clear-cache'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -446,5 +447,30 @@ class SiteController extends Controller
         }
 
         return $this->redirect(Yii::$app->params['partner_url'] . '/payu-response/' . $data['txnid']);
+    }
+    // public function actionClearCache()
+    // {
+    //     MessageManager::clearAllCache();
+    //     Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+    //     return $this->redirect(['index']);
+    // }
+
+    public function actionClearCache()
+    {
+        $cachePaths = [
+            '@api/runtime/message-cache',
+            // '@business/runtime/cache',
+            // '@backend/runtime/cache',
+        ];
+        foreach ($cachePaths as $path) {
+            $cache = new \yii\caching\FileCache([
+                'cachePath' => Yii::getAlias($path),
+            ]);
+            $manager = new \api\components\MessageManager();
+            $manager->clearCache($cache);
+        }
+
+        Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+        return $this->redirect(['index']);
     }
 }

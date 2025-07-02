@@ -22,9 +22,8 @@ class MessageManager extends Component
     protected function loadMessages()
     {
 
-        $cache = Yii::$app->cache;
+        $cache = \Yii::$app->messageCacheApi;
 
-        // Try to get messages from cache
         $messages = $cache->get($this->cacheKey);
 
         if ($messages === false) {
@@ -57,33 +56,46 @@ class MessageManager extends Component
             Yii::warning("getMessage() called with invalid or empty key: " . print_r($key, true), __METHOD__);
             return $default === null ? '' : $default;
         }
-    
+
         $parts = explode('.', $key);
         $currentLevel = $this->_messages;
-    
+
         foreach ($parts as $index => $part) {
             if (!is_array($currentLevel) || !isset($currentLevel[$part])) {
                 return $default === null ? '' : $default;
             }
             $currentLevel = $currentLevel[$part];
         }
-    
+
         if (!is_string($currentLevel)) {
             return $default === null ? '' : $default;
         }
-    
+
         $message = $currentLevel;
         $message = strtr($message, $params);
         $message = preg_replace('/\{[^\}]+\}/', '', $message);
         return trim($message);
     }
-    
+
     /**
      * Clears the cached messages. Useful when you update the messages.php file.
      */
-    public function clearCache()
+    // public function clearCache()
+    // {
+    //     \Yii::$app->cache->delete($this->cacheKey);
+    //     return true;
+    // }
+
+    // public static function clearAllCache()
+    // {
+    //     $manager = new self();
+    //     return $manager->clearCache();
+    // }
+
+    public function clearCache($cache = null)
     {
-        \Yii::$app->cache->delete($this->cacheKey);
+        $cache = $cache ?: \Yii::$app->messageCacheApi;
+        $cache->delete($this->cacheKey);
         return true;
     }
 }
