@@ -436,7 +436,7 @@ class SiteController extends Controller
     public function actionClearCache()
     {
         $cachePaths = [
-            '@api/runtime/cache',
+            '@api/runtime/message-cache',
             // '@business/runtime/cache',
             // '@backend/runtime/cache',
         ];

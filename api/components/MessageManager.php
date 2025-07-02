@@ -22,9 +22,8 @@ class MessageManager extends Component
     protected function loadMessages()
     {
 
-        $cache = Yii::$app->cache;
+        $cache = \Yii::$app->messageCacheApi;
 
-        // Try to get messages from cache
         $messages = $cache->get($this->cacheKey);
 
         if ($messages === false) {
@@ -95,7 +94,7 @@ class MessageManager extends Component
 
     public function clearCache($cache = null)
     {
-        $cache = $cache ?: \Yii::$app->cache;
+        $cache = $cache ?: \Yii::$app->messageCacheApi;
         $cache->delete($this->cacheKey);
         return true;
     }

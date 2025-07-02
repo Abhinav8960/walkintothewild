@@ -92,5 +92,10 @@ return [
                 'cacheDuration' => 3600,
             ],
         ],
+        'messageCacheApi' => [
+            'class' => 'yii\caching\FileCache',
+            'cachePath' => '@api/runtime/message-cache',
+        ],
+        
     ],
 ];
