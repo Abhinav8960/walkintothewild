@@ -41,6 +41,9 @@ class DefaultController extends RestController
             // Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote not found."]);
         }
+        if ($model->is_payment_received == 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment already received for this"]);
+        }
         if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
             Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
@@ -381,7 +384,7 @@ class DefaultController extends RestController
         if (!$model) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Transaction not found."]);
         }
-        
+
         $data['transaction'] = [
             'id' => $model->id,
             'reference_id' => $model->reference_id,
