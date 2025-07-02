@@ -218,8 +218,8 @@ class DefaultController extends RestController
 
     private function storePayu($lead_partner_quotes_id, $data = [])
     {
-        
-       
+
+
         // db transaction begin
         $transaction = Yii::$app->db->beginTransaction();
         try {
