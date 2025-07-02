@@ -373,4 +373,56 @@ class DefaultController extends RestController
             return false;
         }
     }
+
+
+    public function actionTransactionInfo($reference)
+    {
+        $model = Transaction::find()->andWhere(['reference_id' => $reference])->one();
+        if (!$model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Transaction not found."]);
+        }
+        
+        $data['transaction'] = [
+            'id' => $model->id,
+            'reference_id' => $model->reference_id,
+            'order_id' => $model->order_id,
+            'status' => $model->status,
+            'amount' => $model->received_amount,
+            'currency' => $model->currency,
+            'payment_gateway' => $model->payment_gateway == Transaction::PAYMENT_GATEWAY_PAYU ? 'PayU' : ($model->payment_gateway == Transaction::PAYMENT_GATEWAY_ICICI ? 'ICICI' : 'HDFC'),
+            'safaris' => $model->safaris,
+            'travelers' => $model->travelers,
+            'name' => $model->name,
+            'email' => $model->email,
+            'phone' => $model->phone,
+            'start_date' => $model->start_date,
+            'end_date' => $model->end_date,
+            'status' => $model->status,
+            'status_label' => $model->status == Transaction::STATUS_INITIATED ? 'Initiated' : ($model->status == Transaction::STATUS_SUCCESS ? 'Success' : ($model->status == Transaction::STATUS_FAILED ? 'Failed' : ($model->status == Transaction::STATUS_HOLD ? 'Hold' : ($model->status == Transaction::STATUS_REFUNDED ? 'Refunded' : 'Conflict')))),
+            // 'lead_partner_quotes_id' => $model->lead_partner_quotes_id,
+            // 'lead_partner_quote_installments_id' => $model->lead_partner_quote_installments_id,
+            // 'lead_partner_id' => $model->lead_partner_id,
+            // 'lead_id' => $model->lead_id,
+            // 'partner_id' => $model->partner_id,
+            // 'park_id' => $model->park_id,
+            // 'billing_name' => $model->billing_name,
+            // 'billing_address' => $model->billing_address,
+            // 'billing_city' => $model->billing_city,
+            // 'billing_state' => $model->billing_state,
+            // 'billing_zip' => $model->billing_zip,
+            // 'billing_country' => $model->billing_country,
+            // 'billing_tel' => $model->billing_tel,
+            // 'billing_email' => $model->billing_email,
+            // 'param1' => $model->param1,
+            // 'param2' => $model->param2,
+            // 'param3' => $model->param3,
+            // 'param4' => $model->param4,
+            // 'param5' => $model->param5,
+
+            'created_at' => date('Y-m-d H:i:s', $model->created_at),
+            // 'updated_at' => date('Y-m-d H:i:s', $model->updated_at),
+            // Add other fields as necessary
+        ];
+        return Yii::$app->api->sendResponse($data);
+    }
 }
