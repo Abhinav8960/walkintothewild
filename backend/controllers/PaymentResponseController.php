@@ -63,17 +63,23 @@ class PaymentResponseController extends Controller
         if ($is_verify) {
             Yii::info('Payment verified successfully.', 'transaction');
             $this->transactionupdate();
+            // if ($data['status'] == 'success') {
+            //     return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/success/' . ($data['udf1'] ?? ''));
+            // } elseif ($data['status'] == 'failure') {
+            //     return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/cancel/' . ($data['udf1'] ?? ''));
+            // } elseif ($data['status'] == 'pending') {
+            //     return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/pending/' . ($data['udf1'] ?? ''));
+            // }
+            // return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['udf1'] ?? ''));
+
             if ($data['status'] == 'success') {
                 return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/success/' . ($data['udf1'] ?? ''));
-            } elseif ($data['status'] == 'failure') {
-                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/cancel/' . ($data['udf1'] ?? ''));
-            } elseif ($data['status'] == 'pending') {
-                return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/pending/' . ($data['udf1'] ?? ''));
             }
-            return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['udf1'] ?? ''));
+            return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/failed/' . ($data['udf1'] ?? ''));
         }
 
-        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/error/' . ($data['udf1'] ?? '') . '?error=Payment verification failed. Please try again.');
+
+        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/failed/' . ($data['udf1'] ?? '') . '?error=Payment verification failed. Please try again.');
     }
 
     private function transactionupdate()
