@@ -1896,13 +1896,26 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $key = Yii::$app->params['encryption_key'];
         $cipher = "aes-256-cbc";
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher)); // Generate a 16-byte IV
+
+        // Ensure the encryption key is valid
+        if (empty($key) || strlen($key) !== 32) {
+            throw new Exception("Invalid encryption key. Ensure it is 32 characters long.");
+        }
+
+        // Hardcoded IV (must be 16 bytes for aes-256-cbc)
+        $iv = '1234567890123456'; // Example IV (16 characters)
+
+        // Encrypt the data
         $encrypted_data = openssl_encrypt($data, $cipher, $key, 0, $iv);
+
+        if ($encrypted_data === false) {
+            throw new Exception("Encryption failed.");
+        }
 
         // Encode the encrypted data and IV separately
         $encrypted_string = base64_encode($encrypted_data) . '::' . base64_encode($iv);
 
-        // Replace '/' with '_' in the final encrypted string
+        // Replace '/' with '_' in the final encrypted string for safe transmission
         $encrypted_string = str_replace('/', '_', $encrypted_string);
 
         return $encrypted_string;
@@ -1916,6 +1929,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         // Replace '_' back to '/' before decoding
         $data = str_replace('_', '/', $data);
 
+        // Validate the format of $data
+        if (strpos($data, '::') === false) {
+            Yii::error("Decrypt method received invalid data format: " . print_r($data, true), __METHOD__);
+            throw new Exception("Invalid encrypted data format. Expected '::' delimiter.");
+        }
+
         // Split the encrypted data and IV
         list($encrypted_data, $encoded_iv) = explode('::', $data, 2);
 
@@ -1923,12 +1942,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $encrypted_data = base64_decode($encrypted_data);
         $iv = base64_decode($encoded_iv);
 
-        // Ensure the IV is exactly the correct length
-        if (strlen($iv) !== openssl_cipher_iv_length($cipher)) {
-            throw new Exception("Invalid IV length");
+        // Ensure the IV matches the hardcoded value
+        $hardcoded_iv = '1234567890123456'; // Same as in the encrypt method
+        if ($iv !== $hardcoded_iv) {
+            throw new Exception("Invalid IV value.");
         }
 
         // Decrypt the data
-        return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
+        $decrypted_data = openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
+        if ($decrypted_data === false) {
+            Yii::error("Decryption failed for data: " . print_r($data, true), __METHOD__);
+            throw new Exception("Decryption failed");
+        }
+
+        return $decrypted_data;
     }
 }
