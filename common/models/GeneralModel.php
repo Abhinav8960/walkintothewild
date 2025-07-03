@@ -1149,7 +1149,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function sharesafarioptionswithdelete()
     {
-          $return = [
+        $return = [
             '3' => 'Live',
             '1' => 'Active',
             '0' => 'Inactive By User',
@@ -1889,5 +1889,162 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $user = User::find()->where(['id' => $id])->limit(1)->one();
         return $user->name . '(' . $user->email . ')';
+    }
+
+    public static function maskContactInfoInString(string $text): string
+    {
+
+        // Define a mapping for number words to digits
+        $numberWordMap = [
+            'zero'  => '0',
+            'one'   => '1',
+            'two'   => '2',
+            'three' => '3',
+            'four'  => '4',
+            'five'  => '5',
+            'six'   => '6',
+            'seven' => '7',
+            'eight' => '8',
+            'nine'  => '9'
+        ];
+
+        // Create a regex pattern for number words (case-insensitive)
+        $numberWordPattern = implode('|', array_keys($numberWordMap));
+
+        // --- 1. Mask Natural Language Email Addresses ---
+        // Regex to find patterns like "username at domain dot com"
+        // It captures the parts to reconstruct the email.
+        $text = preg_replace_callback(
+            '/\b([A-Za-z0-9._%+-]+)\s+at\s+([A-Za-z0-9.-]+)\s+dot\s+([A-Za-z]{2,})\b/i', // 'i' for case-insensitive
+            function ($matches) {
+                // Reconstruct the email in a standard format
+                $email = $matches[1] . '@' . $matches[2] . '.' . $matches[3];
+
+                // Basic validation to ensure it's a valid email before masking
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    // If the reconstructed email is not valid, return the original matched string
+                    return $matches[0];
+                }
+
+                $parts = explode('@', $email);
+                $username = $parts[0];
+                $domain = $parts[1];
+
+                // Mask username: first character + 'X' for the rest
+                $maskedUsername = substr($username, 0, 1) . str_repeat('X', strlen($username) - 1);
+
+                // Reconstruct the masked email address
+                return $maskedUsername . '@' . $domain;
+            },
+            $text
+        );
+
+
+        // --- 2. Mask Standard Email Addresses ---
+        // Regex to find common email patterns.
+        // \b for word boundaries, [A-Za-z0-9._%+-]+ for username, @, [A-Za-z0-9.-]+ for domain, \.[A-Za-z]{2,} for TLD.
+        $text = preg_replace_callback(
+            '/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/',
+            function ($matches) {
+                $email = $matches[0];
+                // Basic validation to ensure it's a valid email before masking
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    return $email; // Return original if not a valid email format
+                }
+
+                $parts = explode('@', $email);
+                // Ensure there are exactly two parts (username and domain)
+                if (count($parts) !== 2) {
+                    return $email;
+                }
+
+                $username = $parts[0];
+                $domain = $parts[1];
+
+                // Mask username: first character + 'X' for the rest
+                $maskedUsername = substr($username, 0, 1) . str_repeat('X', strlen($username) - 1);
+
+                // Reconstruct the masked email address
+                return $maskedUsername . '@' . $domain;
+            },
+            $text
+        );
+
+        // --- 3. Mask Phone Numbers (Word-based and Mixed) ---
+        // This regex looks for sequences of number words or digits, potentially separated by spaces.
+        // It's designed to capture patterns like "nine eight three", "nine 8 seven", "123 four five six".
+        // The callback will then extract only the numerical digits before masking.
+        $text = preg_replace_callback(
+            '/\b(?:' . $numberWordPattern . '|\d+)(?:\s*(?:' . $numberWordPattern . '|\d+))*\b/i',
+            function ($matches) use ($numberWordMap) {
+                $matchedString = $matches[0];
+                $digitsOnly = '';
+
+                // Split the matched string into individual words/numbers
+                $parts = preg_split('/\s+/', $matchedString);
+
+                foreach ($parts as $part) {
+                    // Check if the part is a number word
+                    $lowerPart = strtolower($part);
+                    if (isset($numberWordMap[$lowerPart])) {
+                        $digitsOnly .= $numberWordMap[$lowerPart];
+                    } elseif (is_numeric($part)) {
+                        // If it's a numeric digit string
+                        $digitsOnly .= $part;
+                    }
+                    // Ignore other non-numeric words or symbols for phone number construction
+                }
+
+                // Only proceed with masking if we extracted a reasonable number of digits
+                // A typical phone number has at least 7 digits (e.g., local number) up to 15 (international)
+                if (strlen($digitsOnly) < 7 || strlen($digitsOnly) > 15) {
+                    return $matchedString; // Return original if not enough digits for a phone number
+                }
+
+                // Apply the same masking logic as for standard phone numbers
+                $unmaskedLength = max(0, strlen($digitsOnly) - 8);
+                $unmaskedPart = substr($digitsOnly, 0, $unmaskedLength);
+                $maskedPartLength = strlen($digitsOnly) - $unmaskedLength;
+                $maskedPart = str_repeat('X', $maskedPartLength);
+
+                return $unmaskedPart . $maskedPart;
+            },
+            $text
+        );
+
+        // --- 4. Mask Phone Numbers (Standard Digit-based) ---
+        // This step remains to catch any digit-based phone numbers that might not
+        // have been caught by the more specific word-based regex (e.g., due to different spacing or formats).
+        // It's important to run this *after* the word-based one to prioritize word conversion.
+        $text = preg_replace_callback(
+            '/\b(?:\+?\d{1,4}[-.\s]*)?(?:\(\d{2,5}\)|\d{2,5})[-.\s]*\d{2,5}[-.\s]*\d{4,}\b|\b\d[\d\s\-\(\).]{7,}\d\b/',
+            function ($matches) {
+                $phoneNumber = $matches[0];
+
+                // Remove all non-digit characters to get a clean number
+                $digitsOnly = preg_replace('/\D/', '', $phoneNumber);
+
+                // If no digits are found or the number is empty, return original
+                if (strlen($digitsOnly) === 0) {
+                    return $phoneNumber;
+                }
+
+                // Determine how many initial digits to keep unmasked
+                $unmaskedLength = max(0, strlen($digitsOnly) - 8);
+
+                // Extract the unmasked part
+                $unmaskedPart = substr($digitsOnly, 0, $unmaskedLength);
+
+                // Calculate the number of 'X's needed for the masked part
+                $maskedPartLength = strlen($digitsOnly) - $unmaskedLength;
+                $maskedPart = str_repeat('X', $maskedPartLength);
+
+                // Reconstruct the masked phone number
+                return $unmaskedPart . $maskedPart;
+            },
+            $text
+        );
+
+        return $text;
     }
 }
