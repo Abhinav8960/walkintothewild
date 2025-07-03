@@ -36,7 +36,13 @@ class DefaultController extends RestController
 
     protected function findModel($lead_partner_quotes_id)
     {
-        $model = LeadPartnerQuotes::find()->andWhere(['id' => $lead_partner_quotes_id])->one();
+        return LeadPartnerQuotes::find()->andWhere(['id' => $lead_partner_quotes_id])->one();
+    }
+
+    private function payu($lead_partner_quotes_id)
+    {
+        $model = $this->findModel($lead_partner_quotes_id);
+
         if (!$model) {
             // Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote not found."]);
@@ -48,12 +54,6 @@ class DefaultController extends RestController
             Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
         }
-        return $model;
-    }
-
-    private function payu($lead_partner_quotes_id)
-    {
-        $model = $this->findModel($lead_partner_quotes_id);
 
         // Fetch PayU configuration parameters
         $merchantKey = Yii::$app->params['payu']['merchantKey'];
@@ -123,6 +123,18 @@ class DefaultController extends RestController
     private function icici($lead_partner_quotes_id)
     {
         $model = $this->findModel($lead_partner_quotes_id);
+
+        if (!$model) {
+            // Yii::$app->session->setFlash('error', 'Lead Partner Quote not found.');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote not found."]);
+        }
+        if ($model->is_payment_received == 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment already received for this"]);
+        }
+        if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
+            Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
+        }
 
         $merchantId = Yii::$app->params['ccavenue']['merchantId'];
         $accessCode = Yii::$app->params['ccavenue']['accessCode'];
