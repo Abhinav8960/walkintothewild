@@ -4,7 +4,7 @@ use common\models\partnerregistration\PartnerRegistration;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Operator Approval';
+$this->title = 'Operator Approval ( ' . $model->brand_name . ' )';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'Update', 'url' => '#'];
 $this->params['title'] = $this->title;
