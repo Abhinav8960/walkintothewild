@@ -75,8 +75,8 @@ class PaymentResponseController extends Controller
             if ($data['status'] == 'success') {
                 return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/success/' . ($data['udf1'] ?? ''));
             }
+            return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/failed/' . ($data['udf1'] ?? ''));
         }
-        return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/failed/' . ($data['udf1'] ?? ''));
 
 
         return $this->redirect(Yii::$app->params['frontend_url_for_payments'] . '/payu/failed/' . ($data['udf1'] ?? '') . '?error=Payment verification failed. Please try again.');
