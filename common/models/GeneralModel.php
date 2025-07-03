@@ -1898,13 +1898,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $cipher = "aes-256-cbc";
         $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
         $encrypted_data = openssl_encrypt($data, $cipher, $key, 0, $iv);
-        return base64_encode($encrypted_data . '::' . $iv);
+        $encrypted_string = base64_encode($encrypted_data . '::' . $iv);
+
+        // Replace '/' with '_' to avoid issues
+        $encrypted_string = str_replace('/', '_', $encrypted_string);
+
+        return $encrypted_string;
     }
 
     public static function decrypt($data)
     {
         $key = Yii::$app->params['encryption_key'];
         $cipher = "aes-256-cbc";
+
+        // Replace '_' back to '/' before decoding
+        $data = str_replace('_', '/', $data);
+
         list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
         return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
     }
