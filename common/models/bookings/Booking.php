@@ -195,6 +195,8 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $this->updateLeadBookingStatus();
             // close lead chat
             $this->closeLeadChat();
+            // close all payment links
+            $this->closePaymentLinks();
             // send booking confirmation email
             // $this->sendBookingConfirmationEmail();
         }
@@ -245,6 +247,18 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
         if ($leadPartnerQuotes) {
             return  $leadPartnerQuotes->closeChat($this->lead_partner_quotes_id);
+        }
+        return true;
+    }
+
+    private function closePaymentLinks()
+    {
+        $leadPartnerQuoteInstallments = \common\models\leads\LeadPartnerQuoteInstallments::findAll(['lead_partner_quote_id' => $this->lead_partner_quotes_id, 'is_payment_received' => 0]);
+        if (!empty($leadPartnerQuoteInstallments)) {
+            foreach ($leadPartnerQuoteInstallments as $installment) {
+                $installment->is_payment_expired = 1;
+                $installment->save(false);
+            }
         }
         return true;
     }

@@ -17,7 +17,7 @@ class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
     public function rules()
     {
         return [
-            [['id', 'lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_payment_expired'], 'integer'],
             [['amount'], 'number'],
             [['payment_link', 'payment_hash', 'qr_code_file', 'before_datetime', 'transaction_id', 'transaction_datetime'], 'safe'],
         ];
@@ -66,6 +66,7 @@ class LeadPartnerQuoteInstallmentsSearch extends LeadPartnerQuoteInstallments
             'partner_id' => $this->partner_id,
             'amount' => $this->amount,
             'before_datetime' => $this->before_datetime,
+            'is_payment_expired' => $this->is_payment_expired,
             'status' => $this->status,
             'payment_gateway' => $this->payment_gateway,
             'transaction_datetime' => $this->transaction_datetime,
