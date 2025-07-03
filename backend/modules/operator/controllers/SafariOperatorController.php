@@ -510,4 +510,18 @@ class SafariOperatorController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionFileView($filepath, $duration = 1)
+    {
+        $urlParts = parse_url($filepath);
+        $relativePath = ltrim($urlParts['path'], '/');
+
+        if (strpos($relativePath, 'site/files/') === 0) {
+            $relativePath = substr($relativePath, strlen('site/files/'));
+        }
+
+        $expiresAt = new \DateTimeImmutable("+$duration minutes");
+        $url = Yii::$app->rfs->temporaryUrl($relativePath, $expiresAt);
+        return $this->renderAjax('_file_view', ['fileUrl' => $url]);
+    }
 }

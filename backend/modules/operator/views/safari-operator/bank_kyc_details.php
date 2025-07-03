@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use yii\helpers\Url;
 
 $this->title = 'Safari Tour Operator : ' . $model->business_name;
 $this->params['breadcrumbs_home_url'] = '/operator/safari-operator';
@@ -64,9 +65,9 @@ foreach ($park as $key => $role) {
                                 <p>
                                     <span>Cancel Check : </span>
                                     <?php if (!empty($model->cancel_check_upload) && strtolower(pathinfo($model->cancel_check_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
-                                        <a href="<?= $model->cancel_check_upload_path ?>" target="_blank">
+                                        <button value="<?= Url::to(['file-view', 'filepath' => $model->cancel_check_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                        </a>
+                                        </button>
                                     <?php } else{ ?>
                                         <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                     <?php } ?>
@@ -89,18 +90,18 @@ foreach ($park as $key => $role) {
                                     <p><span>KYC Adhaar Number :</span> <?= $model->aadhar_number ?? 'N/A'?></p>
                                     <p><span>KYC Aadhar Front : </span>
                                     <?php if (!empty($model->aadhar_front_upload)&& strtolower(pathinfo($model->aadhar_front_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
-                                        <a href="<?= $model->aadhar_front_upload_path ?>" target="_blank">
+                                        <button value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_front_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                        </a>
+                                        </button>
                                     <?php } else{ ?>
                                         <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                     <?php } ?>
                                     </p>
                                     <p><span>KYC Aadhar Back : </span>
                                     <?php if (!empty($model->aadhar_back_upload) && strtolower(pathinfo($model->aadhar_back_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
-                                        <a href="<?= $model->aadhar_back_upload_path ?>" target="_blank">
+                                        <button value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_back_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                        </a>
+                                        </button>
                                     <?php } else{ ?>
                                         <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                     <?php } ?>
@@ -108,9 +109,9 @@ foreach ($park as $key => $role) {
                                     <p><span>KYC PAN Number : </span><?= $model->kyc_pan ?? 'N/A'?></p>
                                     <p><span>KYC PAN Card : </span>
                                     <?php if (!empty($model->kyc_pan_upload) && strtolower(pathinfo($model->kyc_pan_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
-                                        <a href="<?= $model->kyc_pan_upload_path ?>" target="_blank">
+                                        <button value="<?= Url::to(['file-view', 'filepath' => $model->kyc_pan_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                             <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                        </a>
+                                        </button>
                                     <?php } else{ ?>
                                         <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                     <?php } ?>
@@ -126,8 +127,42 @@ foreach ($park as $key => $role) {
     </div>
 </div>
 
+
+
+<div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Document Preview
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 <style>
     .text-box p span {
         color: brown !important;
     }
 </style>
+
+<?php
+$script = <<< JS
+
+    \$('.file-view').on('click', function () {
+            \$('#modalfileview').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
+
+JS;
+$this->registerJs($script);
+?>

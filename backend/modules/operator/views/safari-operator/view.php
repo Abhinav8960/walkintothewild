@@ -80,9 +80,9 @@ foreach ($park as $key => $role) {
                                     <p>
                                         <span>Registered File: </span>
                                         <?php if (!empty($model->registration_copy_upload) && strtolower(pathinfo($model->registration_copy_upload, PATHINFO_EXTENSION)) === 'pdf'){?>
-                                            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
-                                                <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px; ">
-                                            </a>
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->registration_copy_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
+                                                    <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                         <?php } ?>
@@ -93,9 +93,9 @@ foreach ($park as $key => $role) {
                                     <p>
                                         <span>PanCard File: </span>
                                         <?php if (!empty($model->pan_upload)){?>
-                                            <a href="<?= $model->pan_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->pan_upload]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                         <?php } ?>
@@ -171,9 +171,9 @@ foreach ($park as $key => $role) {
                                     <p>
                                         <span>GST Image : </span>
                                         <?php if (!empty($model->gstDetail->gst_upload_path)){?>
-                                            <a href="<?= $model->gstDetail->gst_upload_path ?>" target="_blank">
-                                            <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
-                                            </a>
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->gstDetail->gst_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
+                                                <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" style = "width : 40px ; height : 40px;">
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted" style="color: #6c757d !important;">No file uploaded</span>
                                         <?php } ?>
@@ -246,6 +246,23 @@ foreach ($park as $key => $role) {
     </div>
 </div>
 
+<div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Document Preview
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
@@ -257,6 +274,13 @@ function organizefunction() {
 	});
 }
 organizefunction();
+
+    \$('.file-view').on('click', function () {
+            \$('#modalfileview').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
+
 JS;
 $this->registerJs($script);
 ?>
