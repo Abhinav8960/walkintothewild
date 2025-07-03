@@ -240,9 +240,9 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     private function closeLeadChat()
     {
-        $lead = \common\models\leads\Lead::findOne($this->lead_id);
-        if ($lead) {
-            $lead->closeChat();
+        $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
+        if ($leadPartnerQuotes) {
+            $leadPartnerQuotes->closeChat();
         }
     }
 }
