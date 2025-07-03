@@ -6,6 +6,7 @@ namespace backend\modules\package\controllers;
 use common\models\package\Package;
 use common\models\package\PackageVersion;
 use common\models\package\PackageSearch;
+use common\models\package\PackageVersionSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,7 +43,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    
+
     public function actionActive($id)
     {
         $model = Package::find()->where(['id' => $id])->limit(1)->one();
@@ -106,5 +107,18 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('error', 'Facing technical problem Successfully');
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionRejectList()
+    {
+        $searchModel = new PackageVersionSearch();
+        $searchModel->status = PackageVersion::NOT_APPROVED_STATUS;
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['IS NOT', 'cancellation_reason', NULL]);
+
+        return $this->render('_cancellation_list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
