@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row pb-4">
             <div class="col-12">
                 <div class="row filter-areaParent w-100">
-                    <div class="col-xxl-8 col-xl-9">
+                    <div class="col-xxl-12 col-xl-12">
+                        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                     </div>
                     <!-- <div class="col-xxl-4 col-xl-3">
                         <div>
@@ -38,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-xxl-3 col-xl-3 col-lg-4 md-6 col-12 mb-3">
                     <div class="sightings-parent-card">
                         <div class="card p-2 border-0">
-                            <a href="<?= Url::toRoute(['view', 'id' => 1]) ?>"> <img src="<?= $model->thumbnail ?>"
+                            <a href="<?= Url::toRoute(['/sightings/default/view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                     class="card-img-top" alt=""></a>
                             <div class="card-body">
                                 <p class="mb-0"><?= $model->description ?></p>
