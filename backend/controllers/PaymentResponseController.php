@@ -27,7 +27,7 @@ class PaymentResponseController extends Controller
                         'actions' => ['payu-verify', 'payu-response'],
                         'allow' => true,
                     ],
-                    
+
                 ],
             ],
             'verbs' => [
@@ -90,6 +90,8 @@ class PaymentResponseController extends Controller
                 $transaction->status = \common\models\transaction\Transaction::STATUS_HOLD;
             }
             $transaction->payment_gateway = \common\models\transaction\Transaction::PAYMENT_GATEWAY_PAYU;
+            $transaction->transaction_datetime = date('Y-m-d H:i:s');
+
             $transaction->save(false);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');

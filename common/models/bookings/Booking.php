@@ -1,7 +1,8 @@
 <?php
 
-namespace common\models\transaction;
+namespace common\models\bookings;
 
+use common\models\leads\LeadPartners;
 use Yii;
 
 /**
@@ -92,7 +93,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     protected function getActiveUserId()
     {
-        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
+        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'] ?? null;
     }
 
     /**
@@ -114,7 +115,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['transaction_id', 'reference_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
-            [['transaction_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
+            [['transaction_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'lead_partner_quotes_id'], 'integer'],
             [['addional_notes'], 'string'],
             [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
@@ -185,5 +186,63 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             'param5' => 'Param5',
             'status' => 'Status',
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->status == 1 && $insert) {
+            // lead booking status update
+            $this->updateLeadBookingStatus();
+            // close lead chat
+            $this->closeLeadChat();
+            // send booking confirmation email
+            // $this->sendBookingConfirmationEmail();
+        }
+    }
+
+    private function updateLeadBookingStatus()
+    {
+        $lead = \common\models\leads\Lead::findOne($this->lead_id);
+        if ($lead) {
+            $lead->is_payment_received = 1;
+            $lead->payment_gateway = $this->payment_gateway;
+            $lead->transaction_id = $this->transaction_id;
+            $lead->transaction_datetime = $this->transaction_datetime;
+            $lead->save(false);
+        }
+        $leadPartner = LeadPartners::findOne($this->lead_partner_id);
+        if ($leadPartner) {
+            $leadPartner->is_payment_received = 1;
+            $leadPartner->payment_gateway = $this->payment_gateway;
+            $leadPartner->transaction_id = $this->transaction_id;
+            $leadPartner->transaction_datetime = $this->transaction_datetime;
+            $leadPartner->save(false);
+        }
+        $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
+        if ($leadPartnerQuotes) {
+            $leadPartnerQuotes->is_payment_received = 1;
+            $leadPartnerQuotes->payment_gateway = $this->payment_gateway;
+            $leadPartnerQuotes->transaction_id = $this->transaction_id;
+            $leadPartnerQuotes->transaction_datetime = $this->transaction_datetime;
+            $leadPartnerQuotes->save(false);
+        }
+        $leadPartnerQuoteInstallments = \common\models\leads\LeadPartnerQuoteInstallments::findOne(['lead_partner_quote_id' => $this->lead_partner_quotes_id]);
+        // Update the installment status if it exists
+        // This assumes that the installment is linked to the lead and partner quote
+        if ($leadPartnerQuoteInstallments) {
+            $leadPartnerQuoteInstallments->is_payment_received = 1;
+            $leadPartnerQuoteInstallments->payment_gateway = $this->payment_gateway;
+            $leadPartnerQuoteInstallments->transaction_id = $this->transaction_id;
+            $leadPartnerQuoteInstallments->transaction_datetime = $this->transaction_datetime;
+            $leadPartnerQuoteInstallments->save(false);
+        }
+    }
+
+    private function closeLeadChat()
+    {
+        $lead = \common\models\leads\Lead::findOne($this->lead_id);
+        if ($lead) {
+            $lead->closeChat();
+        }
     }
 }

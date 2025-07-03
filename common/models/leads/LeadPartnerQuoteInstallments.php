@@ -61,7 +61,7 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
     {
         return [
             [['payment_link', 'qr_code_file', 'payment_gateway', 'transaction_id', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
+            [['status', 'is_payment_received'], 'default', 'value' => 0],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'amount', 'payment_hash', 'before_datetime'], 'required'],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
