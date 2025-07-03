@@ -208,11 +208,13 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
     public function closeChat($quote_id)
     {
         $chatmessage = ChatMessage::findOne(['quotation_id' => $quote_id]);
-        $chat = Chat::updateAll(
-            ['is_closed' => true],
-            ['quotation_id' => $this->lead_id],
-            ['!=', 'id' => $chatmessage->chat_id]
-        );
+        if (!empty($chatmessage)) {
+            $chat = Chat::updateAll(
+                ['is_closed' => true],
+                ['quotation_id' => $this->lead_id],
+                ['!=', 'id' => $chatmessage->chat_id]
+            );
+        }
         return true;
     }
 }
