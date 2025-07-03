@@ -450,7 +450,7 @@ class DefaultController extends RestController
 
     public function actionQuotationInfo($hash)
     {
-        $model = LeadPartnerQuoteInstallments::find()->andWhere(['payment_hash' => $hash])->one();
+        $model = LeadPartnerQuoteInstallments::find()->andWhere(['payment_hash' => $hash, 'is_payment_expired' => 0])->one();
         if (empty($model)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
         }
