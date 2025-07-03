@@ -1898,9 +1898,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $cipher = "aes-256-cbc";
         $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher)); // Generate a 16-byte IV
         $encrypted_data = openssl_encrypt($data, $cipher, $key, 0, $iv);
-        $encrypted_string = base64_encode($encrypted_data . '::' . base64_encode($iv)); // Encode IV separately to avoid issues
 
-        // Replace '/' with '_' to avoid issues
+        // Encode the encrypted data and IV separately
+        $encrypted_string = base64_encode($encrypted_data) . '::' . base64_encode($iv);
+
+        // Replace '/' with '_' in the final encrypted string
         $encrypted_string = str_replace('/', '_', $encrypted_string);
 
         return $encrypted_string;
@@ -1914,14 +1916,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         // Replace '_' back to '/' before decoding
         $data = str_replace('_', '/', $data);
 
-        list($encrypted_data, $encoded_iv) = explode('::', base64_decode($data), 2);
-        $iv = base64_decode($encoded_iv); // Decode the IV
+        // Split the encrypted data and IV
+        list($encrypted_data, $encoded_iv) = explode('::', $data, 2);
 
-        // Ensure the IV is exactly 16 bytes
+        // Decode the encrypted data and IV
+        $encrypted_data = base64_decode($encrypted_data);
+        $iv = base64_decode($encoded_iv);
+
+        // Ensure the IV is exactly the correct length
         if (strlen($iv) !== openssl_cipher_iv_length($cipher)) {
             throw new Exception("Invalid IV length");
         }
 
+        // Decrypt the data
         return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
     }
 }
