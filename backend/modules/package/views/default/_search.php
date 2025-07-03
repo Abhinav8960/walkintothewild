@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?>
+        <!-- <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?> -->
     </div>
 
 </div>
