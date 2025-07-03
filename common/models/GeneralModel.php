@@ -1149,7 +1149,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function sharesafarioptionswithdelete()
     {
-          $return = [
+        $return = [
             '3' => 'Live',
             '1' => 'Active',
             '0' => 'Inactive By User',
@@ -1890,5 +1890,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $user = User::find()->where(['id' => $id])->limit(1)->one();
         return $user->name . '(' . $user->email . ')';
+    }
+
+    public static function encrypt($data)
+    {
+        $key = Yii::$app->params['encryption_key'];
+        $cipher = "aes-256-cbc";
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+        $encrypted_data = openssl_encrypt($data, $cipher, $key, 0, $iv);
+        return base64_encode($encrypted_data . '::' . $iv);
+    }
+
+    public static function decrypt($data)
+    {
+        $key = Yii::$app->params['encryption_key'];
+        $cipher = "aes-256-cbc";
+        list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+        return openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
     }
 }

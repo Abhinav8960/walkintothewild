@@ -99,7 +99,7 @@ class DefaultController extends  Controller
     {
         $id = Yii::$app->request->post('id');
         // $paymentUrl = Yii::$app->request->post('payment_url');
-        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payu/' . $id;
+        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payu/' . GeneralModel::encrypt($id);
         $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage') ?? 0;
         $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
