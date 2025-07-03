@@ -1,6 +1,6 @@
 <?php
 return [
-    'encryption_key' => 'BB8F2A1D3C4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6',
+    'encryption_key' => 'a8f5d3c2b7e9f1a4c6d8e2f3b9a7c1e5',
     // 'adminEmail' => 'support@walkintothewild.in',
     'supportEmail' => 'support@example.com',
     'senderEmail' => 'noreply@example.com',
