@@ -11,7 +11,8 @@ $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
 
-$this->params['buttons'][] = Html::a('Package Approval List', [Url::toRoute(['/packageapproval/default/index'])], ['class' => 'btn btn-orange', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Package Approval List', [Url::toRoute(['/packageapproval/default/index'])], ['class' => 'btn btn-orange me-2', 'title' => 'Package Approval List']);
+$this->params['buttons'][] = Html::a('Package Reject List', [Url::toRoute(['reject-list'])], ['class' => 'btn btn-danger', 'title' => 'Package Reject List']);
 ?>
 
 
