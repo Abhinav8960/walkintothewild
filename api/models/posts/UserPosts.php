@@ -25,7 +25,7 @@ class UserPosts extends \common\models\UserPosts
 
         $fields = array_diff($fields, $hold_fields);
         $fields['caption'] = function () {
-            return trim($this->caption);
+            return \common\models\GeneralModel::maskContactInfoInString(trim($this->caption));
         };
         return $fields;
     }
