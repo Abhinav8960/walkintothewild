@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 $this->title = 'Package';
 // $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created create float-end mt-3', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-created new create float-end mt-3', 'title' => 'Create']);
 ?>
 
 
@@ -37,8 +37,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         }
                     ],
                     [
+                        'label' => 'Duration',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->no_of_day . ' Days ,' . $model->no_of_night . ' Nights';
+                        }
+                    ],
+                    [
                         'label' => 'Cost Per Person',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -46,8 +54,17 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         }
                     ],
                     [
+                        'label' => 'No of Safari',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->no_of_safari;
+                        }
+                    ],
+                    [
                         'label' => 'Stay Category',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->stay_category_id) ? GeneralModel::packagemetastaycategory()[$model->stay_category_id] : '';
@@ -56,7 +73,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                     [
                         'label' => 'Feature',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';
@@ -70,23 +87,23 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         }
                     ],
 
-                    [
-                        'label' => 'Included',
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $html = '';
-                            $included = $model->packageincluded;
-                            foreach ($included as $key => $data) {
-                                if (isset(GeneralModel::packageincludeoption()[$data->include_id])) {
-                                    $html .= GeneralModel::packageincludeoption()[$data->include_id] . ', ';
-                                }
-                            }
-                            return $html;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Included',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $html = '';
+                    //         $included = $model->packageincluded;
+                    //         foreach ($included as $key => $data) {
+                    //             if (isset(GeneralModel::packageincludeoption()[$data->include_id])) {
+                    //                 $html .= GeneralModel::packageincludeoption()[$data->include_id] . ', ';
+                    //             }
+                    //         }
+                    //         return $html;
+                    //     }
+                    // ],
                     [
                         'label' => 'Live Version',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if (!empty($model->live_version->final_approved_at)) {
@@ -99,18 +116,19 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         }
                     ],
 
-                    // [
-                    //     'label' => 'Status',
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return $model->newstatuslabel;
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Status',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->newstatuslabel;
+                        }
+                    ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
