@@ -211,7 +211,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         if (!empty($chatmessage)) {
             $chat = Chat::updateAll(
                 ['is_closed' => true],
-                ['and', ['quotation_id' => $this->lead_id], ['!=', 'id', $chatmessage->chat_id]]
+                ['and', ['lead_id' => $this->lead_id], ['!=', 'id', $chatmessage->chat_id]]
             );
         }
         return true;

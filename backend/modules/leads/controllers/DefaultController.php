@@ -99,7 +99,8 @@ class DefaultController extends  Controller
     {
         $id = Yii::$app->request->post('id');
         // $paymentUrl = Yii::$app->request->post('payment_url');
-        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payu/' . GeneralModel::encrypt($id);
+        $payment_hash = GeneralModel::encrypt($id);
+        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payu/' . $payment_hash;
         $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage') ?? 0;
         $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
@@ -126,6 +127,7 @@ class DefaultController extends  Controller
                 $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
                 $installment->amount = $quotation->net_payment_price;
                 $installment->payment_link = $paymentUrl;
+                $installment->payment_hash = $payment_hash;
 
                 // Handle QR code file upload
                 if (!empty($qr_code_file)) {
