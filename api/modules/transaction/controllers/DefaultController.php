@@ -21,6 +21,12 @@ class DefaultController extends RestController
     {
 
         $lead_partner_quotes_id = GeneralModel::decrypt($lead_partner_quotes_id);
+
+        $lead_installments = LeadPartnerQuoteInstallments::find()->andWhere(['lead_partner_quotes_id' => $lead_partner_quotes_id, 'is_payment_expired' => 0])->one();
+
+        if (!$lead_installments) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
+        }
         if (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI_LABEL])) {
             return $this->icici($lead_partner_quotes_id);
         } elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {
