@@ -382,6 +382,9 @@ class DefaultController extends RestController
         $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();
 
         $m = $this->findLeadModel($lead_id, $partner);
+        if ($m->is_payment_received == 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "This lead is closed. You can not send quotation."]);
+        }
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $partner->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
