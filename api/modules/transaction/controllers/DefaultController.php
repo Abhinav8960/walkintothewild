@@ -7,7 +7,7 @@ use common\models\leads\LeadPartnerQuotes;
 use common\models\transaction\Transaction;
 use common\models\transaction\TransactionSearch;
 use api\controllers\RestController;
-
+use common\models\GeneralModel;
 use yii;
 
 /**
@@ -20,6 +20,7 @@ class DefaultController extends RestController
     public function actionInitiate($lead_partner_quotes_id, $payment_gateway)
     {
 
+        $lead_partner_quotes_id = GeneralModel::decrypt($lead_partner_quotes_id);
         if (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_ICICI_LABEL])) {
             return $this->icici($lead_partner_quotes_id);
         } elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {

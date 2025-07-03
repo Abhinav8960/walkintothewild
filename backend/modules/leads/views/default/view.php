@@ -165,7 +165,7 @@ AppAsset::register($this);
                                         <?php } ?>
 
                                         <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED && $model->is_payment_received == 0) { ?>
-                                            <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button>
+                                            <!-- <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button> -->
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -197,16 +197,18 @@ AppAsset::register($this);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5> -->
+                <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to approve this quotation?</p>
-                <input type="hidden" id="approve-quotation-id">
+                <form id="approve-form">
+                    <input type="hidden" id="approve-quotation-id">
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" id="confirm-approve-btn">Approve</button>
+                <button type="submit" class="btn btn-success" form="approve-form">Approve</button>
             </div>
         </div>
     </div>
