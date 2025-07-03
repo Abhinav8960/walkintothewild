@@ -4,7 +4,6 @@ namespace business\modules\sharesafari\controllers;
 
 use business\controllers\BusinessController;
 use common\models\master\faq\MasterFaq;
-use common\models\sharesafari\form\CreateDepartureForm;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
 use common\models\sharesafari\ShareSafari;
@@ -14,7 +13,9 @@ use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariSearch;
+use frontend\models\form\CreateDepartureForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,13 +24,38 @@ use yii\web\UploadedFile;
 /**
  * DefaultController.
  */
-class DefaultController extends BusinessController
+class DefaultController extends Controller
 {
+
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+
+        return $behaviors + [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'update', 'create', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+
+                ],
+
+            ],
+        ];
+    }
 
     public function actionIndex()
     {
+        $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
         $searchModel->status = 1;
+        $searchModel->host_user_id = $safari_operator->id;
         $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -41,26 +67,30 @@ class DefaultController extends BusinessController
 
     public function actionCreate()
     {
-
+        $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureForm();
-        $model->host_user_id =  92; //We have to change it we want here operator id
+        $model->host_user_id =  $safari_operator->id;
         $model->type = 2;
-        // if ($safari_operator->category_id == 1) {
-        //     $model->host_type = 3;
-        // } elseif ($safari_operator->category_id == 2) {
-        //     $model->host_type = 2;
-        // } else {
-        //     $model->host_type = Yii::$app->user->identity->account_type;
-        // }
-        $model->host_type = Yii::$app->user->identity->account_type;
-        $model->status = ShareSafari::STATUS_ACTIVE;
+
+        if ($safari_operator->category_id == 1) {
+            $model->host_type = 3;
+        } elseif ($safari_operator->category_id == 2) {
+            $model->host_type = 2;
+        } else {
+            $model->host_type = Yii::$app->user->identity->account_type;
+        }
+
+        $model->status = ShareSafari::STATUS_SUSPEND;
+        $model->rand_text = substr(sha1(mt_rand()), 17, 6) . '-' . $model->host_user_id . time();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save()) {
+                        $model->shared_safari_departure_model->savehistory();
                         $parks = $model->park_list;
+
                         if ($parks) {
                             foreach ($parks as $park) {
                                 $park_model = new ShareSafariParklist();
@@ -71,7 +101,7 @@ class DefaultController extends BusinessController
                         }
 
                         \Yii::$app->session->setFlash('success', 'Fixed departure created successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['update', 'id' => $model->shared_safari_departure_model->id]);
                     }
                 }
             }
@@ -81,6 +111,7 @@ class DefaultController extends BusinessController
 
         return $this->render('create', [
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 
@@ -103,6 +134,7 @@ class DefaultController extends BusinessController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
+                        $model->shared_safari_departure_model->savehistory();
                         $parks = $model->park_list;
                         if ($parks) {
                             ShareSafariParklist::deleteAll(['share_safari_id' => $shared_safari_departure_model->id]);
@@ -125,7 +157,9 @@ class DefaultController extends BusinessController
 
         return $this->render('update', [
             'model' => $model,
-            'shared_safari_departure_model' => $shared_safari_departure_model
+            'shared_safari_departure_model' => $shared_safari_departure_model,
+            'safari_operator' => $safari_operator,
+
         ]);
     }
 

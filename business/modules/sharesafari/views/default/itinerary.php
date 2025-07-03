@@ -5,29 +5,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Fixed Departure : ' . $shared_safari_departure_model->share_safari_title . '';
-$this->params['breadcrumbs_home_url'] = '#';
-$this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 
 
-<div class="panel panel-primary tabs-style-2">
+<div class="tabs-formswrapper mx-3">
     <?= $this->render('_navbar', ['shared_safari_departure_model' => $shared_safari_departure_model, 'itinerary_active' => 'active']) ?>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
-        <div class="tab-content">
-            <div class="tab-pane active">
-                <div aria-multiselectable="true" class="accordion" id="accordion" role="tablist">
+    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="accordionMianBox">
+            <div class="accordionItems">
+                <div class="accordion" id="accordionExample">
                     <?php
                     $no_of_day = $shared_safari_departure_model->tour_duration;
                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <a class="accordion-button" href="<?= Url::toRoute(['itinerary', 'id' => $shared_safari_departure_model->id, 'day' => $i]) ?>">
-                                    Day <?= $i ?>
-                                </a>
+                        <div class="accordion-item mb-3">
+                            <h2 class="accordion-header" id="heading<?= $i ?>">
+                                <a class="accordion-button day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>">Day <?= $i ?></a>
                             </h2>
-
 
                             <div id="flush-collapse<?= $i ?>" class="accordion-collapse collapse <?= ($i == $model->day) ? 'show' : ''; ?>" aria-labelledby="flush-heading<?= $i ?>" data-bs-parent="#accordionFlushExample">
                                 <?php if ($i == $model->day) { ?>
@@ -40,31 +35,46 @@ $this->params['title'] = $this->title;
 
                                                 <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $shared_safari_departure_model->tour_duration])->label(false) ?>
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <?= $form->field($model, 'day')->textInput([
-                                                            'maxlength' => true,
-                                                            'value' => $i,
-                                                            'placeholder' => 'Enter Day',
-                                                            'id' => 'dayitineraryform-day' . $i,
-                                                        ])->label('Day', ['class' => 'Modal_label']) ?>
+                                                    <div class="col-md-6">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Day</label>
+                                                            <?= $form->field($model, 'day')->textInput([
+                                                                'maxlength' => true,
+                                                                'value' => $i,
+                                                                'placeholder' => 'Enter Day',
+                                                                'id' => 'dayitineraryform-day' . $i,
+                                                                'readOnly' => true,
+                                                                'class' => 'form-control'
+                                                            ])->label(false); ?>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <?= $form->field($model, 'day_title')->textInput([
-                                                            'maxlength' => true,
-                                                            'placeholder' => 'Enter Day Title',
-                                                            'id' => 'dayitineraryform-day_title' . $i,
-                                                        ])->label('Day Title', ['class' => 'Modal_label']) ?>
+                                                    <div class="col-md-6">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Day Title</label>
+                                                            <?= $form->field($model, 'day_title')->textInput([
+                                                                'maxlength' => true,
+                                                                'placeholder' => 'Enter Day Title',
+                                                                'id' => 'dayitineraryform-day_title' . $i,
+                                                                'class' => 'form-control'
+
+                                                            ])->label(false); ?>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-md-12">
-                                                        <?= $form->field($model, 'day_description')->textarea([
-                                                            'rows' => '2',
-                                                            'placeholder' => 'Description Detail',
-                                                            'id' => 'dayitineraryform-day_description' . $i,
-                                                        ])->label('Description', ['class' => 'Modal_label']) ?>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Overview <span>*</span></label>
+                                                            <?= $form->field($model, 'day_description')->textarea([
+                                                                'rows' => '2',
+                                                                'placeholder' => 'Description Detail',
+                                                                'id' => 'dayitineraryform-day_description' . $i,
+                                                                'class' => 'form-control'
+                                                            ])->label(false) ?>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="row" style='display: none;'>
                                                     <div class="col-md-4 mb-3">
                                                         <?= $form->field($model, 'start_location')->textInput([
