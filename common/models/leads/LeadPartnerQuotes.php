@@ -2,6 +2,8 @@
 
 namespace common\models\leads;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use common\models\meta\MetaPackageRange;
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperator;
@@ -201,5 +203,16 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         if ($quotation != null) {
             return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id);
         }
+    }
+
+    public function closeChat()
+    {
+        $chatmessage = ChatMessage::findOne(['quotation_id' => $this->lead_id]);
+        $chat = Chat::updateAll(
+            ['is_closed' => true],
+            ['quotation_id' => $this->lead_id],
+            ['!=', 'id' => $chatmessage->chat_id]
+        );
+        return true;
     }
 }

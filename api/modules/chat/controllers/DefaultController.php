@@ -176,6 +176,9 @@ class DefaultController extends RestController
             if (empty($chat_model)) {
                 return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
             }
+            if ($chat_model->is_closed == 1) {
+                return Yii::$app->api->sendResponse([], ['message' => 'Chat is closed, you can not reply'], 400);
+            }
         } else {
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         }

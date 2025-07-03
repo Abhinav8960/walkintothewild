@@ -43,3 +43,6 @@ ALTER TABLE `lead_partner_quote_installments` ADD `is_payment_received` INT NOT 
 
 
 ALTER TABLE `booking` ADD `lead_partner_quotes_id` INT NOT NULL AFTER `id`;
+
+<!-- 03072025 -->
+ALTER TABLE `chat` ADD `is_closed` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`;
