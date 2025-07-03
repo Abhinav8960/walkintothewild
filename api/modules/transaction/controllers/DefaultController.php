@@ -448,10 +448,46 @@ class DefaultController extends RestController
         return Yii::$app->api->sendResponse($data);
     }
 
-    public function actionTransactionInfo($reference)
-    
-}
+    public function actionQuotationInfo($hash)
+    {
+        $model = LeadPartnerQuoteInstallments::find()->andWhere(['payment_hash' => $hash])->one();
+        if (empty($model)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
+        }
+        $quotation = \api\models\leads\LeadPartnerQuotes::find()->andWhere(['id' => $model->lead_partner_quote_id])->one();
 
+        if (empty($quotation)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quotation not found."]);
+        }
+        $data['quotation'] = [
+            "quotation_id" => $quotation->id,
+            "lead_id" => $quotation->lead_id,
+            "partner_name" => $quotation->partner->name ?? '',
+            "park_name" => $quotation->park->name ?? '',
+            "safaris" => $quotation->safaris,
+            "travelers" => $quotation->travelers,
+            "stay_category_label" => $quotation->staycatgory->title ?? '',
+            "name" => $quotation->name,
+            "email" => $quotation->email,
+            "phone" => $quotation->phone,
+            "start_date" => date('M d, Y', strtotime($quotation->start_date)),
+            "end_date" => date('M d, Y', strtotime($quotation->end_date)),
+            // "validity_date" => date('M d, Y', strtotime($quotation->validity_date)),
+            // "permit_booking_date" => date('M d, Y', strtotime($quotation->permit_booking_date)),
+            "amount" => $quotation->net_payment_price,
+            "quantity" => 1,
+            "additional_notes" => $quotation->addional_notes,
+            // "installments" => array_map(function ($installment) {
+            //     return [
+            //         "id" => $installment->id,
+            //         "amount" => $installment->amount,
+            //         "due_date" => date('M d, Y', strtotime($installment->due_date)),
+            //         "is_paid" => $installment->is_paid,
+            //         "payment_link" => $installment->payment_link,
+            //     ];
+            // }, $quotation->installments ?? []),
+        ];
 
-    payment-info
+        return Yii::$app->api->sendResponse($data);
+    }
 }
