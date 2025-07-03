@@ -124,7 +124,7 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
             $host = UserPosts::find()->where(['id' => $this->user_posts_id, 'status' => UserPosts::STATUS_ACTIVE])->one();
             $host_user = User::find()->where(['id' => $host->user_id, 'status' => User::STATUS_ACTIVE])->one();
             if (!empty($host && $host_user)) {
-                return new \common\events\post\PostCommentByUser($this->id,$this->user->name, $this->user->user_handle, $host_user->id, $host_user->name);
+                return new \common\events\post\PostCommentByUser($this->id, $this->user->name, $this->user->user_handle, $host_user->id, $host_user->name);
             }
         }
     }
@@ -139,5 +139,15 @@ class UserPostComment extends \yii\db\ActiveRecord implements \common\interfaces
                 $userposts->save(false);
             }
         }
+    }
+
+    public function getLike()
+    {
+        return $this->hasMany(UserPostCommentLike::class, ['user_post_comment_id' => 'id'])->andWhere(['user_post_comment_like.status' => 1]);
+    }
+
+    public function getLiked_count()
+    {
+        return $this->getLike()->count();
     }
 }

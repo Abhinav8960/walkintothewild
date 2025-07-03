@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Sighting';
@@ -69,7 +69,7 @@ $this->title = 'Sighting';
                                     <div class="card-body">
                                         <div class="liksMain pt-0 d-flex align-items-center justify-content-between">
                                             <div class="likes d-flex align-items-center gap-1">
-                                                <a href=""><img src="/assets/a8486371/images/like.png" alt=""></a>
+                                                <a href=""><img src="<?= $this->params['baseurl'] ?>/images/like.svg" alt=""></a>
                                                 <a href="">
                                                     <p class="mb-0"><span><?= $model->like_count; ?></span> Likes</p>
                                                 </a>

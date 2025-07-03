@@ -45,13 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <p class="mb-0"><?= $model->description ?></p>
                                 <div class="liksMain pt-2 d-flex align-items-center justify-content-between">
                                     <div class="likes d-flex align-items-center gap-1">
-                                        <a href=""><img src="<?= $this->params['baseurl'] ?>/images/like.png" alt=""></a>
-                                        <a href="">
+                                        <a href="<?= Url::toRoute(['/sightings/default/view', 'id' => $model->id]) ?>"><img src="<?= $this->params['baseurl'] ?>/images/like.svg" alt=""></a>
+                                        <a href="<?= Url::toRoute(['/sightings/default/view', 'id' => $model->id]) ?>">
                                             <p class="mb-0"><span><?= $model->like_count ?></span> Likes</p>
                                         </a>
                                     </div>
                                     <div class="likes d-flex align-items-center gap-1">
-                                        <a href="">
+                                        <a href="<?= Url::toRoute(['/sightings/default/view', 'id' => $model->id]) ?>">
                                             <p class="mb-0"><span><?= $model->comment_count ?></span> Comments</p>
                                         </a>
                                     </div>
