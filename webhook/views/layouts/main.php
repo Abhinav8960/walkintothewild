@@ -3,9 +3,10 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use webhook\assets\AppAsset;
-use webhook\assets\NovaAppAsset;
+use backend\assets\AppAsset;
+use backend\assets\NovaAppAsset;
 use common\assets\NotifyAsset;
+use common\widgets\Alert;
 
 NovaAppAsset::register($this);
 AppAsset::register($this);
@@ -23,6 +24,31 @@ NotifyAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
+
+    <?php if (\Yii::$app->params['environment'] == "production") { ?>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X449945MQ2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-X449945MQ2');
+        </script>
+    <?php } ?>
+    <style>
+        .invalid-feedback {
+            color: #dc3545;
+        }
+
+        .body {
+            background-color: #ebeef4 !important;
+        }
+    </style>
 </head>
 
 <body class="ltr main-body app sidebar-mini">
@@ -32,11 +58,11 @@ NotifyAsset::register($this);
 
         <div>
             <!-- /main-header -->
-            <?= \business\widgets\Header::widget() ?>
+            <?= \backend\widgets\Header::widget() ?>
             <!-- /main-header -->
 
             <!-- main-sidebar -->
-            <?= \business\widgets\Sidebar::widget() ?>
+            <?= \backend\widgets\Sidebar::widget() ?>
             <!-- main-sidebar -->
         </div>
         <!-- START #content -->
@@ -46,7 +72,7 @@ NotifyAsset::register($this);
 
             <!-- container -->
             <div class="main-container container-fluid">
-                <?= \business\widgets\PageHeader::widget([
+                <?= \backend\widgets\PageHeader::widget([
                     'title' => isset($this->params['title']) ? $this->params['title'] : '',
                     'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
                 ]) ?>
@@ -58,6 +84,10 @@ NotifyAsset::register($this);
 
 
         <!-- END #content -->
+
+
+        <!-- BEGIN Setting -->
+        <?= \backend\widgets\Setting::widget() ?>
         <?= \common\widgets\NotifyAlert::widget() ?>
 
         <!-- END Setting -->

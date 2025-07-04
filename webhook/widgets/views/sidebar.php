@@ -1194,7 +1194,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								)) ? "is-expanded" : "" ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/log/default/index",
-												"/log/transaction",
+												"/log/default/transaction",
 												"/trierror",
 												"/log/default/front-index",
 												"/trierror/frontend-request-log",
@@ -1210,7 +1210,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/log/transaction">Transaction</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/log/default/transaction">Transaction</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/trierror/api-request-log/index">Api Request Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Backend Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/log/call-log/index")) ? "active" : "" ?>" href="/log/call-log/index">Call Log</a></li>

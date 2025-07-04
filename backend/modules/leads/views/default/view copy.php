@@ -105,7 +105,8 @@ AppAsset::register($this);
                         <th>Lead Received Date</th>
                         <th>Validity Date</th>
                         <th>Permit Booking Date</th>
-                        <th>Payment Link</th>
+                        <th>QR Code/Payment Link</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <?php if (count($quotations) > 0) { ?>
@@ -157,7 +158,16 @@ AppAsset::register($this);
                                     </td>
 
 
+                                    <td>
+                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING && $model->is_payment_received == 0) { ?>
+                                            <!-- <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
+                                            <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button> -->
+                                        <?php } ?>
 
+                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED && $model->is_payment_received == 0) { ?>
+                                            <!-- <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button> -->
+                                        <?php } ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         <?php } ?>
@@ -183,11 +193,88 @@ AppAsset::register($this);
     </div>
 </div>
 
+<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to approve this quotation?</p>
+                <form id="approve-form">
+                    <input type="hidden" id="approve-quotation-id">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" form="approve-form">Approve</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Disapprove Modal -->
+<div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Quotation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="disapprove-form">
+                    <input type="hidden" id="disapprove-quotation-id">
+                    <div class="mb-3">
+                        <label for="disapprove-reason" class="form-label">Reason for Disapproval</label>
+                        <textarea class="form-control" id="disapprove-reason" rows="3" placeholder="Enter reason for disapproval" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<!-- Payment Received Modal -->
+<div class="modal fade" id="PaymentReceivedModel" tabindex="-1" aria-labelledby="PaymentReceivedModelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PaymentReceivedModelLabel">Payment Received</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="payment-received-form">
+                    <input type="hidden" id="payment-received-quotation-id">
+                    <div class="mb-3">
+                        <label for="payment-gateway" class="form-label">Payment Gateway</label>
+                        <select class="form-control" id="payment-gateway" required>
+                            <option value="">Select Payment Gateway</option>
 
+                            <?php
+                            foreach (GeneralModel::PaymentgatewayOptions() as $key => $value) {
+                                echo "<option value=\"$key\">$value</option>";
+                            }
+                            ?>
 
-
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transaction-id" class="form-label">Transaction ID</label>
+                        <input type="text" class="form-control" id="transaction-id" placeholder="Enter Transaction ID" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transaction-datetime" class="form-label">Transaction Datetime</label>
+                        <input type="datetime-local" class="form-control" id="transaction-datetime" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal fade" id="assignAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -216,6 +303,109 @@ $('.pop-up').on('click', function () {
     $('#assignAction').modal('show')
         .find('#modalContent')
         .load($(this).attr('value'));
+});
+
+// Handle Approve Button Click
+$('.approve-btn').on('click', function () {
+    var quotationId = $(this).data('id');
+    $('#approve-quotation-id').val(quotationId);
+    $('#approveModal').modal('show');
+});
+
+// Handle Approve Confirmation
+$('#approve-form').on('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    var quotationId = $('#approve-quotation-id').val();
+
+    // Send AJAX request to approve the quotation
+    $.ajax({
+        url: '/leads/default/approve',
+        type: 'POST',
+        data: { id: quotationId },
+        success: function (response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert('An error occurred: ' + response.message);
+            }
+        },
+        error: function () {
+            alert('An error occurred while processing the request.');
+        }
+    });
+
+    $('#approveModal').modal('hide');
+});
+
+// Handle Disapprove Button Click
+$('.disapprove-btn').on('click', function () {
+    var quotationId = $(this).data('id');
+    $('#disapprove-quotation-id').val(quotationId);
+    $('#disapproveModal').modal('show');
+});
+
+// Handle Disapprove Form Submission
+$('#disapprove-form').on('submit', function (e) {
+    e.preventDefault();
+
+    var quotationId = $('#disapprove-quotation-id').val();
+    var reason = $('#disapprove-reason').val();
+
+    // Send AJAX request to disapprove the quotation
+    $.post('/leads/default/disapprove', { id: quotationId, reason: reason }, function (response) {
+        if (response.success) {
+            location.reload();
+        } else {
+            alert('An error occurred: ' + response.message);
+        }
+    });
+
+    $('#disapproveModal').modal('hide');
+});
+
+// Handle Payment Received Button Click
+$('.payment-received').on('click', function () {
+    var quotationId = $(this).data('id');
+    $('#payment-received-quotation-id').val(quotationId);
+    $('#PaymentReceivedModel').modal('show');
+});
+
+// Handle Payment Received Form Submission
+$('#payment-received-form').on('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Get form values
+    var quotationId = $('#payment-received-quotation-id').val();
+    var transactionId = $('#transaction-id').val();
+    var transactionDatetime = $('#transaction-datetime').val();
+    var paymentGateway = $('#payment-gateway').val();
+
+    // Format transactionDatetime to 'YYYY-MM-DD HH:mm'
+    transactionDatetime = transactionDatetime.replace('T', ' ');
+
+    // Send AJAX request
+    $.ajax({
+        url: '/leads/default/payment-received?quotation_id=' + quotationId,
+        type: 'POST',
+        data: {
+            'QuotationPaymentReceived[payment_gateway]': paymentGateway,
+            'QuotationPaymentReceived[transaction_id]': transactionId,
+            'QuotationPaymentReceived[transaction_datetime]': transactionDatetime,
+        },
+        success: function (response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert('An error occurred: ' + response.message);
+            }
+        },
+        error: function () {
+            alert('An error occurred while processing the request.');
+        }
+    });
+
+    $('#PaymentReceivedModel').modal('hide');
 });
 
 JS;
