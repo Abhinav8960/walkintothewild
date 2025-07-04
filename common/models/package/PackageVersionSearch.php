@@ -360,7 +360,7 @@ class PackageVersionSearch extends PackageVersion
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             'pagination' => [
                 'pageSize' => 50,
             ],
