@@ -105,7 +105,7 @@ class PaymentResponseController extends Controller
 
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
-            $this->prepareChat($transaction->lead_partner_quotes_id, $message);
+            $this->prepareChat($transaction->lead_partner_quotes_id, $message, $transaction->status);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
@@ -258,7 +258,7 @@ class PaymentResponseController extends Controller
         }
     }
 
-    private function prepareChat($quotation_id, $message)
+    private function prepareChat($quotation_id, $message, $status)
     {
 
         // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
@@ -316,13 +316,16 @@ class PaymentResponseController extends Controller
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
-        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        if($status == 1){
+
+            ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        }
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
         $chat_message->message = $message;
-        $chat_message->is_quotation_message = false;
-        $chat_message->quotation_id = $quotation->id;
-        $chat_message->is_quotation_active = false;
+        // $chat_message->is_quotation_message = false;
+        // $chat_message->quotation_id = $quotation->id;
+        // $chat_message->is_quotation_active = false;
         // $chat_message->data = json_encode($data);
         $chat_message->status = 1;
         $chat_message->sender_id = $quotation->partner->user_id;
