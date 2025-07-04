@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -87,9 +89,11 @@ class PaymentResponseController extends Controller
         $data = Yii::$app->request->post();
 
         $transaction = \common\models\transaction\Transaction::find()->where(['reference_id' => $data['udf1']])->one();
+        $message = "Payment Failed";
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
+                $message = "Payment Received";
             } elseif (strtolower($data['status']) == 'failure') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_FAILED;
             } elseif (strtolower($data['status']) == 'pending') {
@@ -99,6 +103,7 @@ class PaymentResponseController extends Controller
             $transaction->transaction_datetime = date('Y-m-d H:i:s');
 
             $transaction->save(false);
+            $this->prepareChat($transaction->lead_partner_quotes_id, $message);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
@@ -249,5 +254,91 @@ class PaymentResponseController extends Controller
             Yii::error('Hash mismatch during payment verification.', 'transaction');
             return false;
         }
+    }
+
+    private function prepareChat($quotation, $message)
+    {
+
+        // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
+        if (!$chat_model) {
+            return false;
+        }
+
+        // $message = "Payment received: ";
+
+        // if (isset($quotation->park->title)) {
+        //     $message = "Park: " . $quotation->park->title;
+        //     $message .= "\n";
+        //     $message .= "Safaris: " . $quotation->safaris;
+        // }
+        // $message .= "\n";
+        // $message .= "\n";
+        // $message .= "\n";
+        // $message .= "Travelers: " . $quotation->travelers;
+        // $message .= "\n";
+        // $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
+        // $message .= "\n";
+        // $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
+        // $message .= "\n";
+        // $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
+        // if (!empty($quotation->validity_date)) {
+        //     $message .= "\n";
+        //     $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+        // }
+        // if (!empty($quotation->permit_booking_date)) {
+        //     $message .= "\n";
+        //     $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        // }
+        // $message .= "\n";
+        // $message .= "Notes:";
+        // $message .= "\n";
+        // $message .= $quotation->addional_notes;
+
+        // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        // $data = $x->preparedata;
+        // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
+        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->message = $message;
+        $chat_message->is_quotation_message = false;
+        $chat_message->quotation_id = $quotation->id;
+        $chat_message->is_quotation_active = false;
+        // $chat_message->data = json_encode($data);
+        $chat_message->status = 1;
+        $chat_message->sender_id = $quotation->partner->user_id;
+
+        if ($chat_message->save(false)) {
+
+            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+            $chat->last_message_at = time();
+            $chat->sender_id = $quotation->partner->user_id;
+            $chat->quote_id = NULL;
+            $chat->is_lead_chat_open_for_user = 1;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            return $chat->save(false);
+        }
+
+        return false;
     }
 }
