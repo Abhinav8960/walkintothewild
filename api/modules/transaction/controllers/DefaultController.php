@@ -246,6 +246,7 @@ class DefaultController extends RestController
     private function storePayu($lead_partner_quotes_id, $data = [])
     {
 
+        $utm_source = Yii::$app->request->get('utm_source', null); 
 
         // db transaction begin
         $transaction = Yii::$app->db->beginTransaction();
@@ -253,6 +254,7 @@ class DefaultController extends RestController
             $model = $this->findModel($lead_partner_quotes_id);
             // Store the transaction in the database
             $t = new Transaction();
+            $t->utm_source = $utm_source;
             $t->user_id = $this->userinfoId;
             $t->lead_partner_quotes_id = $model->id;
 
