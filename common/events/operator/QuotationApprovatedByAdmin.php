@@ -33,6 +33,7 @@ class QuotationApprovatedByAdmin extends Event
         $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
         $this->quotation = $quotation;
         $this->payment_url  =  $payment_url;
+        $this->payment_url_email  =  $payment_url . '?utm_source=email';
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
@@ -69,7 +70,7 @@ class QuotationApprovatedByAdmin extends Event
                         'staycategory' => @$this->quotation->staycatgory->title,
                         'addional_notes' => $this->quotation->addional_notes,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->quotation->due_quatation->amount),
-                        'payment_url' => urlencode($this->payment_url),
+                        'payment_url' => urlencode($this->payment_url_email),
                         'qr_code' => isset($this->quotation->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file) : null,
                     ],
                     'to_mail' => $this->user->email,
