@@ -13,16 +13,18 @@ $this->title = 'Gallery';
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-4">
-                <div class="selectandsearchmain d-flex justify-content-between align-items-center">
-                    <div class="search-here position-relative">
-                        <input type="search" placeholder="Search" />
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <?php if (false) { ?>
+                    <div class="selectandsearchmain d-flex justify-content-between align-items-center">
+                        <div class="search-here position-relative">
+                            <input type="search" placeholder="Search" />
+                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        </div>
+                        <div class="d-flex align-items-center gap-4">
+                            <!-- <a href="" class="sequenceBtn">set sequence</a> -->
+                            <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center gap-4">
-                        <!-- <a href="" class="sequenceBtn">set sequence</a> -->
-                        <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
             <?php if ($dataProvider) {
                 foreach ($dataProvider->getModels() as $model) { ?>
