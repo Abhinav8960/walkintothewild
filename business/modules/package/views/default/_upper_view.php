@@ -21,13 +21,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <!-- <div class="edinBtn saveBtn">
                             <button type="btn">Save</button>
                         </div> -->
+
+                        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
+                            <div class="col-lg-2">
+                                <div class="editBtn float-end">
+                                    <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->id])], [ 'title' => 'Edit']) ?>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
                             <div class="edinBtn">
-                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['class' => 'btn', 'title' => 'Send For Approval']) ?>
+                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], [ 'title' => 'Send For Approval']) ?>
                             </div>
                         <?php } ?>
                         <div class="edinBtn copyBtn">
-                            <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['class' => 'btn', 'title' => 'Copy']) ?>
+                            <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], [ 'title' => 'Copy']) ?>
                         </div>
                         <!-- <div class="versions">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
@@ -319,13 +327,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         </div>
                     </div>
-                    <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
-                        <div class="col-lg-2">
-                            <div class="edinBtn float-end">
-                                <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn', 'title' => 'Edit']) ?>
-                            </div>
-                        </div>
-                    <?php } ?>
+
                 </div>
 
             </div>
@@ -377,3 +379,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </div>
+
+<style>
+
+
+    .editBtn a {
+        background-color: #237F40;
+        color: #ffffff;
+        border: 0;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 10px 50px;
+    }
+</style>
