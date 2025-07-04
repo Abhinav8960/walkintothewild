@@ -491,7 +491,7 @@ class DefaultController extends RestController
             "email" => $quotation->email,
             "phone" => $quotation->phone,
             'profile_display_image' => $quotation->lead->user->profile_display_image ?? null,
-
+            'partner' => $quotation->partner->business_name ?? null,
             "start_date" => date('M d, Y', strtotime($quotation->start_date)),
             "end_date" => date('M d, Y', strtotime($quotation->end_date)),
             // "validity_date" => date('M d, Y', strtotime($quotation->validity_date)),
