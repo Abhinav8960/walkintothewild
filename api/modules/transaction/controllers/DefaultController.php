@@ -89,8 +89,8 @@ class DefaultController extends RestController
             'amount' => $amount,
             'productinfo' => 'Lead Partner Quote Payment',
             'firstname' => $model->name,
-            // 'email' => $model->email,
-            'email' => 'annu@triline.co.in',
+            'email' => $model->email,
+            // 'email' => 'annu@triline.co.in',
             'phone' => $model->phone,
             'surl' => Yii::$app->params['payu']['successUrl'],
             'furl' => Yii::$app->params['payu']['failureUrl'],
@@ -482,7 +482,6 @@ class DefaultController extends RestController
         $data['quotation'] = [
             "quotation_id" => $quotation->id,
             "lead_id" => $quotation->lead_id,
-            "partner_name" => $quotation->partner->name ?? '',
             "park_name" => $quotation->park_label ?? '',
             "safaris" => $quotation->safaris,
             "travelers" => $quotation->travelers,
@@ -491,7 +490,7 @@ class DefaultController extends RestController
             "email" => $quotation->email,
             "phone" => $quotation->phone,
             'profile_display_image' => $quotation->lead->user->profile_display_image ?? null,
-
+            'partner' => $quotation->partner->business_name ?? null,
             "start_date" => date('M d, Y', strtotime($quotation->start_date)),
             "end_date" => date('M d, Y', strtotime($quotation->end_date)),
             // "validity_date" => date('M d, Y', strtotime($quotation->validity_date)),

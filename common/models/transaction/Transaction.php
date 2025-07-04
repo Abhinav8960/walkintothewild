@@ -345,15 +345,15 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getTransactionEvents()
     {
-        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quote_id' => 'lead_partner_quotes_id']);
+        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quote_id' => 'lead_partner_quotes_id'])->orderBy(['id' => SORT_ASC]);
     }
 
     public function triggerTransactionEvent()
     {
         if ($this->status == self::STATUS_SUCCESS) {
 
-            return \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_SUCCESS, $this->lead_partner_quotes_id, $this->id);
+            return \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_SUCCESS, $this->lead_id, $this->lead_partner_quotes_id, $this->id);
         }
-        return  \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_FAILED, $this->lead_partner_quotes_id, $this->id);
+        return  \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_FAILED, $this->lead_id, $this->lead_partner_quotes_id, $this->id);
     }
 }
