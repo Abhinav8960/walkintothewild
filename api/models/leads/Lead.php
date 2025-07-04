@@ -164,7 +164,7 @@ class Lead extends \common\models\leads\Lead
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getAssignOperator()
