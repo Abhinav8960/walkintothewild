@@ -474,4 +474,19 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         }
         return 0;
     }
+
+    public function getStatustags()
+    {
+        if ($this->status == PackageVersion::NOT_APPROVED_STATUS) {
+            return "In Draft";
+        } else if ($this->status == PackageVersion::APPROVED_AND_LIVE_STATUS) {
+            return "APPROVED_AND_LIVE_STATUS";
+        } else if ($this->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+            return "SEND_FOR_APPROVAL_STATUS";
+        } else if ($this->status == PackageVersion::EDIATBLE_STATUS) {
+            return "EDIATBLE_STATUS";
+        } else if ($this->status == PackageVersion::TERMINATED_STATUS) {
+            return "TERMINATED_STATUS";
+        }
+    }
 }

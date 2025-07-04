@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use common\models\package\PackageVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -78,11 +79,25 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'value' => function ($model) {
                             $html = '';
                             $features = $model->packagefeatures;
+                            $displayLimit = 2;
+                            $count = 0;
+                            $total = count($features);
+
                             foreach ($features as $key => $feature) {
                                 if (isset(GeneralModel::packagefeatureoption()[$feature->feature_id])) {
-                                    $html .= GeneralModel::packagefeatureoption()[$feature->feature_id] . ', ';
+                                    $text = GeneralModel::packagefeatureoption()[$feature->feature_id];
+                                    if ($count < $displayLimit) {
+                                        $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">' . htmlspecialchars($text) . '</span>';
+                                    }
+                                    $count++;
                                 }
                             }
+
+                            if ($count > $displayLimit) {
+                                $remaining = $count - $displayLimit;
+                                $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">+' . $remaining . '</span>';
+                            }
+
                             return $html;
                         }
                     ],
@@ -101,27 +116,27 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                     //         return $html;
                     //     }
                     // ],
-                    [
-                        'label' => 'Live Version',
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            if (!empty($model->live_version->final_approved_at)) {
-                                // return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
-                                //     'class' => 'btn btn-sm btn-primary',
-                                // ]);
-                                return date("F j, Y, g:i a", $model->live_version->final_approved_at);
-                            }
-                            return '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Live Version',
+                    //     'headerOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         if (!empty($model->live_version->final_approved_at)) {
+                    //             // return Html::a($model->live_version->version, Url::toRoute(['view', 'id' => $model->id]), [
+                    //             //     'class' => 'btn btn-sm btn-primary',
+                    //             // ]);
+                    //             return date("F j, Y, g:i a", $model->live_version->final_approved_at);
+                    //         }
+                    //         return '';
+                    //     }
+                    // ],
 
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->newstatuslabel;
+                            return $model->statustags;
                         }
                     ],
 
@@ -132,13 +147,17 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
                         'buttons' => [
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
-                                ', ['/package/default/update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
 
-                                ]);
+                            'update' => function ($url, $model) {
+                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
+                                ', ['/package/default/update', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+
+                                    ]);
+                                }
+                                return '';
                             },
                             'view' => function ($url, $model) {
                                 return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->id], [
