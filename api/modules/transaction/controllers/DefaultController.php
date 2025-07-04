@@ -324,7 +324,7 @@ class DefaultController extends RestController
                 $transaction->rollBack();
                 return false;
             }
-            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_INITIATED, $lead_partner_quotes_id, $t->id);
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_INITIATED,$model->lead_id, $lead_partner_quotes_id, $t->id);
 
             $transaction->commit();
             return true;
@@ -462,7 +462,7 @@ class DefaultController extends RestController
             // 'updated_at' => date('Y-m-d H:i:s', $model->updated_at),
             // Add other fields as necessary
         ];
-        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quotes_id, $model->id);
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN,$model->lead_id, $model->lead_partner_quotes_id, $model->id);
 
 
         return Yii::$app->api->sendResponse($data);
@@ -508,7 +508,7 @@ class DefaultController extends RestController
             //     ];
             // }, $quotation->installments ?? []),
         ];
-        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_CART_OPEN, $quotation->id, $transaction_id = null);
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_CART_OPEN,$quotation->lead_id, $quotation->id, $transaction_id = null);
 
         return Yii::$app->api->sendResponse($data);
     }
