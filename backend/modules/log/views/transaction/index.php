@@ -19,7 +19,7 @@ $this->params['title'] = $this->title;
 <div class="card">
 
     <div class="card-body">
-        <?php  $this->render('_search', ['model' => $searchModel]); ?>
+        <?php $this->render('_search', ['model' => $searchModel]); ?>
 
         <div class="table-responsive">
             <?= GridView::widget([
@@ -31,7 +31,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->reference_id . ' / ' . $model->reference_id;
+                            return $model->reference_id . ' / ' . $model->order_id;
                         }
                     ],
                     [
