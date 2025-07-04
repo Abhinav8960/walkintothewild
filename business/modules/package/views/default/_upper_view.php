@@ -64,7 +64,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/Icon-feather-heart.svg" alt="Wishlist">
+                                <img src="<?= $this->params['baseurl'] ?>/images/whislist.svg" alt="Wishlist">
                             </div>
                             <div class="text-card">
                                 <p>Wishlist</p>
@@ -87,7 +87,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/quote.svg" alt="Quotes">
+                                <img src="<?= $this->params['baseurl'] ?>/images/quote_request.svg" alt="Quotes">
                             </div>
                             <div class="text-card">
                                 <p>Quote Requests</p>
@@ -137,7 +137,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="cardChild d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-2 align-items-center">
                             <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/comment.svg" alt="Comment">
+                                <img src="<?= $this->params['baseurl'] ?>/images/package_comment.svg" alt="Comment">
                             </div>
                             <div class="text-card">
                                 <p>Comments</p>
