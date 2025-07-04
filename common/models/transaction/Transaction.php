@@ -2,12 +2,17 @@
 
 namespace common\models\transaction;
 
+use common\models\leads\Lead;
+use common\models\meta\MetaStayCategory;
+use common\models\operator\SafariOperator;
+use common\models\park\SafariPark;
 use Yii;
 
 /**
  * This is the model class for table "transaction".
  *
  * @property int $id
+ * @property int $user_id
  * @property string $reference_id
  * @property int $lead_partner_quotes_id
  * @property int $lead_partner_quote_installments_id
@@ -34,7 +39,7 @@ use Yii;
  * @property float $partner_net_selling_price
  * @property float $plateform_customer_discount
  * @property float $net_payment_price
- * @property int $installment
+ * @property int $installment Installment_id
  * @property float $received_amount
  * @property string|null $addtional_data
  * @property string|null $datetime_of_approval_by_admin
@@ -59,7 +64,13 @@ use Yii;
  * @property string|null $param3
  * @property string|null $param4
  * @property string|null $param5
- * @property int|null $status
+ * @property string|null $device
+ * @property string|null $platform
+ * @property string|null $platform_version
+ * @property string|null $browser
+ * @property string|null $browser_version
+ * @property string|null $application_version
+ * @property int|null $status 0=>initiated,1=>Success,2=>Failed,3=>Hold,4=>Refunded
  */
 class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
@@ -125,22 +136,23 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function rules()
     {
         return [
-            [['park_id', 'addional_notes', 'user_id', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
+            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'default', 'value' => null],
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['reference_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
-            [['lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
+            [['user_id', 'reference_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
+            [['user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['addional_notes'], 'string'],
             [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
-            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'string', 'max' => 255],
+            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 3],
             [['phone'], 'string', 'max' => 50],
             [['billing_zip'], 'string', 'max' => 30],
             [['billing_tel'], 'string', 'max' => 20],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -152,7 +164,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             'user_id' => 'User ID',
             'reference_id' => 'Reference ID',
             'lead_partner_quotes_id' => 'Lead Partner Quotes ID',
-            'lead_partner_quote_installments_id' => 'Lead Partner Quotes Lead Partner Quote Installments     ID',
+            'lead_partner_quote_installments_id' => 'Lead Partner Quote Installments ID',
             'order_id' => 'Order ID',
             'currency' => 'Currency',
             'lead_partner_id' => 'Lead Partner ID',
@@ -201,9 +213,16 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             'param3' => 'Param3',
             'param4' => 'Param4',
             'param5' => 'Param5',
+            'device' => 'Device',
+            'platform' => 'Platform',
+            'platform_version' => 'Platform Version',
+            'browser' => 'Browser',
+            'browser_version' => 'Browser Version',
+            'application_version' => 'Application Version',
             'status' => 'Status',
         ];
     }
+
 
     public static function orderId($identifier)
     {
@@ -220,6 +239,9 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         // if ststus is 1 the create a row in booking table
         if ($this->status == self::STATUS_SUCCESS) {
             $this->makebooking();
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_SUCCESS, $this->lead_partner_quotes_id, $this->id);
+        } else {
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_FAILED, $this->lead_partner_quotes_id, $this->id);
         }
         parent::afterSave($insert, $changedAttributes);
     }
@@ -278,5 +300,54 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         // set the status to 1
         $booking->status = 1;
         return $booking->save(false);
+    }
+
+    public function getStatusLabel()
+    {
+        $arr = [
+            self::STATUS_INITIATED => "INITIATED",
+            self::STATUS_SUCCESS => "SUCCESS",
+            self::STATUS_FAILED => "FAILED",
+            self::STATUS_HOLD => "HOLD",
+            self::STATUS_REFUNDED => "REFUNDED",
+            self::STATUS_CONFLICT => "CONFLICT"
+        ];
+        return ucfirst($arr[$this->status]) ?? '';
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
+
+    public function getPark_label()
+    {
+        return $this->park->title ?? null;
+    }
+
+    public function getLead()
+    {
+        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
+    }
+
+
+    public function getStaycatgory_lable()
+    {
+        return $this->staycatgory->title ?? null;
+    }
+
+    public function getTransactionEvents()
+    {
+        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quotes_id' => 'lead_partner_quotes_id']);
     }
 }

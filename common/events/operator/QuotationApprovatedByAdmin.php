@@ -73,7 +73,9 @@ class QuotationApprovatedByAdmin extends Event
                         'qr_code' => isset($this->quotation->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file) : null,
                     ],
                     'to_mail' => $this->user->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail'],
+                    ],
                     'bcc' => [],
                 ],
                 [
@@ -96,7 +98,9 @@ class QuotationApprovatedByAdmin extends Event
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->quotation->due_quatation->amount),
                     ],
                     'to_mail' => $this->partner_user->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail'],
+                    ],
                     'bcc' => [],
                 ]
             ],

@@ -180,9 +180,9 @@ class DefaultController extends RestController
                 $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
                 return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
-            if ($chat_model->is_closed == 1) {
-                return Yii::$app->api->sendResponse([], ['message' => 'Chat is closed, you can not reply'], 400);
-            }
+            // if ($chat_model->is_closed == 1) {
+            //     return Yii::$app->api->sendResponse([], ['message' => 'Chat is closed, you can not reply'], 400);
+            // }
         } else {
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         }
@@ -382,9 +382,9 @@ class DefaultController extends RestController
         $partner = SafariOperator::find()->where(['user_id' => $this->userinfo->id])->one();
 
         $m = $this->findLeadModel($lead_id, $partner);
-        if ($m->is_payment_received == 1) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "This lead is closed. You can not send quotation."]);
-        }
+        // if ($m->is_payment_received == 1) {
+        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "This lead is closed. You can not send quotation."]);
+        // }
         $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => $partner->id])->one();
         // $lead_partner = LeadPartners::find()->where(['lead_id' => $m->id, 'partner_id' => 87])->one();
         $model = new LeadPartnerQuotationForm();
@@ -403,6 +403,13 @@ class DefaultController extends RestController
 
         // return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not Send"]);
     }
+
+
+
+
+
+
+    
 
     protected function findLeadModel($id, $partner)
     {

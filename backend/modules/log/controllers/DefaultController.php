@@ -6,6 +6,7 @@ use common\models\MailLog;
 use common\models\MailLogSearch;
 use common\models\master\email\MasterMailTemplate;
 use common\models\sharesafari\ShareSafari;
+use common\models\transaction\TransactionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -30,11 +31,12 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionView($id){
+    public function actionView($id)
+    {
         $model = $this->findModel($id);
-        $master_mail_template = MasterMailTemplate :: find()->where(['id'=>$model->mail_template_id , 'status'=>MasterMailTemplate :: STATUS_ACTIVE])->one();
+        $master_mail_template = MasterMailTemplate::find()->where(['id' => $model->mail_template_id, 'status' => MasterMailTemplate::STATUS_ACTIVE])->one();
         return $this->render('view', [
-            'master_mail_template'=>$master_mail_template,
+            'master_mail_template' => $master_mail_template,
             'model' => $model,
         ]);
     }
@@ -46,5 +48,17 @@ class DefaultController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionTransaction()
+    {
+
+        $searchModel = new TransactionSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('transaction', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

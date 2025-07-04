@@ -57,10 +57,10 @@ class DefaultController extends RestController
         if ($model->is_payment_received == 1) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment already received for this"]);
         }
-        if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
-            Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
-        }
+        // if ($model->status != LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED) {
+        //     Yii::$app->session->setFlash('error', 'Lead Partner Quote is not approved by admin.');
+        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Lead Partner Quote is not approved by admin."]);
+        // }
 
         // Fetch PayU configuration parameters
         $merchantKey = Yii::$app->params['payu']['merchantKey'];
@@ -103,6 +103,7 @@ class DefaultController extends RestController
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
         $this->storePayu($lead_partner_quotes_id,  $store);
+
         return Yii::$app->api->sendResponse($data);
     }
 
@@ -299,6 +300,20 @@ class DefaultController extends RestController
             // $t->param3 = $model->id;
             // $t->param4 = $model->installment->id ?? null;
             // $t->param5 = $model->installment->installment ?? 0;
+            $headers = Yii::$app->getRequest()->getHeaders();
+            $device = strtolower($headers->get('x-device')) ?? null;
+            $platform = strtolower($headers->get('x-platform')) ?? null;
+            $platform_version = strtolower($headers->get('x-platform-version')) ?? null;
+            $application_version = strtolower($headers->get('x-application-version')) ?? null;
+            $t->device = $device;
+            $t->platform = $platform;
+            $t->platform_version = $platform_version;
+            $t->browser = null;
+            $t->browser_version = null;
+            $t->application_version =  $application_version;
+
+
+
             $t->status = Transaction::STATUS_INITIATED;
             $t->created_at = time();
             $t->updated_at = time();
@@ -309,6 +324,8 @@ class DefaultController extends RestController
                 $transaction->rollBack();
                 return false;
             }
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_INITIATED, $lead_partner_quotes_id, $t->id);
+
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
@@ -445,6 +462,8 @@ class DefaultController extends RestController
             // 'updated_at' => date('Y-m-d H:i:s', $model->updated_at),
             // Add other fields as necessary
         ];
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quote_id, $model->id);
+
         return Yii::$app->api->sendResponse($data);
     }
 
@@ -487,6 +506,7 @@ class DefaultController extends RestController
             //     ];
             // }, $quotation->installments ?? []),
         ];
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_CART_OPEN, $quotation->id, $transaction_id = null);
 
         return Yii::$app->api->sendResponse($data);
     }

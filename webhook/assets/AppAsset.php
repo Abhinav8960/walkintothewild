@@ -1,11 +1,11 @@
 <?php
 
-namespace webhook\assets;
+namespace backend\assets;
 
 use yii\web\AssetBundle;
 
 /**
- * Main webhook application asset bundle.
+ * Main backend application asset bundle.
  */
 class AppAsset extends AssetBundle
 {
