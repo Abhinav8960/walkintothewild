@@ -9,6 +9,7 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+$this->title = 'Package';
 
 ?>
 
@@ -31,96 +32,107 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <p><?= $package->package_description ?></p>
                                     </div>
                                 </div>
-                                <?php if (false) { ?>
+
+                                <?php if ($package->live_version) { ?>
                                     <div class="col-xl-12">
                                         <div class="itrnTextCard py-4">
-                                            <h6>2 Comments</h6>
+                                            <h6><?= $package->commentCount ?> Comments</h6>
                                             <div class="one_box position-relative pb-4">
-                                                <div class="postcomment d-flex gap-2 pt-3 w-100">
-                                                    <div class="avatar"><a href="/profile/user/anil-kumar"
-                                                            data-discover="true"><img alt="Profile"
-                                                                class="rounded-circle bg-info"
-                                                                title="Anil Kumar" src=""></a>
-                                                    </div>
-                                                    <div class="text_com">
-                                                        <div
-                                                            class="requestContact d-flex gap-2 align-items-center font-color">
-                                                            <a href="/profile/user/anil-kumar"
-                                                                data-discover="true"><span
-                                                                    class="comment-author">Rahul
-                                                                    Kumar</span></a>
-                                                        </div>
-                                                        <p>Oh, that sounds amazing! I've always wanted to
-                                                            experience the thrill of seeing wild animals up
-                                                            close.</p>
-                                                    </div>
-                                                </div>
+                                                <?php if ($live_package = $package->livePackage) {
+                                                    if ($parent_comments = $live_package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
+                                                        foreach ($parent_comments as $comments) {
+                                                            $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all();
+
+                                                ?>
+                                                            <div class="postcomment d-flex gap-2 pt-3 w-100">
+                                                                <div class="avatar">
+                                                                    <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
+                                                                        class="rounded-circle bg-info">
+                                                                </div>
+                                                                <div class="text_com">
+                                                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                        <span class="comment-author"><?= $comments->user->name ?></span>
+                                                                        <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                                                    </div>
+                                                                    <p><?= $comments->comment ?></p>
+                                                                    <div class="user-active d-flex align-items-center gap-2">
+                                                                        <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
+                                                                    </div>
+                                                                    <?php if ($replies) { ?>
+                                                                        <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
+                                                                            <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
+                                                                                <a href=""><span>Hide replies</span></a>
+                                                                            </div>
+                                                                            <?php foreach ($replies as $reply) { ?>
+                                                                                <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                                                                    <div class="avatar">
+                                                                                        <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
+                                                                                    </div>
+                                                                                    <div class="text_com">
+                                                                                        <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                                            <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                                            <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
+                                                                                        </div>
+                                                                                        <p><?= $reply->comment ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            <?php } ?>
+                                                                        </div>
+                                                                    <?php } ?>
+
+                                                                </div>
+                                                            </div>
+                                                <?php }
+                                                    }
+                                                } ?>
                                             </div>
-                                            <div class="one_box position-relative pb-4">
-                                                <div class="postcomment d-flex gap-2 pt-3 w-100">
-                                                    <div class="avatar"><a href="/profile/user/anil-kumar"
-                                                            data-discover="true"><img alt="Profile"
-                                                                class="rounded-circle bg-info"
-                                                                title="Anil Kumar" src=""></a>
-                                                    </div>
-                                                    <div class="text_com">
-                                                        <div
-                                                            class="requestContact d-flex gap-2 align-items-center font-color">
-                                                            <a href="/profile/user/anil-kumar"
-                                                                data-discover="true"><span
-                                                                    class="comment-author">Rahul
-                                                                    Kumar</span></a>
-                                                        </div>
-                                                        <p>Oh, that sounds amazing! I've always wanted to
-                                                            experience the thrill of seeing wild animals up
-                                                            close.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <form id="comment-form"><input type="hidden" value="TOKEN_HERE"
-                                                    name="_csrf-frontend">
-                                                <div class="comments-persons px-0 pt-4">
-                                                    <div class="postcomment d-flex gap-3">
-                                                        <div class="avatar"><a
-                                                                href="/profile/user/md-sarwar"
-                                                                data-discover="true"><img alt="" width="30"
-                                                                    height="30"
-                                                                    class="me-1 d-xl-inline-flex rounded-circle bg-info"
-                                                                    src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
-                                                        </div>
-                                                        <div class="text-area">
-                                                            <div
-                                                                class="mb-3 field-sharesafaricommentform-comment required">
-                                                                <textarea
-                                                                    id="sharesafaricommentform-comment"
-                                                                    class="form-control w-100"
-                                                                    name="ShareSafariCommentForm[comment]"
-                                                                    rows="5"
-                                                                    placeholder="Write a comment..."></textarea>
+
+                                            <?php if (false) { ?>
+                                                <form id="comment-form"><input type="hidden" value="TOKEN_HERE"
+                                                        name="_csrf-frontend">
+                                                    <div class="comments-persons px-0 pt-4">
+                                                        <div class="postcomment d-flex gap-3">
+                                                            <div class="avatar"><a
+                                                                    href="/profile/user/md-sarwar"
+                                                                    data-discover="true"><img alt="" width="30"
+                                                                        height="30"
+                                                                        class="me-1 d-xl-inline-flex rounded-circle bg-info"
+                                                                        src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
+                                                            </div>
+                                                            <div class="text-area">
+                                                                <div
+                                                                    class="mb-3 field-sharesafaricommentform-comment required">
+                                                                    <textarea
+                                                                        id="sharesafaricommentform-comment"
+                                                                        class="form-control w-100"
+                                                                        name="ShareSafariCommentForm[comment]"
+                                                                        rows="5"
+                                                                        placeholder="Write a comment..."></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="comments-persons px-4 pt-2">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-lg-12 col-xl-8">
-                                                            <!-- <div class="post_text padding_ad">
+                                                    <div class="comments-persons px-4 pt-2">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-12 col-xl-8">
+                                                                <!-- <div class="post_text padding_ad">
                                                                             <p>Commenting on this thread will notify all
                                                                                 event attendees and will also be visible
                                                                                 to everyone viewing the event.</p>
                                                                         </div> -->
-                                                        </div>
-                                                        <div class="col-lg-12 col-xl-4">
-                                                            <div
-                                                                class="comment_button float-end mb-lg-0 mb-3">
-                                                                <button type="submit"
-                                                                    class="post-comment">Post
-                                                                    Comment</button>
+                                                            </div>
+                                                            <div class="col-lg-12 col-xl-4">
+                                                                <div
+                                                                    class="comment_button float-end mb-lg-0 mb-3">
+                                                                    <button type="submit"
+                                                                        class="post-comment">Post
+                                                                        Comment</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -153,12 +165,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <p class="mb-0">
                             <?php if ($package->versions) {
                                 foreach ($package->versions as $v) { ?>
-                                <div>
-                                    <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
-                                        <?= $v->version ?>-<?= $v->statusLabel ?>
-                                    </a>
-                                </div>
-                            <?php }
+                        <div>
+                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
+                                <?= $v->version ?>-<?= $v->statusLabel ?>
+                            </a>
+                        </div>
+                <?php }
                             } ?></p>
                     </div>
                 </div>
@@ -167,3 +179,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
 </section>
 <!-- </div> -->
+
+
+
+<?php
+$js = <<<JS
+
+$(document).on('click', '.show-replies', function() {
+    var id = $(this).data('id');
+    $('#replies-wrapper-' + id).slideDown();
+    $(this).show();
+});
+
+
+$(document).on('click', '.hide-replies', function() {
+    var id = $(this).data('id');
+    $('#replies-wrapper-' + id).slideUp();
+});
+JS;
+
+$this->registerJs($js);
+?>

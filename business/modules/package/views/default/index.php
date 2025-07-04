@@ -6,6 +6,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 $this->title = 'Package';
 // $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-created new create float-end mt-3', 'title' => 'Create']);
@@ -150,7 +153,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
 
                             'update' => function ($url, $model) {
                                 if ($model->status == PackageVersion::EDIATBLE_STATUS) {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
                                 ', ['/package/default/update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',

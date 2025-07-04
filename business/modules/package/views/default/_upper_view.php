@@ -5,7 +5,8 @@ use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 <section class="topHead mx-3">
@@ -87,11 +88,11 @@ use yii\helpers\Url;
 
                         <?php if ($package->live_version) { ?>
                             <div class="numbwrCount">
-                                <h3>300</h3>
+                                <h3><?= $package->leadCount ?></h3>
                             </div>
                         <?php } else {  ?>
                             <div class="numbwrCount">
-                                <h3><?= $package->leadCount ?></h3>
+                                <h3>0</h3>
                             </div>
                         <?php } ?>
                     </div>
@@ -355,14 +356,8 @@ use yii\helpers\Url;
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
                                     data-bs-target="#Exclusions" type="button" role="tab"
                                     aria-controls="contact"
-                                    aria-selected="false">Getting There</button>
+                                    aria-selected="false" style="white-space: nowrap;">Getting There</button>
                             </li>
-                            <!-- <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#Accomodation" type="button" role="tab"
-                                aria-controls="contact"
-                                aria-selected="false">Accomodation</button>
-                        </li> -->
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
                                     data-bs-target="#common" type="button" role="tab"
