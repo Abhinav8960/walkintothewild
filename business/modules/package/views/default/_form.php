@@ -101,7 +101,7 @@ use kartik\datetime\DateTimePicker;
 
     <div class="row row-cols-md-3 row-cols-lg-4">
         <div class="form_boxes mb-3">
-            <label for="">Accommodation Type <span>*</span></label>
+            <label for="">Stay Category<span>*</span></label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">

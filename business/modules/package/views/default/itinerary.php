@@ -64,8 +64,8 @@ $this->params['title'] = $this->title;
                                                     ])->label(false); ?>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
+
+
                                             <div class="col-lg-12">
                                                 <div class="form_boxes mb-3">
                                                     <label for="">Overview <span>*</span></label>
@@ -77,162 +77,165 @@ $this->params['title'] = $this->title;
                                                     ])->label(false) ?>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-lg-2">
-                                                <div class="row">
-                                                    <?php if ($model->package_day_model->day_image) { ?>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="form_boxes mb-3">
-                                                                    <label for="">Package Image (JPEG / JPG
-                                                                        / PNG / 250kb)
-                                                                        <span>*</span></label>
-                                                                    <div class="form-group mt-2">
-                                                                        <label for="fileField<?= $i ?>"
-                                                                            class="attachment">
-                                                                            <div class="row btn-file">
-                                                                                <div
-                                                                                    class="btn-file__preview">
-                                                                                </div>
-                                                                                <div
-                                                                                    class="btn-file__actions">
+
+                                            <?php if (false) { ?>
+                                                <!-- <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="row">
+                                                        <?php if ($model->package_day_model->day_image) { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="form_boxes mb-3">
+                                                                        <label for="">Package Image (JPEG / JPG
+                                                                            / PNG / 250kb)
+                                                                            <span>*</span></label>
+                                                                        <div class="form-group mt-2">
+                                                                            <label for="fileField<?= $i ?>"
+                                                                                class="attachment">
+                                                                                <div class="row btn-file">
                                                                                     <div
-                                                                                        class="btn-file__actions__item col-xs-12 text-center rounded-0">
+                                                                                        class="btn-file__preview">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="btn-file__actions">
                                                                                         <div
-                                                                                            class="btn-file__actions__item--shadow">
-                                                                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                                                                aria-hidden="true"></i>
+                                                                                            class="btn-file__actions__item col-xs-12 text-center rounded-0">
                                                                                             <div
-                                                                                                class="visible-xs-block">
+                                                                                                class="btn-file__actions__item--shadow">
+                                                                                                <i class="fa fa-plus fa-lg fa-fw"
+                                                                                                    aria-hidden="true"></i>
+                                                                                                <div
+                                                                                                    class="visible-xs-block">
+                                                                                                </div>
+                                                                                                Select file
                                                                                             </div>
-                                                                                            Select file
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
-                                                                        </label>
+                                                                                <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
-                                                        </div>
-                                                    <?php } else { ?>
-                                                        <div class="row">
                                                             <div class="col-lg-12">
-                                                                <div class="form_boxes mb-3">
-                                                                    <label for="">Package Image (JPEG / JPG
-                                                                        / PNG / 250kb)
-                                                                        <span>*</span></label>
-                                                                    <div class="form-group mt-2">
-                                                                        <label for="fileField<?= $i ?>"
-                                                                            class="attachment">
-                                                                            <div class="row btn-file">
-                                                                                <div
-                                                                                    class="btn-file__preview">
-                                                                                </div>
-                                                                                <div
-                                                                                    class="btn-file__actions">
+                                                                <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="form_boxes mb-3">
+                                                                        <label for="">Package Image (JPEG / JPG
+                                                                            / PNG / 250kb)
+                                                                            <span>*</span></label>
+                                                                        <div class="form-group mt-2">
+                                                                            <label for="fileField<?= $i ?>"
+                                                                                class="attachment">
+                                                                                <div class="row btn-file">
                                                                                     <div
-                                                                                        class="btn-file__actions__item col-xs-12 text-center rounded-0">
+                                                                                        class="btn-file__preview">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="btn-file__actions">
                                                                                         <div
-                                                                                            class="btn-file__actions__item--shadow">
-                                                                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                                                                aria-hidden="true"></i>
+                                                                                            class="btn-file__actions__item col-xs-12 text-center rounded-0">
                                                                                             <div
-                                                                                                class="visible-xs-block">
+                                                                                                class="btn-file__actions__item--shadow">
+                                                                                                <i class="fa fa-plus fa-lg fa-fw"
+                                                                                                    aria-hidden="true"></i>
+                                                                                                <div
+                                                                                                    class="visible-xs-block">
+                                                                                                </div>
+                                                                                                Select file
                                                                                             </div>
-                                                                                            Select file
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
-                                                                        </label>
+                                                                                <?= $form->field($model, 'day_image')->fileInput(['id' => 'fileField' . $i])->label(false) ?>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    <?php } ?>
+                                                        <?php } ?>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-10">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Start Location</label>
-                                                            <?= $form->field($model, 'start_location')->textInput([
-                                                                'maxlength' => true,
-                                                                'placeholder' => 'Enter',
-                                                                'id' => 'dayitineraryform-start_location' . $i,
-                                                                'class' => 'form-control'
-                                                            ])->label(false); ?>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">End Location</label>
-                                                            <?= $form->field($model, 'end_location')->textInput([
-                                                                'maxlength' => true,
-                                                                'placeholder' => 'Enter',
-                                                                'id' => 'dayitineraryform-end_location' . $i,
-                                                                'class' => 'form-control'
-                                                            ])->label(false); ?>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Accommodation
-                                                                <span>*</span></label>
-                                                            <?= $form->field($model, 'hotel_name')->textInput([
-                                                                'maxlength' => true,
-                                                                'placeholder' => 'Enter',
-                                                                'id' => 'dayitineraryform-hotel_name' . $i,
-                                                                'class' => 'form-control'
-                                                            ])->label(false) ?>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Accommodation
-                                                                Latitude</label>
-                                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Accommodation
-                                                                Longitude</label>
-                                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
-                                                        </div>
-                                                    </div>
-                                                    <?php
-
-                                                    $latitude = $model->latitude;
-                                                    $longitude = $model->longitude;
-
-                                                    $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
-
-                                                    if (!empty($latitude) && !empty($longitude)) {
-                                                    ?>
+                                                <div class="col-lg-10">
+                                                    <div class="row">
                                                         <div class="col-md-4">
-                                                            <iframe width="200" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
-                                                            </iframe>
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">Start Location</label>
+                                                                <?= $form->field($model, 'start_location')->textInput([
+                                                                    'maxlength' => true,
+                                                                    'placeholder' => 'Enter',
+                                                                    'id' => 'dayitineraryform-start_location' . $i,
+                                                                    'class' => 'form-control'
+                                                                ])->label(false); ?>
+                                                            </div>
                                                         </div>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">End Location</label>
+                                                                <?= $form->field($model, 'end_location')->textInput([
+                                                                    'maxlength' => true,
+                                                                    'placeholder' => 'Enter',
+                                                                    'id' => 'dayitineraryform-end_location' . $i,
+                                                                    'class' => 'form-control'
+                                                                ])->label(false); ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">Accommodation
+                                                                    <span>*</span></label>
+                                                                <?= $form->field($model, 'hotel_name')->textInput([
+                                                                    'maxlength' => true,
+                                                                    'placeholder' => 'Enter',
+                                                                    'id' => 'dayitineraryform-hotel_name' . $i,
+                                                                    'class' => 'form-control'
+                                                                ])->label(false) ?>
+                                                            </div>
+                                                        </div>
 
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="form-group float-end">
-                                                <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                                                        <div class="col-md-4">
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">Accommodation
+                                                                    Latitude</label>
+                                                                <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">Accommodation
+                                                                    Longitude</label>
+                                                                <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'form-control'])->label(false) ?>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+
+                                                        $latitude = $model->latitude;
+                                                        $longitude = $model->longitude;
+
+                                                        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+
+                                                        if (!empty($latitude) && !empty($longitude)) {
+                                                        ?>
+                                                            <div class="col-md-4">
+                                                                <iframe width="200" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+                                                                </iframe>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                            </div> -->
+                                            <?php } ?>
+                                            <div class="col-lg-12">
+                                                <div class="form-group float-end">
+                                                    <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                                                </div>
                                             </div>
                                         </div>
                                         <?php ActiveForm::end(); ?>
