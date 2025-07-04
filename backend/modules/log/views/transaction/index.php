@@ -19,7 +19,7 @@ $this->params['title'] = $this->title;
 <div class="card">
 
     <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php  $this->render('_search', ['model' => $searchModel]); ?>
 
         <div class="table-responsive">
             <?= GridView::widget([
