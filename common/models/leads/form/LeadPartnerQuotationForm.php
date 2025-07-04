@@ -207,7 +207,7 @@ class LeadPartnerQuotationForm extends Model
     public function markApprove($id)
     {
         $payment_hash = GeneralModel::encrypt($id);
-        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payu/' . $payment_hash;
+        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payment/' . $payment_hash;
         $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage') ?? 0;
         // $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
 
