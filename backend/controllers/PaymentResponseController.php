@@ -94,6 +94,7 @@ class PaymentResponseController extends Controller
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
                 $message = "Payment Received";
+                
             } elseif (strtolower($data['status']) == 'failure') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_FAILED;
             } elseif (strtolower($data['status']) == 'pending') {

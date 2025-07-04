@@ -220,6 +220,9 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         // if ststus is 1 the create a row in booking table
         if ($this->status == self::STATUS_SUCCESS) {
             $this->makebooking();
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_SUCCESS, $this->lead_partner_quotes_id, $this->id);
+        } else {
+            \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_FAILED, $this->lead_partner_quotes_id, $this->id);
         }
         parent::afterSave($insert, $changedAttributes);
     }
