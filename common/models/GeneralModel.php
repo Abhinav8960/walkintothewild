@@ -1957,7 +1957,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         return $decrypted_data;
     }
-    
+
     public static function maskContactInfoInString(string $text): string
     {
 
@@ -2123,5 +2123,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '3' => 'Draft',
             '4' => 'Terminated',
         ];
+    }
+
+    public static function generatePdf($viewPath, $params = [])
+    {
+        // Render the partial view
+        return $content = Yii::$app->view->renderFile(Yii::getAlias($viewPath), $params);
+
+        // // Generate the PDF
+        // $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+        // $pdf->WriteHTML($content);
+        // $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $params['quotation']->id . '.pdf';
+        // $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+        // return $pdfFilePath;
     }
 }
