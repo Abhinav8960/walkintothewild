@@ -462,7 +462,8 @@ class DefaultController extends RestController
             // 'updated_at' => date('Y-m-d H:i:s', $model->updated_at),
             // Add other fields as necessary
         ];
-        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quote_id, $model->id);
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quotes_id, $model->id);
+
 
         return Yii::$app->api->sendResponse($data);
     }
