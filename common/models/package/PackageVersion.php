@@ -3,11 +3,13 @@
 namespace common\models\package;
 
 use common\models\feeds\Feeds;
+use common\models\leads\Lead;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\UserWishlist;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 
@@ -442,4 +444,50 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         ];
         return $arr[$this->status] ?? "";
     }
+
+    public function getWhislistCount()
+    {
+        $whislist_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($whislist_package) {
+            return UserWishlist::find()->where(['item_type_id' => 1, 'item_id' => $whislist_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getLeadCount()
+    {
+        $lead_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($lead_package) {
+            return Lead::find()->where(['source' => Lead::SOURCE_PACKAGE, 'package_id' => $lead_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getCommentCount()
+    {
+        $comment_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($comment_package) {
+            $count = PackageComment::find()->where(['package_id' => $comment_package->id])->andWhere(['status' => 1])->count();
+            if ($count > 0) {
+                return $count;
+            }
+        }
+        return 0;
+    }
+
+    public function getStatustags()
+    {
+        if ($this->status == PackageVersion::NOT_APPROVED_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        } else if ($this->status == PackageVersion::APPROVED_AND_LIVE_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+        } else if ($this->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/pending.svg'>";
+        } else if ($this->status == PackageVersion::EDIATBLE_STATUS) {
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/draft.svg'>";
+        } else if ($this->status == PackageVersion::TERMINATED_STATUS) {
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        }
+    }
+
 }

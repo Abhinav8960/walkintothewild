@@ -47,6 +47,7 @@ class DefaultController extends Controller
 
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $model->package_id;
+        $searchModel->version = $model->version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 

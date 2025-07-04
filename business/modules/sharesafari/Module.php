@@ -21,10 +21,9 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
-        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id,'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->exists()) {
+        if (!SafariOperator::find()->where(['user_id' => \Yii::$app->user->id, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->exists()) {
             \Yii::$app->getResponse()->redirect(['/partner-registration/create'])->send();
             \Yii::$app->end();
-
         }
 
         // if (!Yii::$app->request->isConsoleRequest) {

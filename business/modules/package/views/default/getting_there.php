@@ -2,21 +2,23 @@
 
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package_version_model->package_name . '';
-?>
-<?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+$this->params['title'] = $this->title;
 
-<div class="panel panel-primary tabs-style-2">
+?>
+<?php if (false) { ?>
+    <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+<?php } ?>
+
+<div class="tabs-formswrapper mx-3">
     <?= $this->render('_navbar', ['package' => $package_version_model, 'getting_there_active' => 'active']) ?>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
-        <div class="tab-content">
-            <div class="tab-pane active">
-                <?= $this->render('_getting_there_form', [
-                    'model' => $model,
-                ]) ?>
-            </div>
-        </div>
+    <div class="tabs-content-wraps">
+        <?= $this->render('_getting_there_form', [
+            'model' => $model,
+        ]) ?>
     </div>
 </div>

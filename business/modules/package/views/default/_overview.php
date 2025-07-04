@@ -8,9 +8,9 @@
                         foreach ($packagedays as $packageday) { ?>
                             <div class="accordion-item itinerary_item mt-2">
                                 <h2 class="accordion-header" id="heading<?= $packageday->day ?>">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $packageday->day ?>" aria-expanded="true" aria-controls="collapse<?= $packageday->day ?>">
+                                    <div class="accordion-button custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $packageday->day ?>" aria-expanded="true" aria-controls="collapse<?= $packageday->day ?>">
                                         DAY <?= $packageday->day ?> - <?= $packageday->day_title ?>
-                                    </button>
+                                    </div>
                                 </h2>
                                 <div id="collapse<?= $packageday->day ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $packageday->day ?>" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
@@ -21,59 +21,60 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-4 mb-3">
-                                                <div class="titles_locations">
-                                                    <h6 class="fs-5">Start Location</h6>
-                                                    <p><?= $packageday->start_location ?></p>
+                                        <?php if (false) { ?>
+                                            <div class="row">
+                                                <div class="col-lg-4 mb-3">
+                                                    <div class="titles_locations">
+                                                        <h6 class="fs-5">Start Location</h6>
+                                                        <p><?= $packageday->start_location ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <div class="titles_locations">
+                                                        <h6 class="fs-5">End Location</h6>
+                                                        <p><?= $packageday->end_location ?></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <div class="titles_locations">
+                                                        <h6 class="fs-5">Hotel Stay Home</h6>
+                                                        <p><?= $packageday->hotel_name ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <div class="titles_locations">
-                                                    <h6 class="fs-5">End Location</h6>
-                                                    <p><?= $packageday->end_location ?></p>
+
+                                            <div class="titles_locations pt-4">
+                                                <h6 class="fs-5">Images</h6>
+                                            </div>
+
+                                            <div class="row pt-2">
+                                                <div class="col-lg-4 mb-2">
+                                                    <div class="hotelImages">
+                                                        <img src="<?= isset($packageday->day_image) ? $packageday->imagepath : $this->params['baseurl'] . '/img/FESHwr.jpg' ?>" alt="" class="w-100">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <div class="titles_locations">
-                                                    <h6 class="fs-5">Hotel Stay Home</h6>
-                                                    <p><?= $packageday->hotel_name ?></p>
-                                                </div>
+
+                                            <div class="titles_locations pt-4">
+                                                <h6 class="fs-5">Map</h6>
                                             </div>
-                                        </div>
+                                            <?php
 
-                                        <div class="titles_locations pt-4">
-                                            <h6 class="fs-5">Images</h6>
-                                        </div>
+                                            $latitude = $packageday->latitude;
+                                            $longitude = $packageday->longitude;
 
-                                        <div class="row pt-2">
-                                            <div class="col-lg-4 mb-2">
-                                                <div class="hotelImages">
-                                                    <img src="<?= isset($packageday->day_image) ? $packageday->imagepath : $this->params['baseurl'] . '/img/FESHwr.jpg' ?>" alt="" class="w-100">
+                                            $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+
+                                            if (!empty($latitude) && !empty($longitude)) {
+                                            ?>
+                                                <div class="col-lg-4 mb-2">
+                                                    <div class="hotelImages">
+                                                        <iframe width="400" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+                                                        </iframe>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="titles_locations pt-4">
-                                            <h6 class="fs-5">Map</h6>
-                                        </div>
-                                        <?php
-
-                                        $latitude = $packageday->latitude;
-                                        $longitude = $packageday->longitude;
-
-                                        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
-
-                                        if (!empty($latitude) && !empty($longitude)) {
-                                        ?>
-                                            <div class="col-lg-4 mb-2">
-                                                <div class="hotelImages">
-                                                    <iframe width="400" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
-                                                    </iframe>
-                                                </div>
-                                            </div>
+                                            <?php } ?>
                                         <?php } ?>
-
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +89,7 @@
 
 
 <style>
-   .itinerary_item .accordion-button {
-    background-color: #CED2E0 !important;
-}
+    .itinerary_item .accordion-button {
+        background-color: #CED2E0 !important;
+    }
 </style>

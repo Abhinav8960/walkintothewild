@@ -20,18 +20,21 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 
-<div class="card">
-    <div class="card-body">
+<div class="tab-pane" id="getting" role="tabpanel" aria-labelledby="getting_there">
+    <div class="row">
         <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach'])->label('Package Getting There') ?>
+            <div class="col-lg-12">
+                <div class="form_boxes mb-3">
+                    <label for="">How to reach</label>
+                    <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach','class'=>'form-control rounded-0'])->label(false) ?>
+                </div>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+                    <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
                 </div>
             </div>
         </div>

@@ -34,6 +34,8 @@ class PackageVersionSearch extends PackageVersion
 
     public $business_name;
 
+    public $custom_status;
+    
     public $report_days_option = [
         'all' => 'All',
         'today' => 'Today',
@@ -58,8 +60,9 @@ class PackageVersionSearch extends PackageVersion
             [['is_published_on_web', 'is_published_on_api'], 'boolean'],
             [['is_published_on_web', 'is_published_on_api'], 'safe'],
             [['cost_per_person_min', 'cost_per_person_max'], 'safe'],
-            [['business_name'],'string'],
-            
+            [['business_name'], 'string'],
+            [['custom_status'], 'safe'],
+
         ];
     }
 
@@ -357,7 +360,7 @@ class PackageVersionSearch extends PackageVersion
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             'pagination' => [
                 'pageSize' => 50,
             ],
@@ -482,6 +485,26 @@ class PackageVersionSearch extends PackageVersion
 
             // 
             $query->andWhere($this->rawdatequery);
+        }
+
+        if ($this->custom_status != null) {
+            switch ($this->custom_status) {
+                // case 0:
+                //     $query->andWhere(['status' => 0]);
+                //     break;
+                case 1:
+                    $query->andWhere(['status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere(['status' => 2]);
+                    break;
+                case 3:
+                    $query->andWhere(['status' => 3]);
+                    break;
+                case 4:
+                    $query->andWhere(['status' => [0, 4]]);
+                    break;
+            };
         }
 
         return $dataProvider;

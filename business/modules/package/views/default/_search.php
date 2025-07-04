@@ -21,33 +21,51 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
-        <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Stay Category'])->label(false) ?>
-    </div>
-    <div class="col-md-5">
-        <div class="d-flex align-items-center">
-            <div class="col-md-5">
-                <?= $form->field($model, 'cost_per_person_min')->textInput([
-                    'placeholder' => 'Enter Minimum Price'
-                ])->label(false) ?>
-            </div>
+    <div class="col-12">
+        <div class="filterBar">
+            <div class="filters">
+                <!-- <div class="filterItem">
+                    <label>Package Name:</label>
+                    <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
+                </div> -->
+                <div class="filterItem position-relative">
+                    <label>Duration:</label>
+                    <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Option', 'class' => 'search-border'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="filterItem position-relative">
+                    <label>Stay Category:</label>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'All Stay Category', 'class' => 'search-border'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <!-- <div class="filterItem">
+                    <div class="d-flex align-items-center gap-2">
+                        <label>Price:</label>
+                        <div class="col-md-4">
+                            <?= $form->field($model, 'cost_per_person_min')->textInput([
+                                'placeholder' => 'Enter Minimum Price'
+                            ])->label(false) ?>
+                        </div>
+                        <label>to</label>
+                        <div class="col-md-4">
+                            <?= $form->field($model, 'cost_per_person_max')->textInput([
+                                'placeholder' => 'Enter Maximum Price'
+                            ])->label(false) ?>
+                        </div>
+                    </div>
+                </div> -->
 
-            <p>to</p>
-            <div class="col-md-5">
-                <?= $form->field($model, 'cost_per_person_max')->textInput([
-                    'placeholder' => 'Enter Maximum Price'
-                ])->label(false) ?>
+                <div class="filterItem position-relative">
+                    <label>Status:</label>
+                    <?= $form->field($model, 'custom_status')->dropDownList(GeneralModel::packageversionstatusoption(), ['prompt' => 'Select Status', 'class' => 'search-border'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
             </div>
         </div>
     </div>
-    <div class="col-md-2">
-        <!-- <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?> -->
-    </div>
-
 </div>
+
 <?php ActiveForm::end(); ?>
 
 <?php

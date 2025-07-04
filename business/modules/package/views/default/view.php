@@ -6,172 +6,197 @@ use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-AppAsset::register($this);
+
+$this->title = 'Package';
 
 ?>
 
-
-<div class="d-flex justify-content-between align-items-center mt-5">
-    <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
-    <div>
-        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
-            <?= Html::a('<i class="fa fa-paper-plane" style="font-size:15px; margin-right:5px"></i>Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F7BF39', 'title' => 'Send For Approval']) ?>
-            <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
-        <?php } ?>
-        <?= Html::a('<i class="fa fa-copy" style="font-size:15px; margin-right:5px"></i>Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#7B8191', 'title' => 'Copy']) ?>
-    </div>
-</div>
-
-
+<!-- <div class="main-pannel mt-0"> -->
 <?= $this->render('_upper_view', ['package' => $package]) ?>
+<section class="safari_wrapper  pt-sm-4 pt-0">
+    <div class="container-fluid">
 
+        <div class="row py-4">
+            <div class="col-xl-9">
 
-<div class="row mb-5  mt-4 itenary_tabs">
-    <div class="col-lg-9 col-xl-9 safartabs position-relative">
-        <div class="tab-content accordion" id="myTabContent">
-            <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse bg-set collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-                    <div class="accordion-body p-3">
-                        <div class="col-lg-12 mb-3">
-                            <div class="itenary-title">
-                                <h6 class="fs-6 fw-bold pb-2">ABOUT TRIP / OVERVIEW</h6>
-                            </div>
-                            <div class="itenary_text">
-                                <p><?= $package->package_description ?></p>
+                <div class="tabContent mx-3">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Overview" role="tabpanel"
+                            aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-xl-12 mb-4">
+                                    <div class="itrnTextCard py-4">
+                                        <h6 class="pb-3">About Trip / Overview</h6>
+                                        <p><?= $package->package_description ?></p>
+                                    </div>
+                                </div>
+
+                                <?php if ($package->live_version) { ?>
+                                    <div class="col-xl-12">
+                                        <div class="itrnTextCard py-4">
+                                            <h6><?= $package->commentCount ?> Comments</h6>
+                                            <div class="one_box position-relative pb-4">
+                                                <?php if ($live_package = $package->livePackage) {
+                                                    if ($parent_comments = $live_package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
+                                                        foreach ($parent_comments as $comments) {
+                                                            $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all();
+
+                                                ?>
+                                                            <div class="postcomment d-flex gap-2 pt-3 w-100">
+                                                                <div class="avatar">
+                                                                    <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
+                                                                        class="rounded-circle bg-info">
+                                                                </div>
+                                                                <div class="text_com">
+                                                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                        <span class="comment-author"><?= $comments->user->name ?></span>
+                                                                        <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                                                    </div>
+                                                                    <p><?= $comments->comment ?></p>
+                                                                    <div class="user-active d-flex align-items-center gap-2">
+                                                                        <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
+                                                                    </div>
+                                                                    <?php if ($replies) { ?>
+                                                                        <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
+                                                                            <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
+                                                                                <a href=""><span>Hide replies</span></a>
+                                                                            </div>
+                                                                            <?php foreach ($replies as $reply) { ?>
+                                                                                <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                                                                    <div class="avatar">
+                                                                                        <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
+                                                                                    </div>
+                                                                                    <div class="text_com">
+                                                                                        <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                                            <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                                            <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
+                                                                                        </div>
+                                                                                        <p><?= $reply->comment ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            <?php } ?>
+                                                                        </div>
+                                                                    <?php } ?>
+
+                                                                </div>
+                                                            </div>
+                                                <?php }
+                                                    }
+                                                } ?>
+                                            </div>
+
+                                            <?php if (false) { ?>
+                                                <form id="comment-form"><input type="hidden" value="TOKEN_HERE"
+                                                        name="_csrf-frontend">
+                                                    <div class="comments-persons px-0 pt-4">
+                                                        <div class="postcomment d-flex gap-3">
+                                                            <div class="avatar"><a
+                                                                    href="/profile/user/md-sarwar"
+                                                                    data-discover="true"><img alt="" width="30"
+                                                                        height="30"
+                                                                        class="me-1 d-xl-inline-flex rounded-circle bg-info"
+                                                                        src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
+                                                            </div>
+                                                            <div class="text-area">
+                                                                <div
+                                                                    class="mb-3 field-sharesafaricommentform-comment required">
+                                                                    <textarea
+                                                                        id="sharesafaricommentform-comment"
+                                                                        class="form-control w-100"
+                                                                        name="ShareSafariCommentForm[comment]"
+                                                                        rows="5"
+                                                                        placeholder="Write a comment..."></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comments-persons px-4 pt-2">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-12 col-xl-8">
+                                                                <!-- <div class="post_text padding_ad">
+                                                                            <p>Commenting on this thread will notify all
+                                                                                event attendees and will also be visible
+                                                                                to everyone viewing the event.</p>
+                                                                        </div> -->
+                                                            </div>
+                                                            <div class="col-lg-12 col-xl-4">
+                                                                <div
+                                                                    class="comment_button float-end mb-lg-0 mb-3">
+                                                                    <button type="submit"
+                                                                        class="post-comment">Post
+                                                                        Comment</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="Itinerary" role="tabpanel"
+                            aria-labelledby="itinerary-tab"><?= $this->render('_overview', ['package' => $package]) ?>
+                        </div>
+                        <div class="tab-pane fade" id="Inclusions" role="tabpanel"
+                            aria-labelledby="profile-tab"><?= $this->render('_inclusion', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="Exclusions" role="tabpanel"
+                            aria-labelledby="contact-tab"><?= $this->render('_getting_there', ['package' => $package]) ?>
+                        </div>
+                        <div class="tab-pane fade" id="Accomodation" role="tabpanel"
+                            aria-labelledby="contact-tab"> <?= $this->render('_getting_there', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="common" role="tabpanel"
+                            aria-labelledby="contact-tab"> <?= $this->render('_policy', ['package' => $package]) ?></div>
+                        <div class="tab-pane fade" id="FAQ" role="tabpanel"
+                            aria-labelledby="contact-tab"><?= $this->render('_faqs', ['package' => $package, 'faqs' => $faqs]) ?></div>
                     </div>
                 </div>
-                <?= $this->render('_overview', ['package' => $package]) ?>
-                <!-- Rendered on 2024-07-09 13:16:37 -->
-            </div>
 
-            <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        INCLUSION
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse  bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                    <div class="accordion-body height_set">
-                        <?= $this->render('_inclusion', ['package' => $package]) ?>
+            </div>
+            <div class="col-xl-2">
+                <div class="request_quote mb-4"><button type="button"
+                        class="intested_btn interestBtn d-flex justify-content-between btn btn-primary"
+                        style="background-color: #09422D; cursor: default; border: none;">Edit
+                        History</button>
+                    <div class="interst_wrapper px-3 bg-white text-center">
+                        <p class="mb-0">
+                            <?php if ($package->versions) {
+                                foreach ($package->versions as $v) { ?>
+                        <div>
+                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
+                                <?= $v->version ?>-<?= $v->statusLabel ?>
+                            </a>
+                        </div>
+                <?php }
+                            } ?></p>
                     </div>
-                </div>
-                <!-- Rendered on 2024-07-09 13:16:37 -->
-            </div>
-            <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingFour">
-                    <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        GETTING THERE
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                    <div class="accordion-body height_set">
-                        <?= $this->render('_getting_there', ['package' => $package]) ?>
-                    </div>
-                </div>
-                <!-- Rendered on 2024-07-09 13:16:37 -->
-            </div>
-            <div class="tab-pane fade accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        POLICY INFO
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                    <div class="accordion-body height_set">
-                        <?= $this->render('_policy', ['package' => $package]) ?>
-                    </div>
-                </div>
-                <!-- Rendered on 2024-07-09 13:16:37 -->
-            </div>
-
-            <div class="tab-pane fade accordion-item mb-3" id="faq" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingFive">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                        FAQs
-                    </button>
-                </h2>
-                <div id="collapseFive" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                    <div class="accordion-body height_set">
-                        <?= $this->render('_faqs', ['package' => $package, 'faqs' => $faqs]) ?>
-                    </div>
-                </div>
-                <!-- Rendered on 2024-07-09 13:16:37 -->
-            </div>
-
-        </div>
-
-
-    </div>
-
-    <div class="col-lg-3 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <h4>Versions</h4>
-                <hr>
-                <div>
-                    <?php if ($package->versions) {
-                        foreach ($package->versions as $v) { ?>
-                            <div><a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
-                                    <?= $v->version ?>-<?= $v->statusLabel ?>
-                                </a>
-                            </div>
-                    <?php }
-                    } ?>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<!-- </div> -->
 
-</div>
 
-
-<div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail for Delete</h1>
-
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='userstatusmodalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php
-$script = <<< JS
+$js = <<<JS
 
-function organizefunction() {
-	$('.btn_userarticle').on('click', function () {
-        $('#organize-modal').modal('show')
-		.find('#userstatusmodalContent')
-		.load($(this).attr('value'));
-	});
-}
-organizefunction();
+$(document).on('click', '.show-replies', function() {
+    var id = $(this).data('id');
+    $('#replies-wrapper-' + id).slideDown();
+    $(this).show();
+});
+
+
+$(document).on('click', '.hide-replies', function() {
+    var id = $(this).data('id');
+    $('#replies-wrapper-' + id).slideUp();
+});
 JS;
-$this->registerJs($script);
+
+$this->registerJs($js);
 ?>
-<style>
-    .disclaimer {
-        top: 2375px;
-        left: 303px;
-        width: 687px;
-        height: 148px;
-        text-align: left;
-        font: normal normal normal 16px/25px Roboto;
-        letter-spacing: 0px;
-        color: #151C2C;
-        opacity: 1;
-
-
-    }
-</style>

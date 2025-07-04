@@ -40,11 +40,13 @@ class PreviewController extends Controller
 
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package->id;
+        $searchModel->version = $package->live_version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
         $commentsearchModel = new PackageCommentSearch();
         $commentsearchModel->package_id = $package->id;
+        $commentsearchModel->version = $package->live_version;
         $commentProvider = $commentsearchModel->listingsearch($this->request->queryParams);
         $commentProvider->query->andWhere(['parent_id' => null]);
 

@@ -89,7 +89,7 @@ class DefaultController extends Controller
         } else {
             $model->partner_gallery_model->loadDefaultValues();
         }
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
             'safari_operator_model' => $safari_operator_model,
         ]);
