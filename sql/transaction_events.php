@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 04, 2025 at 12:01 PM
+-- Generation Time: Jul 04, 2025 at 05:16 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `transaction_events`;
 CREATE TABLE `transaction_events` (
   `id` int NOT NULL,
+  `lead_id` int DEFAULT NULL,
   `lead_partner_quote_id` int NOT NULL,
   `transaction_id` int DEFAULT NULL,
   `event` int NOT NULL,

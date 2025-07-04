@@ -74,7 +74,7 @@ AppAsset::register($this);
                             $str .= '<span class="badge badge-danger">Payment Not Received</span>';
                         }
 
-                        $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_partner_quotes_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
+                        $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
                         echo $str;
 
                         ?>

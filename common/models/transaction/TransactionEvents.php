@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "transaction_events".
  *
  * @property int $id
+ * @property int $lead_id
  * @property int $transaction_id
  * @property int $event
  * @property string $event_datetime
@@ -56,7 +57,7 @@ class TransactionEvents extends \yii\db\ActiveRecord
     {
         return [
             [['transaction_id', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['lead_partner_quote_id', 'event', 'event_datetime'], 'required'],
+            [['lead_partner_quote_id', 'lead_id', 'event', 'event_datetime'], 'required'],
             [['lead_partner_quote_id', 'transaction_id', 'event', 'created_at', 'updated_at'], 'integer'],
             [['event_datetime'], 'safe'],
         ];
@@ -69,6 +70,7 @@ class TransactionEvents extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'lead_id' => 'Lead ID',
             'lead_partner_quote_id' => 'Lead Partner Quote ID',
             'transaction_id' => 'Transaction ID',
             'event' => 'Event',
@@ -91,9 +93,10 @@ class TransactionEvents extends \yii\db\ActiveRecord
         return $arr[$this->event] ?? 'N/A';
     }
 
-    public static function store($event, $quote_id, $transaction_id = null)
+    public static function store($event, $lead_id, $quote_id, $transaction_id = null)
     {
         $m  = new self();
+        $m->lead_id = $lead_id;
         $m->lead_partner_quote_id = $quote_id;
         $m->transaction_id = $transaction_id;
         $m->event = $event;
