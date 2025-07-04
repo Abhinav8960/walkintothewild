@@ -24,16 +24,21 @@ use yii\widgets\ActiveForm;
     <div class="col-12">
         <div class="filterBar">
             <div class="filters">
-                <div class="filterItem">
+                <!-- <div class="filterItem">
                     <label>Package Name:</label>
                     <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
+                </div> -->
+                <div class="filterItem position-relative">
+                    <label>Duration:</label>
+                    <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Option', 'class' => 'search-border'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
                 <div class="filterItem position-relative">
                     <label>Stay Category:</label>
                     <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'All Stay Category', 'class' => 'search-border'])->label(false) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div class="filterItem">
+                <!-- <div class="filterItem">
                     <div class="d-flex align-items-center gap-2">
                         <label>Price:</label>
                         <div class="col-md-4">
@@ -48,9 +53,12 @@ use yii\widgets\ActiveForm;
                             ])->label(false) ?>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <!-- <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?> -->
+                </div> -->
+
+                <div class="filterItem position-relative">
+                    <label>Status:</label>
+                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status', 'class' => 'search-border'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
 
             </div>

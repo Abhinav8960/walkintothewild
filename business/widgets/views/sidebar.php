@@ -56,7 +56,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sharesafari/default/index",
                                                                 "/sharesafari/default/create",
@@ -67,7 +67,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'fd_active.svg' : 'fd.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> My Fixed Departures</span>
             </a>
-        </li>
+        </li> -->
 
 
         <!-- <li class="navItems mb-2">
@@ -76,7 +76,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> My Fixed Departures</span>
             </a>
         </li> -->
-        <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sightings/default/index",
                                                                 "/sightings/default/create",
@@ -100,8 +100,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Post_active.svg' : 'Post.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Posts</span>
             </a>
-        </li>
-        <!-- <li class="navItems mb-2">
+        </li> -->
+        <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/gallery/default/index",
                                                                 "/gallery/default/create",
@@ -113,7 +113,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Gallery</span>
             </a>
-        </li> -->
+        </li>
         <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>

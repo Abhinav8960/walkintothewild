@@ -160,7 +160,9 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
 
                                     ]);
                                 }
-                                return '';
+                                return Html::tag('span', '', [
+                                    'style' => 'display:inline-block;width:25px;height:25px;'
+                                ]);
                             },
                             'view' => function ($url, $model) {
                                 return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->id], [
