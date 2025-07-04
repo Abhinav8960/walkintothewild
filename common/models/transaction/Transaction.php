@@ -348,6 +348,6 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getTransactionEvents()
     {
-        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quotes_id' => 'lead_partner_quotes_id']);
+        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quote_id' => 'lead_partner_quote_id']);
     }
 }
