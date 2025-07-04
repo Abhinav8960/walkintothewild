@@ -269,17 +269,17 @@ use kartik\datetime\DateTimePicker;
 
 
     <div class="row">
-        <div class="col-lg-6">
+        <!-- <div class="col-lg-6">
             <div class="form_boxes mb-3">
                 <label for="">Overview <span>*</span></label>
                 <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '1', 'placeholder' => 'Itinerary Detail', 'class' => 'form-control'])->label(false) ?>
 
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-6">
             <div class="form_boxes mb-3">
-                <label for="">Descriptions <span>*</span></label>
-                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Description Detail ', 'class' => 'form-control'])->label(false) ?>
+                <label for="">Overview <span>*</span></label>
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
             </div>
         </div>
     </div>
