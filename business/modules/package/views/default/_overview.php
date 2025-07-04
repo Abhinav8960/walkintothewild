@@ -8,9 +8,9 @@
                         foreach ($packagedays as $packageday) { ?>
                             <div class="accordion-item itinerary_item mt-2">
                                 <h2 class="accordion-header" id="heading<?= $packageday->day ?>">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $packageday->day ?>" aria-expanded="true" aria-controls="collapse<?= $packageday->day ?>">
+                                    <div class="accordion-button custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $packageday->day ?>" aria-expanded="true" aria-controls="collapse<?= $packageday->day ?>">
                                         DAY <?= $packageday->day ?> - <?= $packageday->day_title ?>
-                                    </button>
+                                    </div>
                                 </h2>
                                 <div id="collapse<?= $packageday->day ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $packageday->day ?>" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
@@ -88,7 +88,7 @@
 
 
 <style>
-   .itinerary_item .accordion-button {
-    background-color: #CED2E0 !important;
-}
+    .itinerary_item .accordion-button {
+        background-color: #CED2E0 !important;
+    }
 </style>

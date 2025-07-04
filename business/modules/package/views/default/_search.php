@@ -57,7 +57,7 @@ use yii\widgets\ActiveForm;
 
                 <div class="filterItem position-relative">
                     <label>Status:</label>
-                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status', 'class' => 'search-border'])->label(false) ?>
+                    <?= $form->field($model, 'custom_status')->dropDownList(GeneralModel::packageversionstatusoption(), ['prompt' => 'Select Status', 'class' => 'search-border'])->label(false) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
 

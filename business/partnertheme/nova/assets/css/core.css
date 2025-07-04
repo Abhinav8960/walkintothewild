@@ -589,15 +589,21 @@ p {
   padding: 0 !important;
   cursor: pointer;
 }
-
-.packageTabMain .nav-tabs .nav-link.active {
+.packageTabMain .nav-tabs .nav-link {
   background-color: transparent !important;
   color: #000 !important;
   border: none !important;
-  border-bottom: 5px solid #09422d !important;
+  border-bottom: 5px solid #ffffff !important;
   border-radius: 0px !important;
+  margin-bottom: 1px;
 }
-
+.packageTabMain .nav-tabs .nav-link.active {
+  border-bottom: 5px solid #09422d !important;
+}
+.accordion-button.custom-header{
+  color: #000000 !important;
+  font-weight: 600;
+}
 .packageTabMain .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
   isolation: auto !important;

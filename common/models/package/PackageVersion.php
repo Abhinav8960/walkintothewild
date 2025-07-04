@@ -478,15 +478,15 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getStatustags()
     {
         if ($this->status == PackageVersion::NOT_APPROVED_STATUS) {
-            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/draft.svg'>";
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
         } else if ($this->status == PackageVersion::APPROVED_AND_LIVE_STATUS) {
             return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
         } else if ($this->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/pending.svg'>";
         } else if ($this->status == PackageVersion::EDIATBLE_STATUS) {
-           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/draft.svg'>";
         } else if ($this->status == PackageVersion::TERMINATED_STATUS) {
-           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
         }
     }
 
