@@ -2,6 +2,10 @@
 
 namespace common\models\transaction;
 
+use common\models\leads\Lead;
+use common\models\meta\MetaStayCategory;
+use common\models\operator\SafariOperator;
+use common\models\park\SafariPark;
 use Yii;
 
 /**
@@ -296,5 +300,54 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         // set the status to 1
         $booking->status = 1;
         return $booking->save(false);
+    }
+
+    public function getStatusLabel()
+    {
+        $arr = [
+            self::STATUS_INITIATED => "INITIATED",
+            self::STATUS_SUCCESS => "SUCCESS",
+            self::STATUS_FAILED => "FAILED",
+            self::STATUS_HOLD => "HOLD",
+            self::STATUS_REFUNDED => "REFUNDED",
+            self::STATUS_CONFLICT => "CONFLICT"
+        ];
+        return ucfirst($arr[$this->status]) ?? '';
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
+
+    public function getPark_label()
+    {
+        return $this->park->title ?? null;
+    }
+
+    public function getLead()
+    {
+        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+    }
+
+    public function getPartner()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+    }
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
+    }
+
+
+    public function getStaycatgory_lable()
+    {
+        return $this->staycatgory->title ?? null;
+    }
+
+    public function getTransactionEvents()
+    {
+        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quotes_id' => 'lead_partner_quotes_id']);
     }
 }
