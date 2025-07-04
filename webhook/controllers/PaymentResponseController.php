@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace webhook\controllers;
 
 use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
