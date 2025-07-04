@@ -235,6 +235,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         // This assumes that the installment is linked to the lead and partner quote
         if ($leadPartnerQuoteInstallments) {
             $leadPartnerQuoteInstallments->is_payment_received = 1;
+            $leadPartnerQuoteInstallments->status = \common\models\leads\LeadPartnerQuoteInstallments::STATUS_RECEIVED;
             $leadPartnerQuoteInstallments->payment_gateway = $this->payment_gateway;
             $leadPartnerQuoteInstallments->transaction_id = $this->transaction_id;
             $leadPartnerQuoteInstallments->transaction_datetime = $this->transaction_datetime;
