@@ -104,6 +104,7 @@ class PaymentResponseController extends Controller
             $transaction->transaction_datetime = date('Y-m-d H:i:s');
 
             $transaction->save(false);
+            $transaction->triggerTransactionEvent();
             $this->prepareChat($transaction->lead_partner_quotes_id, $message);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
