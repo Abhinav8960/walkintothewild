@@ -17,6 +17,7 @@ class QuotationApprovatedByAdmin extends Event
     protected $master_notification_template;
     protected $engine;
     protected $payment_url;
+    protected $payment_url_email;
 
     public $templates;
     public $channelName;
