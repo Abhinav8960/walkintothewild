@@ -259,7 +259,9 @@ class LeadPartnerQuotationForm extends Model
             // }
 
             // Generate PDF
-            $content = $this->renderPartial('_quotation_pdf', ['quotation' => $quotation]);
+            $content = GeneralModel::generatePdf('@backend/modules/leads/views/default/_quotation_pdf', [
+                'quotation' => $quotation,
+            ]);
             $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
             $pdf->WriteHTML($content);
             $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $quotation->id . '.pdf';
