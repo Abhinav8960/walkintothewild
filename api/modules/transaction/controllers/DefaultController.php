@@ -482,7 +482,6 @@ class DefaultController extends RestController
         $data['quotation'] = [
             "quotation_id" => $quotation->id,
             "lead_id" => $quotation->lead_id,
-            "partner_name" => $quotation->partner->name ?? '',
             "park_name" => $quotation->park_label ?? '',
             "safaris" => $quotation->safaris,
             "travelers" => $quotation->travelers,
