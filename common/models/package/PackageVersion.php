@@ -343,7 +343,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'version' => $this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }
