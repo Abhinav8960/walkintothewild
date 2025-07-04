@@ -462,7 +462,8 @@ class DefaultController extends RestController
             // 'updated_at' => date('Y-m-d H:i:s', $model->updated_at),
             // Add other fields as necessary
         ];
-        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quote_id, $model->id);
+        \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_PAGE_OPEN, $model->lead_partner_quotes_id, $model->id);
+
 
         return Yii::$app->api->sendResponse($data);
     }
@@ -482,13 +483,15 @@ class DefaultController extends RestController
             "quotation_id" => $quotation->id,
             "lead_id" => $quotation->lead_id,
             "partner_name" => $quotation->partner->name ?? '',
-            "park_name" => $quotation->park->name ?? '',
+            "park_name" => $quotation->park_label ?? '',
             "safaris" => $quotation->safaris,
             "travelers" => $quotation->travelers,
             "stay_category_label" => $quotation->staycatgory->title ?? '',
             "name" => $quotation->name,
             "email" => $quotation->email,
             "phone" => $quotation->phone,
+            'profile_display_image' => $quotation->lead->user->profile_display_image ?? null,
+
             "start_date" => date('M d, Y', strtotime($quotation->start_date)),
             "end_date" => date('M d, Y', strtotime($quotation->end_date)),
             // "validity_date" => date('M d, Y', strtotime($quotation->validity_date)),
