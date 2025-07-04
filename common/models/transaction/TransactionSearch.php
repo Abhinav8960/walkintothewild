@@ -48,6 +48,11 @@ class TransactionSearch extends Transaction
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC, // Replace 'id' with the column you want to sort by
+                ],
+            ],
         ]);
 
         $this->load($params, $formName);
