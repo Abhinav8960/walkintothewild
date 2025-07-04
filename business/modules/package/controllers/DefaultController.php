@@ -75,7 +75,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageVersionSearch();
-        // $searchModel->status = PackageVersion::EDIATBLE_STATUS;
+        $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
         $searchModel->owned_by_id = $this->operatormodel()->id;
 
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
