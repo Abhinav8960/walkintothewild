@@ -4,6 +4,7 @@ namespace webhook\controllers;
 
 use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
+use api\models\leads\LeadPartnerQuotes;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -94,7 +95,6 @@ class PaymentResponseController extends Controller
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
                 $message = "Payment Received";
-                
             } elseif (strtolower($data['status']) == 'failure') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_FAILED;
             } elseif (strtolower($data['status']) == 'pending') {
@@ -257,11 +257,11 @@ class PaymentResponseController extends Controller
         }
     }
 
-    private function prepareChat($quotation, $message)
+    private function prepareChat($quotation_id, $message)
     {
 
         // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
-
+        $quotation = LeadPartnerQuotes::find()->where(['id' => $quotation_id])->one();
         $chat_model = Chat::find()
             ->andWhere(['lead_id' => $quotation->lead_id])
             ->andWhere([
