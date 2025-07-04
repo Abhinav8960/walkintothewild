@@ -31,6 +31,21 @@ return [
                 ],
             ],
         ],
+        'user' => [
+            'class' => 'common\components\WebUser', // For Tracking the Sessions
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-webhook', 'httpOnly' => true],
+        ],
+        'session' => [
+            // this is the name of the session cookie used for login on the backend
+            'class' => 'yii\web\DbSession',
+            'name' => 'advanced-webhook',
+            'timeout' => 3600 * 24 * 30,
+            'cookieParams' => [
+                'lifetime' => 3600 * 24 * 30, // Cookie lifetime, e.g., 30 days
+            ],
+        ],
         'errorHandler' => [
             // 'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
             'errorAction' => 'site/error',
