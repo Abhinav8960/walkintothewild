@@ -300,6 +300,20 @@ class DefaultController extends RestController
             // $t->param3 = $model->id;
             // $t->param4 = $model->installment->id ?? null;
             // $t->param5 = $model->installment->installment ?? 0;
+            $headers = Yii::$app->getRequest()->getHeaders();
+            $device = strtolower($headers->get('x-device')) ?? null;
+            $platform = strtolower($headers->get('x-platform')) ?? null;
+            $platform_version = strtolower($headers->get('x-platform-version')) ?? null;
+            $application_version = strtolower($headers->get('x-application-version')) ?? null;
+            $t->device = $device;
+            $t->platform = $platform;
+            $t->platform_version = $platform_version;
+            $t->browser = null;
+            $t->browser_version = null;
+            $t->application_version =  $application_version;
+
+
+
             $t->status = Transaction::STATUS_INITIATED;
             $t->created_at = time();
             $t->updated_at = time();
