@@ -5,6 +5,7 @@ namespace webhook\controllers;
 use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
 use api\models\leads\LeadPartnerQuotes;
+use common\models\transaction\Transaction;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -106,7 +107,7 @@ class PaymentResponseController extends Controller
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
             $this->prepareChat($transaction->lead_partner_quotes_id, $message, $transaction->status);
-            $this->sendEmailNotification($transaction->lead_partner_quotes_id, $refernce_no = $data['udf1'], $transaction->user_id, $transaction->partner->user_id, $transaction->status);
+            $this->sendEmailNotification($transaction->id, $refernce_no = $data['udf1'], $transaction->user_id, $transaction->partner->user_id, $transaction->status);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
@@ -351,12 +352,12 @@ class PaymentResponseController extends Controller
     // $this->sendEmailNotification($transaction->lead_partner_quotes_id, $transaction->status);
     //         PaymentRecievedForQuotation
 
-    private function sendEmailNotification($quotation_id, $reference_no, $user_id, $partner_user_id, $status)
+    private function sendEmailNotification($transaction_id, $reference_no, $user_id, $partner_user_id, $status)
     {
-        $quotation = LeadPartnerQuotes::find()->where(['id' => $quotation_id])->one();
+        $transaction = Transaction::find()->where(['id' => $transaction_id])->one();
 
         if ($status == 1) {
-            new \common\events\leads\PaymentRecievedForQuotation($quotation, $reference_no, $user_id, $partner_user_id);
+            new \common\events\leads\PaymentRecievedForQuotation($transaction, $reference_no, $user_id, $partner_user_id);
         }
     }
 }

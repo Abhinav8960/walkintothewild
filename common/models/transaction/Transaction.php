@@ -2,8 +2,10 @@
 
 namespace common\models\transaction;
 
+use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\Lead;
 use common\models\meta\MetaStayCategory;
+use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use Yii;
@@ -310,6 +312,12 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             self::STATUS_CONFLICT => "CONFLICT"
         ];
         return ucfirst($arr[$this->status]) ?? '';
+    }
+
+    public function getQuotation(){
+        // lead_partner_quotes_id
+        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'lead_partner_quotes_id']);
+
     }
 
     public function getPark()

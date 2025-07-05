@@ -63,6 +63,8 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
             [['transaction_id'], 'string', 'max' => 100],
             [['payment_hash'], 'unique', 'message' => 'This payment hash has already been used.'],
             [['payment_link'], 'url', 'defaultScheme' => 'https', 'message' => 'The payment link must be a valid URL.'],
+            [['is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason'], 'safe'],
+
         ];
     }
 

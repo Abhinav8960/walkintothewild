@@ -229,7 +229,12 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $leadPartnerQuotes->transaction_id = $this->transaction_id;
             $leadPartnerQuotes->transaction_datetime = $this->transaction_datetime;
             $leadPartnerQuotes->save(false);
+            \common\models\leads\LeadPartnerQuotes::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "Payment received against lead"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0]] // Condition
+            );
         }
+
         $leadPartnerQuoteInstallments = \common\models\leads\LeadPartnerQuoteInstallments::findOne(['lead_partner_quote_id' => $this->lead_partner_quotes_id]);
         // Update the installment status if it exists
         // This assumes that the installment is linked to the lead and partner quote
@@ -240,6 +245,11 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $leadPartnerQuoteInstallments->transaction_id = $this->transaction_id;
             $leadPartnerQuoteInstallments->transaction_datetime = $this->transaction_datetime;
             $leadPartnerQuoteInstallments->save(false);
+
+            \common\models\leads\LeadPartnerQuoteInstallments::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "Payment received against lead"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0]] // Condition
+            );
         }
     }
 
