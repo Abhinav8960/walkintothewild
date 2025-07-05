@@ -435,7 +435,7 @@ class DefaultController extends RestController
             // 'order_id' => $model->order_id,
             'partner' => $model->partner->business_name ?? null,
             "title" => $title,
-            "park_name" => $quotation->park_label ?? '',
+            "park_name" => $model->park_label ?? '',
             'status' => $model->status,
             'amount' => $model->received_amount,
             'currency' => $model->currency,

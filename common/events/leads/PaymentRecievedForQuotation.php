@@ -25,8 +25,8 @@ class PaymentRecievedForQuotation extends Event
     protected $channels = [
         'email',
     ];
-    protected $mail_template_code_FOR_USER = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_USER; // New User Registration
-    protected $mail_template_code_FOR_OPERATOR = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_OPERATOR; // New User Registration
+    protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_USER; // New User Registration
+    protected $mail_template_code_for_operator = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_OPERATOR; // New User Registration
 
     public function __construct($quotation, $reference_no, $user_id, $partner_user_id)
     {
@@ -36,7 +36,7 @@ class PaymentRecievedForQuotation extends Event
         $this->reference_no = $reference_no;
 
         $this->engine  = \Yii::$app->engine;
-
+       
         $this->broadcast();
     }
 
@@ -116,7 +116,7 @@ class PaymentRecievedForQuotation extends Event
 
     protected function emailTemplateIdForUser()
     {
-        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_USER, 'status' => 1])->limit(1)->one();
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_for_user, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }
@@ -125,7 +125,7 @@ class PaymentRecievedForQuotation extends Event
 
     protected function emailTemplateIdForOperartor()
     {
-        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_OPERATOR, 'status' => 1])->limit(1)->one();
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_for_operator, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }
