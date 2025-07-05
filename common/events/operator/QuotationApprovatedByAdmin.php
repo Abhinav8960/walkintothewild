@@ -26,7 +26,7 @@ class QuotationApprovatedByAdmin extends Event
         'email',
     ];
     protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_USER; // New User Registration
-    protected $mail_template_code_FOR_OPERATOR = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_OPERATOR; // New User Registration
+    protected $mail_template_code_for_operator = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_OPERATOR; // New User Registration
 
     public function __construct($quotation, $payment_url, $user_id, $partner_user_id)
     {
@@ -110,7 +110,7 @@ class QuotationApprovatedByAdmin extends Event
 
     protected function emailTemplateIdForUser()
     {
-        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_USER, 'status' => 1])->limit(1)->one();
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_for_user, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }
@@ -119,7 +119,7 @@ class QuotationApprovatedByAdmin extends Event
 
     protected function emailTemplateIdForOperartor()
     {
-        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_FOR_OPERATOR, 'status' => 1])->limit(1)->one();
+        $template = MasterMailTemplate::find()->where(['code' => $this->mail_template_code_for_operator, 'status' => 1])->limit(1)->one();
         if ($template) {
             return $template->id;
         }
