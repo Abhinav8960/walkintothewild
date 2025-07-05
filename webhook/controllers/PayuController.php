@@ -56,31 +56,31 @@ class PayuController extends Controller
         return parent::beforeAction($action);
     }
 
-    public function actionSucess()
+    public function actionSuccess()
     {
         $data = Yii::$app->request->post();
 
-        \Yii::info('PayU Response Sucess: ' . json_encode($data), 'payu');
+        \Yii::info('PayU Response Sucess: ' . json_encode($data), 'payu-webhook');
     }
 
     public function actionFailed()
     {
         $data = Yii::$app->request->post();
 
-        \Yii::info('PayU Response Failed: ' . json_encode($data), 'payu');
+        \Yii::info('PayU Response Failed: ' . json_encode($data), 'payu-webhook');
     }
 
     public function actionRefund()
     {
         $data = Yii::$app->request->post();
 
-        \Yii::info('PayU Response Refund: ' . json_encode($data), 'payu');
+        \Yii::info('PayU Response Refund: ' . json_encode($data), 'payu-webhook');
     }
 
     public function actionDispute()
     {
         $data = Yii::$app->request->post();
 
-        \Yii::info('PayU Response Dispute: ' . json_encode($data), 'payu');
+        \Yii::info('PayU Response Dispute: ' . json_encode($data), 'payu-webhook');
     }
 }
