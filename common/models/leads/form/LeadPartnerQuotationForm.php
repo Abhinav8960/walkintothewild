@@ -173,11 +173,11 @@ class LeadPartnerQuotationForm extends Model
 
             \common\models\leads\LeadPartnerQuotes::updateAll(
                 ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "New Quotation Send"], // Set `is_payment_expired` to 1
-                ['and', ['lead_id' => $lpq->id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id]] // Condition
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id]] // Condition
             );
             \common\models\leads\LeadPartnerQuoteInstallments::updateAll(
                 ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "New Quotation Send"], // Set `is_payment_expired` to 1
-                ['and', ['lead_id' => $lpq->id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id]] // Condition
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id]] // Condition
             );
 
             $transaction->commit();
