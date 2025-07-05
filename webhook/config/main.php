@@ -29,6 +29,15 @@ return [
                     'maxFileSize' => 1024 * 2, // 2MB
                     'maxLogFiles' => 5,
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['payu-webhook'],
+                    'logFile' => '@runtime/logs/payu-webhook.log',
+                    'maxFileSize' => 1024 * 2, // 2MB
+                    'maxLogFiles' => 5,
+                ],
+                
             ],
         ],
         'user' => [
