@@ -500,7 +500,7 @@ class DefaultController extends RestController
             "amount" => $quotation->net_payment_price,
             "quantity" => 1,
             "additional_notes" => $quotation->addional_notes,
-            "is_payment_received" => $quotation->is_payment_received,
+            "is_payment_received" => (bool) $quotation->is_payment_received,
             "if_payment_received_then_message" => $quotation->is_payment_received == 1 ? "Payment has already been received." : null,
             // "installments" => array_map(function ($installment) {
             //     return [
