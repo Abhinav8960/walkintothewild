@@ -423,12 +423,19 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Transaction not found."]);
         }
 
+        if (isset($model->lead->package_id)) {
+            $title = "Package:" . $model->lead->package->package_name;
+        } else {
+            $title = "Park:" . $model->park_label;
+        }
+
         $data['transaction'] = [
             'id' => $model->id,
             'reference_id' => $model->reference_id,
             // 'order_id' => $model->order_id,
             'partner' => $model->partner->business_name ?? null,
-            "title" => '',
+            "title" => $title,
+            "park_name" => $quotation->park_label ?? '',
             'status' => $model->status,
             'amount' => $model->received_amount,
             'currency' => $model->currency,
