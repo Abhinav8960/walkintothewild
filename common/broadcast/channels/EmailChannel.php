@@ -41,7 +41,14 @@ class EmailChannel
                 if ($template) {
                     $mailer =  \Yii::$app->mailer;
                     if (\Yii::$app->params['environment'] != 'production') {
-                        $log->torecipient->recipient = \Yii::$app->params['adminEmail'];
+                        // defaultEmail
+
+                        if ($log->torecipient->recipient == \Yii::$app->params['adminEmail']) {
+                            $log->torecipient->recipient = \Yii::$app->params['adminEmail'];
+                        } else {
+                            $log->torecipient->recipient = \Yii::$app->params['defaultEmail'];
+                        }
+
                         $bcc = [];
                         $cc = [];
                     }
@@ -51,7 +58,7 @@ class EmailChannel
                         ->setTo($log->torecipient->recipient)
                         ->setBcc($bcc)
                         ->setCc($cc)
-                        ->setSubject($log->subject)                        
+                        ->setSubject($log->subject)
                         ->send();
 
                     if ($message) {
