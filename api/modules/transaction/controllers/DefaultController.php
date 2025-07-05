@@ -427,6 +427,7 @@ class DefaultController extends RestController
             'id' => $model->id,
             'reference_id' => $model->reference_id,
             // 'order_id' => $model->order_id,
+            'partner' => $model->partner->business_name ?? null,
             "title" => '',
             'status' => $model->status,
             'amount' => $model->received_amount,
