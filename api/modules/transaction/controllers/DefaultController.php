@@ -427,6 +427,7 @@ class DefaultController extends RestController
             'id' => $model->id,
             'reference_id' => $model->reference_id,
             'order_id' => $model->order_id,
+            "title" => '',
             'status' => $model->status,
             'amount' => $model->received_amount,
             'currency' => $model->currency,
@@ -484,6 +485,7 @@ class DefaultController extends RestController
         $data['quotation'] = [
             "quotation_id" => $quotation->id,
             "lead_id" => $quotation->lead_id,
+            "title" => '',
             "park_name" => $quotation->park_label ?? '',
             "safaris" => $quotation->safaris,
             "travelers" => $quotation->travelers,
