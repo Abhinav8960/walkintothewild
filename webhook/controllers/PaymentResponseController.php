@@ -356,7 +356,7 @@ class PaymentResponseController extends Controller
         $quotation = LeadPartnerQuotes::find()->where(['id' => $quotation_id])->one();
 
         if ($status == 1) {
-            new \common\events\operator\PaymentRecievedForQuotation($quotation, $reference_no, $user_id, $partner_user_id);
+            new \common\events\leads\PaymentRecievedForQuotation($quotation, $reference_no, $user_id, $partner_user_id);
         }
     }
 }
