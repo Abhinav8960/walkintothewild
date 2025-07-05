@@ -49,3 +49,7 @@ ALTER TABLE `chat` ADD `is_closed` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`
 ALTER TABLE `lead_partner_quote_installments` ADD `is_payment_expired` BOOLEAN NOT NULL DEFAULT FALSE AFTER `status`;
 
 
+<!-- 04072025 -->
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'PRQU', 'Payment Received Against Quotation For User', 'payment_received_against_quotation_for_user-html', '1', '1716278771', '2', '1716289465', '2');
+
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'PRQO', 'Payment Received Against Quotation For Operator', 'payment_received_against_quotation_for_operator-html', '1', '1716278771', '2', '1716289465', '2');

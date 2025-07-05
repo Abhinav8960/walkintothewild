@@ -106,6 +106,7 @@ class PaymentResponseController extends Controller
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
             $this->prepareChat($transaction->lead_partner_quotes_id, $message, $transaction->status);
+            $this->sendEmailNotification($transaction->lead_partner_quotes_id, $refernce_no = $data['udf1'], $transaction->user_id, $transaction->partner->user_id, $transaction->status);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
@@ -316,7 +317,7 @@ class PaymentResponseController extends Controller
         // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
         // $data = $x->preparedata;
         // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
-        if($status == 1){
+        if ($status == 1) {
 
             ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
         }
@@ -345,5 +346,17 @@ class PaymentResponseController extends Controller
         }
 
         return false;
+    }
+
+    // $this->sendEmailNotification($transaction->lead_partner_quotes_id, $transaction->status);
+    //         PaymentRecievedForQuotation
+
+    private function sendEmailNotification($quotation_id, $reference_no, $user_id, $partner_user_id, $status)
+    {
+        $quotation = LeadPartnerQuotes::find()->where(['id' => $quotation_id])->one();
+
+        if ($status == 1) {
+            new \common\events\operator\PaymentRecievedForQuotation($quotation, $reference_no, $user_id, $partner_user_id);
+        }
     }
 }

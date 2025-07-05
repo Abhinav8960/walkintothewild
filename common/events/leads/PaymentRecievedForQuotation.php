@@ -2,6 +2,7 @@
 
 namespace common\events\operator;
 
+use api\models\leads\Lead;
 use common\broadcast\services\BroadcastService;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -9,32 +10,31 @@ use common\models\operator\SafariOperator;
 use common\models\User;
 use yii\base\Event;
 
-class QuotationApprovatedByAdmin extends Event
+class PaymentRecievedForQuotation extends Event
 {
     public $quotation;
     protected $user;
     protected $partner_user;
     protected $master_notification_template;
     protected $engine;
-    protected $payment_url;
-    protected $payment_url_email;
 
     public $templates;
     public $channelName;
+    public $reference_no;
 
     protected $channels = [
         'email',
     ];
-    protected $mail_template_code_for_user = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_USER; // New User Registration
-    protected $mail_template_code_FOR_OPERATOR = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_APPROVED_BY_ADMIN_FOR_OPERATOR; // New User Registration
+    protected $mail_template_code_FOR_USER = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_USER; // New User Registration
+    protected $mail_template_code_FOR_OPERATOR = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_PAYMENT_RECEIVED_AGAINST_QUOTATION_FOR_OPERATOR; // New User Registration
 
-    public function __construct($quotation, $payment_url, $user_id, $partner_user_id)
+    public function __construct($quotation, $reference_no, $user_id, $partner_user_id)
     {
         $this->user = User::find()->where(['id' => $user_id])->one();
         $this->partner_user = User::find()->where(['id' => $partner_user_id])->one();
         $this->quotation = $quotation;
-        $this->payment_url  =  $payment_url;
-        $this->payment_url_email  =  $payment_url . '?utm_source=email';
+        $this->reference_no = $reference_no;
+
         $this->engine  = \Yii::$app->engine;
 
         $this->broadcast();
@@ -56,7 +56,7 @@ class QuotationApprovatedByAdmin extends Event
         $arr = [
             'email' => [
                 [
-                    'subject' => 'Quote Received for ' . @$this->quotation->park_label,
+                    'subject' => 'Payment Received for ' . @$this->quotation->park_label,
                     'mail_template_id'  => $this->emailTemplateIdForUser(),
                     'params' => [
                         'username' => $this->user->name,
@@ -70,16 +70,19 @@ class QuotationApprovatedByAdmin extends Event
                         'night_stay_count' => round((strtotime($this->quotation->end_date) - strtotime($this->quotation->start_date)) / 86400),
                         'staycategory' => @$this->quotation->staycatgory->title,
                         'addional_notes' => $this->quotation->addional_notes,
+                        'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->quotation->due_quatation->amount),
-                        'payment_url' => urlencode($this->payment_url_email),
-                        'qr_code' => isset($this->quotation->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file) : null,
+                        // 'payment_url' => urlencode($this->payment_url_email),
+                        // 'qr_code' => isset($this->quotation->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->quotation->due_quatation->qr_code_file) : null,
                     ],
                     'to_mail' => $this->user->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail']
+                    ],
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'Quote approved and forwared to user ' . $this->user->name,
+                    'subject' => 'Payment Received for user ' . $this->user->name,
                     'mail_template_id'  => $this->emailTemplateIdForOperartor(),
                     'params' => [
                         'username' => $this->partner_user->name,
@@ -95,10 +98,13 @@ class QuotationApprovatedByAdmin extends Event
                         'night_stay_count' => round((strtotime($this->quotation->end_date) - strtotime($this->quotation->start_date)) / 86400),
                         'staycategory' =>  @$this->quotation->staycatgory->title,
                         'addional_notes' => $this->quotation->addional_notes,
+                        'reference_no' => $this->reference_no,
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->quotation->due_quatation->amount),
                     ],
                     'to_mail' => $this->partner_user->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail']
+                    ],
                     'bcc' => [],
                 ]
             ],
