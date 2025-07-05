@@ -1,6 +1,6 @@
 <?php
 
-namespace common\events\operator;
+namespace common\events\leads;
 
 use api\models\leads\Lead;
 use common\broadcast\services\BroadcastService;
