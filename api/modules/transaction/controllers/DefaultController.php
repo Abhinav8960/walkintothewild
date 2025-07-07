@@ -426,7 +426,7 @@ class DefaultController extends RestController
         if (isset($model->lead->package_id)) {
             $title = "Package:" . $model->lead->package->package_name;
         } else {
-            $title = "Park:" . $model->park_label;
+            $title = "Customer safari enquiry - " . $model->park_label;
         }
 
         $data['transaction'] = [
@@ -495,7 +495,7 @@ class DefaultController extends RestController
         if (isset($quotation->lead->package_id)) {
             $title = "Package:" . $quotation->lead->package->package_name;
         } else {
-            $title = "Park:" . $quotation->park_label;
+            $title = "Customer safari enquiry - " . $model->park_label;
         }
         $data['quotation'] = [
             "quotation_id" => $quotation->id,
