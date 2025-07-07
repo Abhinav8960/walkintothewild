@@ -48,6 +48,7 @@ class CreateDepartureForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
     public $version;
+    public $user_id;
 
 
 
@@ -117,6 +118,7 @@ class CreateDepartureForm extends \yii\base\Model
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['version'], 'integer'],
             [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
+            [['user_id'],'integer'],
 
         ];
     }
@@ -173,6 +175,7 @@ class CreateDepartureForm extends \yii\base\Model
 
         $this->shared_safari_departure_model->type = $this->type;
         $this->shared_safari_departure_model->host_user_id = $this->host_user_id;
+        $this->shared_safari_departure_model->user_id = $this->user_id;
         $this->shared_safari_departure_model->share_safari_title = $this->share_safari_title;
         $this->shared_safari_departure_model->host_type = $this->host_type; // iss bhi check karna ha
         $this->shared_safari_departure_model->type = $this->type;

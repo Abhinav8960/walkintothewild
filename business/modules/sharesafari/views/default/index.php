@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = 'Fixed Departure';
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created create float-end', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created new create float-end', 'title' => 'Create']);
 ?>
 
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,7 +31,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::a(($model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled'), ['fixed-view', 'id' => $model->id], [
@@ -43,7 +43,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Start Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
@@ -51,7 +51,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'End Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
@@ -59,7 +59,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Cut Off Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->cut_off_date) ? date('Y-m-d', strtotime($model->cut_off_date)) : '';
@@ -67,7 +67,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Number Of Safari',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->no_of_safari;
@@ -75,7 +76,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Number Of Seat',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 15%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->total_seat;
@@ -121,7 +123,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     // ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -131,8 +133,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'template' => '{update}&nbsp',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
