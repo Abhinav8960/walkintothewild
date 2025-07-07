@@ -49,8 +49,8 @@ class EmailChannel
                             $log->torecipient->recipient = \Yii::$app->params['defaultEmail'];
                         }
 
-                        $bcc = [];
-                        $cc = [];
+                        // $bcc = [];
+                        // $cc = [];
                     }
                     $message = $mailer->compose($template->path, json_decode($log->params, true))
                         // ->setFrom($log->mail_from)
