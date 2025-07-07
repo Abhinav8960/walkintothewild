@@ -257,7 +257,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
         if ($leadPartnerQuotes) {
-            return  $leadPartnerQuotes->closeChat($this->lead_partner_quotes_id);
+            return  $leadPartnerQuotes->closeChat($this->lead_partner_quotes_id) && $leadPartnerQuotes->markQuoteInactiveInChat($this->lead_id);
         }
         return true;
     }

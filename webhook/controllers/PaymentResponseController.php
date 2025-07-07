@@ -91,11 +91,13 @@ class PaymentResponseController extends Controller
         $data = Yii::$app->request->post();
 
         $transaction = \common\models\transaction\Transaction::find()->where(['reference_id' => $data['udf1']])->one();
-        $message = "Payment Failed";
+        // $message = "Payment Failed";
+        $message = "Unfortunately, your transaction could not be completed. Please try again or use a different payment method.";
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
-                $message = "Payment Received";
+                // $message = "Payment Received";
+                $message = "Your transaction was completed successfully. Booking details have been sent to your registered email.";
             } elseif (strtolower($data['status']) == 'failure') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_FAILED;
             } elseif (strtolower($data['status']) == 'pending') {
@@ -107,7 +109,7 @@ class PaymentResponseController extends Controller
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
             $this->prepareChat($transaction->lead_partner_quotes_id, $message, $transaction->status);
-            $this->sendEmailNotification($transaction->id, $refernce_no = $data['udf1'], $transaction->user_id, $transaction->partner->user_id, $transaction->status);
+            $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->status);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
