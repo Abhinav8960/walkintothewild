@@ -7,6 +7,7 @@ use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariCommentSearch;
 use common\models\sharesafari\ShareSafariDay;
 use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
@@ -39,8 +40,18 @@ class DefaultController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'update', 'create', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'actions' => ['index', 'create'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['view', 'copy-package'],
+                        'allow' => $this->isFdOwner(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'allow' => $this->isFdOwner(),
                         'roles' => ['@'],
                     ],
 
@@ -54,7 +65,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
-        $searchModel->status = 1;
+        // $searchModel->status = 1;
         $searchModel->host_user_id = $safari_operator->id;
         $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
 
@@ -64,12 +75,26 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $searchModel = new ShareSafariFaqSearch();
+        $searchModel->share_safari_id = $share_safari->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+        return $this->render('_fixed_view', [
+            'share_safari' => $share_safari,
+            'faqs' => $faqs,
+        ]);
+    }
+
 
     public function actionCreate()
     {
         $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureForm();
-        $model->host_user_id =  $safari_operator->id;
+        $model->host_user_id =  $safari_operator->id; //Operator Id Comes Here
         $model->type = 2;
 
         if ($safari_operator->category_id == 1) {
@@ -101,7 +126,7 @@ class DefaultController extends Controller
                         }
 
                         \Yii::$app->session->setFlash('success', 'Fixed departure created successfully');
-                        return $this->redirect(['update', 'id' => $model->shared_safari_departure_model->id]);
+                        return $this->redirect(['itinerary', 'id' => $model->shared_safari_departure_model->id]);
                     }
                 }
             }
@@ -333,29 +358,12 @@ class DefaultController extends Controller
     public function actionFaq($id)
     {
         $safari_operator = $this->module->operatormodel();
-
         $shared_safari_departure_model = $this->findModel($id, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $faqs = $dataProvider->getModels();
 
-
-        return $this->render('faq', [
-            'shared_safari_departure_model' => $shared_safari_departure_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Create ShareSafariFaqForm.
-     * 
-     * @return mixed
-     */
-    public function actionCreateFaq($id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_model = $this->findModel($id, $safari_operator->id);
         $model = new ShareSafariFaqForm();
         $model->share_safari_id = $shared_safari_departure_model->id;
         $model->status = ShareSafariFaq::STATUS_ACTIVE;
@@ -382,13 +390,13 @@ class DefaultController extends Controller
             $model->share_safari_faq_model->loadDefaultValues();
         }
 
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create_faq', [
-                'model' => $model,
-                'shared_safari_departure_model' => $shared_safari_departure_model,
-            ]);
-        }
+        return $this->render('faq', [
+            'shared_safari_departure_model' => $shared_safari_departure_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'faqs' => $faqs,
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdateFaq($id, $faq_id)
@@ -401,9 +409,9 @@ class DefaultController extends Controller
         $model->share_safari_id = $shared_safari_departure_model->id;
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
+            if ($model->validate()) {
+                $model->initializeForm();
+                if ($faq_model->load($this->request->post())) {
                     if ($model->share_safari_faq_model->save(false)) {
                         $faq = new MasterFaq();
                         $faq->question = $model->question;
@@ -443,5 +451,101 @@ class DefaultController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Create ShareSafariFaqForm.
+     * 
+     * @return mixed
+     */
+    // public function actionCreateFaq($id)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     $shared_safari_departure_model = $this->findModel($id, $safari_operator->id);
+    //     $model = new ShareSafariFaqForm();
+    //     $model->share_safari_id = $shared_safari_departure_model->id;
+    //     $model->status = ShareSafariFaq::STATUS_ACTIVE;
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->share_safari_faq_model->save(false)) {
+    //                     $faq = new MasterFaq();
+    //                     $faq->question = $model->question;
+    //                     $faq->answer = $model->answer;
+    //                     $faq->position = 0;
+    //                     $faq->status = MasterFaq::STATUS_ACTIVE;
+    //                     if ($faq->save(false)) {
+    //                         $model->share_safari_faq_model->faq_id = $faq->id;
+    //                         $model->share_safari_faq_model->save(false);
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
+    //                     return $this->redirect(['faq', 'id' => $shared_safari_departure_model->id]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->share_safari_faq_model->loadDefaultValues();
+    //     }
+
+
+    //     if (Yii::$app->request->isAjax) {
+    //         return $this->renderAjax('create_faq', [
+    //             'model' => $model,
+    //             'shared_safari_departure_model' => $shared_safari_departure_model,
+    //         ]);
+    //     }
+    // }
+
+    // public function actionUpdateFaq($id, $faq_id)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+
+    //     $shared_safari_departure_model = $this->findModel($id, $safari_operator->id);
+    //     $faq_model = ShareSafariFaq::find()->where(['id' => $faq_id])->one();
+    //     $model = new ShareSafariFaqForm($faq_model);
+    //     $model->share_safari_id = $shared_safari_departure_model->id;
+
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->share_safari_faq_model->save(false)) {
+    //                     $faq = new MasterFaq();
+    //                     $faq->question = $model->question;
+    //                     $faq->answer = $model->answer;
+    //                     $faq->position = 0;
+    //                     $faq->status = MasterFaq::STATUS_ACTIVE;
+    //                     if ($faq->save(false)) {
+    //                         $model->share_safari_faq_model->faq_id = $faq->id;
+    //                         $model->share_safari_faq_model->save(false);
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
+    //                     return $this->redirect(['faq', 'id' => $shared_safari_departure_model->id]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->share_safari_faq_model->loadDefaultValues();
+    //     }
+    //     if (Yii::$app->request->isAjax) {
+    //         return $this->renderAjax('create_faq', [
+    //             'model' => $model,
+    //             'shared_safari_departure_model' => $shared_safari_departure_model,
+    //         ]);
+    //     }
+    // }
+
+    protected function isFdOwner()
+    {
+        $id = Yii::$app->request->get('id');
+
+        $operator = $this->module->operatormodel();
+        $model = ShareSafari::findOne(['id' => $id]);
+
+        if ($model && $model->host_user_id == $operator->id) {
+            return true;
+        }
+        return false;
     }
 }

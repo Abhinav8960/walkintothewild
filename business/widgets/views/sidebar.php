@@ -65,7 +65,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/sharesafari/default/index",
                                                                                                     "/sharesafari/default/create",
                                                                                                 )) ? 'fd_active.svg' : 'fd.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu"> My Fixed Departures</span>
+                <span class="hide-slide-menu">My Fixed Departures</span>
             </a>
         </li> -->
 

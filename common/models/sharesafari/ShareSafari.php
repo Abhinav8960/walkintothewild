@@ -87,10 +87,10 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             [['share_safari_title'], 'string'],
             [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'tour_duration', 'cost_per_person', 'type'], 'integer'],
-            [['start_date', 'end_date', 'slug','is_published_on_api', 'is_published_on_web'], 'safe'],
-            [['is_published_on_api', 'is_published_on_web'], 'boolean'],            
+            [['start_date', 'end_date', 'slug', 'is_published_on_api', 'is_published_on_web'], 'safe'],
+            [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['safari_plan'], 'string'],
-            [['image','filepath'], 'string'],
+            [['image', 'filepath'], 'string'],
         ];
     }
 
@@ -158,10 +158,16 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
     }
 
+    // public function getSharedimagepath()
+    // {
+
+    //     return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+    // }
+
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
@@ -321,5 +327,14 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             return true;
         }
         return false;
+    }
+
+    public function getCommentCount()
+    {
+        $count = ShareSafariComment::find()->where(['share_safari_id' => $this->id])->andWhere(['status' => 1])->count();
+        if ($count > 0) {
+            return $count;
+        }
+        return 0;
     }
 }
