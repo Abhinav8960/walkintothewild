@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'template' => '{input}{error}',
     ],
 ]); ?>
-<div class="row mt-3">
+<div class="row">
     <div class="col-12">
         <div class="filterBar">
             <div class="filters">
