@@ -2125,7 +2125,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         ];
     }
 
-    public static function generatePdf($viewPath, $params = [])
+    public static function generatePdfContent($viewPath, $params = [])
     {
         // Render the partial view
         return $content = Yii::$app->view->renderFile(Yii::getAlias($viewPath), $params);
