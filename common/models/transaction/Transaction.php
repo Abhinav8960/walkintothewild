@@ -251,7 +251,8 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
         //  // Generate PDF
         //  $content = GeneralModel::generatePdfContent('@backend/modules/leads/views/default/_quotation_pdf.php', [
-        //     'quotation' => $quotation,
+        //     'transaction' => $this,
+        //     'transaction' => $this,
         // ]);
         // $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
         // $pdf->WriteHTML($content);
@@ -267,8 +268,8 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         //     'error' => UPLOAD_ERR_OK,
         // ]);
 
-        // $fileName = 'quotation_' . $quotation->id . '.pdf';
-        // $filePath = 'quotations/' . date('ym') . '/' . $fileName;
+        // $fileName = 'payment_receipt_' . $quotation->id . '.pdf';
+        // $filePath = 'payment_receipts/' . date('ym') . '/' . $fileName;
 
         // $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
 
