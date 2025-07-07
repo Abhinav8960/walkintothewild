@@ -2,6 +2,7 @@
 
 namespace common\models\transaction;
 
+use common\models\GeneralModel;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\Lead;
 use common\models\meta\MetaStayCategory;
@@ -247,6 +248,30 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     private function makebooking()
     {
+
+        //  // Generate PDF
+        //  $content = GeneralModel::generatePdfContent('@backend/modules/leads/views/default/_quotation_pdf.php', [
+        //     'quotation' => $quotation,
+        // ]);
+        // $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+        // $pdf->WriteHTML($content);
+        // $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $quotation->id . '.pdf';
+        // $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+        // // Upload PDF to RFS
+        // $uploadedFile = new \yii\web\UploadedFile([
+        //     'name' => 'quotation_' . $quotation->id . '.pdf',
+        //     'tempName' => $pdfFilePath,
+        //     'type' => 'application/pdf',
+        //     'size' => filesize($pdfFilePath),
+        //     'error' => UPLOAD_ERR_OK,
+        // ]);
+
+        // $fileName = 'quotation_' . $quotation->id . '.pdf';
+        // $filePath = 'quotations/' . date('ym') . '/' . $fileName;
+
+        // $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
+
         $booking = new \common\models\bookings\Booking();
         $booking->transaction_id = $this->id;
         $booking->order_id = $this->order_id;
@@ -300,6 +325,8 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         $booking->status = 1;
         return $booking->save(false);
     }
+
+
 
     public function getStatusLabel()
     {

@@ -104,7 +104,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email', 'rejection_reason', 'quotation_filepath', 'transaction_id'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
-            [['validity_date', 'permit_booking_date', 'is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason'], 'safe'],
+            [['validity_date', 'permit_booking_date', 'is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason','payment_receipt'], 'safe'],
         ];
     }
 
@@ -222,7 +222,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         $chats = Chat::findOne(['lead_id' => $lead_id]);
         if (!empty($chats)) {
             foreach ($chats as $chat) {
-                $chat = ChatMessage::updateAll(
+                ChatMessage::updateAll(
                     ['is_quotation_active' => false],
                     [['chat_id' => $chat->id]]
                 );

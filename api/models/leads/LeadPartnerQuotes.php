@@ -117,7 +117,7 @@ class LeadPartnerQuotes extends \common\models\leads\LeadPartnerQuotes
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email', 'rejection_reason', 'quotation_filepath', 'transaction_id'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
-            [['validity_date', 'permit_booking_date', 'is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason'], 'safe'],
+            [['validity_date', 'permit_booking_date', 'is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason','payment_receipt'], 'safe'],
 
         ];
     }
