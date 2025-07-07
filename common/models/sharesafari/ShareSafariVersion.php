@@ -2,79 +2,36 @@
 
 namespace common\models\sharesafari;
 
-use common\models\feeds\Feeds;
 use common\models\operator\SafariOperator;
 use Yii;
 use common\models\User;
 use common\models\park\SafariPark;
 use common\traits\CommanRelationship;
-use yii\behaviors\SluggableBehavior;
 
-/**
- * This is the model class for table "share_safari".
- *
- * @property int $id
- * @property int $host_user_id
- * @property int|null $host_type
- * @property int|null $park_id
- * @property int|null $share_safari_agenda_id
- * @property int|null $no_of_safari
- * @property string|null $start_date
- * @property string|null $end_date
- * @property int|null $stay_category_id
- * @property int|null $estimate_price_min
- * @property int|null $estimate_price_max
- * @property string|null $safari_plan
- * @property int|null $total_seat
- * @property int|null $share_seat
- * @property int|null $created_at
- * @property int|null $created_by
- * @property int|null $updated_at
- * @property int|null $updated_by
- * @property int|null $status
- */
-class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+
+class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
 
-
-    // const STATUS_APPROVED = 1;
-    // const STATUS_SUSPEND = 2;
-    const STATUS_FULL_SEAT = 2;
-
-    const TYPE_SAFARI = 1;
-    const TYPE_FIXED_DEPARTURE = 2;
-
-    const STATUS_DELETE_BY_USER = -2;
-
-    const OBJECTIVE = "share_safari";
+    const NOT_APPROVED_STATUS = 0;
+    const APPROVED_AND_LIVE_STATUS = 1;
+    const SEND_FOR_APPROVAL_STATUS = 2;
+    const EDIATBLE_STATUS = 3;
+    const TERMINATED_STATUS = 4;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'share_safari';
+        return 'share_safari_version';
     }
 
 
     public function behaviors()
     {
         return [
-            [
-                'class' => \common\behaviors\FeedsBehavior::class,
-                'objective' => 'share_safari',
-                'collection' => Feeds::MODEL_SHARESFARI,
-                'date_time' => 'start_date',
-            ],
-
             \yii\behaviors\TimestampBehavior::className(),
             \yii\behaviors\BlameableBehavior::className(),
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'share_safari_title',
-                'slugAttribute' => 'slug',
-                'ensureUnique' => true,
-            ],
         ];
     }
 
@@ -91,6 +48,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['safari_plan'], 'string'],
             [['image', 'filepath'], 'string'],
+            [['version', 'share_safari_title', 'share_safari_id'], 'required'],
+
         ];
     }
 
@@ -124,13 +83,6 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         ];
     }
 
-    public function getStatuslabel()
-    {
-
-        $options = [ShareSafari::STATUS_ACTIVE => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full', ShareSafari::STATUS_DELETE_BY_USER => 'Delete by User'];
-        return isset($options[$this->status]) ? $options[$this->status] : '';
-    }
-
     public function getPark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
@@ -138,7 +90,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getParklist()
     {
-        return $this->hasMany(ShareSafariParklist::className(), ['id' => 'share_safari_id']);
+        return $this->hasMany(ShareSafariParklist::className(), ['id' => 'share_safari_id', 'version' => 'version']);
     }
 
 
@@ -153,16 +105,11 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     }
 
 
-    public function getIntrested()
-    {
-        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
-    }
-
-    // public function getSharedimagepath()
+    // public function getIntrested()
     // {
-
-    //     return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+    //     return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
     // }
+
 
     public function getSharedimagepath()
     {
@@ -172,22 +119,22 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getComments()
     {
-        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'share_safari_id']);
     }
 
     /**
      * Get Host Type
      */
-    public function getHosttype()
-    {
-        $options = [
-            1 => 'Individual',
-            2 => 'Wildlife Influencer',
-            3 => 'Wildlife Influencer',
-            4 => 'Safari Tour Operator'
-        ];
-        return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
-    }
+    // public function getHosttype()
+    // {
+    //     $options = [
+    //         1 => 'Individual',
+    //         2 => 'Wildlife Influencer',
+    //         3 => 'Wildlife Influencer',
+    //         4 => 'Safari Tour Operator'
+    //     ];
+    //     return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
+    // }
 
 
 
@@ -228,18 +175,14 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getSharesafariIncludeds()
     {
-        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'share_safari_id', 'version' => 'version']);
     }
 
     public function getSharesafaridays()
     {
-        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'share_safari_id', 'version' => 'version']);
     }
 
-    public function getSharesafarigallery()
-    {
-        return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
-    }
 
     public function getOrganizedslug()
     {
@@ -284,68 +227,57 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     }
 
 
-    public function getSharesafarifollowerlist()
-    {
-        if ($this->user &&  $this->user->userfollowers) {
-            return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
-        }
-    }
+    // public function getSharesafarifollowerlist()
+    // {
+    //     if ($this->user &&  $this->user->userfollowers) {
+    //         return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
+    //     }
+    // }
 
-    public function getFixeddeparturefollowerlist()
-    {
-        if ($this->safarioperator && $this->safarioperator->followerlist) {
-            return $this->safarioperator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
-        }
-    }
+    // public function getFixeddeparturefollowerlist()
+    // {
+    //     if ($this->safarioperator && $this->safarioperator->followerlist) {
+    //         return $this->safarioperator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
+    //     }
+    // }
 
 
-    public function savehistory()
-    {
+    // public function savehistory()
+    // {
 
-        $historyModel = new ShareSafariHistory();
-        $historyModel->attributes = $this->attributes;
-        $historyModel->parent_id = $this->id;
+    //     $historyModel = new ShareSafariHistory();
+    //     $historyModel->attributes = $this->attributes;
+    //     $historyModel->parent_id = $this->id;
 
-        if (!$historyModel->save(false)) {
-            Yii::error('Failed to save ShareSafariHistory: ' . print_r($historyModel->errors, true), __METHOD__);
-        }
-    }
+    //     if (!$historyModel->save(false)) {
+    //         Yii::error('Failed to save ShareSafariHistory: ' . print_r($historyModel->errors, true), __METHOD__);
+    //     }
+    // }
 
-    public function getSharedSafariHistory()
-    {
-        $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_SAFARI])->count();
-        if ($count >= 2) {
-            return true;
-        }
-        return false;
-    }
+    // public function getSharedSafariHistory()
+    // {
+    //     $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_SAFARI])->count();
+    //     if ($count >= 2) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function getFixedDepartureHistory()
-    {
-        $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->count();
-        if ($count >= 2) {
-            return true;
-        }
-        return false;
-    }
+    // public function getFixedDepartureHistory()
+    // {
+    //     $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->count();
+    //     if ($count >= 2) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function getCommentCount()
-    {
-        $count = ShareSafariComment::find()->where(['share_safari_id' => $this->id])->andWhere(['status' => 1])->count();
-        if ($count > 0) {
-            return $count;
-        }
-        return 0;
-    }
-
-    public static function generateUnqiueSlug($share_safari_title)
-    {
-        $slug = \yii\helpers\Inflector::slug($share_safari_title);
-        $count = 0;
-        while (self::find()->where(['slug' => $slug])->exists()) {
-            $count++;
-            $slug = \yii\helpers\Inflector::slug($share_safari_title) . '-' . $count;
-        }
-        return $slug;
-    }
+    // public function getCommentCount()
+    // {
+    //     $count = ShareSafariComment::find()->where(['share_safari_id' => $this->id])->andWhere(['status' => 1])->count();
+    //     if ($count > 0) {
+    //         return $count;
+    //     }
+    //     return 0;
+    // }
 }

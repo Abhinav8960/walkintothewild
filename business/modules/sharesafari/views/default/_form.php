@@ -8,7 +8,7 @@ use common\models\GeneralModel;
 ?>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'create-departure-form',
+    'id' => 'create-departure-version-form',
     'method' => 'POST',
     'fieldConfig' => [
         'template' => '<div class="form-group">{label}{input}{error}</div>',
@@ -160,27 +160,27 @@ use common\models\GeneralModel;
 <?php
 
 $script = <<< JS
-    $("#createdepartureform-cut_off_date").on("change", function(){
-        $("#createdepartureform-start_date").attr("min", $(this).val());
+    $("#createdepartureversionform-cut_off_date").on("change", function(){
+        $("#createdepartureversionform-start_date").attr("min", $(this).val());
     });  
 
-    $("#createdepartureform-start_date").on("change", function(){
-        $("#createdepartureform-end_date").attr("min", $(this).val());
+    $("#createdepartureversionform-start_date").on("change", function(){
+        $("#createdepartureversionform-end_date").attr("min", $(this).val());
     });  
 
-    $("#createdepartureform-start_date").on("change", function(){
+    $("#createdepartureversionform-start_date").on("change", function(){
         var date = (new Date()).toISOString().split('T')[0];
-        $("#createdepartureform-cut_off_date").attr("min", date);
-        $("#createdepartureform-cut_off_date").attr("max", $(this).val());
+        $("#createdepartureversionform-cut_off_date").attr("min", date);
+        $("#createdepartureversionform-cut_off_date").attr("max", $(this).val());
     }); 
 
-    // $("#createdepartureform-tour_duration").on("input",function()
+    // $("#createdepartureversionform-tour_duration").on("input",function()
     // {
     //     var selectedValue = $(this).val();
     //     $("#tour").html(selectedValue);
     // });
 
-    $("#createdepartureform-no_of_safari").on("input",function()
+    $("#createdepartureversionform-no_of_safari").on("input",function()
     {
         var selectedValue = $(this).val();
         $("#safariseat").html(selectedValue);
