@@ -495,7 +495,7 @@ class DefaultController extends RestController
         if (isset($quotation->lead->package_id)) {
             $title = "Package:" . $quotation->lead->package->package_name;
         } else {
-            $title = "Customer safari enquiry - " . $model->park_label;
+            $title = "Customer safari enquiry - " . $quotation->park_label;
         }
         $data['quotation'] = [
             "quotation_id" => $quotation->id,
