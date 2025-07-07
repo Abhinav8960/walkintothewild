@@ -31,61 +31,61 @@ $this->title = 'Fixed Departure';
                                     </div>
                                 </div>
 
-                                <?php if (false) { ?>
-                                    <div class="col-xl-12">
-                                        <div class="itrnTextCard py-4">
-                                            <h6><?= $share_safari->commentCount ?> Comments</h6>
-                                            <div class="one_box position-relative pb-4">
-                                                <?php if ($live_package = $package->livePackage) {
-                                                    if ($parent_comments = $live_package->getComments()->where(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all()) {
-                                                        foreach ($parent_comments as $comments) {
-                                                            $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'package_comment.status' => 1])->all();
 
-                                                ?>
-                                                            <div class="postcomment d-flex gap-2 pt-3 w-100">
-                                                                <div class="avatar">
-                                                                    <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
-                                                                        class="rounded-circle bg-info">
-                                                                </div>
-                                                                <div class="text_com">
-                                                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                        <span class="comment-author"><?= $comments->user->name ?></span>
-                                                                        <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                <div class="col-xl-12">
+                                    <div class="itrnTextCard py-4">
+                                        <h6><?= $share_safari->commentCount ?> Comments</h6>
+                                        <div class="one_box position-relative pb-4">
+                                            <?php
+                                            if ($parent_comments = $share_safari->getComments()->andWhere(['parent_id' => null, 'deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_comment.status' => 1])->all()) {
+                                                foreach ($parent_comments as $comments) {
+                                                    $replies = $comments->getReplies()->andWhere(['deleted_by' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_comment.status' => 1])->all();
+
+                                            ?>
+                                                    <div class="postcomment d-flex gap-2 pt-3 w-100">
+                                                        <div class="avatar">
+                                                            <img src="<?= $comments->user->profile_display_image ?>" alt="Profile"
+                                                                class="rounded-circle bg-info">
+                                                        </div>
+                                                        <div class="text_com">
+                                                            <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                <span class="comment-author"><?= $comments->user->name ?></span>
+                                                                <span class="userDate-time"><?= date("d F Y, h:i A", $comments->created_at); ?></span>
+                                                            </div>
+                                                            <p><?= $comments->comment ?></p>
+                                                            <div class="user-active d-flex align-items-center gap-2">
+                                                                <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
+                                                            </div>
+                                                            <?php if ($replies) { ?>
+                                                                <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
+                                                                    <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
+                                                                        <a href=""><span>Hide replies</span></a>
                                                                     </div>
-                                                                    <p><?= $comments->comment ?></p>
-                                                                    <div class="user-active d-flex align-items-center gap-2">
-                                                                        <a href="javascript:void(0);" class="show-replies" data-id="<?= $comments->id ?>">Reply <span><?= count($replies) ?></span></a>
-                                                                    </div>
-                                                                    <?php if ($replies) { ?>
-                                                                        <div class="replies-wrapper mt-2" id="replies-wrapper-<?= $comments->id ?>" style="display: none;">
-                                                                            <div class="hide-and-show hide-replies" id="replies-<?= $comments->id ?>">
-                                                                                <a href=""><span>Hide replies</span></a>
+                                                                    <?php foreach ($replies as $reply) { ?>
+                                                                        <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                                                            <div class="avatar">
+                                                                                <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
                                                                             </div>
-                                                                            <?php foreach ($replies as $reply) { ?>
-                                                                                <div class="postcomment d-flex gap-2 pt-2 w-100">
-                                                                                    <div class="avatar">
-                                                                                        <img src="<?= $reply->user->profile_display_image ?>" alt="Profile" class="rounded-circle bg-info">
-                                                                                    </div>
-                                                                                    <div class="text_com">
-                                                                                        <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                                            <span class="comment-author"><?= $reply->user->name ?></span>
-                                                                                            <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
-                                                                                        </div>
-                                                                                        <p><?= $reply->comment ?></p>
-                                                                                    </div>
+                                                                            <div class="text_com">
+                                                                                <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                                    <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                                    <span class="userDate-time"><?= date("d F Y, h:i A", $reply->created_at); ?></span>
                                                                                 </div>
-                                                                            <?php } ?>
+                                                                                <p><?= $reply->comment ?></p>
+                                                                            </div>
                                                                         </div>
                                                                     <?php } ?>
-
                                                                 </div>
-                                                            </div>
-                                                <?php }
-                                                    }
-                                                } ?>
-                                            </div>
+                                                            <?php } ?>
 
+                                                        </div>
+                                                    </div>
+                                            <?php }
+                                            }
+                                            ?>
+                                        </div>
 
+                                        <?php if (false) { ?>
                                             <form id="comment-form"><input type="hidden" value="TOKEN_HERE"
                                                     name="_csrf-frontend">
                                                 <div class="comments-persons px-0 pt-4">
@@ -130,9 +130,9 @@ $this->title = 'Fixed Departure';
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div>
+                                            <?php } ?>
                                     </div>
-                                    <?php } ?>
+                                </div>
 
                             </div>
                         </div>
