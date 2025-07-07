@@ -59,3 +59,9 @@ ALTER TABLE `lead_partner_quote_installments` ADD `payment_expired_datetime` DAT
 
 
 ALTER TABLE `lead_partner_quotes` ADD `is_payment_expired` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_payment_link_send`, ADD `payment_expired_datetime` DATETIME NULL DEFAULT NULL AFTER `is_payment_expired`, ADD `payment_expired_reason` VARCHAR(255) NULL DEFAULT NULL AFTER `payment_expired_datetime`;
+
+ALTER TABLE `transaction` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `utm_source`;
+ALTER TABLE `booking` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `param5`;
+ALTER TABLE `lead` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
+ALTER TABLE `lead_partner_quotes` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
+ALTER TABLE `lead_partner_quote_installments` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;

@@ -65,7 +65,7 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'amount', 'payment_hash', 'before_datetime'], 'required'],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','is_payment_expired'], 'integer'],
             [['amount'], 'number'],
-            [['before_datetime'], 'safe'],
+            [['before_datetime','payment_receipt'], 'safe'],
             [['payment_link', 'payment_hash', 'transaction_id'], 'string', 'max' => 255],
             [['transaction_datetime'], 'date', 'format' => "php:Y-m-d H:i:s"],
             [['transaction_id'], 'string', 'max' => 100],

@@ -92,7 +92,7 @@ class Lead extends \common\models\leads\Lead
             [['status'], 'default', 'value' => 1],
             [['source', 'from_date', 'user_id', 'booked_operator_id', 'payment_gateway'], 'required'],
             [['source', 'package_id', 'park_id', 'operator_id', 'is_date_flexible', 'safaris', 'travelers', 'stay_category_id', 'user_id', 'is_booking_for_login_user', 'is_seen_by_admin', 'status', 'is_payment_received', 'booked_operator_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['from_date', 'to_date', 'transaction_datetime'], 'safe'],
+            [['from_date', 'to_date', 'transaction_datetime', 'payment_receipt'], 'safe'],
             [['addional_notes'], 'string'],
             [['package_version'], 'string', 'max' => 10],
             [['name', 'email', 'destination', 'transport', 'meals', 'budget', 'transaction_id'], 'string', 'max' => 255],
