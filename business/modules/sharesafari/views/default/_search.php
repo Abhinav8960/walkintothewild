@@ -19,9 +19,21 @@ use yii\widgets\ActiveForm;
     <div class="col-12">
         <div class="filterBar">
             <div class="filters">
-
+                <div class="filterItem position-relative">
+                    <label>Start Date:</label>
+                    <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
+                </div>
+                <div class="filterItem position-relative">
+                    <label>End Date:</label>
+                    <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
+                </div>
+                <div class="filterItem position-relative">
+                    <label>Cut off Date:</label>
+                    <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 

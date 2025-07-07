@@ -73,16 +73,9 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
-        $fixedsearchModel = new ShareSafariCommentSearch();
-        $fixedsearchModel->share_safari_id = $share_safari->id;
-        $fixedProvider = $fixedsearchModel->listingsearch($this->request->queryParams);
-        $fixedProvider->query->andWhere(['parent_id' => null]);
-
         return $this->render('_fixed_view', [
             'share_safari' => $share_safari,
             'faqs' => $faqs,
-            'fixedsearchModel' => $fixedsearchModel,
-            'fixedProvider' => $fixedProvider,
         ]);
     }
 
