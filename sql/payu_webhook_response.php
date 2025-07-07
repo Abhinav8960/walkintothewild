@@ -30,7 +30,6 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `payu_webhook_response`;
 CREATE TABLE `payu_webhook_response` (
   `id` int NOT NULL,
-  `transaction_id` varchar(255) NOT NULL,
   `mihpayid` varchar(255) DEFAULT NULL,
   `mode` varchar(50) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,

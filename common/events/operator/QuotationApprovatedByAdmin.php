@@ -79,7 +79,7 @@ class QuotationApprovatedByAdmin extends Event
                     'bcc' => [],
                 ],
                 [
-                    'subject' => 'Quote approved and forwared to user ' . $this->user->name,
+                    'subject' => 'Quote forwared to user ' . $this->user->name,
                     'mail_template_id'  => $this->emailTemplateIdForOperartor(),
                     'params' => [
                         'username' => $this->partner_user->name,
