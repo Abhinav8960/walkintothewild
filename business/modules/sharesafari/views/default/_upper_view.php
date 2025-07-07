@@ -73,11 +73,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 <div class="row packageSfari mx-3">
     <div class="col-12 mt-4">
-        <div class="imagesSafari d-sm-block d-none">
-            <div class="package-banner-dummy">
-                <img src="<?= $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
-            </div>
-        </div>
         <div class="wrapper-skybgsafri pb-0">
             <div class="row pb-4">
                 <div class="border-right col-lg-8 col-md-12 col-sm-12">
@@ -92,6 +87,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="d-flex flex-column pt-3 col-lg-8 col-md-9">
                             <div class="safrititles ">
                                 <h2 class="m-0 lh-1 d-inline font-devator"><?= $share_safari->share_safari_title ?></h2>
+                                <h6 class="titler_safari my-3"><span style="color:#4b4b4b;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:#4b4b4b;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
                                 <h6 class="titler_safari my-3"><i class="fa-solid fa-location-dot me-1"></i> <?= $share_safari->park->title ?><br></h6>
                                 <p class="mb-0 ">Organized by <strong><?= $share_safari->organizedbyname ?></strong></p>
                             </div>
