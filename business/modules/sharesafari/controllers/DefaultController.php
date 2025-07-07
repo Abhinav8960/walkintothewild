@@ -7,6 +7,7 @@ use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariCommentSearch;
 use common\models\sharesafari\ShareSafariDay;
 use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
@@ -39,7 +40,7 @@ class DefaultController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'update', 'create', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'actions' => ['index','view', 'update', 'create', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -61,6 +62,27 @@ class DefaultController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $searchModel = new ShareSafariFaqSearch();
+        $searchModel->share_safari_id = $share_safari->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+        $fixedsearchModel = new ShareSafariCommentSearch();
+        $fixedsearchModel->share_safari_id = $share_safari->id;
+        $fixedProvider = $fixedsearchModel->listingsearch($this->request->queryParams);
+        $fixedProvider->query->andWhere(['parent_id' => null]);
+
+        return $this->render('_fixed_view', [
+            'share_safari' => $share_safari,
+            'faqs' => $faqs,
+            'fixedsearchModel' => $fixedsearchModel,
+            'fixedProvider' => $fixedProvider,
         ]);
     }
 
