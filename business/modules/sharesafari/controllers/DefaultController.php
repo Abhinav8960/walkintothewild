@@ -95,7 +95,6 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureForm();
         $model->host_user_id =  $safari_operator->id; //Operator Id Comes Here
-        $model->user_id =  $safari_operator->user_id; //Operator Id Comes Here
         $model->type = 2;
 
         if ($safari_operator->category_id == 1) {

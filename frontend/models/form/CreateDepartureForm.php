@@ -48,7 +48,6 @@ class CreateDepartureForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
     public $version;
-    public $user_id;
 
 
 
@@ -118,7 +117,7 @@ class CreateDepartureForm extends \yii\base\Model
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['version'], 'integer'],
             [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
-            [['user_id'],'integer'],
+        
 
         ];
     }
