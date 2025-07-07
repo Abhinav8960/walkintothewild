@@ -40,8 +40,18 @@ class DefaultController extends Controller
                 'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                 'rules' => [
                     [
-                        'actions' => ['index','view', 'update', 'create', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'actions' => ['index', 'create'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['view', 'copy-package'],
+                        'allow' => $this->isFdOwner(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'allow' => $this->isFdOwner(),
                         'roles' => ['@'],
                     ],
 
@@ -526,4 +536,17 @@ class DefaultController extends Controller
     //         ]);
     //     }
     // }
+
+    protected function isFdOwner()
+    {
+        $id = Yii::$app->request->get('id');
+
+        $operator = $this->module->operatormodel();
+        $model = ShareSafari::findOne(['id' => $id]);
+
+        if ($model && $model->host_user_id == $operator->id) {
+            return true;
+        }
+        return false;
+    }
 }
