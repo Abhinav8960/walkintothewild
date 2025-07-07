@@ -144,8 +144,6 @@ $this->title = 'Fixed Departure';
                         <div class="tab-pane fade" id="Exclusions" role="tabpanel"
                             aria-labelledby="contact-tab"><?= $this->render('_getting_there', ['share_safari' => $share_safari]) ?>
                         </div>
-                        <div class="tab-pane fade" id="Accomodation" role="tabpanel"
-                            aria-labelledby="contact-tab"> <?= $this->render('_getting_there', ['share_safari' => $share_safari]) ?></div>
                         <div class="tab-pane fade" id="common" role="tabpanel"
                             aria-labelledby="contact-tab"> <?= $this->render('_policy', ['share_safari' => $share_safari]) ?></div>
                         <div class="tab-pane fade" id="FAQ" role="tabpanel"

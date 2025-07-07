@@ -92,7 +92,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="col-12 mt-4">
         <div class="imagesSafari d-sm-block d-none">
             <div class="package-banner-dummy">
-                <img src="<?= isset($share_safari->imagebannerpath) ? $share_safari->imagebannerpath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
+                <img src="<?= $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
             </div>
         </div>
         <div class="wrapper-skybgsafri pb-0">
@@ -103,15 +103,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             class="maxWidth pb-md-3 pb-lg-0 col-lg-3 col-md-12 col-sm-12 col-12">
                             <div class="images_tour select_safrai ">
                                 <img class="w-100 h-100" alt="Partner"
-                                    src="<?= isset($share_safari->imagepath) ? $share_safari->imagepath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>">
+                                    src="<?= isset($share_safari->sharedimagepath) ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>">
                             </div>
                         </div>
                         <div class="d-flex flex-column pt-3 col-lg-8 col-md-9">
                             <div class="safrititles ">
                                 <h2 class="m-0 lh-1 d-inline font-devator"><?= $share_safari->share_safari_title ?></h2>
                                 <h6 class="titler_safari my-3"><i class="fa-solid fa-location-dot me-1"></i> <?= $share_safari->park->title ?><br></h6>
-                                <p class="mb-0 ">Organized by <a href=""
-                                        data-discover="true"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                <p class="mb-0 ">Organized by <strong><?= $share_safari->organizedbyname ?></strong></p>
                             </div>
                         </div>
 
@@ -177,19 +176,18 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
 
                         </div>
-                        <?php if(false){ ?>
+
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
                                 <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-hotel.png">
                                 </div>
                                 <div class="text-form">
 
-                                    <p class="mb-0"><?= isset(GeneralModel::packageStayOption()[$share_safari->stay_category_id]) ? GeneralModel::packageStayOption()[$share_safari->stay_category_id] : 'Not Included' ?>
+                                    <p class="mb-0"><?= isset(GeneralModel::fdStayOption()[$share_safari->stay_category_id]) ? GeneralModel::fdStayOption()[$share_safari->stay_category_id] : 'Not Included' ?>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <?php }?>
                     </div>
                 </div>
                 <div class="row mt-2 pt-md-3 align-items-center justify-content-end border-top border-bottom gx-4 pb-3">

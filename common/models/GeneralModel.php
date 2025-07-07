@@ -2057,4 +2057,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '4' => 'Terminated',
         ];
     }
+
+     public static function fdStayOption()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_share_safari' => SORT_ASC])->all(), 'id', 'title');
+    }
 }
