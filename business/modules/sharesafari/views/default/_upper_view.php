@@ -48,23 +48,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
-                <div class="mainCard py-3 px-3">
-                    <div class="cardChild d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-2 align-items-center">
-                            <div class="iconsDiv d-flex justify-content-center align-items-center">
-                                <img src="<?= $this->params['baseurl'] ?>/images/quote_request.svg" alt="Quotes">
-                            </div>
-                            <div class="text-card">
-                                <p>Quote Requests</p>
-                            </div>
-                        </div>
-                        <div class="numbwrCount">
-                            <h3>0</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="col-xxl-3 col-xl-4 col-md-6 col-12 mb-3">
                 <div class="mainCard py-3 px-3">
