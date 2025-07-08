@@ -233,7 +233,7 @@ class DefaultController extends Controller
     public function actionInclusion($id)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_version_model = $this->findModel($id, $safari_operator->id);
+        $shared_safari_departure_version_model = $this->findModel($id);
         $model = new CreateDepartureVersionForm($shared_safari_departure_version_model);
         $model->scenario = 'inclusion';
 
