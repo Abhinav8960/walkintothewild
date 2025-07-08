@@ -31,22 +31,23 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <div class="form_boxes mb-3 postion-relative">
+        <div class="form_boxes mb-3">
             <label for="">Safari Park<span>*</span></label>
-            <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
-                'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
-                'options' => [
-                    'multiple' => true,
-                    'autocomplete' => 'off',
-                    'class' => 'form-select form-select-lg mb-3',
-                ],
-                'pluginOptions' => [
-                    'placeholder' => 'Open this select menu',
-                ],
-            ])->label(false) ?>
-            <i class="fa fa-angle-down position-absolute"
-                style="right: 20px; top: 55px; pointer-events: none; z-index: 100;"></i>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
         </div>
     </div>
 
@@ -112,22 +113,21 @@ use kartik\datetime\DateTimePicker;
         </div>
         <div class="form_boxes mb-3 position-relative">
             <label for="">Package Feature <span>*</span></label>
-
-            <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
-                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
-                'data' => GeneralModel::packagefeatureoption(),
-                'options' => [
-                    'multiple' => true,
-                    'autocomplete' => 'off',
-                    'class' => 'form-select form-select-lg mb-3',
-                ],
-                'pluginOptions' => [
-                    'placeholder' => 'Open this select menu',
-                ],
-            ])->label(false) ?>
-
-            <i class="fa fa-angle-down position-absolute"
-                style="right: 20px; top: 40px; pointer-events: none; z-index: 100;"></i>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::packagefeatureoption(),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                        'class' => 'form-select form-select-lg mb-3',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
         </div>
         <div class="form_boxes mb-3">
             <label for="">Cost Per Person <span>*</span></label>
@@ -288,3 +288,19 @@ $gst_script = <<< JS
 JS;
 $this->registerJs($gst_script);
 ?>
+
+<style>
+    .select2-angle-wrapper {
+        position: relative;
+    }
+
+    .select2-angle-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #888;
+        font-size: 16px;
+    }
+</style>
