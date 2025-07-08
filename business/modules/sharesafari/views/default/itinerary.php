@@ -7,20 +7,20 @@ use yii\widgets\ActiveForm;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Fixed Departure : ' . $shared_safari_departure_model->share_safari_title . '';
+$this->title = 'Fixed Departure : ' . $shared_safari_departure_version_model->share_safari_title . '';
 $this->params['title'] = $this->title;
 ?>
 
 
 <div class="tabs-formswrapper mx-3">
-    <?= $this->render('_navbar', ['shared_safari_departure_model' => $shared_safari_departure_model, 'itinerary_active' => 'active']) ?>
+    <?= $this->render('_navbar', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model, 'itinerary_active' => 'active']) ?>
 
     <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <div class="accordionMianBox">
             <div class="accordionItems">
                 <div class="accordion" id="accordionExample">
                     <?php
-                    $no_of_day = $shared_safari_departure_model->tour_duration;
+                    $no_of_day = $shared_safari_departure_version_model->tour_duration;
                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="heading<?= $i ?>">
@@ -33,9 +33,9 @@ $this->params['title'] = $this->title;
 
                                         <?php $form = ActiveForm::begin(); ?>
 
-                                        <?= $form->field($model, 'share_safari_id')->hiddenInput(['value' => $shared_safari_departure_model->id])->label(false) ?>
+                                        <?= $form->field($model, 'share_safari_id')->hiddenInput(['value' => $shared_safari_departure_version_model->share_safari_id])->label(false) ?>
 
-                                        <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $shared_safari_departure_model->tour_duration])->label(false) ?>
+                                        <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $shared_safari_departure_version_model->tour_duration])->label(false) ?>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form_boxes mb-3">
@@ -185,7 +185,7 @@ $(document).ready(function() {
         
         var dayNumber = $(this).data('day');
         var accordionId = 'collapse' + dayNumber;
-        var url = '/sharesafari/default/itinerary?id={$shared_safari_departure_model->id}&day=' + dayNumber + '#' + accordionId;
+        var url = '/sharesafari/default/itinerary?id={$shared_safari_departure_version_model->id}&day=' + dayNumber + '#' + accordionId;
 
         // Update URL
         window.history.pushState({ path: url }, '', url);

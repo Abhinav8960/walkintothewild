@@ -9,13 +9,13 @@ use yii\grid\GridView;
 
 $faq_count = 1;
 
-$this->title = 'Fixed Departure : ' . $shared_safari_departure_model->share_safari_title . '';
+$this->title = 'Fixed Departure : ' . $shared_safari_departure_version_model->share_safari_title . '';
 $this->params['title'] = $this->title;
 ?>
 
 
 <div class="tabs-formswrapper mx-3">
-    <?= $this->render('_navbar', ['shared_safari_departure_model' => $shared_safari_departure_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('_navbar', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model, 'faq_active' => 'active']) ?>
 
     <div class="tabs-content-wraps">
 

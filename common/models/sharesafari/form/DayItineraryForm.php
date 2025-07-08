@@ -29,6 +29,7 @@ class DayItineraryForm  extends \yii\base\Model
     public $longitude;
     public $share_safari_day_model;
     public $status;
+    public $version;
 
 
     /**
@@ -42,6 +43,7 @@ class DayItineraryForm  extends \yii\base\Model
         if ($share_safari_day_model != null) {
             $this->share_safari_day_model = $share_safari_day_model;
             $this->share_safari_id = $this->share_safari_day_model->share_safari_id;
+            $this->version = $this->share_safari_day_model->version;
             $this->day = $this->share_safari_day_model->day;
             $this->day_title = $this->share_safari_day_model->day_title;
             $this->meal_breakfast = $this->share_safari_day_model->meal_breakfast;
@@ -64,7 +66,7 @@ class DayItineraryForm  extends \yii\base\Model
     public function rules()
     {
         return [
-            [['share_safari_id', 'day', 'day_title'], 'required'],
+            [['share_safari_id', 'day', 'day_title','version'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
@@ -94,6 +96,7 @@ class DayItineraryForm  extends \yii\base\Model
     public function initializeForm()
     {
         $this->share_safari_day_model->share_safari_id = $this->share_safari_id;
+        $this->share_safari_day_model->version = $this->version;
         $this->share_safari_day_model->day = $this->day;
         $this->share_safari_day_model->day_title = $this->day_title;
         if ($this->share_safari_id) {

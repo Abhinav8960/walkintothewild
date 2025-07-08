@@ -14,8 +14,8 @@ use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariParklist;
-use common\models\sharesafari\ShareSafariSearch;
 use common\models\sharesafari\ShareSafariVersion;
+use common\models\sharesafari\ShareSafariVersionSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -65,10 +65,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        $searchModel = new ShareSafariSearch();
-        // $searchModel->status = 1;
+        $searchModel = new ShareSafariVersionSearch();
+       $searchModel->custom_status = ShareSafariVersion::EDIATBLE_STATUS;
         $searchModel->host_user_id = $safari_operator->id;
-        $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -78,9 +78,10 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $share_safari = $this->findModel($id);
         $searchModel = new ShareSafariFaqSearch();
-        $searchModel->share_safari_id = $share_safari->id;
+        $searchModel->share_safari_id = $share_safari->share_safari_id;
+        $searchModel->version = $share_safari->version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
@@ -188,10 +189,10 @@ class DefaultController extends Controller
     public function actionItinerary($id, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_version_departure_model = $this->findModel($id);
+        $shared_safari_departure_version_model = $this->findModel($id);
 
-        $share_safari_id = $shared_safari_version_departure_model->share_safari_id;
-        $version = $shared_safari_version_departure_model->version;
+        $share_safari_id = $shared_safari_departure_version_model->share_safari_id;
+        $version = $shared_safari_departure_version_model->version;
         $share_safari_day_model = $this->findModelDay($share_safari_id, $day, $version);
 
         if ($share_safari_day_model) {
@@ -199,8 +200,8 @@ class DefaultController extends Controller
         } else {
             $model = new DayItineraryForm();
             $model->share_safari_id = $share_safari_id;
-            $model->version = $shared_safari_version_departure_model->version;
-            $model->no_of_day = $shared_safari_version_departure_model->tour_duration;
+            $model->version = $shared_safari_departure_version_model->version;
+            $model->no_of_day = $shared_safari_departure_version_model->tour_duration;
             $model->day = $day;
         }
         // Validate and save each day's itinerary entries
@@ -213,7 +214,7 @@ class DefaultController extends Controller
                     if ($model->share_safari_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Itinerary updated successfully');
-                        return $this->redirect(['itinerary', 'id' => $shared_safari_version_departure_model->id, 'day' => $day]);
+                        return $this->redirect(['itinerary', 'id' => $shared_safari_departure_version_model->id, 'day' => $day]);
                     }
                 }
             }
@@ -222,7 +223,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('itinerary', [
-            'shared_safari_version_departure_model' => $shared_safari_version_departure_model,
+            'shared_safari_departure_version_model' => $shared_safari_departure_version_model,
             'model' => $model,
             'safari_operator' => $safari_operator
         ]);
@@ -546,7 +547,7 @@ class DefaultController extends Controller
         $id = Yii::$app->request->get('id');
 
         $operator = $this->module->operatormodel();
-        $model = ShareSafari::findOne(['id' => $id]);
+        $model = ShareSafariVersion::findOne(['id' => $id]);
 
         if ($model && $model->host_user_id == $operator->id) {
             return true;

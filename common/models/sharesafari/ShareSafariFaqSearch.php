@@ -17,7 +17,7 @@ class ShareSafariFaqSearch extends ShareSafariFaq
     public function rules()
     {
         return [
-            [['share_safari_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['share_safari_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','version'], 'integer'],
             [['answer'], 'string'],
             [['question'], 'string', 'max' => 512],
         ];
@@ -62,6 +62,7 @@ class ShareSafariFaqSearch extends ShareSafariFaq
         $query->andFilterWhere([
             'id' => $this->id,
             'share_safari_id' => $this->share_safari_id,
+            'version' => $this->version,
             'position' => $this->position,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

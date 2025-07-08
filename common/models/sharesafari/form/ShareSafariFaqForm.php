@@ -15,6 +15,7 @@ class ShareSafariFaqForm extends \yii\base\Model
     public $share_safari_faq_model;
     public $action_url;
     public $action_validate_url;
+    public $version;
 
 
     /**
@@ -28,6 +29,7 @@ class ShareSafariFaqForm extends \yii\base\Model
         if ($share_safari_faq_model != null) {
             $this->share_safari_faq_model = $share_safari_faq_model;
             $this->share_safari_id = $this->share_safari_faq_model->share_safari_id;
+            $this->version = $this->share_safari_faq_model->version;
             $this->question = $this->share_safari_faq_model->question;
             $this->answer = $this->share_safari_faq_model->answer;
             $this->position = $this->share_safari_faq_model->position;
@@ -39,7 +41,7 @@ class ShareSafariFaqForm extends \yii\base\Model
     {
         return [
             [['answer', 'question'], 'required'],
-            [['share_safari_id', 'position', 'status'], 'integer'],
+            [['share_safari_id', 'position', 'status','version'], 'integer'],
             [['answer'], 'string'],
             [['position'], 'default', 'value' => 0],
             [['question'], 'string', 'max' => 512],
@@ -69,6 +71,7 @@ class ShareSafariFaqForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->share_safari_faq_model->share_safari_id = $this->share_safari_id;
+        $this->share_safari_faq_model->version = $this->version;
         $this->share_safari_faq_model->question = $this->question;
         $this->share_safari_faq_model->answer = $this->answer;
         $this->share_safari_faq_model->position = $this->position;
