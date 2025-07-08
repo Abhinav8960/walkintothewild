@@ -240,8 +240,7 @@ class ScheduleController extends Controller
     // 12:01 daily
     public function actionExpireQuotationPaymentLink()
     {
-
-        $lead_partner_quotes = LeadPartnerQuotes::find()->where(['<', 'validity_date' => date('Y-m-d'), 'is_payment_expired' => 0])->all();
+        $lead_partner_quotes = LeadPartnerQuotes::find()->where(['<', 'validity_date', date('Y-m-d')])->andWhere(['is_payment_expired' => 0])->all();
         if (count($lead_partner_quotes) > 0) {
             foreach ($lead_partner_quotes as $lead_partner_quote) {
                 $lead_partner_quote->is_payment_expired = 1;
