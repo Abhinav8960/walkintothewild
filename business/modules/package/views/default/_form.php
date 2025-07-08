@@ -2,6 +2,7 @@
 
 
 use common\models\GeneralModel;
+use Google\Api\ResourceDescriptor\Style;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
@@ -57,7 +58,6 @@ use kartik\datetime\DateTimePicker;
             <?= $form->field($model, 'no_of_safari')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter Number of Safaris',
-                'class' => 'form-select form-select-lg'
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
@@ -72,7 +72,7 @@ use kartik\datetime\DateTimePicker;
 
     <div class="row row-cols-md-3 row-cols-lg-4">
         <div class="form_boxes mb-3">
-            <label for="">Tour Start Place <span>*</span></label>
+            <label for="">Tour Start Place </label>
             <?= $form->field($model, 'start_location')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter Start Location',
@@ -80,7 +80,7 @@ use kartik\datetime\DateTimePicker;
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
-            <label for="">Tour End Place<span>*</span></label>
+            <label for="">Tour End Place</label>
             <?= $form->field($model, 'end_location')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter End Location',
@@ -125,7 +125,7 @@ use kartik\datetime\DateTimePicker;
         </div>
 
         <div class="form_boxes mb-3">
-            <label for="">Maximum Booking Date<span>*</span></label>
+            <label for="">Maximum Booking Date</label>
             <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
         </div>
 
@@ -136,18 +136,18 @@ use kartik\datetime\DateTimePicker;
     <div class="row">
         <?php
         if ($model->package_version_model->package_image) { ?>
-            <div class="col-lg-5">
+            <div class="col-lg-3 ">
                 <div class="form_boxes mb-3">
                     <label for="">Package DP (JPEG / JPG / PNG / 250kb)
-                        <span>*</span></label>
+                    </label>
                     <div class="form-group mt-2">
                         <label for="fileField" class="attachment">
                             <div class="row btn-file">
                                 <div class="btn-file__preview"></div>
                                 <div class="btn-file__actions">
                                     <div
-                                        class="btn-file__actions__item col-xs-12 text-center">
-                                        <div class="btn-file__actions__item--shadow">
+                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
                                             <i class="fa fa-plus fa-lg fa-fw"
                                                 aria-hidden="true"></i>
                                             <div class="visible-xs-block"></div>
@@ -156,27 +156,27 @@ use kartik\datetime\DateTimePicker;
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_image')->fileInput(['id'=>"fileField"])->label(false) ?>
+                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField"])->label(false) ?>
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 mt-5">
+            <div class="col-lg-3 mt-5">
                 <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
             </div>
         <?php } else { ?>
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <div class="form_boxes mb-3">
                     <label for="">Package DP (JPEG / JPG / PNG / 250kb)
-                        <span>*</span></label>
+                    </label>
                     <div class="form-group mt-2">
                         <label for="fileField1" class="attachment">
                             <div class="row btn-file">
                                 <div class="btn-file__preview"></div>
                                 <div class="btn-file__actions">
                                     <div
-                                        class="btn-file__actions__item col-xs-12 text-center">
-                                        <div class="btn-file__actions__item--shadow">
+                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
                                             <i class="fa fa-plus fa-lg fa-fw"
                                                 aria-hidden="true"></i>
                                             <div class="visible-xs-block"></div>
@@ -185,7 +185,7 @@ use kartik\datetime\DateTimePicker;
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_image')->fileInput(['id'=>"fileField1"])->label(false) ?>
+                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField1"])->label(false) ?>
                         </label>
                     </div>
                 </div>
@@ -194,18 +194,18 @@ use kartik\datetime\DateTimePicker;
 
         <?php
         if ($model->package_version_model->package_banner_image) { ?>
-            <div class="col-lg-7">
+            <div class="col-lg-9">
                 <div class="form_boxes mb-3">
                     <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                        <span>*</span></label>
+                    </label>
                     <div class="form-group mt-2">
                         <label for="fileField2" class="attachment">
                             <div class="row btn-file">
                                 <div class="btn-file__preview"></div>
                                 <div class="btn-file__actions">
                                     <div
-                                        class="btn-file__actions__item col-xs-12 text-center">
-                                        <div class="btn-file__actions__item--shadow">
+                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
                                             <i class="fa fa-plus fa-lg fa-fw"
                                                 aria-hidden="true"></i>
                                             <div class="visible-xs-block"></div>
@@ -214,7 +214,7 @@ use kartik\datetime\DateTimePicker;
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id'=>"fileField2"])->label(false) ?>
+                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField2"])->label(false) ?>
                         </label>
                     </div>
                 </div>
@@ -223,18 +223,18 @@ use kartik\datetime\DateTimePicker;
                 <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
             </div>
         <?php } else { ?>
-            <div class="col-lg-7">
+            <div class="col-lg-9">
                 <div class="form_boxes mb-3">
                     <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                        <span>*</span></label>
+                    </label>
                     <div class="form-group mt-2">
                         <label for="fileField3" class="attachment">
                             <div class="row btn-file">
                                 <div class="btn-file__preview"></div>
                                 <div class="btn-file__actions">
                                     <div
-                                        class="btn-file__actions__item col-xs-12 text-center">
-                                        <div class="btn-file__actions__item--shadow">
+                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
                                             <i class="fa fa-plus fa-lg fa-fw"
                                                 aria-hidden="true"></i>
                                             <div class="visible-xs-block"></div>
@@ -243,7 +243,7 @@ use kartik\datetime\DateTimePicker;
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id'=>"fileField3"])->label(false) ?>
+                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField3"])->label(false) ?>
                         </label>
                     </div>
                 </div>
@@ -276,9 +276,9 @@ use kartik\datetime\DateTimePicker;
 
             </div>
         </div> -->
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="form_boxes mb-3">
-                <label for="">Overview <span>*</span></label>
+                <label for="">Overview</label>
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
             </div>
         </div>
@@ -288,7 +288,7 @@ use kartik\datetime\DateTimePicker;
 <div class="row pt-2">
     <div class="col-12">
         <div class="d-flex gap-3 justify-content-end">
-            <?= Html::a('Cancel', ['index'], ['class' => 'button-created']) ?>
+            <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
             <?= Html::submitButton('Submit', ['class' => 'button-created create']) ?>
         </div>
     </div>
