@@ -217,9 +217,14 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         return true;
     }
 
-    public function markQuoteInactiveInChat($lead_id)
+    public function markQuoteInactiveInChat($lead_id, $quote_id = null)
     {
-        $chats = Chat::findAll(['lead_id' => $lead_id]);
+        if (!empty($quote_id)) {
+            $chats = Chat::findAll(['lead_id' => $lead_id, 'quote_id' => $quote_id]);
+        } else {
+
+            $chats = Chat::findAll(['lead_id' => $lead_id]);
+        }
         if (!empty($chats)) {
             foreach ($chats as $chat) {
                 ChatMessage::updateAll(

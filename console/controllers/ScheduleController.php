@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\leads\LeadPartnerQuotes;
 use common\models\feeds\Feeds;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
@@ -234,5 +235,29 @@ class ScheduleController extends Controller
         }
 
         echo "Successfully updated feeds based on start date!";
+    }
+
+    // 12:01 daily
+    public function actionExpireQuotationPaymentLink()
+    {
+
+        $lead_partner_quotes = LeadPartnerQuotes::find()->where(['<', 'validity_date' => date('Y-m-d'), 'is_payment_expired' => 0])->all();
+        if (count($lead_partner_quotes) > 0) {
+            foreach ($lead_partner_quotes as $lead_partner_quote) {
+                $lead_partner_quote->is_payment_expired = 1;
+                $lead_partner_quote->payment_expired_datetime = date('Y-m-d H:i:s');
+                $lead_partner_quote->payment_expired_reason = "Validity Date expired";
+                $lead_partner_quote->save(false);
+                $lead_partner_quote->markQuoteInactiveInChat($lead_partner_quote->lead_id, $lead_partner_quote->id);
+
+                \common\models\leads\LeadPartnerQuoteInstallments::updateAll(
+                    ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "Validity Date expired"], // Set `is_payment_expired` to 1
+                    ['and', ['lead_partner_quote_id' => $lead_partner_quote->id], ['is_payment_expired' => 0]] // Condition
+                );
+            }
+        }
+
+        echo "done";
+        die();
     }
 }
