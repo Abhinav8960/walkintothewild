@@ -1,13 +1,18 @@
 <?php
 
+use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package_version_model->package_name;
 $this->params['title'] = mb_strimwidth($this->title,0, 40, "...");
+if ($package_version_model->status == PackageVersion::EDIATBLE_STATUS) {
+    $this->params['buttons'][] = Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package_version_model->id])], ['class' => 'btn','style' => 'background-color: #152f1b; color:#fff;','title' => 'Send For Approval']);
+}
 
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>

@@ -2,7 +2,7 @@
 
 use yii\bootstrap5\Breadcrumbs;
 ?>
-<div class="breadcrumb-header justify-content-between align-items-center">
+<div class="d-flex breadcrumb-header justify-content-between align-items-center">
     <div>
         <h3 class="page-header mb-0"><?= $title ?> </h3>
     </div>
