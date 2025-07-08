@@ -49,6 +49,7 @@ $this->params['title'] = $this->title;
                         'pagination' => $dataProvider->pagination,
                         'options' => ['class' => 'pagination justify-content-center'],
                         'linkOptions' => ['class' => 'page-link'],
+                        'maxButtonCount'=>5,
                         'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link']
                     ]) ?>
                 </div>
