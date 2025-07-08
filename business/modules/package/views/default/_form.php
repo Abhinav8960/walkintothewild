@@ -31,7 +31,7 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <div class="form_boxes mb-3">
+        <div class="form_boxes mb-3 postion-relative">
             <label for="">Safari Park<span>*</span></label>
             <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
                 'theme' => \kartik\select2\Select2::THEME_KRAJEE,
@@ -46,7 +46,8 @@ use kartik\datetime\DateTimePicker;
                     'allowClear' => true,
                 ],
             ])->label(false) ?>
-
+            <i class="fa fa-angle-down position-absolute"
+                style="right: 20px; top: 55px; pointer-events: none; z-index: 100;"></i>
         </div>
     </div>
 
@@ -110,8 +111,9 @@ use kartik\datetime\DateTimePicker;
             <label for="">Stay Category<span>*</span></label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
         </div>
-        <div class="form_boxes mb-3">
+        <div class="form_boxes mb-3 position-relative">
             <label for="">Package Feature <span>*</span></label>
+
             <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
                 'theme' => \kartik\select2\Select2::THEME_KRAJEE,
                 'data' => GeneralModel::packagefeatureoption(),
@@ -125,6 +127,9 @@ use kartik\datetime\DateTimePicker;
                     'allowClear' => true,
                 ],
             ])->label(false) ?>
+
+            <i class="fa fa-angle-down position-absolute"
+                style="right: 20px; top: 40px; pointer-events: none; z-index: 100;"></i>
         </div>
         <div class="form_boxes mb-3">
             <label for="">Cost Per Person <span>*</span></label>
