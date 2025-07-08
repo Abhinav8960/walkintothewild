@@ -15,6 +15,8 @@ $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
 if ($package->popular_package != 1) {
     $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn btn-orange', 'title' => 'Mark as Popular']);
+} else {
+    $this->params['buttons'][] = Html::a('Remove As Popular', [Url::toRoute(['remove-popular', 'id' => $package->id])], ['class' => 'btn btn-danger', 'title' => 'Remove Popular']);
 }
 
 ?>
