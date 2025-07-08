@@ -175,8 +175,8 @@ use kartik\datetime\DateTimePicker;
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 mt-5">
-                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
+            <div class="col-lg-3" style="margin-top:35px;">
+                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px"></img>'; ?>
             </div>
         <?php } else { ?>
             <div class="col-lg-3">

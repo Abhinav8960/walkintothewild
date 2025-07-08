@@ -7,7 +7,7 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package_version_model->package_name;
-$this->params['title'] = $this->title;
+$this->params['title'] = mb_strimwidth($this->title,0, 40, "...");
 
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
