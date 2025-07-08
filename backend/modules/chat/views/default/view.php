@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="card-body d-flex justify-content-between align-items-center">
+<div class="card-body d-flex justify-content-between align-items-center mt-2" style="height: 60px;" >
     <div class="d-flex align-items-center">
         <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
