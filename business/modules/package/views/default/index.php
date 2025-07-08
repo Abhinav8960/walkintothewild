@@ -37,7 +37,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->package_name;
+                            return mb_strimwidth($model->package_name, 0, 40, "...");
                         }
                     ],
                     [
