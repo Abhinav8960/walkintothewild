@@ -100,6 +100,8 @@ class DayItineraryForm  extends \yii\base\Model
                 'skipOnEmpty' => true,
             ],
             ['created_at','safe'],
+            [['day_title'],'string','max'=>255],
+            [['day_description'],'string','max'=>2000],
         ];
     }
 

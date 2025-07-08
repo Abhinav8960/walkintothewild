@@ -34,7 +34,15 @@ $this->params['title'] = $this->title;
                                 </h2>
                                 <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
                                     <div class="accordion-body">
-                                        <?php $form = ActiveForm::begin(); ?>
+                                        <?php $form = ActiveForm::begin(
+                                            [
+                                                'id' => 'itinerary-form',
+                                                'method' => 'POST',
+                                                'fieldConfig' => [
+                                                    'template' => '<div class="form-group">{label}{input}{error}</div>',
+                                                ],
+                                            ]
+                                        ); ?>
 
 
                                         <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>

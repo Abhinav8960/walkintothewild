@@ -43,7 +43,6 @@ use kartik\datetime\DateTimePicker;
                 ],
                 'pluginOptions' => [
                     'placeholder' => 'Open this select menu',
-                    'allowClear' => true,
                 ],
             ])->label(false) ?>
             <i class="fa fa-angle-down position-absolute"
@@ -124,7 +123,6 @@ use kartik\datetime\DateTimePicker;
                 ],
                 'pluginOptions' => [
                     'placeholder' => 'Open this select menu',
-                    'allowClear' => true,
                 ],
             ])->label(false) ?>
 
@@ -208,65 +206,6 @@ use kartik\datetime\DateTimePicker;
             </div>
         <?php  } ?>
 
-        <?php
-        if ($model->package_version_model->package_banner_image) { ?>
-            <div class="col-lg-9">
-                <div class="form_boxes mb-3">
-                    <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField2" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField2"])->label(false) ?>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 mt-5">
-                <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
-            </div>
-        <?php } else { ?>
-            <div class="col-lg-9">
-                <div class="form_boxes mb-3">
-                    <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField3" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField3"])->label(false) ?>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        <?php  } ?>
-
-
     </div>
 
 
@@ -305,7 +244,7 @@ use kartik\datetime\DateTimePicker;
     <div class="col-12">
         <div class="d-flex gap-3 justify-content-end">
             <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
-            <?= Html::submitButton('Submit', ['class' => 'button-created create']) ?>
+            <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
         </div>
     </div>
 </div>
