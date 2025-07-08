@@ -7,18 +7,22 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="card-body d-flex justify-content-between align-items-center ">
+<div class="card-body d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center">
         <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
             style="width: 40px; height: 40px; object-fit: cover;">
         <h5 class="mb-0"><?= $user->name ? $user->name : '' ?></h5>
-    </div>
-    <div class="d-flex align-items-center">
+
+        <strong class="fs-1 mb-3">↔</strong>
+
         <img src="<?= $recipient && $recipient->profile_display_image ? $recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
             style="width: 40px; height: 40px; object-fit: cover;">
         <h5 class="mb-0"><?= $recipient->name ? $recipient->name : '' ?></h5>
+    </div>
+    <div class="d-flex align-items-center">
+        <strong class="text-danger"><?= $model->chat_type ? '(' . GeneralModel::chattype($model->chat_type) . ')' : '' ?></strong>
     </div>
 </div>
 
@@ -26,13 +30,13 @@ use yii\helpers\Url;
 
 <div class="messaging">
     <div class="mesgs">
-        <div class="msg_history">
+        <div class="msg_history" id="chatBox">
 
             <?php
             if ($model) {
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
-                        if ($chat_message->created_by == $model->recipient_user_id) {?>
+                        if ($chat_message->created_by == $model->recipient_user_id) { ?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
@@ -171,23 +175,6 @@ use yii\helpers\Url;
                 }
             }
             ?>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="notificationAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header flageHeader">
-                <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Form
-                </h6>
-            </div>
-
-            <div class="modal-body modal_form">
-                <div id='modalContent'></div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -349,14 +336,13 @@ use yii\helpers\Url;
 
 <?php
 $script = <<< JS
-    $('.pop-up').on('click', function () {
-        $('#notificationAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-
-
+$(document).ready(function() {
+    function scrollToBottom() {
+        var \$box = $("#chatBox");
+        \$box.scrollTop(\$box[0].scrollHeight);
+    }
+    scrollToBottom();
+});
 JS;
 $this->registerJs($script);
-
 ?>

@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                                 <div>
                                     <strong><?= Html::encode($chat->displayLabelUser) ?></strong>
                                 </div>
-                                <strong class="fs-2">↔</strong>
+                                <strong class="fs-2 mb-3">↔</strong>
                                 <img src="<?= $chat->recipient && $chat->recipient->profile_display_image ? $chat->recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
                                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
                                 <div>
