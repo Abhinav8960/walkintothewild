@@ -177,10 +177,10 @@ class DefaultController extends RestController
         // print_r($data);
         // die();
 
-        $dataString = http_build_query($data);
+        // $dataString = http_build_query($data);
 
         try {
-            $encryptedData = $this->encryptCCAvenueData($dataString, $workingKey);
+            $encryptedData = $this->encryptCCAvenueData($data, $workingKey);
 
             if ($encryptedData === false) {
                 throw new \yii\base\InvalidArgumentException('Encryption failed.');
@@ -223,25 +223,71 @@ class DefaultController extends RestController
      */
     private function encryptCCAvenueData($data, $workingKey)
     {
-        if (empty($data)) {
-            throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
+        $merchant_data='';
+
+        foreach ($data as $key => $value){
+            $merchant_data.=$key.'='.$value.'&';
         }
 
-        if (empty($workingKey) || strlen($workingKey) < 16) {
-            throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
-        }
+        $key = $this->hextobin(md5($workingKey));
+        $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+        $openMode = openssl_encrypt($merchant_data, 'AES-128-CBC', $workingKey, OPENSSL_RAW_DATA, $initVector);
+        $encryptedText = bin2hex($openMode);
+        return $encryptedText;
 
-        // Ensure the IV is 16 bytes long
-        $iv = substr($workingKey, 0, 16);
 
-        $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
+        // if (empty($data)) {
+        //     throw new \yii\base\InvalidArgumentException('Data to encrypt cannot be empty.');
+        // }
 
-        if ($encryptedData === false) {
-            throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
-        }
+        // if (empty($workingKey) || strlen($workingKey) < 16) {
+        //     throw new \yii\base\InvalidArgumentException('Working key must be at least 16 characters long.');
+        // }
 
-        return $encryptedData;
+        // // Ensure the IV is 16 bytes long
+        // $iv = substr($workingKey, 0, 16);
+
+        // $encryptedData = openssl_encrypt($data, 'AES-128-CBC', $workingKey, 0, $iv);
+
+        // if ($encryptedData === false) {
+        //     throw new \yii\base\InvalidArgumentException('Failed to encrypt data.');
+        // }
+
+        // return $encryptedData;
     }
+
+    private function decryptCCAvenueData($encryptedText,$key)
+    {
+        $key = $this->hextobin(md5($key));
+        $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+        $encryptedText = hextobin($encryptedText);
+        $decryptedText = openssl_decrypt($encryptedText, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $initVector);
+        return $decryptedText;
+    }
+
+    private function hextobin($hexString) 
+    { 
+       $length = strlen($hexString); 
+       $binString="";   
+       $count=0; 
+       while($count<$length) 
+       {       
+           $subString =substr($hexString,$count,2);           
+           $packedString = pack("H*",$subString); 
+           if ($count==0)
+           {
+               $binString=$packedString;
+           } 
+           
+           else 
+           {
+               $binString.=$packedString;
+           } 
+           
+           $count+=2; 
+       } 
+           return $binString; 
+     } 
 
     private function storePayu($lead_partner_quotes_id, $data = [])
     {

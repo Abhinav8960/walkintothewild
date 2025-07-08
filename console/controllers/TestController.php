@@ -368,7 +368,8 @@ class TestController extends Controller
         $options = [
             'vnm' => \Yii::$app->params['airphone_api_vnm'],
             'agent' => "9650901148",
-            'caller' => "8890534746",
+            // 'caller' => "8890534746",
+            'caller' => "9958858979",// Apurva Sir
             'token' => \Yii::$app->params['airphone_api_token'],
             'reqId' => "dfgh"
         ];
@@ -383,7 +384,7 @@ class TestController extends Controller
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
             return false;
         }
-       echo $json_contents = json_encode($response->content);
+        $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
 
         // print_r([$response->content, $options]);
