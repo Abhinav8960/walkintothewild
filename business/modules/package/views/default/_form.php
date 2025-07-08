@@ -34,13 +34,19 @@ use kartik\datetime\DateTimePicker;
         <div class="form_boxes mb-3">
             <label for="">Safari Park<span>*</span></label>
             <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
+                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
                 'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
-                'options' => ['placeholder' => 'Open this select menu', 'multiple' => true],
-                'pluginOptions' => [
-                    'allowClear' => true
+                'options' => [
+                    'multiple' => true,
+                    'autocomplete' => 'off',
+                    'class' => 'form-select form-select-lg mb-3',
                 ],
-                'class' => 'form-select form-select-lg mb-3'
+                'pluginOptions' => [
+                    'placeholder' => 'Open this select menu',
+                    'allowClear' => true,
+                ],
             ])->label(false) ?>
+
         </div>
     </div>
 
@@ -107,12 +113,17 @@ use kartik\datetime\DateTimePicker;
         <div class="form_boxes mb-3">
             <label for="">Package Feature <span>*</span></label>
             <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
+                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
                 'data' => GeneralModel::packagefeatureoption(),
-                'options' => ['placeholder' => 'Open this select menu', 'multiple' => true],
-                'pluginOptions' => [
-                    'allowClear' => true
+                'options' => [
+                    'multiple' => true,
+                    'autocomplete' => 'off',
+                    'class' => 'form-select form-select-lg mb-3',
                 ],
-                'class' => 'form-select form-select-lg'
+                'pluginOptions' => [
+                    'placeholder' => 'Open this select menu',
+                    'allowClear' => true,
+                ],
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
