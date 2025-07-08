@@ -27,9 +27,9 @@
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item faq_item mt-2">
                                 <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <div class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Are meals included in the Package?
-                                    </button>
+                                    </div>
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
@@ -44,9 +44,9 @@
                             </div>
                             <div class="accordion-item faq_item mt-2">
                                 <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <div class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         Does the Package include transport to and from the resort?
-                                    </button>
+                                    </div>
                                 </h2>
                                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
@@ -64,9 +64,9 @@
                             </div>
                             <div class="accordion-item faq_item mt-2">
                                 <h2 class="accordion-header" id="headingFour">
-                                    <button class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <div class="accordion-button collapsed  custom-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                         Are accommodation arrangements included in the Package?
-                                    </button>
+                                    </div>
                                 </h2>
                                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
