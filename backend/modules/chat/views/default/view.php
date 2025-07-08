@@ -32,8 +32,7 @@ use yii\helpers\Url;
             if ($model) {
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
-                        if ($chat_message->created_by == $model->recipient_user_id) {
-            ?>
+                        if ($chat_message->created_by == $model->recipient_user_id) {?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
