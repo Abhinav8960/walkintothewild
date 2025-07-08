@@ -3,6 +3,7 @@
 namespace common\models\partnergallery;
 
 use api\models\partnergalleryimage\PartnerGalleryImage as ApiPartnergalleryimage;
+use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\traits\CommanRelationship;
@@ -135,5 +136,10 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
                 return $image->toArray();
             }, $this->galleryActiveImages),
         ];
+    }
+
+    public function getPartner()
+    {
+       return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 }
