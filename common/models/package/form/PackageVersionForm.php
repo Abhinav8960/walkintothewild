@@ -153,7 +153,7 @@ class PackageVersionForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id','no_of_safari','stay_category_id'], 'required', 'on' => ['create', 'update']],
+            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id'], 'required', 'on' => ['create', 'update']],
             [['package_park'], 'required', 'on' => ['create']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
@@ -163,6 +163,7 @@ class PackageVersionForm extends \yii\base\Model
             [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there', 'package_agenda_id'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
             // [['package_slug'], 'string', 'max' => 720],
+            [['start_location', 'end_location'], 'match', 'pattern' => '/^[a-zA-Z\s-]+$/', 'message' => 'Only letters, spaces, and hyphens are allowed.'],
             [['start_location', 'end_location'], 'string', 'max' => 255],
             [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'package_id', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
