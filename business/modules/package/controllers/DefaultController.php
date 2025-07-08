@@ -613,11 +613,11 @@ class DefaultController extends Controller
             echo "<pre>";
             print_r($e->getMessage());
             die();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['index']);
         }
         $transaction->commit();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     public function actionCopyPackage($id)
