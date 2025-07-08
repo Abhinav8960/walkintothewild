@@ -2047,4 +2047,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         return $text;
     }
+
+    public static function chattype($type)
+    {
+        $types = [
+            1 => 'Direct Chat',
+            2 => 'Operator Quote Chat',
+        ];
+
+        return $types[$type] ?? '';
+    }
+    
 }

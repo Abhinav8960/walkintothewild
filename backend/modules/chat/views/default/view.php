@@ -1,295 +1,187 @@
 <?php
 
-use business\assets\AppAsset;
+use common\models\chat\ChatMessage;
 use common\models\GeneralModel;
-use common\models\leads\LeadPartnerQuotes;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
-$this->title = 'Leads(' . $model->sourceLabel . ')';
-$this->params['title'] = $this->title;
-
-if ($model->status == 1 && $model->source == 2) {
-    $this->params['buttons'][] = Html::button('Assign', ['value' => Url::toRoute(['/leads/default/assign', 'id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'Assign']);
-}
-if ($model->status == 1) {
-    $this->params['buttons'][] = Html::a('Inactive', [Url::toRoute(['/leads/default/inactive', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
-}
-if ($model->status == 0) {
-
-    $this->params['buttons'][] = Html::a('Active', [Url::toRoute(['/leads/default/active', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Inactive']);
-}
-AppAsset::register($this);
-
-
 ?>
 
-<div class="row mb-5 mt-4 itenary_tabs">
-    <div class="col-lg-12 col-xl-12 safartabs position-relative">
-        <table class="table table-bordered">
-            <thead>
-                <th>Name</th>
-                <th>Safaris</th>
-                <th>Travelers</th>
-                <th>Accomodation</th>
-                <th>User Notes</th>
-                <th>Travel Date looking For</th>
-                <th>Lead Received Date</th>
-                <th>Payment Info</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><?= $model->displayLabel ?></td>
-                    <td><?= !empty($model->safaris) ? $model->safaris : ''; ?></td>
-                    <td><?= !empty($model->travelers) ? $model->travelers : '' ?></td>
-                    <td><?= !empty($model->staycatgory) ? $model->staycatgory->title : '' ?></td>
-                    <td><?= !empty($model->user_notes) ? $model->user_notes : '' ?></td>
-                    <td>
-                        <?php
-                        $str = date('d M, Y', strtotime($model->from_date));
-                        if (!empty($model->to_date)) {
-                            $str .= '- ' . date('d M, Y', strtotime($model->to_date));
-                        }
-                        echo $str;
-                        ?>
-                    </td>
-                    <td><?= date('d M, Y h:i A', $model->created_at) ?></td>
-                    <td>
-                        <?php
-                        $str = '';
-                        if ($model->is_payment_received) {
-                            $str .= '<span class="badge badge-success">Payment Received</span>';
-                            if (!empty($model->transaction_datetime)) {
-                                $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
-                            }
-                            if (!empty($model->transaction_id)) {
-                                $str .= '<br><b>Transaction Id</b>: ' .  $model->transaction_id;
-                            }
-                            if (!empty($model->booked_operator_id)) {
-                                $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
-                            }
-                        } else {
-                            $str .= '<span class="badge badge-danger">Payment Not Received</span>';
-                        }
-
-                        echo $str;
-                        ?>
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="card-body d-flex justify-content-between align-items-center ">
+    <div class="d-flex align-items-center">
+        <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+            class="rounded me-2"
+            style="width: 40px; height: 40px; object-fit: cover;">
+        <h5 class="mb-0"><?= $user->name ? $user->name : '' ?></h5>
     </div>
+    <div class="d-flex align-items-center">
+        <img src="<?= $recipient && $recipient->profile_display_image ? $recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+            class="rounded me-2"
+            style="width: 40px; height: 40px; object-fit: cover;">
+        <h5 class="mb-0"><?= $recipient->name ? $recipient->name : '' ?></h5>
+    </div>
+</div>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h4>Quotations</h4>
-                <table class="table table-responsive table-bordered">
-                    <thead>
-                        <th>Operator</th>
-                        <th>Safaris</th>
-                        <th>Travelers</th>
-                        <th>Accomodation</th>
-                        <th>Travel Date looking For</th>
-                        <th>Info</th>
-                        <!-- <th>Partner selling price</th>
-                        <th>Platform Partner Fees Percentage</th>
-                        <th>Platform Partner Fees</th>
-                        <th>Partner net selling price</th>
-                        <th>Platform customer discount</th> -->
-                        <th>Net payment price</th>
-                        <th>No of installment</th>
-                        <th>Lead Received Date</th>
-                        <th>Validity Date</th>
-                        <th>Permit Booking Date</th>
-                        <th>QR Code/Payment Link</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <?php if (count($quotations) > 0) { ?>
-                            <?php foreach ($quotations as $quotation) { ?>
-                                <tr class="<?= $quotation->is_payment_received == true ? 'bg-warning' : '' ?>">
-                                    <td><?= $quotation->partner->business_name ?></td>
-                                    <td><?= !empty($quotation->safaris) ? $quotation->safaris : ''; ?></td>
-                                    <td><?= !empty($quotation->travelers) ? $quotation->travelers : '' ?></td>
-                                    <td><?= !empty($quotation->staycatgory) ? $quotation->staycatgory->title : '' ?></td>
-                                    <td>
-                                        <?php
-                                        $str = date('d M, Y', strtotime($quotation->start_date));
-                                        if (!empty($quotation->end_date)) {
-                                            $str .= '- ' . date('d M, Y', strtotime($quotation->end_date));
-                                        }
-                                        echo $str;
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?= $quotation->name ?>
-                                        <?= $quotation->email ?>
-                                        <?= $quotation->phone ?>
-                                    </td>
-                                    <!-- <td>₹<?= $quotation->partner_selling_price ?></td>
-                                    <td><?= $quotation->plateform_partner_fees_percentage ?>%</td>
-                                    <td>₹<?= $quotation->plateform_partner_fees ?></td>
-                                    <td>₹<?= $quotation->partner_net_selling_price ?></td>
-                                    <td>₹<?= $quotation->plateform_customer_discount ?></td> -->
-                                    <td>₹<?= $quotation->net_payment_price ?></td>
-                                    <td><?= $quotation->installment ?></td>
-                                    <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
-                                    <td><?= $quotation->validity_date ?></td>
-                                    <td><?= $quotation->permit_booking_date ?></td>
-                                    <td>
-                                        <?php
-                                        if (isset($quotation->due_quatation)) {
-                                            if (!empty($quotation->due_quatation->qr_code_file)) {
-                                        ?>
-                                                <img src="<?= \Yii::$app->params['s3_endpoint'] . '/' . $quotation->due_quatation->qr_code_file ?>" width="100px" alt="QR Code">
-                                        <?php
-                                            }
-                                            if (!empty($quotation->due_quatation->payment_link)) {
-                                                echo Html::a('Payment Link', $quotation->due_quatation->payment_link, ['target' => '_blank', 'class' => 'btn btn-link btn-sm']);
-                                            }
-                                        }
-                                        ?>
+<hr>
 
+<div class="messaging">
+    <div class="mesgs">
+        <div class="msg_history">
 
-                                    </td>
+            <?php
+            if ($model) {
+                if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
+                    foreach ($chats as $chat_message) {
+                        if ($chat_message->created_by == $model->recipient_user_id) {
+            ?>
+                            <?php if ($chat_message->is_quotation_message == 1) { ?>
+                                <div class="d-flex justify-content-center m-2">
+                                    <div class="ItineraryQuotationarea">
+                                        <div class="topTitle pb-3">
+                                            <h3 class="text-center">Itinerary & Quotation</h3>
+                                        </div>
+                                        <div class="discriptionsCenter">
+                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
+                                            <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
 
+                                            <p class="mb-1"><span>Start Date:</span><b><?= !empty($chat_message->quote['start_date']) ? date('M d, Y', strtotime($chat_message->quote['start_date'])) : '' ?></b></p>
+                                            <p class="mb-1"><span>End Date:</span><b><?= !empty($chat_message->quote['end_date']) ? date('M d, Y', strtotime($chat_message->quote['end_date'])) : '' ?></b></p>
+                                            <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                            <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                                                <div>
+                                                    <p>
+                                                        <span style="color: red;"><i>Quotation Valid Until:</i></span>
+                                                        <b><i><?= $chat_message->quote->validity_date ?? '' ?></i></b>
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex align-items-center gap-1">
 
-                                    <td>
-                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING && $model->is_payment_received == 0) { ?>
-                                            <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
-                                            <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button>
-                                        <?php } ?>
+                                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20" height="20">
+                                                    <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote['net_payment_price']) ?? '' ?></b></span>
+                                                </div>
+                                            </div>
+                                            <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
 
-                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED && $model->is_payment_received == 0) { ?>
-                                            <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
+                                        </div>
+                                        <div class="recievedTime">
+                                            <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } else if ($chat_message->gallery != null) {
+                                $gallery_data = json_decode($chat_message->gallery, true);
+                                if ($gallery_data) { ?>
+
+                                    <div class="d-flex justify-content-end m-2">
+                                        <div class="galleryBox bg-transparent">
+                                            <div class="pb-2 d-flex justify-content-end">
+                                                <h3 class="text-center"><?= isset($gallery_data['title']) ? $gallery_data['title'] : '' ?></h3>
+                                            </div>
+                                            <div class="gallery-container">
+                                                <?php if ($gallery_data['images']) {
+                                                    foreach ($gallery_data['images'] as $image) {  ?>
+                                                        <div class="single-image" data-fancybox="gallery" data-caption="Image 4">
+                                                            <img src="<?= isset($image['gallery_image_path']) ? $image['gallery_image_path'] : '' ?>" alt="<?= isset($image['title']) ? $image['title'] : ''  ?>" title="<?= isset($image['caption']) ? $image['caption'] : '' ?>">
+                                                            <div class="image-caption"><?= isset($image['caption']) ? $image['caption'] : '' ?></div>
+                                                        </div>
+
+                                                <?php }
+                                                } ?>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else if ($chat_message->is_call_message == 1) { ?>
+                                <div class="d-flex justify-content-end m-2">
+                                    <div class="sentChat himselfVoiceCall">
+                                        <div class="innerBg d-flex align-items-center gap-3">
+                                            <div class="callIcons">
+                                                <a href=""><i class="fa-solid fa-phone"></i></a>
+                                            </div>
+                                            <div class="voiceText">
+                                                <h3 style="padding-right: 20px;">
+                                                    <?= $chat_message->message ?>
+                                                </h3>
+
+                                                <?php if (!empty($chat_message->recordingUrl)) {  ?>
+                                                    <audio controls style="margin-top: 10px; width:225px">
+                                                        <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                <?php } ?>
+
+                                                <div class="currentTime">
+                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } else { ?>
+                                <div class="d-flex justify-content-end m-2">
+                                    <div class="sentChat">
+                                        <p><?= $chat_message->message ?></p>
+                                        <div class="timeingNotified d-flex justify-content-end pe-2">
+                                            <div class="d-flex gap-3">
+                                                <div class="currentTime">
+                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                                </div>
+                                                <div class="tiknotified">
+                                                    <i class="fa-solid fa-check-double"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             <?php } ?>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+
+                        <?php
+                        } else { ?>
+                            <?php if ($chat_message->is_call_request == 1) { ?>
+                                <div class="d-flex justify-content-start m-2">
+                                    <div class="sentChat incomingVoiceCall">
+                                        <div class="innerBg innerincomingCall d-flex align-items-center gap-3">
+                                            <div class="callIcons">
+                                                <a href=""><i class="fa-solid fa-phone"></i></a>
+                                            </div>
+                                            <div class="voiceText">
+                                                <h3 style="padding-right: 20px;"><?= $chat_message->message ?></h3>
+                                                <div class="recievedTime">
+                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } else { ?>
+                                <div class="receivedChat m-2">
+                                    <p><?= $chat_message->message ?></p>
+                                    <div class="recievedTime">
+                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                    </div>
+                                </div>
+
+            <?php }
+                        }
+                    }
+                }
+            }
+            ?>
         </div>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <h4>Assign To</h4>
-        <ul class="nav nav-tabs" role="tablist">
-            <?php foreach ($model->assignOperator as $index => $assignOperator) { ?>
-                <li class="nav-item">
-                    <a href="<?= Url::toRoute(['operator-lead-chat', 'id' => $model->id, 'safari_operator_id' => $assignOperator->partner->id]) ?>" class="nav-link <?= isset($safari_operator_id) && $assignOperator->partner->id == $safari_operator_id ? 'active' : '' ?>">
-                        <?= $assignOperator->partner->business_name ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </div>
-</div>
-
-<!-- Approve Modal -->
-<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="approve-form">
-                    <input type="hidden" id="approve-quotation-id">
-                    <input type="hidden" id="partner-selling-price" value="0">
-                    <div class="mb-3">
-                        <label for="payment-url" class="form-label">Payment URL</label>
-                        <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
-                        <!-- <label for="plateform-partner-fees-percentage" class="form-label">Platform Partner Fees Percentage</label>
-                        <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required> -->
-                        <small id="net-payment-price-hint" class="form-text text-muted"></small>
-                        <label for="approval-file" class="form-label">Upload QR Code File</label>
-                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png,.jpeg">
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Disapprove Modal -->
-<div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Quotation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="disapprove-form">
-                    <input type="hidden" id="disapprove-quotation-id">
-                    <div class="mb-3">
-                        <label for="disapprove-reason" class="form-label">Reason for Disapproval</label>
-                        <textarea class="form-control" id="disapprove-reason" rows="3" placeholder="Enter reason for disapproval" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Payment Received Modal -->
-<div class="modal fade" id="PaymentReceivedModel" tabindex="-1" aria-labelledby="PaymentReceivedModelLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="PaymentReceivedModelLabel">Payment Received</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="payment-received-form">
-                    <input type="hidden" id="payment-received-quotation-id">
-                    <div class="mb-3">
-                        <label for="payment-gateway" class="form-label">Payment Gateway</label>
-                        <select class="form-control" id="payment-gateway" required>
-                            <option value="">Select Payment Gateway</option>
-
-                            <?php
-                            foreach (GeneralModel::PaymentgatewayOptions() as $key => $value) {
-                                echo "<option value=\"$key\">$value</option>";
-                            }
-                            ?>
-
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="transaction-id" class="form-label">Transaction ID</label>
-                        <input type="text" class="form-control" id="transaction-id" placeholder="Enter Transaction ID" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="transaction-datetime" class="form-label">Transaction Datetime</label>
-                        <input type="datetime-local" class="form-control" id="transaction-datetime" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="assignAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="notificationAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header flageHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Assign
+                    Form
                 </h6>
             </div>
 
@@ -301,163 +193,171 @@ AppAsset::register($this);
     </div>
 </div>
 
+<style>
+    .inbox_msg {
+        border: 1px solid #c4c4c4;
+        clear: both;
+        overflow: hidden;
+    }
+
+
+    .mesgs {
+        float: left;
+        padding: 30px 15px 0 25px;
+        width: 100%;
+    }
+
+
+
+    .messaging {
+        padding: 0 0 50px 0;
+    }
+
+    .msg_history {
+        height: 516px;
+        overflow-y: auto;
+    }
+
+
+    .receivedChat p {
+
+        font-size: 14px;
+        color: #131313;
+    }
+
+    .receivedChat {
+
+        max-width: 380px;
+        background: #eaeaea;
+        padding: 15px 12px;
+        border-radius: 0px 15px 15px 15px;
+    }
+
+    .recievedTime span {
+        color: #000000;
+        font-size: 12px;
+    }
+
+    .ItineraryQuotationarea {
+
+        min-width: 480px;
+        background-color: #fafafa;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .topTitle h3 {
+
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+
+    .discriptionsCenter p {
+
+        font-size: 12px;
+        color: #421421;
+    }
+
+
+    .gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: end;
+    }
+
+    .gallery-container .single-image {
+        display: block;
+        width: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+
+    .gallery-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+    .sentChat {
+
+        max-width: 340px;
+        background-color: #09432D;
+        padding: 7px 7px 20px 10px;
+        border-radius: 15px 0px 15px 15px;
+    }
+
+    .sentChat {
+
+        margin-top: 50px;
+    }
+
+    .sentChat p {
+        color: #fff;
+        font-size: 12px;
+
+    }
+
+
+    .sentChat.himselfVoiceCall {
+
+        max-width: 300px !important;
+        background-color: #144D37 !important;
+    }
+
+    .currentTime span {
+
+        color: #fff;
+        font-size: 12px;
+
+    }
+
+    .voiceText h3 {
+
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .callIcons {
+
+        width: 35px;
+        height: 35px;
+        background-color: #242626;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .callIcons a i {
+
+        color: #fff !important;
+        font-size: 15px;
+    }
+
+    .voiceText a i {
+        color: #fff !important;
+        font-size: 15px;
+    }
+</style>
+
 
 <?php
 $script = <<< JS
-
-  $('.pop-up').on('click', function () {
-        $('#assignAction').modal('show')
+    $('.pop-up').on('click', function () {
+        $('#notificationAction').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
 
 
-// Handle Approve Button Click
-$('.approve-btn').on('click', function() {
-    var quotationId = $(this).data('id');
-    var percentage = $(this).data('percentage');
-    var partnerSellingPrice = $(this).data('partner-selling-price');
-    $('#approve-quotation-id').val(quotationId);
-    // $('#plateform-partner-fees-percentage').val(percentage);
-    $('#partner-selling-price').val(partnerSellingPrice);
-    updateNetPaymentPriceHint();
-});
-
-// Update net payment price hint dynamically on percentage change
-$('#plateform-partner-fees-percentage').on('input', function() {
-    updateNetPaymentPriceHint();
-});
-
-function updateNetPaymentPriceHint() {
-    var partnerSellingPrice = parseFloat($('#partner-selling-price').val()) || 0;
-    var percentage =  0;
-    var partnerFees = (partnerSellingPrice * percentage) / 100;
-    var netPaymentPrice = partnerSellingPrice + partnerFees;
-    $('#net-payment-price-hint').text('Net Payment Price: ₹' + netPaymentPrice.toFixed(2));
-}
-
-// Handle Approve Form Submission
-$('#approve-form').on('submit', function(e) {
-    e.preventDefault(); // Prevent default form submission
-
-    // Get form values
-    var quotationId = $('#approve-quotation-id').val();
-    var paymentUrl = $('#payment-url').val();
-    var partnerFeesPercentage = $('#plateform-partner-fees-percentage').val();
-    var qrCodeFile = $('#approval-file').prop('files')[0];
-
-    // Call sendApproveRequest function
-    sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qrCodeFile);
-});
-
-// Function to send the approve request
-function sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qrCodeFile) {
-    var formData = new FormData();
-    formData.append('id', quotationId);
-    formData.append('payment_url', paymentUrl);
-    formData.append('plateform_partner_fees_percentage', partnerFeesPercentage);
-    if (qrCodeFile) {
-        formData.append('qr_code_file', qrCodeFile);
-    }
-
-    $.ajax({
-        url: '/leads/default/approve',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert('An error occurred: ' + response.message);
-            }
-        },
-        error: function() {
-            alert('An error occurred while processing the request.');
-        }
-    });
-
-    $('#approveModal').modal('hide');
-}
-
-// Handle Disapprove Button Click
-$('.disapprove-btn').on('click', function() {
-    var quotationId = $(this).data('id');
-    $('#disapprove-quotation-id').val(quotationId);
-});
-
-// Handle Disapprove Form Submission
-$('#disapprove-form').on('submit', function(e) {
-    e.preventDefault();
-    var quotationId = $('#disapprove-quotation-id').val();
-    var reason = $('#disapprove-reason').val();
-    $.post('/leads/default/disapprove', {id: quotationId, reason: reason}, function(response) {
-        if (response.success) {
-            location.reload();
-        } else {
-            alert('An error occurred: ' + response.message);
-        }
-    });
-    $('#disapproveModal').modal('hide');
-});
-
-
-// Handle Payment Received Button Click
-$('.payment-received').on('click', function () {
-    var quotationId = $(this).data('id');
-    console.log('Quotation ID:', quotationId); // Debugging log
-    $('#payment-received-quotation-id').val(quotationId);
-    $('#PaymentReceivedModel').modal('show');
-});
-
-// Handle Payment Received Form Submission
-$('#payment-received-form').on('submit', function(e) {
-    e.preventDefault(); // Prevent default form submission
-
-    // Get form values
-    var quotationId = $('#payment-received-quotation-id').val();
-    var transactionId = $('#transaction-id').val();
-    var transactionDatetime = $('#transaction-datetime').val();
-    var paymentGateway = $('#payment-gateway').val(); // Get the selected payment gateway
-    // Format transactionDatetime to 'YYYY-MM-DD HH:mm'
-    transactionDatetime = transactionDatetime.replace('T', ' ');
-    // Send AJAX request
-    $.ajax({
-        url: '/leads/default/payment-received?quotation_id=' + quotationId,
-        type: 'POST',
-        data: {
-            'QuotationPaymentReceived[payment_gateway]': paymentGateway,
-            'QuotationPaymentReceived[transaction_id]': transactionId,
-            'QuotationPaymentReceived[transaction_datetime]': transactionDatetime,
-        },
-        success: function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert('An error occurred: ' + response.message);
-            }
-        },
-        error: function() {
-            alert('An error occurred while processing the request.');
-        }
-    });
-
-    $('#PaymentReceivedModel').modal('hide');
-});
-
 JS;
 $this->registerJs($script);
+
 ?>
-
-<style>
-    .nav-tabs .nav-link.active {
-        color: white !important;
-        background-color: #237729 !important;
-        border-color: #dee2e6 #dee2e6 #fff;
-    }
-
-    .table a {
-        color: #237729 !important;
-    }
-</style>

@@ -1,211 +1,106 @@
 <?php
 
-use common\models\GeneralModel;
-use yii\grid\GridView;
+use common\models\operator\SafariOperator;
+use common\models\User;
+use yii\bootstrap5\LinkPager;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
-$this->title = 'Leads';
+$this->title = 'Chat';
 $this->params['title'] = $this->title;
 ?>
 
+<div class="row">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Chat List</h5>
+                <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+            </div>
+            <div class="card-body p-2" style="height: 700px; overflow-y: auto;">
+                <?php foreach ($dataProvider->models as $chat){ ?>
+                    <?php
+                    $url = Url::to(['/chat/default/view','chat_id'=>$chat->id, 'user_id' => $chat->user_id, 'recipient_id' => $chat->recipient_user_id]);
+                    ?>
+                    <a href="javascript:void(0);" style="text-decoration:none" class="chat-box-link" data-url="<?= $url ?>">
+                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; ">
+                            <div class="d-flex align-items-center">
+                                <img src="<?= $chat->user && $chat->user->profile_display_image ? $chat->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+                                    class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div>
+                                    <strong><?= Html::encode($chat->displayLabelUser) ?></strong>
+                                </div>
+                                <strong class="fs-2">↔</strong>
+                                <img src="<?= $chat->recipient && $chat->recipient->profile_display_image ? $chat->recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+                                    class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div>
+                                    <strong><?= Html::encode($chat->displayLabelRecipient) ?></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                <?php } ?>
 
-<div class="card">
-    <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-        <div id="w1-button" class="mb-3"></div>
+                <!-- Pagination links -->
+                <div class="mt-2">
+                    <?= LinkPager::widget([
+                        'pagination' => $dataProvider->pagination,
+                        'options' => ['class' => 'pagination justify-content-center'],
+                        'linkOptions' => ['class' => 'page-link'],
+                        'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link']
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="table-responsive">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => [
-                    [
-                        'class' => 'yii\grid\SerialColumn',
-                        'headerOptions' => ['style' => 'width: 5%;'],
-                    ],
-                    [
-                        'label' => 'User Name',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-
-                            if ($user = $model->user) {
-                                $name = $user->name ?? '';
-                                $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
-
-                                return Html::a(
-                                    Html::img($imageUrl, [
-                                        'class' => "rounded profile-picture",
-                                        'style' => "width:28px;"
-                                    ]) . ' ' . Html::encode($name),
-                                    ['/user/default/profile', 'user_id' => $user->id],
-                                    ['style' => 'color:black !important;']
-                                );
-                            }
-
-                            return '';
-                        },
-                    ],
-                    [
-                        'label' => 'Source',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str = $model->sourceLabel;
-                            if (isset($model->displayLabel)) {
-                                $str .= "<br>";
-                                $str .= isset($model->displayLabel) ? $model->displayLabel : '';
-                            }
-                            return $str;
-                        }
-                    ],
-
-                    // [
-                    //     'label' => 'Detail',
-                    //     'headerOptions' => ['style' => 'width: 15%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->displayLabel) ? $model->displayLabel : '';
-                    //     }
-                    // ],
-
-                    [
-                        'label' => 'Safaris',
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return !empty($model->safaris) ? $model->safaris : '';
-                        }
-                    ],
-                    [
-                        'label' => 'Travelers',
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return !empty($model->travelers) ? $model->travelers : '';
-                        }
-                    ],
-
-                    // [
-                    //     'label' => 'Accomodation',
-                    //     'contentOptions' => ['style' => 'text-align: left;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return !empty($model->staycatgory) ? $model->staycatgory->title : '';
-                    //     }
-                    // ],
-                    [
-                        'label' => 'Travel Date looking',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str =  date('d M, Y', strtotime($model->from_date));
-                            if (!empty($model->to_date)) {
-                                $str .=  '- ' . date('d M, Y', strtotime($model->to_date));
-                            }
-                            return $str;
-                        }
-                    ],
-                    [
-                        'label' => 'Lead Received Date',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return date('d M, Y h:i A', $model->created_at);
-                        }
-                    ],
-                    // [
-                    //     'label' => 'Is payment received',
-                    //     'headerOptions' => ['style' => 'width: 15%;'],
-                    //     'contentOptions' => ['style' => 'text-align: left;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         if ($model->is_payment_received) {
-                    //             return '<span class="badge badge-success">Yes</span>';
-                    //         } else {
-                    //             return '<span class="badge badge-danger">No</span>';
-                    //         }
-                    //     }
-                    // ],
-                    [
-                        'label' => 'Payment Information',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str = '';
-                            if ($model->is_payment_received) {
-                                $str .= '<span class="badge badge-success">Payment Received</span>';
-                                if (!empty($model->transaction_datetime)) {
-                                    $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
-                                }
-                                if (!empty($model->transaction_id)) {
-                                    $str .= '<br><b>Transaction Id</b>: ' .  $model->transaction_id;
-                                }
-                                if (!empty($model->booked_operator_id)) {
-                                    $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;
-                                }
-                            }
-                            return $str;
-                        }
-                    ],
-                    [
-                        'label' => 'Quotation Count',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->quotation_count;
-                        }
-                    ],
-                    [
-                        'label' => 'Operator Count',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->assigned_operator_count;
-                        }
-                    ],
-                    [
-                        'label' => 'Partner Chat Started Count',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->partner_chat_started_count;
-                        }
-                    ],
-
-
-                    [
-                        'label' => 'Is Chat Started',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->is_chat_started == 1 ? 'Yes' : 'No';
-                        }
-                    ],
-
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'header' => "Actions",
-                        'headerOptions' => ['style' => 'width:15%; text-align: left;'],
-                        'template' => '{view}',
-                        'buttons' => [
-
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/leads/default/view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-                                ]);
-                            },
-
-
-
-                        ]
-                    ],
-                ],
-            ]); ?>
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5>Chat Preview</h5>
+            </div>
+            <div class="card-body p-0">
+                <?php  Pjax::begin(['id' => 'user-detail-content']); ?>
+                <div id="user-detail-content" style="min-height: 740px;">
+                    <div class="text-center p-5 text-muted">Please select a chat to preview</div>
+                </div>
+                <?php Pjax::end(); ?>
+            </div>
         </div>
     </div>
 </div>
+
+<?php
+$script = <<<JS
+$(document).on('click', '.chat-box-link', function(e) {
+    e.preventDefault();
+    var url = $(this).data('url');
+    $('#user-detail-content').html('<div class="text-center py-5">Loading...</div>');
+
+    $.pjax({
+        url: url,
+        container: '#user-detail-content',
+        push: false,
+        replace: false,
+        timeout: 10000
+    });
+});
+
+$(document).on('mouseenter', '.hover-shadow', function(){
+    $(this).css({
+        'transform': 'scale(1.03)',
+        'box-shadow': '0 8px 20px rgba(0,0,0,0.2)'
+    });
+});
+$(document).on('mouseleave', '.hover-shadow', function(){
+    $(this).css({
+        'transform': '',
+        'box-shadow': ''
+    });
+});
+
+JS;
+$this->registerJs($script);
+?>
