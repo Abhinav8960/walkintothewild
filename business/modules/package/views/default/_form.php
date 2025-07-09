@@ -181,7 +181,7 @@ use kartik\datetime\DateTimePicker;
         <?php } else { ?>
             <div class="col-lg-3">
                 <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                    <label for="">Package DP (JPEG / JPG / PNG / 250kb/ (350*350))
                     </label>
                     <div class="form-group mt-2">
                         <label for="fileField1" class="attachment">
@@ -205,13 +205,6 @@ use kartik\datetime\DateTimePicker;
                 </div>
             </div>
         <?php  } ?>
-
-        <div class="col-lg-9">
-            <div class="form_boxes mt-2">
-                <label for="">Overview</label>
-                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
-            </div>
-        </div>
 
     </div>
 
@@ -238,6 +231,12 @@ use kartik\datetime\DateTimePicker;
 
             </div>
         </div> -->
+        <div class="col-lg-12">
+            <div class="form_boxes mt-2">
+                <label for="">Overview</label>
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
+            </div>
+        </div>
 
     </div>
 </div>
