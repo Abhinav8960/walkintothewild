@@ -1,5 +1,6 @@
 <?php
 
+use common\models\chat\ChatMessage;
 use common\models\GeneralModel;
 use yii\bootstrap5\Html;
 use yii\data\Pagination;
@@ -50,7 +51,7 @@ use yii\data\Pagination;
                                             <h3 class="text-center">Itinerary & Quotation</h3>
                                         </div>
                                         <div class="discriptionsCenter">
-                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? ''?></b> </p>
+                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
                                             <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
                                             <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
                                             <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
@@ -112,7 +113,11 @@ use yii\data\Pagination;
                                             </div>
                                             <div class="voiceText">
                                                 <h3 style="padding-right: 20px;">
-                                                    <?= $chat_message->message ?>
+                                                    <?php if ($chat_message->status == 0) { ?>
+                                                        <p class="fst-italic"><?= $chat_message->message ?></p>
+                                                    <?php } else { ?>
+                                                        <p><?= $chat_message->message ?></p>
+                                                    <?php } ?>
                                                 </h3>
 
                                                 <?php if (!empty($chat_message->recordingUrl)) { ?>
@@ -133,12 +138,16 @@ use yii\data\Pagination;
                             <?php } else { ?>
                                 <div class="d-flex justify-content-end m-2">
                                     <div class="sentChat">
-                                        <p><?= $chat_message->message ?></p>
+                                        <?php if ($chat_message->status == 0) { ?>
+                                            <p class="fst-italic"><?= $chat_message->message ?></p>
+                                        <?php } else { ?>
+                                            <p><?= $chat_message->message ?></p>
+                                        <?php } ?>
                                         <div class="timeingNotified d-flex justify-content-end pe-2">
                                             <div class="d-flex gap-3">
                                                 <?php if ($chat_message->is_edited) { ?>
                                                     <div class="currentTime">
-                                                        <span><?= 'Edited'.' '.date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                                        <span><?= 'Edited' . ' ' . date('Y-m-d h:i A', $chat_message->created_at) ?></span>
                                                     </div>
                                                     <div class="tiknotified">
                                                         <i class="fa-solid fa-check-double" style="color: #ffffff;"></i>
@@ -168,7 +177,13 @@ use yii\data\Pagination;
                                                 <a href=""><i class="fa-solid fa-phone"></i></a>
                                             </div>
                                             <div class="voiceText">
-                                                <h3 style="padding-right: 20px;"><?= $chat_message->message ?></h3>
+                                                <h3 style="padding-right: 20px;">
+                                                    <?php if ($chat_message->status == 0) { ?>
+                                                        <p class="fst-italic"><?= $chat_message->message ?></p>
+                                                    <?php } else { ?>
+                                                        <p><?= $chat_message->message ?></p>
+                                                    <?php } ?>
+                                                </h3>
                                                 <div class="recievedTime">
                                                     <span><?= date('Y-m-d h:i A', $chat_message->created_at) ?></span>
                                                 </div>
@@ -179,10 +194,14 @@ use yii\data\Pagination;
                                 </div>
                             <?php } else { ?>
                                 <div class="receivedChat m-2">
-                                    <p><?= $chat_message->message ?></p>
+                                    <?php if ($chat_message->status == 0) { ?>
+                                        <p class="fst-italic"><?= $chat_message->message ?></p>
+                                    <?php } else { ?>
+                                        <p><?= $chat_message->message ?></p>
+                                    <?php } ?>
                                     <?php if ($chat_message->is_edited) { ?>
                                         <div class="recievedTime">
-                                            <span><?= 'Edited'.' '.date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                            <span><?= 'Edited' . ' ' . date('Y-m-d h:i A', $chat_message->created_at) ?></span>
                                         </div>
                                     <?php } else { ?>
                                         <div class="recievedTime">
