@@ -11,7 +11,7 @@ $this->title = 'Gallery Collection';
 
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row g-1">
         <?php if ($dataProvider) {
             foreach ($dataProvider->getModels() as $model) { ?>
                 <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-6 mb-3">

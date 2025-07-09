@@ -139,7 +139,7 @@ use kartik\datetime\DateTimePicker;
         </div>
 
         <div class="form_boxes mb-3">
-            <label for="">Maximum Booking Date</label>
+            <label for="">Validity Date</label>
             <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
         </div>
 
@@ -206,6 +206,13 @@ use kartik\datetime\DateTimePicker;
             </div>
         <?php  } ?>
 
+         <div class="col-lg-9">
+            <div class="form_boxes mt-2">
+                <label for="">Overview</label>
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
+            </div>
+        </div>
+
     </div>
 
 
@@ -231,12 +238,7 @@ use kartik\datetime\DateTimePicker;
 
             </div>
         </div> -->
-        <div class="col-lg-12">
-            <div class="form_boxes mb-3">
-                <label for="">Overview</label>
-                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
-            </div>
-        </div>
+       
     </div>
 </div>
 
