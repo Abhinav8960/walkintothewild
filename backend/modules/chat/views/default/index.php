@@ -85,9 +85,9 @@ $this->params['title'] = $this->title;
         <div class="card shadow-sm">
             <!-- <div class="card-header">
             </div> -->
-            <div class="card-body p-0">
+            <div class="card-body p-0" style="height: 790px; overflow-y: auto;">
                 <?php  Pjax::begin(['id' => 'user-detail-content']); ?>
-                <div id="user-detail-content" style="min-height: 740px;">
+                <div id="user-detail-content">
                     <div class="text-center p-5 text-muted">Please select a chat to preview</div>
                 </div>
                 <?php Pjax::end(); ?>
