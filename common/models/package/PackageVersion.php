@@ -107,7 +107,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['version', 'package_name', 'package_id'], 'required'],
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
             [['start_date', 'end_date', 'status'], 'safe'],
-            [['cost_per_person', 'total_price'], 'number'],
+            [['cost_per_person','cost_per_two_person', 'total_price'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
             [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
@@ -117,6 +117,8 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512],
             [['max_booking_date'], 'safe'],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+            [['partner_gallery_id'], 'integer'],
+            [['gallery_json'], 'safe'],
 
 
         ];

@@ -94,6 +94,10 @@ use kartik\datetime\DateTimePicker;
                 'class' => 'form-control'
             ])->label(false) ?>
         </div>
+        <div class="form_boxes mb-3">
+            <label for="">Gallery</label>
+            <?= $form->field($model, 'partner_gallery_id')->dropDownList(GeneralModel::liveGallery($safari_operator->id), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
         <!-- <div class="form_boxes mb-3">
             <label for="">Start Date <span>*</span></label>
             <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
@@ -106,7 +110,7 @@ use kartik\datetime\DateTimePicker;
     </div>
 
 
-    <div class="row row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-md-3 row-cols-lg-5">
         <div class="form_boxes mb-3">
             <label for="">Stay Category<span>*</span></label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
@@ -132,6 +136,14 @@ use kartik\datetime\DateTimePicker;
         <div class="form_boxes mb-3">
             <label for="">Cost Per Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_person')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Cost Per Two Person</label>
+            <?= $form->field($model, 'cost_per_two_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
                 'class' => 'form-control'

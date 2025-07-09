@@ -105,6 +105,7 @@ class DefaultController extends Controller
             $package->original_banner_filename = $model->original_banner_filename;
             $package->stay_category_id = $model->stay_category_id;
             $package->cost_per_person = $model->cost_per_person;
+            $package->cost_per_two_person = $model->cost_per_two_person;
             $package->type = $model->type;
             $package->gst_percentage = $model->gst_percentage;
             $package->total_price = $model->total_price;
@@ -130,6 +131,8 @@ class DefaultController extends Controller
             $package->pending_for_approval_version = null;
             $package->live_version = $version;
             $package->max_booking_date = $model->max_booking_date;
+            $package->partner_gallery_id = $model->partner_gallery_id;
+            $package->gallery_json = $model->gallery_json;
             $package->status = Package::STATUS_ACTIVE;
             $package->save(false);
 
