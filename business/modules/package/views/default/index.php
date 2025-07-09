@@ -45,7 +45,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_day . ' Days ,' . $model->no_of_night . ' Nights';
+                            return $model->no_of_day . ' Days, ' . $model->no_of_night . ' Nights';
                         }
                     ],
                     [

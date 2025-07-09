@@ -152,7 +152,7 @@ use kartik\datetime\DateTimePicker;
         if ($model->package_version_model->package_image) { ?>
             <div class="col-lg-3 ">
                 <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                    <label for="">Package DP (JPEG / JPG / PNG / 250kb / (350*350))
                     </label>
                     <div class="form-group mt-2">
                         <label for="fileField" class="attachment">

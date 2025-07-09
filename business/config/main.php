@@ -10,7 +10,8 @@ return [
     'id' => 'app-business',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'business\controllers',
-    'bootstrap' => ['log', '\business\components\AppBootstrap'],
+    // 'bootstrap' => ['log', '\business\components\AppBootstrap'],
+    'bootstrap' => ['log'],
     'timeZone' => 'Asia/Calcutta',
     'modules' => [
         'package' => [
