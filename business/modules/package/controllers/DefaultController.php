@@ -75,7 +75,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageVersionSearch();
-        $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
+        // $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
         $searchModel->owned_by_id = $this->operatormodel()->id;
 
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
@@ -613,23 +613,22 @@ class DefaultController extends Controller
             echo "<pre>";
             print_r($e->getMessage());
             die();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['index']);
         }
         $transaction->commit();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     public function actionCopyPackage($id)
     {
-
         $m = $this->findModel($id);
         $transaction = Yii::$app->db->beginTransaction();
         try {
 
-            $this->copyPackageNow($id, true);
+            $newModel = $this->copyPackageNow($id, true);
             // $this->updatePackageStatus($m->uuid, $m->version, $m->status);
-            Yii::$app->session->setFlash('success', 'Package copy successfully');
+            Yii::$app->session->setFlash('success', 'Package copied successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
@@ -640,7 +639,7 @@ class DefaultController extends Controller
         }
         $transaction->commit();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['update', 'id' => $newModel->id]);
     }
 
 

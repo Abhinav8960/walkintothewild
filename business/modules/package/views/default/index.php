@@ -37,7 +37,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->package_name;
+                            return mb_strimwidth($model->package_name, 0, 40, "...");
                         }
                     ],
                     [
@@ -45,7 +45,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_day . ' Days ,' . $model->no_of_night . ' Nights';
+                            return $model->no_of_day . ' Days, ' . $model->no_of_night . ' Nights';
                         }
                     ],
                     [
@@ -75,35 +75,35 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         }
                     ],
 
-                    [
-                        'label' => 'Feature',
-                        'headerOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $html = '';
-                            $features = $model->packagefeatures;
-                            $displayLimit = 2;
-                            $count = 0;
-                            $total = count($features);
+                    // [
+                    //     'label' => 'Feature',
+                    //     'headerOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $html = '';
+                    //         $features = $model->packagefeatures;
+                    //         $displayLimit = 1;
+                    //         $count = 0;
+                    //         $total = count($features);
 
-                            foreach ($features as $key => $feature) {
-                                if (isset(GeneralModel::packagefeatureoption()[$feature->feature_id])) {
-                                    $text = GeneralModel::packagefeatureoption()[$feature->feature_id];
-                                    if ($count < $displayLimit) {
-                                        $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">' . htmlspecialchars($text) . '</span>';
-                                    }
-                                    $count++;
-                                }
-                            }
+                    //         foreach ($features as $key => $feature) {
+                    //             if (isset(GeneralModel::packagefeatureoption()[$feature->feature_id])) {
+                    //                 $text = GeneralModel::packagefeatureoption()[$feature->feature_id];
+                    //                 if ($count < $displayLimit) {
+                    //                     $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">' . htmlspecialchars($text) . '</span>';
+                    //                 }
+                    //                 $count++;
+                    //             }
+                    //         }
 
-                            if ($count > $displayLimit) {
-                                $remaining = $count - $displayLimit;
-                                $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">+' . $remaining . '</span>';
-                            }
+                    //         if ($count > $displayLimit) {
+                    //             $remaining = $count - $displayLimit;
+                    //             $html .= '<span style="display: inline-block; background-color:rgb(210, 210, 210); color: #000; border-radius: 50px; padding: 5px 10px; margin: 2px;">+' . $remaining . '</span>';
+                    //         }
 
-                            return $html;
-                        }
-                    ],
+                    //         return $html;
+                    //     }
+                    // ],
 
                     // [
                     //     'label' => 'Included',

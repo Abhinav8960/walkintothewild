@@ -1,20 +1,20 @@
 <?php
 
+use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package_version_model->package_name;
-$this->params['title'] = $this->title;
 
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
-<?php if (false) { ?>
-    <?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
-<?php } ?>
+<?= $this->render('_form_upper_view', ['package' => $package_version_model]) ?>
+
 
 
 <div class="tabs-formswrapper mx-3">
@@ -34,7 +34,15 @@ $this->params['title'] = $this->title;
                                 </h2>
                                 <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
                                     <div class="accordion-body">
-                                        <?php $form = ActiveForm::begin(); ?>
+                                        <?php $form = ActiveForm::begin(
+                                            [
+                                                'id' => 'itinerary-form',
+                                                'method' => 'POST',
+                                                'fieldConfig' => [
+                                                    'template' => '<div class="form-group">{label}{input}{error}</div>',
+                                                ],
+                                            ]
+                                        ); ?>
 
 
                                         <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>

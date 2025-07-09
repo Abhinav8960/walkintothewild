@@ -31,23 +31,23 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <div class="form_boxes mb-3 postion-relative">
+        <div class="form_boxes mb-3">
             <label for="">Safari Park<span>*</span></label>
-            <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
-                'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
-                'options' => [
-                    'multiple' => true,
-                    'autocomplete' => 'off',
-                    'class' => 'form-select form-select-lg mb-3',
-                ],
-                'pluginOptions' => [
-                    'placeholder' => 'Open this select menu',
-                    'allowClear' => true,
-                ],
-            ])->label(false) ?>
-            <i class="fa fa-angle-down position-absolute"
-                style="right: 20px; top: 55px; pointer-events: none; z-index: 100;"></i>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
         </div>
     </div>
 
@@ -113,23 +113,21 @@ use kartik\datetime\DateTimePicker;
         </div>
         <div class="form_boxes mb-3 position-relative">
             <label for="">Package Feature <span>*</span></label>
-
-            <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
-                'theme' => \kartik\select2\Select2::THEME_KRAJEE,
-                'data' => GeneralModel::packagefeatureoption(),
-                'options' => [
-                    'multiple' => true,
-                    'autocomplete' => 'off',
-                    'class' => 'form-select form-select-lg mb-3',
-                ],
-                'pluginOptions' => [
-                    'placeholder' => 'Open this select menu',
-                    'allowClear' => true,
-                ],
-            ])->label(false) ?>
-
-            <i class="fa fa-angle-down position-absolute"
-                style="right: 20px; top: 40px; pointer-events: none; z-index: 100;"></i>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::packagefeatureoption(),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                        'class' => 'form-select form-select-lg mb-3',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
         </div>
         <div class="form_boxes mb-3">
             <label for="">Cost Per Person <span>*</span></label>
@@ -141,7 +139,7 @@ use kartik\datetime\DateTimePicker;
         </div>
 
         <div class="form_boxes mb-3">
-            <label for="">Maximum Booking Date</label>
+            <label for="">Validity Date</label>
             <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
         </div>
 
@@ -154,7 +152,7 @@ use kartik\datetime\DateTimePicker;
         if ($model->package_version_model->package_image) { ?>
             <div class="col-lg-3 ">
                 <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                    <label for="">Package DP (JPEG / JPG / PNG / 250kb / (350*350))
                     </label>
                     <div class="form-group mt-2">
                         <label for="fileField" class="attachment">
@@ -177,13 +175,13 @@ use kartik\datetime\DateTimePicker;
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 mt-5">
-                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
+            <div class="col-lg-3" style="margin-top:35px;">
+                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px"></img>'; ?>
             </div>
         <?php } else { ?>
             <div class="col-lg-3">
                 <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                    <label for="">Package DP (JPEG / JPG / PNG / 250kb/ (350*350))
                     </label>
                     <div class="form-group mt-2">
                         <label for="fileField1" class="attachment">
@@ -207,65 +205,6 @@ use kartik\datetime\DateTimePicker;
                 </div>
             </div>
         <?php  } ?>
-
-        <?php
-        if ($model->package_version_model->package_banner_image) { ?>
-            <div class="col-lg-9">
-                <div class="form_boxes mb-3">
-                    <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField2" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField2"])->label(false) ?>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 mt-5">
-                <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
-            </div>
-        <?php } else { ?>
-            <div class="col-lg-9">
-                <div class="form_boxes mb-3">
-                    <label for="">Package Banner Image (JPEG / JPG / PNG / 250kb)
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField3" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?= $form->field($model, 'package_banner_image')->fileInput(['id' => "fileField3"])->label(false) ?>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        <?php  } ?>
-
 
     </div>
 
@@ -293,19 +232,23 @@ use kartik\datetime\DateTimePicker;
             </div>
         </div> -->
         <div class="col-lg-12">
-            <div class="form_boxes mb-3">
+            <div class="form_boxes mt-2">
                 <label for="">Overview</label>
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
             </div>
         </div>
+
     </div>
 </div>
 
 <div class="row pt-2">
-    <div class="col-12">
+    <div class="col-md-8">
+        <?= $form->errorSummary($model, ['class' => 'alert alert-danger', 'header' => '']) ?>
+    </div>
+    <div class="col-lg-4">
         <div class="d-flex gap-3 justify-content-end">
             <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
-            <?= Html::submitButton('Submit', ['class' => 'button-created create']) ?>
+            <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
         </div>
     </div>
 </div>
@@ -313,15 +256,15 @@ use kartik\datetime\DateTimePicker;
 <?php ActiveForm::end(); ?>
 
 
-<style>
+<!-- <style>
     .ck-editor__editable {
         min-height: 350px;
     }
-</style>
+</style> -->
 <?php
 $script = <<< JS
-editor('packageversionform-package_description');
-editor('packageversionform-package_itinerary_overview');
+// editor('packageversionform-package_description');
+// editor('packageversionform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
@@ -349,3 +292,19 @@ $gst_script = <<< JS
 JS;
 $this->registerJs($gst_script);
 ?>
+
+<style>
+    .select2-angle-wrapper {
+        position: relative;
+    }
+
+    .select2-angle-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #888;
+        font-size: 16px;
+    }
+</style>

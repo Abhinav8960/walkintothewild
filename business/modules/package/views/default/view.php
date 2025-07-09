@@ -165,9 +165,9 @@ $this->title = 'Package';
                         <p class="mb-0">
                             <?php if ($package->versions) {
                                 foreach ($package->versions as $v) { ?>
-                        <div>
-                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>">
-                                <?= $v->version ?>-<?= $v->statusLabel ?>
+                        <div class="border mb-2">
+                            <a href="<?= Url::toRoute(['view', 'id' => $v->id]) ?>" style="color:black;">
+                                <?= $v->version ?>-<?= $v->statusLabel ?><br>(<?= date('Y-m-d H:i:s', $v->created_at) ?>)
                             </a>
                         </div>
                 <?php }

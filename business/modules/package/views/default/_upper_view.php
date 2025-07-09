@@ -15,7 +15,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-12 mb-4">
                 <div class="topParent d-flex justify-content-between align-items-center">
                     <div class="packageTitle">
-                        <h2>Package : <?= Html::encode($package->package_name) ?></h2>
+                        <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?></h2>
                     </div>
                     <div class="butonsParent d-flex align-items-center gap-3">
                         <!-- <div class="edinBtn saveBtn">
@@ -163,9 +163,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="row packageSfari mx-3">
     <div class="col-12 mt-4">
         <div class="imagesSafari d-sm-block d-none">
-            <div class="package-banner-dummy">
+            <!-- <div class="package-banner-dummy">
                 <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/images/Bandhavgarhsmall.jpg' ?>" alt="" class="w-100 h-100">
-            </div>
+            </div> -->
         </div>
         <div class="wrapper-skybgsafri pb-0">
             <div class="row pb-4">

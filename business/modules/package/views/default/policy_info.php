@@ -2,11 +2,16 @@
 
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
+
+use common\models\package\PackageVersion;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package_version_model->package_name . '';
-$this->params['title'] = $this->title;
+
 
 ?>
 

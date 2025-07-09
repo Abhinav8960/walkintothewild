@@ -43,13 +43,13 @@ use yii\bootstrap5\ActiveForm;
 <?php ActiveForm::end(); ?>
 
 <style>
-    .ck-editor__editable {
+    /* .ck-editor__editable {
         min-height: 200px;
-    }
+    } */
 </style>
 <?php
 $script = <<< JS
-bulleteditor('PackageVersionForm-getting_there');
+// bulleteditor('PackageVersionForm-getting_there');
 JS;
 $this->registerJs($script);
 ?>
