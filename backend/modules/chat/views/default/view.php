@@ -1,13 +1,11 @@
 <?php
 
-use common\models\chat\ChatMessage;
 use common\models\GeneralModel;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use yii\data\Pagination;
 
 ?>
 
-<div class="card-body d-flex justify-content-between align-items-center mt-2" style="height: 60px;" >
+<div class="card-body d-flex justify-content-between align-items-center mt-2" style="height: 60px;">
     <div class="d-flex align-items-center">
         <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
@@ -34,9 +32,18 @@ use yii\helpers\Url;
 
             <?php
             if ($model) {
+            //     $query = $model->getChatmessages()->orderby(['id' => SORT_DESC]);
+            //     $pagination = new Pagination([
+            //         'totalCount' => $query->count(),
+            //         'pageSize' => 10,
+            //     ]);
+            //     $chatMessages = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+            //     $chats = array_reverse($chatMessages);
+            //     if($chats){
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
-                        if ($chat_message->created_by == $model->recipient_user_id) { ?>
+                        if ($chat_message->created_by == $model->recipient_user_id) {
+                            ?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
@@ -84,9 +91,9 @@ use yii\helpers\Url;
                                             </div>
                                             <div class="gallery-container">
                                                 <?php if ($gallery_data['images']) {
-                                                    foreach ($gallery_data['images'] as $image) {  ?>
+                                                    foreach ($gallery_data['images'] as $image) { ?>
                                                         <div class="single-image" data-fancybox="gallery" data-caption="Image 4">
-                                                            <img src="<?= isset($image['gallery_image_path']) ? $image['gallery_image_path'] : '' ?>" alt="<?= isset($image['title']) ? $image['title'] : ''  ?>" title="<?= isset($image['caption']) ? $image['caption'] : '' ?>">
+                                                            <img src="<?= isset($image['gallery_image_path']) ? $image['gallery_image_path'] : '' ?>" alt="<?= isset($image['title']) ? $image['title'] : '' ?>" title="<?= isset($image['caption']) ? $image['caption'] : '' ?>">
                                                             <div class="image-caption"><?= isset($image['caption']) ? $image['caption'] : '' ?></div>
                                                         </div>
 
@@ -109,7 +116,7 @@ use yii\helpers\Url;
                                                     <?= $chat_message->message ?>
                                                 </h3>
 
-                                                <?php if (!empty($chat_message->recordingUrl)) {  ?>
+                                                <?php if (!empty($chat_message->recordingUrl)) { ?>
                                                     <audio controls style="margin-top: 10px; width:225px">
                                                         <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
                                                         Your browser does not support the audio element.
@@ -143,7 +150,8 @@ use yii\helpers\Url;
                             <?php } ?>
 
                         <?php
-                        } else { ?>
+                        } else {
+                        ?>
                             <?php if ($chat_message->is_call_request == 1) { ?>
                                 <div class="d-flex justify-content-start m-2">
                                     <div class="sentChat incomingVoiceCall">
@@ -169,7 +177,8 @@ use yii\helpers\Url;
                                     </div>
                                 </div>
 
-            <?php }
+            <?php
+                            }
                         }
                     }
                 }
@@ -335,14 +344,23 @@ use yii\helpers\Url;
 
 
 <?php
-$script = <<< JS
-$(document).ready(function() {
-    function scrollToBottom() {
-        var \$box = $("#chatBox");
-        \$box.scrollTop(\$box[0].scrollHeight);
-    }
-    scrollToBottom();
-});
+$js = <<<JS
+(function () {
+    const chatBox = document.querySelector('#chatBox');
+    if (!chatBox) return;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    const observer = new MutationObserver(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+    observer.observe(chatBox, { childList: true });
+
+    $(document).on('pjax:end', '#chat-pjax', () => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+})();
 JS;
-$this->registerJs($script);
+
+$this->registerJs($js, \yii\web\View::POS_READY);
 ?>

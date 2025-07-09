@@ -2,13 +2,9 @@
 
 namespace backend\modules\chat\controllers;
 
-use api\models\chat\Chat as ApiChat;
-use api\models\chat\ChatMessage;
+
 use common\models\chat\Chat;
 use common\models\chat\ChatDisplaySearch;
-use common\models\leads\Lead;
-use common\models\leads\LeadSearch;
-use common\models\operator\SafariOperator;
 use common\models\User;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -76,11 +72,10 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        // print_r($id);
-        // die();
         if (($model = Chat::find()->where(['id'=>$id])->one()) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }
