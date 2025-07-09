@@ -112,7 +112,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?php
-                                                    $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+                                                    $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->share_safari_id, 'include_id' => 3, 'selection' => 1, 'status' => 1, 'version' => $share_safari->version])->limit(1)->one();
 
                                                     echo ($pick_drop_includes) ? 'Included' : 'Not Included';
                                                     ?></p>

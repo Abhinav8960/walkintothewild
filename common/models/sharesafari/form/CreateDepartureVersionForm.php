@@ -41,16 +41,16 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $getting_there;
     public $rand_text;
     public $cut_off_date;
-    
+
     public $breakfast_included;
     public $lunch_included;
     public $dinner_included;
     public $meal_not_included;
     public $mail_sent;
-    
+
     public $action_url;
     public $action_validate_url;
-    
+
     public $shared_safari_departure_version_model;
 
 
@@ -63,6 +63,9 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $this->version = '1';
         if ($shared_safari_departure_version_model  != '') {
             $this->shared_safari_departure_version_model = $shared_safari_departure_version_model;
+
+            $this->share_safari_id = $this->shared_safari_departure_version_model->share_safari_id;
+            $this->version = $this->shared_safari_departure_version_model->version;
 
             $this->type =  $this->shared_safari_departure_version_model->type;
             $this->share_safari_title =  $this->shared_safari_departure_version_model->share_safari_title;
