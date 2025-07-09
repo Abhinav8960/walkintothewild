@@ -5,7 +5,7 @@ use yii\data\Pagination;
 
 ?>
 
-<div class="card-body d-flex justify-content-between align-items-center mt-2" style="height: 60px;">
+<div class="card-header d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center">
         <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
@@ -24,26 +24,24 @@ use yii\data\Pagination;
     </div>
 </div>
 
-<hr>
-
 <div class="messaging">
     <div class="mesgs">
         <div class="msg_history" id="chatBox">
 
             <?php
             if ($model) {
-            //     $query = $model->getChatmessages()->orderby(['id' => SORT_DESC]);
-            //     $pagination = new Pagination([
-            //         'totalCount' => $query->count(),
-            //         'pageSize' => 10,
-            //     ]);
-            //     $chatMessages = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            //     $chats = array_reverse($chatMessages);
-            //     if($chats){
+                //     $query = $model->getChatmessages()->orderby(['id' => SORT_DESC]);
+                //     $pagination = new Pagination([
+                //         'totalCount' => $query->count(),
+                //         'pageSize' => 10,
+                //     ]);
+                //     $chatMessages = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+                //     $chats = array_reverse($chatMessages);
+                //     if($chats){
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
                         if ($chat_message->created_by == $model->recipient_user_id) {
-                            ?>
+            ?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
@@ -51,19 +49,19 @@ use yii\data\Pagination;
                                             <h3 class="text-center">Itinerary & Quotation</h3>
                                         </div>
                                         <div class="discriptionsCenter">
-                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
-                                            <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
-                                            <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
-                                            <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote['park_label'] ?? '' ?></b> </p>
+                                            <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote['safaris'] ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote['travelers'] ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote['staycatgory_lable'] ?? '' ?></b></p>
 
                                             <p class="mb-1"><span>Start Date:</span><b><?= !empty($chat_message->quote['start_date']) ? date('M d, Y', strtotime($chat_message->quote['start_date'])) : '' ?></b></p>
                                             <p class="mb-1"><span>End Date:</span><b><?= !empty($chat_message->quote['end_date']) ? date('M d, Y', strtotime($chat_message->quote['end_date'])) : '' ?></b></p>
-                                            <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                            <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote['addional_notes'] ?? '' ?></p>
                                             <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
                                                 <div>
                                                     <p>
                                                         <span style="color: red;"><i>Quotation Valid Until:</i></span>
-                                                        <b><i><?= $chat_message->quote->validity_date ?? '' ?></i></b>
+                                                        <b><i><?= $chat_message->quote['validity_date'] ?? '' ?></i></b>
                                                     </p>
                                                 </div>
                                                 <div class="d-flex align-items-center gap-1">
@@ -75,7 +73,7 @@ use yii\data\Pagination;
                                             <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
 
                                         </div>
-                                        <div class="recievedTime">
+                                        <div class="recievedTime d-flex justify-content-end">
                                             <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                         </div>
                                     </div>
@@ -137,12 +135,21 @@ use yii\data\Pagination;
                                         <p><?= $chat_message->message ?></p>
                                         <div class="timeingNotified d-flex justify-content-end pe-2">
                                             <div class="d-flex gap-3">
-                                                <div class="currentTime">
-                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                                </div>
-                                                <div class="tiknotified">
-                                                    <i class="fa-solid fa-check-double"></i>
-                                                </div>
+                                                <?php if ($chat_message->is_edited) { ?>
+                                                    <div class="currentTime">
+                                                        <span><?= 'Edited'.' '.date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                                    </div>
+                                                    <div class="tiknotified">
+                                                        <i class="fa-solid fa-check-double" style="color: #ffffff;"></i>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="currentTime">
+                                                        <span><?= date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                                    </div>
+                                                    <div class="tiknotified">
+                                                        <i class="fa-solid fa-check-double" style="color: #ffffff;"></i>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +169,7 @@ use yii\data\Pagination;
                                             <div class="voiceText">
                                                 <h3 style="padding-right: 20px;"><?= $chat_message->message ?></h3>
                                                 <div class="recievedTime">
-                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                                    <span><?= date('Y-m-d h:i A', $chat_message->created_at) ?></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,9 +179,15 @@ use yii\data\Pagination;
                             <?php } else { ?>
                                 <div class="receivedChat m-2">
                                     <p><?= $chat_message->message ?></p>
-                                    <div class="recievedTime">
-                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                    </div>
+                                    <?php if ($chat_message->is_edited) { ?>
+                                        <div class="recievedTime">
+                                            <span><?= 'Edited'.' '.date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="recievedTime">
+                                            <span><?= date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                        </div>
+                                    <?php } ?>
                                 </div>
 
             <?php

@@ -25,7 +25,8 @@ $this->params['title'] = $this->title;
                     $url = Url::to(['/chat/default/view','chat_id'=>$chat->id, 'user_id' => $chat->user_id, 'recipient_id' => $chat->recipient_user_id]);
                     ?>
                     <a href="javascript:void(0);" style="text-decoration:none" class="chat-box-link" data-url="<?= $url ?>">
-                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; ">
+                        <?php if($chat->chat_type == 2){?>
+                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; background-color:rgb(245, 240, 240) !important;">
                             <div class="d-flex align-items-center">
                                 <img src="<?= $chat->user && $chat->user->profile_display_image ? $chat->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
                                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
@@ -39,7 +40,30 @@ $this->params['title'] = $this->title;
                                     <strong><?= Html::encode($chat->displayLabelRecipient) ?></strong>
                                 </div>
                             </div>
+                            <div class="recievedTime d-flex justify-content-end">
+                                    <span><?= date('Y-m-d h:i A', $chat->last_message_at) ?></span>
+                            </div>
                         </div>
+                        <?php } else { ?>
+                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; background-color:rgb(240, 245, 235) !important;">
+                            <div class="d-flex align-items-center">
+                                <img src="<?= $chat->user && $chat->user->profile_display_image ? $chat->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+                                    class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div>
+                                    <strong><?= Html::encode($chat->displayLabelUser) ?></strong>
+                                </div>
+                                <strong class="fs-2 mb-3">↔</strong>
+                                <img src="<?= $chat->recipient && $chat->recipient->profile_display_image ? $chat->recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
+                                    class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div>
+                                    <strong><?= Html::encode($chat->displayLabelRecipient) ?></strong>
+                                </div>
+                            </div>
+                            <div class="recievedTime d-flex justify-content-end">
+                                    <span><?= date('Y-m-d h:i A', $chat->last_message_at) ?></span>
+                            </div>
+                        </div>
+                        <?php } ?>
                     </a>
                 <?php } ?>
 
@@ -59,9 +83,8 @@ $this->params['title'] = $this->title;
 
     <div class="col-md-7">
         <div class="card shadow-sm">
-            <div class="card-header">
-                <h5>Chat Preview</h5>
-            </div>
+            <!-- <div class="card-header">
+            </div> -->
             <div class="card-body p-0">
                 <?php  Pjax::begin(['id' => 'user-detail-content']); ?>
                 <div id="user-detail-content" style="min-height: 740px;">
