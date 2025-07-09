@@ -280,4 +280,19 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     //     }
     //     return 0;
     // }
+
+    public function getStatustags()
+    {
+        if ($this->status == ShareSafariVersion::NOT_APPROVED_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        } else if ($this->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+        } else if ($this->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/pending.svg'>";
+        } else if ($this->status == ShareSafariVersion::EDIATBLE_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/draft.svg'>";
+        } else if ($this->status == ShareSafariVersion::TERMINATED_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        }
+    }
 }

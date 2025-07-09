@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 /**
  * ShareSafariSearch represents the model behind the search form of `common\models\sharesafari\ShareSafari`.
  */
-class ShareSafariVersionSearch extends ShareSafari
+class ShareSafariVersionSearch extends ShareSafariVersion
 {
     public $month_id;
     public $custom_sort_by;

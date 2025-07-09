@@ -129,7 +129,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->statustags;
                         }
                     ],
 

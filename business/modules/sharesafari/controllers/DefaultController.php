@@ -68,7 +68,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariVersionSearch();
-        $searchModel->custom_status = ShareSafariVersion::EDIATBLE_STATUS;
+        // $searchModel->custom_status = ShareSafariVersion::EDIATBLE_STATUS;
         $searchModel->host_user_id = $safari_operator->id;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
