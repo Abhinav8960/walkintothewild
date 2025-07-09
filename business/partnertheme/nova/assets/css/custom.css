@@ -290,7 +290,7 @@ li{
   background: #C4E3BD !important;
   border-radius: 15px 15px 0px 0px !important;
   margin-bottom: 0;
-  padding: 10px 20px !important;
+  padding: 10px 20px 0px 20px !important;
   align-items: center;
   text-transform: uppercase;
   display: flex;
@@ -308,16 +308,17 @@ li{
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 600;
+  color: #152F1B;
+  padding: 10px !important;
 }
 
 .tabs-formswrapper .mynav.nav-tabs .nav-item .nav-link.active {
 
   background-color: transparent;
-  border-bottom: 2px solid red;
+  border-bottom: 3px solid #152F1B !important;
   border-radius: 0;
-  padding: 0 !important;
+  
   border: 0;
-  color: #fff;
 }
 
 .tabs-content-wraps {
