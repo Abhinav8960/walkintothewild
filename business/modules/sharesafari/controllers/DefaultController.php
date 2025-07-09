@@ -98,7 +98,7 @@ class DefaultController extends Controller
         $model = new CreateDepartureVersionForm();
         $model->host_user_id =  $safari_operator->id; //Operator Id Comes Here
         $model->type = 2;
-        $model->host_type = 3;
+        $model->host_type = 3; //check for operator
 
         $model->status = ShareSafariVersion::EDIATBLE_STATUS;
 

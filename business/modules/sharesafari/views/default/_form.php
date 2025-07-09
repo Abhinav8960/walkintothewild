@@ -29,14 +29,21 @@ use common\models\GeneralModel;
     <div class="col-md-6">
         <div class="form_boxes mb-3">
             <label for="">Safari Park<span>*</span></label>
-            <?= $form->field($model, 'park_list')->widget(\kartik\select2\Select2::classname(), [
-                'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
-                'options' => ['placeholder' => 'Open this select menu', 'multiple' => true],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-                'class' => 'form-select form-select-lg mb-3'
-            ])->label(false) ?>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'park_list')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
         </div>
     </div>
     <div class="col-md-6">
@@ -136,8 +143,8 @@ use common\models\GeneralModel;
 <div class="row pt-2">
     <div class="col-12">
         <div class="d-flex gap-3 justify-content-end">
-            <?= Html::a('Cancel', ['index'], ['class' => 'button-created']) ?>
-            <?= Html::submitButton('Submit', ['class' => 'button-created create']) ?>
+            <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
+            <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
         </div>
     </div>
 </div>
@@ -189,3 +196,19 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
+
+<style>
+    .select2-angle-wrapper {
+        position: relative;
+    }
+
+    .select2-angle-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #888;
+        font-size: 16px;
+    }
+</style>
