@@ -149,6 +149,9 @@ class ScheduleController extends Controller
     {
         $models = \common\models\CallLog::find()
             ->where(['file_path' => NULL])
+            ->where(['status' => \common\models\CallLog::STATUS_SUCCESS])
+            ->andWhere(['is_detail_fetched' => 1, 'file_path' => null])
+            ->andWhere(['!=', 'recording_url', null])
             ->all();
         foreach ($models as $model) {
             if (empty($model->file_path) && !empty($model->recording_url)) {
