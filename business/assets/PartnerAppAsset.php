@@ -24,7 +24,8 @@ class PartnerAppAsset extends AssetBundle
         // 'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
         // 'https://code.jquery.com/jquery-3.6.1.js',
         'js/main.js',
-        'js/custom.js'
+        'js/custom.js',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
     ];
 
     public $depends = [
