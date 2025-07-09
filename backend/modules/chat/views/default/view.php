@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use yii\bootstrap5\Html;
 use yii\data\Pagination;
 
 ?>
@@ -10,18 +11,18 @@ use yii\data\Pagination;
         <img src="<?= $user && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
             style="width: 40px; height: 40px; object-fit: cover;">
-        <h5 class="mb-0"><?= $user->name ? $user->name : '' ?></h5>
+        <h5 class="mb-0"><?= Html::encode($model->displayLabelUser) ?></h5>
 
         <strong class="fs-1 mb-3">↔</strong>
 
         <img src="<?= $recipient && $recipient->profile_display_image ? $recipient->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
             class="rounded me-2"
             style="width: 40px; height: 40px; object-fit: cover;">
-        <h5 class="mb-0"><?= $recipient->name ? $recipient->name : '' ?></h5>
+        <h5 class="mb-0"><?= Html::encode($model->displayLabelRecipient) ?></h5>
     </div>
-    <div class="d-flex align-items-center">
+    <!-- <div class="d-flex align-items-center">
         <strong class="text-danger"><?= $model->chat_type ? '(' . GeneralModel::chattype($model->chat_type) . ')' : '' ?></strong>
-    </div>
+    </div> -->
 </div>
 
 <div class="messaging">

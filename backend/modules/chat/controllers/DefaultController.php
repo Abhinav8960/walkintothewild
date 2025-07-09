@@ -22,7 +22,7 @@ class DefaultController extends Controller
         return $behaviors + [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'quotation', 'quotation-validate'],
+                'only' => ['index', 'view'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -30,7 +30,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'quotation', 'quotation-validate'],
+                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

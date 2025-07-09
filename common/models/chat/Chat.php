@@ -164,9 +164,9 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         $user = User::find()->where(['id'=>$this->user_id])->one();
         $userName = $user ? $user->name : '';
-        $userOperator = SafariOperator::find()->where(['user_id' => $user ? $user->id : ''])->one();
+        $userOperator = SafariOperator::find()->where(['user_id' => $user->id])->one();
         if ($userOperator) {
-            $userName .= ' | (Operator)';
+            $userName = $userOperator->business_name .' | (Operator)';
         }
         return $userName ;
     }
@@ -175,9 +175,9 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         $recipient = User::find()->where(['id'=>$this->recipient_user_id])->one();
         $recipientName = $recipient ? $recipient->name : '';
-        $recipientOperator = SafariOperator::find()->where(['user_id' => $recipient ? $recipient->id : ''])->one();
+        $recipientOperator = SafariOperator::find()->where(['user_id' =>$recipient->id])->one();
         if ($recipientOperator) {
-            $recipientName .= ' | (Operator)';
+            $recipientName = $recipientOperator->business_name .' | (Operator)';
         }
         return $recipientName ;
     }
