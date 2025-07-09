@@ -172,4 +172,14 @@ class PreviewController extends Controller
             return $this->redirect(\Yii::$app->request->referrer);
         }
     }
+
+      public function actionRemovePopular($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model->popular_package = 0;
+        if ($model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Remove From Successfully!!!');
+            return $this->redirect(\Yii::$app->request->referrer);
+        }
+    }
 }
