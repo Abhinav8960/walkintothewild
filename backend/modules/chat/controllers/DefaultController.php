@@ -2,8 +2,7 @@
 
 namespace backend\modules\chat\controllers;
 
-
-use common\models\chat\Chat;
+use api\models\chat\Chat;
 use common\models\chat\ChatDisplaySearch;
 use common\models\User;
 use yii\filters\AccessControl;

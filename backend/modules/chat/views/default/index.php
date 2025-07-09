@@ -26,7 +26,7 @@ $this->params['title'] = $this->title;
                     ?>
                     <a href="javascript:void(0);" style="text-decoration:none" class="chat-box-link" data-url="<?= $url ?>">
                         <?php if($chat->chat_type == 2){?>
-                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; background-color:rgb(245, 240, 240) !important;">
+                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; background-color:rgb(215, 215, 215) !important;">
                             <div class="d-flex align-items-center">
                                 <img src="<?= $chat->user && $chat->user->profile_display_image ? $chat->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
                                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
@@ -45,7 +45,7 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                         <?php } else { ?>
-                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer; background-color:rgb(240, 245, 235) !important;">
+                        <div class="card mb-2 shadow-sm p-2 hover-shadow" style="cursor: pointer;">
                             <div class="d-flex align-items-center">
                                 <img src="<?= $chat->user && $chat->user->profile_display_image ? $chat->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png' ?>"
                                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
