@@ -206,7 +206,7 @@ use kartik\datetime\DateTimePicker;
             </div>
         <?php  } ?>
 
-         <div class="col-lg-9">
+        <div class="col-lg-9">
             <div class="form_boxes mt-2">
                 <label for="">Overview</label>
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
@@ -238,12 +238,15 @@ use kartik\datetime\DateTimePicker;
 
             </div>
         </div> -->
-       
+
     </div>
 </div>
 
 <div class="row pt-2">
-    <div class="col-12">
+    <div class="col-md-8">
+        <?= $form->errorSummary($model, ['class' => 'alert alert-danger', 'header' => '']) ?>
+    </div>
+    <div class="col-lg-4">
         <div class="d-flex gap-3 justify-content-end">
             <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
             <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
@@ -254,15 +257,15 @@ use kartik\datetime\DateTimePicker;
 <?php ActiveForm::end(); ?>
 
 
-<style>
+<!-- <style>
     .ck-editor__editable {
         min-height: 350px;
     }
-</style>
+</style> -->
 <?php
 $script = <<< JS
-editor('packageversionform-package_description');
-editor('packageversionform-package_itinerary_overview');
+// editor('packageversionform-package_description');
+// editor('packageversionform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
