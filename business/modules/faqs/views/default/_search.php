@@ -22,13 +22,25 @@ use yii\widgets\ActiveForm;
             <div class="filters">
 
 
-                <div class="filterItem position-relative">
+                <!-- <div class="filterItem position-relative">
                     <label>Status:</label>
                     <?= $form->field($model, 'status')->dropDownList(
                         GeneralModel::newstatusoption(),
                         [
                             'prompt' => 'Select Status',
                         ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div> -->
+                <div class="filterItem position-relative">
+                    <label>Park:</label>
+                    <?= $form->field($model, 'park_id')->dropDownList(
+                        GeneralModel::operatorpark($safari_operator->id),
+                        [
+                            'prompt' => 'Select Park',
+                            'class' => 'search-border'
+
+                        ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>

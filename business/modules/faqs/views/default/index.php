@@ -52,6 +52,16 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                             return isset($model->answer) ? $model->answer : '' ;
                         }
                     ],
+
+                    [
+                        'label' => 'Park',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->park) ? $model->park->title : '' ;
+                        }
+                    ],
+
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 20%; text-align: left;'],

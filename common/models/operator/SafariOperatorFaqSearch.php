@@ -17,12 +17,13 @@ class SafariOperatorFaqSearch extends SafariOperatorFaq
     public $id;
     public $status;
     public $share_safari_id;
+    public $park_id;
 
 
     public function rules()
     {
         return [
-            [['id','safari_operator_id','status', 'created_at'], 'integer'],
+            [['id','safari_operator_id','park_id','status', 'created_at'], 'integer'],
             // [['question', 'answer'], 'safe'],
         ];
     }
@@ -64,6 +65,7 @@ class SafariOperatorFaqSearch extends SafariOperatorFaq
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
+            'park_id'=>$this->park_id,
             'safari_operator_id'=>$this->safari_operator_id,
         ]);
 
