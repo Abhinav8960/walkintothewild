@@ -20,6 +20,8 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
+use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGallerySearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -938,5 +940,20 @@ class DefaultController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function actionGalleryPopup()
+    {
+        $safari_operator = $this->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['IS NOT', 'live_images', NULL]);
+
+        return $this->renderAjax('_gallery_popup', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

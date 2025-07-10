@@ -7,9 +7,6 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
 
-$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
-
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -97,7 +94,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 'class' => 'form-control'
             ])->label(false) ?>
         </div>
-
+        <div class="form_boxes mb-3">
+            <label for="">Gallery</label>
+            <?= $form->field($model, 'partner_gallery_id')->dropDownList(GeneralModel::liveGallery($safari_operator->id), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
         <!-- <div class="form_boxes mb-3">
             <label for="">Start Date <span>*</span></label>
             <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
@@ -134,7 +134,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="form_boxes mb-3">
-            <label for="">Cost Per Person <span>*</span></label>
+            <label for="">Cost Per One Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
@@ -160,16 +160,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
     <div class="row">
-        <div class="col-lg-3 ">
-            <div class="form_boxes mb-3">
-                <label for="">Gallery
-                </label>
-                <div class="galleryModal d-flex flex-column justify-center align-items-center">
-                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                    <label for="">Attach Gallery</label>
-                </div>
-            </div>
-        </div>
         <?php
         if ($model->package_version_model->package_image) { ?>
             <div class="col-lg-3 ">
@@ -278,21 +268,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <?php ActiveForm::end(); ?>
 
 
-<div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
-
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='gallerymodalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!-- <style>
     .ck-editor__editable {
         min-height: 350px;
@@ -300,15 +275,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 </style> -->
 <?php
 $script = <<< JS
-/
-function organizefunction() {
-	$('.galleryModal').on('click', function () {
-        $('#gallery-modal').modal('show')
-		.find('#gallerymodalContent')
-		.load($(this).attr('value'));
-	});
-}
-organizefunction();
+// editor('packageversionform-package_description');
+// editor('packageversionform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
@@ -350,29 +318,5 @@ $this->registerJs($gst_script);
         pointer-events: none;
         color: #888;
         font-size: 16px;
-    }
-
-    .galleryModal h1 {
-
-        color: red;
-    }
-
-    .form_boxes .galleryModal {
-
-        padding: 35px;
-        font-size: 1.5em;
-        color: #d3e0e9;
-        cursor: pointer;
-        border: 2px dashed #d3e0e9 !important;
-        height: 200px;
-        border-radius: 15px;
-        margin-top: 10px;
-    }
-
-    .galleryModal img {
-
-        margin: auto;
-        width: 30px;
-        object-fit: cover;
     }
 </style>

@@ -6,6 +6,10 @@ use Google\Api\ResourceDescriptor\Style;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 
@@ -94,10 +98,7 @@ use kartik\datetime\DateTimePicker;
                 'class' => 'form-control'
             ])->label(false) ?>
         </div>
-        <div class="form_boxes mb-3">
-            <label for="">Gallery</label>
-            <?= $form->field($model, 'partner_gallery_id')->dropDownList(GeneralModel::liveGallery($safari_operator->id), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
-        </div>
+
         <!-- <div class="form_boxes mb-3">
             <label for="">Start Date <span>*</span></label>
             <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
@@ -134,7 +135,7 @@ use kartik\datetime\DateTimePicker;
             </div>
         </div>
         <div class="form_boxes mb-3">
-            <label for="">Cost Per One Person <span>*</span></label>
+            <label for="">Cost Per Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
@@ -160,6 +161,16 @@ use kartik\datetime\DateTimePicker;
 
 
     <div class="row">
+        <div class="col-lg-3 ">
+            <div class="form_boxes mb-3">
+                <label for="">Gallery
+                </label>
+                <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup']) ?>">
+                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                    <label for="">Attach Gallery</label>
+                </div>
+            </div>
+        </div>
         <?php
         if ($model->package_version_model->package_image) { ?>
             <div class="col-lg-3 ">
@@ -253,6 +264,9 @@ use kartik\datetime\DateTimePicker;
     </div>
 </div>
 
+<?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id'])->label(false) ?>
+
+
 <div class="row pt-2">
     <div class="col-md-8">
         <?= $form->errorSummary($model, ['class' => 'alert alert-danger', 'header' => '']) ?>
@@ -268,15 +282,41 @@ use kartik\datetime\DateTimePicker;
 <?php ActiveForm::end(); ?>
 
 
-<!-- <style>
-    .ck-editor__editable {
-        min-height: 350px;
-    }
-</style> -->
+<div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
+
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='gallerymodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <?php
 $script = <<< JS
-// editor('packageversionform-package_description');
-// editor('packageversionform-package_itinerary_overview');
+
+function galleryfunction() {
+	  $('.galleryModal').on('click', function () {
+        var url = $(this).data('url');
+        var partner_gallery_id = $('#partner_gallery_id').val();
+        var queryparams = "";
+        if(partner_gallery_id != ''){
+        queryparams = "?partner_gallery_id="+partner_gallery_id;
+        }
+        $('#gallery-modal').modal('show')
+            .find('#gallerymodalContent')
+            .load(url+''+queryparams);
+    });
+}
+galleryfunction();
 JS;
 $this->registerJs($script);
 ?>
@@ -305,6 +345,8 @@ JS;
 $this->registerJs($gst_script);
 ?>
 
+
+
 <style>
     .select2-angle-wrapper {
         position: relative;
@@ -318,5 +360,29 @@ $this->registerJs($gst_script);
         pointer-events: none;
         color: #888;
         font-size: 16px;
+    }
+
+    .galleryModal h1 {
+
+        color: red;
+    }
+
+    .form_boxes .galleryModal {
+
+        padding: 35px;
+        font-size: 1.5em;
+        color: #d3e0e9;
+        cursor: pointer;
+        border: 2px dashed #d3e0e9 !important;
+        height: 200px;
+        border-radius: 15px;
+        margin-top: 10px;
+    }
+
+    .galleryModal img {
+
+        margin: auto;
+        width: 30px;
+        object-fit: cover;
     }
 </style>
