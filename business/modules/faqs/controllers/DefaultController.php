@@ -52,6 +52,7 @@ class DefaultController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 

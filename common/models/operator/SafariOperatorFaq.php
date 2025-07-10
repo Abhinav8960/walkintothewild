@@ -42,7 +42,7 @@ class SafariOperatorFaq extends \yii\db\ActiveRecord implements \common\interfac
         return [
             [['safari_operator_id','question', 'answer', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 0],
-            [['safari_oparator_id', 'sequence', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_oparator_id', 'sequence', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','park_id'], 'integer'],
             [['question', 'answer'], 'string', 'max' => 500],
         ];
     }

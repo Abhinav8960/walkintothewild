@@ -13,6 +13,9 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-12">
+                <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($safari_operator->id), ['prompt' => 'Select Park'])->label('Park') ?>
+            </div>
+            <div class="col-md-12">
                 <?= $form->field($model, 'question')->textarea(['rows' => '4', 'placeholder' => 'Question'])->label('Question') ?>
             </div>
             <div class="col-md-12">
