@@ -234,6 +234,7 @@ class DefaultController extends Controller
 
     public function actionItinerary($id, $day = 1)
     {
+        $safari_operator = $this->operatormodel();
         $package_version_model = $this->findModel($id);
 
         $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
@@ -267,6 +268,7 @@ class DefaultController extends Controller
         return $this->render('itinerary', [
             'package_version_model' => $package_version_model,
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 

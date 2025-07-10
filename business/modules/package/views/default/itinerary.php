@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\package\PackageVersion;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
@@ -47,7 +48,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 
                                         <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_version_model->no_of_day])->label(false) ?>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form_boxes mb-3">
                                                     <label for="">Day</label>
                                                     <?= $form->field($model, 'day')->textInput([
@@ -60,7 +61,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                     ])->label(false); ?>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form_boxes mb-3">
                                                     <label for="">Day Title</label>
                                                     <?= $form->field($model, 'day_title')->textInput([
@@ -70,6 +71,12 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                         'class' => 'form-control'
 
                                                     ])->label(false); ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Gallery</label>
+                                                    <?= $form->field($model, 'partner_gallery_id')->dropDownList(GeneralModel::liveGallery($safari_operator->id), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
                                                 </div>
                                             </div>
 
