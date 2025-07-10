@@ -25,7 +25,7 @@ use Yii;
 class SafariOperatorFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
-    use CommanRelationship;
+    // use CommanRelationship;
 
     /**
      * {@inheritdoc}
@@ -72,4 +72,21 @@ class SafariOperatorFaq extends \yii\db\ActiveRecord implements \common\interfac
         {
             return $this->hasOne(SafariPark::className(), ['id' => 'park_id'])->andWhere(['safari_park.status' => 1]);
         }    
+
+
+        public function getNewstatuslabel()
+        {
+            $statuses = GeneralModel::newrecentstatusoption();
+    
+            if (isset($statuses[$this->status])) {
+                if ($this->status == 1) {
+                    return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" style="width: 60px;height: 30px;object-fit: contain;">';
+                } else if ($this->status == 0) {
+                    return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" style="width: 60px;height: 30px;object-fit: contain;">';
+                } else if ($this->status == -1) {
+                    return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" style="width: 60px;height: 30px;object-fit: contain;">';
+                }
+            }
+            return $this->status;
+        }
 }
