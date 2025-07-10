@@ -400,8 +400,11 @@ class DefaultController extends Controller
         $safari_operator = $this->operatormodel();
         $package_version_model = $this->findModel($id);
 
+        $park_array = PackageSafariPark::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version])->select('park_id')->asArray()->column();
+
         $faqList = SafariOperatorFaq::find()
             ->where(['safari_operator_id' => $safari_operator->id])
+            ->andWhere(['park_id' => $park_array])
             ->select(['id', 'question'])
             ->asArray()
             ->all();
