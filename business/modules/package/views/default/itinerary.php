@@ -81,7 +81,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                     <div class="form_boxes mb-3">
                                                         <label for="">Gallery
                                                         </label>
-                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup']) ?>">
+                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_'.$i ?>">
                                                             <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
                                                             <label for="">Attach Gallery</label>
                                                         </div>
@@ -261,7 +261,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                             </div>
                                         </div>
 
-                                        <?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id'])->label(false) ?>
+                                        <?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id_' . $i])->label(false) ?>
 
                                         <?php ActiveForm::end(); ?>
                                     </div>
@@ -300,16 +300,19 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 
 
 
+
 <?php
 $script = <<< JS
 
 function galleryfunction() {
 	  $('.galleryModal').on('click', function () {
         var url = $(this).data('url');
-        var partner_gallery_id = $('#partner_gallery_id').val();
+        var assignment_attr = $(this).attr("data-assignto");
+        var partner_gallery_id = $('#'+assignment_attr).val();
+        console.log(assignment_attr);
         var queryparams = "";
         if(partner_gallery_id != ''){
-        queryparams = "?partner_gallery_id="+partner_gallery_id;
+        queryparams = "&partner_gallery_id="+partner_gallery_id;
         }
         $('#gallery-modal').modal('show')
             .find('#gallerymodalContent')
@@ -320,6 +323,7 @@ galleryfunction();
 JS;
 $this->registerJs($script);
 ?>
+
 
 
 
@@ -355,7 +359,6 @@ $this->registerJs($script);
 
 
 <style>
-
     .galleryModal h1 {
 
         color: red;

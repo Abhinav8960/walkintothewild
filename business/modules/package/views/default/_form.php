@@ -165,7 +165,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="form_boxes mb-3">
                 <label for="">Gallery
                 </label>
-                <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup']) ?>">
+                <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id']) ?>">
                     <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
                     <label for="">Attach Gallery</label>
                 </div>
@@ -285,8 +285,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <div class="modal-header justify-content-center">
+            <div class="modal-header justify-content-space-between">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">OK</span>
+                </button>
 
             </div>
             <div class="modal-body px-2 pt-0">
@@ -309,7 +312,7 @@ function galleryfunction() {
         var partner_gallery_id = $('#partner_gallery_id').val();
         var queryparams = "";
         if(partner_gallery_id != ''){
-        queryparams = "?partner_gallery_id="+partner_gallery_id;
+        queryparams = "&partner_gallery_id="+partner_gallery_id;
         }
         $('#gallery-modal').modal('show')
             .find('#gallerymodalContent')

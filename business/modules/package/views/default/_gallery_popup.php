@@ -14,7 +14,7 @@ $partner_gallery_id = $_REQUEST['partner_gallery_id'] ?? null;
         <?php if ($dataProvider) {
             foreach ($dataProvider->getModels() as $model) { ?>
                 <div class="col-xxl-3 col-xl-3 col-lg-4 md-6 col-12 mb-3">
-                    <div class="galleryCard <?= $partner_gallery_id == $model->id ? 'selected':'' ?>" data-id="<?= $model->id ?>">
+                    <div class="galleryCard <?= $partner_gallery_id == $model->id ? 'selected' : '' ?>" data-id="<?= $model->id ?>">
                         <div class="card p-0 border-0 bg-transparent">
                             <div class="position-relative">
                                 <img src="<?= $model->thumbnail ?>"
@@ -38,20 +38,21 @@ $partner_gallery_id = $_REQUEST['partner_gallery_id'] ?? null;
 
 
 <?php
-$script = <<< JS
-    
-    $(document).on('click', '.galleryCard', function() {
-    const isSelected = $(this).hasClass('selected');
-    $('.galleryCard').removeClass('selected');
+$context = json_encode($context); // safely encode PHP variable for JS
 
-    if (!isSelected) {
-        $(this).addClass('selected');
-        const id = $(this).data('id');
-        $('#partner_gallery_id').val(JSON.stringify(id));
-    } else {
-        $('#partner_gallery_id').val('');
-    }
-});
+$script = <<< JS
+    $(document).on('click', '.galleryCard', function() {
+        var contxt = $context;
+        const isSelected = $(this).hasClass('selected');
+        $('.galleryCard').removeClass('selected');
+        if (!isSelected) {
+            $(this).addClass('selected');
+            const id = $(this).data('id');
+            $('#' + contxt).val(id);
+        } else {
+            $('#' + contxt).val('');
+        }
+    });
 JS;
 $this->registerJs($script);
 ?>
