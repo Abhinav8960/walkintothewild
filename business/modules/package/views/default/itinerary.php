@@ -81,7 +81,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                     <div class="form_boxes mb-3">
                                                         <label for="">Gallery
                                                         </label>
-                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_'.$i ?>">
+                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
                                                             <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
                                                             <label for="">Attach Gallery</label>
                                                         </div>
@@ -287,6 +287,9 @@ $this->title = 'Package : ' . $package_version_model->package_name;
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">OK</span>
+                </button>
 
             </div>
             <div class="modal-body px-2 pt-0">
