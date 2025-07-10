@@ -79,6 +79,7 @@ class DefaultController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 
