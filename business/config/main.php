@@ -37,6 +37,9 @@ return [
         ],
         'gallery' => [
             'class' => 'business\modules\gallery\Module',
+        ],
+        'faqs'=>[
+            'class'=>'business\modules\faqs\Module'
         ]
 
 
