@@ -10,33 +10,48 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="card">
     <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="col-md-12">
+                    <div class="form_boxes mb-3">
+                        <label for="">Park</label>
+                        <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($safari_operator->id), ['prompt' => 'Select Park'])->label(false) ?>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($safari_operator->id), ['prompt' => 'Select Park'])->label('Park') ?>
-            </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'question')->textarea(['rows' => '4', 'placeholder' => 'Question'])->label('Question') ?>
-            </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'answer')->textarea(['rows' => '4', 'placeholder' => 'Answer'])->label('Answer') ?>
-            </div>
-            <?php
-            if (!empty($model->faqs_model->id)) { ?>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--']) ?>
+
+                <div class="col-md-12">
+                    <div class="form_boxes mb-3">
+                        <label for="">Question</label>
+                        <?= $form->field($model, 'question')->textarea(['rows' => '2', 'placeholder' => 'Question', 'class' => 'form-control'])->label(false) ?>
+                    </div>
                 </div>
-            <?php } ?>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'button-created create']) ?>
+
+                <div class="col-lg-12">
+                    <div class="form_boxes mb-3">
+                        <label for="">Answer <span>*</span></label>
+                        <?= $form->field($model, 'answer')->textarea(['rows' => '2', 'placeholder' => 'Answer', 'class' => 'form-control'])->label(false) ?>
+
+                    </div>
                 </div>
+
+                <?php
+                if (!empty($model->faqs_model->id)) { ?>
+                    <div class="col-md-3">
+                        <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--']) ?>
+                    </div>
+                <?php } ?>
+
+
+                <div class="col-12">
+                    <div
+                        class="d-flex gap-3 justify-content-end align-items-center">
+                        <?= Html::submitButton('Create', ['class' => 'button-created create']) ?>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
-
 <?php ActiveForm::end(); ?>

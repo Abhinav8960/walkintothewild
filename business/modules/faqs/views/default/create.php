@@ -1,6 +1,6 @@
 <?php
 $this->title = 'FAQ';
-$this->params['title'] = $this->title;
+// $this->params['title'] = $this->title;
 ?>
 
 
