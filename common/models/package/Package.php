@@ -116,6 +116,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['package_name'], 'string', 'max' => 512],
             ['cancellation_reason', 'required', 'on' => 'reject'],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+            [['discount_in_percentage'], 'default', 'value' => 0.00],
+            [['discount_in_value'], 'default', 'value' => 0.00],
+
 
         ];
     }
