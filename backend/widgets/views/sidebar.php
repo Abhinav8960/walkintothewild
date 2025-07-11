@@ -28,6 +28,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/leads/default/index",
 													)) ? "active" : "" ?>" href="/leads/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Leads</span></a>
 					</li>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/chat",
+														"/chat/default/index",
+													)) ? "active" : "" ?>" href="/chat/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Chat</span></a>
+					</li>
 				<?php } ?>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 

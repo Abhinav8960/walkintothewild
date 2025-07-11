@@ -23,6 +23,14 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
+
+                    [
+                        'label' => 'Partner',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->partner->business_name ?? '';
+                        }
+                    ],
                     [
                         'label' => 'Gallery Name',
                         'format' => 'raw',

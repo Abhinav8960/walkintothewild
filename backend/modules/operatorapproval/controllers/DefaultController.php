@@ -10,6 +10,7 @@ use common\models\operatorregistration\OperatorRegistrationSearch;
 use common\models\partnerregistration\form\PartnerRegistrationForm;
 use common\models\partnerregistration\PartnerRegistration;
 use common\models\partnerregistration\PartnerRegistrationSearch;
+use common\models\RestrictedFiles;
 use PHPUnit\Framework\Constraint\Operator;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -284,22 +285,22 @@ class DefaultController extends Controller
         $safari_operator_model->starting_price = 0;
         $safari_operator_model->is_approved = 1;
 
-        $safari_operator_model->legal_entity_type  = $model->legal_entity_type;
-        $safari_operator_model->legal_entity_whatsapp  = $model->legal_entity_whatsapp;
-        $safari_operator_model->registration_number  = $model->registration_number;
-        $safari_operator_model->registration_copy_upload  = $model->registration_copy_upload;
-        $safari_operator_model->pan_number  = $model->pan_number;
-        $safari_operator_model->pan_upload  = $model->pan_upload;
+        $safari_operator_model->legal_entity_type = $model->legal_entity_type;
+        $safari_operator_model->legal_entity_whatsapp = $model->legal_entity_whatsapp;
+        $safari_operator_model->registration_number = $model->registration_number;
+        $safari_operator_model->registration_copy_upload = $model->registration_copy_upload;
+        $safari_operator_model->pan_number = $model->pan_number;
+        $safari_operator_model->pan_upload = $model->pan_upload;
         // $safari_operator_model->operated_park  = $model->operated_park;
-        $safari_operator_model->billing_mail  = $model->billing_mail;
-        $safari_operator_model->billing_phone  = $model->billing_phone;
-        $safari_operator_model->bank_name  = $model->bank_name;
-        $safari_operator_model->account_holder_name  = $model->account_holder_name;
+        $safari_operator_model->billing_mail = $model->billing_mail;
+        $safari_operator_model->billing_phone = $model->billing_phone;
+        $safari_operator_model->bank_name = $model->bank_name;
+        $safari_operator_model->account_holder_name = $model->account_holder_name;
         $safari_operator_model->account_number = $model->account_number;
-        $safari_operator_model->ifsc_number  = $model->ifsc_number;
-        $safari_operator_model->cancel_check_upload  = $model->cancel_check_upload;
-        $safari_operator_model->owner_name  = $model->owner_name;
-        $safari_operator_model->kyc_phone  = $model->kyc_phone;
+        $safari_operator_model->ifsc_number = $model->ifsc_number;
+        $safari_operator_model->cancel_check_upload = $model->cancel_check_upload;
+        $safari_operator_model->owner_name = $model->owner_name;
+        $safari_operator_model->kyc_phone = $model->kyc_phone;
         $safari_operator_model->kyc_whatsapp = $model->kyc_whatsapp;
         $safari_operator_model->kyc_email = $model->kyc_email;
         $safari_operator_model->kyc_pan = $model->kyc_pan;
@@ -347,7 +348,6 @@ class DefaultController extends Controller
         return $operator ? $operator->id : null;
     }
 
-
     protected function findModel($id)
     {
         if (($model = PartnerRegistration::findOne(['id' => $id])) !== null) {
@@ -386,4 +386,19 @@ class DefaultController extends Controller
             return $this->redirect(['update', 'id' => $model->id]);
         }
     }
+
+    public function actionFileView($filepath, $duration = 1)
+    {
+        $urlParts = parse_url($filepath);
+        $relativePath = ltrim($urlParts['path'], '/');
+
+        if (strpos($relativePath, 'site/files/') === 0) {
+            $relativePath = substr($relativePath, strlen('site/files/'));
+        }
+
+        $expiresAt = new \DateTimeImmutable("+$duration minutes");
+        $url = Yii::$app->rfs->temporaryUrl($relativePath, $expiresAt);
+        return $this->renderAjax('_file_view', ['fileUrl' => $url]);
+    }
+    
 }

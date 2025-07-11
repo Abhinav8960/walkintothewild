@@ -159,4 +159,27 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         return $this->hasOne(User::className(), ['id' => 'sender_id']);
     }
+
+    public function getDisplayLabelUser()
+    {
+        $user = User::find()->where(['id'=>$this->user_id])->one();
+        $userName = $user ? $user->name : '';
+        $userOperator = SafariOperator::find()->where(['user_id' => $user->id])->one();
+        if ($userOperator) {
+            $userName = $userOperator->business_name .' | (Operator)';
+        }
+        return $userName ;
+    }
+
+    public function getDisplayLabelRecipient()
+    {
+        $recipient = User::find()->where(['id'=>$this->recipient_user_id])->one();
+        $recipientName = $recipient ? $recipient->name : '';
+        $recipientOperator = SafariOperator::find()->where(['user_id' =>$recipient->id])->one();
+        if ($recipientOperator) {
+            $recipientName = $recipientOperator->business_name .' | (Operator)';
+        }
+        return $recipientName ;
+    }
+
 }

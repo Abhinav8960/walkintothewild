@@ -25,6 +25,13 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
+                        'label' => 'Partner',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->partner ? $model->partner->business_name : '';
+                        }
+                    ],
+                    [
                         'label' => 'Gallery Name',
                         'format' => 'raw',
                         'value' => function ($model) {

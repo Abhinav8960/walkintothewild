@@ -4,7 +4,7 @@ use common\models\partnerregistration\PartnerRegistration;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Operator Approval';
+$this->title = 'Operator Approval ( ' . $model->brand_name . ' )';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'Update', 'url' => '#'];
 $this->params['title'] = $this->title;
@@ -101,9 +101,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Registration Number :</strong> <?= $model->registration_number ?></p>
                                         <p><strong>Registration File : </strong>
                                         <?php if (!empty($model->registration_copy_upload_path)){?>
-                                            <a href="<?= $model->registration_copy_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->registration_copy_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
@@ -111,9 +111,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>PAN Number : </strong><?= $model->pan_number ?></p>
                                         <p><strong>PAN Card : </strong>
                                         <?php if (!empty($model->pan_upload_path)){?>
-                                            <a href="<?= $model->pan_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->pan_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
@@ -184,9 +184,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>GST Number : </strong><?= $model->partner_model->gstDetail->gst_number ?? '' ?></p>
                                         <p><strong>GST Image : </strong>
                                             <?php if (!empty($model->partner_model->gstDetail->gst_upload_path)){?>
-                                                <a href="<?= $model->partner_model->gstDetail->gst_upload_path ?>" target="_blank">
+                                                <button value="<?= Url::to(['file-view', 'filepath' => $model->partner_model->gstDetail->gst_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                     <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                                </a>
+                                                </button>
                                             <?php } else{ ?>
                                                 <span class="text-muted">No file uploaded</span>
                                             <?php } ?>
@@ -246,9 +246,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Ifsc Code :</strong><?= $model->ifsc_number ?></p>
                                         <p><strong>Cancel Check : </strong>
                                         <?php if (!empty($model->cancel_check_upload_path)){?>
-                                            <a href="<?= $model->cancel_check_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->cancel_check_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
@@ -308,18 +308,18 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>Adhaar Number :</strong> <?= $model->aadhar_number ?></p>
                                         <p><strong>Aadhar Front : </strong>
                                         <?php if (!empty($model->aadhar_front_upload_path)){?>
-                                            <a href="<?= $model->aadhar_front_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_front_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
                                         </p>
                                         <p><strong>Aadhar Back : </strong>
                                         <?php if (!empty($model->aadhar_back_upload_path)){?>
-                                            <a href="<?= $model->aadhar_back_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_back_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
@@ -327,9 +327,9 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
                                         <p><strong>PAN Number : </strong><?= $model->kyc_pan ?></p>
                                         <p><strong>PAN Card : </strong>
                                         <?php if (!empty($model->kyc_pan_upload_path)){?>
-                                            <a href="<?= $model->kyc_pan_upload_path ?>" target="_blank">
+                                            <button value="<?= Url::to(['file-view', 'filepath' => $model->kyc_pan_upload_path]) ?>" class="file-view " style ="border: 0; background-color: transparent;">
                                                 <img src="<?= Yii::getAlias('@web') ?>/img/pdf-file-logo.png" alt="PDF Icon" width="50">
-                                            </a>
+                                            </button>
                                         <?php } else{ ?>
                                             <span class="text-muted">No file uploaded</span>
                                         <?php } ?>
@@ -384,11 +384,34 @@ $this->params['businessDomain'] = Yii::$app->params['businessDomain'];
     </div>
 </div>
 
+<div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Document Preview
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<<JS
 
         \$('.reject-action').on('click', function () {
             \$('#modalReject').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
+     
+    \$('.file-view').on('click', function () {
+            \$('#modalfileview').modal('show')
     \t\t.find('#modalContent')
     \t\t.load(\$(this).attr('value'));
     \t});

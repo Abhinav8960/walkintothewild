@@ -16,8 +16,17 @@ AppAsset::register($this);
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
         <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#09422D;color:#EFF8F5;', 'title' => 'Approved']) ?>
-        <?= Html::a('<i class="fa fa-times" style="font-size:15px; color:#DA2F49 margin-right:5px"></i>Reject', [Url::toRoute(['reject', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#FBE7E8; color:#DA2F49', 'title' => 'Reject']) ?>
-        <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?>
+        <?= Html::button(
+            '<i class="fa fa-times" style="font-size:15px; color:#DA2F49; margin-right:5px;"></i>Reject',
+            [
+                'value' => Url::toRoute(['reject', 'package_id' => $package->package_id, 'version' => $package->version]),
+                'class' => 'btn mt-3 reasonpopup',
+                'style' => 'background-color:#FBE7E8; color:#DA2F49;',
+                'title' => 'Reject'
+            ]
+        ) ?>
+
+        <!-- <?= Html::a('<i class="fa fa-edit" style="font-size:15px; margin-right:5px"></i>Edit', [Url::toRoute(['update', 'id' => $package->id])], ['class' => 'btn mt-3', 'style' => 'background-color:#F48270', 'title' => 'Edit']) ?> -->
     </div>
 </div>
 
@@ -129,6 +138,22 @@ AppAsset::register($this);
 </div>
 
 
+
+<div class="modal fade _standard-text" id="reject-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Reason For Rejection</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='reasonContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -154,9 +179,20 @@ function organizefunction() {
 	});
 }
 organizefunction();
+
+function rejection() {
+	$('.reasonpopup').on('click', function () {
+        $('#reject-modal').modal('show')
+		.find('#reasonContent')
+		.load($(this).attr('value'));
+	});
+}
+rejection();
 JS;
 $this->registerJs($script);
 ?>
+
+
 <style>
     .disclaimer {
         top: 2375px;

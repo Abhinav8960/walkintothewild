@@ -126,6 +126,8 @@ return [
         ],
         'transaction' => [
             'class' => 'backend\modules\transaction\Module',
+        'chat' => [
+            'class' => 'backend\modules\chat\Module',
         ],
 
     ],

@@ -144,7 +144,7 @@ class DefaultController extends Controller
             print_r($e->getMessage());
             die();
             Yii::$app->session->setFlash('error', 'Failed to approve package.');
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['index']);
         }
         $transaction->commit();
 
@@ -184,7 +184,7 @@ class DefaultController extends Controller
                 $package->save(false);
 
                 $model->status = PackageVersion::NOT_APPROVED_STATUS;
-                $model->cancellation_reason = \Yii::$app->request->post('Package')['cancellation_reason'] ?? NULL;
+                $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;
                 $model->save(false);
                 // } catch (\Exception $e) {
                 //     Yii::error($e->getMessage());
@@ -194,7 +194,7 @@ class DefaultController extends Controller
                 // }
                 // $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirect(['index']);
             }
         }
 
