@@ -24,3 +24,9 @@ ALTER TABLE package ADD discount_type INT NOT NULL DEFAULT '0' AFTER editable_ve
 ALTER TABLE package_faq ADD master_faq_id INT NULL DEFAULT NULL AFTER status;
 
 ALTER TABLE safari_operator_faq ADD park_id INT NOT NULL AFTER safari_operator_id;
+
+ALTER TABLE `package` ADD `price_after_discount_in_percentage` DECIMAL(10,2) NULL DEFAULT '0' AFTER `discount_in_value`, ADD `price_after_discount_in_value` DECIMAL(10,2) NULL DEFAULT '0' AFTER `price_after_discount_in_percentage`;
+
+ALTER TABLE `package` CHANGE `price_after_discount_in_percentage` `price_after_discount_in_percentage` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
+
+ALTER TABLE `package` CHANGE `price_after_discount_in_value` `price_after_discount_in_value` DECIMAL(10,2) NOT NULL DEFAULT '0.00';

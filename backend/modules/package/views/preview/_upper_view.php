@@ -3,7 +3,7 @@
 use common\models\GeneralModel;
 
 ?>
-
+<!-- 
 <div class="row">
     <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
@@ -63,7 +63,7 @@ use common\models\GeneralModel;
         </div>
     </div>
 </div>
-
+ -->
 
 <div class="row mt-2">
     <div class="col-12">

@@ -543,32 +543,4 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionPlatformDiscount($package_id, $version)
-    {
-        $package = Package::find()->where(['id' => $package_id, 'pending_for_approval_version' => $version])->one();
-        if (empty($package)) {
-            Yii::$app->session->setFlash('error', 'Package not found.');
-            return $this->redirect(['index']);
-        }
-
-        $model = new PackageDiscountForm($package);
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_discount_model->save(false)) {
-                        Yii::$app->session->setFlash('success', 'Platform Discount Save successfully.');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_platform_discount', [
-                'model' => $model,
-            ]);
-        }
-    }
 }
