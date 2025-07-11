@@ -569,7 +569,7 @@ p {
 
 .packageTabMain .nav-tabs {
   border: none !important;
-  gap: 80px;
+  /* gap: 80px; */
 }
 
 .packageTabMain .nav {
@@ -582,9 +582,9 @@ p {
   margin: 0 !important;
 }
 
-.packageTabMain .nav-item {
+/* .packageTabMain .nav-item {
   width: 0px !important;
-}
+} */
 
 .packageTabMain .nav-item .nav-link {
   padding: 0 !important;
@@ -896,7 +896,7 @@ p {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 15px 20px;
+  padding: 15px 0px;
   background: #f8f9fb;
   border-radius: 8px;
 }
