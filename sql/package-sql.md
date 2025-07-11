@@ -20,3 +20,7 @@ ALTER TABLE package ADD cost_per_two_person DECIMAL(10,2) NULL DEFAULT NULL AFTE
 ALTER TABLE package_day ADD partner_gallery_id INT NULL DEFAULT NULL AFTER day_note, ADD gallery_json JSON NULL DEFAULT NULL AFTER partner_gallery_id;
 
 ALTER TABLE package ADD discount_type INT NOT NULL DEFAULT '0' AFTER editable_version, ADD discount_in_percentage DECIMAL(10,2) NOT NULL DEFAULT '0' AFTER discount_type, ADD discount_in_value DECIMAL(10,2) NOT NULL DEFAULT '0' AFTER discount_in_percentage;
+
+ALTER TABLE package_faq ADD master_faq_id INT NULL DEFAULT NULL AFTER status;
+
+ALTER TABLE safari_operator_faq ADD park_id INT NOT NULL AFTER safari_operator_id;

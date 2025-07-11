@@ -16,6 +16,7 @@ class PackageFaqForm extends \yii\base\Model
     public $package_faq_model;
     public $action_url;
     public $action_validate_url;
+    public $master_faq_id;
 
 
     /**
@@ -32,6 +33,7 @@ class PackageFaqForm extends \yii\base\Model
             $this->version = $this->package_faq_model->version;
             $this->question = $this->package_faq_model->question;
             $this->answer = $this->package_faq_model->answer;
+            $this->master_faq_id = $this->package_faq_model->master_faq_id;
             $this->position = $this->package_faq_model->position;
             $this->status = $this->package_faq_model->status;
         }
@@ -45,6 +47,7 @@ class PackageFaqForm extends \yii\base\Model
             [['answer'], 'string'],
             [['position'], 'default', 'value' => 0],
             [['question','version'], 'string', 'max' => 512],
+            [['master_faq_id'],'integer'],
         ];
     }
 
@@ -59,6 +62,7 @@ class PackageFaqForm extends \yii\base\Model
             'question' => 'Question',
             'answer' => 'Answer',
             'position' => 'Position',
+            'master_faq_id' => 'Master Faq Id',
             'status' => 'Status',
         ];
     }
@@ -71,6 +75,7 @@ class PackageFaqForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->package_faq_model->package_id = $this->package_id;
+        $this->package_faq_model->master_faq_id = $this->master_faq_id;
         $this->package_faq_model->version = $this->version;
         $this->package_faq_model->question = $this->question;
         $this->package_faq_model->answer = $this->answer;

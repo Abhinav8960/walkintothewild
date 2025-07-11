@@ -73,30 +73,23 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                     ])->label(false); ?>
                                                 </div>
                                             </div>
-
+                                            <div class="col-md-4">
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Gallery</label>
+                                                    <?= $form->field($model, 'partner_gallery_id')->dropDownList(GeneralModel::liveGallery($safari_operator->id), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+                                                </div>
+                                            </div>
 
 
                                             <div class="col-lg-12">
-                                                <div class="col-lg-3 ">
-                                                    <div class="form_boxes mb-3">
-                                                        <label for="">Gallery
-                                                        </label>
-                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
-                                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                                                            <label for="">Attach Gallery</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-9">
-                                                    <div class="form_boxes mb-3">
-                                                        <label for="">Overview <span>*</span></label>
-                                                        <?= $form->field($model, 'day_description')->textarea([
-                                                            'rows' => '2',
-                                                            'placeholder' => 'Description Detail',
-                                                            'id' => 'dayitineraryform-day_description' . $i,
-                                                            'class' => 'form-control'
-                                                        ])->label(false) ?>
-                                                    </div>
+                                                <div class="form_boxes mb-3">
+                                                    <label for="">Overview <span>*</span></label>
+                                                    <?= $form->field($model, 'day_description')->textarea([
+                                                        'rows' => '2',
+                                                        'placeholder' => 'Description Detail',
+                                                        'id' => 'dayitineraryform-day_description' . $i,
+                                                        'class' => 'form-control'
+                                                    ])->label(false) ?>
                                                 </div>
                                             </div>
 
@@ -260,9 +253,6 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id_' . $i])->label(false) ?>
-
                                         <?php ActiveForm::end(); ?>
                                     </div>
                                 </div>
@@ -279,59 +269,17 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">OK</span>
-                </button>
-
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='gallerymodalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
+        <style>
+            .ck-editor__editable {
+                min-height: 150px;
+            }
+        </style>
 
 
-
-
-<?php
-$script = <<< JS
-
-function galleryfunction() {
-	  $('.galleryModal').on('click', function () {
-        var url = $(this).data('url');
-        var assignment_attr = $(this).attr("data-assignto");
-        var partner_gallery_id = $('#'+assignment_attr).val();
-        console.log(assignment_attr);
-        var queryparams = "";
-        if(partner_gallery_id != ''){
-        queryparams = "&partner_gallery_id="+partner_gallery_id;
-        }
-        $('#gallery-modal').modal('show')
-            .find('#gallerymodalContent')
-            .load(url+''+queryparams);
-    });
-}
-galleryfunction();
-JS;
-$this->registerJs($script);
-?>
-
-
-
-
-<?php
-$script = <<< JS
+        <?php
+        $script = <<< JS
 $(document).ready(function() {
     // Handle accordion link clicks
     $('.day-accordion-link').on('click', function(e) {
@@ -357,32 +305,5 @@ $(document).ready(function() {
     });
 });
 JS;
-$this->registerJs($script);
-?>
-
-
-<style>
-    .galleryModal h1 {
-
-        color: red;
-    }
-
-    .form_boxes .galleryModal {
-
-        padding: 35px;
-        font-size: 1.5em;
-        color: #d3e0e9;
-        cursor: pointer;
-        border: 2px dashed #d3e0e9 !important;
-        height: 200px;
-        border-radius: 15px;
-        margin-top: 10px;
-    }
-
-    .galleryModal img {
-
-        margin: auto;
-        width: 30px;
-        object-fit: cover;
-    }
-</style>
+        $this->registerJs($script);
+        ?>

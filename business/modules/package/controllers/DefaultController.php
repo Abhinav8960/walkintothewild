@@ -4,6 +4,7 @@ namespace business\modules\package\controllers;
 
 use common\models\master\faq\MasterFaq;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageVersionForm;
@@ -19,8 +20,11 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
+use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGallerySearch;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -395,7 +399,20 @@ class DefaultController extends Controller
 
     public function actionFaq($id)
     {
+        $safari_operator = $this->operatormodel();
         $package_version_model = $this->findModel($id);
+
+        $park_array = PackageSafariPark::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version])->select('park_id')->asArray()->column();
+
+        $faqList = SafariOperatorFaq::find()
+            ->where(['safari_operator_id' => $safari_operator->id])
+            ->andWhere(['park_id' => $park_array])
+            ->select(['id', 'question'])
+            ->asArray()
+            ->all();
+
+        $drop_down_list = ArrayHelper::map($faqList, 'id', 'question');
+
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_version_model->package_id;
         $searchModel->version = $package_version_model->version;
@@ -412,15 +429,6 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->package_faq_model->faq_id = $faq->id;
-                            $model->package_faq_model->save(false);
-                        }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
@@ -436,6 +444,7 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
             'faqs' => $faqs,
             'model' => $model,
+            'drop_down_list' => $drop_down_list,
         ]);
     }
 
@@ -531,15 +540,6 @@ class DefaultController extends Controller
                 $model->initializeForm();
                 if ($faq_model->load($this->request->post())) {
                     if ($model->package_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->package_faq_model->faq_id = $faq->id;
-                            $model->package_faq_model->save(false);
-                        }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
@@ -922,5 +922,39 @@ class DefaultController extends Controller
             return $operator;
         }
         throw new ForbiddenHttpException('You are not Allowed to access this Page');
+    }
+
+
+    public function actionGetMasterFaq($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $faq = SafariOperatorFaq::findOne($id);
+
+        if ($faq) {
+            return [
+                'success' => true,
+                'question' => $faq->question,
+                'answer' => $faq->answer,
+            ];
+        }
+
+        return ['success' => false];
+    }
+
+    public function actionGalleryPopup($context)
+    {
+        $safari_operator = $this->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['IS NOT', 'live_images', NULL]);
+
+        return $this->renderAjax('_gallery_popup', [
+            'dataProvider' => $dataProvider,
+            'context' => $context,
+        ]);
     }
 }

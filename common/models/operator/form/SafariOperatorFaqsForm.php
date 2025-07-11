@@ -15,6 +15,7 @@ class SafariOperatorFaqsForm extends Model
     public $status;
     public $status_option = [];
     public $faqs_model;
+    public $park_id;
 
     public function __construct(SafariOperatorFaq $faqs_model = null, $config = [])
     {
@@ -27,6 +28,7 @@ class SafariOperatorFaqsForm extends Model
             $this->safari_operator_id = $this->faqs_model->safari_operator_id;
             $this->question = $this->faqs_model->question;
             $this->answer = $this->faqs_model->answer;
+            $this->park_id = $this->faqs_model->park_id;
             $this->status = $this->faqs_model->status;
         }
 
@@ -39,8 +41,8 @@ class SafariOperatorFaqsForm extends Model
     public function rules()
     {
         return [
-            [['safari_operator_id','question','answer'], 'required'],
-            [['status'], 'integer'],
+            [['safari_operator_id','question','answer','park_id'], 'required'],
+            [['status','park_id'], 'integer'],
             [['question'], 'string', 'max' => 512],
             [['answer'], 'validateMaxWords', 'params' => ['max' => 100]],
             [['status'], 'default', 'value' => 1],
@@ -78,6 +80,7 @@ class SafariOperatorFaqsForm extends Model
         $this->faqs_model->safari_operator_id = $this->safari_operator_id;
         $this->faqs_model->question = $this->question;
         $this->faqs_model->answer = $this->answer;
+        $this->faqs_model->park_id = $this->park_id;
         $this->faqs_model->status = $this->status;
     }
 }
