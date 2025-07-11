@@ -14,7 +14,7 @@ $partner_gallery_id = $_REQUEST['partner_gallery_id'] ?? null;
         <?php if ($dataProvider) {
             foreach ($dataProvider->getModels() as $model) { ?>
                 <div class="col-xxl-3 col-xl-3 col-lg-4 md-6 col-12 mb-3">
-                    <div class="galleryCard <?= $partner_gallery_id == $model->id ? 'selected' : '' ?>" data-id="<?= $model->id ?>">
+                    <div class="galleryCard <?= $partner_gallery_id == $model->id ? 'selected' : '' ?>" data-id="<?= $model->id ?>" data-src="<?= $model->thumbnail ?>">
                         <div class="card p-0 border-0 bg-transparent">
                             <div class="position-relative">
                                 <img src="<?= $model->thumbnail ?>"
@@ -39,18 +39,26 @@ $partner_gallery_id = $_REQUEST['partner_gallery_id'] ?? null;
 
 <?php
 $context = json_encode($context); // safely encode PHP variable for JS
+$preview = json_encode($preview); // safely encode PHP variable for JS
 
 $script = <<< JS
     $(document).on('click', '.galleryCard', function() {
         var contxt = $context;
+        var preview = $preview;
         const isSelected = $(this).hasClass('selected');
         $('.galleryCard').removeClass('selected');
         if (!isSelected) {
             $(this).addClass('selected');
             const id = $(this).data('id');
+            const thumbnail = $(this).data('src');
             $('#' + contxt).val(id);
+            $('#' + preview).attr('src', thumbnail);
+             $('#' + preview).closest('.galleryModal').find('.fadeImage').show();
         } else {
             $('#' + contxt).val('');
+            $('#' + preview).attr('src', '');
+            $('#' + preview).closest('.galleryModal').find('.fadeImage').hide();
+
         }
     });
 JS;

@@ -942,7 +942,7 @@ class DefaultController extends Controller
         return ['success' => false];
     }
 
-    public function actionGalleryPopup($context)
+    public function actionGalleryPopup($context,$preview)
     {
         $safari_operator = $this->operatormodel();
         $searchModel = new PartnerGallerySearch();
@@ -955,6 +955,7 @@ class DefaultController extends Controller
         return $this->renderAjax('_gallery_popup', [
             'dataProvider' => $dataProvider,
             'context' => $context,
+            'preview' => $preview
         ]);
     }
 }
