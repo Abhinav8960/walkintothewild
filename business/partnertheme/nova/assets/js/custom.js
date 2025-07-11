@@ -82,21 +82,22 @@ $(document).on("change", ".uploadProfileInput", function () {
     }
   });
 
-  jQuery(($) => {
-    $('.attachment input[type="file"]')
-      .on('change', (event) => {
-      let el = $(event.target).closest('.attachment').find('.btn-file');
-      
-      el
-        .find('.btn-file__actions__item')
-        .css({
-          'padding': '135px'
-        });
-      
-      el
-        .find('.btn-file__preview')
-        .css({
-          'background-image': 'url(' + window.URL.createObjectURL(event.target.files[0]) + ')'
-        });
+ jQuery(($) => {
+    $('.attachment input[type="file"]').on('change', (event) => {
+        let file = event.target.files[0];
+        if (!file) return;
+
+        // Optional: Adjust the button padding if needed
+        let el = $(event.target).closest('.attachment').find('.btn-file');
+        // el.find('.btn-file__actions__item').css({ 'padding': '135px' });
+
+        // Set preview in external image tag
+        if (file.type.startsWith('image/')) {
+            let previewUrl = URL.createObjectURL(file);
+            $('#imagePreviewBottom').attr('src', previewUrl).show();
+        } else {
+            $('#imagePreviewBottom').hide();
+        }
     });
-  });
+});
+ 

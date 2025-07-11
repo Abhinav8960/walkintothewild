@@ -225,7 +225,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="form-group mt-2">
                                         <label for="fileField" class="attachment">
                                             <div class="row btn-file">
-                                                <div class="btn-file__preview"></div>
                                                 <div class="btn-file__actions">
                                                     <div
                                                         class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
@@ -243,8 +242,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12" style="margin-top:35px;">
-                                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px"></img>'; ?>
+
+                            <div class="external-preview mt-2">
+                                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px" id="imagePreviewBottom"></img>'; ?>
+                                <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
                             </div>
                         </div>
                     </div>
@@ -253,18 +254,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="row">
                             <div class="col-lg-12 ">
                                 <div class="form_boxes mb-3">
-                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
-                                    </label>
+                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)</label>
                                     <div class="form-group mt-2">
                                         <label for="fileField1" class="attachment">
                                             <div class="row btn-file">
-                                                <div class="btn-file__preview"></div>
                                                 <div class="btn-file__actions">
-                                                    <div
-                                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                                    <div class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
                                                         <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                                aria-hidden="true"></i>
+                                                            <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true"></i>
                                                             <div class="visible-xs-block"></div>
                                                             Select file
                                                         </div>
@@ -274,6 +271,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField1"])->label(false) ?>
                                         </label>
                                     </div>
+                                </div>
+
+                                <div class="external-preview mt-2">
+                                    <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
                                 </div>
                             </div>
                         </div>
