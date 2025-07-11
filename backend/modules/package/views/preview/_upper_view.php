@@ -173,14 +173,34 @@ use common\models\GeneralModel;
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
-                        <div class="pakageCost mb-xxl-0 mb-2">
-                            <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
-                        </div>
-                        <div class="btn-delet float-end py-2">
-                            <!-- <a style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" href="<?= \yii\helpers\Url::toRoute(['/package/preview/update', 'id' => $package->id]) ?>"><i class="fas fa-check me-1"></i>Mark Package As Pouplar</a>
-                            <button class="btn_userarticle" style="background:red !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-trash me-1"></i>Delete</button> -->
-                        </div>
+                        <div class="pakageCost mb-xxl-0 mb-2 d-flex">
+                            <?php if ($package->price_after_discount_in_percentage > 1 || $package->price_after_discount_in_value > 1): ?>
+                                
+                                    <h6 class="fs-6 text-muted mb-1">
+                                        <del>
+                                            <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="16px" class="me-1 mb-1">
+                                            <?= GeneralModel::number_format_indian($package->total_price) ?> / <span class="perpersonText">Per Person</span>
+                                        </del>
+                                    </h6>
 
+                                  
+                                    <h6 class="fs-4 mb-0 fw-bold text-danger">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
+                                        <?= GeneralModel::number_format_indian(
+                                            $package->price_after_discount_in_percentage > 1
+                                                ? $package->price_after_discount_in_percentage
+                                                : $package->price_after_discount_in_value
+                                        ) ?> / <span class="perpersonText">Per Person</span>
+                                    </h6>
+                               
+                            <?php else: ?>
+                                <h6 class="fs-4 mb-0 fw-bold">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1">
+                                    <?= GeneralModel::number_format_indian($package->total_price) ?> / <span class="perpersonText">Per Person</span>
+                                </h6>
+                            <?php endif; ?>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -220,8 +240,8 @@ use common\models\GeneralModel;
 </div>
 
 <style>
-.banner_image{
-    height: 220px !important;
-    object-fit: cover !important;
-}
+    .banner_image {
+        height: 220px !important;
+        object-fit: cover !important;
+    }
 </style>
