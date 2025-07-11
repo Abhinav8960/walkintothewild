@@ -329,7 +329,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header justify-content-space-between">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
+                <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Gallery</h1>
                 <button type="button" class="btn" style="background-color:#152f1b; color:#fff;" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">OK</span>
                 </button>
