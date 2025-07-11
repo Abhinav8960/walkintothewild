@@ -144,7 +144,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
-            <label for="">Cost Per 2 Person</label>
+            <label for="">Cost Per 2 Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_two_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
