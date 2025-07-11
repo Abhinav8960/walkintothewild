@@ -19,7 +19,7 @@ use yii\bootstrap5\Breadcrumbs;
         ]) ?> -->
     </div>
 
-    <div class="pb-4">
+    <div class="pb-0">
         <?php
         if ($buttons) {
             foreach ($buttons as $button) {
