@@ -100,7 +100,7 @@ class DefaultController extends RestController
 
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
-        $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'].'/_payment';
+        $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
         $this->storePayu($lead_partner_quotes_id,  $store);
@@ -224,10 +224,10 @@ class DefaultController extends RestController
      */
     private function encryptCCAvenueData($data, $workingKey)
     {
-        $merchant_data='';
+        $merchant_data = '';
 
-        foreach ($data as $key => $value){
-            $merchant_data.=$key.'='.$value.'&';
+        foreach ($data as $key => $value) {
+            $merchant_data .= $key . '=' . $value . '&';
         }
 
         $key = $this->hextobin(md5($workingKey));
@@ -257,38 +257,33 @@ class DefaultController extends RestController
         // return $encryptedData;
     }
 
-    private function decryptCCAvenueData($encryptedText,$key)
+    private function decryptCCAvenueData($encryptedText, $key)
     {
         $key = $this->hextobin(md5($key));
         $initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
-        $encryptedText = hextobin($encryptedText);
+        $encryptedText = $this->hextobin($encryptedText);
         $decryptedText = openssl_decrypt($encryptedText, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $initVector);
         return $decryptedText;
     }
 
-    private function hextobin($hexString) 
-    { 
-       $length = strlen($hexString); 
-       $binString="";   
-       $count=0; 
-       while($count<$length) 
-       {       
-           $subString =substr($hexString,$count,2);           
-           $packedString = pack("H*",$subString); 
-           if ($count==0)
-           {
-               $binString=$packedString;
-           } 
-           
-           else 
-           {
-               $binString.=$packedString;
-           } 
-           
-           $count+=2; 
-       } 
-           return $binString; 
-     } 
+    private function hextobin($hexString)
+    {
+        $length = strlen($hexString);
+        $binString = "";
+        $count = 0;
+        while ($count < $length) {
+            $subString = substr($hexString, $count, 2);
+            $packedString = pack("H*", $subString);
+            if ($count == 0) {
+                $binString = $packedString;
+            } else {
+                $binString .= $packedString;
+            }
+
+            $count += 2;
+        }
+        return $binString;
+    }
 
     private function storePayu($lead_partner_quotes_id, $data = [])
     {
@@ -471,7 +466,7 @@ class DefaultController extends RestController
         }
 
         if (isset($model->lead->package_id)) {
-            $title = "Package:" . $model->lead->package->package_name;
+            $title = "Package - " . $model->lead->package->package_name;
         } else {
             $title = "Customer safari enquiry - " . $model->park_label;
         }
@@ -540,7 +535,7 @@ class DefaultController extends RestController
 
 
         if (isset($quotation->lead->package_id)) {
-            $title = "Package:" . $quotation->lead->package->package_name;
+            $title = "Package - " . $quotation->lead->package->package_name;
         } else {
             $title = "Customer safari enquiry - " . $quotation->park_label;
         }

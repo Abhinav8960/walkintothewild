@@ -327,6 +327,7 @@ class PaymentResponseController extends Controller
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_model->id;
         $chat_message->message = $message;
+        $chat_message->is_system_generated = 1;
         // $chat_message->is_quotation_message = false;
         // $chat_message->quotation_id = $quotation->id;
         // $chat_message->is_quotation_active = false;

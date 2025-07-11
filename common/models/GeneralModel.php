@@ -2115,7 +2115,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $text;
     }
 
-<<<<<<< HEAD
     public static function packageversionstatusoption()
     {
         return [
@@ -2139,7 +2138,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         // return $pdfFilePath;
     }
-=======
     public static function chattype($type)
     {
         $types = [
@@ -2150,5 +2148,4 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $types[$type] ?? '';
     }
     
->>>>>>> main
 }

@@ -64,3 +64,5 @@ ALTER TABLE `booking` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER
 ALTER TABLE `lead` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
 ALTER TABLE `lead_partner_quotes` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
 ALTER TABLE `lead_partner_quote_installments` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
+
+ALTER TABLE `chat_message` ADD `is_system_generated` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_edited`;
