@@ -134,6 +134,7 @@ class DefaultController extends Controller
             $package->max_booking_date = $model->max_booking_date;
             $package->partner_gallery_id = $model->partner_gallery_id;
             $package->gallery_json = $model->gallery_json;
+            $package->price_after_discount = $model->cost_per_person;
             $package->status = Package::STATUS_ACTIVE;
             $package->save(false);
 

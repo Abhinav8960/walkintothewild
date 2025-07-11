@@ -30,3 +30,6 @@ ALTER TABLE `package` ADD `price_after_discount_in_percentage` DECIMAL(10,2) NUL
 ALTER TABLE `package` CHANGE `price_after_discount_in_percentage` `price_after_discount_in_percentage` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
 
 ALTER TABLE `package` CHANGE `price_after_discount_in_value` `price_after_discount_in_value` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
+
+ALTER TABLE `package` DROP `price_after_discount_in_value`;
+ALTER TABLE `package` CHANGE `price_after_discount_in_percentage` `price_after_discount` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
