@@ -127,6 +127,7 @@
                          </div>
                      </div>
                  <?php } elseif ($chat_message->is_system_generated == 1) { ?>
+                    
                      <div class="d-flex justify-content-center m-2">
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-3">
