@@ -2,6 +2,7 @@
 
 
 use common\models\GeneralModel;
+use common\models\partnergallery\PartnerGallery;
 use Google\Api\ResourceDescriptor\Style;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
@@ -161,16 +162,47 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
     <div class="row">
-        <div class="col-lg-3 ">
-            <div class="form_boxes mb-3">
-                <label for="">Gallery
-                </label>
-                <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id']) ?>">
-                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                    <label for="">Attach Gallery</label>
+        <?php
+        if ($model->package_version_model->partner_gallery_id) { ?>
+            <div class="col-lg-3 ">
+                <div class="form_boxes mb-3">
+                    <label for="">Gallery
+                    </label>
+                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
+                        <div class="w-100 h-100 fadeImage">
+                            <img src="" class="selectImage" alt="" id="preview">
+                        </div>
+                        <div class="displayImage d-flex flex-column gap-2">
+                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                            <label for="">Attach Gallery</label>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-3" style="margin-top:35px;">
+                <?php
+                $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_version_model->partner_gallery_id])->limit(1)->one();
+                echo '<img src="' . $thumbnail_path->thumbnail . '" width="200px" height="200px"></img>'; ?>
+            </div>
+        <?php } else { ?>
+            <div class="col-lg-3 ">
+                <div class="form_boxes mb-3">
+                    <label for="">Gallery
+                    </label>
+                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
+                        <div class="w-100 h-100 fadeImage">
+                            <img src="" class="selectImage" alt="" id="preview">
+                        </div>
+                        <div class="displayImage d-flex flex-column gap-2">
+                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                            <label for="">Attach Gallery</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <?php  } ?>
         <?php
         if ($model->package_version_model->package_image) { ?>
             <div class="col-lg-3 ">
@@ -387,5 +419,24 @@ $this->registerJs($gst_script);
         margin: auto;
         width: 30px;
         object-fit: cover;
+    }
+
+    .galleryModal .selectImage {
+
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .displayImage {
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .fadeImage {
+        display: none;
     }
 </style>

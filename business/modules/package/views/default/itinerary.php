@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use common\models\package\PackageVersion;
+use common\models\partnergallery\PartnerGallery;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
@@ -77,16 +78,47 @@ $this->title = 'Package : ' . $package_version_model->package_name;
 
 
                                             <div class="col-lg-12">
-                                                <div class="col-lg-3 ">
-                                                    <div class="form_boxes mb-3">
-                                                        <label for="">Gallery
-                                                        </label>
-                                                        <div class="galleryModal d-flex flex-column justify-center align-items-center" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
-                                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                                                            <label for="">Attach Gallery</label>
+                                                <div class="row">
+                                                <?php
+                                                if ($model->package_day_model->partner_gallery_id) { ?>
+                                                    <div class="col-lg-3 ">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Gallery
+                                                            </label>
+                                                            <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>">
+                                                                <div class="w-100 h-100 fadeImage">
+                                                                    <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
+                                                                </div>
+                                                                <div class="displayImage d-flex flex-column gap-2">
+                                                                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                                                    <label for="">Attach Gallery</label>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <div class="col-lg-3" style="margin-top:35px;">
+                                                        <?php
+                                                        $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_day_model->partner_gallery_id])->limit(1)->one();
+                                                        echo '<img src="' . $thumbnail_path->thumbnail . '" width="200px" height="200px"></img>'; ?>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="col-lg-3 ">
+                                                        <div class="form_boxes mb-3">
+                                                            <label for="">Gallery
+                                                            </label>
+                                                            <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
+                                                                <div class="w-100 h-100 fadeImage">
+                                                                    <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
+                                                                </div>
+                                                                <div class="displayImage d-flex flex-column gap-2">
+                                                                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                                                    <label for="">Attach Gallery</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php  } ?>
                                                 <div class="col-lg-9">
                                                     <div class="form_boxes mb-3">
                                                         <label for="">Overview <span>*</span></label>
@@ -98,6 +130,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                         ])->label(false) ?>
                                                     </div>
                                                 </div>
+                                                        </div>
                                             </div>
 
 
@@ -369,7 +402,7 @@ $this->registerJs($script);
 
     .form_boxes .galleryModal {
 
-        padding: 35px;
+        /* padding: 35px; */
         font-size: 1.5em;
         color: #d3e0e9;
         cursor: pointer;
@@ -384,5 +417,24 @@ $this->registerJs($script);
         margin: auto;
         width: 30px;
         object-fit: cover;
+    }
+
+     .galleryModal .selectImage {
+
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .displayImage {
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .fadeImage {
+        display: none;
     }
 </style>
