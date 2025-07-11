@@ -92,7 +92,7 @@ class PaymentResponseController extends Controller
 
         $transaction = \common\models\transaction\Transaction::find()->where(['reference_id' => $data['udf1']])->one();
         // $message = "Payment Failed";
-        $message = "Unfortunately, your transaction could not be completed.\n Please try again or use a different payment method.";
+        $message = "Unfortunately, your transaction could not be completed.\n Please try again or use a different transaction method.";
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
