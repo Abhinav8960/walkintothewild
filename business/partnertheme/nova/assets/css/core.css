@@ -2,8 +2,8 @@
 
 @font-face {
   font-family: "Devator Exp";
-  src: url("/assets/fonts/Devator-BoldExpanded.ttf");
-  src: url("/assets/fonts/Devator-BoldExpanded.ttf");
+  src: url("../fonts/Devator-BoldExpanded.ttf");
+  src: url("../fonts/Devator-BoldExpanded.ttf");
 }
 
 /* @font-face {
@@ -411,9 +411,7 @@ p {
 
 .safrititles h2 {
   color: #09422d;
-      text-transform: uppercase;
       font-size: 26px;
-      font-weight: 700;
 }
 
 .titler_safari {
