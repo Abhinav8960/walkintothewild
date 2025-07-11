@@ -92,12 +92,12 @@ class PaymentResponseController extends Controller
 
         $transaction = \common\models\transaction\Transaction::find()->where(['reference_id' => $data['udf1']])->one();
         // $message = "Payment Failed";
-        $message = "Unfortunately, your transaction could not be completed. Please try again or use a different payment method.";
+        $message = "Unfortunately, your transaction could not be completed.\n Please try again or use a different payment method.";
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
                 // $message = "Payment Received";
-                $message = "Your transaction was completed successfully. Booking details have been sent to your registered email.";
+                $message = "Your transaction was completed successfully.\n Booking details have been sent to your registered email.";
             } elseif (strtolower($data['status']) == 'failure') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_FAILED;
             } elseif (strtolower($data['status']) == 'pending') {
