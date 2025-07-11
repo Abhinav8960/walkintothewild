@@ -343,7 +343,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="modal-content">
             <div class="modal-header justify-content-space-between">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn" style="background-color:#152f1b; color:#fff;" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">OK</span>
                 </button>
 
