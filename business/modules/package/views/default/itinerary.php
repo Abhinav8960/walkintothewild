@@ -75,67 +75,74 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    if ($model->package_day_model->partner_gallery_id) { ?>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 ">
+                                                                <div class="form_boxes mb-3">
+                                                                    <label for="">Gallery
+                                                                    </label>
+                                                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>">
 
+                                                                        <div class="displayImage d-flex flex-column gap-2">
+                                                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                                                            <label for="">Attach Gallery</label>
+                                                                        </div>
 
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                <?php
-                                                if ($model->package_day_model->partner_gallery_id) { ?>
-                                                    <div class="col-lg-3 ">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Gallery
-                                                            </label>
-                                                            <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>">
-                                                                <div class="w-100 h-100 fadeImage">
-                                                                    <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
-                                                                </div>
-                                                                <div class="displayImage d-flex flex-column gap-2">
-                                                                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                                                                    <label for="">Attach Gallery</label>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3" style="margin-top:35px;">
-                                                        <?php
-                                                        $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_day_model->partner_gallery_id])->limit(1)->one();
-                                                        echo '<img src="' . $thumbnail_path->thumbnail . '" width="200px" height="200px"></img>'; ?>
-                                                    </div>
-                                                <?php } else { ?>
-                                                    <div class="col-lg-3 ">
-                                                        <div class="form_boxes mb-3">
-                                                            <label for="">Gallery
-                                                            </label>
-                                                            <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
-                                                                <div class="w-100 h-100 fadeImage">
-                                                                    <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
-                                                                </div>
-                                                                <div class="displayImage d-flex flex-column gap-2">
-                                                                    <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                                                                    <label for="">Attach Gallery</label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-lg-12" style="margin-top:35px;">
+                                                                <?php
+                                                                $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_day_model->partner_gallery_id])->limit(1)->one();
+                                                                ?>
+                                                                <img src="<?= $thumbnail_path->thumbnail ?>" width="200px" height="200px" class="selectImage" id="<?= 'preview_' . $i ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                <?php  } ?>
-                                                <div class="col-lg-9">
-                                                    <div class="form_boxes mb-3">
-                                                        <label for="">Overview <span>*</span></label>
-                                                        <?= $form->field($model, 'day_description')->textarea([
-                                                            'rows' => '2',
-                                                            'placeholder' => 'Description Detail',
-                                                            'id' => 'dayitineraryform-day_description' . $i,
-                                                            'class' => 'form-control'
-                                                        ])->label(false) ?>
-                                                    </div>
+                                                    <?php } else { ?>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 ">
+                                                                <div class="form_boxes mb-3">
+                                                                    <label for="">Gallery
+                                                                    </label>
+                                                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
+                                                                        <div class="w-100 h-100 fadeImage">
+                                                                            <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
+                                                                        </div>
+                                                                        <div class="displayImage d-flex flex-column gap-2">
+                                                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                                                            <label for="">Attach Gallery</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="checkModal">
+                                                                <div class="col-lg-12 fadeImage" style="margin-top:35px;">
+                                                                    <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>" style=" width: 100%; height: 100%; object-fit: contain;" ;>
+                                                                </div>
+                                                            </div>
+                                                        <?php  } ?>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="form_boxes mb-3">
+                                                                <label for="">Overview <span>*</span></label>
+                                                                <?= $form->field($model, 'day_description')->textarea([
+                                                                    'rows' => '2',
+                                                                    'placeholder' => 'Description Detail',
+                                                                    'id' => 'dayitineraryform-day_description' . $i,
+                                                                    'class' => 'form-control'
+                                                                ])->label(false) ?>
+                                                            </div>
+                                                        </div>
                                                 </div>
-                                                        </div>
-                                            </div>
 
 
-                                            <?php if (false) { ?>
-                                                <!-- <div class="row">
+
+
+                                                <?php if (false) { ?>
+                                                    <!-- <div class="row">
                                                 <div class="col-lg-2">
                                                     <div class="row">
                                                         <?php if ($model->package_day_model->day_image) { ?>
@@ -286,59 +293,59 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                 </div>
 
                                             </div> -->
-                                            <?php } ?>
-                                            <div class="col-lg-12">
-                                                <div class="form-group float-end">
-                                                    <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                                                <?php } ?>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group float-end">
+                                                        <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id_' . $i])->label(false) ?>
+
+                                            <?php ActiveForm::end(); ?>
                                         </div>
-
-                                        <?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id_' . $i])->label(false) ?>
-
-                                        <?php ActiveForm::end(); ?>
                                     </div>
                                 </div>
-                            </div>
-                            <?php
-                            $script = <<< JS
+                                <?php
+                                $script = <<< JS
                             // editor('dayitineraryform-day_description{$i}');
                             JS;
-                            $this->registerJs($script);
-                            ?>
-                        <?php } ?>
+                                $this->registerJs($script);
+                                ?>
+                            <?php } ?>
 
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header justify-content-space-between">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">OK</span>
-                </button>
+    <div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header justify-content-space-between">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Gallery</h1>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">OK</span>
+                    </button>
 
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='gallerymodalContent'></div>
+                </div>
+                <div class="modal-body px-2 pt-0">
+                    <div id='gallerymodalContent'></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
 
 
 
-<?php
-$script = <<< JS
+    <?php
+    $script = <<< JS
 
 function galleryfunction() {
 	  $('.galleryModal').on('click', function () {
@@ -357,14 +364,14 @@ function galleryfunction() {
 }
 galleryfunction();
 JS;
-$this->registerJs($script);
-?>
+    $this->registerJs($script);
+    ?>
 
 
 
 
-<?php
-$script = <<< JS
+    <?php
+    $script = <<< JS
 $(document).ready(function() {
     // Handle accordion link clicks
     $('.day-accordion-link').on('click', function(e) {
@@ -390,51 +397,51 @@ $(document).ready(function() {
     });
 });
 JS;
-$this->registerJs($script);
-?>
+    $this->registerJs($script);
+    ?>
 
 
-<style>
-    .galleryModal h1 {
+    <style>
+        .galleryModal h1 {
 
-        color: red;
-    }
+            color: red;
+        }
 
-    .form_boxes .galleryModal {
+        .form_boxes .galleryModal {
 
-        /* padding: 35px; */
-        font-size: 1.5em;
-        color: #d3e0e9;
-        cursor: pointer;
-        border: 2px dashed #d3e0e9 !important;
-        height: 200px;
-        border-radius: 15px;
-        margin-top: 10px;
-    }
+            /* padding: 35px; */
+            font-size: 1.5em;
+            color: #d3e0e9;
+            cursor: pointer;
+            border: 2px dashed #d3e0e9 !important;
+            height: 200px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
 
-    .galleryModal img {
+        .galleryModal img {
 
-        margin: auto;
-        width: 30px;
-        object-fit: cover;
-    }
+            margin: auto;
+            width: 30px;
+            object-fit: cover;
+        }
 
-     .galleryModal .selectImage {
+        .galleryModal .selectImage {
 
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-    .displayImage {
+        .displayImage {
 
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-    .fadeImage {
-        display: none;
-    }
-</style>
+        .fadeImage {
+            display: none;
+        }
+    </style>
