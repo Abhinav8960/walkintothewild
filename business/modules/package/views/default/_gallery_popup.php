@@ -53,11 +53,11 @@ $script = <<< JS
             const thumbnail = $(this).data('src');
             $('#' + contxt).val(id);
             $('#' + preview).attr('src', thumbnail);
-             $('#' + preview).closest('.galleryModal').find('.fadeImage').show();
+             $('#' + preview).closest('.checkModal').find('.fadeImage').show();
         } else {
             $('#' + contxt).val('');
             $('#' + preview).attr('src', '');
-            $('#' + preview).closest('.galleryModal').find('.fadeImage').hide();
+            $('#' + preview).closest('.checkModal').find('.fadeImage').hide();
 
         }
     });

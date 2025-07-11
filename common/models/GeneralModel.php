@@ -2070,4 +2070,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $live_gallery = PartnerGallery::find()->where(['safari_operator_id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->andWhere(['IS NOT', 'live_images', NULL]);
         return ArrayHelper::map($live_gallery->all(), 'id', 'title');
     }
+    public static function chattype($type)
+    {
+        $types = [
+            1 => 'Direct Chat',
+            2 => 'Operator Quote Chat',
+        ];
+
+        return $types[$type] ?? '';
+    }
+    
 }

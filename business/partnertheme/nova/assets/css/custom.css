@@ -1,3 +1,12 @@
+
+.packageTitle h2{
+
+  font-family: "Roboto", sans-serif !important;
+  font-size: 18px;
+  font-weight: 700;
+  color: #152F1B;
+}
+
 .tablecustoms {
   border-spacing: inherit;
 }

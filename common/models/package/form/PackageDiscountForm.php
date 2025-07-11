@@ -13,7 +13,9 @@ class PackageDiscountForm extends model
     public $discount_type;
     public $discount_in_percentage;
     public $discount_in_value;
+    public $price_after_discount;
     public $package_discount_model;
+    public $cost_per_person;
 
 
     public function __construct(?Package $package_discount_model = null)
@@ -30,6 +32,8 @@ class PackageDiscountForm extends model
             $this->discount_type              =  $this->package_discount_model->discount_type;
             $this->discount_in_percentage     =  $this->package_discount_model->discount_in_percentage;
             $this->discount_in_value          =  $this->package_discount_model->discount_in_value;
+            $this->price_after_discount     =  $this->package_discount_model->price_after_discount;
+            $this->cost_per_person          =  $this->package_discount_model->cost_per_person;
         }
     }
 
@@ -41,7 +45,7 @@ class PackageDiscountForm extends model
     {
         return [
             [['discount_type'], 'required'],
-            [['discount_type', 'discount_in_percentage'], 'number'],
+            [['discount_type', 'discount_in_percentage', 'price_after_discount', 'cost_per_person'], 'number'],
             [
                 'discount_in_percentage',
                 'required',
@@ -63,7 +67,7 @@ class PackageDiscountForm extends model
                 return $('#discount_type').val() == '2';
             }"
             ],
-            [['discount_in_percentage'], 'default', 'value' => 0.00],
+            [['discount_in_percentage', 'price_after_discount'], 'default', 'value' => 0.00],
             [['discount_in_value'], 'default', 'value' => 0.00],
         ];
     }
@@ -86,8 +90,18 @@ class PackageDiscountForm extends model
      */
     public function initializeForm()
     {
+
         $this->package_discount_model->discount_type = $this->discount_type;
         $this->package_discount_model->discount_in_percentage = $this->discount_in_percentage;
         $this->package_discount_model->discount_in_value = $this->discount_in_value;
+
+        if ($this->discount_in_percentage > 0) {
+            $this->package_discount_model->price_after_discount =
+                $this->cost_per_person - ($this->cost_per_person * ($this->discount_in_percentage / 100));
+        }
+        if ($this->discount_in_value > 0) {
+            $this->package_discount_model->price_after_discount =
+                $this->package_discount_model->cost_per_person - $this->discount_in_value;
+        }
     }
 }

@@ -124,6 +124,9 @@ return [
         'gallery' => [
             'class' => 'backend\modules\gallery\Module',
         ],
+        'chat' => [
+            'class' => 'backend\modules\chat\Module',
+        ],
 
     ],
     'components' => [

@@ -62,6 +62,14 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         },
                     ],
                     [
+                        'label' => 'Mobile Number',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->mobile_no) ? $model->mobile_no : '';
+                        }
+                    ],
+                    [
                         'label' => 'Mobile Verified User',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',

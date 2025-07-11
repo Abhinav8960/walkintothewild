@@ -100,19 +100,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ])->label(false) ?>
         </div>
 
-        <!-- <div class="form_boxes mb-3">
-            <label for="">Start Date <span>*</span></label>
-            <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
-        </div> -->
-        <!-- <div class="form_boxes mb-3">
-            <label for="">End Date <span>*</span></label>
-            <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
-        </div> -->
-
-    </div>
-
-
-    <div class="row row-cols-md-3 row-cols-lg-5">
         <div class="form_boxes mb-3">
             <label for="">Stay Category<span>*</span></label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
@@ -135,8 +122,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <i class="fa fa-angle-down select2-angle-icon"></i>
             </div>
         </div>
+        <!-- <div class="form_boxes mb-3">
+            <label for="">Start Date <span>*</span></label>
+            <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
+        </div> -->
+        <!-- <div class="form_boxes mb-3">
+            <label for="">End Date <span>*</span></label>
+            <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
+        </div> -->
+
+    </div>
+
+
+    <div class="row row-cols-md-3 row-cols-lg-5">
         <div class="form_boxes mb-3">
-            <label for="">Cost Per Person <span>*</span></label>
+            <label for="">Cost Per 1 Person <span>*</span></label>
             <?= $form->field($model, 'cost_per_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
@@ -144,7 +144,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ])->label(false) ?>
         </div>
         <div class="form_boxes mb-3">
-            <label for="">Cost Per Two Person</label>
+            <label for="">Cost Per 2 Person</label>
             <?= $form->field($model, 'cost_per_two_person')->textInput([
                 'maxlength' => true,
                 'placeholder' => 'Enter',
@@ -160,108 +160,138 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
 
 
-
     <div class="row">
-        <?php
-        if ($model->package_version_model->partner_gallery_id) { ?>
-            <div class="col-lg-3 ">
-                <div class="form_boxes mb-3">
-                    <label for="">Gallery
-                    </label>
-                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
-                        <div class="w-100 h-100 fadeImage">
-                            <img src="" class="selectImage" alt="" id="preview">
-                        </div>
-                        <div class="displayImage d-flex flex-column gap-2">
-                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                            <label for="">Attach Gallery</label>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3" style="margin-top:35px;">
+        <div class="col-md-6">
+            <div class="row">
                 <?php
-                $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_version_model->partner_gallery_id])->limit(1)->one();
-                echo '<img src="' . $thumbnail_path->thumbnail . '" width="200px" height="200px"></img>'; ?>
-            </div>
-        <?php } else { ?>
-            <div class="col-lg-3 ">
-                <div class="form_boxes mb-3">
-                    <label for="">Gallery
-                    </label>
-                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
-                        <div class="w-100 h-100 fadeImage">
-                            <img src="" class="selectImage" alt="" id="preview">
-                        </div>
-                        <div class="displayImage d-flex flex-column gap-2">
-                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
-                            <label for="">Attach Gallery</label>
-                        </div>
+                if ($model->package_version_model->partner_gallery_id) { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Gallery</label>
+                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
 
-                    </div>
-                </div>
-            </div>
-        <?php  } ?>
-        <?php
-        if ($model->package_version_model->package_image) { ?>
-            <div class="col-lg-3 ">
-                <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb / (350*350))
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
+                                        <div class="displayImage d-flex flex-column gap-2">
+                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                            <label for="">Attach Gallery</label>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField"])->label(false) ?>
-                        </label>
+                            <div class="col-lg-12" style="margin-top:35px;">
+                                <?php
+                                $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_version_model->partner_gallery_id])->limit(1)->one();
+                                echo '<img src="' . $thumbnail_path->thumbnail . '" width="200px" height="200px" id="preview"></img>'; ?>
+                                <img src="" class="selectImage" alt="" id="preview">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-3" style="margin-top:35px;">
-                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px"></img>'; ?>
-            </div>
-        <?php } else { ?>
-            <div class="col-lg-3">
-                <div class="form_boxes mb-3">
-                    <label for="">Package DP (JPEG / JPG / PNG / 250kb/ (350*350))
-                    </label>
-                    <div class="form-group mt-2">
-                        <label for="fileField1" class="attachment">
-                            <div class="row btn-file">
-                                <div class="btn-file__preview"></div>
-                                <div class="btn-file__actions">
-                                    <div
-                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
-                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                            <i class="fa fa-plus fa-lg fa-fw"
-                                                aria-hidden="true"></i>
-                                            <div class="visible-xs-block"></div>
-                                            Select file
+                <?php } else { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Gallery
+                                    </label>
+                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
+
+                                        <div class="displayImage d-flex flex-column gap-2">
+                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                            <label for="">Attach Gallery</label>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField1"])->label(false) ?>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        <?php  } ?>
 
+                            <div class="checkModal">
+                                <div class="col-lg-12 fadeImage" style="margin-top:35px;">
+                                    <img src="" class="selectImage" alt="" id="preview" style=" width: 100%; height: 100%; object-fit: contain;" ;>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php  } ?>
+                <?php
+                if ($model->package_version_model->package_image) { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                                    </label>
+                                    <div class="form-group mt-2">
+                                        <label for="fileField" class="attachment">
+                                            <div class="row btn-file">
+                                                <div class="btn-file__actions">
+                                                    <div
+                                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
+                                                            <i class="fa fa-plus fa-lg fa-fw"
+                                                                aria-hidden="true"></i>
+                                                            <div class="visible-xs-block"></div>
+                                                            Select file
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField"])->label(false) ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="external-preview mt-2">
+                                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px" id="imagePreviewBottom"></img>'; ?>
+                                <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)</label>
+                                    <div class="form-group mt-2">
+                                        <label for="fileField1" class="attachment">
+                                            <div class="row btn-file">
+                                                <div class="btn-file__actions">
+                                                    <div class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
+                                                            <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true"></i>
+                                                            <div class="visible-xs-block"></div>
+                                                            Select file
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField1"])->label(false) ?>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="external-preview mt-2">
+                                    <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php  } ?>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form_boxes mt-2">
+                <label for="">Overview</label>
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
+            </div>
+        </div>
     </div>
+
+
+
 
 
 
@@ -286,12 +316,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
             </div>
         </div> -->
-        <div class="col-lg-12">
-            <div class="form_boxes mt-2">
-                <label for="">Overview</label>
-                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
-            </div>
-        </div>
+
 
     </div>
 </div>
