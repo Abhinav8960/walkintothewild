@@ -100,6 +100,7 @@ class DefaultController extends RestController
 
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
+        $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'];
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
         $this->storePayu($lead_partner_quotes_id,  $store);
