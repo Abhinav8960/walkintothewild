@@ -114,7 +114,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Settings</span>
             </a>
         </li> -->
-     <li class="navItems mb-2">
+     <!-- <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sightings/default/index",
                                                                 "/sightings/default/create",
@@ -139,7 +139,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Posts</span>
             </a>
-        </li>
+        </li> -->
       <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/gallery/default/index",
