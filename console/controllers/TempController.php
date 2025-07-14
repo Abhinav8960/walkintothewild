@@ -426,10 +426,6 @@ class TempController extends Controller
             $version_form_model->live_images = $gallery->live_images;
             $version_form_model->is_live = 1;
             $version_form_model->status = $gallery->status;
-            $version_form_model->created_at = $gallery->created_at;
-            $version_form_model->created_by = $gallery->created_by;
-            $version_form_model->updated_at = $gallery->updated_at;
-            $version_form_model->updated_by = $gallery->updated_by;
             $version_form_model->save(false);
         }
         echo "Done";
