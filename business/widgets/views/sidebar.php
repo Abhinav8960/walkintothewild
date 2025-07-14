@@ -101,19 +101,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Posts</span>
             </a>
         </li> -->
-        <li class="navItems mb-2">
-            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                "/gallery/default/index",
-                                                                "/gallery/default/create",
-
-                                                            )) ? "active" : "" ?>" href="/gallery/default/index">
-                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                    "/gallery/default/index",
-                                                                                                    "/gallery/default/create",
-                                                                                                )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu"> Gallery</span>
-            </a>
-        </li>
+  
         <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
@@ -126,8 +114,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Settings</span>
             </a>
         </li> -->
+     <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/sightings/default/index",
+                                                                "/sightings/default/create",
 
-         <!-- <li class="navItems mb-2">
+                                                            )) ? "active" : "" ?>" href="/sightings/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/sightings/default/index",
+                                                                                                    "/sightings/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Sightings</span>
+            </a>
+        </li>
+         <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/posts/default/index",
                                                                 "/posts/default/create",
@@ -140,20 +140,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Posts</span>
             </a>
         </li>
-
-         <li class="navItems mb-2">
+      <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                "/sightings/default/index",
-                                                                "/sightings/default/create",
+                                                                "/gallery/default/index",
+                                                                "/gallery/default/create",
 
-                                                            )) ? "active" : "" ?>" href="/sightings/default/index">
+                                                            )) ? "active" : "" ?>" href="/gallery/default/index">
                 <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                    "/sightings/default/index",
-                                                                                                    "/sightings/default/create",
-                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu"> Sightings</span>
+                                                                                                    "/gallery/default/index",
+                                                                                                    "/gallery/default/create",
+                                                                                                )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Gallery</span>
             </a>
-        </li> -->
+        </li>
+    
 
 
         <li class="navItems mb-2">
