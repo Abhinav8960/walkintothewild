@@ -52,7 +52,6 @@ $this->title = 'Gallery';
                                         <div class="dropdown-menu">
                                             <p>Edit</p>
                                             <p>Delete</p>
-
                                         </div>
                                     </div>
                                     <div class="approve-btn not-approve-btn">
@@ -61,7 +60,7 @@ $this->title = 'Gallery';
                                 </div>
                                 <div class="card-body d-flex justify-content-between">
                                     <p class="mb-0"><?= $model->title ?></p>
-                                    <p class="mb-0"><?= $model->title ?></p>
+                                    <p class="mb-0"><?= $model->gallery_count ?></p>
                                 </div>
 
                             </div>

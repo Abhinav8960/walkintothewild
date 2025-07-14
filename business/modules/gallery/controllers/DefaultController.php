@@ -154,7 +154,7 @@ class DefaultController extends Controller
             $model->partner_gallery_image_model->loadDefaultValues();
         }
 
-        return $this->render('create_gallery', [
+        return $this->renderAjax('create_gallery', [
             'model' => $model,
         ]);
     }
