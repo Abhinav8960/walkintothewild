@@ -13,18 +13,29 @@ $this->title = 'Gallery';
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-4">
-                <?php if (false) { ?>
-                    <div class="selectandsearchmain d-flex justify-content-between align-items-center">
-                        <div class="search-here position-relative">
-                            <input type="search" placeholder="Search" />
-                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                        </div>
-                        <div class="d-flex align-items-center gap-4">
-                            <!-- <a href="" class="sequenceBtn">set sequence</a> -->
-                            <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
-                        </div>
+                <div class="selectandsearchmain d-flex justify-content-between align-items-center">
+                    <div class="search-here position-relative">
+                        <input type="search" placeholder="Search" />
+                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
                     </div>
-                <?php } ?>
+                    <div class="d-flex align-items-center gap-4">
+                        <!-- <a href="" class="sequenceBtn">set sequence</a> -->
+                        <!-- <div class="filter-areaParent">
+                                <div class="shortList-wrapper">
+                                    <div class="shortList d-flex gap-5 align-items-center border">
+                                        <span>Sort</span>
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="shortList-dropdown dropdown">
+                                        <p>Created Recently</p>
+                                        <p>Most Images</p>
+                                        <p>Popularity</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
+                    </div>
+                </div>
             </div>
             <?php if ($dataProvider) {
                 foreach ($dataProvider->getModels() as $model) { ?>
@@ -34,7 +45,7 @@ $this->title = 'Gallery';
                                 <div class="position-relative">
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
-                                    <!-- <div class="dropdown-wrapper" tabindex="0">
+                                    <div class="dropdown-wrapper" tabindex="0">
                                         <a href="#" class="dot-icon">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
@@ -43,12 +54,13 @@ $this->title = 'Gallery';
                                             <p>Delete</p>
 
                                         </div>
-                                    </div> -->
-
+                                    </div>
+                                    <div class="approve-btn not-approve-btn">
+                                        <button type="btn">Approve</button>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-0"><?= $model->title ?></p>
-
                                 </div>
                             </div>
                         </div>
