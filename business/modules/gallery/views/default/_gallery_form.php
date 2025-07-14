@@ -17,29 +17,28 @@ use yii\bootstrap5\ActiveForm;
                     <div class="col-lg-12 ">
                         <div class="form_boxes mb-3">
                             <div class="form-group mt-2">
-                                <label for="fileField" class="attachment">
+                                <label for="fileField1" class="attachment">
                                     <div class="row btn-file">
                                         <div class="btn-file__actions">
-                                            <div
-                                                class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                            <div class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
                                                 <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
-                                                    <i class="fa fa-plus fa-lg fa-fw"
-                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true"></i>
                                                     <div class="visible-xs-block"></div>
                                                     Picture attached
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <?= $form->field($model, 'file')->fileInput(['id' => "fileField"])->label(false) ?>
+                                    <?= $form->field($model, 'file')->fileInput(['id' => 'fileField1'])->label(false) ?>
                                 </label>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="external-preview mt-2">
-                        <?php echo '<img src="' . $model->partner_gallery_image_model->gallery_image . '" width="200px" height="200px" id="imagePreviewBottom"></img>'; ?>
-                        <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+
+                        <div class="external-preview mb-2">
+                            <img src="<?= $model->partner_gallery_image_model->gallery_image ?>" width="200" height="200" class="imagePreviewBottom">
+                            <img class="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,19 +60,18 @@ use yii\bootstrap5\ActiveForm;
                                             </div>
                                         </div>
                                     </div>
-                                    <?= $form->field($model, 'file')->fileInput(['id' => "fileField"])->label(false) ?>
+                                    <?= $form->field($model, 'file')->fileInput(['id' => 'fileField'])->label(false) ?>
                                 </label>
                             </div>
                         </div>
 
-                        <div class="external-preview mt-2">
-                            <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                        <div class="external-preview mb-2">
+                            <img class="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
                         </div>
                     </div>
                 </div>
             </div>
-        <?php  } ?>
-
+        <?php } ?>
     </div>
     <div class="col-lg-8">
         <div class="row">
@@ -108,3 +106,25 @@ use yii\bootstrap5\ActiveForm;
 
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$this->registerJs(<<<JS
+jQuery(function ($) {
+
+    $(document).on('change', '.attachment input[type="file"]', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const \$container = $(this).closest('.form_boxes');
+        const \$previewImg = \$container.closest('.col-lg-12').find('.imagePreviewBottom').first();
+
+        if (file.type.startsWith('image/')) {
+            const previewUrl = URL.createObjectURL(file);
+            \$previewImg.attr('src', previewUrl).show();
+        } else {
+            \$previewImg.hide();
+        }
+    });
+});
+JS);
+?>

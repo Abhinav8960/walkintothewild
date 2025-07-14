@@ -41,7 +41,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image','gallery-delete'],
+                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image', 'gallery-delete'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -305,6 +305,7 @@ class DefaultController extends Controller
         }
 
         $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        $partner_gallery_model->remark = NULL;
         if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
             return $this->redirect(['index']);

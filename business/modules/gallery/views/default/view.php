@@ -6,6 +6,8 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+$this->title = 'Gallery';
+
 ?>
 
 <div class="container-fluid">
@@ -22,6 +24,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                     </div>
                     <div class="d-flex align-items-center gap-4">
+                        <!-- <a href="<?= Url::toRoute(['set-sequence', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="sequenceBtn">Set sequence</a> -->
                         <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $partner_gallery_model->id]) ?>">Send
                             For Approval</a>
                     </div>
