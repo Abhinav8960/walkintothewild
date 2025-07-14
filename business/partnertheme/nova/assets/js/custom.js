@@ -100,6 +100,53 @@ $(document).on("change", ".uploadProfileInput", function () {
         }
     });
     
+
+    // Store gallery image URLs in a JS array
+const galleryImages = [];
+document.querySelectorAll('.gallery-image-item').forEach(img => {
+  galleryImages.push(img.src);
+});
+
+
+document.querySelectorAll('.gallery-image-item').forEach((img, index) => {
+  img.addEventListener('click', () => {
+    const sliderModal = new bootstrap.Modal(document.getElementById('gallerySliderModal'));
+    sliderModal.show();
+
+    // Set main image
+    document.getElementById('sliderMainImage').src = galleryImages[index];
+
+    // Build thumbnails
+    const thumbsContainer = document.getElementById('sliderThumbnails');
+    thumbsContainer.innerHTML = ''; // Clear old thumbnails
+
+    galleryImages.forEach((src, idx) => {
+      const thumb = document.createElement('img');
+      thumb.src = src;
+      thumb.classList.add('img-thumbnail');
+      thumb.style.width = '80px';
+      thumb.style.cursor = 'pointer';
+
+      if (idx === index) {
+        thumb.classList.add('border', 'border-primary'); // Highlight active
+      }
+
+      thumb.addEventListener('click', () => {
+        document.getElementById('sliderMainImage').src = src;
+
+        // Update active border
+        thumbsContainer.querySelectorAll('img').forEach(t => t.classList.remove('border', 'border-primary'));
+        thumb.classList.add('border', 'border-primary');
+      });
+
+      thumbsContainer.appendChild(thumb);
+    });
+  });
+});
+
+
+
+
 });
  
 
