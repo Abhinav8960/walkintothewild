@@ -21,8 +21,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <!-- <a href="" class="sequenceBtn">set sequence</a> -->
-                        <a class="button-created new" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Send
+                        <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $model->id]) ?>">Send
                             For Approval</a>
                     </div>
                 </div>

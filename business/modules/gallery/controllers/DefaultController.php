@@ -281,4 +281,25 @@ class DefaultController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
     }
+
+
+    public function actionSendForApproval($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+        if ($partner_gallery_model->can_send_for_approval == PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
+            \Yii::$app->session->setFlash('danger', 'This gallery already send for approval!!!');
+            return $this->redirect(['index']);
+        }
+
+        $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        if ($partner_gallery_model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
+            return $this->redirect(['index']);
+        }
+    }
 }
