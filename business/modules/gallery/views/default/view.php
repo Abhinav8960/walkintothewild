@@ -21,7 +21,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <a href="" class="sequenceBtn">set sequence</a>
+                        <!-- <a href="" class="sequenceBtn">set sequence</a> -->
                         <a class="button-created new" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Send
                             For Approval</a>
                     </div>
@@ -78,9 +78,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <p>Set as Thumbnail</p>
-                                        <p>Edit</p>
-                                        <p>Delete</p>
+                                        <p>
+                                            <?php if ($model->status == 1) { ?>
+                                                <a href="<?= Url::toRoute(['update-thumbnail', 'partner_gallery_id' => $model->partner_gallery_id, 'id' => $model->id]) ?>">Set as Thumbnail</a>
+                                            <?php } ?>
+                                        </p>
+                                        <p>
+                                            <button value="<?= Url::toRoute(['update-gallery-image', 'id' => $model->id]) ?>" class="galleryEditAction">Edit</button>
+                                        </p>
+                                        <!-- <p>Delete</p> -->
                                     </div>
                                 </div>
 
@@ -105,6 +111,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class=" modal-content">
         <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
             <p class="" id="">Create Gallery</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 py-4" id='modalContent'>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"">
+        <div class=" modal-content">
+        <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
+            <p class="" id="">Edit Gallery</p>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body px-4 py-4" id='modalContent'>
@@ -146,6 +165,11 @@ $script = <<< JS
 		.load($(this).attr('value'));
 	});
 
+      $('.galleryEditAction').on('click', function () {
+        $('#editModal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
 
 JS;
 $this->registerJs($script);

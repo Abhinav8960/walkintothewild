@@ -137,7 +137,7 @@ class DefaultController extends Controller
             $model->set_as_thumbnail = 1;
         }
         $model->scenario = 'create';
-        
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->file = UploadedFile::getInstance($model, 'file');
@@ -204,7 +204,7 @@ class DefaultController extends Controller
             $model->partner_gallery_image_model->loadDefaultValues();
         }
 
-        return $this->render('update_gallery', [
+        return $this->renderAjax('update_gallery', [
             'model' => $model,
         ]);
     }
