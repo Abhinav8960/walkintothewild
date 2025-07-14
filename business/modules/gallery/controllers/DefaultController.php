@@ -105,7 +105,7 @@ class DefaultController extends Controller
         }
 
         $searchModel = new PartnerGalleryImageSearch();
-        // $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
+        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
         $searchModel->partner_gallery_id = $partner_gallery_model->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -160,7 +160,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionSwtich($id)
+    public function actionSwitch($id)
     {
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
         if (!$model) {
@@ -170,7 +170,7 @@ class DefaultController extends Controller
         if ($model->status == PartnerGallery::STATUS_ACTIVE) {
             $model->status = PartnerGallery::STATUS_SUSPEND;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Successfully Inacive !!!');
+            \Yii::$app->getSession()->setFlash('success', 'Successfully Inactive !!!');
         } else {
             $model->status = PartnerGallery::STATUS_ACTIVE;
             $model->save(false);

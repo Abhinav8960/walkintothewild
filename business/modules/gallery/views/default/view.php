@@ -85,6 +85,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <p>
                                             <button value="<?= Url::toRoute(['update-gallery-image', 'id' => $model->id]) ?>" class="galleryEditAction">Edit</button>
                                         </p>
+
+                                        <?php
+                                        if ($model->set_as_thumbnail == 0) { ?>
+                                            <p>
+                                                <a href="<?= Url::toRoute(['switch', 'id' => $model->id]) ?>">Delete</a>
+                                            </p>
+                                        <?php } ?>
+
                                     </div>
                                 </div>
 
