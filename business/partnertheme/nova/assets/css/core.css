@@ -95,7 +95,7 @@ p {
   position: fixed !important;
   height: 100vh;
   background-color: #fff !important;
- 
+
   border-right: 1px solid #e7e7e7;
 }
 
@@ -179,7 +179,7 @@ p {
   font-weight: 600;
   color: #111111;
   margin-bottom: 0px !important;
-      font-family: "Roboto", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .mainParent {
@@ -413,7 +413,7 @@ p {
 
 .safrititles h2 {
   color: #09422d;
-      font-size: 26px;
+  font-size: 26px;
 }
 
 .titler_safari {
@@ -590,6 +590,7 @@ p {
   padding: 0 !important;
   cursor: pointer;
 }
+
 .packageTabMain .nav-tabs .nav-link {
   background-color: transparent !important;
   color: #000 !important;
@@ -598,13 +599,16 @@ p {
   border-radius: 0px !important;
   margin-bottom: 1px;
 }
+
 .packageTabMain .nav-tabs .nav-link.active {
   border-bottom: 5px solid #09422d !important;
 }
-.accordion-button.custom-header{
+
+.accordion-button.custom-header {
   color: #000000 !important;
   font-weight: 600;
 }
+
 .packageTabMain .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
   isolation: auto !important;
@@ -650,10 +654,10 @@ p {
 
 .clsHeadings p {
   font-size: 12px;
-    font-weight: 400;
-    padding-bottom: 5px;
-    display: inline-block;
-    color: #464A53;
+  font-weight: 400;
+  padding-bottom: 5px;
+  display: inline-block;
+  color: #464A53;
 }
 
 .form_boxes .inclabel {
@@ -1472,17 +1476,19 @@ summary::after {
   border: none;
   text-transform: uppercase;
 }
-.sequenceBtn.editBtn{
- background: #A2D22B;
-      border-radius: 5px;
-    padding: 8px 40px;
+
+.sequenceBtn.editBtn {
+  background: #A2D22B;
+  border-radius: 5px;
+  padding: 8px 40px;
 
 }
+
 .sequenceBtn.cancleBtn {
   background: transparent;
   border: 1px solid #09432D;
-      border-radius: 5px;
-    padding: 8px 40px;
+  border-radius: 5px;
+  padding: 8px 40px;
 
 }
 
@@ -1574,10 +1580,12 @@ summary::after {
 .hidden {
   display: none;
 }
-.mdi-menu{
+
+.mdi-menu {
 
   font-size: 25px;
 }
+
 @media (max-width:1200px) {
   .filterItem {
     width: 100% !important;
@@ -1604,4 +1612,28 @@ summary::after {
   .filterBar {
     padding: 10px !important;
   }
+}
+
+approve-btn {
+
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.approve-btn button {
+
+  outline: none;
+  background: #82C43C;
+  color: #FFFFFF;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 5px;
+}
+
+.approve-btn.not-approve-btn button {
+
+  background: #C43C3C;
 }
