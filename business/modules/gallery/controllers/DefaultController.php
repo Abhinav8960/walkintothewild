@@ -10,6 +10,7 @@ use common\models\partnergalleryimage\form\PartnerGalleryImageForm;
 use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\models\partnergalleryimage\PartnerGalleryImageSearch;
 use Yii;
+use yii\bootstrap5\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
@@ -76,6 +77,11 @@ class DefaultController extends Controller
         $model->safari_operator_id = $safari_operator_model->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -89,7 +95,7 @@ class DefaultController extends Controller
         } else {
             $model->partner_gallery_model->loadDefaultValues();
         }
-        
+
         return $this->renderAjax('create', [
             'model' => $model,
             'safari_operator_model' => $safari_operator_model,
@@ -315,6 +321,11 @@ class DefaultController extends Controller
         }
 
         $model = new PartnerGalleryForm($partner_gallery_model);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

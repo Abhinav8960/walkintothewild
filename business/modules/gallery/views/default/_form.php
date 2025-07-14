@@ -9,7 +9,10 @@ $this->title = 'Create Gallery';
 ?>
 
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'create-gallery']]); ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'create-gallery',
+    'enableAjaxValidation' => true,
+]); ?>
 
 
 <div class="row">
@@ -27,7 +30,7 @@ $this->title = 'Create Gallery';
     </div>
     <div class="col-12">
         <div class="modalCrateButton">
-            <?= Html::submitButton('Save', ['class' => 'btn w-100']) ?>
+            <?= Html::submitButton('Save', ['class' => 'w-100']) ?>
         </div>
     </div>
 </div>
