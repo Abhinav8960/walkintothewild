@@ -126,7 +126,21 @@
 
                          </div>
                      </div>
-                 <?php } else { ?>
+                 <?php } elseif ($chat_message->is_system_generated == 1) { ?>
+                    
+                     <div class="d-flex justify-content-center m-2">
+                         <div class="ItineraryQuotationarea">
+                             <div class="topTitle pb-3">
+                                 <h6 class="text-center"><?= $chat_message->message ?></h6>
+                             </div>
+                             <div class="recievedTime d-flex justify-content-end">
+                                 <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                             </div>
+                         </div>
+                     </div>
+
+                 <?php
+                    } else { ?>
                      <div class="d-flex justify-content-end">
                          <div class="sentChat">
                              <p><?= $chat_message->message ?></p>
