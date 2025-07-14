@@ -1638,3 +1638,21 @@ summary::after {
 
   background: #C43C3C;
 }
+
+
+.createGalleryButton-parent {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #152F1B;
+}
+.createGalleryButton-parent button{
+
+  outline: none;
+  background-color: transparent;
+  border: 0px;
+}
+.createGalleryButton-parent button i {
+  color: #ffffff;
+  font-size: 25px;
+}
