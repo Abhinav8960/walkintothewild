@@ -1615,7 +1615,7 @@ summary::after {
   }
 }
 
-approve-btn {
+.approve-btn {
 
   position: absolute;
   top: 20px;
