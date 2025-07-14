@@ -64,6 +64,7 @@ class DefaultController extends Controller
         $partner_gallery_model->live_images = json_encode($partner_gallery_model->PrepareFullResponse());
         $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
         if ($partner_gallery_model->save(false)) {
+            $partner_gallery_model->versionsave();
             \Yii::$app->session->setFlash('danger', 'Gallery Approved SuccessFully!!!');
             return $this->redirect(['index']);
         }

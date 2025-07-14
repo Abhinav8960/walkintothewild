@@ -148,4 +148,23 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return $this->hasOne(SafariPark::class, ['id' => 'park_id']);
     }
+
+    public function versionsave()
+    {
+        $version_model = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $this->id])->orderBy(['version' => SORT_DESC])->limit(1)->one();
+
+        $version_form_model = new PartnerGalleryVersion();
+        $version_form_model->partner_gallery_id = $this->id;
+        $version_form_model->version = !empty($version_model->version) ? $version_model->version + 1 : 1;
+        $version_form_model->safari_operator_id = $this->safari_operator_id;
+        $version_form_model->park_id = $this->park_id;
+        $version_form_model->title = $this->title;
+        $version_form_model->slug = $this->slug;
+        $version_form_model->remark = $this->remark;
+        $version_form_model->can_send_for_approval = $this->can_send_for_approval;
+        $version_form_model->live_images = $this->live_images;
+        $version_form_model->status = $this->status;
+
+        $version_form_model->save(false);
+    }
 }
