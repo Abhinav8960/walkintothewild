@@ -942,7 +942,7 @@ class DefaultController extends Controller
         return ['success' => false];
     }
 
-    public function actionGalleryPopup($context,$preview)
+    public function actionGalleryPopup($context, $preview)
     {
         $safari_operator = $this->operatormodel();
         $searchModel = new PartnerGallerySearch();
@@ -950,7 +950,7 @@ class DefaultController extends Controller
         $searchModel->safari_operator_id = $safari_operator->id;
 
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['IS NOT', 'live_images', NULL]);
+        $dataProvider->query->andWhere(['IS NOT', 'live_images', NULL])->andWhere(['IS', 'remark', NULL]);
 
         return $this->renderAjax('_gallery_popup', [
             'dataProvider' => $dataProvider,
