@@ -41,7 +41,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail','update-gallery-image'],
+                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image','gallery-delete'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -346,5 +346,25 @@ class DefaultController extends Controller
             'model' => $model,
             'safari_operator_model' => $safari_operator_model,
         ]);
+    }
+
+
+    public function actionGalleryDelete($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+        $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
+        $partner_gallery_model->title = time() . '_' . $partner_gallery_model->title;
+        if ($partner_gallery_model->save(false)) {
+
+            \Yii::$app->session->setFlash('success', 'Gallery Deleted Successfully!!!');
+            return $this->redirect(['index']);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }
