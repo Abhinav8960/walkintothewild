@@ -15,8 +15,8 @@ $this->title = 'Gallery';
             <div class="col-12 mb-4">
                 <div class="selectandsearchmain d-flex justify-content-between align-items-center">
                     <div class="search-here position-relative">
-                        <input type="search" placeholder="Search" />
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <!-- <input type="search" placeholder="Search" />
+                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a> -->
                     </div>
                     <div class="d-flex align-items-center gap-4">
                         <!-- <a href="" class="sequenceBtn">set sequence</a> -->
@@ -59,9 +59,11 @@ $this->title = 'Gallery';
                                         <button type="btn">Approve</button>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body d-flex justify-content-between">
+                                    <p class="mb-0"><?= $model->title ?></p>
                                     <p class="mb-0"><?= $model->title ?></p>
                                 </div>
+
                             </div>
                         </div>
 
@@ -72,19 +74,21 @@ $this->title = 'Gallery';
     </div>
 </div>
 
+
 <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg"">
-    <div class=" modal-content">
-        <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
-            <p class="" id="">Create Gallery</p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body px-4 pb-4 pt-0">
+        <div class=" modal-content">
+            <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
+                <p class="" id="">Create Gallery</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 pt-0">
             <div id='modalContent' class="row"></div>
+            </div>
         </div>
     </div>
 </div>
-</div>
+
 
 <?php
 $script = <<< JS
