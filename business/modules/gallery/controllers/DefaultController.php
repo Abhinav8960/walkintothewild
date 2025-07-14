@@ -41,7 +41,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'edit-gallery'],
+                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail','update-gallery-image'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -116,7 +116,7 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
-            'model' => $partner_gallery_model,
+            'partner_gallery_model' => $partner_gallery_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -298,7 +298,8 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
-        if ($partner_gallery_model->can_send_for_approval == PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
+
+        if ($partner_gallery_model->can_send_for_approval === PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
             \Yii::$app->session->setFlash('danger', 'This gallery already send for approval!!!');
             return $this->redirect(['index']);
         }

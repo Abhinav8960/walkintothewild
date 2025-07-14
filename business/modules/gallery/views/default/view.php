@@ -1,5 +1,6 @@
 <?php
 
+use common\models\partnergallery\PartnerGallery;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
@@ -16,12 +17,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="selectandsearchmain d-flex align-items-center gap-4">
                     <div class="createGalleryButton-parent d-flex justify-content-center align-items-center">
-                        <button value="<?= Url::toRoute(['create-gallery', 'partner_gallery_id' => $model->id]) ?>" class="galleryCreateAction"><i
+                        <button value="<?= Url::toRoute(['create-gallery', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="galleryCreateAction"><i
                                 class="fa-solid fa-plus"></i></button>
 
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $model->id]) ?>">Send
+                        <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $partner_gallery_model->id]) ?>">Send
                             For Approval</a>
                     </div>
                 </div>
@@ -32,11 +33,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
                     <div class="date-or-time">
                         <p class="mb-1">Title</p>
-                        <p class="mb-0"><?= $model->title ?></p>
+                        <p class="mb-0"><?= $partner_gallery_model->title ?></p>
                     </div>
                     <div class="date-or-time">
                         <p class="mb-1">Park</p>
-                        <p class="mb-0"><?= isset($model->park) ? $model->park->title : '' ?></p>
+                        <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
                     </div>
                     <div class="active-btn">
                         <!-- <a href="">ACTIVE</a> -->
@@ -48,13 +49,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <tr>
                                 <td style="width: 25%;">Created Date:</td>
                                 <td style="width: 75%;">
-                                    <p><?= date('j F Y, g:i A', $model->created_at) ?></p>
+                                    <p><?= date('j F Y, g:i A', $partner_gallery_model->created_at) ?></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Updated Date:</td>
                                 <td>
-                                    <p><?= date('j F Y, g:i A', $model->updated_at) ?></p>
+                                    <p><?= date('j F Y, g:i A', $partner_gallery_model->updated_at) ?></p>
                                 </td>
                             </tr>
 
@@ -76,6 +77,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <a href="#" class="dot-icon">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </a>
+
                                     <div class="dropdown-menu">
                                         <p>
                                             <?php if ($model->status == 1) { ?>
@@ -92,10 +94,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <a href="<?= Url::toRoute(['switch', 'id' => $model->id]) ?>">Delete</a>
                                             </p>
                                         <?php } ?>
-
                                     </div>
                                 </div>
-
 
                             </div>
                             <div class="card-body fancy-box-body">
