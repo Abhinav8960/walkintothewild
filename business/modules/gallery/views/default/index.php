@@ -50,8 +50,11 @@ $this->title = 'Gallery';
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <p>Edit</p>
-                                            <p>Delete</p>
+                                            <!-- <p>Edit</p> -->
+                                            <!-- <p>Delete</p> -->
+                                            <p>
+                                                <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="approve-btn not-approve-btn">
@@ -77,15 +80,28 @@ $this->title = 'Gallery';
 <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg"">
         <div class=" modal-content">
-            <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
-                <p class="" id="">Create Gallery</p>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-4 pb-4 pt-0">
+        <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
+            <p class="" id="">Create Gallery</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 pb-4 pt-0">
             <div id='modalContent' class="row"></div>
-            </div>
         </div>
     </div>
+</div>
+</div>
+
+<div class="modal fade" id="editparentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg"">
+        <div class=" modal-content">
+        <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
+            <p class="" id="">Edit Gallery</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 py-4" id='modalContent'>
+        </div>
+    </div>
+</div>
 </div>
 
 
@@ -101,6 +117,12 @@ $script = <<< JS
 
      $('.quotation-button').on('click', function () {
         $('#quotationAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+      $('.galleryParetnAction').on('click', function () {
+        $('#editparentModal').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});

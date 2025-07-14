@@ -35,12 +35,12 @@ class DefaultController extends Controller
                 'only' => ['index', 'view'],
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view'],
+                        'actions' => ['view', 'edit-gallery'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -89,6 +89,7 @@ class DefaultController extends Controller
         } else {
             $model->partner_gallery_model->loadDefaultValues();
         }
+        
         return $this->renderAjax('create', [
             'model' => $model,
             'safari_operator_model' => $safari_operator_model,
@@ -301,5 +302,37 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
             return $this->redirect(['index']);
         }
+    }
+
+    public function actionEditGallery($id)
+    {
+        $safari_operator_model = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id,  'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        $model = new PartnerGalleryForm($partner_gallery_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->partner_gallery_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully!!!');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->partner_gallery_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('update', [
+            'model' => $model,
+            'safari_operator_model' => $safari_operator_model,
+        ]);
     }
 }
