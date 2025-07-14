@@ -33,3 +33,6 @@ ALTER TABLE `package` CHANGE `price_after_discount_in_value` `price_after_discou
 
 ALTER TABLE `package` DROP `price_after_discount_in_value`;
 ALTER TABLE `package` CHANGE `price_after_discount_in_percentage` `price_after_discount` DECIMAL(10,2) NOT NULL DEFAULT '0.00';
+
+<!-- 14 July 2025 -->
+ALTER TABLE `partner_gallery` ADD `park_id` INT NULL DEFAULT NULL AFTER `safari_operator_id`;
