@@ -127,6 +127,34 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li> -->
 
+         <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/posts/default/index",
+                                                                "/posts/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/posts/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/posts/default/index",
+                                                                                                    "/posts/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Posts</span>
+            </a>
+        </li>
+
+         <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/sightings/default/index",
+                                                                "/sightings/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/sightings/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/sightings/default/index",
+                                                                                                    "/sightings/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Sightings</span>
+            </a>
+        </li>
+
 
         <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
@@ -142,6 +170,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
+        
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">

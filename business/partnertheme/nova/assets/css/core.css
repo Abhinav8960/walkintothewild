@@ -1063,10 +1063,11 @@ p {
 .filterItem i {
 
   position: absolute;
-  right: 5px;
+  top: 4px;
+  right: 4px;
   cursor: pointer;
   color: #92929D;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .interst_wrapper {
