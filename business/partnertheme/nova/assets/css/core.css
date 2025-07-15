@@ -1411,17 +1411,17 @@ summary::after {
     font-weight: 700;
 }
 
-.galleryCard .card-body p:nth-child(2) {
+.galleryCard .card-body.fancy-box-body p:nth-child(2) {
     color: #848A90;
     font-size: 12px;
     font-weight: 400;
 }
 
-/* .galleryCard .card-body p {
+.galleryCard .card-body p {
 
   font-size: 14px;
   font-weight: 700;
-} */
+}
 
 .dot-icon {
 
