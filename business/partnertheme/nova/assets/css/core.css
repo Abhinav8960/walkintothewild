@@ -1707,12 +1707,16 @@ summary::after {
 
 .selectandsearchmain .search-here .topnav{
 
-  background-color: transparent !important;
+      background-color: #C4E3BD;
+      border-radius: 100px;
+      padding: 0px 20px;
 }
 .selectandsearchmain .search-here .topnav a.active {
     background-color: transparent !important;
-    color: #000;
+    color: #152F1B;
     position: relative;
+    font-size: 15px;
+    font-weight: 700;
 }
 .selectandsearchmain .search-here .topnav a.active:before{
 
@@ -1727,7 +1731,9 @@ summary::after {
 
 .selectandsearchmain .search-here .topnav a{
 
-  color: #000;
+      color: #152F1B;
+    font-size: 15px;
+    font-weight: 600;
 }
 .selectandsearchmain .search-here .topnav a:hover {
         background-color: transparent !important;
