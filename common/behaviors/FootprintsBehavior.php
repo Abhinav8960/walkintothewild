@@ -17,7 +17,7 @@ class FootprintsBehavior extends Behavior
     {
         return [
             ActiveRecord::EVENT_AFTER_INSERT => 'acumen',
-            ActiveRecord::EVENT_AFTER_UPDATE => 'acumen',
+            // ActiveRecord::EVENT_AFTER_UPDATE => 'acumen',
         ];
     }
 
