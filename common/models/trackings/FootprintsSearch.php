@@ -18,7 +18,7 @@ class FootprintsSearch extends Footprints
     {
         return [
             [['id', 'collection', 'collection_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['objective', 'action', 'date_time', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'safe'],
+            [['objective', 'action', 'date_time', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'absolute_url'], 'safe'],
         ];
     }
 
@@ -74,6 +74,7 @@ class FootprintsSearch extends Footprints
             ->andFilterWhere(['like', 'device', $this->device])
             ->andFilterWhere(['like', 'platform', $this->platform])
             ->andFilterWhere(['like', 'platform_version', $this->platform_version])
+            ->andFilterWhere(['like', 'absolute_url', $this->absolute_url])
             ->andFilterWhere(['like', 'browser', $this->browser])
             ->andFilterWhere(['like', 'browser_version', $this->browser_version])
             ->andFilterWhere(['like', 'application_version', $this->application_version]);

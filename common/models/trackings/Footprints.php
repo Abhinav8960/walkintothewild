@@ -46,7 +46,7 @@ class Footprints extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['action', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['action', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'created_at', 'updated_at', 'created_by', 'updated_by', 'absolute_url'], 'default', 'value' => null],
             [['objective', 'collection', 'collection_id', 'date_time'], 'required'],
             [['collection', 'collection_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['date_time'], 'safe'],
