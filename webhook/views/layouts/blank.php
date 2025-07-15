@@ -3,7 +3,7 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-use webhook\assets\AppAsset;
+use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\helpers\Html;
 

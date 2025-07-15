@@ -361,4 +361,49 @@ class TestController extends Controller
 
         return $array;
     }
+
+    public function actionMakeCallOnChat()
+    {
+        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/c2c';
+        $options = [
+            'vnm' => \Yii::$app->params['airphone_api_vnm'],
+            'agent' => "9650901148",
+            // 'caller' => "8890534746",
+            'caller' => "9958858979",// Apurva Sir
+            'token' => \Yii::$app->params['airphone_api_token'],
+            'reqId' => "dfgh"
+        ];
+        $client = new \yii\httpclient\Client();
+        $response = $client->createRequest()
+            ->setMethod('POST')
+            ->setHeaders(['Content-Type' => 'application/x-www-form-urlencoded'])
+            ->setUrl($url)
+            ->setData($options) // Use setData for form parameters
+            ->send();
+        if (!$response->isOk) {
+            \Yii::error('Call failed: ' . $response->content, __METHOD__);
+            return false;
+        }
+        $json_contents = json_encode($response->content);
+        $arr_contents = json_decode($response->content, true);
+
+        // print_r([$response->content, $options]);
+        // die();
+        // if (is_array($arr_contents) && !empty($arr_contents)) {
+        //     if (isset($arr_contents['status']) && strtolower($arr_contents['status']) == 'success') {
+        //         $this->call_model->unique_id = $arr_contents['unique_id'];
+        //         $this->call_model->status = CallLog::STATUS_SUCCESS;
+        //     }
+        // }
+        // $this->call_model->call_request_status = $arr_contents['status'];
+        // $this->call_model->call_request_message = $arr_contents['message'];
+        // $this->call_model->save(false);
+        // return $this->call_model->status;
+
+        die('kjjkj');
+        // Call the callNow method
+        $result = $callingService->callNow();
+
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated.']);
+    }
 }

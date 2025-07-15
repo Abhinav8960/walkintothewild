@@ -2,6 +2,8 @@
 
 namespace common\models\leads;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use common\models\meta\MetaPackageRange;
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperator;
@@ -102,7 +104,7 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['name', 'email', 'rejection_reason', 'quotation_filepath', 'transaction_id'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 50],
-            [['validity_date', 'permit_booking_date'], 'safe'],
+            [['validity_date', 'permit_booking_date', 'is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason', 'payment_receipt'], 'safe'],
         ];
     }
 
@@ -189,11 +191,47 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
         return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 
+    public function getInstallmentDue()
+    {
+        // return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->where(['is NOT', 'transaction_id', NULL])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(LeadPartnerQuoteInstallments::className(), ['lead_partner_quote_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
         $quotation = LeadPartnerQuotes::find()->where(['status' => LeadPartnerQuotes::STATUS_ACTIVE, 'id' => $this->id])->one();
         if ($quotation != null) {
             return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id);
+        }
+    }
+
+    public function closeChat($quote_id)
+    {
+        $chatmessage = ChatMessage::findOne(['quotation_id' => $quote_id]);
+        if (!empty($chatmessage)) {
+            $chat = Chat::updateAll(
+                ['is_closed' => true],
+                ['and', ['lead_id' => $this->lead_id], ['!=', 'id', $chatmessage->chat_id]]
+            );
+        }
+        return true;
+    }
+
+    public function markQuoteInactiveInChat($lead_id, $quote_id = null)
+    {
+        if (!empty($quote_id)) {
+            $chats = Chat::findAll(['lead_id' => $lead_id, 'quote_id' => $quote_id]);
+        } else {
+
+            $chats = Chat::findAll(['lead_id' => $lead_id]);
+        }
+        if (!empty($chats)) {
+            foreach ($chats as $chat) {
+                ChatMessage::updateAll(
+                    ['is_quotation_active' => false],
+                    ['chat_id' => $chat->id]
+                );
+            }
         }
     }
 }

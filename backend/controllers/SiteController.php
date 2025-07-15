@@ -53,11 +53,13 @@ class SiteController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
+                    'payu-response' => ['post', 'get'],
                 ],
             ],
         ];
     }
 
+  
     /**
      * {@inheritdoc}
      */
@@ -420,4 +422,9 @@ class SiteController extends Controller
 
         throw new NotFoundHttpException('Short URL not found.');
     }
+
+    // 'successUrl' => 'http://admin.walkintothewild.io/payu/success',
+    // 'failureUrl' => 'http://admin.walkintothewild.io/payu/failure',
+    // 'cancelUrl' => 'http://app.walkintothewild.io/payu/cancel',
+
 }
