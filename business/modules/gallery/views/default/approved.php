@@ -33,11 +33,11 @@ $this->title = 'Gallery';
                         <div class="galleryCard">
                             <div class="card p-0 border-0 bg-transparent">
                                 <div class="position-relative">
-                                    <a href="<?= Url::toRoute(['approved-view', 'id' => $model->partner_gallery_id]) ?>"> <img src="<?= $model->thumbnail ?>"
+                                    <a href="<?= Url::toRoute(['approved-view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
 
                                     <?php
-                                    if ($model->partnerGallery->is_approved == 1 && $model->partnerGallery->in_draft == 0) {
+                                    if ($model->is_approved == 1 && $model->in_draft == 0) {
                                     ?>
                                         <div class="dropdown-wrapper" tabindex="0">
                                             <a href="#" class="dot-icon">
@@ -45,7 +45,7 @@ $this->title = 'Gallery';
                                             </a>
                                             <div class="dropdown-menu">
                                                 <p>
-                                                    <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->partner_gallery_id]) ?>">Edit</a>
+                                                    <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">Edit</a>
                                                 </p>
                                             </div>
                                         </div>

@@ -75,7 +75,7 @@ class DefaultController extends Controller
     public function actionApproved()
     {
         $safari_operator = $this->module->operatormodel();
-        $searchModel = new PartnerGalleryVersionSearch();
+        $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
         // $searchModel->is_approved = 1;
         $searchModel->is_live = 1;
