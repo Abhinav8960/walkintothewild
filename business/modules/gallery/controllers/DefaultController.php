@@ -80,7 +80,7 @@ class DefaultController extends Controller
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('approved', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'approved_active' => true,
@@ -96,7 +96,7 @@ class DefaultController extends Controller
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('pending_for_approval', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'pending_active' => true,

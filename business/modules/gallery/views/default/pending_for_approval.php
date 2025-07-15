@@ -35,25 +35,10 @@ $this->title = 'Gallery';
                                 <div class="position-relative">
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
-
-                                    <div class="dropdown-wrapper" tabindex="0">
-                                        <a href="#" class="dot-icon">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <p>
-                                                <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
-                                            </p>
-                                            <p>
-                                                <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
-                                            </p>
-                                        </div>
+                                  
+                                    <div class="approve-btn not-approve-btn pending-btn">
+                                        <button type="btn">Pending for Approval</button>
                                     </div>
-
-                                    <div class="approve-btn not-approve-btn inDraft-btn">
-                                        <button type="btn">In Draft</button>
-                                    </div>
-
 
                                 </div>
                                 <div class="card-body d-flex justify-content-between">

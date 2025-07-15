@@ -35,23 +35,23 @@ $this->title = 'Gallery';
                                 <div class="position-relative">
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
-
-                                    <div class="dropdown-wrapper" tabindex="0">
-                                        <a href="#" class="dot-icon">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <p>
-                                                <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
-                                            </p>
-                                            <p>
-                                                <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
-                                            </p>
+                                    <?php if ($model->in_draft == 1) { ?>
+                                        <div class="dropdown-wrapper" tabindex="0">
+                                            <a href="#" class="dot-icon">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <p>
+                                                    <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
+                                                </p>
+                                                <p>
+                                                    <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="approve-btn not-approve-btn inDraft-btn">
-                                        <button type="btn">In Draft</button>
+                                    <?php } ?>
+                                    <div class="approve-btn not-approve-btn approveBtn">
+                                        <button type="btn">Approve</button>
                                     </div>
 
 
