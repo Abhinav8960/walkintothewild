@@ -1703,3 +1703,33 @@ summary::after {
   color: #ffffff;
   font-size: 25px;
 }
+
+
+.selectandsearchmain .search-here .topnav{
+
+  background-color: transparent !important;
+}
+.selectandsearchmain .search-here .topnav a.active {
+    background-color: transparent !important;
+    color: #000;
+    position: relative;
+}
+.selectandsearchmain .search-here .topnav a.active:before{
+
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #0f1015;
+}
+
+.selectandsearchmain .search-here .topnav a{
+
+  color: #000;
+}
+.selectandsearchmain .search-here .topnav a:hover {
+        background-color: transparent !important;
+        color: black;
+}
