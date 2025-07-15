@@ -63,7 +63,6 @@ if (!empty($partner_gallery_model->live_images)) {
             </div>
         </div>
         <?php
-            echo "mjhvskjs";
         if (is_array($gallery)) {
             if (isset($gallery['images'])) {
 

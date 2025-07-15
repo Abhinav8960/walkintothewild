@@ -76,7 +76,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
         // $searchModel->is_approved = 1;
         $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
@@ -413,10 +413,9 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
-        $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
-        $partner_gallery_model->title = time() . '_' . $partner_gallery_model->title;
-        if ($partner_gallery_model->save(false)) {
 
+        $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
+        if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Gallery Deleted Successfully!!!');
             return $this->redirect(['index']);
         }
@@ -443,7 +442,7 @@ class DefaultController extends Controller
 
     public function actionApprovedView($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
