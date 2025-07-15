@@ -16,7 +16,7 @@ use yii\helpers\Html;
             </tr>
         </table>
         <hr>
-        <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>, get ready for your next wild adventure!</p>
+        <p style="font-size: 18px; color: #333; margin-bottom: 20px; font-style: italic;">Hi <?= Html::encode($username) ?>,  get ready for your next wild adventure! Find below the contact details of your safari operator to coordinate the trip.</p>
 
         <p style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 20px;"><?= $parkname ?> <?= isset($night_stay_count) ? ' + ' . $night_stay_count . ' Nights Stay' : '' ?> <?= isset($safaris) ? ' + ' . $safaris . ' Jungle Safaris' : '' ?></p>
 
