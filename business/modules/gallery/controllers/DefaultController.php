@@ -342,6 +342,7 @@ class DefaultController extends Controller
 
         // $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
         // $partner_gallery_model->remark = NULL;
+        
         $partner_gallery_model->send_for_approval = 1;
         $partner_gallery_model->in_draft = 0;
 
