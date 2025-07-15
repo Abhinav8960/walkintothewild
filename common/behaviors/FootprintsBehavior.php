@@ -38,7 +38,6 @@ class FootprintsBehavior extends Behavior
         $model->collection_id = $this->owner->id;
         $model->action = \Yii::$app->controller->action->id;
         $model->absolute_url = \Yii::$app->request->absoluteUrl;
-        $model->status = $this->owner->status;
         $model->date_time = date('Y-m-d H:i:s');
         $model->device = $device;
         $model->platform = $platform;
