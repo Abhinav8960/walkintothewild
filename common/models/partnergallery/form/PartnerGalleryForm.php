@@ -18,6 +18,7 @@ class PartnerGalleryForm extends model
 
     public $can_send_for_approval;
     public $park_id;
+    
     public $in_draft;
 
 
@@ -52,7 +53,7 @@ class PartnerGalleryForm extends model
             [['title', 'status', 'park_id'], 'required'],
             [['status', 'safari_operator_id', 'can_send_for_approval', 'park_id', 'in_draft'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['title'], 'validateUniqueTitle'],
+            // [['title'], 'validateUniqueTitle'],
 
         ];
     }
