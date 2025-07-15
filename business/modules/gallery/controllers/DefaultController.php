@@ -60,14 +60,49 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->in_draft = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'draft_active' => true,
         ]);
     }
+
+    public function actionApproved()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->is_approved = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'approved_active' => true,
+        ]);
+    }
+
+    public function actionPendingForApproval()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->send_for_approval = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pending_active' => true,
+        ]);
+    }
+
 
     public function actionCreate()
     {
@@ -76,6 +111,7 @@ class DefaultController extends Controller
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
+        $model->in_draft = 1;
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -299,13 +335,16 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        if ($partner_gallery_model->can_send_for_approval === PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
-            \Yii::$app->session->setFlash('danger', 'This gallery already send for approval!!!');
-            return $this->redirect(['index']);
-        }
+        // if ($partner_gallery_model->can_send_for_approval === PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
+        //     \Yii::$app->session->setFlash('danger', 'This gallery already send for approval!!!');
+        //     return $this->redirect(['index']);
+        // }
 
-        $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
-        $partner_gallery_model->remark = NULL;
+        // $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        // $partner_gallery_model->remark = NULL;
+        $partner_gallery_model->send_for_approval = 1;
+        $partner_gallery_model->in_draft = 0;
+
         if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
             return $this->redirect(['index']);

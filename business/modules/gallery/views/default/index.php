@@ -15,24 +15,14 @@ $this->title = 'Gallery';
             <div class="col-12 mb-4">
                 <div class="selectandsearchmain d-flex justify-content-between align-items-center">
                     <div class="search-here position-relative">
-                        <!-- <input type="search" placeholder="Search" />
-                        <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a> -->
+                        <div class="topnav float-start">
+                            <a class="<?= isset($approved_active) ? 'active' : '' ?>" href="<?= Url::toRoute(['approved']) ?>">Approved</a>
+                            <a class="<?= isset($draft_active) ? 'active' : '' ?>" href="<?= Url::toRoute(['index']) ?>">In Draft</a>
+                            <a class="<?= isset($pending_active) ? 'active' : '' ?>" href="<?= Url::toRoute(['pending-for-approval']) ?>">Pending For Approval</a>
+                        </div>
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <!-- <a href="" class="sequenceBtn">set sequence</a> -->
-                        <!-- <div class="filter-areaParent">
-                                <div class="shortList-wrapper">
-                                    <div class="shortList d-flex gap-5 align-items-center border">
-                                        <span>Sort</span>
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="shortList-dropdown dropdown">
-                                        <p>Created Recently</p>
-                                        <p>Most Images</p>
-                                        <p>Popularity</p>
-                                    </div>
-                                </div>
-                            </div> -->
+
                         <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
                     </div>
                 </div>
@@ -45,23 +35,29 @@ $this->title = 'Gallery';
                                 <div class="position-relative">
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
-                                    <div class="dropdown-wrapper" tabindex="0">
-                                        <a href="#" class="dot-icon">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <!-- <p>Edit</p> -->
-                                            <!-- <p>Delete</p> -->
-                                            <p>
-                                                <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
-                                            </p>
-                                            <p>
-                                                <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
-                                            </p>
+                                    <?php if ($model->in_draft == 1) { ?>
+                                        <div class="dropdown-wrapper" tabindex="0">
+                                            <a href="#" class="dot-icon">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <p>
+                                                    <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
+                                                </p>
+                                                <p>
+                                                    <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php } ?>
                                     <div class="approve-btn not-approve-btn">
-                                        <button type="btn">Approve</button>
+                                        <?php if ($model->in_draft == 1) { ?>
+                                            <button type="btn">In Draft</button>
+                                        <?php } else if ($model->send_for_approval == 1) { ?>
+                                            <button type="btn">Pending for Approval</button>
+                                        <?php } else if ($model->is_approved == 1) { ?>
+                                            <button type="btn">Approve</button>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="card-body d-flex justify-content-between">
@@ -135,3 +131,29 @@ JS;
 $this->registerJs($script);
 
 ?>
+
+<style>
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+</style>
