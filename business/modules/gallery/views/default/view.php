@@ -16,15 +16,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <p>Gallery View</p>
                 </div>
                 <div class="selectandsearchmain d-flex align-items-center gap-4">
-                    <div class="createGalleryButton-parent d-flex justify-content-center align-items-center">
-                        <button value="<?= Url::toRoute(['create-gallery', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="galleryCreateAction"><i
-                                class="fa-solid fa-plus"></i></button>
+                    <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                        <div class="createGalleryButton-parent d-flex justify-content-center align-items-center">
+                            <button value="<?= Url::toRoute(['create-gallery', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="galleryCreateAction"><i
+                                    class="fa-solid fa-plus"></i></button>
 
-                    </div>
-                    <div class="d-flex align-items-center gap-4">
-                        <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $partner_gallery_model->id]) ?>">Send
-                            For Approval</a>
-                    </div>
+
+                        </div>
+                        <div class="d-flex align-items-center gap-4">
+                            <!-- <a href="<?= Url::toRoute(['set-sequence', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="sequenceBtn">Set sequence</a> -->
+                            <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $partner_gallery_model->id]) ?>">Send
+                                For Approval</a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -73,29 +77,30 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="position-relative">
                                 <img src="<?= $model->gallery_image ?>"
                                     class="card-img-top" alt="">
-                                <div class="dropdown-wrapper">
-                                    <a href="#" class="dot-icon">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </a>
-
-                                    <div class="dropdown-menu">
-                                        <p>
-                                            <?php if ($model->status == 1) { ?>
-                                                <a href="<?= Url::toRoute(['update-thumbnail', 'partner_gallery_id' => $model->partner_gallery_id, 'id' => $model->id]) ?>">Set as Thumbnail</a>
+                                <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                                    <div class="dropdown-wrapper">
+                                        <a href="#" class="dot-icon">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <?php if ($model->status == 1 && $model->set_as_thumbnail != 1) { ?>
+                                                <p>
+                                                    <a href="<?= Url::toRoute(['update-thumbnail', 'partner_gallery_id' => $model->partner_gallery_id, 'id' => $model->id]) ?>">Set as Thumbnail</a>
+                                                </p>
                                             <?php } ?>
-                                        </p>
-                                        <p>
-                                            <button value="<?= Url::toRoute(['update-gallery-image', 'id' => $model->id]) ?>" class="galleryEditAction">Edit</button>
-                                        </p>
-
-                                        <?php
-                                        if ($model->set_as_thumbnail == 0) { ?>
                                             <p>
-                                                <a href="<?= Url::toRoute(['switch', 'id' => $model->id]) ?>">Delete</a>
+                                                <button value="<?= Url::toRoute(['update-gallery-image', 'id' => $model->id]) ?>" class="galleryEditAction">Edit</button>
                                             </p>
-                                        <?php } ?>
+
+                                            <?php
+                                            if ($model->set_as_thumbnail == 0) { ?>
+                                                <p>
+                                                    <a href="<?= Url::toRoute(['switch', 'id' => $model->id]) ?>">Delete</a>
+                                                </p>
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
 
                             </div>
                             <div class="card-body fancy-box-body">

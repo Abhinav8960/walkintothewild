@@ -18,6 +18,7 @@ class PartnerGalleryForm extends model
 
     public $can_send_for_approval;
     public $park_id;
+    public $in_draft;
 
 
     public function __construct(?PartnerGallery $partner_gallery_model = null)
@@ -34,6 +35,7 @@ class PartnerGalleryForm extends model
             $this->title = $this->partner_gallery_model->title;
             $this->safari_operator_id = $this->partner_gallery_model->safari_operator_id;
             $this->park_id = $this->partner_gallery_model->park_id;
+            $this->in_draft = $this->partner_gallery_model->in_draft;
             $this->status = $this->partner_gallery_model->status;
         }
 
@@ -48,7 +50,7 @@ class PartnerGalleryForm extends model
     {
         return [
             [['title', 'status', 'park_id'], 'required'],
-            [['status', 'safari_operator_id', 'can_send_for_approval','park_id'], 'integer'],
+            [['status', 'safari_operator_id', 'can_send_for_approval', 'park_id', 'in_draft'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['title'], 'validateUniqueTitle'],
 
@@ -77,6 +79,7 @@ class PartnerGalleryForm extends model
         $this->partner_gallery_model->title = $this->title;
         $this->partner_gallery_model->safari_operator_id = $this->safari_operator_id;
         $this->partner_gallery_model->park_id = $this->park_id;
+        $this->partner_gallery_model->in_draft = $this->in_draft;
         $this->partner_gallery_model->can_send_for_approval = $this->can_send_for_approval;
         $this->partner_gallery_model->status = $this->status;
     }
