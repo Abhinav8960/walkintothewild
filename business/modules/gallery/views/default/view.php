@@ -43,15 +43,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <p class="mb-1">Park</p>
                         <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
                     </div>
-                    <div class="active-btn">
-                        <?php if ($partner_gallery_model->in_draft == 1) { ?>
+
+                    <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                        <div class="active-btn">
                             <a href="">In Draft</a>
-                        <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
+                        </div>
+                    <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
+                        <div class="active-btn">
                             <a href="">Pending for Approval</a>
-                        <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
+                        </div>
+                    <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
+                        <div class="active-btn">
                             <a href="">Approve</a>
-                        <?php } ?>
-                    </div>
+                        </div>
+                    <?php } ?>
+
                 </div>
                 <div class="d-flex">
                     <table class="table w-50 border-0 border_o d-inline-block py-3">

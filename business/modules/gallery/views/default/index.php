@@ -50,15 +50,21 @@ $this->title = 'Gallery';
                                             </div>
                                         </div>
                                     <?php } ?>
-                                    <div class="approve-btn not-approve-btn">
-                                        <?php if ($model->in_draft == 1) { ?>
+                                    <?php if ($model->in_draft == 1) { ?>
+                                        <div class="approve-btn not-approve-btn">
                                             <button type="btn">In Draft</button>
-                                        <?php } else if ($model->send_for_approval == 1) { ?>
+                                        </div>
+                                    <?php } else if ($model->send_for_approval == 1) { ?>
+                                        <div class="approve-btn not-approve-btn">
                                             <button type="btn">Pending for Approval</button>
-                                        <?php } else if ($model->is_approved == 1) { ?>
+                                        </div>
+                                    <?php } else if ($model->is_approved == 1) { ?>
+                                        <div class="approve-btn not-approve-btn">
                                             <button type="btn">Approve</button>
-                                        <?php } ?>
-                                    </div>
+                                        </div>
+
+                                    <?php } ?>
+
                                 </div>
                                 <div class="card-body d-flex justify-content-between">
                                     <p class="mb-0"><?= $model->title ?></p>
