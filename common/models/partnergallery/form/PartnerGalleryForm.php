@@ -18,6 +18,7 @@ class PartnerGalleryForm extends model
 
     public $can_send_for_approval;
     public $park_id;
+    
     public $in_draft;
 
 
@@ -35,7 +36,6 @@ class PartnerGalleryForm extends model
             $this->title = $this->partner_gallery_model->title;
             $this->safari_operator_id = $this->partner_gallery_model->safari_operator_id;
             $this->park_id = $this->partner_gallery_model->park_id;
-            $this->in_draft = $this->partner_gallery_model->in_draft;
             $this->status = $this->partner_gallery_model->status;
         }
 
