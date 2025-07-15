@@ -164,6 +164,9 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         $version_form_model->remark = $this->remark;
         $version_form_model->can_send_for_approval = $this->can_send_for_approval;
         $version_form_model->live_images = $this->live_images;
+        $version_form_model->in_draft = $this->in_draft;
+        $version_form_model->is_approved = $this->is_approved;
+        $version_form_model->send_for_approval = $this->send_for_approval;
         $version_form_model->is_live = 1;
         $version_form_model->status = $this->status;
 
