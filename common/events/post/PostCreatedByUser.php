@@ -109,17 +109,18 @@ class PostCreatedByUser extends Event
     private function prepareFirebaseTemplate()
     {
         $arr = [];
-        foreach ($this->receiverUserIds as $userId) {
+        foreach ($this->receiverUserIds as $user) {
             $arr[] =  [
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
                 'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective]),
-                'user_id'                           => $userId,
+                'user_id'                           => $user['user_id'],
                 'image_url'                         => NULL,
                 'action'                            => NULL,
             ];
         }
+
         return $arr;
     }
 }
