@@ -1562,8 +1562,8 @@ summary::after {
 
 .active-btn a {
   background-color: #d3eaba;
-  padding: 3px 20px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 100px;
   color: #82C43C;
   font-size: 12px;
   font-weight: 600;
@@ -1673,7 +1673,7 @@ summary::after {
 
   outline: none;
   background: #82C43C;
-  color: #FFFFFF;
+  color: #82C43C;
   border: none;
   font-size: 12px;
   font-weight: 600;
@@ -1683,7 +1683,7 @@ summary::after {
 
 .approve-btn.not-approve-btn button {
 
-  background: #C43C3C;
+  background: #82C43C1A;
 }
 
 
