@@ -110,21 +110,18 @@ class SightingCreatedByUser extends Event
     private function prepareFirebaseTemplate()
     {
         $arr = [];
-        // $count = 0;
-        foreach ($this->receiverUserIds as $userId) {
-            // $count++;
+        foreach ($this->receiverUserIds as $user) {
             $arr[] =  [
                 'master_notification_template_id'   => $this->firebaseTemplateId(),
                 'title'                             => $this->title(),
                 'message'                           => $this->message(),
                 'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => $this->objective]),
-                'user_id'                           => $userId,
+                'user_id'                           => $user['user_id'],
                 'image_url'                         => NULL,
                 'action'                            => NULL,
             ];
         }
-        // print_r($count);
-        // die;
+
         return $arr;
     }
 }
