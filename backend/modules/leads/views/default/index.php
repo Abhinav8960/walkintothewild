@@ -141,7 +141,7 @@ $this->params['title'] = $this->title;
                                     $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
                                 }
                                 if (!empty($model->transaction_id)) {
-                                    $str .= '<br><b>Transaction Id</b>: ' .  $model->transaction_id;
+                                    $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[id]=' . $model->transaction_id . '" target="_blank">Success Transaction</b>: </a>';
                                 }
                                 if (!empty($model->booked_operator_id)) {
                                     $str .= '<br><b>Operator Booked</b>: ' .  $model->bookedpartner->business_name;

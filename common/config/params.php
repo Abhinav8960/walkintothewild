@@ -1,5 +1,6 @@
 <?php
 return [
+    'encryption_key' => 'a8f5d3c2b7e9f1a4c6d8e2f3b9a7c1e5',
     // 'adminEmail' => 'support@walkintothewild.in',
     'supportEmail' => 'support@example.com',
     'senderEmail' => 'noreply@example.com',

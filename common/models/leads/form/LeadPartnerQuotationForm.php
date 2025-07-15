@@ -2,6 +2,9 @@
 
 namespace common\models\leads\form;
 
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
+use common\models\GeneralModel;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuoteInstallments;
 use common\models\leads\LeadPartnerQuotes;
@@ -166,6 +169,16 @@ class LeadPartnerQuotationForm extends Model
 
             $lead_partner->quotation_count = $lead_partner->quotation_count + 1;
             $lead_partner->save(false);
+            $this->markApprove($lpq->id);
+
+            \common\models\leads\LeadPartnerQuotes::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "New Quotation Send"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id], ['!=', 'id', $lpq->id]] // Condition
+            );
+            \common\models\leads\LeadPartnerQuoteInstallments::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "New Quotation Send"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0], ['partner_id' => $lpq->partner_id], ['!=', 'id', $installment->id]] // Condition
+            );
 
             $transaction->commit();
             return true;
@@ -199,5 +212,195 @@ class LeadPartnerQuotationForm extends Model
         if ($inputTime < $invalideTime) {
             $this->addError($attribute, 'The ' . $attribute . ' must be greater that 2 hours from current time.');
         }
+    }
+
+    public function markApprove($id)
+    {
+        $payment_hash = GeneralModel::encrypt($id);
+        $paymentUrl = \Yii::$app->params['frontend_url_for_payments'] . '/payment/' . $payment_hash;
+        $partnerFeesPercentage = Yii::$app->request->post('plateform_partner_fees_percentage') ?? 0;
+        // $qr_code_file = \yii\web\UploadedFile::getInstanceByName('qr_code_file');
+
+        // print_r($qr_code_file);
+        // die();
+        $quotation = LeadPartnerQuotes::findOne($id);
+        $installment = LeadPartnerQuoteInstallments::find()->where(['lead_partner_quote_id' => $id])->one();
+
+        if ($quotation) {
+            // Calculate platform partner fees
+            $partnerSellingPrice = $quotation->partner_selling_price;
+            // $platformPartnerFees = ($partnerSellingPrice * $partnerFeesPercentage) / 100;
+            $platformPartnerFees = 0;
+            $netSellingPrice = $partnerSellingPrice + $platformPartnerFees;
+
+            // Update quotation details
+            $quotation->plateform_partner_fees_percentage = $partnerFeesPercentage;
+            $quotation->plateform_partner_fees = $platformPartnerFees;
+            $quotation->partner_net_selling_price = $netSellingPrice;
+            // $quotation->plateform_customer_discount = $quotation->plateform_customer_discount;
+            $quotation->net_payment_price = $quotation->partner_net_selling_price - $quotation->plateform_customer_discount;
+            $quotation->is_approved_by_admin = LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED;
+            $quotation->datetime_of_approval_by_admin = date('Y-m-d H:i:s');
+            $installment->amount = $quotation->net_payment_price;
+            $installment->payment_link = $paymentUrl;
+            $installment->payment_hash = $payment_hash;
+
+            // // Handle QR code file upload
+            // if (!empty($qr_code_file)) {
+            //     // Retrieve the uploaded file directly
+
+
+
+            //     // Generate the file name
+            //     $qrCodeFileName = 'qr_code_' . $quotation->id . '_' . time() . '.' . $qr_code_file->extension;
+
+            //     // Define the file path in the RFS storage
+            //     $qrCodeFilePath = 'qr_codes/' . date('ym') . '/' . $qrCodeFileName;
+
+            //     // Save the uploaded file to the RFS storage
+            //     $qrCodeChecksum = \common\Helper\FsHelper::saveUploadedFile($qr_code_file, $qrCodeFilePath, $qrCodeFileName);
+
+            //     if (!$qrCodeChecksum) {
+            //         throw new \Exception('Failed to upload QR code to RFS.');
+            //     }
+
+            //     // Save the file path in the installment model
+            //     $installment->qr_code_file = $qrCodeFilePath;
+            // }
+
+            // Generate PDF
+            $content = GeneralModel::generatePdfContent('@backend/modules/leads/views/default/_quotation_pdf.php', [
+                'quotation' => $quotation,
+            ]);
+            $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+            $pdf->WriteHTML($content);
+            $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $quotation->id . '.pdf';
+            $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+            // Upload PDF to RFS
+            $uploadedFile = new \yii\web\UploadedFile([
+                'name' => 'quotation_' . $quotation->id . '.pdf',
+                'tempName' => $pdfFilePath,
+                'type' => 'application/pdf',
+                'size' => filesize($pdfFilePath),
+                'error' => UPLOAD_ERR_OK,
+            ]);
+
+            $fileName = 'quotation_' . $quotation->id . '.pdf';
+            $filePath = 'quotations/' . date('ym') . '/' . $fileName;
+
+            $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
+
+            if (!$checksum) {
+                throw new \Exception('Failed to upload PDF to RFS.');
+            }
+
+            $quotation->quotation_filepath = $filePath;
+            $quotation->is_payment_link_send = 1;
+
+            // Save quotation and installment
+            $quotation->save(false);
+            $installment->save(false);
+
+            $lead_partner = LeadPartners::find()->where(['id' => $quotation->lead_partner_id])->one();
+            $lead_partner->is_payment_link_send = 1;
+            $lead_partner->save(false);
+
+            $lead = Lead::find()->where(['id' => $quotation->lead_id])->one();
+            $lead->is_payment_link_send = 1;
+            $lead->save(false);
+            // Trigger events and prepare chat
+            new \common\events\operator\QuotationApprovatedByAdmin($quotation, $paymentUrl, $quotation->lead->user_id, $quotation->partner->user_id);
+            $this->prepareChat($quotation);
+            return true;
+        }
+
+        return false;
+        // return $this->asJson(['success' => false, 'message' => 'Failed to approve the quotation.' . $e->getMessage()]);
+    }
+
+    private function prepareChat($quotation)
+    {
+
+        // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
+
+        $chat_model = Chat::find()
+            ->andWhere(['lead_id' => $quotation->lead_id])
+            ->andWhere([
+                'or',
+                [
+                    'user_id' => $quotation->partner->user_id,
+                    'recipient_user_id' => $quotation->lead->user_id
+                ],
+                [
+                    'user_id' => $quotation->lead->user_id,
+                    'recipient_user_id' => $quotation->partner->user_id
+                ]
+            ])
+            ->andWhere(['chat_type' => 2])
+            ->one();
+
+        if (!$chat_model) {
+            return false;
+        }
+
+        $message = "Safaris: " . $quotation->safaris;
+
+        if (isset($quotation->park->title)) {
+            $message = "Park: " . $quotation->park->title;
+            $message .= "\n";
+            $message .= "Safaris: " . $quotation->safaris;
+        }
+        $message .= "\n";
+        $message .= "Travelers: " . $quotation->travelers;
+        $message .= "\n";
+        $message .= "Stay Category: " . @\common\models\GeneralModel::staycategoryoption()[$quotation->stay_category_id];
+        $message .= "\n";
+        $message .= "Start Date: " . date('M d, Y', strtotime($quotation->start_date));
+        $message .= "\n";
+        $message .= "End Date: " . date('M d, Y', strtotime($quotation->end_date));
+        if (!empty($quotation->validity_date)) {
+            $message .= "\n";
+            $message .= "Validity Date: " . date('M d, Y', strtotime($quotation->validity_date));
+        }
+        if (!empty($quotation->permit_booking_date)) {
+            $message .= "\n";
+            $message .= "Permit Booking Date: " . date('M d, Y', strtotime($quotation->permit_booking_date));
+        }
+        $message .= "\n";
+        $message .= "Notes:";
+        $message .= "\n";
+        $message .= $quotation->addional_notes;
+
+        Chat::markChatStarted($chat_model, $quotation->partner_id);
+        // $x = \api\models\leads\LeadPartnerQuotes::find()->where(['id' => $quotation->id])->one();
+        // $data = $x->preparedata;
+        // $this->storeMessage($chat_model->id, $quotation->lead->user_id, $message, $data);
+        ChatMessage::updateAll(['is_quotation_active' => 0], ['chat_id' => $chat_model->id]);
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->message = $message;
+        $chat_message->is_quotation_message = true;
+        $chat_message->quotation_id = $quotation->id;
+        $chat_message->is_quotation_active = true;
+        // $chat_message->data = json_encode($data);
+        $chat_message->status = 1;
+        $chat_message->sender_id = $quotation->partner->user_id;
+
+        if ($chat_message->save(false)) {
+
+            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+            $chat->last_message_at = time();
+            $chat->sender_id = $quotation->partner->user_id;
+            $chat->quote_id = $quotation->id;
+            $chat->is_lead_chat_open_for_user = 1;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            return $chat->save(false);
+        }
+
+        return false;
     }
 }

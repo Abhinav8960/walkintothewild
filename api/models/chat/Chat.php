@@ -27,9 +27,6 @@ class Chat extends \common\models\chat\Chat
     public function fields()
     {
 
-
-
-
         $fields = [
             'id',
             'chat_hash',
@@ -85,6 +82,10 @@ class Chat extends \common\models\chat\Chat
             $fields['can_call'] = function () {
                 return (bool) $this->callpossible();
             };
+            $fields['is_closed'] = function () {
+                return (bool) $this->is_closed;
+            };
+
             // if ($this->call_id > 0) {
 
 
@@ -115,7 +116,7 @@ class Chat extends \common\models\chat\Chat
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_lead_chat_open_for_user'], 'integer'],
+            [['quote_id', 'user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'call_id', 'is_quote_accept', 'is_call_request', 'sender_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_lead_chat_open_for_user', 'is_closed'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -271,7 +272,7 @@ class Chat extends \common\models\chat\Chat
         $chat->last_message_at = $last_message->created_at;
         $chat->call_id = $last_message->call_id;
         $chat->is_call_request = $last_message->is_call_request;
-        $chat->quote_id = $last_message->quotation_id  ? $last_message->quotation_id : $chat->quote_id ;
+        $chat->quote_id = $last_message->quotation_id  ? $last_message->quotation_id : $chat->quote_id;
         $chat->sender_id = $last_message->created_by;
         $chat->save(false);
     }

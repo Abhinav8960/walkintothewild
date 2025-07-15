@@ -727,6 +727,8 @@ class SiteController extends RestController
 
     public function actionTest()
     {
+        $encrypted = \common\models\GeneralModel::encrypt("53");
+        return $encrypted;
         return [];
         return  new \common\events\user\MobileNoVerification(748, '9650901148', '123456', 'Anurag Kumar Yadav');
     }

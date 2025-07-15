@@ -1,0 +1,1 @@
+ALTER TABLE `lead_partner_quotes` CHANGE `payment_gateway` `payment_gateway` INT NULL DEFAULT NULL COMMENT '1=>payu,2=>icic,3=>hdfc';
