@@ -99,7 +99,6 @@ $(document).on("change", ".uploadProfileInput", function () {
             $('#imagePreviewBottom').hide();
         }
     });
-    
 });
  
 
