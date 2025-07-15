@@ -38,3 +38,5 @@ ALTER TABLE `package` CHANGE `price_after_discount_in_percentage` `price_after_d
 ALTER TABLE `partner_gallery` ADD `park_id` INT NULL DEFAULT NULL AFTER `safari_operator_id`;
 
 ALTER TABLE `partner_gallery` ADD `in_draft` INT NULL DEFAULT '0' AFTER `live_images`, ADD `is_approved` INT NULL DEFAULT '0' AFTER `in_draft`, ADD `send_for_approval` INT NULL DEFAULT '0' AFTER `is_approved`;
+
+ALTER TABLE `partner_gallery_version` ADD `in_draft` INT NULL DEFAULT '0' AFTER `live_images`, ADD `is_approved` INT NULL DEFAULT '0' AFTER `in_draft`, ADD `send_for_approval` INT NULL DEFAULT '0' AFTER `is_approved`;
