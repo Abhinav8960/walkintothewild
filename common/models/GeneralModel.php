@@ -1758,6 +1758,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             6 => 'Chat',
             7 => 'Comment/Review',
             8 => 'Quote',
+            9 => 'Post',
+            10 => 'Sighting',
         ];
         asort($module_type);
         return $module_type;
