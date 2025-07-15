@@ -1785,7 +1785,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return [
             1 => 'PayU',
-            2 => 'HDFC',
+            2 => 'ICICI',
+            3 => 'HDFC',
         ];
     }
 
@@ -1891,6 +1892,72 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $user = User::find()->where(['id' => $id])->limit(1)->one();
         return $user->name . '(' . $user->email . ')';
+    }
+
+    public static function encrypt($data)
+    {
+        $key = Yii::$app->params['encryption_key'];
+        $cipher = "aes-256-cbc";
+
+        // Ensure the encryption key is valid
+        if (empty($key) || strlen($key) !== 32) {
+            throw new Exception("Invalid encryption key. Ensure it is 32 characters long.");
+        }
+
+        // Hardcoded IV (must be 16 bytes for aes-256-cbc)
+        $iv = '1234567890123456'; // Example IV (16 characters)
+
+        // Encrypt the data
+        $encrypted_data = openssl_encrypt($data, $cipher, $key, 0, $iv);
+
+        if ($encrypted_data === false) {
+            throw new Exception("Encryption failed.");
+        }
+
+        // Encode the encrypted data and IV separately
+        $encrypted_string = base64_encode($encrypted_data) . '::' . base64_encode($iv);
+
+        // Replace '/' with '_' in the final encrypted string for safe transmission
+        $encrypted_string = str_replace('/', '_', $encrypted_string);
+
+        return $encrypted_string;
+    }
+
+    public static function decrypt($data)
+    {
+        $key = Yii::$app->params['encryption_key'];
+        $cipher = "aes-256-cbc";
+
+        // Replace '_' back to '/' before decoding
+        $data = str_replace('_', '/', $data);
+
+        // Validate the format of $data
+        if (strpos($data, '::') === false) {
+            Yii::error("Decrypt method received invalid data format: " . print_r($data, true), __METHOD__);
+            throw new Exception("Invalid encrypted data format. Expected '::' delimiter.");
+        }
+
+        // Split the encrypted data and IV
+        list($encrypted_data, $encoded_iv) = explode('::', $data, 2);
+
+        // Decode the encrypted data and IV
+        $encrypted_data = base64_decode($encrypted_data);
+        $iv = base64_decode($encoded_iv);
+
+        // Ensure the IV matches the hardcoded value
+        $hardcoded_iv = '1234567890123456'; // Same as in the encrypt method
+        if ($iv !== $hardcoded_iv) {
+            throw new Exception("Invalid IV value.");
+        }
+
+        // Decrypt the data
+        $decrypted_data = openssl_decrypt($encrypted_data, $cipher, $key, 0, $iv);
+        if ($decrypted_data === false) {
+            Yii::error("Decryption failed for data: " . print_r($data, true), __METHOD__);
+            throw new Exception("Decryption failed");
+        }
+
+        return $decrypted_data;
     }
 
     public static function maskContactInfoInString(string $text): string
@@ -2050,6 +2117,29 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $text;
     }
 
+    public static function packageversionstatusoption()
+    {
+        return [
+            '1' => 'Live',
+            '2' => 'Pending',
+            '3' => 'Draft',
+            '4' => 'Terminated',
+        ];
+    }
+
+    public static function generatePdfContent($viewPath, $params = [])
+    {
+        // Render the partial view
+        return $content = Yii::$app->view->renderFile(Yii::getAlias($viewPath), $params);
+
+        // // Generate the PDF
+        // $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+        // $pdf->WriteHTML($content);
+        // $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $params['quotation']->id . '.pdf';
+        // $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+        // return $pdfFilePath;
+    }
     public static function chattype($type)
     {
         $types = [

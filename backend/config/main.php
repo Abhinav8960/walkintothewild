@@ -124,6 +124,9 @@ return [
         'gallery' => [
             'class' => 'backend\modules\gallery\Module',
         ],
+        'transaction' => [
+            'class' => 'backend\modules\transaction\Module',
+        ],
         'chat' => [
             'class' => 'backend\modules\chat\Module',
         ],
@@ -163,6 +166,14 @@ return [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['payu'],
+                    'logFile' => '@runtime/logs/payu.log',
+                    'maxFileSize' => 1024 * 2, // 2MB
+                    'maxLogFiles' => 5,
+                ],
             ],
         ],
         'errorHandler' => [
@@ -182,7 +193,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/re/<short_id>' => 'site/redirect-url',
-                '/aws-mailer-notification' => '/aws-mailer-notification/index'
+                '/aws-mailer-notification' => '/aws-mailer-notification/index',
+                'payu-response' => 'payment-response/payu-response',
             ],
         ],
 

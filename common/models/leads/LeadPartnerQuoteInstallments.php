@@ -31,8 +31,13 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
     const STATUS_NOT_RECEIVED = 0;
     const STATUS_RECEIVED = 1;
 
-    const PAYMENT_GATEWAY_PAYU = 1;
-    const PAYMENT_GATEWAY_HDFC = 2;
+    public const PAYMENT_GATEWAY_PAYU = 1;
+    public const PAYMENT_GATEWAY_ICICI = 2;
+    public const PAYMENT_GATEWAY_HDFC = 3;
+
+    public const PAYMENT_GATEWAY_PAYU_LABEL = "payu";
+    public const PAYMENT_GATEWAY_ICICI_LABEL = "icici";
+    public const PAYMENT_GATEWAY_HDFC_LABEL = "hdfc";
 
     public function behaviors()
     {
@@ -56,11 +61,11 @@ class LeadPartnerQuoteInstallments extends \yii\db\ActiveRecord implements \comm
     {
         return [
             [['payment_link', 'qr_code_file', 'payment_gateway', 'transaction_id', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
+            [['status', 'is_payment_received'], 'default', 'value' => 0],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'amount', 'payment_hash', 'before_datetime'], 'required'],
-            [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','is_payment_expired'], 'integer'],
             [['amount'], 'number'],
-            [['before_datetime'], 'safe'],
+            [['before_datetime','payment_receipt'], 'safe'],
             [['payment_link', 'payment_hash', 'transaction_id'], 'string', 'max' => 255],
             [['transaction_datetime'], 'date', 'format' => "php:Y-m-d H:i:s"],
             [['transaction_id'], 'string', 'max' => 100],

@@ -5,5 +5,5 @@ return [
     'senderEmail' => 'smritipal2201@gmail.com',
     'senderName' => 'Walk Into Wild',
     'mailerActive' => true,
-    'app_name' => 'webhook'
+    'app_name' => 'Backend'
 ];

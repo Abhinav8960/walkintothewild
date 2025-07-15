@@ -1,6 +1,6 @@
 <?php
 
-namespace webhook\panels;
+namespace backend\panels;
 
 use bedezign\yii2\audit\components\panels\Panel;
 use yii\base\Event;

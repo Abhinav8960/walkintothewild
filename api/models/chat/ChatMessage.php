@@ -64,6 +64,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
             'is_deleted' => function () {
                 return (bool) $this->status == 0 ? true : false;
             },
+            'is_system_generated' => function () {
+                return (bool) $this->is_system_generated;
+            },
 
             'message_datetime' => function () {
                 return strtotime($this->message_datetime);
@@ -122,7 +125,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery'], 'safe'],
+            [['gallery', 'is_system_generated'], 'safe'],
         ];
     }
 

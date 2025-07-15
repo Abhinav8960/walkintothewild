@@ -57,12 +57,14 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'amount', 'payment_hash', 'before_datetime'], 'required'],
             [['lead_partner_quote_id', 'lead_id', 'partner_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
-            [['before_datetime'], 'safe'],
+            [['before_datetime','payment_receipt'], 'safe'],
             [['payment_link', 'payment_hash'], 'string', 'max' => 255],
             [['transaction_datetime'], 'date', 'format' => "php:Y-m-d H:i:s"],
             [['transaction_id'], 'string', 'max' => 100],
             [['payment_hash'], 'unique', 'message' => 'This payment hash has already been used.'],
             [['payment_link'], 'url', 'defaultScheme' => 'https', 'message' => 'The payment link must be a valid URL.'],
+            [['is_payment_expired', 'payment_expired_datetime', 'payment_expired_reason'], 'safe'],
+
         ];
     }
 
@@ -95,6 +97,6 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
     public function getPayment_initiate_link()
     {
         // return \Yii::$app->params['frontend_url'] . '/payment/' . $this->payment_hash;
-        return $this->payment_link;
+        return $this->payment_link . '?utm_source=chat';
     }
 }

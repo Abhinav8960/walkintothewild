@@ -42,8 +42,9 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
     {
         return [
             [['status'], 'default', 'value' => 1],
+            [['transaction_datetime', 'payment_gateway'], 'safe'],
             [['lead_id', 'partner_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
-            [['lead_id', 'partner_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['lead_id', 'partner_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'is_payment_received', 'transaction_id'], 'integer'],
             [['lead_id', 'partner_id'], 'unique', 'targetAttribute' => ['lead_id', 'partner_id']],
         ];
     }
@@ -68,6 +69,5 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
     public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
-
     }
 }

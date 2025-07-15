@@ -6,6 +6,7 @@ use Yii;
 use yii\rest\Controller;
 use common\models\UserSession;
 use api\models\User;
+use common\models\GeneralModel;
 use common\models\RenderedContent;
 use common\models\trierror\ApiRequestLog;
 use common\models\trierror\FrontendRequestLog;
@@ -444,5 +445,15 @@ class RestController extends Controller
     public function device()
     {
         return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
+    }
+
+    public function encrypt($data)
+    {
+        return GeneralModel::encrypt($data);
+    }
+
+    public function decrypt($data)
+    {
+        return GeneralModel::decrypt($data);
     }
 }

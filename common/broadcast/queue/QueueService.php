@@ -112,7 +112,7 @@ class QueueService
         $model->is_send = 0;
         $model->is_cron_run = 0;
         $model->status = 1;
-        $model->created_by = isset(\Yii::$app->user->identity) ? \Yii::$app->user->identity->id : \Yii::$app->params['active_user_id'];
+        $model->created_by = \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'] ?? null;
 
         $model->save(false);
         return $model;
