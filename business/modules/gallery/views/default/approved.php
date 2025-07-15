@@ -22,7 +22,7 @@ $this->title = 'Gallery';
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-4">
-
+                        <?= $this->render('_search', ['model' => $searchModel]) ?>
                         <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
                     </div>
                 </div>

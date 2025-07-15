@@ -1774,3 +1774,44 @@ summary::after {
         background-color: transparent !important;
         color: black;
 }
+
+
+.shortList {
+
+  padding: 6px 15px 6px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.shortList i {
+
+  color: #92929D;
+}
+
+.filter-one input {
+
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.shortList-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.shortList-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #ddd;
+  z-index: 10;
+}
+
+.shortList-wrapper.open .shortList-dropdown {
+  display: block;
+}

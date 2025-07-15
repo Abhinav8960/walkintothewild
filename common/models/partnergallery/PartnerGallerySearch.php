@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 class PartnerGallerySearch extends PartnerGallery
 {
+    public $custom_filter;
     /**
      * {@inheritdoc}
      */
@@ -18,6 +19,7 @@ class PartnerGallerySearch extends PartnerGallery
         return [
             [['safari_operator_id', 'title'], 'safe'],
             [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft'], 'integer'],
+            [['custom_filter'], 'safe'],
         ];
     }
 
@@ -63,12 +65,35 @@ class PartnerGallerySearch extends PartnerGallery
             'is_approved' => $this->is_approved,
             'send_for_approval' => $this->send_for_approval,
             'can_send_for_approval' => $this->can_send_for_approval,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+            // 'created_at' => $this->created_at,
+            // 'created_by' => $this->created_by,
+            // 'updated_at' => $this->updated_at,
+            // 'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
+
+        if ($this->custom_filter) {
+            switch ($this->custom_filter) {
+                case 1:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['created_at' => SORT_DESC]
+                    ];
+                    break;
+                case 2:
+                    $subQuery = (new \yii\db\Query())
+                        ->select(['COUNT(*)'])
+                        ->from('partner_gallery_image')
+                        ->where('partner_gallery_image.partner_gallery_id = partner_gallery.id')
+                        ->andWhere(['partner_gallery_image.status' => 1]);
+
+                    $query->select([
+                        'partner_gallery.*',
+                        'image_count' => $subQuery,
+                    ])
+                        ->orderBy(['image_count' => SORT_DESC]);
+                    break;
+            };
+        }
 
         return $dataProvider;
     }
