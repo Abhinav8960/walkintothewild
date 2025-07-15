@@ -310,7 +310,7 @@ class LeadPartnerQuotationForm extends Model
             $lead->is_payment_link_send = 1;
             $lead->save(false);
             // Trigger events and prepare chat
-            new \common\events\operator\QuotationApprovatedByAdmin($quotation, $paymentUrl, $quotation->lead->user_id, $quotation->partner->user_id);
+            // new \common\events\operator\QuotationApprovatedByAdmin($quotation, $paymentUrl, $quotation->lead->user_id, $quotation->partner->user_id);
             $this->prepareChat($quotation);
             return true;
         }
