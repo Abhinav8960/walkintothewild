@@ -44,7 +44,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
                     </div>
                     <div class="active-btn">
-                        <!-- <a href="">ACTIVE</a> -->
+                        <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                            <a href="">In Draft</a>
+                        <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
+                            <a href="">Pending for Approval</a>
+                        <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
+                            <a href="">Approve</a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="d-flex">
