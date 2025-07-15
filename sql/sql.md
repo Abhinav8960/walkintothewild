@@ -28,3 +28,9 @@ ALTER TABLE `lead` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFT
 ALTER TABLE lead_partners ADD assign_by_admin_date_time INT NULL DEFAULT NULL AFTER is_assign_by_admin;
 ALTER TABLE `lead_partners` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `assign_by_admin_date_time`;
 ALTER TABLE `lead_partner_quotes` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `payment_gateway`;
+
+
+<!-- 14 july Notification template -->
+ALTER TABLE `master_notification_template` CHANGE `module_type` `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\',\r\n7 => \'comment/review\',\r\n8 =>\'quote\' ,\r\n9 => \'post\',\r\n10 => \'sighting\'';
+INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '9', 'New Post', '{{username}} just shared a new post.', 'Take a look!', '1', '1735806556', '30', '1735806556', '30');
+INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '10', 'New Sighting', 'New sighting alert!', 'Tap to see the latest update.', '1', '1735806556', '30', '1735806556', '30');

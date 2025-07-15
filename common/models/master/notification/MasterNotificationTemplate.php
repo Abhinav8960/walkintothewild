@@ -31,6 +31,8 @@ class MasterNotificationTemplate extends \yii\db\ActiveRecord implements \common
     const FIXED_DEPARTURE_UPDATED = 16;
     const PACKAGE_CREATED = 17;
     const PACKAGE_UPDATED = 18;
+    const NEW_POST = 19;
+    const NEW_SIGHTING = 20;
 
 
 
