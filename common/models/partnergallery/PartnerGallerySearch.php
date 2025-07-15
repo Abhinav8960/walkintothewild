@@ -18,7 +18,7 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count'], 'integer'],
             [['custom_filter'], 'safe'],
         ];
     }
@@ -80,18 +80,21 @@ class PartnerGallerySearch extends PartnerGallery
                     ];
                     break;
                 case 2:
-                    $subQuery = (new \yii\db\Query())
-                        ->select(['COUNT(*)'])
-                        ->from('partner_gallery_image')
-                        ->where('partner_gallery_image.partner_gallery_id = partner_gallery.id')
-                        ->andWhere(['partner_gallery_image.status' => 1]);
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['gallery_images_count' => SORT_DESC]
+                    ];
 
-                    $query->select([
-                        'partner_gallery.*',
-                        'image_count' => $subQuery,
-                    ])
-                        ->orderBy(['image_count' => SORT_DESC]);
                     break;
+                case 3:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['live_gallery_images_count' => SORT_DESC]
+                    ];
+
+                    break;
+                default:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['created_at' => SORT_DESC]
+                    ];
             };
         }
 

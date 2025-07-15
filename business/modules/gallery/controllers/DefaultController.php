@@ -190,6 +190,8 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->partner_gallery_image_model->save()) {
                         $model->uploadFile();
+                        $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
+                        $partner_gallery_model->save(false);
                         \Yii::$app->session->setFlash('success', 'Successfully Uploaded');
                         return $this->redirect(['view', 'id' => $partner_gallery_model->id]);
                     }
@@ -206,18 +208,28 @@ class DefaultController extends Controller
 
     public function actionSwitch($id)
     {
-        $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
+        $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGalleryImage::STATUS_ACTIVE, PartnerGalleryImage::STATUS_SUSPEND]])->limit(1)->one();
         if (!$model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        if ($model->status == PartnerGallery::STATUS_ACTIVE) {
-            $model->status = PartnerGallery::STATUS_SUSPEND;
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $model->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        if ($model->status == PartnerGalleryImage::STATUS_ACTIVE) {
+            $model->status = PartnerGalleryImage::STATUS_SUSPEND;
             $model->save(false);
+            $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
+            $partner_gallery_model->save(false);
             \Yii::$app->getSession()->setFlash('success', 'Successfully Inactive !!!');
         } else {
-            $model->status = PartnerGallery::STATUS_ACTIVE;
+            $model->status = PartnerGalleryImage::STATUS_ACTIVE;
             $model->save(false);
+            $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
+            $partner_gallery_model->save(false);
             \Yii::$app->getSession()->setFlash('success', 'Successfully Active!!!');
         }
 

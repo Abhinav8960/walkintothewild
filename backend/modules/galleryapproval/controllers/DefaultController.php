@@ -71,6 +71,8 @@ class DefaultController extends Controller
         $partner_gallery_model->send_for_approval = 0;
         $partner_gallery_model->remark = NULL;
         $partner_gallery_model->is_live = 1;
+        $partner_gallery_model->live_gallery_images_count = $partner_gallery_model->gallery_count;
+
 
         if ($partner_gallery_model->save(false)) {
             $partner_gallery_model->versionsave();
@@ -90,7 +92,7 @@ class DefaultController extends Controller
 
         $model = new PartnerGalleryRejectionForm($partner_gallery_model);
         // $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
-        
+
         $model->in_draft  = 1;
         $model->send_for_approval  = 0;
         $model->approved  = 0;

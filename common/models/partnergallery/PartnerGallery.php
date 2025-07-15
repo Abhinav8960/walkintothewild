@@ -77,7 +77,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['safari_operator_id', 'title', 'slug'], 'required'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id','gallery_images_count'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             // [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
