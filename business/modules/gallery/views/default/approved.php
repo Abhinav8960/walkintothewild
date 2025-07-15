@@ -47,6 +47,7 @@ $this->title = 'Gallery';
                                                 <p>
                                                     <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">Edit</a>
                                                 </p>
+                                                
                                             </div>
                                         </div>
                                     <?php
