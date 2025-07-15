@@ -33,23 +33,27 @@ $this->title = 'Gallery';
                         <div class="galleryCard">
                             <div class="card p-0 border-0 bg-transparent">
                                 <div class="position-relative">
-                                    <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
+                                    <a href="<?= Url::toRoute(['approved-view', 'id' => $model->partner_gallery_id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
-                                    <?php if ($model->in_draft == 1) { ?>
+
+                                    <?php
+                                    if ($model->partnerGallery->is_approved == 1 && $model->partnerGallery->in_draft == 0) {
+                                    ?>
                                         <div class="dropdown-wrapper" tabindex="0">
                                             <a href="#" class="dot-icon">
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu">
                                                 <p>
-                                                    <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
-                                                </p>
-                                                <p>
-                                                    <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
+                                                    <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->partner_gallery_id]) ?>">Edit</a>
                                                 </p>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    <?php
+                                    }
+                                    ?>
+
+
                                     <div class="approve-btn not-approve-btn approveBtn">
                                         <button type="btn">Approve</button>
                                     </div>

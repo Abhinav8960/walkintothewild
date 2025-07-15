@@ -6,6 +6,7 @@ namespace business\modules\gallery\controllers;
 use common\models\partnergallery\form\PartnerGalleryForm;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGallerySearch;
+use common\models\partnergallery\PartnerGalleryVersionSearch;
 use common\models\partnergalleryimage\form\PartnerGalleryImageForm;
 use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\models\partnergalleryimage\PartnerGalleryImageSearch;
@@ -41,7 +42,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image', 'gallery-delete'],
+                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image', 'gallery-delete', 'draft-gallery'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -74,9 +75,10 @@ class DefaultController extends Controller
     public function actionApproved()
     {
         $safari_operator = $this->module->operatormodel();
-        $searchModel = new PartnerGallerySearch();
+        $searchModel = new PartnerGalleryVersionSearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        $searchModel->is_approved = 1;
+        // $searchModel->is_approved = 1;
+        $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -342,7 +344,7 @@ class DefaultController extends Controller
 
         // $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
         // $partner_gallery_model->remark = NULL;
-        
+
         $partner_gallery_model->send_for_approval = 1;
         $partner_gallery_model->in_draft = 0;
 
@@ -407,5 +409,42 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDraftGallery($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'is_approved' => 1, 'in_draft' => 0, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery not available for draft!!!');
+        }
+        $partner_gallery_model->is_approved = 0;
+        $partner_gallery_model->in_draft = 1;
+        \Yii::$app->session->setFlash('danger', 'Technical Issue!!!');
+
+        if ($partner_gallery_model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Done!!!');
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionApprovedView($id)
+    {
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        // $searchModel = new PartnerGalleryImageSearch();
+        // $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
+        // $searchModel->partner_gallery_id = $partner_gallery_model->id;
+        // $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('approved_view', [
+            'partner_gallery_model' => $partner_gallery_model,
+            // 'searchModel' => $searchModel,
+        ]);
     }
 }

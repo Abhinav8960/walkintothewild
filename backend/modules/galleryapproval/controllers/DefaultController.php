@@ -70,6 +70,7 @@ class DefaultController extends Controller
         $partner_gallery_model->in_draft = 0;
         $partner_gallery_model->send_for_approval = 0;
         $partner_gallery_model->remark = NULL;
+        $partner_gallery_model->is_live = 1;
 
         if ($partner_gallery_model->save(false)) {
             $partner_gallery_model->versionsave();

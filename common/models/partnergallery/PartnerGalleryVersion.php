@@ -2,6 +2,7 @@
 
 namespace common\models\partnergallery;
 
+use common\models\partnergalleryimage\PartnerGalleryImage;
 use Yii;
 
 /**
@@ -71,5 +72,29 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    public function getThumbnail()
+    {
+        $model = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->partner_gallery_id])->andWhere(['set_as_thumbnail' => 1])->limit(1)->one();
+        if ($model) {
+            return Yii::$app->params['s3_endpoint'] . '/' . $model->filepath;
+        }
+        return null;
+    }
+
+    public function getGallery_count()
+    {
+        $gallery_count = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->partner_gallery_id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+        if ($gallery_count > 0) {
+            return $gallery_count;
+        }
+        return 0;
+    }
+
+    public function getPartnerGallery()
+    {
+        return $this->hasOne(PartnerGallery::class, ['id' => 'partner_gallery_id']);
     }
 }
