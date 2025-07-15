@@ -51,15 +51,15 @@ $this->title = 'Gallery';
                                         </div>
                                     <?php } ?>
                                     <?php if ($model->in_draft == 1) { ?>
-                                        <div class="approve-btn not-approve-btn">
+                                        <div class="approve-btn not-approve-btn inDraft-btn">
                                             <button type="btn">In Draft</button>
                                         </div>
                                     <?php } else if ($model->send_for_approval == 1) { ?>
-                                        <div class="approve-btn not-approve-btn">
+                                        <div class="approve-btn not-approve-btn pending-btn">
                                             <button type="btn">Pending for Approval</button>
                                         </div>
                                     <?php } else if ($model->is_approved == 1) { ?>
-                                        <div class="approve-btn not-approve-btn">
+                                        <div class="approve-btn not-approve-btn approveBtn">
                                             <button type="btn">Approve</button>
                                         </div>
 

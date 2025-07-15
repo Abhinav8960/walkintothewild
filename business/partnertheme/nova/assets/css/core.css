@@ -1569,6 +1569,27 @@ summary::after {
   font-weight: 600;
 
 }
+.active-btn.inDraf-inner-butn a{
+
+      background: #09432D33;
+    color: #09432D;
+    font-size: 17px;
+    font-weight: 600;
+}
+.active-btn.pending-inner-butn a{
+
+      background: #FFDDDD;
+    color: #FD5634;
+    font-size: 17px;
+    font-weight: 600;
+}
+.active-btn.approve-inner-butn a{
+
+      background: #FFDDDD;
+    color: #82C43C;
+    font-size: 17px;
+    font-weight: 600;
+}
 
 .tbody-leads.sighting-leads td {
   font-size: 13px;
@@ -1680,7 +1701,21 @@ summary::after {
   padding: 3px 12px;
   border-radius: 5px;
 }
+.approve-btn.not-approve-btn.approveBtn button{
+ background: #FFDDDD;
+    color: #82C43C;
 
+}
+.approve-btn.not-approve-btn.inDraft-btn button{
+
+      background: #09432D33;
+    color: #09432D;
+}
+.approve-btn.not-approve-btn.pending-btn button{
+
+      background: #FFDDDD;
+    color: #FD5634;
+}
 .approve-btn.not-approve-btn button {
 
   background: #82C43C1A;
