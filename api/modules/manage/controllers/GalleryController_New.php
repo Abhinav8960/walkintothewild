@@ -67,6 +67,7 @@ class GalleryController_New extends RestController
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->in_draft = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery");
@@ -172,7 +173,7 @@ class GalleryController_New extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->partner_gallery_image_model->save()) {
-                $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+                // $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
                 if ($partner_gallery_model->save(false)) {
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Successfully Updated!!!"]);
                 }
@@ -212,6 +213,10 @@ class GalleryController_New extends RestController
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]])->limit(1)->one();
         if (!$model) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Image Not Found!!!"]);
+        }
+
+        if ($model->set_as_thumbnail == 1) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "This image is set as Thumbnail!!!"]);
         }
 
         $model->status = PartnerGalleryImage::STATUS_SUSPEND;
@@ -285,8 +290,7 @@ class GalleryController_New extends RestController
         if (!$partner_gallery_model) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
         }
-        $partner_gallery_model->status = PartnerGallery::STATUS_DELETE;
-        $partner_gallery_model->title = time() . '_' . $partner_gallery_model->title;
+        $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
         if ($partner_gallery_model->save(false)) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Deleted Successfully!!!"]);
         }
@@ -311,5 +315,46 @@ class GalleryController_New extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery Send For Approval!!!"]);
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Please Try Again!!!"]);
+    }
+
+    public function actionApproved()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->is_live = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "approved_gallery");
+    }
+
+
+    public function actionPendingForApproval()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->send_for_approval = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "pending_gallery");
+    }
+
+    public function actionDraftGallery($slug)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'is_approved' => 1, 'in_draft' => 0, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery not available for draft!!!"]);
+        }
+        $partner_gallery_model->is_approved = 0;
+        $partner_gallery_model->in_draft = 1;
+
+        if ($partner_gallery_model->save(false)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Done!!!"]);
+        }
+        return $this->redirect(['index']);
     }
 }
