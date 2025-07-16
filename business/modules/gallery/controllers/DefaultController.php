@@ -325,6 +325,13 @@ class DefaultController extends Controller
 
     public function actionUpdateThumbnail($partner_gallery_id, $id)
     {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
         $update_model = PartnerGalleryImage::updateAll(['set_as_thumbnail' => 0], ['partner_gallery_id' => $partner_gallery_id]);
 
         $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
@@ -343,7 +350,7 @@ class DefaultController extends Controller
     public function actionSendForApproval($id)
     {
         $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'in_draft' => 1, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
