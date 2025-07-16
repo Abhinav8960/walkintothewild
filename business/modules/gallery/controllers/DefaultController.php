@@ -366,6 +366,7 @@ class DefaultController extends Controller
 
         $partner_gallery_model->send_for_approval = 1;
         $partner_gallery_model->in_draft = 0;
+        $partner_gallery_model->remark = null;
 
         if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
