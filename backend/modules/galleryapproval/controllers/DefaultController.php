@@ -95,7 +95,7 @@ class DefaultController extends Controller
 
         $model->in_draft  = 1;
         $model->send_for_approval  = 0;
-        $model->approved  = 0;
+        $model->is_approved  = 0;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
