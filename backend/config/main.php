@@ -130,6 +130,9 @@ return [
         'chat' => [
             'class' => 'backend\modules\chat\Module',
         ],
+        'leadoperatorwise' => [
+            'class' => 'backend\modules\leadoperatorwise\Module',
+        ],
 
     ],
     'components' => [
