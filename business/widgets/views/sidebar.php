@@ -52,7 +52,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/package/default/index",
                                                                                                     "/package/default/create",
                                                                                                 )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu" style="    white-space: nowrap;"> My Packages</span>
+                <span class="hide-slide-menu" style="    white-space: nowrap;">Packages</span>
             </a>
         </li>
 
