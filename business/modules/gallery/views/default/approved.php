@@ -46,15 +46,19 @@ $this->title = 'Gallery';
                                             <?php
                                             if ($model->is_approved == 1 && $model->in_draft == 0) {
                                             ?>
-                                                <p>
-                                                    <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">Edit</a>
-                                                </p>
+
+                                                <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">
+                                                    <p>Edit</p>
+                                                </a>
+
                                             <?php
                                             }
                                             ?>
-                                            <p>
-                                                <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">Delete</a>
-                                            </p>
+
+                                            <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
+                                                <p>Delete</p>
+                                            </a>
+
                                         </div>
                                     </div>
 
