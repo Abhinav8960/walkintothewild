@@ -44,3 +44,5 @@ ALTER TABLE `partner_gallery_version` ADD `in_draft` INT NULL DEFAULT '0' AFTER 
 ALTER TABLE partner_gallery ADD is_live TINYINT NOT NULL DEFAULT '0' AFTER can_send_for_approval;
 
 ALTER TABLE `partner_gallery` ADD `live_gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_images`, ADD `gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_gallery_images_count`;
+
+ALTER TABLE `partner_gallery_version` ADD `live_gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_images`, ADD `gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_gallery_images_count`;

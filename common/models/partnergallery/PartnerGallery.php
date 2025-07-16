@@ -168,6 +168,8 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         $version_form_model->is_approved = $this->is_approved;
         $version_form_model->send_for_approval = $this->send_for_approval;
         $version_form_model->is_live = 1;
+        $version_form_model->live_gallery_images_count = $this->live_gallery_images_count;
+        $version_form_model->gallery_images_count = $this->gallery_images_count;
         $version_form_model->status = $this->status;
 
         $version_form_model->save(false);

@@ -12,6 +12,7 @@ use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
+use common\models\partnergalleryimage\PartnerGalleryImage;
 use common\models\postscomment\UserPostComment;
 use common\models\postscomment\UserPostLike;
 use common\models\sighting\Sighting;
@@ -411,31 +412,50 @@ class TempController extends Controller
 
     public function actionApprovedGallery()
     {
-        $partner_galleries = PartnerGallery::find()->where(['IS NOT', 'live_images', NULL])->all();
+        $partner_galleries = PartnerGallery::find()
+            ->where(['IS NOT', 'live_images', null])
+            ->all();
 
         foreach ($partner_galleries as $gallery) {
-            $version_form_model = new PartnerGalleryVersion();
-            $version_form_model->partner_gallery_id = $gallery->id;
-            $version_form_model->version = 1;
-            $version_form_model->safari_operator_id = $gallery->safari_operator_id;
-            $version_form_model->park_id = $gallery->park_id;
-            $version_form_model->title = $gallery->title;
-            $version_form_model->slug = $gallery->slug;
-            $version_form_model->remark = $gallery->remark;
-            $version_form_model->can_send_for_approval = $gallery->can_send_for_approval;
-            $version_form_model->live_images = $gallery->live_images;
-            $version_form_model->in_draft = $gallery->in_draft;
-            $version_form_model->send_for_approval = $gallery->send_for_approval;
-            $version_form_model->approved = $gallery->approved;
-            $version_form_model->is_live = 1;
-            $version_form_model->status = $gallery->status;
-            $version_form_model->save(false);
+            $gallery_images_count = PartnerGalleryImage::find()
+                ->where(['partner_gallery_id' => $gallery->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])
+                ->count();
+
+            $live_gallery_images_count = 0;
+            if (!empty($gallery->live_images)) {
+                $c_arr = json_decode($gallery->live_images, true);
+                $live_gallery_images_count = $c_arr['image_count'] ?? 0;
+            }
+
+            $version = new PartnerGalleryVersion();
+            $version->partner_gallery_id = $gallery->id;
+            $version->version = 1;
+            $version->safari_operator_id = $gallery->safari_operator_id;
+            $version->park_id = $gallery->park_id;
+            $version->title = $gallery->title;
+            $version->slug = $gallery->slug;
+            $version->remark = $gallery->remark;
+            $version->can_send_for_approval = $gallery->can_send_for_approval;
+            $version->live_images = $gallery->live_images;
+            $version->in_draft = $gallery->in_draft;
+            $version->send_for_approval = $gallery->send_for_approval;
+            $version->approved = $gallery->approved;
+            $version->is_live = 1;
+            $version->status = $gallery->status;
+            $version->gallery_images_count = $gallery_images_count;
+            $version->live_gallery_images_count = $live_gallery_images_count;
+            $version->save(false);
+
 
             $gallery->in_draft = 0;
             $gallery->send_for_approval = 0;
-            $gallery->is_approved = 1;
+            $gallery->approved = 1;
+            $gallery->is_live = 1;
+            $gallery->gallery_images_count = $gallery_images_count;
+            $gallery->live_gallery_images_count = $live_gallery_images_count;
             $gallery->save(false);
         }
+
         echo "Done";
     }
 }

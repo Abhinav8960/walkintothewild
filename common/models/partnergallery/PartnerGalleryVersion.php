@@ -43,11 +43,9 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
         return [
             [['park_id', 'remark', 'live_images', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['version', 'safari_operator_id', 'title', 'slug'], 'required'],
-            [['version', 'safari_operator_id', 'park_id', 'can_send_for_approval', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['version', 'safari_operator_id', 'park_id', 'can_send_for_approval', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','live_gallery_images_count','gallery_images_count'], 'integer'],
             [['live_images'], 'string'],
             [['title', 'slug', 'remark'], 'string', 'max' => 255],
-            [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
     }
 

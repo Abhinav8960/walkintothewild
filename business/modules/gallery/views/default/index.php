@@ -44,9 +44,11 @@ $this->title = 'Gallery';
                                             <p>
                                                 <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
                                             </p>
-                                            <p>
-                                                <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">Delete</a>
-                                            </p>
+
+                                            <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">
+                                                <p>Delete</p>
+                                            </a>
+
                                         </div>
                                     </div>
 
