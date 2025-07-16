@@ -37,30 +37,30 @@ $this->title = 'Gallery';
                                             class="card-img-top" alt=""></a>
 
 
-                                    <div class="dropdown-wrapper" tabindex="0">
-                                        <a href="#" class="dot-icon">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
+                                    <?php
+                                    if ($model->is_approved == 1 && $model->in_draft == 0) {
+                                    ?>
+                                        <div class="dropdown-wrapper" tabindex="0">
+                                            <a href="#" class="dot-icon">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
 
-                                        <div class="dropdown-menu">
-                                            <?php
-                                            if ($model->is_approved == 1 && $model->in_draft == 0) {
-                                            ?>
+                                            <div class="dropdown-menu">
 
                                                 <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">
                                                     <p>Edit</p>
                                                 </a>
 
-                                            <?php
-                                            }
-                                            ?>
 
-                                            <!-- <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
+                                                <!-- <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
                                                 <p>Delete</p>
                                             </a> -->
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php
+                                    }
+                                    ?>
 
 
 

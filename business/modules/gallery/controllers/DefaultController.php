@@ -440,10 +440,12 @@ class DefaultController extends Controller
         }
         $partner_gallery_model->is_approved = 0;
         $partner_gallery_model->in_draft = 1;
-        \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
+
 
         if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Done!!!');
+        } else {
+            \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
         }
         return $this->redirect(['index']);
     }
