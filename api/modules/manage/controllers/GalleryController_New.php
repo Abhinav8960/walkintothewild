@@ -323,7 +323,6 @@ class GalleryController_New extends RestController
         $searchModel = new PartnerGallerySearch();
         $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
-        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "approved_gallery");
     }
@@ -336,7 +335,6 @@ class GalleryController_New extends RestController
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
         $searchModel->send_for_approval = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
-        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->dataProviderSender($searchModel, $rootIndexName = "pending_gallery");
     }

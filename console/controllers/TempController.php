@@ -449,7 +449,7 @@ class TempController extends Controller
 
             $gallery->in_draft = 0;
             $gallery->send_for_approval = 0;
-            $gallery->approved = 1;
+            $gallery->is_approved = 1;
             $gallery->is_live = 1;
             $gallery->gallery_images_count = $gallery_images_count;
             $gallery->live_gallery_images_count = $live_gallery_images_count;
