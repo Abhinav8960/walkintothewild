@@ -32,7 +32,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             //     return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
             // },
             'gallery_image_count' => function () {
-                return (int) $this->live_gallery_images_count;
+                return (int) $this->gallery_images_count;
             },
             // 'live_image_count' => function () {
             //     if (!empty($this->live_images)) {
@@ -42,7 +42,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             //     return 0;
             // },
             'live_image_count' => function () {
-               return (int) $this->gallery_images_count;
+               return (int) $this->live_gallery_images_count;
             },
             // 'can_send_for_approval' =>  function () {
             //     return (bool) $this->can_send_for_approval;

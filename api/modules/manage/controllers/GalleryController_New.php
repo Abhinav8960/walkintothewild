@@ -73,6 +73,27 @@ class GalleryController_New extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery");
     }
 
+    public function actionApproved()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->is_live = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "approved_gallery");
+    }
+
+    public function actionPendingForApproval()
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->send_for_approval = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "pending_gallery");
+    }
+
     public function actionCreate()
     {
         $safari_operator_model = $this->module->operatormodel();
@@ -80,7 +101,6 @@ class GalleryController_New extends RestController
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
-        // $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
         $model->in_draft = 1;
 
 
@@ -93,6 +113,20 @@ class GalleryController_New extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Created!!!"]);
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+    public function actionView($slug)
+    {
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $searchModel = new PartnerGalleryImageSearch();
+        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
+        $searchModel->partner_gallery_id = $partner_gallery_model->id;
+
+        return $this->dataProviderSender($searchModel, $rootIndexName = "partner_gallery_view");
     }
 
     public function actionEditGallery($slug)
@@ -221,6 +255,8 @@ class GalleryController_New extends RestController
 
         $model->status = PartnerGalleryImage::STATUS_SUSPEND;
         if ($model->save(false)) {
+            $partner_gallery_model->gallery_images_count = $partner_gallery_model->gallery_count;
+            $partner_gallery_model->save(false);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete image Successfully !!!"]);
         }
 
@@ -300,7 +336,7 @@ class GalleryController_New extends RestController
     public function actionSendForApproval($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug,'in_draft' => 1, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
         }
@@ -317,27 +353,6 @@ class GalleryController_New extends RestController
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Please Try Again!!!"]);
     }
 
-    public function actionApproved()
-    {
-        $safari_operator = $this->module->operatormodel();
-        $searchModel = new PartnerGallerySearch();
-        $searchModel->is_live = 1;
-        $searchModel->safari_operator_id = $safari_operator->id;
-
-        return $this->dataProviderSender($searchModel, $rootIndexName = "approved_gallery");
-    }
-
-
-    public function actionPendingForApproval()
-    {
-        $safari_operator = $this->module->operatormodel();
-        $searchModel = new PartnerGallerySearch();
-        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        $searchModel->send_for_approval = 1;
-        $searchModel->safari_operator_id = $safari_operator->id;
-
-        return $this->dataProviderSender($searchModel, $rootIndexName = "pending_gallery");
-    }
 
     public function actionDraftGallery($slug)
     {
