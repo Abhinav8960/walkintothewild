@@ -946,11 +946,11 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
 
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['IS NOT', 'live_images', NULL])->andWhere(['IS', 'remark', NULL]);
 
         return $this->renderAjax('_gallery_popup', [
             'dataProvider' => $dataProvider,
