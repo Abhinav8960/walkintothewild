@@ -12,7 +12,7 @@ use common\models\UserSession;
 /**
  * Class for common API functions
  */
-class Api extends Component
+class SecureApi extends Component
 {
     public function sendResponse($data = false, $additional_info = false, $code = 200)
     {
@@ -42,7 +42,9 @@ class Api extends Component
             $response = $_GET['callback'] . "(" . $response . ")";
         }
 
-        return $response;
+        return $this->encyptResponse($response);
+
+        // return $response;
     }
 
 
@@ -57,10 +59,10 @@ class Api extends Component
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);
         }
-        return $response = json_encode($response);
+        // return $response = json_encode($response);
+        return json_encode($this->encyptResponse($response));
+
         // return $this->send($response);
-
-
         exit;
     }
 
@@ -74,11 +76,23 @@ class Api extends Component
         //     $response = array_merge($response, $msg);
         // }
         // return $response = json_encode($response);
-        echo json_encode($response);
+        echo json_encode($this->encyptResponse($response));
+
+        // echo json_encode($response);
         exit;
     }
 
-    
+    private function encyptResponse($data)
+    {
+        $platform = \Yii::$app->request->headers->get('x-client-platform', 'web');
+        $key = \Yii::$app->params['aes_keys'][$platform] ?? \Yii::$app->params['aes_keys']['web'];
+        $encrypted = \common\components\AesCrypto::encrypt($data, $key);
+        // $decrypted = \common\components\AesCrypto::decrypt($encrypted, $key);
+        // return ['encrypted' => $encrypted, 'decrypted'=>$decrypted];
+        return ['data' => $encrypted];
+    }
+
+
 
 
 
