@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = 'Leads(' . $model->sourceLabel . ')';
+$this->title = 'Leads Operator Wise(' . $model->sourceLabel . ')';
 $this->params['title'] = $this->title;
 
 // if ($model->status == 1 && $model->source == 2) {
