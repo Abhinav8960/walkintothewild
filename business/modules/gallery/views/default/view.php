@@ -6,6 +6,8 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+$this->title = 'Gallery';
+
 ?>
 
 <div class="container-fluid">
@@ -13,7 +15,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="col-12 mb-4">
             <div class="galleryViewMain-parent d-flex justify-content-between align-items-center">
                 <div class="gallary-title">
-                    <p>Gallery View</p>
+                    <p>
+                        Gallery View
+                        <?php if ($partner_gallery_model->remark != null) { ?>
+                            $partner_gallery_model->remark
+                        <?php } ?>
+                    </p>
                 </div>
                 <div class="selectandsearchmain d-flex align-items-center gap-4">
                     <?php if ($partner_gallery_model->in_draft == 1) { ?>
