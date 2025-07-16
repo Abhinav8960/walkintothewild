@@ -17,9 +17,9 @@ $this->title = 'Gallery';
                 <div class="gallary-title">
                     <p>
                         Gallery View
-                        <?php if ($partner_gallery_model->remark != null) { ?>
-                            $partner_gallery_model->remark
-                        <?php } ?>
+                        <?php if ($partner_gallery_model->remark != null) {
+                            echo '(' . $partner_gallery_model->remark . ')';
+                        } ?>
                     </p>
                 </div>
                 <div class="selectandsearchmain d-flex align-items-center gap-4">
