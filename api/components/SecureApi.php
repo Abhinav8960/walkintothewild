@@ -87,8 +87,8 @@ class SecureApi extends Component
         $platform = \Yii::$app->request->headers->get('x-client-platform', 'web');
         $key = \Yii::$app->params['aes_keys'][$platform] ?? \Yii::$app->params['aes_keys']['web'];
         $encrypted = \common\components\AesCrypto::encrypt($data, $key);
-        // $decrypted = \common\components\AesCrypto::decrypt($encrypted, $key);
-        // return ['encrypted' => $encrypted, 'decrypted'=>$decrypted];
+        $decrypted = \common\components\AesCrypto::decrypt($encrypted, $key);
+        return ['encrypted' => $encrypted, 'decrypted'=>$decrypted];
         return ['data' => $encrypted];
     }
 
