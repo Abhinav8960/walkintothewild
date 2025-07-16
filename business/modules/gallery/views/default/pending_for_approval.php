@@ -36,9 +36,9 @@ $this->title = 'Gallery';
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
                                             class="card-img-top" alt=""></a>
 
-                                    <div class="approve-btn not-approve-btn pending-btn">
+                                    <!-- <div class="approve-btn not-approve-btn pending-btn">
                                         <button type="btn">Pending for Approval</button>
-                                    </div>
+                                    </div> -->
 
                                 </div>
                                 <div class="card-body d-flex justify-content-between">

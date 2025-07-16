@@ -52,9 +52,9 @@ $this->title = 'Gallery';
                                         </div>
                                     </div>
 
-                                    <div class="approve-btn not-approve-btn inDraft-btn">
+                                    <!-- <div class="approve-btn not-approve-btn inDraft-btn">
                                         <button type="btn">In Draft</button>
-                                    </div>
+                                    </div> -->
 
 
                                 </div>

@@ -44,26 +44,30 @@ $this->title = 'Gallery';
                 <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
                     <div class="date-or-time">
                         <p class="mb-1">Title</p>
-                        <p class="mb-0"><?= $partner_gallery_model->title ?></p>
+                        <div class="d-flex align-items-center gap-5">
+                            <p class="mb-0"><?= $partner_gallery_model->title ?></p>
+                            <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                                <div class="active-btn inDraf-inner-butn">
+                                    <a href="">In Draft</a>
+                                </div>
+                            <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
+                                <div class="active-btn pending-inner-butn">
+                                    <a href="">Pending for Approval</a>
+                                </div>
+                            <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
+                                <div class="active-btn approve-inner-butn">
+                                    <a href="">Approve</a>
+                                </div>
+                            <?php } ?>
+                        </div>
+
                     </div>
                     <div class="date-or-time">
                         <p class="mb-1">Park</p>
                         <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
                     </div>
 
-                    <?php if ($partner_gallery_model->in_draft == 1) { ?>
-                        <div class="active-btn inDraf-inner-butn">
-                            <a href="">In Draft</a>
-                        </div>
-                    <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
-                        <div class="active-btn pending-inner-butn">
-                            <a href="">Pending for Approval</a>
-                        </div>
-                    <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
-                        <div class="active-btn approve-inner-butn">
-                            <a href="">Approve</a>
-                        </div>
-                    <?php } ?>
+
 
                 </div>
                 <div class="d-flex">

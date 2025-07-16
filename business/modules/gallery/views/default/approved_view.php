@@ -28,16 +28,21 @@ if (!empty($partner_gallery_model->live_images)) {
                 <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
                     <div class="date-or-time">
                         <p class="mb-1">Title</p>
-                        <p class="mb-0"><?= $partner_gallery_model->title ?></p>
+
+                        <div class="d-flex align-items-center gap-5">
+                            <p class="mb-0"><?= $partner_gallery_model->title ?></p>
+                            <div class="active-btn approve-inner-butn">
+                                <a href="">Approve</a>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="date-or-time">
                         <p class="mb-1">Park</p>
                         <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
                     </div>
 
-                    <div class="active-btn approve-inner-butn">
-                        <a href="">Approve</a>
-                    </div>
+
 
                 </div>
                 <div class="d-flex">

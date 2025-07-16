@@ -55,18 +55,18 @@ $this->title = 'Gallery';
                                             }
                                             ?>
 
-                                            <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
+                                            <!-- <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
                                                 <p>Delete</p>
-                                            </a>
+                                            </a> -->
 
                                         </div>
                                     </div>
 
 
 
-                                    <div class="approve-btn not-approve-btn approveBtn">
+                                    <!-- <div class="approve-btn not-approve-btn approveBtn">
                                         <button type="btn">Approve</button>
-                                    </div>
+                                    </div> -->
 
 
                                 </div>

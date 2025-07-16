@@ -1568,7 +1568,7 @@ summary::after {
 
 .active-btn a {
   background-color: #d3eaba;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 100px;
   color: #82C43C;
   font-size: 12px;
@@ -1579,21 +1579,21 @@ summary::after {
 
       background: #09432D33;
     color: #09432D;
-    font-size: 17px;
+    font-size: 12px;
     font-weight: 600;
 }
 .active-btn.pending-inner-butn a{
 
       background: #FFDDDD;
     color: #FD5634;
-    font-size: 17px;
+    font-size: 12px;
     font-weight: 600;
 }
 .active-btn.approve-inner-butn a{
 
       background: #FFDDDD;
     color: #82C43C;
-    font-size: 17px;
+    font-size: 12px;
     font-weight: 600;
 }
 
