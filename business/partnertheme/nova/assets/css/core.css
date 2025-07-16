@@ -133,7 +133,12 @@ p {
   border-radius: 50% !important;
   padding: 8px 31px 8px 10px;
 }
+/* .ed-du-img img{
 
+  width: 15px;
+  height: 16px;
+  object-fit: cover;
+} */
 .navItems .navLinks:hover {
 
   background: #0f1015;
