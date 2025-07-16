@@ -1422,6 +1422,12 @@ summary::after {
   font-size: 14px;
   font-weight: 700;
 }
+.gallary-title p{
+
+    font-size: 20px;
+    font-weight: 700;
+    color: #09432D;
+}
 
 .dot-icon {
 
