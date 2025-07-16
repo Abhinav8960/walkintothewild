@@ -144,7 +144,7 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -165,7 +165,7 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -215,7 +215,7 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $model->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -275,7 +275,7 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -345,12 +345,12 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
         // if ($partner_gallery_model->can_send_for_approval === PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
-        //     \Yii::$app->session->setFlash('danger', 'This gallery already send for approval!!!');
+        //     \Yii::$app->session->setFlash('error', 'This gallery already send for approval!!!');
         //     return $this->redirect(['index']);
         // }
 
@@ -372,7 +372,7 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id,  'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -410,13 +410,13 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
         $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
         if ($partner_gallery_model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Gallery Deleted Successfully!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Deleted Successfully!!!');
             return $this->redirect(['index']);
         }
         return $this->redirect(Yii::$app->request->referrer);
@@ -428,11 +428,11 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'is_approved' => 1, 'in_draft' => 0, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery not available for draft!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery not available for draft!!!');
         }
         $partner_gallery_model->is_approved = 0;
         $partner_gallery_model->in_draft = 1;
-        \Yii::$app->session->setFlash('danger', 'Technical Issue!!!');
+        \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
 
         if ($partner_gallery_model->save(false)) {
             \Yii::$app->session->setFlash('success', 'Done!!!');
@@ -444,7 +444,7 @@ class DefaultController extends Controller
     {
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
@@ -466,7 +466,7 @@ class DefaultController extends Controller
 
         $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id])->limit(1)->one();
         if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
