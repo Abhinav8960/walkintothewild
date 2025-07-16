@@ -26,17 +26,23 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             //     return !empty($this->live_images) ?  true : false;
             // },
             'can_share' =>  function () {
-                return (bool) $this->is_approved;
+                return (bool) $this->is_live;
             },
+            // 'gallery_image_count' => function () {
+            //     return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+            // },
             'gallery_image_count' => function () {
-                return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+                return (int) $this->live_gallery_images_count;
             },
+            // 'live_image_count' => function () {
+            //     if (!empty($this->live_images)) {
+            //         $c_arr =  json_decode($this->live_images, true);
+            //         return $c_arr['image_count'] ?? 0;
+            //     }
+            //     return 0;
+            // },
             'live_image_count' => function () {
-                if (!empty($this->live_images)) {
-                    $c_arr =  json_decode($this->live_images, true);
-                    return $c_arr['image_count'] ?? 0;
-                }
-                return 0;
+               return (int) $this->gallery_images_count;
             },
             // 'can_send_for_approval' =>  function () {
             //     return (bool) $this->can_send_for_approval;
