@@ -18,7 +18,7 @@
                <i class="mdi mdi-bell"></i>
              </a>
            </li> -->
-            <li class="nav-item " id="dropdown-pro">
+            <!-- <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center gap-4">
            <div class="ed-du-img">
                <a href=""><img src="<?= $this->params['baseurl'] ?>/images/inbox.png" class="card-img-top" alt=""></a>
@@ -28,7 +28,7 @@
             <a href=""><img src="<?= $this->params['baseurl'] ?>/images/bell.png" class="card-img-top" alt=""></a>
            </div>
           </div>
-       </li>
+       </li> -->
        <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center">
            <div class="dorpdown-profile me-2">
