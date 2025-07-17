@@ -13,6 +13,7 @@ use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
 use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGalleryVersion;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -89,7 +90,7 @@ class DefaultController extends  Controller
             if ($chat_message_model->load($this->request->post())) {
                 if ($chat_message_model->validate()) {
                     $chat_message_model->initializeForm();
-                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity);
+                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL);
                     $chat_message_model->message = '';
                 }
             }
@@ -179,7 +180,8 @@ class DefaultController extends  Controller
         /**Gallery Section*/
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->query->andWhere(['not', ['live_images' => null]]);
@@ -198,9 +200,10 @@ class DefaultController extends  Controller
                         $message = "Gallery";
                         $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_selection_model->gallery_slug])->one();
                         if ($partnerGallery) {
+                            $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['is_live' => 1])->limit(1)->one();
                             $gallery = $partnerGallery->live_images;
                         }
-                        $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $message, $gallery, $data = NULL, Yii::$app->user->identity);
+                        $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $message, $gallery, $data = NULL, Yii::$app->user->identity, $partner_gallery_version->id);
                         return $this->redirect(['view', 'id' => $id]);
                     }
                 }
@@ -215,7 +218,7 @@ class DefaultController extends  Controller
         ]);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -235,6 +238,7 @@ class DefaultController extends  Controller
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
+        $chat_message->partner_gallery_version_id = $partner_gallery_version_id;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;

@@ -96,7 +96,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{update}&nbsp{suspend}',
+                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{leads}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
@@ -144,6 +144,15 @@ $this->params['title'] = $this->title;
                                         ]
                                     );
                                 }
+                            },
+
+                            'leads' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/message.png" alt="" width="25" height="25">
+                                ', ['/leadoperatorwise/default/index', 'operator_id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Leads view',
+
+                                ]);
                             },
 
                             // 'update' => function ($url, $model) {

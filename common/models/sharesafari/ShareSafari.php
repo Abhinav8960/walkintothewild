@@ -66,6 +66,11 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
                 'collection' => Feeds::MODEL_SHARESFARI,
                 'date_time' => 'start_date',
             ],
+            [
+                'class' => \common\behaviors\FootprintsBehavior::class,
+                'objective' => self::OBJECTIVE,
+                'collection' => \common\models\trackings\Footprints::MODEL_SHARESFARI,
+            ],
 
             \yii\behaviors\TimestampBehavior::className(),
             \yii\behaviors\BlameableBehavior::className(),

@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 class PartnerGallerySearch extends PartnerGallery
 {
+    public $custom_filter;
     /**
      * {@inheritdoc}
      */
@@ -17,7 +18,8 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count','is_live'], 'integer'],
+            [['custom_filter'], 'safe'],
         ];
     }
 
@@ -59,13 +61,43 @@ class PartnerGallerySearch extends PartnerGallery
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
+            'in_draft' => $this->in_draft,
+            'is_approved' => $this->is_approved,
+            'is_live' => $this->is_live,
+            'send_for_approval' => $this->send_for_approval,
             'can_send_for_approval' => $this->can_send_for_approval,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+            // 'created_at' => $this->created_at,
+            // 'created_by' => $this->created_by,
+            // 'updated_at' => $this->updated_at,
+            // 'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
+
+        if ($this->custom_filter) {
+            switch ($this->custom_filter) {
+                case 1:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['created_at' => SORT_DESC]
+                    ];
+                    break;
+                case 2:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['gallery_images_count' => SORT_DESC]
+                    ];
+
+                    break;
+                case 3:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['live_gallery_images_count' => SORT_DESC]
+                    ];
+
+                    break;
+                default:
+                    $dataProvider->sort = [
+                        'defaultOrder' => ['created_at' => SORT_DESC]
+                    ];
+            };
+        }
 
         return $dataProvider;
     }

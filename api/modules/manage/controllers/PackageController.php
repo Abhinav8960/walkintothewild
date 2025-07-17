@@ -122,6 +122,7 @@ class PackageController extends RestController
 
     public function actionCreate()
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
 
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
@@ -192,6 +193,8 @@ class PackageController extends RestController
 
     public function actionUpdate($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -251,6 +254,8 @@ class PackageController extends RestController
 
     public function actionPolicyInfo($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -279,6 +284,8 @@ class PackageController extends RestController
 
     public function actionGettingThere($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -307,6 +314,8 @@ class PackageController extends RestController
 
     public function actionInclusion($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -374,6 +383,8 @@ class PackageController extends RestController
 
     public function actionItinerary($slug, $day = 1)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -430,6 +441,8 @@ class PackageController extends RestController
      */
     public function actionCreateFaq($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -469,6 +482,8 @@ class PackageController extends RestController
 
     public function actionUpdateFaq($slug, $faq_id)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
@@ -514,6 +529,7 @@ class PackageController extends RestController
 
     public function actionSendForApproval($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
 
         $safari_operator = $this->module->operatormodel();
         if ($safari_operator->category_id == 2) {
@@ -652,6 +668,7 @@ class PackageController extends RestController
 
     private function copyPackageNow($id, $isNewRecord = false)
     {
+        
         $model = PackageVersion::findOne($id);
 
         if ($model) {

@@ -98,7 +98,7 @@
     </div>
 
     <div class="footer">
-        <p>Generated on <?= date('M d, Y H:i:s') ?></p>
+        <p>Generated on <?= date('M d, Y h:i A') ?></p>
     </div>
 </body>
 

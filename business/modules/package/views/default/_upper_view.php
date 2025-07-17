@@ -25,17 +25,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
                             <div class="col-lg-2">
                                 <div class="editBtn float-end">
-                                    <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->id])], [ 'title' => 'Edit']) ?>
+                                    <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->id])], ['title' => 'Edit']) ?>
                                 </div>
                             </div>
                         <?php } ?>
                         <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
                             <div class="edinBtn">
-                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], [ 'title' => 'Send For Approval']) ?>
+                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
                             </div>
                         <?php } ?>
                         <div class="edinBtn copyBtn">
-                            <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], [ 'title' => 'Copy']) ?>
+                            <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['title' => 'Copy']) ?>
                         </div>
                         <!-- <div class="versions">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
@@ -322,7 +322,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div
                             class="d-flex justify-content-md-start align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
                             <div class="pakageCost mb-xxl-0 mb-2">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/images/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?>/ Person
                                 </h6>
                             </div>
                         </div>
@@ -381,8 +381,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 </div>
 
 <style>
-
-
     .editBtn a {
         background-color: #237F40;
         color: #ffffff;

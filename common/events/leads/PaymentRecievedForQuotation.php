@@ -76,10 +76,10 @@ class PaymentRecievedForQuotation extends Event
                         // 'qr_code' => isset($this->transaction->due_quatation->qr_code_file) ? urlencode(\Yii::$app->params['s3_endpoint'] . '/' . $this->transaction->due_quatation->qr_code_file) : null,
                     ],
                     'to_mail' => $this->user->email,
-                    'cc' => [
-                        \Yii::$app->params['adminEmail']
+                    'cc' => [],
+                    'bcc' => [
+                        \Yii::$app->params['adminEmail']                        
                     ],
-                    'bcc' => [],
                 ],
                 [
                     'subject' => 'Payment Received for user ' . $this->user->name,
@@ -102,10 +102,10 @@ class PaymentRecievedForQuotation extends Event
                         'amount' => \common\models\GeneralModel::formatIndianCurrency($this->transaction->received_amount),
                     ],
                     'to_mail' => $this->partner_user->email,
-                    'cc' => [
+                    'cc' => [],
+                    'bcc' => [
                         \Yii::$app->params['adminEmail']
                     ],
-                    'bcc' => [],
                 ]
             ],
 

@@ -10,6 +10,7 @@ use api\models\sighting\SightingComment;
 use api\models\sighting\SightingCommentLike;
 use api\models\sighting\SightingLike;
 use api\models\sighting\SightingSearch;
+use api\models\User;
 use common\models\operator\SafariOperator;
 use common\models\sighting\form\SightingCommentFlagForm;
 use common\models\sighting\form\SightingCommentForm;
@@ -113,8 +114,11 @@ class DefaultController extends RestController
                 $model->sighting_model->height = $resolution['height'];
 
                 if ($model->sighting_model->save()) {
-                    $message = Yii::$app->api->messageManager->getMessage('sighting.create_sighting.sighting_added');
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+                    $active_followers = $model->sighting_model->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->asArray()->all();
+                    if(!empty($active_followers)){
+                    new \common\events\sighting\SightingCreatedByUser($active_followers,$model->sighting_model->user->name);
+                    }
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Sighting added successfully"]);
                 }
             }
             $message = Yii::$app->api->messageManager->getMessage('sighting.create_sighting.sighting_not_added');

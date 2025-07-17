@@ -127,6 +127,12 @@ return [
         'transaction' => [
             'class' => 'backend\modules\transaction\Module',
         ],
+        'chat' => [
+            'class' => 'backend\modules\chat\Module',
+        ],
+        'leadoperatorwise' => [
+            'class' => 'backend\modules\leadoperatorwise\Module',
+        ],
 
     ],
     'components' => [

@@ -4,6 +4,7 @@ namespace backend\modules\packageapproval\controllers;
 
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
+use common\models\package\form\PackageDiscountForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageVersionForm;
 use common\models\package\PackageVersion;
@@ -105,6 +106,7 @@ class DefaultController extends Controller
             $package->original_banner_filename = $model->original_banner_filename;
             $package->stay_category_id = $model->stay_category_id;
             $package->cost_per_person = $model->cost_per_person;
+            $package->cost_per_two_person = $model->cost_per_two_person;
             $package->type = $model->type;
             $package->gst_percentage = $model->gst_percentage;
             $package->total_price = $model->total_price;
@@ -130,6 +132,9 @@ class DefaultController extends Controller
             $package->pending_for_approval_version = null;
             $package->live_version = $version;
             $package->max_booking_date = $model->max_booking_date;
+            $package->partner_gallery_id = $model->partner_gallery_id;
+            $package->gallery_json = $model->gallery_json;
+            $package->price_after_discount = $model->cost_per_person;
             $package->status = Package::STATUS_ACTIVE;
             $package->save(false);
 
@@ -151,7 +156,7 @@ class DefaultController extends Controller
 
 
         Yii::$app->session->setFlash('success', 'Package approved and Live successfully.');
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     public function actionRejectview($package_id, $version)
@@ -538,4 +543,5 @@ class DefaultController extends Controller
             return $model;
         }
     }
+
 }

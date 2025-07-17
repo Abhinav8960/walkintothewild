@@ -4,7 +4,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
-<nav class="side_bar sidebar-offcanvas d-flex justify-content-center">
+<nav class="side_bar sidebar-offcanvas d-flex justify-content-start">
     <ul class="nav">
         <li class="nav-item-profile d-flex justify-content-between align-items-center nav-item mb-5">
             <div class="profile-ditails d-flex justify-content-around align-items-center">
@@ -52,7 +52,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/package/default/index",
                                                                                                     "/package/default/create",
                                                                                                 )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu" style="    white-space: nowrap;"> My Packages</span>
+                <span class="hide-slide-menu" style="    white-space: nowrap;">Packages</span>
             </a>
         </li>
 
@@ -101,19 +101,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Posts</span>
             </a>
         </li> -->
-        <li class="navItems mb-2">
-            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                "/gallery/default/index",
-                                                                "/gallery/default/create",
-
-                                                            )) ? "active" : "" ?>" href="/gallery/default/index">
-                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                    "/gallery/default/index",
-                                                                                                    "/gallery/default/create",
-                                                                                                )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
-                <span class="hide-slide-menu"> Gallery</span>
-            </a>
-        </li>
+  
         <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
@@ -126,6 +114,63 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Settings</span>
             </a>
         </li> -->
+     <!-- <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/sightings/default/index",
+                                                                "/sightings/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/sightings/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/sightings/default/index",
+                                                                                                    "/sightings/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Sightings</span>
+            </a>
+        </li>
+         <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/posts/default/index",
+                                                                "/posts/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/posts/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/posts/default/index",
+                                                                                                    "/posts/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Posts</span>
+            </a>
+        </li> -->
+      <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/gallery/default/approved",
+                                                                "/gallery/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/gallery/default/approved">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/gallery/default/approved",
+                                                                                                    "/gallery/default/create",
+                                                                                                )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Gallery</span>
+            </a>
+        </li>
+    
+
+
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/faqs/default/index",
+                                                                "/faqs/default/create",
+
+                                                            )) ? "active" : "" ?>" href="/faqs/default/index">
+                <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/faqs/default/index",
+                                                                                                    "/faqs/default/create",
+                                                                                                )) ? 'Frame.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> Faqs</span>
+            </a>
+        </li>
+
+        
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">

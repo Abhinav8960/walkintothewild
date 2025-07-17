@@ -174,7 +174,7 @@ class CreateDepartureForm extends \yii\base\Model
 
         $this->shared_safari_departure_model->type = $this->type;
         $this->shared_safari_departure_model->host_user_id = $this->host_user_id;
-        $this->shared_safari_departure_model->user_id = $this->user_id;
+        // $this->shared_safari_departure_model->user_id = $this->user_id;
         $this->shared_safari_departure_model->share_safari_title = $this->share_safari_title;
         $this->shared_safari_departure_model->host_type = $this->host_type; // iss bhi check karna ha
         $this->shared_safari_departure_model->type = $this->type;

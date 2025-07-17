@@ -52,6 +52,11 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
                     return time();
                 },
             ],
+            [
+                'class' => \common\behaviors\FootprintsBehavior::class,
+                'objective' => self::OBJECTIVE,
+                'collection' => \common\models\trackings\Footprints::MODEL_SIGHTING,
+            ],
         ];
     }
 

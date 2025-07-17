@@ -7,7 +7,7 @@
      </div>
 
 
-     <ul class="nav-right d-flex align-items-center justify-content-center">
+     <ul class="nav-right d-flex align-items-center justify-content-center gap-4">
        <!-- <li class="nav-item dropdown">
              <a class="nav-link count-indicator ">
                <i class="mdi mdi-email"></i>
@@ -18,6 +18,17 @@
                <i class="mdi mdi-bell"></i>
              </a>
            </li> -->
+            <!-- <li class="nav-item " id="dropdown-pro">
+         <div class="d-flex align-items-center gap-4">
+           <div class="ed-du-img">
+               <a href=""><img src="<?= $this->params['baseurl'] ?>/images/inbox.png" class="card-img-top" alt=""></a>
+           </div>
+           <div class="ed-du-img">
+            
+            <a href=""><img src="<?= $this->params['baseurl'] ?>/images/bell.png" class="card-img-top" alt=""></a>
+           </div>
+          </div>
+       </li> -->
        <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center">
            <div class="dorpdown-profile me-2">

@@ -6,22 +6,32 @@ use yii\bootstrap5\ActiveForm;
 use yii\rest\DeleteAction;
 
 $this->title = 'Create Gallery';
-// $this->params['title'] = $this->title;
 ?>
 
 
-<?php $form = ActiveForm::begin(['options' => ['id' => 'create-gallery']]); ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'create-gallery',
+    'enableAjaxValidation' => true,
+]); ?>
 
 
-<div class="col-12 mb-4">
-    <div class="form_boxes mb-3">
-        <label for="">Gallery Title <span>*</span></label>
-        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Enter Gallery Title'])->label(false) ?>
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="form_boxes mb-3">
+            <label for="">Gallery Title <span>*</span></label>
+            <?= $form->field($model, 'title')->textInput(['placeholder' => 'Enter Gallery Title'])->label(false) ?>
+        </div>
     </div>
-</div>
-<div class="col-12">
-    <div class="modalCrateButton">
-        <?= Html::submitButton('Save', ['class' => 'btn w-100']) ?>
+    <div class="col-12 mb-4">
+        <div class="form_boxes mb-3">
+            <label for="">Park<span>*</span></label>
+            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($safari_operator_model->id), ['prompt' => 'Select', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="modalCrateButton">
+            <?= Html::submitButton('Save', ['class' => 'w-100']) ?>
+        </div>
     </div>
 </div>
 

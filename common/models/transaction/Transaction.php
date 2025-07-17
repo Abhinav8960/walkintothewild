@@ -249,29 +249,30 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     private function makebooking()
     {
 
-        //  // Generate PDF
-        //  $content = GeneralModel::generatePdfContent('@backend/modules/leads/views/default/_quotation_pdf.php', [
-        //     'transaction' => $this,
-        //     'transaction' => $this,
-        // ]);
-        // $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
-        // $pdf->WriteHTML($content);
-        // $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'quotation_' . $quotation->id . '.pdf';
-        // $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+        // Generate PDF
+        $content = GeneralModel::generatePdfContent('@common/templates/payments/payment_receipt.php', [
+            'transaction' => $this,
+        ]);
+        $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
+        $pdf->WriteHTML($content);
+        $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'payment_receipt_' . $this->reference_id . '.pdf';
+        $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
 
-        // // Upload PDF to RFS
-        // $uploadedFile = new \yii\web\UploadedFile([
-        //     'name' => 'quotation_' . $quotation->id . '.pdf',
-        //     'tempName' => $pdfFilePath,
-        //     'type' => 'application/pdf',
-        //     'size' => filesize($pdfFilePath),
-        //     'error' => UPLOAD_ERR_OK,
-        // ]);
+        // Upload PDF to RFS
+        $uploadedFile = new \yii\web\UploadedFile([
+            'name' => 'payment_receipt_' . $this->reference_id . '.pdf',
+            'tempName' => $pdfFilePath,
+            'type' => 'application/pdf',
+            'size' => filesize($pdfFilePath),
+            'error' => UPLOAD_ERR_OK,
+        ]);
 
-        // $fileName = 'payment_receipt_' . $quotation->id . '.pdf';
-        // $filePath = 'payment_receipts/' . date('ym') . '/' . $fileName;
+        $fileName = 'payment_receipt_' . $this->reference_id . '.pdf';
+        $filePath = 'payment_receipts/' . date('ym') . '/' . $fileName;
 
         // $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
+        $checksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
+
 
         $booking = new \common\models\bookings\Booking();
         $booking->transaction_id = $this->id;
@@ -279,6 +280,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         $booking->currency = $this->currency;
         $booking->reference_id = $this->reference_id; // use the same
         $booking->lead_partner_quotes_id = $this->lead_partner_quotes_id;
+        $booking->payment_receipt = $filePath;
         // $booking->lead_partner_quote_installments_id = $this->lead_partner_quote_installments_id;
         $booking->lead_partner_id = $this->lead_partner_id;
         $booking->lead_id = $this->lead_id;
@@ -342,10 +344,10 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         return ucfirst($arr[$this->status]) ?? '';
     }
 
-    public function getQuotation(){
+    public function getQuotation()
+    {
         // lead_partner_quotes_id
         return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'lead_partner_quotes_id']);
-
     }
 
     public function getPark()

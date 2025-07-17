@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 pb-4">
         <div class="filterBar">
             <div class="filters">
                 <!-- <div class="filterItem">

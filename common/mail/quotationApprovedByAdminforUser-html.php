@@ -74,8 +74,6 @@ use yii\helpers\Html;
                     <td style="text-align: right;"><?= isset($amount) ? '₹' . $amount : '' ?></td>
                 </tr>
             </table>
-
-
             <div style="text-align: center; margin-bottom: 30px;">
                 <table style="width: 100%; font-size: 20px; font-weight: 600; margin-bottom: 10px;">
                     <tr>
@@ -85,11 +83,6 @@ use yii\helpers\Html;
                         </td>
                     </tr>
                 </table>
-                <br>OR<br><br>
-                <b>Scan & Pay</b><br>
-                <?php if (isset($qr_code) && $qr_code): ?>
-                    <img src="<?= urldecode($qr_code) ?>" alt="QR Code" style="width: 200px; height: 200px; margin-top: 15px;">
-                <?php endif; ?>
             </div>
         </div>
 

@@ -29,6 +29,8 @@ ALTER TABLE lead_partners ADD assign_by_admin_date_time INT NULL DEFAULT NULL AF
 ALTER TABLE `lead_partners` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `assign_by_admin_date_time`;
 ALTER TABLE `lead_partner_quotes` ADD `is_payment_link_send` BOOLEAN NOT NULL DEFAULT FALSE AFTER `payment_gateway`;
 
+
+
 <!-- 01 july 2025 -->
 ALTER TABLE `transaction` CHANGE `installment` `installment` INT NOT NULL DEFAULT '1' COMMENT 'Installment_id';
 ALTER TABLE `transaction` ADD `user_id` INT NOT NULL AFTER `id`;
@@ -64,3 +66,10 @@ ALTER TABLE `booking` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER
 ALTER TABLE `lead` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
 ALTER TABLE `lead_partner_quotes` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
 ALTER TABLE `lead_partner_quote_installments` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
+
+ALTER TABLE `chat_message` ADD `is_system_generated` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_edited`;
+
+<!-- 14 july Notification template -->
+ALTER TABLE `master_notification_template` CHANGE `module_type` `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\',\r\n7 => \'comment/review\',\r\n8 =>\'quote\' ,\r\n9 => \'post\',\r\n10 => \'sighting\'';
+INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '9', 'New Post', '{{username}} just shared a new post.', 'Take a look!', '1', '1735806556', '30', '1735806556', '30');
+INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '10', 'New Sighting', 'New sighting alert!', 'Tap to see the latest update.', '1', '1735806556', '30', '1735806556', '30');

@@ -10,6 +10,7 @@ use api\models\posts\UserPostCommentLike;
 use api\models\posts\UserPostLike;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
+use api\models\User;
 use common\models\PostReportForm;
 use common\models\postscomment\form\UserPostCommentFlagForm;
 use common\models\postscomment\form\UserPostCommentForm;
@@ -111,6 +112,10 @@ class DefaultController extends RestController
                 }
 
                 if ($model->user_image_model->save()) {
+                    $active_followers = $model->user_image_model->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->asArray()->all();
+                    if(!empty($active_followers)){
+                    new \common\events\post\PostCreatedByUser($active_followers,$model->user_image_model->user->name);
+                    }
                     $model->user_image_model->savehistory();
                     $message = Yii::$app->api->messageManager->getMessage('post.create_post.post_added');
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
