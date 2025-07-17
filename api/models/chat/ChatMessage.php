@@ -125,7 +125,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery', 'is_system_generated'], 'safe'],
+            [['gallery', 'is_system_generated','transaction_id'], 'safe'],
         ];
     }
 
