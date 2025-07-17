@@ -98,7 +98,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                                 <?php
                                                                 $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_day_model->partner_gallery_id])->limit(1)->one();
                                                                 ?>
-                                                                <img src="<?= $thumbnail_path->thumbnail ?>" width="200px" height="200px" class="selectImage" id="<?= 'preview_' . $i ?>">
+                                                                <img src="<?= isset($thumbnail_path->thumbnail) ? $thumbnail_path->thumbnail : '' ?>" width="200px" height="200px" class="selectImage" id="<?= 'preview_' . $i ?>">
                                                             </div>
                                                         </div>
                                                     <?php } else { ?>

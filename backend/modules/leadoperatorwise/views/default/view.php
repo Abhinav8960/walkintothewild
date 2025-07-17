@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\business\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = 'Leads(' . $model->sourceLabel . ')';
+$this->title = 'Leads Operator Wise(' . $model->sourceLabel . ')';
 $this->params['title'] = $this->title;
 
 // if ($model->status == 1 && $model->source == 2) {
@@ -72,6 +72,7 @@ AppAsset::register($this);
                             $str .= '<span class="badge badge-danger">Payment Not Received</span>';
                         }
 
+                        $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
                         echo $str;
                         ?>
 
@@ -103,8 +104,7 @@ AppAsset::register($this);
                         <th>Lead Received Date</th>
                         <th>Validity Date</th>
                         <th>Permit Booking Date</th>
-                        <th>QR Code/Payment Link</th>
-                        <th>Action</th>
+                        <th>Payment Link</th>
                     </thead>
                     <tbody>
                         <?php if (count($quotations) > 0) { ?>
@@ -151,20 +151,6 @@ AppAsset::register($this);
                                             }
                                         }
                                         ?>
-
-
-                                    </td>
-
-
-                                    <td>
-                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_PENDING && $model->is_payment_received == 0) { ?>
-                                            <button class="btn btn-success btn-sm approve-btn" data-partner-selling-price="<?= $quotation->partner_selling_price ?>" data-percentage="<?= $quotation->plateform_partner_fees_percentage ?>" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
-                                            <button class="btn btn-danger btn-sm disapprove-btn" data-id="<?= $quotation->id ?>" data-bs-toggle="modal" data-bs-target="#disapproveModal">Disapprove</button>
-                                        <?php } ?>
-
-                                        <?php if ($quotation->is_approved_by_admin == LeadPartnerQuotes::IS_APPROVED_BY_ADMIN_APPROVED && $model->is_payment_received == 0) { ?>
-                                            <button class="btn btn-success btn-sm payment-received" data-id="<?= $quotation->id ?>">Payment Received</button>
-                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -180,96 +166,6 @@ AppAsset::register($this);
     <div class="card-body">
         <h4>Chat <?= '(' . $safari_operator->business_name . ')' ?></h4>
         <div id="chat-container">
-        </div>
-    </div>
-</div>
-
-<!-- Approve Modal -->
-<div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="approveModalLabel">Approve Quotation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="approve-form">
-                    <input type="hidden" id="approve-quotation-id">
-                    <input type="hidden" id="partner-selling-price" value="0">
-                    <div class="mb-3">
-                        <label for="payment-url" class="form-label">Payment URL</label>
-                        <input type="url" class="form-control" id="payment-url" placeholder="Enter Payment URL" required>
-                        <!-- <label for="plateform-partner-fees-percentage" class="form-label">Platform Partner Fees Percentage</label>
-                        <input type="number" class="form-control" id="plateform-partner-fees-percentage" placeholder="Enter Platform partner fees percentage" required> -->
-                        <small id="net-payment-price-hint" class="form-text text-muted"></small>
-                        <label for="approval-file" class="form-label">Upload QR Code File</label>
-                        <input type="file" class="form-control" id="approval-file" accept=".jpg,.png,.jpeg">
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Disapprove Modal -->
-<div class="modal fade" id="disapproveModal" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Quotation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="disapprove-form">
-                    <input type="hidden" id="disapprove-quotation-id">
-                    <div class="mb-3">
-                        <label for="disapprove-reason" class="form-label">Reason for Disapproval</label>
-                        <textarea class="form-control" id="disapprove-reason" rows="3" placeholder="Enter reason for disapproval" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Payment Received Modal -->
-<div class="modal fade" id="PaymentReceivedModel" tabindex="-1" aria-labelledby="PaymentReceivedModelLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="PaymentReceivedModelLabel">Payment Received</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="payment-received-form">
-                    <input type="hidden" id="payment-received-quotation-id">
-                    <div class="mb-3">
-                        <label for="payment-gateway" class="form-label">Payment Gateway</label>
-                        <select class="form-control" id="payment-gateway" required>
-                            <option value="">Select Payment Gateway</option>
-
-                            <?php
-                            foreach (GeneralModel::PaymentgatewayOptions() as $key => $value) {
-                                echo "<option value=\"$key\">$value</option>";
-                            }
-                            ?>
-
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="transaction-id" class="form-label">Transaction ID</label>
-                        <input type="text" class="form-control" id="transaction-id" placeholder="Enter Transaction ID" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="transaction-datetime" class="form-label">Transaction Datetime</label>
-                        <input type="datetime-local" class="form-control" id="transaction-datetime" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-            </div>
         </div>
     </div>
 </div>
@@ -293,160 +189,24 @@ AppAsset::register($this);
 </div>
 
 
-<?php
-$script = <<<JS
-
-      \$('.pop-up').on('click', function () {
-            \$('#assignAction').modal('show')
-    \t\t.find('#modalContent')
-    \t\t.load(\$(this).attr('value'));
-    \t});
-
-
-    // Handle Approve Button Click
-    \$('.approve-btn').on('click', function() {
-        var quotationId = \$(this).data('id');
-        var percentage = \$(this).data('percentage');
-        var partnerSellingPrice = \$(this).data('partner-selling-price');
-        \$('#approve-quotation-id').val(quotationId);
-        // \$('#plateform-partner-fees-percentage').val(percentage);
-        \$('#partner-selling-price').val(partnerSellingPrice);
-        updateNetPaymentPriceHint();
-    });
-
-    // Update net payment price hint dynamically on percentage change
-    \$('#plateform-partner-fees-percentage').on('input', function() {
-        updateNetPaymentPriceHint();
-    });
-
-    function updateNetPaymentPriceHint() {
-        var partnerSellingPrice = parseFloat(\$('#partner-selling-price').val()) || 0;
-        var percentage =  0;
-        var partnerFees = (partnerSellingPrice * percentage) / 100;
-        var netPaymentPrice = partnerSellingPrice + partnerFees;
-        \$('#net-payment-price-hint').text('Net Payment Price: ₹' + netPaymentPrice.toFixed(2));
-    }
-
-    // Handle Approve Form Submission
-    \$('#approve-form').on('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
-
-        // Get form values
-        var quotationId = \$('#approve-quotation-id').val();
-        var paymentUrl = \$('#payment-url').val();
-        var partnerFeesPercentage = \$('#plateform-partner-fees-percentage').val();
-        var qrCodeFile = \$('#approval-file').prop('files')[0];
-
-        // Call sendApproveRequest function
-        sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qrCodeFile);
-    });
-
-    // Function to send the approve request
-    function sendApproveRequest(quotationId, paymentUrl, partnerFeesPercentage, qrCodeFile) {
-        var formData = new FormData();
-        formData.append('id', quotationId);
-        formData.append('payment_url', paymentUrl);
-        formData.append('plateform_partner_fees_percentage', partnerFeesPercentage);
-        if (qrCodeFile) {
-            formData.append('qr_code_file', qrCodeFile);
-        }
-
-        \$.ajax({
-            url: '/leads/default/approve',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.success) {
-                    location.reload();
-                } else {
-                    alert('An error occurred: ' + response.message);
-                }
-            },
-            error: function() {
-                alert('An error occurred while processing the request.');
-            }
-        });
-
-        \$('#approveModal').modal('hide');
-    }
-
-    // Handle Disapprove Button Click
-    \$('.disapprove-btn').on('click', function() {
-        var quotationId = \$(this).data('id');
-        \$('#disapprove-quotation-id').val(quotationId);
-    });
-
-    // Handle Disapprove Form Submission
-    \$('#disapprove-form').on('submit', function(e) {
-        e.preventDefault();
-        var quotationId = \$('#disapprove-quotation-id').val();
-        var reason = \$('#disapprove-reason').val();
-        \$.post('/leads/default/disapprove', {id: quotationId, reason: reason}, function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert('An error occurred: ' + response.message);
-            }
-        });
-        \$('#disapproveModal').modal('hide');
-    });
-
-
-    // Handle Payment Received Button Click
-    \$('.payment-received').on('click', function () {
-        var quotationId = \$(this).data('id');
-        console.log('Quotation ID:', quotationId); // Debugging log
-        \$('#payment-received-quotation-id').val(quotationId);
-        \$('#PaymentReceivedModel').modal('show');
-    });
-
-    // Handle Payment Received Form Submission
-    \$('#payment-received-form').on('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
-
-        // Get form values
-        var quotationId = \$('#payment-received-quotation-id').val();
-        var transactionId = \$('#transaction-id').val();
-        var transactionDatetime = \$('#transaction-datetime').val();
-        var paymentGateway = \$('#payment-gateway').val(); // Get the selected payment gateway
-        // Format transactionDatetime to 'YYYY-MM-DD HH:mm'
-        transactionDatetime = transactionDatetime.replace('T', ' ');
-        // Send AJAX request
-        \$.ajax({
-            url: '/leads/default/payment-received?quotation_id=' + quotationId,
-            type: 'POST',
-            data: {
-                'QuotationPaymentReceived[payment_gateway]': paymentGateway,
-                'QuotationPaymentReceived[transaction_id]': transactionId,
-                'QuotationPaymentReceived[transaction_datetime]': transactionDatetime,
-            },
-            success: function(response) {
-                if (response.success) {
-                    location.reload();
-                } else {
-                    alert('An error occurred: ' + response.message);
-                }
-            },
-            error: function() {
-                alert('An error occurred while processing the request.');
-            }
-        });
-
-        \$('#PaymentReceivedModel').modal('hide');
-    });
-
-    JS;
-$this->registerJs($script);
-?>
 
 <?php
+
 $chatUrl = \yii\helpers\Url::to(['/leadoperatorwise/default/operator-lead-chat', 'id' => $model->id, 'safari_operator_id' => $operator_id]);
-$js = <<<JS
-    \$('#chat-container').load('$chatUrl');
-    JS;
-$this->registerJs($js);
+
+$script = <<< JS
+
+// Handle Assign Button Click
+$('.pop-up').on('click', function () {
+    $('#assignAction').modal('show')
+        .find('#modalContent')
+        .load($(this).attr('value'));
+});
+
+\$('#chat-container').load('$chatUrl');
+
+JS;
+$this->registerJs($script);
 ?>
 
 <style>

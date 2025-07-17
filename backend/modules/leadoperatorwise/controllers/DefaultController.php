@@ -54,19 +54,19 @@ class DefaultController extends Controller
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex($operator_slug)
+    public function actionIndex($operator_id)
     {
         $searchModel = new LeadSearch();
         $searchModel->status = Lead::STATUS_ACTIVE;
-        $operator = SafariOperator::find()->where(['slug' => $operator_slug,'status'=>SafariOperator::STATUS_ACTIVE])->one();
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams,$operator->id);
+        // $operator = SafariOperator::find()->where(['slug' => $operator_slug,'status'=>SafariOperator::STATUS_ACTIVE])->one();
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams,$operator_id);
 
         return $this->render(
             'index',
             [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                'operator'=>$operator,
+                'operator_id'=>$operator_id,
             ]
         );
     }

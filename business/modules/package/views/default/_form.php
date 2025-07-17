@@ -183,7 +183,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="col-lg-12" style="margin-top:35px;">
                                 <?php
                                 $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_version_model->partner_gallery_id])->limit(1)->one(); ?>
-                                <img src="<?= $thumbnail_path->thumbnail ?>" width="200px" height="200px" class="selectImage" id="preview">
+                                <img src="<?= isset($thumbnail_path->thumbnail) ? $thumbnail_path->thumbnail : ''  ?>" width="200px" height="200px" class="selectImage" id="preview">
                             </div>
                         </div>
                     </div>
