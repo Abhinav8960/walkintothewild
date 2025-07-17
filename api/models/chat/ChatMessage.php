@@ -127,7 +127,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery', 'is_system_generated'], 'safe'],
+            [['gallery', 'is_system_generated','transaction_id'], 'safe'],
         ];
     }
 
@@ -193,6 +193,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $history->data = $this->data;
         $history->gallery = $this->gallery;
         $history->partner_gallery_version_id = $this->partner_gallery_version_id;
+        $history->transaction_id = $this->transaction_id;
         $history->created_at = $this->created_at;
         $history->created_by = $this->created_by;
         $history->updated_at = $this->updated_at;
