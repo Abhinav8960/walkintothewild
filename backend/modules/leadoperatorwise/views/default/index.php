@@ -12,7 +12,7 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel, 'operator' => $operator]); ?>
+        <?php echo $this->render('_search', ['model' => $searchModel, 'operator_id' => $operator_id]); ?>
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
@@ -184,7 +184,7 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width:15%; text-align: left;'],
                         'template' => '{view}',
                         'buttons' => [
-                            'view' => function ($url, $model) use ($operator) {
+                            'view' => function ($url, $model) use ($operator_id) {
                                 return Html::a(
                                     Html::img($this->params['baseurl'] . '/img/view.png', [
                                         'alt' => '',
@@ -194,7 +194,7 @@ $this->params['title'] = $this->title;
                                     [
                                         '/leadoperatorwise/default/view',
                                         'id' => $model->id,
-                                        'operator_id' => $operator->id,
+                                        'operator_id' => $operator_id,
                                     ],
                                     [
                                         'class' => 'btn p-0 change-menuicon',
