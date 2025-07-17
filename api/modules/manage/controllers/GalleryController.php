@@ -75,7 +75,7 @@ class GalleryController extends RestController
 
     public function actionCreate()
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator_model = $this->module->operatormodel();
 
@@ -97,7 +97,7 @@ class GalleryController extends RestController
 
     public function actionEditGallery($slug)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator_model = $this->module->operatormodel();
 
@@ -121,7 +121,7 @@ class GalleryController extends RestController
 
     public function actionCreateGallery($slug)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
@@ -158,7 +158,7 @@ class GalleryController extends RestController
 
     public function actionUpdateGalleryImage($slug, $id)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator = $this->module->operatormodel();
 
@@ -209,7 +209,7 @@ class GalleryController extends RestController
 
     public function actionStatusChange($slug, $id)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator = $this->module->operatormodel();
 
@@ -234,7 +234,7 @@ class GalleryController extends RestController
 
     public function actionUpdateSequence($slug)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator = $this->module->operatormodel();
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
@@ -266,7 +266,7 @@ class GalleryController extends RestController
 
     public function actionUpdateThumbnail($slug, $id)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator = $this->module->operatormodel();
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
@@ -292,7 +292,7 @@ class GalleryController extends RestController
 
     public function actionGalleryDelete($slug)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
 
         $safari_operator = $this->module->operatormodel();
 
@@ -309,7 +309,7 @@ class GalleryController extends RestController
 
     public function actionSendForApproval($slug)
     {
-        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.'],403);
         
         $safari_operator = $this->module->operatormodel();
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
