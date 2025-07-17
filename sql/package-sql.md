@@ -54,3 +54,13 @@ ALTER TABLE `partner_gallery_version` ADD `live_gallery_images_count` INT NOT NU
 ALTER TABLE chat_message ADD partner_gallery_version_id INT NULL DEFAULT NULL AFTER data;
 
 ALTER TABLE `chat_message_history` ADD `partner_gallery_version_id` INT NULL DEFAULT NULL AFTER `data`;
+
+
+<!-- Cron -->
+
+php yii temp/approved-gallery
+
+<!-- Please Comment behaviour in ChatMessage -->
+
+php yii temp/update-version
+php yii temp/update-version-history
