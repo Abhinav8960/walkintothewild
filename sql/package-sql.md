@@ -52,3 +52,5 @@ ALTER TABLE `partner_gallery` ADD `live_gallery_images_count` INT NOT NULL DEFAU
 ALTER TABLE `partner_gallery_version` ADD `live_gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_images`, ADD `gallery_images_count` INT NOT NULL DEFAULT '0' AFTER `live_gallery_images_count`;
 
 ALTER TABLE chat_message ADD partner_gallery_version_id INT NULL DEFAULT NULL AFTER data;
+
+ALTER TABLE `chat_message_history` ADD `partner_gallery_version_id` INT NULL DEFAULT NULL AFTER `data`;

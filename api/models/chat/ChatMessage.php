@@ -192,6 +192,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $history->is_call_request = $this->is_call_request == 1 ? 1 : 0;
         $history->data = $this->data;
         $history->gallery = $this->gallery;
+        $history->partner_gallery_version_id = $this->partner_gallery_version_id;
         $history->created_at = $this->created_at;
         $history->created_by = $this->created_by;
         $history->updated_at = $this->updated_at;
