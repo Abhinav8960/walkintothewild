@@ -1,6 +1,6 @@
 <div class="card mt-2">
     <div class="card-body">
-        <div class="row pt-4">
+        <div class="row pt-0">
             <div class="col-12">
                 <div class="accordion" id="accordionExample">
                     <?php if ($faqs) {
@@ -92,6 +92,7 @@
 
 <style>
     .faq_item .accordion-button {
-        background-color: #CED2E0 !important;
+        background-color: #D7D7D8 !important;
+        padding: 13px;
     }
 </style>

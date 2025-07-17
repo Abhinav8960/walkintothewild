@@ -422,8 +422,9 @@ p {
 }
 
 .titler_safari {
-  font-size: 18px !important;
+  font-size: 22px !important;
   font-style: italic;
+  font-weight: 500;
 }
 
 .safrititles h6 {
@@ -598,11 +599,13 @@ p {
 
 .packageTabMain .nav-tabs .nav-link {
   background-color: transparent !important;
-  color: #000 !important;
+  color: #1E1E1E !important;
   border: none !important;
   border-bottom: 5px solid #ffffff !important;
   border-radius: 0px !important;
   margin-bottom: 1px;
+      font-size: 18px;
+    font-weight: 500;
 }
 
 .packageTabMain .nav-tabs .nav-link.active {
@@ -610,10 +613,24 @@ p {
 }
 
 .accordion-button.custom-header {
-  color: #000000 !important;
+  color: #152F1B !important;
   font-weight: 600;
+  font-size: 16px;
+  border-radius: 0px !important;
+   font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
+.accordion-button.custom-header .accordion-body p{
 
+      font-size: 16px;
+    font-weight: 400;
+    color: #151C2C;
+}
+.accordion-item.faq_item{
+
+  border-radius: 0px;
+}
 .packageTabMain .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
   isolation: auto !important;
@@ -1090,6 +1107,9 @@ p {
   border-radius: 10px 10px 0 0 !important;
   text-align: left;
   width: 100%;
+      font-size: 18px;
+    font-weight: 500;
+color: #FFFFFF;
 }
 
 .itrnTextCard {
@@ -1826,3 +1846,13 @@ summary::after {
 .shortList-wrapper.open .shortList-dropdown {
   display: block;
 }
+.change-menuicon i{
+
+  border: 2px solid #E2E2EA;
+  padding: 0px 5px !important;
+  color: #92929D;
+  border-radius: 5px;
+}
+ :not(.btn-check) + .btn:active{
+  border-color: transparent !important;
+ }
