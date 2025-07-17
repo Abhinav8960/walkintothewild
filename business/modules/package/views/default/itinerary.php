@@ -108,9 +108,7 @@ $this->title = 'Package : ' . $package_version_model->package_name;
                                                                     <label for="">Gallery
                                                                     </label>
                                                                     <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id_' . $i, 'preview' => 'preview_' . $i]) ?>" data-assignto="<?= 'partner_gallery_id_' . $i ?>">
-                                                                        <div class="w-100 h-100 fadeImage">
-                                                                            <img src="" class="selectImage" alt="" id="<?= 'preview_' . $i ?>">
-                                                                        </div>
+                                                                      
                                                                         <div class="displayImage d-flex flex-column gap-2">
                                                                             <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
                                                                             <label for="">Attach Gallery</label>
@@ -355,7 +353,6 @@ function galleryfunction() {
         var url = $(this).data('url');
         var assignment_attr = $(this).attr("data-assignto");
         var partner_gallery_id = $('#'+assignment_attr).val();
-        console.log(assignment_attr);
         var queryparams = "";
         if(partner_gallery_id != ''){
         queryparams = "&partner_gallery_id="+partner_gallery_id;
