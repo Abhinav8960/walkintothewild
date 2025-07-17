@@ -439,7 +439,7 @@ class TempController extends Controller
             $version->live_images = $gallery->live_images;
             $version->in_draft = $gallery->in_draft;
             $version->send_for_approval = $gallery->send_for_approval;
-            $version->approved = $gallery->approved;
+            $version->is_approved = $gallery->is_approved;
             $version->is_live = 1;
             $version->status = $gallery->status;
             $version->gallery_images_count = $gallery_images_count;
@@ -457,5 +457,40 @@ class TempController extends Controller
         }
 
         echo "Done";
+    }
+
+    public function actionUpdateVersion()
+    {
+        $chat_messages = ChatMessage::find()->where(['IS NOT', 'gallery', null])->all();
+
+        foreach ($chat_messages as $chat) {
+            $json = json_decode($chat->gallery, true);
+
+            if (isset($json['images'][0]['id'])) {
+                $image_id = $json['images'][0]['id'];
+
+                $partner_gallery_image = PartnerGalleryImage::find()
+                    ->where(['id' => $image_id])
+                    ->limit(1)
+                    ->one();
+
+                if ($partner_gallery_image) {
+                    $version = PartnerGalleryVersion::find()
+                        ->where([
+                            'partner_gallery_id' => $partner_gallery_image->partner_gallery_id,
+                            'is_live' => 1,
+                        ])
+                        ->limit(1)
+                        ->one();
+
+                    if ($version) {
+                        $chat->partner_gallery_version_id = $version->id;
+                        $chat->save(false);
+                    }
+                }
+            }
+        }
+
+        echo 'Done';
     }
 }
