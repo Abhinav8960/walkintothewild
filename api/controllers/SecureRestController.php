@@ -66,11 +66,12 @@ class SecureRestController extends RestController
 
     public function beforeAction($action)
     {
-        $this->platform = \Yii::$app->request->headers->get('x-client-platform', 'web');
+        $this->platform = \Yii::$app->request->headers->get('x-platform', 'web');
         $this->encrypt_key = \Yii::$app->params['aes_keys'][$this->platform] ?? \Yii::$app->params['aes_keys']['web'];
         if (Yii::$app->request->isPost) {
             // 1. Get the single encrypted payload string from a field, e.g., 'payload'
-            $encryptedPayload = Yii::$app->request->post('payload');
+            // $encryptedPayload = Yii::$app->request->post('payload');
+            $encryptedPayload = Yii::$app->request->rawBody;
 
             if ($encryptedPayload) {
                 // 2. Decrypt the string
