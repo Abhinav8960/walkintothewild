@@ -39,7 +39,7 @@ use yii\bootstrap5\ActiveForm;
                             </div>
 
                             <?php
-                            if (!empty($model->faqs_model->id)) { ?>
+                            if (false && !empty($model->faqs_model->id)) { ?>
                                 <div class="col-lg-6">
                                     <div class="form_boxes mb-3">
                                         <label for="">Status</label>
