@@ -7,6 +7,7 @@ use Yii;
 use api\models\User;
 use common\models\chat\ChatMessageHistory;
 use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGalleryVersion;
 
 /**
  * This is the model class for table "chat_message".
@@ -99,7 +100,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
             unset($fields['message']);
 
             $fields['gallery'] = function () {
-                return json_decode($this->gallery, true);
+                // return json_decode($this->gallery, true);
+                return isset($this->partnerGalleryVersion) ? json_decode($this->partnerGalleryVersion->live_images, true) : null;
             };
             // $fields['thumbnail_url'] = function () {
             //     return $this->getGalleryThumbnail();
@@ -283,5 +285,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
             return $call->recording_url;
         }
         return '';
+    }
+
+    public function getPartnerGalleryVersion()
+    {
+        return $this->hasOne(PartnerGalleryVersion::class, ['id' => 'partner_gallery_version_id']);
     }
 }
