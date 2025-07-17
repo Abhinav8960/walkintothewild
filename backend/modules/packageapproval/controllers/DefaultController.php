@@ -156,7 +156,7 @@ class DefaultController extends Controller
 
 
         Yii::$app->session->setFlash('success', 'Package approved and Live successfully.');
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     public function actionRejectview($package_id, $version)
