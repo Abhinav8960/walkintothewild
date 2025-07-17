@@ -199,9 +199,13 @@ class LeadPartnerQuotes extends \yii\db\ActiveRecord implements \common\interfac
 
     public function afterSave($insert, $changedAttributes)
     {
-        $quotation = LeadPartnerQuotes::find()->where(['status' => LeadPartnerQuotes::STATUS_ACTIVE, 'id' => $this->id])->one();
-        if ($quotation != null) {
-            return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id);
+        // $quotation = LeadPartnerQuotes::find()->where(['status' => LeadPartnerQuotes::STATUS_ACTIVE, 'id' => $this->id])->one();
+        // if ($quotation != null && $insert) {
+        //     return new \common\events\operator\QuotationSendByOperator($quotation, $this->lead->user_id);
+        // }
+        if ($insert && $this->status === LeadPartnerQuotes::STATUS_ACTIVE) {
+            // We can use `$this` directly as it is the newly saved model instance.
+            return new \common\events\operator\QuotationSendByOperator($this, $this->lead->user_id);
         }
     }
 
