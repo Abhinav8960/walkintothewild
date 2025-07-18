@@ -240,8 +240,12 @@ $this->title = 'Dashboard';
       <div class="col-xl-12 mb-3">
         <div class="rightSidebar">
           <div class="cadplaform">
-            <p class="mb-2 headbg">Platform Usage & Ethics</p>
-            <p class="mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting..</p>
+            <p class="mb-2 headbg">New Feature Unlocked! 🔥</p>
+            <p class="mb-3">Now create safrai packages and photo album directly from your partner panel.</p>
+            <div class="d-flex flex-column gap-2">
+              <a href="<?= Url::toRoute(['/package/default/index']) ?>" class="rounded text-center">Package</a>
+              <a href="<?= Url::toRoute(['/gallery/default/index']) ?>" class="rounded text-center">Gallery</a>
+            </div>
             <!-- <a href="">Read Partner Handbook</a> -->
             <!-- <a href="">Coming Soon</a> -->
           </div>
