@@ -42,6 +42,11 @@ class Api extends Component
             $response = $_GET['callback'] . "(" . $response . ")";
         }
 
+        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+
+            return $this->encyptResponse($response);
+        }
+
         return $response;
     }
 
@@ -57,6 +62,15 @@ class Api extends Component
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);
         }
+        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+
+            return $this->encyptResponse($response);
+        }
+        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+
+            return $this->encyptResponse($response);
+        }
+
         return $response = json_encode($response);
         // return $this->send($response);
 
@@ -74,11 +88,26 @@ class Api extends Component
         //     $response = array_merge($response, $msg);
         // }
         // return $response = json_encode($response);
+        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+
+            echo $this->encyptResponse($response);
+        }
+
         echo json_encode($response);
+
         exit;
     }
 
-    
+    private function encyptResponse($data)
+    {
+        $platform = \Yii::$app->request->headers->get('x-platform', 'web');
+        $key = \Yii::$app->params['aes_keys'][$platform] ?? \Yii::$app->params['aes_keys']['web'];
+        $encrypted = \common\components\AesCrypto::encrypt($data, $key);
+        // $decrypted = \common\components\AesCrypto::decrypt($encrypted, $key);
+        // return ['encrypted' => $encrypted, 'decrypted'=>$decrypted];
+        return ['data' => $encrypted];
+    }
+
 
 
 
