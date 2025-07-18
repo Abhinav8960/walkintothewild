@@ -13,7 +13,6 @@ class AesCrypto
             // If data is an array, convert it to JSON
             $json = json_encode($data);
         }
-        $json = json_encode($data);
         // $encrypted = openssl_encrypt($json, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
         $encrypted = openssl_encrypt($json, 'AES-128-ECB', $key, OPENSSL_RAW_DATA);
         return base64_encode($encrypted);

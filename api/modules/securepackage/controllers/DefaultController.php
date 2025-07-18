@@ -120,7 +120,7 @@ class DefaultController extends SecureRestController
             return Yii::$app->secureapi->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
         }
 
-        return Yii::$app->secureapi->sendResponse($data = ['data' => $package]);
+        return Yii::$app->secureapi->sendResponse($data = ['data' => (array) $package]);
     }
 
 
