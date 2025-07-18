@@ -4,6 +4,7 @@ use common\models\chat\ChatMessage;
 use common\models\GeneralModel;
 use yii\bootstrap5\Html;
 use yii\data\Pagination;
+use yii\helpers\Url;
 
 ?>
 
@@ -24,6 +25,11 @@ use yii\data\Pagination;
     <!-- <div class="d-flex align-items-center">
         <strong class="text-danger"><?= $model->chat_type ? '(' . GeneralModel::chattype($model->chat_type) . ')' : '' ?></strong>
     </div> -->
+    <div>
+        <?php if ($model->lead_id != null) { ?>
+        <?= $this->params['buttons'][] = Html::button('View Lead Details', ['value' => Url::toRoute(['view-lead-details', 'chat_id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'View Lead Details']); ?>
+        <?php } ?>
+    </div>
 </div>
 
 <div class="messaging">
@@ -32,18 +38,10 @@ use yii\data\Pagination;
 
             <?php
             if ($model) {
-                //     $query = $model->getChatmessages()->orderby(['id' => SORT_DESC]);
-                //     $pagination = new Pagination([
-                //         'totalCount' => $query->count(),
-                //         'pageSize' => 10,
-                //     ]);
-                //     $chatMessages = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-                //     $chats = array_reverse($chatMessages);
-                //     if($chats){
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
                         if ($chat_message->created_by == $model->recipient_user_id) {
-            ?>
+                            ?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
@@ -148,7 +146,8 @@ use yii\data\Pagination;
                                 </div>
 
                             <?php
-                            } else { ?>
+                            } else {
+                                ?>
                                 <div class="d-flex justify-content-end m-2">
                                     <div class="sentChat">
                                         <?php if ($chat_message->status == 0) { ?>
@@ -233,6 +232,25 @@ use yii\data\Pagination;
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="viewleaddetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    View Lead Details
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <style>
     .inbox_msg {
@@ -391,22 +409,30 @@ use yii\data\Pagination;
 
 <?php
 $js = <<<JS
-(function () {
-    const chatBox = document.querySelector('#chatBox');
-    if (!chatBox) return;
 
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    const observer = new MutationObserver(() => {
-        chatBox.scrollTop = chatBox.scrollHeight;
+    \$('.pop-up').on('click', function () {
+        // console.log('Clicked:', \$(this).attr('value'));
+        \$('#viewleaddetails').modal('show')
+            .find('#modalContent')
+            .load(\$(this).attr('value'));
     });
-    observer.observe(chatBox, { childList: true });
 
-    $(document).on('pjax:end', '#chat-pjax', () => {
+    (function () {
+        const chatBox = document.querySelector('#chatBox');
+        if (!chatBox) return;
+
         chatBox.scrollTop = chatBox.scrollHeight;
-    });
-})();
-JS;
+
+        const observer = new MutationObserver(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+        observer.observe(chatBox, { childList: true });
+
+        \$(document).on('pjax:end', '#chat-pjax', () => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    })();
+    JS;
 
 $this->registerJs($js, \yii\web\View::POS_READY);
 ?>
