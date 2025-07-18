@@ -47,10 +47,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/package/default/index",
                                                                 "/package/default/create",
+                                                                "/package/default/view",
+                                                                "/package/default/update",
+                                                                "/package/default/itinerary",
+                                                                "/package/default/inclusion",
+                                                                "/package/default/policy-info",
+                                                                "/package/default/faq",
+                                                                "/package/default/getting-there",
                                                             )) ? "active" : "" ?>" href="/package/default/index">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/package/default/index",
                                                                                                     "/package/default/create",
+                                                                                                    "/package/default/view",
+                                                                                                    "/package/default/update",
+                                                                                                    "/package/default/itinerary",
+                                                                                                    "/package/default/inclusion",
+                                                                                                    "/package/default/policy-info",
+                                                                                                    "/package/default/faq",
+                                                                                                    "/package/default/getting-there",
                                                                                                 )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu" style="    white-space: nowrap;">Packages</span>
             </a>
@@ -101,7 +115,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Posts</span>
             </a>
         </li> -->
-  
+
         <!-- <li class="navItems mb-2">
             <a href="" class="navLinks d-flex align-items-center">
                 <span class="nav-icon me-1"> <i class="fa-solid fa-house-chimney"></i></span>
@@ -114,7 +128,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Settings</span>
             </a>
         </li> -->
-     <!-- <li class="navItems mb-2">
+        <!-- <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sightings/default/index",
                                                                 "/sightings/default/create",
@@ -140,20 +154,29 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="hide-slide-menu"> Posts</span>
             </a>
         </li> -->
-      <li class="navItems mb-2">
+        <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/gallery/default/approved",
                                                                 "/gallery/default/create",
+                                                                "/gallery/default/index",
+                                                                "/gallery/default/pending-for-approval",
+                                                                "/gallery/default/view",
+                                                                "/gallery/default/approved-view",
 
                                                             )) ? "active" : "" ?>" href="/gallery/default/approved">
                 <span class="nav-icon me-1"> <img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     "/gallery/default/approved",
                                                                                                     "/gallery/default/create",
+                                                                                                    "/gallery/default/index",
+                                                                                                    "/gallery/default/pending-for-approval",
+                                                                                                    "/gallery/default/view",
+                                                                                                    "/gallery/default/approved-view",
+
                                                                                                 )) ? 'Gallery_active.svg' : 'Gallery.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> Gallery</span>
             </a>
         </li>
-    
+
 
 
         <li class="navItems mb-2">
@@ -170,7 +193,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        
+
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
