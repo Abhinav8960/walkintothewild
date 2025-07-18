@@ -17,14 +17,16 @@ require __DIR__ . '/common/components/AesCrypto.php';
 
 $encryptionKey = 'Q1r2S3t4U5v6W7x8';
 // 2. This is the data you want to send
-$data_to_encrypt = [
-    'comment' => 'testing',
-    // 'password' => 'a-very-secret-password-123',
-    // 'some_other_field' => 'value123'
-];
+// $data_to_encrypt = [
+//     'comment' => 'testing',
+//     // 'password' => 'a-very-secret-password-123',
+//     // 'some_other_field' => 'value123'
+// ];
+$data_to_encrypt = "Hello, this is a test string for encryption!";
 
 // 3. Encrypt the data (assuming your encrypt function takes a string)
-$encrypted_string = \common\components\AesCrypto::encrypt(json_encode($data_to_encrypt), $encryptionKey);
+// $encrypted_string = \common\components\AesCrypto::encrypt(json_encode($data_to_encrypt), $encryptionKey);
+$encrypted_string = \common\components\AesCrypto::encrypt($data_to_encrypt, $encryptionKey);
 
 // --- DO NOT EDIT BELOW ---
 echo "Paste the following string into your Postman request body:\n\n";
