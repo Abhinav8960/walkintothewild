@@ -30,8 +30,46 @@ $this->title = 'Package';
                                     <div class="itrnTextCard py-4">
                                         <h6 class="pb-3">About Trip / Overview</h6>
                                         <p><?= $package->package_description ?></p>
+                                        <?php if ($package->partner_gallery_id && !empty($package->gallery_json)) {
+                                            $gallery_images = json_decode($package->gallery_json, true);
+                                            $images = $gallery_images['images'];
+                                        ?>
+                                            <h6>Accomodation Images</h6>
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                                <!-- <div class="carousel-indicators">
+                                                            <?php foreach ($images as $index => $image) { ?>
+                                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>" aria-current="<?= $index === 0 ? 'true' : 'false' ?>" aria-label="Slide <?= $index + 1 ?>"></button>
+                                                            <?php } ?>
+                                                        </div> -->
+                                                <div class="carousel-inner">
+                                                    <?php foreach ($images as $index => $image) { ?>
+                                                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                                            <img class="d-block w-100 rounded carousel-img" src="<?= $image['gallery_image_path'] ?>" alt="<?= htmlspecialchars($image['title']) ?>">
+                                                            <div class="carousel-caption d-none d-md-block">
+                                                                <h5><?= $image['title'] ?></h5>
+                                                                <p><?= $image['caption'] ?></p>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+
+                                                <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                        </button> -->
+                                            </div>
+
+
+                                        <?php } ?>
+
                                     </div>
                                 </div>
+
+
 
                                 <?php if ($package->live_version) { ?>
                                     <div class="col-xl-12">
@@ -200,3 +238,9 @@ JS;
 
 $this->registerJs($js);
 ?>
+
+<style>
+    .carousel-img {
+        height: 400px;
+    }
+</style>
