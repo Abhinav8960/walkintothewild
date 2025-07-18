@@ -4,6 +4,7 @@ namespace backend\modules\chat\controllers;
 
 use api\models\chat\Chat;
 use common\models\chat\ChatDisplaySearch;
+use common\models\leads\Lead;
 use common\models\User;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -78,4 +79,24 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    public function actionViewLeadDetails($chat_id)
+    {      
+        $model = $this->findModel($chat_id);
+        $lead = $this->findLeadModel($model->lead_id);
+       
+        return $this->renderAjax('_view_lead_details', [
+            'model' => $model,
+            'lead' =>$lead,
+        ]);
+    }
+
+
+    protected function findLeadModel($id)
+    {
+        if (($model = Lead::find()->where([Lead::getTableSchema()->fullName . '.id' => $id])->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }
