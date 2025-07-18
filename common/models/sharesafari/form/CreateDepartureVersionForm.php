@@ -54,7 +54,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $shared_safari_departure_version_model;
 
 
-    public function __construct(?ShareSafariVersion $shared_safari_departure_version_model = null)
+    public function __construct(ShareSafariVersion $shared_safari_departure_version_model = null)
     {
         $this->shared_safari_departure_version_model = Yii::createObject([
             'class' => ShareSafariVersion::class

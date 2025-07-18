@@ -135,6 +135,15 @@ use common\models\GeneralModel;
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-12 ">
+            <div class="form_boxes mb-3">
+                <label for="">Plan<span>*</span></label>
+                <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan', 'class' => 'form-control'])->label(false) ?>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
