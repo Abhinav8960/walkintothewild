@@ -79,7 +79,13 @@ class SecureRestController extends RestController
                 
                 // 3. The decrypted data should be an array (from the original JSON)
                 //    Handle potential JSON decoding errors if decrypt doesn't do it.
-                $params = json_decode($decryptedData, true);
+                if(!is_array($decryptedData)){
+
+                    $params = json_decode($decryptedData, true);
+                }else{
+                    $params = $decryptedData;
+
+                }
 
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     throw new \yii\web\BadRequestHttpException('Invalid encrypted data format.');
