@@ -12,8 +12,15 @@ return [
     'controllerNamespace' => 'support\controllers',
     'bootstrap' => ['log', '\support\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
+
     'modules' => [
+        'leads' => [
+            'class' => 'support\modules\leads\Module',
+        ],
     ],
+
+
+
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
