@@ -77,7 +77,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->call_status) ? str_replace('_', ' ', $model->call_status)  : '';
+                            return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }
                     ],
                     // [
