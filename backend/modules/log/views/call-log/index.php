@@ -63,12 +63,21 @@ $this->params['title'] = $this->title;
                             return '';
                         }
                     ],
-                    [
-                        'label' => 'Dial Status',
+                    // [
+                    //     'label' => 'Dial Status',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->dial_status) ? $model->dial_status : '';
+                    //     }
+                    // ],
+
+                     [
+                        'label' => 'Call Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->dial_status) ? $model->dial_status : '';
+                            return isset($model->call_status) ? str_replace('_', ' ', $model->call_status)  : '';
                         }
                     ],
                     // [
