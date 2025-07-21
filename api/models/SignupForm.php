@@ -71,24 +71,23 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-
+    
         $user = new User();
         $user->name = $this->name;
         $user->email = $this->email;
         $user->username = $this->email;
         $user->signup_via_otp = 1;
-        if ($this->name) {
-            $autoPassword = $this->name . '@1234';
-            $user->setPassword($autoPassword);  // this sets password_hash using Yii's security
-        }
+        $autoPassword = $this->name . '@1234'; 
+        $user->setPassword($autoPassword);
         $user->generateAuthKey();
-        $user->status = User::STATUS_ACTIVE;  // Or however you set the initial status
-
+        $user->status = User::STATUS_ACTIVE;
+    
         if ($user->save()) {
             return $user;
         }
         $this->addErrors($user->getErrors());
         return null;
     }
+    
 
 }

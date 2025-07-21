@@ -749,112 +749,102 @@ class SiteController extends RestController
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post(), '')) {
-          
             if (!$model->validate()) {
-                
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
-
-            $existingUser = User::find()->where(['email' => $model->email,'signup_via_otp'=>1 ,'status' => User::STATUS_ACTIVE])->one();
-            if ($existingUser !== null ) {
+            // Check if active user already exists via OTP signup
+            $existingUser = User::find()->where([
+                'email' => $model->email, 
+                'signup_via_otp' => 1,
+                'status' => User::STATUS_ACTIVE
+            ])->one();
+            if ($existingUser !== null) {
                 return Yii::$app->api->sendFailedStringResponse(['Email is already registered and active.']);
             }
-            if($model->email){
-                $this->sendmailOtp();
-            }
-        //     if ($user = $model->signup()) {
-              
-        //         $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
-        //         $data = ['access_token' => $accesstoken->token];
-        //         return Yii::$app->api->sendResponse($data);
-        //     } else {
-        //         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-        //     }
-        // } else {
-            return Yii::$app->api->sendFailedStringResponse(['Invalid request.'], 400);
+            // Send OTP
+            $this->sendmailOtp($model->email, $model->name);
+            return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email.']); // Success response
         }
+        return Yii::$app->api->sendFailedStringResponse(['Invalid request.'], 400);
     }
+    
 
-    public function sendmailOtp()
+
+    public function sendmailOtp($email, $name)
     {
         $model = new EmailVerification();
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = 0; // No user yet, create account after OTP
+        $model->email = $email;
         $model->otp = rand(100000, 999999);
         $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
         $model->status = 1;
-
-        if (Yii::$app->request->isPost) {
-            $email = Yii::$app->request->post('email');
-
-            if ($email) {
-                $model->email = $email;
-                if ($model->save(false)) {
-                    $to_be_send = EmailVerification::find()->where(['email' => $email, 'otp' => $model->otp, 'status' => 1])->andWhere(['>=', 'exp_datetime', date('Y-m-d H:i:s')])->orderBy(['id' => SORT_DESC])->one();
-                    if ($to_be_send != null) {
-                        new \common\events\user\EmailVerification($model->user_id, $model->email,'abhinav', $to_be_send->otp, $model->exp_datetime);
-                    }
-                    return \yii\helpers\Json::encode([
-                        'success' => true,
-                        'message' => 'OTP sent to ' . $email
-                    ]);
-                }
-            }
+        // $model->name = $name; // Store name for use at user creation
+    
+        if ($model->save(false)) {
+            // Send email (replace with your event/notification code)
+            new \common\events\user\EmailVerification(
+                0,
+                $email,
+                $name,
+                $model->otp,
+                $model->exp_datetime
+            );
+            return true;
         }
+        return false;
     }
-
+    
 
     public function actionMailOtpVerification()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
+    
+        $email = Yii::$app->request->post('email');
         $otpByUser = Yii::$app->request->post('otp_by_user');
-        if (!$otpByUser) {
+        $name = Yii::$app->request->post('name');
+    
+        if (!$email || !$otpByUser || !$name) {
             return [
                 'success' => false,
-                'message' => 'Missing OTP'
+                'message' => 'Email, Name, or OTP missing'
             ];
         }
-
-        $model = EmailVerification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->id])->orderBy(['id' => SORT_DESC])->one();
-        if (!$model) {
-            return [
-                'success' => false,
-                'message' => 'OTP record not found'
-            ];
+    
+        $otp_record = EmailVerification::find()
+            ->where([
+                'email' => $email,
+                'status' => 1
+            ])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+    
+        if (!$otp_record) {
+            return [ 'success' => false, 'message' => 'OTP record not found' ];
         }
-        if ($model->otp != $otpByUser) {
-            return [
-                'success' => false,
-                'message' => 'Incorrect OTP'
-            ];
+        if ($otp_record->otp != $otpByUser) {
+            return [ 'success' => false, 'message' => 'Incorrect OTP' ];
         }
-
-        if (strtotime($model->exp_datetime) < time()) {
-            return [
-                'success' => false,
-                'message' => 'OTP has expired'
-            ];
+        if (strtotime($otp_record->exp_datetime) < time()) {
+            return [ 'success' => false, 'message' => 'OTP has expired' ];
         }
-
-            $model->status = 3;
-            $model->otp_by_user = $otpByUser;
-            $model->source_type = EmailVerification::SIGNUP_MAIL;
-            $model->save(false);
-            if ($model->status == 2) {
-                Yii::$app->session->setFlash('success', 'Email verified successfully');
-            }
-
-            if ($user = $model->signup()) {
-              
-                $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
-                $data = ['access_token' => $accesstoken->token];
-                return Yii::$app->api->sendResponse($data);
-            } else {
-                return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-            }
-        return $this->redirect(Yii::$app->request->referrer);
+    
+        $otp_record->status = 2;
+        $otp_record->otp_by_user = $otpByUser;
+        $otp_record->source_type = EmailVerification::SIGNUP_MAIL;
+        $otp_record->save(false);
+    
+        $signupmodel = new SignupForm();
+        $signupmodel->email = $email;
+        $signupmodel->name = $name;
+        if ($user = $signupmodel->signup()) {
+            $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel); // Pass user, not $model!
+            $data = ['access_token' => $accesstoken->token];
+            return Yii::$app->api->sendResponse($data);
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($signupmodel->firstErrors, 400);
+        }
     }
-
+    
     private function RateLimit($rateLimitKey, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration)
     {
         $cache = Yii::$app->cache;
