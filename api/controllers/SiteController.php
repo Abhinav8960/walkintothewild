@@ -30,6 +30,7 @@ use Yii;
  */
 class SiteController extends RestController
 {
+    
     /**
      * @inheritdoc
      */
@@ -744,12 +745,22 @@ class SiteController extends RestController
 
     public function actionSignup()
     {
-        print_r('diee');
-        die();
         $model = new SignupForm();
 
+        if($model->email){
+            
+        }
+
+
+
+
+
+
+
         if ($model->load(Yii::$app->request->post(), '')) {
+          
             if (!$model->validate()) {
+                
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
 
@@ -759,6 +770,7 @@ class SiteController extends RestController
             }
 
             if ($user = $model->signup()) {
+              
                 $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                 $data = ['access_token' => $accesstoken->token];
                 return Yii::$app->api->sendResponse($data);
