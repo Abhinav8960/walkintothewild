@@ -116,7 +116,7 @@ class DefaultController extends RestController
         }
 
         if ($package->status != Package::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
+            return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()], ['message' => "Package is not in use!!!"]);
         }
 
         return Yii::$app->api->sendResponse($data = ['data' => $package]);
