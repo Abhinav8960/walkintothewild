@@ -107,7 +107,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/operator/safari-operator/index',
                                                                                                     '/operator/safari-operator/create',
                                                                                                     '/operator/safari-operator/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator     <a href="" class="drop_imagesCC">
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator <a href="" class="drop_imagesCC">
                     <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
             </a></span>
                 <!-- <i class="angle fe fe-chevron-right"></i> -->
