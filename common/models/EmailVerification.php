@@ -25,6 +25,7 @@ class EmailVerification extends \yii\db\ActiveRecord
 
 
     const BILLING_MAIL =1 ;
+    const SIGNUP_MAIL = 2;
     /**
      * {@inheritdoc}
      */
