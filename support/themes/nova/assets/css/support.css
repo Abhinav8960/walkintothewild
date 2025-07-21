@@ -157,3 +157,9 @@
 
     color: #92929D;
 }
+.thumb-wrapper img{
+
+    width: 107px;
+    height: 60px;
+    object-fit: cover;
+}
