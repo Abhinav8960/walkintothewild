@@ -54,13 +54,12 @@ class WhatsappController extends Controller
     public function actionIndex()
     {
          /* ------------TO VERIFY TOKEN (UnCOMMENT ME)---- */
-        $webhook = new WebHook();
+        // $webhook = new WebHook();
 
-        echo $webhook->verify($_GET, "white-elephant");
-        die();
+        // echo $webhook->verify($_GET, "white-elephant");
+        // die();
         /* --------------------------------------------------------- */
-
-        $data = Yii::$app->request->post();        
-        \Yii::info('PayU Response Sucess: ' . json_encode($data), 'whatsapp-webhook');
+        $payload = file_get_contents('php://input');
+        \Yii::info(time(). 'whatsapp-webhook Response: ' . $payload, 'whatsapp-webhook');
     }
 }
