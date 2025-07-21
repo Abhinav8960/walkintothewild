@@ -112,6 +112,7 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 'signup' => 'site/signup',
+                'mail-otp-verification'=>'site/mail-otp-verification',
 
                 'site/test' => 'site/test',
                 'mobile-no-verification' => 'site/mobile-no-verification',
