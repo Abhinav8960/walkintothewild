@@ -22,6 +22,7 @@ class DefaultController extends Controller
     {
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->is_approved = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

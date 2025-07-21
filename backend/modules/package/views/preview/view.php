@@ -13,6 +13,19 @@ AppAsset::register($this);
 
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
+$this->params['buttons'][] =  Html::button(
+    '<span class="fa-stack fa-sm">
+                <i class="fa fa-certificate fa-stack-2x"></i>
+                <i class="fa fa-tag fa-stack-1x fa-inverse"></i>
+            </span> Platform Discount',
+    [
+        'value' => Url::toRoute(['platform-discount', 'id' => $package->id]),
+        'class' => 'btn mt-2 discountPopup',
+        'style' => 'background-color:#f7f5b2; color:#ed8739; margin-right:5px',
+        'title' => 'Platform Discount'
+    ]
+);
+
 if ($package->popular_package != 1) {
     $this->params['buttons'][] = Html::a('Mark As Popular', [Url::toRoute(['mark-as-popular', 'id' => $package->id])], ['class' => 'btn btn-orange', 'title' => 'Mark as Popular']);
 } else {
@@ -148,6 +161,19 @@ if ($package->popular_package != 1) {
     </div>
 </div>
 
+<div class="modal fade _standard-text" id="discount-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Platform Discount</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='discountContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
@@ -159,6 +185,16 @@ function organizefunction() {
 	});
 }
 organizefunction();
+
+function discount() {
+	$('.discountPopup').on('click', function () {
+        $('#discount-modal').modal('show')
+		.find('#discountContent')
+		.load($(this).attr('value'));
+	});
+}
+discount();
+
 JS;
 $this->registerJs($script);
 ?>

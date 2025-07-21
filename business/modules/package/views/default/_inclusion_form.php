@@ -17,17 +17,19 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) { ?>
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <label class="control-label"><?= $optionLabel ?></label>
+<div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="incBoxMain">
+        <div class="row p-0">
+            <div class="col-lg-8">
+                <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) { ?>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="clsHeadings">
+                                <p><?= $optionLabel ?></p>
                             </div>
-                            <div class="col-lg-10">
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="form_boxes mb-3">
                                 <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
                                     [
                                         '1' => 'Included',
@@ -35,66 +37,85 @@ use yii\bootstrap5\ActiveForm;
                                     ],
                                     [
                                         'item' => function ($index, $label, $name, $checked, $value) {
-                                            return '<div class="form-check form-check-inline">' .
-                                                '<input class="form-check-input" type="radio" name="' . $name . '" value="' . $value . '"' . ($checked ? ' checked' : '') . '>' .
-                                                '<label class="form-check-label">' . $label . '</label>' .
-                                                '</div>';
+                                            return
+                                                '<input class="form-check-input me-3" type="radio" name="' . $name . '" value="' . $value . '"' . ($checked ? ' checked' : '') . '>' .
+                                                '<label class="inclabel">' . $label . '</label>';
                                         },
-                                        'itemOptions' => ['class' => 'form-check-input'], 
+                                        'itemOptions' => ['class' => 'form-check-input'],
                                     ]
                                 )->label(false) ?>
                             </div>
                         </div>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                Meals :
-            </div>
-            <div class="col-md-1">
-                <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast') ?>
-            </div>
-            <div class="col-md-1">
-                <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch') ?>
-            </div>
-            <div class="col-md-1">
-                <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner') ?>
-            </div>
-            <div class="col-md-2">
-                <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included"])->label('Meal Not Included') ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'List everything included'])->label('Package Inclusion') ?>
-            </div>
-            <div class="col-md-6">
-                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'List what is not included'])->label('Package Exclusion') ?>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+
+                    </div>
+                <?php } ?>
+                <div class="row gx-0">
+                    <div class="col-lg-4">
+                        <div class="clsHeadings">
+                             <p>Meals :</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included", 'class' => "form-check-input"])->label('Breakfast') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included", 'class' => "form-check-input"])->label('Lunch') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included", 'class' => "form-check-input"])->label('Dinner') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                           <div class="form_boxes">
+                               <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included", 'class' => "form-check-input"])->label('Meal Not Included') ?>
+                           </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form_boxes mb-3">
+                <label for="">Package Inclusion <span>*</span></label>
+                <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'List everything included'])->label(false) ?>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form_boxes mb-3">
+                <label for="">Package Exclusion <span>*</span></label>
+                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'List what is not included'])->label(false) ?>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row pt-2">
+        <div class="col-12">
+            <div class="d-flex gap-3 justify-content-end">
+                <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+            </div>
+        </div>
+    </div>
 </div>
+
 <?php ActiveForm::end(); ?>
 
 <style>
-    .ck-editor__editable {
+    /* .ck-editor__editable {
         min-height: 150px;
-    }
+    } */
 </style>
 <?php
 $script = <<< JS
-bulleteditor('PackageVersionForm-package_inclusion');
-bulleteditor('PackageVersionForm-package_exclusion');
+// bulleteditor('PackageVersionForm-package_inclusion');
+// bulleteditor('PackageVersionForm-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>
@@ -150,7 +171,12 @@ $this->registerJs($script);
 
 <style>
     .form-check-inline {
-    display: inline-block;
-    margin-right: 2rem !important;
-}
+        display: inline-block;
+        margin-right: 2rem !important;
+    }
+
+    .form-check-input:checked {
+        background-color: #152F1B !important;
+        border-color: #152F1B !important;
+    }
 </style>

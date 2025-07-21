@@ -14,7 +14,7 @@ $package_included = PackageIncluded::find()
 
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group">
+        <div class="form-group itrnTextCard">
             <?php
             $selectedOptions = [];
             foreach ($package_included as $included) {
@@ -37,10 +37,8 @@ $package_included = PackageIncluded::find()
                                     echo 'Included';
                                 } else if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2)) {
                                     echo 'Not Included';
-                                } else  if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3)) {
-                                    echo 'Optional';
                                 } else {
-                                    echo '';
+                                    echo 'Optional';
                                 }  ?>
                             </label>
                         </div>
@@ -63,17 +61,22 @@ $package_included = PackageIncluded::find()
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row inclusions">
-    <div class="col-md-12 pt-3">
-        <div class="itenary_text font_familydd">
-            <p class="mb-2"><?= $package->package_inclusion ?></p>
-        </div>
-        <div class="itenary_text">
-            <p class="mb-2"><?= $package->package_exclusion ?></p>
-        </div>
-    </div>
 
+            <div class="row inclusions">
+                <div class="col-md-12 pt-3">
+                    <div class="itenary_text font_familydd">
+                        <h6 class="mb-2">Inclusion</h6>
+                        <p class="mb-2"><?= $package->package_inclusion ?></p>
+                    </div>
+                    <div class="itenary_text">
+                        <h6 class="mb-2">Exclusion</h6>
+                        <p class="mb-2"><?= $package->package_exclusion ?></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+

@@ -24,6 +24,7 @@
 
 <style>
    .faq_item .accordion-button {
-    background-color: #CED2E0 !important;
+    background-color: #D7D7D8 !important;
+    padding: 13px;
 }
 </style>

@@ -81,7 +81,11 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getGalleryActiveImages()
     {
-        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
+        // return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
+        if (!empty($this->live_images)) {
+            $c_arr =  json_decode($this->live_images, true);
+            return $c_arr['images'] ?? [];
+        }
     }
 
     // public function PrepareFullResponse()

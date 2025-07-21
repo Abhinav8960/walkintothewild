@@ -24,7 +24,8 @@ class DefaultController extends Controller
     {
         $searchModel = new PartnerGallerySearch();
         $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        $searchModel->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        // $searchModel->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
+        $searchModel->send_for_approval = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -35,7 +36,8 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
@@ -55,15 +57,25 @@ class DefaultController extends Controller
 
     public function actionApproved($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
+        // $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
         $partner_gallery_model->live_images = json_encode($partner_gallery_model->PrepareFullResponse());
-        $partner_gallery_model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+        $partner_gallery_model->is_approved = 1;
+        $partner_gallery_model->in_draft = 0;
+        $partner_gallery_model->send_for_approval = 0;
+        $partner_gallery_model->remark = NULL;
+        $partner_gallery_model->is_live = 1;
+        $partner_gallery_model->live_gallery_images_count = $partner_gallery_model->gallery_count;
+
+
         if ($partner_gallery_model->save(false)) {
+            $partner_gallery_model->versionsave();
             \Yii::$app->session->setFlash('danger', 'Gallery Approved SuccessFully!!!');
             return $this->redirect(['index']);
         }
@@ -71,14 +83,20 @@ class DefaultController extends Controller
 
     public function actionReject($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        // $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'can_send_for_approval' => PartnerGallery::CANNOT_SEND_FOR_APPROVAL, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'send_for_approval' => 1, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
         $model = new PartnerGalleryRejectionForm($partner_gallery_model);
-        $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+        // $model->can_send_for_approval = PartnerGallery::DEFAULT_APPROVAL_STATUS;
+
+        $model->in_draft  = 1;
+        $model->send_for_approval  = 0;
+        $model->is_approved  = 0;
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {

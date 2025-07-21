@@ -8,6 +8,7 @@ use common\models\package\PackageVersion;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
+use common\models\partnergallery\PartnerGallery;
 
 class PackageVersionForm extends \yii\base\Model
 {
@@ -78,6 +79,9 @@ class PackageVersionForm extends \yii\base\Model
     public $action_validate_url;
     public $created_at;
     public $max_booking_date;
+    public $cost_per_two_person;
+    public $partner_gallery_id;
+    public $gallery_json;
 
     /**
      * @param [type] $package_version_model
@@ -109,6 +113,7 @@ class PackageVersionForm extends \yii\base\Model
             $this->end_date = $this->package_version_model->end_date;
             $this->stay_category_id = $this->package_version_model->stay_category_id;
             $this->cost_per_person = $this->package_version_model->cost_per_person;
+            $this->cost_per_two_person = $this->package_version_model->cost_per_two_person;
             $this->package_description = $this->package_version_model->package_description;
             $this->package_itinerary_overview = $this->package_version_model->package_itinerary_overview;
             $this->package_inclusion = $this->package_version_model->package_inclusion;
@@ -136,6 +141,7 @@ class PackageVersionForm extends \yii\base\Model
             $this->status = $this->package_version_model->status;
             $this->created_at = $this->package_version_model->created_at;
             $this->max_booking_date = $this->package_version_model->max_booking_date;
+            $this->partner_gallery_id = $this->package_version_model->partner_gallery_id;
 
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
             $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
@@ -152,30 +158,40 @@ class PackageVersionForm extends \yii\base\Model
                 'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
+                // 'maxWidth' => 350,
+                // 'maxHeight' => 350,
             ],
-            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id'], 'required', 'on' => ['create', 'update']],
+            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id','cost_per_two_person'], 'required', 'on' => ['create', 'update']],
+            [['package_park'], 'required', 'on' => ['create']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'master_vehicle_id'], 'integer'],
-            [['cost_per_person', 'total_price'], 'number'],
-            [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
-            [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there', 'package_agenda_id'], 'safe'],
-            [['package_name'], 'string', 'max' => 512],
+            [['no_of_day', 'no_of_night', 'stay_category_id', 'status', 'type', 'gst_percentage', 'master_vehicle_id'], 'integer'],
+            [['total_price'], 'number'],
+            [['package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
+            [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'package_agenda_id'], 'safe'],
             // [['package_slug'], 'string', 'max' => 720],
-            [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['start_location', 'end_location'], 'match', 'pattern' => '/^[a-zA-Z\s-]+$/', 'message' => 'Only letters, spaces, and hyphens are allowed.'],
+            [['start_location', 'end_location'], 'string', 'max' => 215],
             [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'package_id', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
-
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
-
-
             [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'popular_package'], 'integer'],
-            [['day_description', 'day_activity', 'day_accommodation', 'day_note'], 'string'],
-            [['day_title'], 'string', 'max' => 512],
-            [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
+            [['day_activity', 'day_accommodation', 'day_note'], 'string'],
+            [['hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
             ['created_at', 'safe'],
             [['max_booking_date'], 'date', 'format' => 'php:Y-m-d'],
-            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+            [['package_name'], 'string', 'max' => 215],
+            [['package_inclusion', 'package_exclusion'], 'string', 'max' => 512],
+            [['no_of_safari'], 'integer', 'min' => 1, 'max' => 99],
+            [['cost_per_person'], 'number', 'min' => 100, 'max' => 9999999],
+            [['cost_per_two_person'], 'number', 'min' => 100, 'max' => 9999999],
+            [['package_description'], 'string', 'max' => 2000],
+            [['day_title'], 'string', 'max' => 512],
+            [['day_description'], 'string', 'max' => 2000],
+            [['getting_there'], 'string', 'max' => 2000],
+            [['partner_gallery_id'], 'integer'],
+            [['gallery_json'], 'safe'],
+
 
         ];
     }
@@ -194,6 +210,7 @@ class PackageVersionForm extends \yii\base\Model
             'stay_category_id',
             'status',
             'cost_per_person',
+            'cost_per_two_person',
             'package_description',
             'package_itinerary_overview',
             'package_inclusion',
@@ -219,6 +236,8 @@ class PackageVersionForm extends \yii\base\Model
             'dinner_included',
             'meal_not_included',
             'max_booking_date',
+            'partner_gallery_id',
+            'gallery_json',
         ];
         $scenarios['update'] = [
             'package_name',
@@ -230,6 +249,7 @@ class PackageVersionForm extends \yii\base\Model
             'stay_category_id',
             'status',
             'cost_per_person',
+            'cost_per_two_person',
             'package_description',
             'package_itinerary_overview',
             'package_inclusion',
@@ -254,6 +274,8 @@ class PackageVersionForm extends \yii\base\Model
             'dinner_included',
             'meal_not_included',
             'max_booking_date',
+            'partner_gallery_id',
+            'gallery_json',
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -294,8 +316,9 @@ class PackageVersionForm extends \yii\base\Model
             'end_location' => 'Tour End',
             'package_image' => 'Package Image',
             'package_banner_image' => 'Package Banner Image',
-            'stay_category_id' => 'Accommodation',
+            'stay_category_id' => 'Stay Category',
             'cost_per_person' => 'Cost Per Person',
+            'cost_per_two_person' => 'Cost Per Two Person',
             'package_description' => 'Package Description',
             'package_itinerary_overview' => 'Overview',
             'package_inclusion' => 'Package Inclusion',
@@ -309,6 +332,8 @@ class PackageVersionForm extends \yii\base\Model
             'master_vehicle_id' => 'Select Vehicle',
             'popular_package' => 'Popular Package',
             'max_booking_date' => 'Max Booking Date',
+            'partner_gallery_id' => 'Gallery Id',
+            'gallery_json' => 'Gallery Json',
             'status' => 'Status',
         ];
     }
@@ -350,6 +375,7 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->end_date = $this->end_date;
         $this->package_version_model->stay_category_id = $this->stay_category_id;
         $this->package_version_model->cost_per_person = $this->cost_per_person;
+        $this->package_version_model->cost_per_two_person = $this->cost_per_two_person;
         $this->package_version_model->package_description = $this->package_description;
         $this->package_version_model->package_itinerary_overview = $this->package_itinerary_overview;
         $this->package_version_model->package_inclusion = $this->package_inclusion;
@@ -384,6 +410,11 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
         $this->package_version_model->popular_package = $this->popular_package;
         $this->package_version_model->max_booking_date = $this->max_booking_date ? $this->max_booking_date : date('Y-m-d', strtotime('+1 year'));
+        $this->package_version_model->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+            $this->package_version_model->gallery_json = $live->live_images;
+        }
 
         // if ($this->package_version_model->package_slug == '') {
         //     $without_space_string = str_replace(' ', '-', strtolower($this->package_version_model->safarioperator->business_name));

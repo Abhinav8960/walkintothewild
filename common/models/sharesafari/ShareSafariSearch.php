@@ -38,7 +38,7 @@ class ShareSafariSearch extends ShareSafari
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'report_days', 'type'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web','cut_off_date'], 'safe'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             ['custom_status', 'safe']
         ];
@@ -344,6 +344,7 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
             'share_safari.start_date' => $this->start_date,
             'share_safari.end_date' => $this->end_date,
+            'share_safari.cut_off_date' => $this->cut_off_date,
             'share_safari.stay_category_id' => $this->stay_category_id,
             'share_safari.total_seat' => $this->total_seat,
             'share_safari.share_seat' => $this->share_seat,

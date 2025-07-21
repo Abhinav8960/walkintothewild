@@ -7,6 +7,7 @@ namespace common\models;
 // use common\models\blog\category\Category;
 // use common\models\blog\frequency\Frequency;
 
+
 use common\models\cms\article\Article;
 use common\models\cms\article\MasterArticleAuthor;
 use common\models\cms\faqcategory\FaqCategory;
@@ -64,6 +65,7 @@ use common\models\MailLogRecipients;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\smstemplate\MasterSmsTemplate;
 use common\models\master\userflag\MasterUserFlag;
+use common\models\partnergallery\PartnerGallery;
 use DOMDocument;
 use DOMXPath;
 use Exception;
@@ -2127,6 +2129,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         ];
     }
 
+    public static function fdStayOption()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => 1])->orderBy(['sequence_for_share_safari' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function liveGallery($id)
+    {
+        $live_gallery = PartnerGallery::find()->where(['safari_operator_id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->andWhere(['IS NOT', 'live_images', NULL]);
+        return ArrayHelper::map($live_gallery->all(), 'id', 'title');
+    }
     public static function generatePdfContent($viewPath, $params = [])
     {
         // Render the partial view
@@ -2149,5 +2161,4 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         return $types[$type] ?? '';
     }
-    
 }

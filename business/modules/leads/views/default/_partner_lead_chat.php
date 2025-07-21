@@ -2,7 +2,8 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
-    use yii\bootstrap5\Html;
+use common\models\partnergallery\PartnerGalleryVersion;
+use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
     ?>
@@ -85,8 +86,9 @@
                              </div>
                          </div>
                      </div>
-                     <?php } else if ($chat_message->gallery != null) {
-                        $gallery_data = json_decode($chat_message->gallery, true);
+                     <?php } else if ($chat_message->partner_gallery_version_id != null) {
+                        $partner_gallery_version = PartnerGalleryVersion::find()->where(['id' => $chat_message->partner_gallery_version_id])->limit(1)->one();
+                        $gallery_data = json_decode($partner_gallery_version->live_images, true);
                         if ($gallery_data) { ?>
 
                          <div class="d-flex justify-content-end mt-5">
@@ -127,7 +129,7 @@
                          </div>
                      </div>
                  <?php } elseif ($chat_message->is_system_generated == 1) { ?>
-                    
+
                      <div class="d-flex justify-content-center m-2">
                          <div class="ItineraryQuotationarea">
                              <div class="topTitle pb-3">

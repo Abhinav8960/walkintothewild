@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = "Create";
 $this->params['title'] = $this->title;
 
 ?>
-<div class="panel panel-primary tabs-style-2">
+ <div class="tabs-formswrapper">
     <?= $this->render('_create_navbar', ['overview_active' => 'active']) ?>
-    <div class="card">
+    <div class="card border-0">
         <div class="card-body">
             <?= $this->render('_form', [
                 'model' => $model,
