@@ -1,3 +1,12 @@
+
+.packageTitle h2{
+
+  font-family: "Roboto", sans-serif !important;
+  font-size: 18px;
+  font-weight: 700;
+  color: #152F1B;
+}
+
 .tablecustoms {
   border-spacing: inherit;
 }
@@ -21,6 +30,11 @@ li{
 .tablecustoms tbody td {
   padding: 8px 14px;
   font-size: 12px;
+      background: #fff;
+          white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
 }
 
 .source-icon {
@@ -78,7 +92,7 @@ li{
 
 
 
-.pagination .active .page-link {
+/* .pagination .active .page-link {
   background-color: #1f3b2f;
   color: #fff;
   width: 20px;
@@ -88,10 +102,56 @@ li{
   border-radius: 4px;
   justify-content: center;
   text-align: center;
+} */
+/* Common pagination styles */
+.pagination {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination .page-link {
+
+  border: none;
+  background: none;
+  color: #92929D;
+      font-size: 14px;
+    font-weight: 400;
+}
+.pagination .page-link:focus{
+
+  box-shadow: none;
+}
+
+.pagination .page-item.active .page-link {
+  font-weight: 700; /* Bold for active */
+  color: #000; /* Black active number */
+}
+
+.pagination .button_nextprve {
+  background: #D5D5DC;
+  color: #fff;
+      font-weight: 600;
+    font-size: 12px;
+  text-transform: uppercase;
+}
+
+.pagination .page-item:last-child .button_nextprve {
+  background: #152F1B;
+      border-radius: 12px;
+          box-shadow: none;
+}
+
+.pagination .button_nextprve {
+      border-radius: 7px !important;
+}
+
+.pagination .page-link:hover {
+  text-decoration: none;
+  opacity: 0.9;
 }
 
 .pagination .page-item.active {
-  background-color: #d4dbd8 !important;
   width: 30px;
   border-radius: 30%;
 }
@@ -138,7 +198,7 @@ li{
 }
 
 .button_nextprve {
-  padding: 4px 20px;
+  padding: 7px 30px;
   border-radius: 8px;
   background-color: #D5D5DC;
   font-size: 14px;
@@ -285,34 +345,39 @@ li{
   font-weight: 600;
 }
 
-.tabs-formswrapper .nav.nav-tabs {
+.tabs-formswrapper .mynav.nav-tabs {
 
   background: #C4E3BD !important;
   border-radius: 15px 15px 0px 0px !important;
   margin-bottom: 0;
-  padding: 3px 20px !important;
+  padding: 10px 20px 0px 20px !important;
   align-items: center;
   text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
 
-.tabs-formswrapper .nav.nav-tabs .nav-item {
+.tabs-formswrapper .mynav.nav-tabs .nav-item {
 
   width: auto !important;
 }
 
-.tabs-formswrapper .nav.nav-tabs .nav-item .nav-link {
+.tabs-formswrapper .mynav.nav-tabs .nav-item .nav-link {
 
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 600;
+  color: #152F1B;
+  padding: 10px !important;
 }
 
-.tabs-formswrapper .nav.nav-tabs .nav-item .nav-link.active {
+.tabs-formswrapper .mynav.nav-tabs .nav-item .nav-link.active {
 
   background-color: transparent;
-  border-bottom: 2px solid red;
+  border-bottom: 3px solid #152F1B !important;
   border-radius: 0;
-  padding: 0 !important;
+  
   border: 0;
 }
 
@@ -485,7 +550,7 @@ li{
 
   position: absolute;
   padding: 20px 0px 0px 20px;
-  width: 180px !important;
+  width: 225px !important;
   height: auto !important;
   object-fit: cover;
   top: 0;
@@ -528,3 +593,26 @@ li{
   display: block;
 }
 
+.table > :not(caption) > * > * {
+    border: none !important;
+}
+.eyeRadius i{
+
+ color: #92929D;
+    font-size: 14px;
+    padding: 5px;
+    border: 2px solid #E2E2EA;
+        background: #FAFAFB;
+    border-radius: 8px;
+}
+.active-btn-org{
+  outline: none;
+    border: none;
+    background: #82C43C1A;
+    padding: 2px 15px;
+    color: #82C43C;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+        text-transform: uppercase;
+}
