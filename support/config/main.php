@@ -17,6 +17,10 @@ return [
         'leads' => [
             'class' => 'support\modules\leads\Module',
         ],
+
+        'sightings' => [
+            'class' => 'support\modules\sightings\Module',
+        ],
     ],
 
 
