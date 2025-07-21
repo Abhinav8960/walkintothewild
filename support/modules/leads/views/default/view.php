@@ -16,7 +16,7 @@ AppAsset::register($this);
 
 ?>
 
-<div class="row mb-5 mt-4 itenary_tabs">
+<!-- <div class="row mb-5 mt-4 itenary_tabs">
     <div class="col-lg-12 col-xl-12 safartabs position-relative">
         <table class="table table-bordered">
             <thead>
@@ -87,18 +87,18 @@ AppAsset::register($this);
                         <th>Accomodation</th>
                         <th>Travel Date looking For</th>
                         <th>Info</th> -->
-                        <!-- <th>Partner selling price</th>
+<!-- <th>Partner selling price</th>
                         <th>Platform Partner Fees Percentage</th>
                         <th>Platform Partner Fees</th>
                         <th>Partner net selling price</th>
                         <th>Platform customer discount</th> -->
-                        <!-- <th>Net payment price</th>
+<!-- <th>Net payment price</th>
                         <th>No of installment</th>
                         <th>Lead Received Date</th>
                         <th>Validity Date</th>
                         <th>Permit Booking Date</th>
                         <th>Payment Link</th> -->
-                    <!-- </thead>
+<!-- </thead>
                     <tbody>
                         <?php if (count($quotations) > 0) { ?>
                             <?php foreach ($quotations as $quotation) { ?>
@@ -121,12 +121,12 @@ AppAsset::register($this);
                                         <?= $quotation->email ?>
                                         <?= $quotation->phone ?>
                                     </td> -->
-                                    <!-- <td>₹<?= $quotation->partner_selling_price ?></td>
+<!-- <td>₹<?= $quotation->partner_selling_price ?></td>
                                     <td><?= $quotation->plateform_partner_fees_percentage ?>%</td>
                                     <td>₹<?= $quotation->plateform_partner_fees ?></td>
                                     <td>₹<?= $quotation->partner_net_selling_price ?></td>
                                     <td>₹<?= $quotation->plateform_customer_discount ?></td> -->
-                                    <!-- <td>₹<?= $quotation->net_payment_price ?></td>
+<!-- <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
                                     <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
                                     <td><?= $quotation->validity_date ?></td>
@@ -158,9 +158,8 @@ AppAsset::register($this);
             </div>
         </div>
     </div> -->
-</div>
 
-<div class="card">
+<!-- <div class="card">
     <div class="card-body">
         <h4>Assign To</h4>
         <ul class="nav nav-tabs" role="tablist">
@@ -173,16 +172,9 @@ AppAsset::register($this);
             <?php } ?>
         </ul>
     </div>
-</div>
+</div> -->
 
-
-
-
-
-
-
-
-<div class="modal fade" id="assignAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="assignAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header flageHeader">
@@ -197,13 +189,12 @@ AppAsset::register($this);
 
         </div>
     </div>
-</div>
+</div> -->
 
-
-<?php
+<!-- <?php
 $script = <<< JS
 
-// Handle Assign Button Click
+Handle Assign Button Click
 $('.pop-up').on('click', function () {
     $('#assignAction').modal('show')
         .find('#modalContent')
@@ -224,4 +215,93 @@ $this->registerJs($script);
     .table a {
         color: #237729 !important;
     }
-</style>
+</style> -->
+
+
+
+
+<div class="table-wrapper remove-css mb-4">
+    <div class="table-responsive">
+        <div class="min-width-table">
+            <div id="w0" class="grid-view">
+                <table class="table tablecustoms table-striped align-middle w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%;">#</th>
+                            <th style="width: 5%;">Name</th>
+                            <th style="width: 2%;">Safaris</th>
+                            <th style="width: 2%;">Travelers</th>
+                            <th style="width: 15%;">User Notes</th>
+                            <th style="width: 3%;">Travel Date looking For</th>
+                            <th style="width: 3%;">Lead Received Date</th>
+                            <th style="width: 10%;">Payment Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-key="840">
+                            <td>1</td>
+                            <td> Karan</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td style="text-align: left;">NOANSWER</td>
+                            <td style="text-align: left;">03 Jul, 2025- 15 Jul, 2025</td>
+                            <td style="text-align: left;">03 Jul, 2025 01:19 PM</td>
+                            <td>
+                                <div class="paymentInfoDetail">
+                                    <a href="" class="payRece mb-2">Payment Received</a>
+                                    <p class="mt-2"><span>Payment Date:</span>03 Jul, 2025 13:24 PM</p>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-wrapper">
+    <div class="breadcrumb-header justify-content-between align-items-center">
+        <div>
+            <p class="page-header mb-0">Assign To</p>
+        </div>
+    </div>
+    <div class="assign-tabs">
+        <div class="row">
+            <div class="col-5">
+  <ul class="nav nav-tabs flex-row" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                role="tab" aria-controls="home" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+        </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#con" type="button"
+                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+        </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#fivcont" type="button"
+                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+        </li>
+    </ul>
+            </div>
+        </div>
+  
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">sarwar</div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">sarwar2</div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">sarwar3</div>
+        <div class="tab-pane fade" id="con" role="tabpanel" aria-labelledby="contact-tab">sarwar4</div>
+        <div class="tab-pane fade" id="fivcont" role="tabpanel" aria-labelledby="contact-tab">sarwar5</div>
+    </div>
+    </div>
+
+</div>

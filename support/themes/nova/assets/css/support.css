@@ -1,4 +1,61 @@
-.container-scroller .main-header .navbar.supportNavbar{
+.container-scroller .main-header .navbar.supportNavbar {
 
     background-color: #679267 !important;
+}
+
+.supportIcons .ed-du-img {
+
+    padding: 5px 8px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.nav-right {
+    margin: 0px 0px 0px 0px !important;
+}
+
+.page-header {
+
+    color: #151C2C;
+    font-size: 26px;
+    font-weight: 600;
+}
+.table-wrapper.remove-css{
+
+    background: transparent !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+    border-bottom: 4px solid #fff;
+}
+.table-wrapper.remove-css .tablecustoms tbody td{
+
+    padding: 20px 14px !important;
+}
+.paymentInfoDetail .payRece{
+
+       background: #82C43C1A;
+    padding: 5px 10px;
+    color: #82C43C;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.assign-tabs .nav.nav-tabs{
+
+        position: static !important;
+            height: auto;
+                width: 100% !important;
+}
+.assign-tabs .nav.nav-tabs .nav-item{
+
+    padding: 0px !important;
+}
+.assign-tabs .nav.nav-tabs .nav-item .nav-link.active{
+
+    background: none;
+    color: #000;
+        padding: 0px;
+            border-radius: 0px;
 }

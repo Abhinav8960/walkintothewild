@@ -19,7 +19,7 @@
              </a>
            </li> -->
             <li class="nav-item " id="dropdown-pro">
-         <div class="d-flex align-items-center gap-4">
+         <div class="supportIcons d-flex align-items-center gap-4">
            <div class="ed-du-img">
                <a href=""><img src="<?= $this->params['baseurl'] ?>/images/inbox.png" class="card-img-top" alt=""></a>
            </div>
@@ -37,7 +37,7 @@
            <div class="d-lg-block d-none">
              <div class="dropdoen-detail-profile d-flex ">
                <!-- <p class="pt-1"><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p> -->
-                <p class="pt-1">Ankit Kankane Safaris&nbsp;</p>
+                <p class="pt-1 mb-0">Ankit Kankane Safaris&nbsp;</p>
                <!-- <i class="mdi mdi-menu-down d-none d-sm-block"></i> -->
              </div>
            </div>
