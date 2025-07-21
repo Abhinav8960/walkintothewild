@@ -10,7 +10,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="profile-ditails d-flex justify-content-around align-items-center">
                 <div class="pro-img me-3">
                     <a href="/">
-                        <img src="<?= $this->params['baseurl'] ?>/images/partner.jpg" alt="">
+                        <img src="<?= $this->params['baseurl'] ?>/images/sp.jpg" alt="">
                         <span class="success-online"></span>
                     </a>
                 </div>
