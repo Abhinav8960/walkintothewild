@@ -69,7 +69,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        <li class="navItems mb-2 <?= in_array($active_url, array(
+        <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
                                         "/operator/safari-operator/index",
                                         "/operator/safari-operator/view",
                                         "/operator/safari-operator/index/view",

@@ -129,12 +129,11 @@
     border-radius: 6px !important;
         font-weight: 700;
 }
-/* .drop_imagesCC{
+.drop_imagesCC{
         position: absolute;
-    top: 50%;
+        top: 10px;
     right: 20px;
-    transform: translateY(-50%);
-} */
+}
 .drop_imagesCC img{
 
     width: 12px;
