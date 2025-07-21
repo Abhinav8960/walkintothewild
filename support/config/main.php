@@ -21,6 +21,10 @@ return [
         'sightings' => [
             'class' => 'support\modules\sightings\Module',
         ],
+
+        'posts' => [
+            'class' => 'support\modules\posts\Module',
+        ],
     ],
 
 

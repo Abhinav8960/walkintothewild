@@ -6,7 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Leads';

@@ -12,7 +12,7 @@ use kartik\daterange\DateRangePicker;
 
 <?php $form = ActiveForm::begin([
     'options' => [
-        'id' => 'sightings-search-form'
+        'id' => 'sighting-search-form'
     ],
     'method' => 'get',
     'fieldConfig' => [
