@@ -114,7 +114,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
              
             </a>
 
-            <ul class="slide-menu collapse <?= in_array($active_url, array(
+            <ul class="slide-menu collapse pt-2 <?= in_array($active_url, array(
                                                 "/operator/safari-operator/index",
                                                 "/operator/safari-operator/view",
                                                 "/operator/safari-operator/index/view",

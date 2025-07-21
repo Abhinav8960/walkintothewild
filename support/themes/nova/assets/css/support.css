@@ -45,18 +45,21 @@
     font-weight: 600;
     text-transform: uppercase;
 }
-.paymentInfoDetail .bolder_font{
+
+.paymentInfoDetail .bolder_font {
 
     font-weight: 500;
     font-size: 13px;
     color: #171725;
 }
-.paymentInfoDetail p{
 
-        font-size: 13px;
+.paymentInfoDetail p {
+
+    font-size: 13px;
     font-weight: 400;
     color: #171725;
 }
+
 .assign-tabs .nav.nav-tabs {
 
     position: static !important;
@@ -69,7 +72,7 @@
 .assign-tabs .nav.nav-tabs .nav-item {
 
     padding: 0px !important;
-     width: auto;
+    width: auto;
 
 }
 
@@ -101,40 +104,56 @@
 
     padding: 0px !important;
 }
-.assign-tabs .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus{
+
+.assign-tabs .nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
 
     border: 1px solid #848A90;
 }
-.assign-tabs .tab-content{
 
-        background: #EEEEEE;
+.assign-tabs .tab-content {
+
+    background: #EEEEEE;
     margin: 0px 14px 0px 37px;
-        padding: 25px;
-            height: 375px;
-        overflow-y: scroll;
+    padding: 25px;
+    height: 375px;
+    overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.breadcrumb-header.assignPara{
+
+.breadcrumb-header.assignPara {
 
     padding: 14px 14px 14px 37px;
     border-bottom: 1px solid #EEEEEE;
 }
-.receivedChat.supportReceivedChat{
 
-        max-width: 464px;
+.receivedChat.supportReceivedChat {
+
+    max-width: 464px;
 }
-.sendNotificationBtn a{
+
+.sendNotificationBtn a {
 
     border-radius: 6px !important;
-        font-weight: 700;
+    font-weight: 700;
 }
-.drop_imagesCC{
-        position: absolute;
-        top: 10px;
+
+.drop_imagesCC {
+    position: absolute;
+    top: 10px;
     right: 20px;
 }
-.drop_imagesCC img{
+
+.drop_imagesCC img {
 
     width: 12px;
-}  
+}
+.action-icon{
+
+    background-color: #fff;
+}
+.action-icon i{
+
+    color: #92929D;
+}
