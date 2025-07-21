@@ -20,7 +20,8 @@
     font-size: 26px;
     font-weight: 600;
 }
-.table-wrapper.remove-css{
+
+.table-wrapper.remove-css {
 
     background: transparent !important;
     border-radius: 16px !important;
@@ -28,13 +29,15 @@
     padding: 0px !important;
     border-bottom: 4px solid #fff;
 }
-.table-wrapper.remove-css .tablecustoms tbody td{
+
+.table-wrapper.remove-css .tablecustoms tbody td {
 
     padding: 20px 14px !important;
 }
-.paymentInfoDetail .payRece{
 
-       background: #82C43C1A;
+.paymentInfoDetail .payRece {
+
+    background: #82C43C1A;
     padding: 5px 10px;
     color: #82C43C;
     border-radius: 5px;
@@ -42,20 +45,97 @@
     font-weight: 600;
     text-transform: uppercase;
 }
-.assign-tabs .nav.nav-tabs{
+.paymentInfoDetail .bolder_font{
 
-        position: static !important;
-            height: auto;
-                width: 100% !important;
+    font-weight: 500;
+    font-size: 13px;
+    color: #171725;
 }
-.assign-tabs .nav.nav-tabs .nav-item{
+.paymentInfoDetail p{
+
+        font-size: 13px;
+    font-weight: 400;
+    color: #171725;
+}
+.assign-tabs .nav.nav-tabs {
+
+    position: static !important;
+    height: auto;
+    width: 100% !important;
+    border: 0px !important;
+    padding: 20px 14px 1px 37px !important;
+}
+
+.assign-tabs .nav.nav-tabs .nav-item {
+
+    padding: 0px !important;
+     width: auto;
+
+}
+
+.assign-tabs .nav.nav-tabs .nav-item .nav-link {
+
+    /* width: 100%; */
+    font-size: 15px;
+    font-weight: 400;
+    padding: 12px !important;
+    border: 1px solid #848A90 !important;
+    border-radius: 4px 4px 0px 0px !important;
+    color: #848A90;
+}
+
+.assign-tabs .nav.nav-tabs .nav-item .nav-link.active {
+
+    background: #152F1B;
+    color: #99FF33;
+    font-size: 15px;
+    font-weight: 500;
+    border: 0px;
+    padding: 12px !important;
+    /* width: 100%; */
+    border: 1px solid #848A90 !important;
+    border-radius: 4px 4px 0px 0px !important;
+}
+
+.container-scroller .assign-tabs .nav .active {
 
     padding: 0px !important;
 }
-.assign-tabs .nav.nav-tabs .nav-item .nav-link.active{
+.assign-tabs .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus{
 
-    background: none;
-    color: #000;
-        padding: 0px;
-            border-radius: 0px;
+    border: 1px solid #848A90;
 }
+.assign-tabs .tab-content{
+
+        background: #EEEEEE;
+    margin: 0px 14px 0px 37px;
+        padding: 25px;
+            height: 375px;
+        overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.breadcrumb-header.assignPara{
+
+    padding: 14px 14px 14px 37px;
+    border-bottom: 1px solid #EEEEEE;
+}
+.receivedChat.supportReceivedChat{
+
+        max-width: 464px;
+}
+.sendNotificationBtn a{
+
+    border-radius: 6px !important;
+        font-weight: 700;
+}
+/* .drop_imagesCC{
+        position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+} */
+.drop_imagesCC img{
+
+    width: 12px;
+}  

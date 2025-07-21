@@ -102,12 +102,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     "/operatorapproval/default/view"
                                 )) ? "true" : "false" ?>"
                 aria-controls="operatorMenu">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                
+                <span class="nav-icon me-1 "><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     '/operator/safari-operator/index',
                                                                                                     '/operator/safari-operator/create',
                                                                                                     '/operator/safari-operator/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator</span>
-                <i class="angle fe fe-chevron-right"></i>
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator     <a href="" class="drop_imagesCC">
+                    <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
+            </a></span>
+                <!-- <i class="angle fe fe-chevron-right"></i> -->
+             
             </a>
 
             <ul class="slide-menu collapse <?= in_array($active_url, array(
@@ -145,6 +149,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                     )) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a>
                 </li>
             </ul>
+            
         </li>
 
 
@@ -161,6 +166,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/package/default/view',
                                                                                                 )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
             </a>
+           
         </li>
 
 

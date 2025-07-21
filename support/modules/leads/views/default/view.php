@@ -248,8 +248,9 @@ $this->registerJs($script);
                             <td style="text-align: left;">03 Jul, 2025 01:19 PM</td>
                             <td>
                                 <div class="paymentInfoDetail">
-                                    <a href="" class="payRece mb-2">Payment Received</a>
-                                    <p class="mt-2"><span>Payment Date:</span>03 Jul, 2025 13:24 PM</p>
+                                    <a href="" class="payRece d-inline-block mb-1">Payment Received</a>
+                                    <p class="mt-1 mb-1"><span class="bolder_font">Payment Date:</span> 03 Jul, 2025 13:24 PM</p>
+                                    <p class="mt-0"><span class="bolder_font">Transaction Id:</span> 01DDG45</p>
                                 </div>
                             </td>
                         </tr>
@@ -262,46 +263,81 @@ $this->registerJs($script);
     </div>
 </div>
 <div class="table-wrapper">
-    <div class="breadcrumb-header justify-content-between align-items-center">
+    <div class="breadcrumb-header assignPara justify-content-between align-items-center">
         <div>
             <p class="page-header mb-0">Assign To</p>
         </div>
     </div>
     <div class="assign-tabs">
         <div class="row">
-            <div class="col-5">
-  <ul class="nav nav-tabs flex-row" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                role="tab" aria-controls="home" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
-                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-        </li>
-         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#con" type="button"
-                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-        </li>
-         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#fivcont" type="button"
-                role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-        </li>
-    </ul>
+            <div class="col-8">
+                <ul class="nav nav-tabs flex-row" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">The Eagle
+                            Safaris</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Ankit Kankane Safaris
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Rawat Safari</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#con"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Triline</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#fivcont"
+                            type="button" role="tab" aria-controls="contact"
+                            aria-selected="false">Swatibansal16290</button>
+                    </li>
+                </ul>
             </div>
         </div>
-  
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">sarwar</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">sarwar2</div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">sarwar3</div>
-        <div class="tab-pane fade" id="con" role="tabpanel" aria-labelledby="contact-tab">sarwar4</div>
-        <div class="tab-pane fade" id="fivcont" role="tabpanel" aria-labelledby="contact-tab">sarwar5</div>
-    </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="d-flex gap-3 mb-4">
+                    <div>
+  <div class="receivedChat supportReceivedChat mt-0 mb-4">
+                        <p>Hi, I am interested in Park: Bandhavgarh Tiger Reserve Safaries: 1 Travelers:1 Stay
+                            Category:Forest Rest House Start Date:Jul 4, 2025 End Date:Jul 8, 2025 Notes:jhjjh</p>
+                        <div class="recievedTime">
+                            <span>2025-06-12 23:04</span>
+                        </div>
+                    </div>
+                      <div class="receivedChat supportReceivedChat mt-0 mb-4">
+                        <p>Hi, I am interested in Park: Bandhavgarh Tiger Reserve Safaries: 1 Travelers:1 Stay
+                            Category:Forest Rest House Start Date:Jul 4, 2025 End Date:Jul 8, 2025 Notes:jhjjh</p>
+                        <div class="recievedTime">
+                            <span>2025-06-12 23:04</span>
+                        </div>
+                    </div>
+                      <div class="receivedChat supportReceivedChat mt-0 mb-4">
+                        <p>Hi, I am interested in Park: Bandhavgarh Tiger Reserve Safaries: 1 Travelers:1 Stay
+                            Category:Forest Rest House Start Date:Jul 4, 2025 End Date:Jul 8, 2025 Notes:jhjjh</p>
+                        <div class="recievedTime">
+                            <span>2025-06-12 23:04</span>
+                        </div>
+                    </div>
+                    </div>
+                  
+                    <div class="sendNotificationBtn pb-0 mt-2">
+                        <a class="button-created new create " href="" title="Create">Send Notification</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="con" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="fivcont" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+        </div>
     </div>
 
 </div>
