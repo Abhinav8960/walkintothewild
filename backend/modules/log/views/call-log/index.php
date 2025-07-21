@@ -62,7 +62,7 @@ $this->params['title'] = $this->title;
                             }
                             elseif($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')
                             {
-                                return '<p class="text-warning" style="color: red !important;">Call Not Recieved</p>';
+                                return '<p class="text-warning" style="color: red !important;">Call Not Received</p>';
                             }
                             return '';
                         }
