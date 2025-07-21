@@ -45,7 +45,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return Html::tag('div', Html::img($model->thumbnail, [
                                 'alt' => 'Uploaded Image',
-                            ]), ['style' => 'text-align: center;']);
+                            ]), ['class' => 'thumb-wrapper','style' => 'text-align: center;']);
                         }
                     ],
 
