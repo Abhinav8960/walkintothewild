@@ -31,23 +31,23 @@ use yii\helpers\Html;
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
                 <div class="filterItem position-relative">
+                    <label>Source:</label>
+                    <?= $form->field($model, 'safari_operator_id')->dropDownList(
+                        GeneralModel::operatorslist(),
+                        [
+                            'prompt' => 'Select Operator',
+                            'class' => 'search-border'
+                        ],
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+                <div class="filterItem position-relative">
                     <label>Month:</label>
                     <?= $form->field($model, 'lead_month')->dropDownList(
                         GeneralModel::monthoption(),
                         [
                             'prompt' => 'All Month',
-                            'class' => 'search-border'
-
-                        ],
-                    ) ?>
-                    <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class="filterItem position-relative">
-                    <label>Park:</label>
-                    <?= $form->field($model, 'park_id')->dropDownList(
-                        GeneralModel::operatorpark($safari_operator->id),
-                        [
-                            'prompt' => 'All Park',
                             'class' => 'search-border'
 
                         ],

@@ -14,7 +14,7 @@ $this->title = 'Leads';
 ?>
 
 
-
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="table-wrapper">
     <div class="table-responsive">
         <div class="min-width-table">
