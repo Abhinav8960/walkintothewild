@@ -761,7 +761,10 @@ class SiteController extends RestController
             if ($existingUser !== null) {
                 return Yii::$app->api->sendFailedStringResponse(['Email is already registered and active.']);
             }
-            // Send OTP
+            Yii::$app->session->set('signup_email', $model->email);
+            Yii::$app->session->set('signup_name', $model->name);
+            Yii::$app->session->set('signup_mobile_no', $model->mobile_no);
+
             $this->sendmailOtp($model->email, $model->name);
             return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email.']); // Success response
         }
@@ -799,9 +802,13 @@ class SiteController extends RestController
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     
-        $email = Yii::$app->request->post('email');
+        $email = Yii::$app->session->get('signup_email');
+        $name = Yii::$app->session->get('signup_name');
+        $mobile_no = Yii::$app->session->get('signup_mobile_no');
+
+        // $email = Yii::$app->request->post('email');
         $otpByUser = Yii::$app->request->post('otp_by_user');
-        $name = Yii::$app->request->post('name');
+        // $name = Yii::$app->request->post('name');
     
         if (!$email || !$otpByUser || !$name) {
             return [
@@ -836,8 +843,9 @@ class SiteController extends RestController
         $signupmodel = new SignupForm();
         $signupmodel->email = $email;
         $signupmodel->name = $name;
+        $signupmodel->mobile_no = $mobile_no;
         if ($user = $signupmodel->signup()) {
-            $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel); // Pass user, not $model!
+            $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel); 
             $data = ['access_token' => $accesstoken->token];
             return Yii::$app->api->sendResponse($data);
         } else {
