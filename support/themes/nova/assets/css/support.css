@@ -162,4 +162,5 @@
     width: 107px;
     height: 60px;
     object-fit: cover;
+    border-radius: 6px;
 }
