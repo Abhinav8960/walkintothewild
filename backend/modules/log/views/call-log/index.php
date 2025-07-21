@@ -60,7 +60,7 @@ $this->params['title'] = $this->title;
                                 audio not supported.
                               </audio>';
                             }
-                            return '';
+                            return '<p class="text-warning" style="color: red !important;">Call Not Recieved</p>';
                         }
                     ],
                     // [
