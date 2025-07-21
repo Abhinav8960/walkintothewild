@@ -421,7 +421,7 @@ class SiteController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
 
         $data = [];
-        $data['user'] = $this->userinfo;
+        $data['user'] = $this->userinfo->toArray();
         unset($data['user']['auth_key']);
         unset($data['user']['password_hash']);
         // unset($data['user']['password_reset_token']);
