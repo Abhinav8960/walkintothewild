@@ -119,7 +119,7 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()], ['message' => "Package is not in use!!!"]);
         }
 
-        return Yii::$app->api->sendResponse($data = ['data' => $package]);
+        return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()]);
     }
 
 
