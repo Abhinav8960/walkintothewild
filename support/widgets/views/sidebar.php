@@ -43,7 +43,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        
+
         <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 '/sightings/default/index',
@@ -68,6 +68,86 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Posts</span>
             </a>
         </li>
+
+        <li class="navItems mb-2 <?= in_array($active_url, array(
+                                        "/operator/safari-operator/index",
+                                        "/operator/safari-operator/view",
+                                        "/operator/safari-operator/index/view",
+                                        "/operator/birding-operator/index",
+                                        "/operator/birding-operator/view",
+                                        "/gallery/default/index",
+                                        "/galleryapproval/default/index",
+                                        "/gallery/default/view",
+                                        "/operatorapproval/default/index",
+                                        "/operatorapproval/default/view"
+                                    )) ? "is-expanded" : "" ?>">
+
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/operator/safari-operator/index",
+                                                                "/operator/safari-operator/view"
+                                                            )) ? "active" : "" ?>"
+                data-bs-toggle="collapse"
+                href="#operatorMenu"
+                role="button"
+                aria-expanded="<?= in_array($active_url, array(
+                                    "/operator/safari-operator/index",
+                                    "/operator/safari-operator/view",
+                                    "/operator/safari-operator/index/view",
+                                    "/operator/birding-operator/index",
+                                    "/operator/birding-operator/view",
+                                    "/gallery/default/index",
+                                    "/galleryapproval/default/index",
+                                    "/gallery/default/view",
+                                    "/operatorapproval/default/index",
+                                    "/operatorapproval/default/view"
+                                )) ? "true" : "false" ?>"
+                aria-controls="operatorMenu">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    '/operator/safari-operator/index',
+                                                                                                    '/operator/safari-operator/create',
+                                                                                                    '/operator/safari-operator/view',
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator</span>
+                <i class="angle fe fe-chevron-right"></i>
+            </a>
+
+            <ul class="slide-menu collapse <?= in_array($active_url, array(
+                                                "/operator/safari-operator/index",
+                                                "/operator/safari-operator/view",
+                                                "/operator/safari-operator/index/view",
+                                                "/operator/birding-operator/index",
+                                                "/operator/birding-operator/view",
+                                                "/gallery/default/index",
+                                                "/galleryapproval/default/index",
+                                                "/gallery/default/view",
+                                                "/operatorapproval/default/index",
+                                                "/operatorapproval/default/view"
+                                            )) ? "show" : "" ?>" id="operatorMenu">
+
+                <li class="navItems mb-2">
+                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                        "/gallery/default/index",
+                                                                        "/galleryapproval/default/index",
+                                                                        "/gallery/default/view"
+                                                                    )) ? "active" : "" ?>" href="/gallery/default/index">Gallery List</a>
+                </li>
+
+                <li class="navItems mb-2">
+                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                        "/operatorapproval/default/index",
+                                                                        "/operatorapproval/default/view"
+                                                                    )) ? "active" : "" ?>" href="/operatorapproval/default/index">Operator Approval List</a>
+                </li>
+
+                <li class="navItems mb-2">
+                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                        "/operator/safari-operator/index",
+                                                                        "/operator/safari-operator/index/view"
+                                                                    )) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a>
+                </li>
+            </ul>
+        </li>
+
+
 
 
         <li class="navItems mb-2">
