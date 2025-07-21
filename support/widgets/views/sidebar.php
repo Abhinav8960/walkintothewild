@@ -43,18 +43,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        <li class="navItems mb-2">
-            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
-                                                                '/package/default/index',
-                                                                '/package/default/create',
-                                                            )) ? 'active' : '' ?>" href="/package/default/index">
-                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                    '/package/default/index',
-                                                                                                    '/package/default/create',
-                                                                                                    '/package/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
-            </a>
-        </li>
         
         <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
@@ -80,18 +68,22 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Posts</span>
             </a>
         </li>
+
+
         <li class="navItems mb-2">
-            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
-                                                                '/gallery/default/index',
-                                                                '/gallery/default/create',
-                                                            )) ? 'active' : '' ?>" href="/gallery/default/index">
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                '/package/default/index',
+                                                                '/package/default/create',
+                                                            )) ? 'active' : '' ?>" href="/package/default/index">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                    '/gallery/default/index',
-                                                                                                    '/gallery/default/create',
-                                                                                                    '/gallery/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Gallery</span>
+                                                                                                    '/package/default/index',
+                                                                                                    '/package/default/create',
+                                                                                                    '/package/default/view',
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
             </a>
         </li>
+
+
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
