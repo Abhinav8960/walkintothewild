@@ -125,9 +125,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                     "/operator/safari-operator/index",
                                                                                     "/operator/safari-operator/index/view"
                                                                                 )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/operator/safari-operator/index",
-                                                                                                                                                                                        "/operator/safari-operator/index/view",
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
+                                                                                                                                                                                                    "/operator/safari-operator/index",
+                                                                                                                                                                                                    "/operator/safari-operator/index/view",
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
                 </li>
 
                 <li class="navItems mb-2">
@@ -135,10 +135,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                     "/galleryapproval/default/index",
                                                                                     "/galleryapproval/default/view"
                                                                                 )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                        "/galleryapproval/default/index",
+                                                                                                                                                                                                    "/galleryapproval/default/index",
 
-                                                                                                                                                                                        "/galleryapproval/default/view"
-                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
+                                                                                                                                                                                                    "/galleryapproval/default/view"
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
                 </li>
 
                 <li class="navItems mb-2">
@@ -147,10 +147,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                     "/galleryapproval/default/index",
                                                                                     "/gallery/default/view"
                                                                                 )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                                                                                                                                "/gallery/default/index",
-                                                                                                                                                                                "/galleryapproval/default/index",
-                                                                                                                                                                                "/gallery/default/view"
-                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
+                                                                                                                                                                                            "/gallery/default/index",
+                                                                                                                                                                                            "/galleryapproval/default/index",
+                                                                                                                                                                                            "/gallery/default/view"
+                                                                                                                                                                                        )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                 </li>
 
 
@@ -175,6 +175,71 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         </li>
 
+
+        <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
+                                                        "/sharesafari/default/index",
+                                                        "/sharesafari/default/view",
+                                                        "/sharesafari/share-safari-comment/index",
+                                                        "/sharesafari/default/fixed-departure",
+                                                        "/sharesafari/default/fixed-view",
+                                                    )) ? "is-expanded" : "" ?>">
+
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/sharesafari/default/fixed-departure",
+                                                                "/sharesafari/default/fixed-view",
+                                                            )) ? "active" : "" ?>"
+                data-bs-toggle="collapse"
+                href="#safariMenu"
+                role="button"
+                aria-expanded="<?= in_array($active_url, array(
+                                    "/sharesafari/default/index",
+                                    "/sharesafari/default/view",
+                                    "/sharesafari/share-safari-comment/index",
+                                    "/sharesafari/default/fixed-departure",
+                                    "/sharesafari/default/fixed-view",
+                                )) ? "true" : "false" ?>"
+                aria-controls="safariMenu">
+
+                <span class="nav-icon me-1 "><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    "/sharesafari/default/index",
+                                                                                                    "/sharesafari/default/view",
+                                                                                                    "/sharesafari/share-safari-comment/index",
+                                                                                                    "/sharesafari/default/fixed-departure",
+                                                                                                    "/sharesafari/default/fixed-view",
+                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Safari<a href="" class="drop_imagesCC">
+                        <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
+                    </a></span>
+            </a>
+
+            <ul class="slide-menu collapse pt-2 <?= in_array($active_url, array(
+                                                    "/sharesafari/default/index",
+                                                    "/sharesafari/default/view",
+                                                    "/sharesafari/share-safari-comment/index",
+                                                    "/sharesafari/default/fixed-departure",
+                                                    "/sharesafari/default/fixed-view",
+                                                )) ? "show" : "" ?>" id="safariMenu">
+                <li class="navItems mb-2">
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
+                                                                                    "/sharesafari/default/fixed-departure",
+                                                                                    "/sharesafari/default/fixed-view",
+                                                                                )) ? "active" : "" ?>" href="/sharesafari/default/fixed-departure"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                                    "/sharesafari/default/fixed-departure",
+                                                                                                                                                                                                    "/sharesafari/default/fixed-view",
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Fixed Departure</span></a>
+                </li>
+
+                <li class="navItems mb-2">
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
+                                                                                    "/sharesafari/default/index",
+                                                                                    "/sharesafari/default/view",
+                                                                                )) ? "active" : "" ?>" href="/sharesafari/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                                    "/sharesafari/default/index",
+                                                                                                                                                                                                    "/sharesafari/default/view",
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Share Safari</span></a>
+                </li>
+            </ul>
+
+        </li>
 
 
         <li class="navItems navitemLogout mb-2 ms-0">

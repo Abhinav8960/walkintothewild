@@ -37,6 +37,14 @@ return [
         'gallery' => [
             'class' => 'support\modules\gallery\Module',
         ],
+
+        'package' => [
+            'class' => 'support\modules\package\Module',
+        ],
+
+        'sharesafari' => [
+            'class' => 'support\modules\sharesafari\Module',
+        ],
         
     ],
 
