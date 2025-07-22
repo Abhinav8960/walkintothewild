@@ -29,11 +29,7 @@ return [
         'operator' => [
             'class' => 'support\modules\operator\Module',
         ],
-
-        'operatorapproval' => [
-            'class' => 'support\modules\operatorapproval\Module',
-        ],
-
+        
         'galleryapproval' => [
             'class' => 'support\modules\galleryapproval\Module',
         ],
