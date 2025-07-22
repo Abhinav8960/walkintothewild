@@ -103,7 +103,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/operator/safari-operator/index',
                                                                                                     '/operator/safari-operator/create',
                                                                                                     '/operator/safari-operator/view',
-                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator <a href="" class="drop_imagesCC">
+                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Operator <a href="" class="drop_imagesCC">
                     <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
             </a></span>
                 <!-- <i class="angle fe fe-chevron-right"></i> -->
@@ -130,7 +130,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                         "/gallery/default/index",
                                                                         "/galleryapproval/default/index",
                                                                         "/gallery/default/view"
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Gallery List</a>
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                 </li>
 
                 <li class="navItems mb-2">
@@ -141,7 +141,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                         "/operatorapproval/default/index",
                                                                         
                                                                         "/operatorapproval/default/view"
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Operator Approval List</a>
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator Approval List</span></a>
                 </li>
 
                 <li class="navItems mb-2">
@@ -151,7 +151,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                     )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                          "/operator/safari-operator/index",
                                                                         "/operator/safari-operator/index/view",                                                            
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Safari Tour Operator</a>
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Safari Tour Operator</span></a>
                 </li>
             </ul>
             
