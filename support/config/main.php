@@ -41,6 +41,10 @@ return [
         'package' => [
             'class' => 'support\modules\package\Module',
         ],
+
+        'sharesafari' => [
+            'class' => 'support\modules\sharesafari\Module',
+        ],
         
     ],
 
