@@ -17,9 +17,10 @@ $this->params['title'] = $this->title;
 
         <div class="row">
             <div class="col-lg-6 col-md-6">
+                <div class="gallary-title supportGalleryTitle">
                 <p>Current Images</p>
-                
-                <div class="table-wrapper">
+                </div>
+                <div class="table-wrapper shadow-none rounded-0">
                 <div class="table-responsive">
                     <div class="min-width-table">
                     <?= GridView::widget([
@@ -29,7 +30,8 @@ $this->params['title'] = $this->title;
                         'columns' => [
                             [
                                 'class' => 'yii\grid\SerialColumn',
-                                'contentOptions' => ['style' => 'width: 5%;'],
+                                'headerOptions' => ['style' => 'text-align: center;'],
+                                // 'contentOptions' => ['style' => 'width: 5%;'],
                             ],
                             [
                                 'label' => 'Title',
@@ -61,6 +63,7 @@ $this->params['title'] = $this->title;
                                 'label' => 'Set as Thumbnail',
                                 'format' => 'raw',
                                 'headerOptions' => ['style' => 'text-align: center;'],
+                                 'contentOptions' => ['style' => 'text-align: center;'],
                                 'value' => function ($model) {
                                     return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
                                 }
@@ -88,16 +91,18 @@ $this->params['title'] = $this->title;
                 if ($live_arr['images']) {
             ?>
                     <div class="col-lg-6 col-md-6">
-                        <p>Live Images</p>
+                        <div class="gallary-title supportGalleryTitle">
+                             <p>Live Images</p>
+                        </div>
                         <div class="table-responsive">
                             <table class="table tablecustoms table-striped align-middle w-100">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Caption</th>
-                                        <th>Gallery</th>
-                                        <th>Set As <br>Thumbnail</br></th>
+                                        <th width="1%">#</th>
+                                        <th width="20%">Title</th>
+                                        <th width="40%">Caption</th>
+                                        <th width="15%">Gallery</th>
+                                        <th width="24%">Set As Thumbnail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
