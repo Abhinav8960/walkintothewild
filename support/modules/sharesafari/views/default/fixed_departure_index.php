@@ -50,7 +50,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Start Date',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
@@ -58,7 +58,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'End Date',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => [''],
 
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -67,7 +67,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Cut Off Date',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'headerOptions' => [''],
 
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -122,30 +122,51 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
-                        'label' => 'Is Publish on Web/App',
-                        'headerOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'on Web',
+                        'headerOptions' => [],
 
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
-                            $str .= '/';
-                            $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success web">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                            // $str .= '/';
+                            // $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                            return $str;
+                        }
+                    ],
+                      [
+                        'label' => 'App',
+                        'headerOptions' => [],
+
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success web">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                            // $str .= '/';
+                            // $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
                             return $str;
                         }
                     ],
                     [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'label' => 'Last Updated',
+                        'headerOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
                         }
                     ],
+                [
+    'label' => 'Status',
+    'headerOptions' => ['class' => 'text-center'],
+    'contentOptions' => ['class' => 'publicesFont'],
+    'format' => 'raw',
+    'value' => function ($model) {
+        return '<a href="#">' . $model->statuslabel . '</a>';
+    }
+],
 
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => ['style' => ' text-align: left;'],
                         'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {

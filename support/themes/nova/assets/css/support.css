@@ -255,7 +255,22 @@
     font-size: 13px;
     font-weight: 400;
 }
+.badge.badge-success.web{
 
+    background: #152F1B;
+    font-size: 13px;
+    border-radius: 100px;
+    font-weight: 400;
+}
+.publicesFont a{
+
+    background: #82C43C1A;
+        padding: 5px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #82C43C;
+}
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
         display: none;
