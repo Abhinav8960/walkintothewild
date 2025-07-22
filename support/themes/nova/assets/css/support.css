@@ -228,6 +228,27 @@
     font-weight: 600;
     color: #171725;
 }
+.intrested.btn-danger{
+    outline: none;
+    border: none;
+    background: #99FF33;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 400;
+}
+.leaved.btn-info{
+
+     outline: none;
+    border: none;
+    background: #FD5634;
+    width: 20px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 400;
+}
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
         display: none;
