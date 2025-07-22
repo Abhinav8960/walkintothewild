@@ -149,63 +149,92 @@
 
     width: 12px;
 }
-.action-icon{
+
+.action-icon {
 
     background-color: #fff;
 }
-.action-icon i{
+
+.action-icon i {
 
     color: #92929D;
 }
-.thumb-wrapper img{
+
+.thumb-wrapper img {
 
     width: 107px;
     height: 60px;
     object-fit: cover;
     border-radius: 6px;
 }
-.navItems .navLinks.navinnerLink{
+
+.navItems .navLinks.navinnerLink {
 
     padding: 8px 8px 8px 8px !important;
 }
-.navItems .navLinks.navinnerLink span{
+
+.navItems .navLinks.navinnerLink span {
     font-size: 16px;
 }
-.circleImages-sidebar{
+
+.circleImages-sidebar {
 
     width: 12px;
     height: 12px;
     object-fit: cover;
 }
-.container-scroller .assign-tabs.operatorTab .nav{
 
-        background-color: #f5f7fb !important;
-}
-.assign-tabs.operatorTab .nav.nav-tabs{
+.container-scroller .assign-tabs.operatorTab .nav {
 
-        padding: 20px 14px 1px 15px !important;
-}
-.assign-tabs.operatorTab .tab-content{
-
-     padding: 20px 14px 1px 15px !important;
-         margin: 0px 14px 0px 15px;
-         height: auto;
-             background: #fff;
+    background-color: #f5f7fb !important;
 }
 
-.identification-photo p{
+.assign-tabs.operatorTab .nav.nav-tabs {
+
+    padding: 20px 14px 1px 15px !important;
+}
+
+.assign-tabs.operatorTab .tab-content {
+
+    padding: 20px 14px 1px 15px !important;
+    margin: 0px 14px 0px 15px;
+    height: auto;
+    background: #fff;
+}
+
+.identification-photo p {
 
     font-size: 15px;
     font-weight: 500;
     color: #171725;
 }
+.card.cardMainImage {
+    border: 1px solid #848A90;
+            padding: 20px 10px;
+}
+.card.cardMainImage img {
+    height: 160px;
+        border-radius: 0px;
+}
+.cardText span{
 
+        font-size: 13px;
+    font-weight: 500;
+    color: #171725;
+}
+.cardText p{
+
+        font-size: 16px;
+    font-weight: 600;
+    color: #171725;
+}
 @media (min-width: 992px) {
-   .collapsed-sidebar .drop_imagesCC img {
+    .collapsed-sidebar .drop_imagesCC img {
         display: none;
     }
 }
-.gallary-title.supportGalleryTitle p{
+
+.gallary-title.supportGalleryTitle p {
 
     font-weight: 500 !important;
 }
