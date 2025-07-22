@@ -25,6 +25,7 @@ $this->params['title'] = $this->title;
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'layout' => "{items}\n{pager}",
+                        'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                         'columns' => [
                             [
                                 'class' => 'yii\grid\SerialColumn',

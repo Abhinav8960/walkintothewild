@@ -70,15 +70,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
         <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
-                                        "/operator/safari-operator/index",
-                                        "/operator/safari-operator/view",
-                                        "/operator/safari-operator/index/view",
-                                        "/gallery/default/index",
-                                        "/galleryapproval/default/index",
-                                        "/gallery/default/view",
-                                        "/operatorapproval/default/index",
-                                        "/operatorapproval/default/view"
-                                    )) ? "is-expanded" : "" ?>">
+                                                        "/operator/safari-operator/index",
+                                                        "/operator/safari-operator/view",
+                                                        "/operator/safari-operator/index/view",
+                                                        "/gallery/default/index",
+                                                        "/galleryapproval/default/index",
+                                                        "/gallery/default/view",
+                                                        "/operatorapproval/default/index",
+                                                        "/operatorapproval/default/view"
+                                                    )) ? "is-expanded" : "" ?>">
 
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/operator/safari-operator/index",
@@ -98,63 +98,64 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     "/operatorapproval/default/view"
                                 )) ? "true" : "false" ?>"
                 aria-controls="operatorMenu">
-                
+
                 <span class="nav-icon me-1 "><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
                                                                                                     '/operator/safari-operator/index',
                                                                                                     '/operator/safari-operator/create',
                                                                                                     '/operator/safari-operator/view',
                                                                                                 )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Operator <a href="" class="drop_imagesCC">
-                    <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
-            </a></span>
+                        <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
+                    </a></span>
                 <!-- <i class="angle fe fe-chevron-right"></i> -->
-             
+
             </a>
 
             <ul class="slide-menu collapse pt-2 <?= in_array($active_url, array(
-                                                "/operator/safari-operator/index",
-                                                "/operator/safari-operator/view",
-                                                "/operator/safari-operator/index/view",
-                                                "/gallery/default/index",
-                                                "/galleryapproval/default/index",
-                                                "/gallery/default/view",
-                                                "/operatorapproval/default/index",
-                                                "/operatorapproval/default/view"
-                                            )) ? "show" : "" ?>" id="operatorMenu">
-
+                                                    "/operator/safari-operator/index",
+                                                    "/operator/safari-operator/view",
+                                                    "/operator/safari-operator/index/view",
+                                                    "/gallery/default/index",
+                                                    "/galleryapproval/default/index",
+                                                    "/gallery/default/view",
+                                                    "/operatorapproval/default/index",
+                                                    "/operatorapproval/default/view"
+                                                )) ? "show" : "" ?>" id="operatorMenu">
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
-                                                                        "/gallery/default/index",
-                                                                        "/galleryapproval/default/index",
-                                                                        "/gallery/default/view"
-                                                                    )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                        "/gallery/default/index",
-                                                                        "/galleryapproval/default/index",
-                                                                        "/gallery/default/view"
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
+                                                                                    "/operator/safari-operator/index",
+                                                                                    "/operator/safari-operator/index/view"
+                                                                                )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                        "/operator/safari-operator/index",
+                                                                                                                                                                                        "/operator/safari-operator/index/view",
+                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
                 </li>
 
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
-                                                                        "/galleryapproval/default/index",
-                                                                        "/galleryapproval/default/view"
-                                                                    )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                        "/galleryapproval/default/index",
-                                                                        
-                                                                        "/galleryapproval/default/view"
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
+                                                                                    "/galleryapproval/default/index",
+                                                                                    "/galleryapproval/default/view"
+                                                                                )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                        "/galleryapproval/default/index",
+
+                                                                                                                                                                                        "/galleryapproval/default/view"
+                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
                 </li>
 
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
-                                                                        "/operator/safari-operator/index",
-                                                                        "/operator/safari-operator/index/view"
-                                                                    )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                         "/operator/safari-operator/index",
-                                                                        "/operator/safari-operator/index/view",                                                            
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Safari Tour Operator</span></a>
+                                                                                    "/gallery/default/index",
+                                                                                    "/galleryapproval/default/index",
+                                                                                    "/gallery/default/view"
+                                                                                )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                "/gallery/default/index",
+                                                                                                                                                                                "/galleryapproval/default/index",
+                                                                                                                                                                                "/gallery/default/view"
+                                                                                                                                                                            )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                 </li>
+
+
             </ul>
-            
+
         </li>
 
 
@@ -171,7 +172,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/package/default/view',
                                                                                                 )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
             </a>
-           
+
         </li>
 
 
