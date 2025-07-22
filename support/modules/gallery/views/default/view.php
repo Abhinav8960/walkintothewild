@@ -18,6 +18,7 @@ $this->params['title'] = $this->title;
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <p>Current Images</p>
+                
                 <div class="table-wrapper">
                 <div class="table-responsive">
                     <div class="min-width-table">
