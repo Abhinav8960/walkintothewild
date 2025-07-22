@@ -752,7 +752,6 @@ class SiteController extends RestController
             if (!$model->validate()) {
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
-            // Check if active user already exists via OTP signup
             $existingUser = User::find()->where([
                 'email' => $model->email, 
                 'signup_via_otp' => 1,
@@ -766,9 +765,9 @@ class SiteController extends RestController
             Yii::$app->session->set('signup_mobile_no', $model->mobile_no);
 
             $this->sendmailOtp($model->email, $model->name);
-            return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email.']); // Success response
+            return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email and mobile!']); 
         }
-        return Yii::$app->api->sendFailedStringResponse(['Invalid request.'], 400);
+        return Yii::$app->api->sendFailedStringResponse(['Invalid request'], 400);
     }
     
 
