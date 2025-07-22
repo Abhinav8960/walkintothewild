@@ -173,3 +173,10 @@
     height: 12px;
     object-fit: cover;
 }
+
+
+@media (min-width: 992px) {
+    .drop_imagesCC img {
+        display: none;
+    }
+}
