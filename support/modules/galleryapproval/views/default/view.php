@@ -5,25 +5,35 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
+
+
+$webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
+
 $this->title = 'Collection ' . '(' . $model->title . ')';
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Approved', [Url::toRoute(['approved', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Approved']);
-$this->params['buttons'][] = Html::button('Rejection', ['value' => Url::toRoute(['reject', 'id' => $model->id]), 'class' => 'btn btn-danger reject-popup', 'title' => 'Reject']);
+// $this->params['buttons'][] = Html::a('Approved', [Url::toRoute(['approved', 'id' => $model->id])], ['class' => 'btn btn-orange me-2', 'title' => 'Approved']);
+// $this->params['buttons'][] = Html::button('Rejection', ['value' => Url::toRoute(['reject', 'id' => $model->id]), 'class' => 'btn btn-danger reject-popup', 'title' => 'Reject']);
 ?>
 
 
 
-<div class="card">
-    <div class="card-body">
-        <div id="w1-button" class="mb-3"></div>
-
-        <div class="table-responsive">
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                <div class='col-md-4 text-start mb-2'>{summary}</div>
+                <div class='col-md-4 text-center mb-2'>{pager}</div>
+                <div class='col-md-4'></div>
+            </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
                         'label' => 'Title',
@@ -54,7 +64,7 @@ $this->params['buttons'][] = Html::button('Rejection', ['value' => Url::toRoute(
                     [
                         'label' => 'Set as Thumbnail',
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'value' => function ($model) {
                             return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
                         }

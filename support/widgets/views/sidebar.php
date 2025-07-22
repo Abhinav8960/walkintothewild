@@ -135,13 +135,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
-                                                                        "/operatorapproval/default/index",
-                                                                        "/operatorapproval/default/view"
-                                                                    )) ? "active" : "" ?>" href="/operatorapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
-                                                                        "/operatorapproval/default/index",
+                                                                        "/galleryapproval/default/index",
+                                                                        "/galleryapproval/default/view"
+                                                                    )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                        "/galleryapproval/default/index",
                                                                         
-                                                                        "/operatorapproval/default/view"
-                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator Approval List</span></a>
+                                                                        "/galleryapproval/default/view"
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Pending Gallery Approval</span></a>
                 </li>
 
                 <li class="navItems mb-2">

@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\galleryapproval;
+namespace support\modules\galleryapproval;
 
 use Yii;
 
@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'backend\modules\galleryapproval\controllers';
+    public $controllerNamespace = 'support\modules\galleryapproval\controllers';
 
     /**
      * {@inheritdoc}

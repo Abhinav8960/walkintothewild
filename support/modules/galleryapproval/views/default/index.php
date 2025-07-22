@@ -11,17 +11,22 @@ $this->params['title'] = $this->title;
 ?>
 
 
-<div class="card">
-    <div class="card-body">
-        <div id="w1-button" class="mb-3"></div>
+<div class="table-wrapper">
+    <div class="table-responsive">
 
-        <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 1%;'],
                     ],
 
                     [
@@ -72,13 +77,12 @@ $this->params['title'] = $this->title;
                         'buttons' => [
                             'view' => function ($url, $model) {
 
-                                return Html::a(
-                                    Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                return Html::a('<i class="mdi mdi-eye"></i>',
                                     [
                                         Url::toRoute(['view', 'id' => $model->id])
                                     ],
                                     [
-                                        'class' => 'btn p-0 change-menuicon',
+                                        'class' => 'action-icon',
                                         'title' => 'View',
                                     ]
                                 );

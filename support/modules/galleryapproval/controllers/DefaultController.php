@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\galleryapproval\controllers;
+namespace support\modules\galleryapproval\controllers;
 
 use common\models\partnergallery\form\PartnerGalleryRejectionForm;
 use common\models\partnergallery\PartnerGallery;
