@@ -128,25 +128,36 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             )) ? "show" : "" ?>" id="operatorMenu">
 
                 <li class="navItems mb-2">
-                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                         "/gallery/default/index",
                                                                         "/galleryapproval/default/index",
                                                                         "/gallery/default/view"
-                                                                    )) ? "active" : "" ?>" href="/gallery/default/index">Gallery List</a>
+                                                                    )) ? "active" : "" ?>" href="/gallery/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                        "/gallery/default/index",
+                                                                        "/galleryapproval/default/index",
+                                                                        "/gallery/default/view"
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Gallery List</a>
                 </li>
 
                 <li class="navItems mb-2">
-                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                         "/operatorapproval/default/index",
                                                                         "/operatorapproval/default/view"
-                                                                    )) ? "active" : "" ?>" href="/operatorapproval/default/index">Operator Approval List</a>
+                                                                    )) ? "active" : "" ?>" href="/operatorapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                        "/operatorapproval/default/index",
+                                                                        
+                                                                        "/operatorapproval/default/view"
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Operator Approval List</a>
                 </li>
 
                 <li class="navItems mb-2">
-                    <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                         "/operator/safari-operator/index",
                                                                         "/operator/safari-operator/index/view"
-                                                                    )) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a>
+                                                                    )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                         "/operator/safari-operator/index",
+                                                                        "/operator/safari-operator/index/view",                                                            
+                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"> Safari Tour Operator</a>
                 </li>
             </ul>
             
