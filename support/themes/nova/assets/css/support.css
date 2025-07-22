@@ -176,7 +176,7 @@
 
 
 @media (min-width: 992px) {
-    .drop_imagesCC img {
+   .collapsed-sidebar .drop_imagesCC img {
         display: none;
     }
 }

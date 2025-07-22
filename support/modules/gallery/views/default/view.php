@@ -11,14 +11,16 @@ $this->params['title'] = $this->title;
 
 
 
-<div class="card">
-    <div class="card-body">
+<div class="card border-0">
+    <div class="card-body border-0">
         <div id="w1-button" class="mb-3"></div>
 
         <div class="row">
             <div class="col-lg-6 col-md-6">
-                <h5>Current Images</h5>
+                <p>Current Images</p>
+                <div class="table-wrapper">
                 <div class="table-responsive">
+                    <div class="min-width-table">
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'layout' => "{items}\n{pager}",
@@ -73,6 +75,9 @@ $this->params['title'] = $this->title;
 
                         ],
                     ]); ?>
+                    </div>
+                  
+                </div>
                 </div>
             </div>
             <?php
@@ -81,9 +86,9 @@ $this->params['title'] = $this->title;
                 if ($live_arr['images']) {
             ?>
                     <div class="col-lg-6 col-md-6">
-                        <h5>Live Images</h5>
+                        <p>Live Images</p>
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table tablecustoms table-striped align-middle w-100">
                                 <thead>
                                     <tr>
                                         <th>#</th>
