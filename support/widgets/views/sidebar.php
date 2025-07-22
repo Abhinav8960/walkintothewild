@@ -53,7 +53,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/sightings/default/index',
                                                                                                     '/sightings/default/create',
                                                                                                     '/sightings/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Sightings</span>
+                                                                                                )) ? 'Sighting_active.svg' : 'Sighting.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Sightings</span>
             </a>
         </li>
         <li class="navItems mb-2">
@@ -65,7 +65,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/posts/default/index',
                                                                                                     '/posts/default/create',
                                                                                                     '/posts/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Posts</span>
+                                                                                                )) ? 'Post_active.svg' : 'Post.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu"> Posts</span>
             </a>
         </li>
 
@@ -107,7 +107,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/operator/safari-operator/index',
                                                                                                     '/operator/safari-operator/create',
                                                                                                     '/operator/safari-operator/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator <a href="" class="drop_imagesCC">
+                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label">Operator <a href="" class="drop_imagesCC">
                     <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
             </a></span>
                 <!-- <i class="angle fe fe-chevron-right"></i> -->
@@ -175,7 +175,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/package/default/index',
                                                                                                     '/package/default/create',
                                                                                                     '/package/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
+                                                                                                )) ? 'package_active.svg' : 'package.svg' ?>" alt="" width="17" height="20"></span> <span class="hide-slide-menu">Packages</span>
             </a>
            
         </li>

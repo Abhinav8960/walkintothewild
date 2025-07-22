@@ -169,5 +169,7 @@
 }
 .circleImages-sidebar{
 
-
+    width: 12px;
+    height: 12px;
+    object-fit: cover;
 }
