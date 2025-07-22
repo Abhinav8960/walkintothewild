@@ -562,42 +562,42 @@ use yii\helpers\Url;
                                                 <th>Park</th>
                                                 <th>Rating</th>
                                                 <th>Review</th>
-                                                 <th>Flaged</th>
+                                                <th>Flaged</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr data-key="838">
                                                 <td>1</td>
-                                                <td ><img class="rounded profile-picture"
+                                                <td><img class="rounded profile-picture"
                                                         src="https://d2oqzs36p95tb4.cloudfront.net/user/profile/7498_google_avatar.jpg"
                                                         alt="" style="width:28px;"> Sahil Modi</td>
-                                                <td >Kanha National Park</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >2</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >Lorem ipsum</td>
+                                                <td>Kanha National Park</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>2</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>Lorem ipsum</td>
                                             </tr>
-                                              <tr data-key="838">
+                                            <tr data-key="838">
                                                 <td>1</td>
-                                                <td ><img class="rounded profile-picture"
+                                                <td><img class="rounded profile-picture"
                                                         src="https://d2oqzs36p95tb4.cloudfront.net/user/profile/7498_google_avatar.jpg"
                                                         alt="" style="width:28px;"> Sahil Modi</td>
-                                                <td >Kanha National Park</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >2</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >Lorem ipsum</td>
+                                                <td>Kanha National Park</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>2</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>Lorem ipsum</td>
                                             </tr>
-                                             <tr data-key="838">
+                                            <tr data-key="838">
                                                 <td>1</td>
-                                                <td ><img class="rounded profile-picture"
+                                                <td><img class="rounded profile-picture"
                                                         src="https://d2oqzs36p95tb4.cloudfront.net/user/profile/7498_google_avatar.jpg"
                                                         alt="" style="width:28px;"> Sahil Modi</td>
-                                                <td >Kanha National Park</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >2</td>
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >Lorem ipsum</td>
+                                                <td>Kanha National Park</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>2</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>Lorem ipsum</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -607,7 +607,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="tab-pane fade" id="ninetcont" role="tabpanel" aria-labelledby="contact-tab">
-                     <div class="table-wrapper shadow-none rounded-0 pb-4">
+                    <div class="table-wrapper shadow-none rounded-0 pb-4">
                         <div class="table-responsive">
                             <div class="min-width-table">
                                 <div id="w0" class="grid-view">
@@ -616,20 +616,20 @@ use yii\helpers\Url;
                                             <tr>
                                                 <th style="width: 1%;">#</th>
                                                 <th>Park</th>
-                                                <th>Status</th>                                            
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr data-key="838">
-                                                <td>1</td>                                             
-                                                <td >Lorem ipsum is a dummy</td>
-                                                <td >
+                                                <td>1</td>
+                                                <td>Lorem ipsum is a dummy</td>
+                                                <td>
                                                     <div class="active-btn">
-                                <a href="">ACTIVE</a>
-                            </div>
+                                                        <a href="">ACTIVE</a>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                           
+
                                         </tbody>
                                     </table>
                                 </div>

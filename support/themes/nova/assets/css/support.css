@@ -208,27 +208,32 @@
     font-weight: 500;
     color: #171725;
 }
+
 .card.cardMainImage {
     border: 1px solid #848A90;
-            padding: 20px 10px;
+    padding: 20px 10px;
 }
+
 .card.cardMainImage img {
     height: 160px;
-        border-radius: 0px;
+    border-radius: 0px;
 }
-.cardText span{
 
-        font-size: 13px;
+.cardText span {
+
+    font-size: 13px;
     font-weight: 500;
     color: #171725;
 }
-.cardText p{
 
-        font-size: 16px;
+.cardText p {
+
+    font-size: 16px;
     font-weight: 600;
     color: #171725;
 }
-.intrested.btn-danger{
+
+.intrested.btn-danger {
     outline: none;
     border: none;
     background: #99FF33;
@@ -238,9 +243,10 @@
     font-size: 13px;
     font-weight: 400;
 }
-.leaved.btn-info{
 
-     outline: none;
+.leaved.btn-info {
+
+    outline: none;
     border: none;
     background: #FD5634;
     width: 20px;
@@ -249,6 +255,7 @@
     font-size: 13px;
     font-weight: 400;
 }
+
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
         display: none;
