@@ -165,7 +165,11 @@
     border-radius: 6px;
 }
 .navItems .navLinks.navinnerLink{
-    font-size: 14px;
+
+    padding: 8px 8px 8px 8px !important;
+}
+.navItems .navLinks.navinnerLink span{
+    font-size: 16px;
 }
 .circleImages-sidebar{
 
@@ -179,4 +183,8 @@
    .collapsed-sidebar .drop_imagesCC img {
         display: none;
     }
+}
+.gallary-title.supportGalleryTitle p{
+
+    font-weight: 500 !important;
 }
