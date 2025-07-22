@@ -176,6 +176,79 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
 
+        <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
+                                                        "/operator/safari-operator/index",
+                                                        "/operator/safari-operator/view",
+                                                        "/operator/safari-operator/index/view",
+                                                        "/gallery/default/index",
+                                                        "/galleryapproval/default/index",
+                                                        "/gallery/default/view",
+                                                        "/operatorapproval/default/index",
+                                                        "/operatorapproval/default/view"
+                                                    )) ? "is-expanded" : "" ?>">
+
+            <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
+                                                                "/operator/safari-operator/index",
+                                                                "/operator/safari-operator/view"
+                                                            )) ? "active" : "" ?>"
+                data-bs-toggle="collapse"
+                href="#safariMenu"
+                role="button"
+                aria-expanded="<?= in_array($active_url, array(
+                                    "/operator/safari-operator/index",
+                                    "/operator/safari-operator/view",
+                                    "/operator/safari-operator/index/view",
+                                    "/gallery/default/index",
+                                    "/galleryapproval/default/index",
+                                    "/gallery/default/view",
+                                    "/operatorapproval/default/index",
+                                    "/operatorapproval/default/view"
+                                )) ? "true" : "false" ?>"
+                aria-controls="safariMenu">
+
+                <span class="nav-icon me-1 "><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    '/operator/safari-operator/index',
+                                                                                                    '/operator/safari-operator/create',
+                                                                                                    '/operator/safari-operator/view',
+                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Safari<a href="" class="drop_imagesCC">
+                        <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
+                    </a></span>
+            </a>
+
+            <ul class="slide-menu collapse pt-2 <?= in_array($active_url, array(
+                                                    "/operator/safari-operator/index",
+                                                    "/operator/safari-operator/view",
+                                                    "/operator/safari-operator/index/view",
+                                                    "/gallery/default/index",
+                                                    "/galleryapproval/default/index",
+                                                    "/gallery/default/view",
+                                                    "/operatorapproval/default/index",
+                                                    "/operatorapproval/default/view"
+                                                )) ? "show" : "" ?>" id="safariMenu">
+                <li class="navItems mb-2">
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
+                                                                                    "/operator/safari-operator/index",
+                                                                                    "/operator/safari-operator/index/view"
+                                                                                )) ? "active" : "" ?>" href="/operator/safari-operator/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                        "/operator/safari-operator/index",
+                                                                                                                                                                                        "/operator/safari-operator/index/view",
+                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Fixed Departure</span></a>
+                </li>
+
+                <li class="navItems mb-2">
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
+                                                                                    "/galleryapproval/default/index",
+                                                                                    "/galleryapproval/default/view"
+                                                                                )) ? "active" : "" ?>" href="/galleryapproval/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                        "/galleryapproval/default/index",
+
+                                                                                                                                                                                        "/galleryapproval/default/view"
+                                                                                                                                                                                    )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Share Safari</span></a>
+                </li>
+            </ul>
+
+        </li>
+
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
