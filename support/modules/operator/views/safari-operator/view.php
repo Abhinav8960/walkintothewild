@@ -41,7 +41,7 @@ foreach ($park as $key => $role) {
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'overview']) ?>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
+    <!-- <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
                 <div class="card">
@@ -224,15 +224,15 @@ foreach ($park as $key => $role) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
-<style>
+<!-- <style>
     .text-box p span {
         color: brown !important;
     }
-</style>
-
+</style> -->
+<!-- 
 <div class="modal fade _standard-text" id="logo-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -244,8 +244,8 @@ foreach ($park as $key => $role) {
             </div>
         </div>
     </div>
-</div>
-
+</div> -->
+<!-- 
 <div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -261,7 +261,7 @@ foreach ($park as $key => $role) {
 
         </div>
     </div>
-</div>
+</div> -->
 
 <?php
 $script = <<< JS

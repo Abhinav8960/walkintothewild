@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 ?>
 <!-- div -->
-<div class="card mg-b-20" id="tabs-style2">
+<div class="card mg-b-20 bg-transparent border-0" id="tabs-style2">
     <div class="card-body">
         <div class="main-content-label mg-b-5">
             <?= $model->register_comapany_name ?>
@@ -73,55 +73,187 @@ use yii\helpers\Url;
             </div>
         </div>
     </div>
-
+<!-- 
     <div class=" tab-menu-heading">
         <div class="tabs-menu1">
           
             <ul class="nav panel-tabs main-nav-line">
-                <!-- <li><a href="/operator/safari-operator/view?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'overview' ? 'active' : '' ?>">Overview</a></li>
-                <li><a href="/operator/safari-operator/quote?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'quote' ? 'active' : '' ?>">Get a Free Quote</a></li> -->
-                <!-- <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li> -->
-                <!-- <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li> -->
-                <!-- <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li> -->
-                <!-- <li><a href="/operator/safari-operator/registration-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'registration-details' ? 'active' : '' ?>">Registration Details</a></li>
+                <li><a href="/operator/safari-operator/view?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'overview' ? 'active' : '' ?>">Overview</a></li>
+                <li><a href="/operator/safari-operator/quote?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'quote' ? 'active' : '' ?>">Get a Free Quote</a></li>
+                <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li>
+                <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
+                <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li>
+                <li><a href="/operator/safari-operator/registration-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'registration-details' ? 'active' : '' ?>">Registration Details</a></li>
                 <li><a href="/operator/safari-operator/business-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'business-details' ? 'active' : '' ?>">Business Details</a></li>
                 <li><a href="/operator/safari-operator/bank-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'bank-details' ? 'active' : '' ?>">Bank Details</a></li>
-                <li><a href="/operator/safari-operator/userkyc-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'userkyc-details' ? 'active' : '' ?>">User Kyc Details</a></li> -->
+                <li><a href="/operator/safari-operator/userkyc-details?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'userkyc-details' ? 'active' : '' ?>">User Kyc Details</a></li>
 
             </ul>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class=" tab-menu-heading">
+<!-- <div class=" tab-menu-heading">
     <div class="tabs-menu1">
-        <!-- Tabs -->
+        Tabs
         <ul class="nav panel-tabs main-nav-line">
             <li><a href="/operator/safari-operator/view?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'overview' ? 'active' : '' ?>">Overview</a></li>
             <li><a href="/operator/safari-operator/quote?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'quote' ? 'active' : '' ?>">Get a Free Quote</a></li>
-            <!-- <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li> -->
+            <li><a href="/operator/safari-operator/sharedsafari?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li>
             <li><a href="/operator/safari-operator/review?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
-            <!-- <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li> -->
+            <li><a href="/operator/safari-operator/follower?id=<?= $model->id ?>" class="nav-link <?= $active_navbar == 'follower' ? 'active' : '' ?>">Follower</a></li>
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/operator-parks', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'operator-parks' ? 'active' : '' ?>">Operator Parks</a></li>
             <li><a href="<?= Url::toRoute(['/operator/safari-operator/bank-and-kyc-details', 'id' => $model->id]) ?>" class="nav-link <?= $active_navbar == 'bank-and-kyc-details' ? 'active' : '' ?>">Bank and Kyc Details</a></li>
 
         </ul>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Detail for Delete</h1>
-                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body px-2 pt-0">
                 <div id='userstatusmodalContent'></div>
             </div>
         </div>
     </div>
+</div> -->
+
+
+
+<!-- STATIC TABS NEW START HERE  -->
+ <div class="">
+    <div class="assign-tabs operatorTab">
+       
+                <ul class="nav nav-tabs flex-row flex-wrap" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                            type="button" role="tab" aria-controls="home" aria-selected="true">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">Legal entity
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Registration proof </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#con"
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">Business </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#fivcont"
+                            type="button" role="tab" aria-controls="contact"
+                            aria-selected="false">Bank Details </button>
+                    </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#svencont"
+                            type="button" role="tab" aria-controls="contact"
+                            aria-selected="false">User KYC</button>
+                    </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#eighttcont"
+                            type="button" role="tab" aria-controls="contact"
+                            aria-selected="false">User Review</button>
+                    </li>
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#ninetcont"
+                            type="button" role="tab" aria-controls="contact"
+                            aria-selected="false">Operator Park</button>
+                    </li>
+                </ul>
+        
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-xl-9">
+                     <div class="overviewDataParent">
+                    <table class="table w-100 border-0 border_o d-inline-block py-3 bg-white">
+                        <tbody class="tbody-leads sighting-leads py-5 w-100">
+                            <tr>
+                                <td style="width: 60%;">Business Name:</td>
+                                <td style="width: 50%;">
+                                    <p>Shivsakti</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Address:</td>
+                                <td>
+                                    <p>Noida sector 62</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number: </td>
+                                <td>
+                                    <p>8825317553</p>
+                                </td>
+                            </tr>
+                                 <tr>
+                                <td>Legal entity Email:</td>
+                                <td>
+                                    <p>annu@gmail.com</p>
+                                </td>
+                            </tr>
+                               <tr>
+                                <td>Category:</td>
+                                <td>
+                                    <p>Safari Tour Operator</p>
+                                </td>
+                            </tr>
+                               <tr>
+                                <td>PAN Number:</td>
+                                <td>
+                                    <p>DFY1533SF</p>
+                                </td>
+                            </tr>
+                               <tr>
+                                <td>Approved Status:</td>
+                                <td>
+                                    <p>Yes</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                       </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="identification-photo">
+                            <p class="mb-1">Pan Photo: </p>
+                               <a href="/">
+                                  <img src="<?= $this->params['baseurl'] ?>/images/pancard.png" alt="" class="w-100 h-100 object-fit-cover">
+                              </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="con" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="fivcont" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="svencont" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="eighttcont" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+            <div class="tab-pane fade" id="ninetcont" role="tabpanel" aria-labelledby="contact-tab">comingsoon!</div>
+        </div>
+    </div>
+
 </div>
+<!-- STATIC TABS NEW END HERE  -->
+
+
+
+
+
+
+
 
 <?php
 $script = <<< JS

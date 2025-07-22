@@ -232,9 +232,9 @@ li{
   font-family: "Poppins", sans-serif;
 }
 
-.table {
-  --bs-table-bg: #F8F8F8 !important;
-}
+/* .table {
+  --bs-table-bg: #F8F8F8;
+} */
 
 /* .thead-details {
   background-color: #009FFF !important;

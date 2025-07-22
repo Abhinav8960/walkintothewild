@@ -177,7 +177,28 @@
     height: 12px;
     object-fit: cover;
 }
+.container-scroller .assign-tabs.operatorTab .nav{
 
+        background-color: #f5f7fb !important;
+}
+.assign-tabs.operatorTab .nav.nav-tabs{
+
+        padding: 20px 14px 1px 15px !important;
+}
+.assign-tabs.operatorTab .tab-content{
+
+     padding: 20px 14px 1px 15px !important;
+         margin: 0px 14px 0px 15px;
+         height: auto;
+             background: #fff;
+}
+
+.identification-photo p{
+
+    font-size: 15px;
+    font-weight: 500;
+    color: #171725;
+}
 
 @media (min-width: 992px) {
    .collapsed-sidebar .drop_imagesCC img {
