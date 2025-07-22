@@ -12,7 +12,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = 'Post';
 $this->params['title'] = $this->title;
 ?>
-
+<!-- 
 <div class="card">
     <div class="card-body" style="background-color: #F5F5F5;">
         <div class="row">
@@ -116,9 +116,9 @@ $this->params['title'] = $this->title;
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<style>
+<!-- <style>
     .comment-box {
         background: white;
         border-radius: 10px;
@@ -162,7 +162,7 @@ $this->params['title'] = $this->title;
         border-left: 2px solid #e9ecef;
         padding-left: 20px;
     }
-</style>
+</style> -->
 
 
 <?php
@@ -174,3 +174,194 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
+
+
+
+
+<div class="row">
+        <div class="col-xl-5">
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <div class="card p-0 bg-transparent h-100" style="border: 5px solid #F0F0F0; border-radius: 12px;">
+                        <div class="h-100">
+                            <a href=""> <img src="/assets/a8486371/images/post-thumnailes-img.jpg" class="card-img-top sightings-thumbnail h-100 object-fit-cover rounded" alt=""></a>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-8 mb-3">
+                    <div class="details-packages">
+                        <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
+                            <div class="date-or-time">
+                                <p class="mb-1">UPLOADED DATE TIME:</p>
+                                <p class="mb-0">12 April 2025, 10:17 PM</p>
+                            </div>
+                            <div class="active-btn">
+                                <a href="">ACTIVE</a>
+                            </div>
+                        </div>
+
+                        <table class="table w-100 border-0 border_o d-inline-block pt-3 mb-0">
+                            <tbody class="tbody-leads sighting-leads py-5 w-100">
+                                <tr>
+                                    <td style="width: 25%;">Sighting Date:</td>
+                                    <td style="width: 75%;">
+                                        <p>12 April 2025</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Animal:</td>
+                                    <td>
+                                        <p>Tiger</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Session:</td>
+                                    <td>
+                                        <p>Morning</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td>
+                                        <p>Bajrang male tiger drinking water in Seeta Mandap in Tala zone</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-packages mb-3 py-4 px-3">
+                <div class="row justify-content-between gx-0">
+                    <div class="col-xl-5">
+                        <div class="video-area sighting-video-area">
+                            <!-- <p>Video</p> -->
+                            <div class="sightings-parent-card sightings-parent-card-view">
+                                <div class="card p-2 border-0 bg-white">
+                                    <a href="/sightings/default/view?id=1"> <img src="/assets/a8486371/images/shigtingimage-one.png" class="card-img-top sightings-video" alt=""></a>
+                                    <div class="card-body">
+                                        <div class="liksMain pt-0 d-flex align-items-center justify-content-between">
+                                            <div class="likes d-flex align-items-center gap-1">
+                                                <a href=""><img src="/assets/a8486371/images/like.png" alt=""></a>
+                                                <a href="">
+                                                    <p class="mb-0"><span>25</span> Likes</p>
+                                                </a>
+                                            </div>
+                                            <div class="likes d-flex align-items-center gap-1">
+                                                <a href="">
+                                                    <p class="mb-0"><span>25</span> Comments</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center pt-3">
+                            <!-- <a href="" class="sequenceBtn editBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</a> -->
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <!-- <div class="col-xl-6">
+                        <div class="galleryCard video-area">
+                            <p>Thumbnail</p>
+                            <div class="card p-0 border-0 bg-transparent">
+                                <div class="">
+                                    <a href=""> <img src="/assets/a8486371/images/gallery-one.png"
+                                            class="card-img-top sightings-thumbnail" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-12 pt-5">
+                        <div class="d-flex justify-content-center">
+                            <a href="" class="sequenceBtn editBtn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Edit</a>
+                        </div>
+
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7">
+            <div class="itrnTextCard py-4">
+                <h6>2 Comments</h6>
+                <div class="one_box position-relative pb-4">
+                    <div class="postcomment d-flex gap-2 pt-3 w-100">
+                        <div class="avatar"><a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src=""></a>
+                        </div>
+                        <div class="text_com">
+                            <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                <a href="/profile/user/anil-kumar" data-discover="true"><span class="comment-author">Rahul Kumar</span></a> <span class="userDate-time">27
+                                    Jun, 2025, 02:30 PM</span>
+                            </div>
+                            <p>Oh, that sounds amazing! I've always wanted to
+                                experience the thrill of seeing wild animals up
+                                close.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="one_box position-relative pb-4">
+                    <div class="postcomment d-flex gap-2 pt-3 w-100">
+                        <div class="avatar"><a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src=""></a>
+                        </div>
+                        <div class="text_com">
+                            <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                <a href="/profile/user/anil-kumar" data-discover="true"><span class="comment-author">Rahul
+                                        Kumar</span></a><span class="userDate-time">27 Jun, 2025, 02:30 PM</span>
+                            </div>
+                            <p>Oh, that sounds amazing! I've always wanted to
+                                experience the thrill of seeing wild animals up
+                                close.</p>
+                            <div class="user-active d-flex align-items-center gap-2">
+                                <a href="">Reply <span>1</span></a> |
+                                <a href="">Like <span>1</span></a>
+                            </div>
+                            <div class="hide-and-show">
+                                <a href=""><span>Hide replies</span></a>
+                            </div>
+                            <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                <div class="avatar"><a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src=""></a>
+                                </div>
+                                <div class="text_com">
+                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                        <a href="/profile/user/anil-kumar" data-discover="true"><span class="comment-author">Rahul Kumar</span></a> <span class="userDate-time">27 Jun, 2025, 02:30 PM</span>
+                                    </div>
+                                    <p>Oh, that sounds amazing! I've always wanted to
+                                        experience the thrill of seeing wild animals up
+                                        close.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="comment-form"><input type="hidden" value="TOKEN_HERE" name="_csrf-frontend">
+                    <div class="comments-persons px-0 pt-4">
+                        <div class="postcomment d-flex gap-3">
+                            <div class="avatar"><a href="/profile/user/md-sarwar" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
+                            </div>
+                            <div class="text-area">
+                                <div class="mb-3 field-sharesafaricommentform-comment required">
+                                    <textarea id="sharesafaricommentform-comment" class="form-control w-100" name="ShareSafariCommentForm[comment]" rows="5" placeholder="Write a comment..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments-persons px-4 pt-2">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-xl-8">
+
+                            </div>
+                            <div class="col-lg-12 col-xl-4">
+                                <div class="comment_button float-end mb-lg-0 mb-3">
+                                    <button type="submit" class="post-comment">Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
