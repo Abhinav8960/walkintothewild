@@ -25,6 +25,23 @@ return [
         'posts' => [
             'class' => 'support\modules\posts\Module',
         ],
+
+        'operator' => [
+            'class' => 'support\modules\operator\Module',
+        ],
+
+        'operatorapproval' => [
+            'class' => 'support\modules\operatorapproval\Module',
+        ],
+
+        'galleryapproval' => [
+            'class' => 'support\modules\galleryapproval\Module',
+        ],
+
+        'gallery' => [
+            'class' => 'support\modules\gallery\Module',
+        ],
+        
     ],
 
 
