@@ -36,7 +36,7 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
-                        'attribute' => 'business_name',
+                        'attribute' => 'business name',
                         'format' => 'raw',
                         'value' => function ($model) {
                             // return Html::a($model->business_name, ['view', 'id' => $model->id], [
