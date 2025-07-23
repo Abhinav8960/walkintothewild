@@ -42,7 +42,7 @@ if (Yii::$app->user->identity) {
 
                     [
                         'label' => 'User Name',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        // 'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
 
@@ -52,7 +52,7 @@ if (Yii::$app->user->identity) {
 
                                 return Html::a(
                                     Html::img($imageUrl, [
-                                        'class' => "rounded profile-picture",
+                                        'class' => "rounded-4 profile-picture",
                                         'style' => "width:28px;"
                                     ]) . ' ' . Html::encode($name),
                                     ['/user/default/profile', 'user_id' => $user->id],
@@ -75,7 +75,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Start Date',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        // 'headerOptions' => ['style' => 'width: 10%;'],
 
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -84,7 +84,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'End Date',
-                        'headerOptions' => ['style' => 'width: 10%;'],
+                        // 'headerOptions' => ['style' => 'width: 10%;'],
 
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -121,9 +121,7 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
                                 'value' => Url::toRoute(['intrested', 'id' => $model->id]),
-                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
-',
-                                'class' => 'intrested',
+                                'class' => 'intrested btn-danger',
                                 'title' => 'Intrested',
                             ]) : '';
                         }
@@ -135,44 +133,53 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
                                 'value' => Url::toRoute(['leaved', 'id' => $model->id]),
-                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
-',
-                                'class' => 'leaved',
+                                'class' => 'leaved btn-info',
                                 'title' => 'Leaved',
                             ]) : '';
                         }
                     ],
                     [
-                        'label' => 'Is Publish on Web/App',
-                        'headerOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'on Web',
+                        'headerOptions' => [''],
 
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
-                            $str .= '/';
-                            $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success web">Yes</a>' : '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            // $str .= '/';
+                            // $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            return $str;
+                        }
+                    ],
+     [
+                        'label' => 'app',
+                        'headerOptions' => [''],
+
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success web">Yes</a>' : '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-danger">No</a>';
+                            // $str .= '/';
+                            // $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-danger">No</a>';
                             return $str;
                         }
                     ],
 
-
                     [
                         'header' => 'Pin',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
 
                             return Html::a(($model->pined_safari == 1 ? 'UnPin' : 'Pin Safari'), ['pinsafari', 'id' => $model->id], [
                                 'style' => 'color: white !important; text-decoration:none;',
                                 'title' => 'Pinned Safar',
-                                'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success'),
+                                'class' => ($model->pined_safari == 1 ? 'btn btn-danger' : 'btn btn-success changeBtnSuccess'),
                             ]);
                         }
                     ],
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->status != 2) {
@@ -185,7 +192,7 @@ if (Yii::$app->user->identity) {
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'contentOptions' => [''],
                         'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {
