@@ -159,18 +159,26 @@ $this->params['title'] = $this->title;
                                             <a href="">Like <span><?= count($replies) ?></span></a>
                                         </div>
                                         <div class="hide-and-show">
-                                            <a href=""><span>Hide replies</span></a>
+                                            <a href="javascript:void(0);" class="toggle-replies"><span>Hide replies</span></a>
                                         </div>
                                         <?php if ($replies) { ?>
-                                            <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                            <div class="reply-container">
                                                 <?php foreach ($replies as $reply) { ?>
-                                                    <div class="avatar"><a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src="<?= $reply->user->profile_display_image ?>"></a>
-                                                    </div>
-                                                    <div class="text_com">
-                                                        <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                            <a href="/profile/user/anil-kumar" data-discover="true"><span class="comment-author"><?= $reply->user->name ?></span></a> <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i:s A", $reply->created_at) ?></span>
+                                                    <div class="postcomment d-flex gap-2 pt-2 w-100">
+                                                        <div class="avatar">
+                                                            <a href="/profile/user/anil-kumar" data-discover="true">
+                                                                <img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src="<?= $reply->user->profile_display_image ?>">
+                                                            </a>
                                                         </div>
-                                                        <p><?= $reply->comment ?></p>
+                                                        <div class="text_com">
+                                                            <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                                                <a href="/profile/user/anil-kumar" data-discover="true">
+                                                                    <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                </a>
+                                                                <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i:s A", $reply->created_at) ?></span>
+                                                            </div>
+                                                            <p><?= $reply->comment ?></p>
+                                                        </div>
                                                     </div>
                                                 <?php } ?>
                                             </div>
@@ -211,31 +219,51 @@ $this->params['title'] = $this->title;
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" "="">
-    <div class=" modal-content">
-            <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
-                <p class="" id="">Update Sighting</p>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-4 pb-5">
-                <div class="row">
-                    <div class="col-lg-12 pb-5">
-                        <div class="form_boxes">
-                            <label for="">Caption <span>*</span></label>
-                            <textarea name="" id="" class="form-control" placeholder="Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development."></textarea>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class=" modal-content">
+                <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
+                    <p class="" id="">Update Sighting</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 pb-5">
+                    <div class="row">
+                        <div class="col-lg-12 pb-5">
+                            <div class="form_boxes">
+                                <label for="">Caption <span>*</span></label>
+                                <textarea name="" id="" class="form-control" placeholder="Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development."></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="modalCrateButton">
-                            <button type="btn" class="w-100">Update</button>
+                        <div class="col-12">
+                            <div class="modalCrateButton">
+                                <button type="btn" class="w-100">Update</button>
+                            </div>
                         </div>
+
                     </div>
+
 
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
-</div>
+
+
+<?php
+$script = <<<JS
+    $('.toggle-replies').on('click', function (e) {
+        e.preventDefault();
+        var replyContainer = $(this).closest('.hide-and-show').next('.reply-container');
+        replyContainer.toggle();
+
+        var spanText = $(this).find('span');
+        if (replyContainer.is(':visible')) {
+            spanText.text('Hide replies');
+        } else {
+            spanText.text('View replies');
+        }
+    });
+JS;
+
+$this->registerJs($script);
+?>

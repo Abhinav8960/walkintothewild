@@ -76,7 +76,7 @@ $this->title = 'Dashboard';
                   <p>Average Rating</p>
                 </div>
                 <div class="numbwrCount">
-                  <h3> Support POrtal</h3>
+                  <h3> Support Portal</h3>
                 </div>
               </div>
             </div>
