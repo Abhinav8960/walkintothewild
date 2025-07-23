@@ -56,25 +56,7 @@ use yii\helpers\Url;
                                     $gallery_data = json_decode($chat_message->gallery, true);
                                     if ($gallery_data) { ?>
 
-                                        <div class="d-flex justify-content-end m-2">
-                                            <div class="galleryBox bg-transparent">
-                                                <div class="pb-2 d-flex justify-content-end">
-                                                    <h3 class="text-center"><?= isset($gallery_data['title']) ? $gallery_data['title'] : '' ?></h3>
-                                                </div>
-                                                <div class="gallery-container">
-                                                    <?php if ($gallery_data['images']) {
-                                                        foreach ($gallery_data['images'] as $image) {  ?>
-                                                            <div class="single-image" data-fancybox="gallery" data-caption="Image 4">
-                                                                <img src="<?= isset($image['gallery_image_path']) ? $image['gallery_image_path'] : '' ?>" alt="<?= isset($image['title']) ? $image['title'] : ''  ?>" title="<?= isset($image['caption']) ? $image['caption'] : '' ?>">
-                                                                <div class="image-caption"><?= isset($image['caption']) ? $image['caption'] : '' ?></div>
-                                                            </div>
-
-                                                    <?php }
-                                                    } ?>
-                                                </div>
-
-                                            </div>
-                                        </div>
+                                   
                                     <?php }
                                 } else if ($chat_message->is_call_message == 1) { ?>
                                     <div class="d-flex justify-content-end m-2">
@@ -172,6 +154,7 @@ use yii\helpers\Url;
                 <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
             </div>
         </div>
+        
     </div>
 </div>
 
