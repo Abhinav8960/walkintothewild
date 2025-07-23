@@ -36,24 +36,24 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
-                        'label' => 'Title',
+                        'label' => 'Gallery Name',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->title) ? $model->title : '';
                         }
                     ],
-                    [
-                        'label' => 'Caption',
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->caption) ? $model->caption : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Caption',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->caption) ? $model->caption : '';
+                    //     }
+                    // ],
 
                     [
-                        'label' => 'Gallery',
+                        'label' => 'Thumbnail',
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'text-align: center;'],
+                        // 'headerOptions' => ['style' => 'text-align: center;'],
                         'value' => function ($model) {
                             return Html::tag('div', Html::img($model->gallery_image, [
                                 'alt' => 'Uploaded Image',
@@ -64,7 +64,7 @@ $this->params['title'] = $this->title;
                     [
                         'label' => 'Set as Thumbnail',
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        // 'headerOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'value' => function ($model) {
                             return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
                         }
@@ -72,7 +72,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        // 'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->newstatuslabel;

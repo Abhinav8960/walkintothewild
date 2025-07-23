@@ -29,13 +29,13 @@ $this->params['title'] = $this->title;
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
 
-                    [
-                        'label' => 'Partner',
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->partner->business_name ?? '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Partner',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->partner->business_name ?? '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Gallery Name',
                         'format' => 'raw',
