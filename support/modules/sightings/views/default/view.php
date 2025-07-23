@@ -140,12 +140,14 @@ $this->params['title'] = $this->title;
                 <div class="itrnTextCard py-4">
                     <h6><?= $model->comment_count; ?>&nbsp;Comments</h6>
                     <div class="one_box position-relative pb-4">
-                        <div class="postcomment d-flex gap-2 pt-3 w-100">
-                            <?php if ($parent_comments = $model->getComments()->andWhere(['parent_id' => null])->joinWith('user')->andWhere(['user.status' => 10, 'sighting_comment.status' => 1])->all()) {
-                                foreach ($parent_comments as $comments) {
-                                    $replies = $comments->getReplies()->joinWith('user')->andWhere(['user.status' => 10, 'sighting_comment.status' => 1])->all();
 
-                            ?>
+                        <?php if ($parent_comments = $model->getComments()->andWhere(['parent_id' => null])->joinWith('user')->andWhere(['user.status' => 10, 'sighting_comment.status' => 1])->all()) {
+                            foreach ($parent_comments as $comments) {
+                                $replies = $comments->getReplies()->joinWith('user')->andWhere(['user.status' => 10, 'sighting_comment.status' => 1])->all();
+
+                        ?>
+                                <div class="postcomment d-flex gap-2 pt-3 w-100">
+
                                     <div class="avatar">
                                         <a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src="<?= $comments->user->profile_display_image ?>"></a>
                                     </div>
@@ -184,35 +186,13 @@ $this->params['title'] = $this->title;
                                             </div>
                                         <?php } ?>
                                     </div>
-                            <?php }
-                            } ?>
-                        </div>
+                                </div>
+                        <?php }
+                        } ?>
                     </div>
-                    <form id="comment-form"><input type="hidden" value="TOKEN_HERE" name="_csrf-frontend">
-                        <div class="comments-persons px-0 pt-4">
-                            <div class="postcomment d-flex gap-3">
-                                <div class="avatar"><a href="/profile/user/md-sarwar" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
-                                </div>
-                                <div class="text-area">
-                                    <div class="mb-3 field-sharesafaricommentform-comment required">
-                                        <textarea id="sharesafaricommentform-comment" class="form-control w-100" name="ShareSafariCommentForm[comment]" rows="5" placeholder="Write a comment..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comments-persons px-4 pt-2">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-12 col-xl-8">
 
-                                </div>
-                                <div class="col-lg-12 col-xl-4">
-                                    <div class="comment_button float-end mb-lg-0 mb-3">
-                                        <button type="submit" class="post-comment">Comment</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <?= $this->render('_comment_form', ['comment_model' => $comment_model]) ?>
+
                 </div>
             </div>
         </div>

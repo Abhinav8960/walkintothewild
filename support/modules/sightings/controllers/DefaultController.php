@@ -2,16 +2,18 @@
 
 namespace support\modules\sightings\controllers;
 
+use common\models\GeneralModel;
+use common\models\sighting\form\SightingCommentForm;
 use common\models\sighting\form\SightingDeleteForm;
 use common\models\sighting\form\SightingThumbnailForm;
 use common\models\sighting\Sighting;
 use common\models\sighting\SightingComment;
 use common\models\sighting\SightingSearch;
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use Yii;
 
 /**
  * DefaultController for the `sightings` module
@@ -34,7 +36,6 @@ class DefaultController extends Controller
         ]);
     }
 
-
     public function actionView($id)
     {
         $sighting = Sighting::find()->where(['id' => $id])->limit(1)->one();
@@ -42,8 +43,32 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Sighting not Found!!!');
             return $this->redirect(['index']);
         }
+
+        $comment_model = new SightingCommentForm();
+
+        if (Yii::$app->request->isPost && $comment_model->load(Yii::$app->request->post())) {
+            if ($comment_model->validate()) {
+
+                $comment = new SightingComment();
+                $comment->comment = $comment_model->comment;
+                $comment->dateTime = date('Y-m-d H:i:s');
+                $comment->user_id = Yii::$app->user->id;
+                $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
+                $comment->sighting_id = $sighting->id;
+                $comment->status = 1;
+
+                if ($comment->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
+                    return $this->render('view', [
+                        'model' => $sighting,
+                        'comment_model' => $comment_model,
+                    ]);
+                }
+            }
+        }
         return $this->render('view', [
             'model' => $sighting,
+            'comment_model' => $comment_model,
         ]);
     }
 
@@ -91,12 +116,11 @@ class DefaultController extends Controller
         return $this->renderAjax('_reply_list', ['dataProvider' => $dataProvider]);
     }
 
-
     public function actionSightingDelete($id)
     {
         $sighting_delete_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_delete_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Sighting Not Found!!!']);
         }
 
         $model = new SightingDeleteForm($sighting_delete_model);
@@ -228,7 +252,7 @@ class DefaultController extends Controller
     {
         $sighting_thumbnail_model = Sighting::find()->where(['id' => $id, 'status' => Sighting::STATUS_ACTIVE])->limit(1)->one();
         if (!$sighting_thumbnail_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Sighting Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => 'Sighting Not Found!!!']);
         }
 
         $model = new SightingThumbnailForm();
@@ -269,7 +293,7 @@ class DefaultController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-        
+
         $out = curl_exec($ch);
 
         if (curl_errno($ch)) {
@@ -293,4 +317,5 @@ class DefaultController extends Controller
         echo $out;
         Yii::$app->end();
     }
+
 }
