@@ -13,68 +13,76 @@ use yii\helpers\Url;
             <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/operator/safari-operator/delete', 'id' => $model->id]) ?>"><i class="fas fa-trash me-1"></i>Delete</button>
         </div> -->
         <div class="row mt-2">
-            <div class="col-2">
-                <div class="card">
-                    <div class="ps-4 pt-4 pe-3 pb-4">
-                        <div class="">
-                            <h6 class="mb-2 tx-12 ">Shared Safari</h6>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Shared Safari</p>
                         </div>
-                        <div class="pb-0 mt-0">
-                            <div class="d-flex">
-                                <h4 class="tx-20 font-weight-semibold mb-2">
-                                    <?= isset($model->safaricount) ? $model->safaricount : ''; ?>
-                                </h4>
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                                <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
                             </div>
+                            <h3 class="">
+                                <?= isset($model->safaricount) ? $model->safaricount : ''; ?>
+                            </h3>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="card">
-                    <div class="ps-4 pt-4 pe-3 pb-4">
-                        <div class="">
-                            <h6 class="mb-2 tx-12 ">Fixed Departure</h6>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Fixed Departure</p>
                         </div>
-                        <div class="pb-0 mt-0">
-                            <div class="d-flex">
-                                <h4 class="tx-20 font-weight-semibold mb-2">
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #FFF4EE;">
+                                <img src="<?= $this->params['baseurl'] ?>/images/fixeddepa.png"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                                <h3 class="">
                                     <?= isset($model->sharedsafaricount) ? $model->sharedsafaricount : ''; ?>
-                                </h4>
-                            </div>
+                                </h3>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="card">
-                    <div class="ps-4 pt-4 pe-3 pb-4">
-                        <div class="">
-                            <h6 class="mb-2 tx-12 ">Package</h6>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Package</p>
                         </div>
-                        <div class="pb-0 mt-0">
-                            <div class="d-flex">
-                                <h4 class="tx-20 font-weight-semibold mb-2">
+                        <div class="numbwrCount d-flex gap-5">
+                               <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #DDFFE7;">
+                                <img src="<?= $this->params['baseurl'] ?>/images/package.png"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                                <h3 class="">
                                     <?= isset($model->packagecount) ? $model->packagecount : ''; ?>
-                                </h4>
-                            </div>
-
+                                </h3>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-2">
-                <div class="card">
-                    <div class="ps-4 pt-4 pe-3 pb-4">
-                        <div class="">
-                            <h6 class="mb-2 tx-12 ">Quotes</h6>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                          <div class="text-card mb-3">
+                            <p>Quotes</p>
                         </div>
-                        <div class="pb-0 mt-0">
-                            <div class="d-flex">
-                                <h4 class="tx-20 font-weight-semibold mb-2">
-                                    <?= isset($model->quotescount) ? $model->quotescount : ''; ?>
-                                </h4>
+                        <div class="numbwrCount d-flex gap-5">
+                              <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #AAAAAA;">
+                                <img src="<?= $this->params['baseurl'] ?>/images/qut.png"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
                             </div>
+                                <h3 class="">
+                                    <?= isset($model->quotescount) ? $model->quotescount : ''; ?>
+                                </h3>
                         </div>
                     </div>
                 </div>

@@ -118,10 +118,21 @@
     padding: 25px;
     height: 375px;
     overflow-y: scroll;
+     position: relative;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+.assign-tabs .tab-content::-webkit-scrollbar {
+    display: none;
+}
+.sendNotificationBtn {
+    position: sticky;
+    top: 25px;
+    z-index: 10;
+    background: #EEEEEE;
+    padding: 10px 0;
+}
 .breadcrumb-header.assignPara {
 
     padding: 14px 14px 14px 37px;
