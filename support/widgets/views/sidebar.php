@@ -206,7 +206,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/sharesafari/share-safari-comment/index",
                                                                                                     "/sharesafari/default/fixed-departure",
                                                                                                     "/sharesafari/default/fixed-view",
-                                                                                                )) ? 'package_active.svg' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Safari<a href="" class="drop_imagesCC">
+                                                                                                )) ? 'safari_active.png' : 'safari.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Safari<a href="" class="drop_imagesCC">
                         <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
                     </a></span>
             </a>

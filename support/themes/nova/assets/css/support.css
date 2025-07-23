@@ -45,7 +45,11 @@
     font-weight: 600;
     text-transform: uppercase;
 }
+.paymentInfoDetail .notRece{
 
+    background-color: #FF4D4F1A !important;
+    color: red;
+}
 .paymentInfoDetail .bolder_font {
 
     font-weight: 500;

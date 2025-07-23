@@ -54,7 +54,7 @@ AppAsset::register($this);
                                     <?php
                                     $str = '';
                                     if ($model->is_payment_received) {
-                                        $str .= '<span class="payRece d-inline-block mb-1">Payment Received</span>';
+                                        $str .= '<span class="payRece notRece d-inline-block mb-1">Payment Received</span>';
                                         if (!empty($model->transaction_datetime)) {
                                             $str .= '<br><b>Payment Date</b>: ' . date('d M, Y H:i A', strtotime($model->transaction_datetime));
                                         }
@@ -65,7 +65,7 @@ AppAsset::register($this);
                                             $str .= '<br><b>Operator Booked</b>: ' . $model->bookedpartner->business_name;
                                         }
                                     } else {
-                                        $str .= '<span class="payRece d-inline-block mb-1">Payment Not Received</span>';
+                                        $str .= '<span class="payRece notRece d-inline-block mb-1">Payment Not Received</span>';
                                     }
 
                                     $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
