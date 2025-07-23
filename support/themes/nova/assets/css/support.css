@@ -274,6 +274,13 @@
     color: #82C43C;
     text-transform: uppercase;
 }
+.btn.btn-success.changeBtnSuccess{
+
+    padding: 3px 10px;
+    background: #464A53;
+    font-size: 12px;
+    font-weight: 600;
+}
 
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
