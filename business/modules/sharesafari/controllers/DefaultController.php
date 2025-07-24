@@ -4,6 +4,8 @@ namespace business\modules\sharesafari\controllers;
 
 use business\controllers\BusinessController;
 use common\models\master\faq\MasterFaq;
+use common\models\operator\SafariOperatorFaq;
+use common\models\partnergallery\PartnerGallerySearch;
 use common\models\sharesafari\form\CreateDepartureVersionForm;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariFaqForm;
@@ -18,6 +20,7 @@ use common\models\sharesafari\ShareSafariVersion;
 use common\models\sharesafari\ShareSafariVersionSearch;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -106,9 +109,11 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_version_model->save()) {
+                        $model->uploadFile();
                         $this->updateFixedDepartureStatus($model->share_safari_id, $model->version, ShareSafariVersion::EDIATBLE_STATUS);
 
                         $parks = $model->park_list;
@@ -156,9 +161,11 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_version_model->save(false)) {
+                        $model->uploadFile();
                         $parks = $model->park_list;
                         if ($parks) {
                             ShareSafariParklist::deleteAll(['share_safari_id' => $shared_safari_departure_version_model->id]);
@@ -203,18 +210,16 @@ class DefaultController extends Controller
             $model = new DayItineraryForm();
             $model->share_safari_id = $share_safari_id;
             $model->version = $shared_safari_departure_version_model->version;
-            $model->no_of_day = $shared_safari_departure_version_model->tour_duration;
             $model->day = $day;
         }
-        // Validate and save each day's itinerary entries
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->day_image = UploadedFile::getInstance($model, 'day_image');
+                // $model->day_image = UploadedFile::getInstance($model, 'day_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_day_model->save(false)) {
-                        $model->uploadFile();
+                        // $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Itinerary updated successfully');
                         return $this->redirect(['itinerary', 'id' => $shared_safari_departure_version_model->id, 'day' => $day]);
                     }
@@ -276,7 +281,7 @@ class DefaultController extends Controller
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Inclusion updated successfully');
+                            Yii::$app->session->setFlash('success', 'Data updated successfully');
                             return $this->redirect(['inclusion', 'id' => $shared_safari_departure_version_model->id]);
                         } else {
                             Yii::$app->session->setFlash('success', 'Failed to update fixed departure details.');
@@ -364,6 +369,19 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_version_model = $this->findModel($id, $safari_operator->id);
+
+        $park_array = ShareSafariParklist::find()->where(['share_safari_id' => $shared_safari_departure_version_model->share_safari_id, 'version' => $shared_safari_departure_version_model->version])->select('park_id')->asArray()->column();
+
+        $faqList = SafariOperatorFaq::find()
+            ->where(['safari_operator_id' => $safari_operator->id])
+            ->andWhere(['park_id' => $park_array])
+            ->select(['id', 'question'])
+            ->asArray()
+            ->all();
+
+        $drop_down_list = ArrayHelper::map($faqList, 'id', 'question');
+
+
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $shared_safari_departure_version_model->share_safari_id;
         $searchModel->version = $shared_safari_departure_version_model->version;
@@ -374,20 +392,12 @@ class DefaultController extends Controller
         $model->share_safari_id = $shared_safari_departure_version_model->share_safari_id;
         $model->version = $shared_safari_departure_version_model->version;
         $model->status = ShareSafariFaq::STATUS_ACTIVE;
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->share_safari_faq_model->faq_id = $faq->id;
-                            $model->share_safari_faq_model->save(false);
-                        }
                         \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
                         return $this->redirect(['faq', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -403,14 +413,15 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
             'faqs' => $faqs,
             'model' => $model,
+            'drop_down_list' => $drop_down_list,
         ]);
     }
 
     public function actionUpdateFaq($id, $faq_id)
     {
         $safari_operator = $this->module->operatormodel();
-
         $shared_safari_departure_version_model = $this->findModel($id);
+
         $faq_model = ShareSafariFaq::find()->where(['id' => $faq_id])->one();
         $model = new ShareSafariFaqForm($faq_model);
         $model->share_safari_id = $shared_safari_departure_version_model->share_safari_id;
@@ -421,15 +432,6 @@ class DefaultController extends Controller
                 $model->initializeForm();
                 if ($faq_model->load($this->request->post())) {
                     if ($model->share_safari_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->share_safari_faq_model->faq_id = $faq->id;
-                            $model->share_safari_faq_model->save(false);
-                        }
                         \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
                         return $this->redirect(['faq', 'id' => $shared_safari_departure_version_model->id]);
                     }
@@ -438,12 +440,8 @@ class DefaultController extends Controller
         } else {
             $model->share_safari_faq_model->loadDefaultValues();
         }
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create_faq', [
-                'model' => $model,
-                'shared_safari_departure_version_model' => $shared_safari_departure_version_model,
-            ]);
-        }
+
+        return $this->redirect(['faq', 'id' => $shared_safari_departure_version_model->id]);
     }
 
     protected function findModelDay($share_safari_id, $day, $version)
@@ -712,7 +710,7 @@ class DefaultController extends Controller
 
     private function CopyFixedDepartureIncluded($old_share_safari_id, $old_version, $new_share_safari_id)
     {
-           
+
         $model = ShareSafariIncluded::find()->where(['share_safari_id' => $old_share_safari_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $included) {
@@ -750,7 +748,7 @@ class DefaultController extends Controller
     }
 
     private function CopyFixedDepartureFaq($old_share_safari_id, $old_version, $new_share_safari_id)
-    {       
+    {
         $model = ShareSafariFaq::find()->where(['share_safari_id' => $old_share_safari_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $faq) {
@@ -776,5 +774,38 @@ class DefaultController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function actionGalleryPopup($context, $preview)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        $searchModel->is_live = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->renderAjax('_gallery_popup', [
+            'dataProvider' => $dataProvider,
+            'context' => $context,
+            'preview' => $preview
+        ]);
+    }
+
+    public function actionGetMasterFaq($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $faq = SafariOperatorFaq::findOne($id);
+
+        if ($faq) {
+            return [
+                'success' => true,
+                'question' => $faq->question,
+                'answer' => $faq->answer,
+            ];
+        }
+
+        return ['success' => false];
     }
 }

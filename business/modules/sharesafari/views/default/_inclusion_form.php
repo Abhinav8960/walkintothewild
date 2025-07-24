@@ -22,8 +22,8 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="contact-tab">
     <div class="incBoxMain">
-        <div class="row py-4">
-            <div class="col-lg-5">
+        <div class="row p-0">
+            <div class="col-lg-8">
                 <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) {  ?>
                     <div class="row">
                         <div class="col-lg-4">
@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
                                 <p><?= $optionLabel ?></p>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="form_boxes mb-3">
                                 <?= $form->field($model, 'share_safari_included[' . $optionValue . ']')->radioList(
                                     [
@@ -40,7 +40,7 @@ use yii\bootstrap5\ActiveForm;
                                     ],
                                     [
                                         'item' => function ($index, $label, $name, $checked, $value) {
-                                            return '<input class="form-check-input" type="radio" name="' . $name . '" value="' . $value . '"' . ($checked ? ' checked' : '') . '>' .
+                                            return '<input class="form-check-input me-3" type="radio" name="' . $name . '" value="' . $value . '"' . ($checked ? ' checked' : '') . '>' .
                                                 '<label class="inclabel">' . $label . '</label>';
                                         },
                                         'itemOptions' => ['class' => 'form-check-input'], // Additional item options if needed
@@ -50,27 +50,39 @@ use yii\bootstrap5\ActiveForm;
                         </div>
                     </div>
                 <?php } ?>
+                <div class="row gx-0">
+                    <div class="col-lg-4">
+                        <div class="clsHeadings">
+                             <p>Meals :</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included", 'class' => "form-check-input"])->label('Breakfast') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included", 'class' => "form-check-input"])->label('Lunch') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form_boxes">
+                            <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included", 'class' => "form-check-input"])->label('Dinner') ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                           <div class="form_boxes">
+                               <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included", 'class' => "form-check-input"])->label('Meal Not Included') ?>
+                           </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-2">
-        Meals :
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast') ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch') ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner') ?>
-    </div>
-    <div class="col-md-3">
-        <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included"])->label('Meal Not Included') ?>
-    </div>
-</div>
+
 
 <div class="row">
     <div class="col-lg-6">
@@ -97,18 +109,7 @@ use yii\bootstrap5\ActiveForm;
 
 <?php ActiveForm::end(); ?>
 
-<style>
-    .ck-editor__editable {
-        min-height: 350px;
-    }
-</style>
-<?php
-$script = <<< JS
-bulleteditor('createdepartureform-share_safari_inclusion');
-bulleteditor('createdepartureform-share_safari_exclusion');
-JS;
-$this->registerJs($script);
-?>
+
 <style>
     .form-check-input[type="radio"] {
         width: 20px;
@@ -170,3 +171,16 @@ $this->registerJs($script);
         updateMealNotIncludedState();
     });
 </script>
+
+
+<style>
+    .form-check-inline {
+        display: inline-block;
+        margin-right: 2rem !important;
+    }
+
+    .form-check-input:checked {
+        background-color: #152F1B !important;
+        border-color: #152F1B !important;
+    }
+</style>

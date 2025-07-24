@@ -4,6 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\corporate\Corporate */
 
+use common\models\sharesafari\ShareSafariVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -126,7 +127,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     // ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statustags;
@@ -140,11 +141,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'template' => '{update}&nbsp{view}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                if ($model->status == ShareSafariVersion::EDIATBLE_STATUS) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
                                 ', ['/sharesafari/default/update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
 
+                                    ]);
+                                }
+                                return Html::tag('span', '', [
+                                    'style' => 'display:inline-block;width:25px;height:25px;'
                                 ]);
                             },
                             'view' => function ($url, $model) {

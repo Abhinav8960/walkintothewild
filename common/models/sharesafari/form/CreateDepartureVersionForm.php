@@ -2,11 +2,11 @@
 
 namespace common\models\sharesafari\form;
 
+use common\models\partnergallery\PartnerGallery;
 use Yii;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariVersion;
-
 class CreateDepartureVersionForm extends \yii\base\Model
 {
     public $share_safari_id;
@@ -51,8 +51,13 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
 
-    public $shared_safari_departure_version_model;
+    public $partner_gallery_id;
+    public $gallery_json;
+    public $image;
+    public $filepath;
+    public $created_at;
 
+    public $shared_safari_departure_version_model;
 
     public function __construct(ShareSafariVersion $shared_safari_departure_version_model = null)
     {
@@ -100,6 +105,9 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->dinner_included = $this->shared_safari_departure_version_model->dinner_included;
             $this->meal_not_included = $this->shared_safari_departure_version_model->meal_not_included;
 
+            $this->filepath = $this->shared_safari_departure_version_model->filepath;
+            $this->created_at = $this->shared_safari_departure_version_model->created_at;
+            $this->partner_gallery_id = $this->shared_safari_departure_version_model->partner_gallery_id;
 
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_version_model->share_safari_id, 'version' => $this->shared_safari_departure_version_model->version])->column(); //abb multiple park ko store karenge
         }
@@ -121,7 +129,12 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
-            [['share_safari_id', 'version'], 'integer']
+            [['share_safari_id', 'version'], 'integer'],
+            [['partner_gallery_id'], 'integer'],
+            [['gallery_json'], 'safe'],
+            [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
+            [['filepath'], 'string'],
+
 
         ];
     }
@@ -164,6 +177,9 @@ class CreateDepartureVersionForm extends \yii\base\Model
             'tour_duration' => 'Total Duration',
             'safari_plan' => 'Safari Plan',
             'total_seat' => 'Total Seat',
+            'partner_gallery_id' => 'Gallery Id',
+            'gallery_json' => 'Gallery Json',
+            'filepath' => 'FilePath',
             'status' => 'Status',
         ];
     }
@@ -236,6 +252,12 @@ class CreateDepartureVersionForm extends \yii\base\Model
         if ($this->park_list) {
             $this->shared_safari_departure_version_model->park_id = $this->park_list[0];
         }
+
+        $this->shared_safari_departure_version_model->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+            $this->shared_safari_departure_version_model->gallery_json = $live->live_images;
+        }
     }
 
 
@@ -244,6 +266,23 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $wordCount = str_word_count($this->$attribute);
         if ($wordCount >= 1000) {
             $this->addError($attribute, 'Please provide content within 1000 words.');
+        }
+    }
+
+
+    public function UploadFile()
+    {
+        if ($this->image) {
+            $storagePath = 'fixed_departure' . '/' . date('ym', $this->created_at);
+            $fileName =  $this->version . '_fixed_departure_image' . '_' . time() . '.' . $this->image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+            if ($fileName) {
+                if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->image, $filePath, $fileName, true)) {
+                    $this->shared_safari_departure_version_model->image = $fileName;
+                    $this->shared_safari_departure_version_model->filepath = $filePath;
+                    $this->shared_safari_departure_version_model->save(false);
+                }
+            }
         }
     }
 }

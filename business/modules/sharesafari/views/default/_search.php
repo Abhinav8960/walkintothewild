@@ -22,25 +22,22 @@ use yii\widgets\ActiveForm;
 
                     <div class="">
                         <div class="filter-one d-flex gap-2">
-                            <span>Start Date:</span>
+                            <span>Start Date Range:</span>
                             <input type="date" placeholder="dd/mm/yyyy" id="visible_start_date" value="<?= $model->start_date ?>">
-                            <img src="<?= $this->params['baseurl'] ?>/images/1.svg" alt="">
                         </div>
                     </div>
 
                     <div class="">
                         <div class="filter-one d-flex gap-2">
-                            <span>End Date:</span>
+                            <span>End Date Range:</span>
                             <input type="date" placeholder="dd/mm/yyyy" id="visible_end_date" value="<?= $model->end_date ?>">
-                            <img src="<?= $this->params['baseurl'] ?>/images/1.svg" alt="">
                         </div>
                     </div>
 
                     <div class="">
                         <div class="filter-one d-flex gap-2">
-                            <span>Cut Off Date:</span>
+                            <span>Cut Off Date Range:</span>
                             <input type="date" placeholder="dd/mm/yyyy" id="visible_cut_off_date" value="<?= $model->cut_off_date ?>">
-                            <img src="<?= $this->params['baseurl'] ?>/images/1.svg" alt="">
                         </div>
                     </div>
 

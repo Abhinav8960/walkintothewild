@@ -16,6 +16,8 @@ class ShareSafariFaqForm extends \yii\base\Model
     public $action_url;
     public $action_validate_url;
     public $version;
+    public $master_faq_id;
+
 
 
     /**
@@ -34,6 +36,8 @@ class ShareSafariFaqForm extends \yii\base\Model
             $this->answer = $this->share_safari_faq_model->answer;
             $this->position = $this->share_safari_faq_model->position;
             $this->status = $this->share_safari_faq_model->status;
+            $this->master_faq_id = $this->share_safari_faq_model->master_faq_id;
+
         }
     }
 
@@ -45,6 +49,8 @@ class ShareSafariFaqForm extends \yii\base\Model
             [['answer'], 'string'],
             [['position'], 'default', 'value' => 0],
             [['question'], 'string', 'max' => 512],
+            [['master_faq_id'],'integer'],
+
         ];
     }
 
@@ -59,6 +65,7 @@ class ShareSafariFaqForm extends \yii\base\Model
             'question' => 'Question',
             'answer' => 'Answer',
             'position' => 'Position',
+            'master_faq_id' => 'Master Faq Id',
             'status' => 'Status',
         ];
     }
@@ -71,6 +78,7 @@ class ShareSafariFaqForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->share_safari_faq_model->share_safari_id = $this->share_safari_id;
+        $this->share_safari_faq_model->master_faq_id = $this->master_faq_id;
         $this->share_safari_faq_model->version = $this->version;
         $this->share_safari_faq_model->question = $this->question;
         $this->share_safari_faq_model->answer = $this->answer;

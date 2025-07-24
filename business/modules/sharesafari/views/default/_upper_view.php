@@ -3,6 +3,7 @@
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIncluded;
+use common\models\sharesafari\ShareSafariVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -18,11 +19,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="packageTitle">
                         <h2>Fixed Departure : <?= Html::encode($share_safari->share_safari_title) ?></h2>
                     </div>
-                    <div class="butonsParent d-flex align-items-center gap-3">
-                        <div class="edinBtn">
-                            <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
+                    <?php
+                    if ($share_safari->status == ShareSafariVersion::EDIATBLE_STATUS) {
+                    ?>
+                        <div class="butonsParent d-flex align-items-center gap-3">
+                            <div class="edinBtn">
+                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

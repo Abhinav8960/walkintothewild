@@ -9,6 +9,9 @@ use yii\grid\GridView;
 
 $faq_count = 1;
 
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 $this->title = 'Fixed Departure : ' . $shared_safari_departure_version_model->share_safari_title . '';
 $this->params['title'] = $this->title;
 ?>
@@ -27,7 +30,7 @@ $this->params['title'] = $this->title;
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item mb-3">
                                     <?php
-                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'url' => Url::toRoute(['update-faq', 'id' => $model->share_safari_id, 'faq_id' => $faq->id])]);
+                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list, 'url' => Url::toRoute(['update-faq', 'id' => $model->share_safari_id, 'faq_id' => $faq->id])]);
                                     ?>
                                 </div>
                             </div>
@@ -40,7 +43,7 @@ $this->params['title'] = $this->title;
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item mb-3">
                             <?php
-                            echo $this->render('faq_form', ['model' => $model, 'question_no' => $faq_count]);
+                            echo $this->render('faq_form', ['model' => $model, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list]);
                             ?>
 
                         </div>

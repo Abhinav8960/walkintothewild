@@ -2,6 +2,7 @@
 
 namespace common\models\sharesafari\form;
 
+use common\models\partnergallery\PartnerGallery;
 use common\models\sharesafari\ShareSafariDay;
 use common\models\sharesafari\ShareSafariIncluded;
 use Yii;
@@ -11,6 +12,7 @@ class DayItineraryForm  extends \yii\base\Model
 
 {
     public $share_safari_id;
+    public $version;
     public $no_of_day;
     public $day;
     public $day_title;
@@ -29,16 +31,18 @@ class DayItineraryForm  extends \yii\base\Model
     public $longitude;
     public $share_safari_day_model;
     public $status;
-    public $version;
+
+    public $partner_gallery_id;
+    public $gallery_json;
 
 
     /**
      * @param [type] $share_safari_day_model
      */
-    public function __construct(ShareSafariDay $share_safari_day_model = null)
+    public function __construct(?ShareSafariDay $share_safari_day_model = null)
     {
         $this->share_safari_day_model = Yii::createObject([
-            'class' => ShareSafariDay::className()
+            'class' => ShareSafariDay::class
         ]);
         if ($share_safari_day_model != null) {
             $this->share_safari_day_model = $share_safari_day_model;
@@ -60,24 +64,38 @@ class DayItineraryForm  extends \yii\base\Model
             $this->latitude = $this->share_safari_day_model->latitude;
             $this->longitude = $this->share_safari_day_model->longitude;
             $this->status = $this->share_safari_day_model->status;
+
+            $this->partner_gallery_id = $this->share_safari_day_model->partner_gallery_id;
+            $this->gallery_json = $this->share_safari_day_model->gallery_json;
         }
     }
 
     public function rules()
     {
         return [
-            [['share_safari_id', 'day', 'day_title','version'], 'required'],
+            [['share_safari_id', 'day', 'day_title', 'version'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
             [[
-                'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
-                'start_location', 'end_location', 'hotel_name', 'day_image', 'latitude', 'longitude'
+                'day_description',
+                'day_activity',
+                'day_accommodation',
+                'day_note',
+                'day_title',
+                'start_location',
+                'end_location',
+                'hotel_name',
+                'day_image',
+                'latitude',
+                'longitude'
             ], 'safe'],
-            
+
 
             [
-                ['day_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['day_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 940,
                 'maxWidth' => 940,
                 'maxHeight' => 430,
@@ -85,6 +103,9 @@ class DayItineraryForm  extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
+            [['day_description'], 'string', 'max' => 2000],
+            [['partner_gallery_id'],'integer'],
+            [['gallery_json'], 'safe'],
         ];
     }
 
@@ -117,6 +138,12 @@ class DayItineraryForm  extends \yii\base\Model
         $this->share_safari_day_model->latitude = $this->latitude;
         $this->share_safari_day_model->longitude = $this->longitude;
         $this->share_safari_day_model->status = $this->status;
+
+        $this->share_safari_day_model->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+            $this->share_safari_day_model->gallery_json = $live->live_images;
+        }
     }
 
 
@@ -125,28 +152,28 @@ class DayItineraryForm  extends \yii\base\Model
      *
      * @return void
      */
-    public function UploadFile()
-    {
-        if ($this->day_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/share_safari/day';
+    // public function UploadFile()
+    // {
+    //     if ($this->day_image) {
+    //         $storagePath = Yii::$app->params['datapath'] . '/share_safari/day';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->share_safari_day_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+    //         if (!file_exists($storagePath)) {
+    //             mkdir($storagePath);
+    //             chmod($storagePath, 0777);
+    //         }
+    //         $storagePath = $storagePath . '/' . $this->share_safari_day_model->id;
+    //         if (!file_exists($storagePath)) {
+    //             mkdir($storagePath);
+    //             chmod($storagePath, 0777);
+    //         }
 
-            $fileName = 'sharesafari_day' . '-' . time() . '.' . $this->day_image->extension;
-            $filePath = $storagePath . '/' . $fileName;
+    //         $fileName = 'sharesafari_day' . '-' . time() . '.' . $this->day_image->extension;
+    //         $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->day_image->saveAs($filePath)) {
-                $this->share_safari_day_model->day_image = $fileName;
-                $this->share_safari_day_model->save(false);
-            }
-        }
-    }
+    //         if ($this->day_image->saveAs($filePath)) {
+    //             $this->share_safari_day_model->day_image = $fileName;
+    //             $this->share_safari_day_model->save(false);
+    //         }
+    //     }
+    // }
 }
