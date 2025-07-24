@@ -58,10 +58,7 @@ class DefaultController extends Controller
 
                 if ($comment_model->save(false)) {
                     Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
-                    return $this->render('view', [
-                        'model' => $sighting,
-                        'comment_model' => $comment_model,
-                    ]);
+                    return $this->refresh();
                 }
             }
         }
