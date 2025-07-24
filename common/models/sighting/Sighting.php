@@ -216,4 +216,10 @@ class Sighting extends \yii\db\ActiveRecord implements \common\interfaces\NewSta
         }
         return null;
     }
+
+    public function getSupportuser()
+    {
+        $supportuser = User::find()->where(['status'=>10,'id'=>Yii::$app->user->id])->one();
+        return $supportuser;
+    }
 }

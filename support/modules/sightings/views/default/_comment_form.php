@@ -7,14 +7,12 @@ $this->title = 'Sighting';
 $this->params['title'] = $this->title;
 ?>
 
-
-
 <?php $form = ActiveForm::begin(['id' => 'comment-form']); ?>
 
 <input type="hidden" value="TOKEN_HERE" name="_csrf-frontend">
 <div class="comments-persons px-0 pt-4">
     <div class="postcomment d-flex gap-3">
-        <div class="avatar"><a href="/profile/user/md-sarwar" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="https://dwi8hvna105nz.cloudfront.net/user/profile/2134_google_avatar.jpg"></a>
+        <div class="avatar"><a href="/user/default/profile?user_id=<?=$model->supportuser->id?>" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="<?= $model->supportuser->profile_display_image ?>"></a>
         </div>
         <div class="text-area">
             <div class="mb-3 field-sharesafaricommentform-comment required">
@@ -29,6 +27,7 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+
 <div class="comments-persons px-4 pt-2">
     <div class="row justify-content-center">
         <div class="col-lg-12 col-xl-8">
