@@ -8,153 +8,148 @@ use yii\helpers\Url;
 ?>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="">
-            <div class="position-relative z-1">
-                <?php
-                if ($chat) {
-                    if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
-                        foreach ($chats as $chat_message) {
-                            if ($chat_message->created_by == $safari_operator_model->user_id) {
-                ?>
-                                <?php if ($chat_message->is_quotation_message == 1) { ?>
-                                    <div class="d-flex justify-content-center m-2">
-                                        <div class="ItineraryQuotationarea">
-                                            <div class="topTitle pb-3">
-                                                <h3 class="text-center">Itinerary & Quotation</h3>
+        <?php
+        if ($chat) {
+            if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
+                foreach ($chats as $chat_message) {
+                    if ($chat_message->created_by == $safari_operator_model->user_id) {
+        ?>
+                        <?php if ($chat_message->is_quotation_message == 1) { ?>
+                            <div class="d-flex justify-content-center m-2">
+                                <div class="ItineraryQuotationarea">
+                                    <div class="topTitle pb-3">
+                                        <h3 class="text-center">Itinerary & Quotation</h3>
+                                    </div>
+                                    <div class="discriptionsCenter">
+                                        <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
+                                        <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
+                                        <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
+                                        <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
+                                        <p class="mb-1"><span>Start Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></b></p>
+                                        <p class="mb-1"><span>End Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></b></p>
+                                        <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
+                                        <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                                            <div>
+                                                <p>
+                                                    <span style="color: red;"><i>Quotation Valid Until:</i></span>
+                                                    <b><i><?= $chat_message->quote->validity_date ?? '' ?></i></b>
+                                                </p>
                                             </div>
-                                            <div class="discriptionsCenter">
-                                                <p class="mb-1"><span>Park:</span> <b><?= $chat_message->quote->park_label ?? '' ?></b> </p>
-                                                <p class="mb-1"><span>Safaris:</span><b> <?= $chat_message->quote->safaris ?? '' ?></b></p>
-                                                <p class="mb-1"><span>Travelers:</span><b> <?= $chat_message->quote->travelers ?? '' ?></b></p>
-                                                <p class="mb-1"><span>Stay Category:</span> <b><?= $chat_message->quote->staycatgory_lable ?? '' ?></b></p>
-                                                <p class="mb-1"><span>Start Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->start_date)) ?? '' ?></b></p>
-                                                <p class="mb-1"><span>End Date:</span><b> <?= date('M d, Y', strtotime($chat_message->quote->end_date)) ?? '' ?></b></p>
-                                                <p class="mb-2"><strong>Note:</strong><br> <?= $chat_message->quote->addional_notes ?? '' ?></p>
-                                                <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
-                                                    <div>
-                                                        <p>
-                                                            <span style="color: red;"><i>Quotation Valid Until:</i></span>
-                                                            <b><i><?= $chat_message->quote->validity_date ?? '' ?></i></b>
-                                                        </p>
-                                                    </div>
-                                                    <div class="d-flex align-items-center gap-1">
+                                            <div class="d-flex align-items-center gap-1">
 
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20" height="20">
-                                                        <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote->net_payment_price) ?? '' ?></b></span>
-
-                                                    </div>
-                                                </div>
-                                                <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20" height="20">
+                                                <span><b style="font-size: 20px;"><?= GeneralModel::number_format_indian($chat_message->quote->net_payment_price) ?? '' ?></b></span>
 
                                             </div>
+                                        </div>
+                                        <p class="mb-1"><span>Read Our:</span><a href="https://www.walkintothewild.in/refund-and-cancellation-policy" target="_blank">Cancellation Policy</a></p>
+
+                                    </div>
+                                    <div class="recievedTime">
+                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } else if ($chat_message->gallery != null) {
+                            $gallery_data = json_decode($chat_message->gallery, true);
+                            if ($gallery_data) { ?>
+
+
+                            <?php }
+                        } else if ($chat_message->is_call_message == 1) { ?>
+                            <div class="d-flex justify-content-end m-2">
+                                <div class="sentChat himselfVoiceCall">
+                                    <div class="innerBg d-flex align-items-center gap-3">
+                                        <div class="callIcons">
+                                            <a href=""><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                        <div class="voiceText">
+                                            <h3 style="padding-right: 20px;">
+                                                <?= $chat_message->message ?>
+                                            </h3>
+
+                                            <?php if (!empty($chat_message->recordingUrl)) {  ?>
+                                                <audio controls style="margin-top: 10px; width:225px">
+                                                    <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
+                                                    Your browser does not support the audio element.
+                                                </audio>
+                                            <?php } ?>
+
+                                            <div class="currentTime">
+                                                <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        <?php } elseif ($chat_message->is_system_generated == 1) { ?>
+                            <div class="d-flex justify-content-center m-2">
+                                <div class="ItineraryQuotationarea">
+                                    <div class="topTitle pb-3">
+                                        <h6 class="text-center"><?= $chat_message->message ?></h6>
+                                    </div>
+                                    <div class="recievedTime d-flex justify-content-end">
+                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php
+                        } else { ?>
+                            <div class="d-flex justify-content-end m-2">
+                                <div class="sentChat">
+                                    <p><?= $chat_message->message ?></p>
+                                    <div class="timeingNotified d-flex justify-content-end pe-2">
+                                        <div class="d-flex gap-3">
+                                            <div class="currentTime">
+                                                <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                            </div>
+                                            <div class="tiknotified">
+                                                <i class="fa-solid fa-check-double"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                    <?php
+                    } else { ?>
+                        <?php if ($chat_message->is_call_request == 1) { ?>
+                            <div class="d-flex justify-content-start m-2">
+                                <div class="sentChat incomingVoiceCall">
+                                    <div class="innerBg innerincomingCall d-flex align-items-center gap-3">
+                                        <div class="callIcons">
+                                            <a href=""><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                        <div class="voiceText">
+                                            <h3 style="padding-right: 20px;"><?= $chat_message->message ?></h3>
                                             <div class="recievedTime">
                                                 <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <?php } else if ($chat_message->gallery != null) {
-                                    $gallery_data = json_decode($chat_message->gallery, true);
-                                    if ($gallery_data) { ?>
 
-                                   
-                                    <?php }
-                                } else if ($chat_message->is_call_message == 1) { ?>
-                                    <div class="d-flex justify-content-end m-2">
-                                        <div class="sentChat himselfVoiceCall">
-                                            <div class="innerBg d-flex align-items-center gap-3">
-                                                <div class="callIcons">
-                                                    <a href=""><i class="fa-solid fa-phone"></i></a>
-                                                </div>
-                                                <div class="voiceText">
-                                                    <h3 style="padding-right: 20px;">
-                                                        <?= $chat_message->message ?>
-                                                    </h3>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="receivedChat supportReceivedChat mt-0 mb-4">
+                                <p><?= $chat_message->message ?></p>
+                                <div class="recievedTime">
+                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                </div>
+                            </div>
 
-                                                    <?php if (!empty($chat_message->recordingUrl)) {  ?>
-                                                        <audio controls style="margin-top: 10px; width:225px">
-                                                            <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
-                                                            Your browser does not support the audio element.
-                                                        </audio>
-                                                    <?php } ?>
-
-                                                    <div class="currentTime">
-                                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                <?php } elseif ($chat_message->is_system_generated == 1) { ?>
-                                    <div class="d-flex justify-content-center m-2">
-                                        <div class="ItineraryQuotationarea">
-                                            <div class="topTitle pb-3">
-                                                <h6 class="text-center"><?= $chat_message->message ?></h6>
-                                            </div>
-                                            <div class="recievedTime d-flex justify-content-end">
-                                                <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                <?php
-                                } else { ?>
-                                    <div class="d-flex justify-content-end m-2">
-                                        <div class="sentChat">
-                                            <p><?= $chat_message->message ?></p>
-                                            <div class="timeingNotified d-flex justify-content-end pe-2">
-                                                <div class="d-flex gap-3">
-                                                    <div class="currentTime">
-                                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                                    </div>
-                                                    <div class="tiknotified">
-                                                        <i class="fa-solid fa-check-double"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-
-                            <?php
-                            } else { ?>
-                                <?php if ($chat_message->is_call_request == 1) { ?>
-                                    <div class="d-flex justify-content-start m-2">
-                                        <div class="sentChat incomingVoiceCall">
-                                            <div class="innerBg innerincomingCall d-flex align-items-center gap-3">
-                                                <div class="callIcons">
-                                                    <a href=""><i class="fa-solid fa-phone"></i></a>
-                                                </div>
-                                                <div class="voiceText">
-                                                    <h3 style="padding-right: 20px;"><?= $chat_message->message ?></h3>
-                                                    <div class="recievedTime">
-                                                        <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="receivedChat supportReceivedChat mt-0 mb-4">
-                                        <p><?= $chat_message->message ?></p>
-                                        <div class="recievedTime">
-                                            <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
-                                        </div>
-                                    </div>
-
-                <?php }
-                            }
-                        }
+        <?php }
                     }
                 }
-                ?>
-            </div>
-            <div class="sendNotificationBtn suportChatNotificationBtn pb-0 mt-2">
-                <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
-            </div>
+            }
+        }
+        ?>
+        <div class="sendNotificationBtn suportChatNotificationBtn pb-0 mt-2">
+            <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
         </div>
-        
     </div>
 </div>
 
@@ -163,7 +158,7 @@ use yii\helpers\Url;
         <div class="modal-content">
             <div class="modal-header flageHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Form
+                    Add Notification
                 </h6>
             </div>
 

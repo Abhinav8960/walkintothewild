@@ -134,7 +134,7 @@
     position: sticky;
     bottom: 85%;
     z-index: 0;
-    background: #EEEEEE;
+    background: transparent;
     padding: 10px 0;
 }
 .sendNotificationBtn.suportChatNotificationBtn button{
