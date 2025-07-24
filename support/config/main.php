@@ -103,9 +103,16 @@ return [
         'definitions' => [
             \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
             'yii\bootstrap5\LinkPager' => [
-                'firstPageLabel' => 'First',
-                'lastPageLabel' => 'Last',
-                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+                'options' => ['class' => 'pagination mb-0 d-flex gap-4 align-items-center'],
+                'listOptions' => ['class' => ['pagination mb-0 d-flex gap-4 align-items-center']],
+                'linkOptions' => ['class' => ''],
+                'linkContainerOptions' => ['class' => ['page-item page-text']],
+                'disabledPageCssClass' => 'disabled',
+                'activePageCssClass' => 'active',
+                'prevPageLabel' => '<span class="page-link button_nextprve button_prve">Prev</span>',
+                'nextPageLabel' => '<span class="page-link button_nextprve active">Next</span>',
+                'firstPageLabel' => false,
+                'lastPageLabel' => false,
             ],
         ],
     ],
