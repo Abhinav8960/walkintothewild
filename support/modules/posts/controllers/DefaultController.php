@@ -2,6 +2,7 @@
 
 namespace support\modules\posts\controllers;
 
+use common\models\GeneralModel;
 use common\models\postscomment\form\UserPostDeleteForm;
 use common\models\postscomment\UserPostComment;
 use common\models\UserPosts;
@@ -40,8 +41,30 @@ class DefaultController extends Controller
             \Yii::$app->session->setFlash('danger', 'Post not Found!!!');
             return $this->redirect(['index']);
         }
+
+
+        $comment_model = new UserPostComment();
+
+        if (Yii::$app->request->isPost && $comment_model->load(Yii::$app->request->post())) {
+            if ($comment_model->validate()) {
+
+                $comment_model->comment = $comment_model->comment;
+                $comment_model->dateTime = date('Y-m-d H:i:s');
+                $comment_model->user_id = Yii::$app->user->id;
+                $comment_model->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
+                $comment_model->user_posts_id = $userpost->id;
+                $comment_model->status = 1;
+
+                if ($comment_model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
+                    return $this->refresh();
+                }
+            }
+        }
+
         return $this->render('view', [
             'model' => $userpost,
+            'comment_model'=>$comment_model
         ]);
     }
 

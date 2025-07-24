@@ -179,4 +179,10 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
 
     //     return true;
     // }
+
+    public function getSupportuser()
+    {
+        $supportuser = User::find()->where(['status'=>10,'id'=>Yii::$app->user->id])->one();
+        return $supportuser;
+    }
 }
