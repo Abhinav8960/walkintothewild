@@ -4,7 +4,7 @@ use yii\bootstrap5\Breadcrumbs;
 ?>
 <div class="breadcrumb-header justify-content-between align-items-center">
     <div>
-        <p class="page-header mb-0"><?= $title ?> </p>
+        <p class="page-header mb-3"><?= $title ?> </p>
     </div>
 
     <div class="d">
