@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
                             <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
                                 <div class="date-or-time">
                                     <p class="mb-1">UPLOADED DATE TIME:</p>
-                                    <p class="mb-0"><?= date("F j, Y", strtotime($model->post_datetime)); ?></p>
+                                    <p class="mb-0"><?= date("F j, Y", $model->created_at) . ' , ' . date("H:i:s A", $model->created_at) ?></p>
                                 </div>
                                 <?php if ($model->status == Sighting::STATUS_ACTIVE) { ?>
                                     <div class="active-btn">
@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
                                     <tr>
                                         <td style="width: 35%;">Sighting Date:</td>
                                         <td style="width: 65%;">
-                                            <p><?= date("F j, Y", $model->created_at) . ' at ' . date("H:i:s A", $model->created_at) ?></p>
+                                            <p><?= date("F j, Y", strtotime($model->post_datetime)); ?></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -153,7 +153,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                     <div class="text_com">
                                         <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                            <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"><span class="comment-author"><?= $comments->user->name ?></span></a><span class="userDate-time"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
+                                            <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"><span class="comment-author"><?= $comments->user->name ?></span></a><span class="userDate-time"><?= date("F j, Y", $comments->created_at) . ' , ' . date("H:i:s A", $comments->created_at) ?></span>
                                         </div>
                                         <p><?= $comments->comment ?></p>
                                         <div class="user-active d-flex align-items-center gap-2">
@@ -177,7 +177,7 @@ $this->params['title'] = $this->title;
                                                                 <a href="/user/default/profile?user_id=<?=$reply->user->id?>" data-discover="true">
                                                                     <span class="comment-author"><?= $reply->user->name ?></span>
                                                                 </a>
-                                                                <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i:s A", $reply->created_at) ?></span>
+                                                                <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' , ' . date("H:i:s A", $reply->created_at) ?></span>
                                                             </div>
                                                             <p><?= $reply->comment ?></p>
                                                         </div>
