@@ -58,6 +58,7 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['package_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['answer'], 'string'],
             [['question','version'], 'string', 'max' => 512],
+            [['master_faq_id'],'integer'],
         ];
     }
 
@@ -73,6 +74,7 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             'answer' => 'Answer',
             'position' => 'Position',
             'status' => 'Status',
+            'master_faq_id' => 'Master Faq Id',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

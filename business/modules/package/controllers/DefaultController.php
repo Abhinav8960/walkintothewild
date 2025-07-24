@@ -529,7 +529,7 @@ class DefaultController extends Controller
 
     public function actionUpdateFaq($id, $package_id, $faq_id)
     {
-        $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
+        $package_version_model = PackageVersion::find()->where(['package_id' => $package_id])->andWhere(['status'=>PackageVersion::EDIATBLE_STATUS])->limit(1)->one();
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
