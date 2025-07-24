@@ -13,82 +13,85 @@ $this->params['title'] = $this->title;
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'user_review']) ?>
+    <div class="assign-tabs operatorTab">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-        <div class="table-wrapper">
-            <div class="table-responsive">
-                <div class="min-width-table">
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                <div class="table-wrapper">
+                    <div class="table-responsive">
+                        <div class="min-width-table">
+                            <?= GridView::widget([
+                                'dataProvider' => $dataProvider,
+                                'layout' => "{items}\n<div class='row align-items-center mt-3'>
                             <div class='col-md-4'></div>
                         </div>",
-                        'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
-                        'columns' => [
-                            [
-                                'class' => 'yii\grid\SerialColumn',
-                                'headerOptions' => ['style' => 'width: 1%;'],
-                            ],
-                            [
-                                'label' => 'User',
-                                'contentOptions' => ['style' => 'width: 15%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    if ($user = $model->user) {
-                                        return Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name;
-                                    }
-                                    return $model->user_id;
-                                }
-                            ],
+                                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
+                                'columns' => [
+                                    [
+                                        'class' => 'yii\grid\SerialColumn',
+                                        'headerOptions' => ['style' => 'width: 1%;'],
+                                    ],
+                                    [
+                                        'label' => 'User',
+                                        'contentOptions' => ['style' => 'width: 15%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            if ($user = $model->user) {
+                                                return Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name;
+                                            }
+                                            return $model->user_id;
+                                        }
+                                    ],
 
-                            [
-                                'label' => 'Safari Operator',
-                                'contentOptions' => ['style' => 'width: 15%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return  isset($model->safari_operator_id) ? GeneralModel::safariparkoperatoroption()[$model->safari_operator_id] : '';
-                                }
-                            ],
-                            [
-                                'label' => 'Park',
-                                'contentOptions' => ['style' => 'width: 15%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return  isset($model->park_id) ? GeneralModel::safariparkoption()[$model->park_id] : '';
-                                }
-                            ],
-                            [
-                                'label' => 'Rating',
-                                'contentOptions' => ['style' => 'width: 10%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return $model->rating;
-                                }
-                            ],
-                            [
-                                'label' => 'Review',
-                                'contentOptions' => [        
-                                    'style' => 'white-space: normal; word-wrap: break-word; max-width: 600px;',
+                                    [
+                                        'label' => 'Safari Operator',
+                                        'contentOptions' => ['style' => 'width: 15%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return  isset($model->safari_operator_id) ? GeneralModel::safariparkoperatoroption()[$model->safari_operator_id] : '';
+                                        }
+                                    ],
+                                    [
+                                        'label' => 'Park',
+                                        'contentOptions' => ['style' => 'width: 15%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return  isset($model->park_id) ? GeneralModel::safariparkoption()[$model->park_id] : '';
+                                        }
+                                    ],
+                                    [
+                                        'label' => 'Rating',
+                                        'contentOptions' => ['style' => 'width: 10%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return $model->rating;
+                                        }
+                                    ],
+                                    [
+                                        'label' => 'Review',
+                                        'contentOptions' => [
+                                            'style' => 'white-space: normal; word-wrap: break-word; max-width: 600px;',
+                                        ],
+
+                                        // 'contentOptions' => ['style' => 'width: 50%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return $model->review;
+                                        }
+                                    ],
+                                    [
+                                        'label' => 'Flaged',
+                                        'contentOptions' => ['style' => 'width: 10%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return ($model->flaged == 1) ? 'Yes' : 'No';
+                                        }
+                                    ],
                                 ],
-
-                                // 'contentOptions' => ['style' => 'width: 50%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return $model->review;
-                                }
-                            ],
-                            [
-                                'label' => 'Flaged',
-                                'contentOptions' => ['style' => 'width: 10%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return ($model->flaged == 1) ? 'Yes' : 'No';
-                                }
-                            ],
-                        ],
-                    ]);
-                    ?>
+                            ]);
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

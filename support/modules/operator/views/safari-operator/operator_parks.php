@@ -12,59 +12,62 @@ $this->params['title'] = $this->title;
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $operator_model, 'active_navbar' => 'operator_park']) ?>
 
-
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="table-wrapper">
-            <div class="table-responsive">
-                <div class="min-width-table">
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'layout' => "{items}\n<div class='row align-items-center mt-3'>
+    <div class="assign-tabs operatorTab">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="table-wrapper">
+                    <div class="table-responsive">
+                        <div class="min-width-table">
+                            <?= GridView::widget([
+                                'dataProvider' => $dataProvider,
+                                'layout' => "{items}\n<div class='row align-items-center mt-3'>
                             <div class='col-md-4'></div>
                         </div>",
-                        'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
-                        'columns' => [
-                            [
-                                'class' => 'yii\grid\SerialColumn',
-                                'headerOptions' => ['style' => 'width: 1%;'],
-                            ],
-                            [
-                                'label' => 'Park',
-                                // 'headerOptions' => ['style' => 'width:15%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return isset($model->park) ? $model->park->title : '';
-                                }
-                            ],
-                            [
-                                'label' => 'Status',
-                                'headerOptions' => ['style' => 'width:15%;'],
-                                // 'contentOptions' => ['style' => 'width: 10%;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return $model->newstatuslabel;
-                                }
-                            ],
-                            [
-                                'header' => 'Action',
-                                'value' => function ($model) use ($operator_model) {
-                                    return Html::a(
-                                        'Remove',
-                                        ['remove-park', 'id' => $operator_model->id, 'park_id' => $model->id],
-                                        [
-                                            'class' => 'btn btn-xs btn-danger',
-                                            'data-method' => 'post',
-                                            'data-confirm' => 'Are you sure you want to remove this park?',
-                                            'title' => 'Remove Park',
-                                        ]
-                                    );
-                                },
-                                'format' => 'raw',
-                                'headerOptions' => ['style' => 'width:15%;'],
-                                'contentOptions' => ['style' => 'width:15%;'],
-                            ],
-                        ],
-                    ]); ?>
+                                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
+                                'columns' => [
+                                    [
+                                        'class' => 'yii\grid\SerialColumn',
+                                        'headerOptions' => ['style' => 'width: 1%;'],
+                                    ],
+                                    [
+                                        'label' => 'Park',
+                                        // 'headerOptions' => ['style' => 'width:15%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return isset($model->park) ? $model->park->title : '';
+                                        }
+                                    ],
+                                    [
+                                        'label' => 'Status',
+                                        'headerOptions' => ['style' => 'width:15%;'],
+                                        // 'contentOptions' => ['style' => 'width: 10%;'],
+                                        'format' => 'raw',
+                                        'value' => function ($model) {
+                                            return $model->newstatuslabel;
+                                        }
+                                    ],
+                                    [
+                                        'header' => 'Action',
+                                        'value' => function ($model) use ($operator_model) {
+                                            return Html::a(
+                                                'Remove',
+                                                ['remove-park', 'id' => $operator_model->id, 'park_id' => $model->id],
+                                                [
+                                                    'class' => 'btn btn-xs btn-danger',
+                                                    'data-method' => 'post',
+                                                    'data-confirm' => 'Are you sure you want to remove this park?',
+                                                    'title' => 'Remove Park',
+                                                ]
+                                            );
+                                        },
+                                        'format' => 'raw',
+                                        'headerOptions' => ['style' => 'width:15%;'],
+                                        'contentOptions' => ['style' => 'width:15%;'],
+                                    ],
+                                ],
+                            ]); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
