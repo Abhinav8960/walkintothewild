@@ -232,14 +232,14 @@ li{
   font-family: "Poppins", sans-serif;
 }
 
-/* .table {
-  --bs-table-bg: #F8F8F8;
-} */
+.table {
+  --bs-table-bg: transparent !important;
+}
 
-/* .thead-details {
+.thead-details {
   background-color: #009FFF !important;
 
-} */
+}
 
 .thead-details th {
 
@@ -295,10 +295,10 @@ li{
   padding-top: 10px;
 }
 
-.tbody-leads {
+/* .tbody-leads {
 
   background-color: #d8d8d8 !important;
-}
+} */
 
 .titles_s {
   font-size: 18px;
