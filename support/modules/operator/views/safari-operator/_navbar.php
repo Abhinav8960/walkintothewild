@@ -2,16 +2,8 @@
 
 use yii\helpers\Url;
 ?>
-<!-- div -->
 <div class="card mg-b-20 bg-transparent border-0" id="tabs-style2">
     <div class="card-body">
-        <div class="main-content-label mg-b-5">
-            <?= $model->register_comapany_name ?>
-        </div>
-
-        <!-- <div class="btn-delet float-end py-2">
-            <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/operator/safari-operator/delete', 'id' => $model->id]) ?>"><i class="fas fa-trash me-1"></i>Delete</button>
-        </div> -->
         <div class="row mt-2">
             <div class="col-xl-3">
                 <div class="mainCard py-3 px-3">
