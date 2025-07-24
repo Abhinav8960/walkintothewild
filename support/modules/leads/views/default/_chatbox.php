@@ -9,7 +9,7 @@ use yii\helpers\Url;
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div class="">
-            <div class="position-relative z-1">
+            <div class="">
                 <?php
                 if ($chat) {
                     if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
