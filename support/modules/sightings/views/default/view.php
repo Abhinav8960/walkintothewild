@@ -149,11 +149,11 @@ $this->params['title'] = $this->title;
                                 <div class="postcomment d-flex gap-2 pt-3 w-100">
 
                                     <div class="avatar">
-                                        <a href="/profile/user/anil-kumar" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src="<?= $comments->user->profile_display_image ?>"></a>
+                                        <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"><img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $comments->user->profile_display_image ?>"></a>
                                     </div>
                                     <div class="text_com">
                                         <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                            <a href="/profile/user/anil-kumar" data-discover="true"><span class="comment-author"><?= $comments->user->name ?></span></a><span class="userDate-time"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
+                                            <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"><span class="comment-author"><?= $comments->user->name ?></span></a><span class="userDate-time"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i:s A", $comments->created_at) ?></span>
                                         </div>
                                         <p><?= $comments->comment ?></p>
                                         <div class="user-active d-flex align-items-center gap-2">
@@ -168,13 +168,13 @@ $this->params['title'] = $this->title;
                                                 <?php foreach ($replies as $reply) { ?>
                                                     <div class="postcomment d-flex gap-2 pt-2 w-100">
                                                         <div class="avatar">
-                                                            <a href="/profile/user/anil-kumar" data-discover="true">
-                                                                <img alt="Profile" class="rounded-circle bg-info" title="Anil Kumar" src="<?= $reply->user->profile_display_image ?>">
+                                                            <a href="/user/default/profile?user_id=<?=$reply->user->id?>" data-discover="true">
+                                                                <img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $reply->user->profile_display_image ?>">
                                                             </a>
                                                         </div>
                                                         <div class="text_com">
                                                             <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                <a href="/profile/user/anil-kumar" data-discover="true">
+                                                                <a href="/user/default/profile?user_id=<?=$reply->user->id?>" data-discover="true">
                                                                     <span class="comment-author"><?= $reply->user->name ?></span>
                                                                 </a>
                                                                 <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i:s A", $reply->created_at) ?></span>
@@ -191,14 +191,14 @@ $this->params['title'] = $this->title;
                         } ?>
                     </div>
 
-                    <?= $this->render('_comment_form', ['comment_model' => $comment_model]) ?>
+                    <?= $this->render('_comment_form', ['comment_model' => $comment_model,'model'=>$model]) ?>
 
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class=" modal-content">
                 <div class="modal-header headerTitle border-bottom-0 align-items-baseline px-4">
@@ -225,7 +225,7 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

@@ -44,20 +44,19 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        $comment_model = new SightingCommentForm();
+        $comment_model = new SightingComment();
 
         if (Yii::$app->request->isPost && $comment_model->load(Yii::$app->request->post())) {
             if ($comment_model->validate()) {
 
-                $comment = new SightingComment();
-                $comment->comment = $comment_model->comment;
-                $comment->dateTime = date('Y-m-d H:i:s');
-                $comment->user_id = Yii::$app->user->id;
-                $comment->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
-                $comment->sighting_id = $sighting->id;
-                $comment->status = 1;
+                $comment_model->comment = $comment_model->comment;
+                $comment_model->dateTime = date('Y-m-d H:i:s');
+                $comment_model->user_id = Yii::$app->user->id;
+                $comment_model->safari_operator_id = GeneralModel::operatorsIdOrNull(Yii::$app->user->id);
+                $comment_model->sighting_id = $sighting->id;
+                $comment_model->status = 1;
 
-                if ($comment->save(false)) {
+                if ($comment_model->save(false)) {
                     Yii::$app->session->setFlash('success', 'Comment submitted successfully.');
                     return $this->render('view', [
                         'model' => $sighting,
