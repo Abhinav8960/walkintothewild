@@ -12,10 +12,9 @@ $this->params['title'] = $this->title;
 
 ?>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'bank_details']) ?>
+    <?= $this->render('@support/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'legal_entity']) ?>
 
-
-    <div class="tab-content" id="myTabContent">
+    <!-- <div class="tab-content" id="myTabContent"> -->
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
                 <div class="col-xl-9">
@@ -23,7 +22,7 @@ $this->params['title'] = $this->title;
                         <table class="table w-100 border-0 border_o d-inline-block py-3 bg-white">
                             <tbody class="tbody-leads sighting-leads py-5 w-100">
                                 <tr>
-                                    <td style="width: 60%;">Business Name:</td>
+                                    <td style="width: 60%;">Legal Entity Business Name:</td>
                                     <td style="width: 50%;">
                                         <p>Shivsakti</p>
                                     </td>
@@ -78,6 +77,7 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

@@ -54,7 +54,7 @@ class SafariOperatorController extends Controller
     }
 
     /**
-     * View Operator
+     * Overview Operator
      */
     public function actionView($id)
     {
@@ -64,49 +64,62 @@ class SafariOperatorController extends Controller
     }
 
     /**
+     * View Partner Legal Entity Details
+     */
+
+    public function actionLegalEntity($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('legal_entity', ['model' => $model]);
+    }
+
+    /**
      * View Partner Registration Details
      */
-    public function actionBankAndKycDetails($id)
+    public function actionRegistrationProof($id)
     {
         $model = $this->findModel($id);
 
-        return $this->render('bank_kyc_details', ['model' => $model]);
-    }
-
-
-    /**
-     * View Operator
-     */
-    public function actionQuote($id)
-    {
-        $model = $this->findModel($id);
-        $searchModel = new OperatorQuoteSearch();
-        $searchModel->operator_id = $id;
-        $searchModel->status = 1;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        return $this->render('free_quote', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('registration_proof', ['model' => $model]);
     }
 
     /**
-     * View Operator
+     * View Partner Business Details
      */
-    public function actionSharedsafari($id)
+    public function actionBusiness($id)
     {
         $model = $this->findModel($id);
-        return $this->render('shared_safari', ['model' => $model]);
+
+        return $this->render('business', ['model' => $model]);
     }
 
     /**
-     * View Operator
-     */
-    public function actionReview($id)
+     * View Partner Bank Details
+     */    
+    public function actionBankDetails($id)
     {
         $model = $this->findModel($id);
 
+        return $this->render('bank_details', ['model' => $model]);
+    }
+
+    /**
+     * View Partner User Kyc Details
+     */    
+    public function actionUserKyc($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('userkyc_details', ['model' => $model]);
+    }
+
+    /**
+     * View Partner User Review Details
+     */    
+    public function actionUserReview($id)
+    {
+        $model = $this->findModel($id);
         $searchModel = new SafariOperatorRatingSearch();
         $searchModel->safari_operator_id = $id;
         $searchModel->status = 1;
@@ -116,6 +129,36 @@ class SafariOperatorController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+
+    /**
+     * View Partner Operator Parks Details
+     */   
+    public function actionOperatorParks($id)
+    {
+        $operator_model = $this->findModel($id);
+
+        $query =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator_model->id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('operator_parks', ['dataProvider' => $dataProvider, 'operator_model' => $operator_model]);
+    }
+
+
+    /**
+     * View Operator
+     */
+    public function actionSharedsafari($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('shared_safari', ['model' => $model]);
     }
 
 
@@ -193,149 +236,7 @@ class SafariOperatorController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    // public function actionUpdate($id)
-    // {
-    //     $safarioperator_model = $this->findModel($id);
-    //     $model = new SafariOperatorForm($safarioperator_model);
-    //     $model->status = SafariOperator::STATUS_ACTIVE;
-    //     $model->action_url = '/operator/safari-operator/update?id=' . $id . '';
-    //     $model->action_validate_url = '/operator/safari-operator/validate?id=' . $id . '';
-
-    //     $model->referrer_url = \Yii::$app->request->referrer;
-
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             $model->logo = UploadedFile::getInstance($model, 'logo');
-    //             if ($model->validate()) {
-    //                 $model->initializeForm();
-    //                 if ($model->safarioperator_model->save(false)) {
-    //                     $model->uploadFile();
-    //                     $parks = $model->park_id;
-    //                     if ($parks) {
-    //                         SafariOperatorPark::updateAll(['status' => SafariOperatorPark::STATUS_SUSPEND], ['safari_operator_id' => $model->safarioperator_model->id]);
-    //                         foreach ($parks as $park) {
-    //                             $safarioperatorpark = new SafariOperatorPark();
-    //                             $safarioperatorpark->safari_operator_id = $model->safarioperator_model->id;
-    //                             $safarioperatorpark->park_id = $park;
-    //                             $safarioperatorpark->save(false);
-    //                         }
-    //                     }
-    //                     $activities = $model->offers_other_wildlifeactivities;
-    //                     if ($activities) {
-    //                         SafariOperatorActivities::updateAll(['status' => SafariOperatorActivities::STATUS_SUSPEND], ['safari_operator_id' => $model->safarioperator_model->id]);
-    //                         foreach ($activities as $activity) {
-    //                             $safarioperatoractivity = new SafariOperatorActivities();
-    //                             $safarioperatoractivity->safari_operator_id = $model->safarioperator_model->id;
-    //                             $safarioperatoractivity->wildlife_activity_id = $activity;
-    //                             $safarioperatoractivity->save(false);
-    //                         }
-    //                     }
-
-    //                     $to_mail = $model->safarioperator_model->email;
-    //                     $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
-    //                     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
-    //                     $req = ['username' => $model->safarioperator_model->business_name];
-
-    //                     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-    //                     \Yii::$app->session->setFlash('success', 'Safari Operator Update Successfully');
-    //                     return $this->redirect(['index']);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->safarioperator_model->loadDefaultValues();
-    //     }
-
-    //     return $this->render('update', [
-    //         'model' => $model,
-    //     ]);
-    // }
-
-
-    // public function actionUpdate($id)
-    // {
-    //     $safari_operator = $this->findModel($id);
-    //     $safari_operator_id = $safari_operator->id;
-
-    //     $searchModel = new SafariOperatorRequestSearch();
-    //     $searchModel->safari_operator_id = $safari_operator_id;
-    //     $searchModel->user_id = $safari_operator->user_id;
-    //     $dataProvider = $searchModel->search($this->request->queryParams);
-
-    //     $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-    //     $model = new SafariOperatorRequestForm($safari_operator_model);
-    //     $model->user_id = $safari_operator->user_id;
-    //     $model->status = SafariOperator::STATUS_ACTIVE;
-    //     $model->action_url = '/operator/safari-operator/update?id=' . $id . '';
-    //     $model->action_validate_url = '/operator/safari-operator/validate?id=' . $id . '';
-    //     $model->referrer_url = \Yii::$app->request->referrer;
-
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             $model->logo = UploadedFile::getInstance($model, 'logo');
-    //             if ($model->validate()) {
-    //                 $model->initializeForm();
-
-    //                 // Revome All Previouse Request if ANy Pending for Approval
-    //                 SafariOperatorRequest::updateAll(['status' => NewStatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
-
-    //                 if ($model->safari_operator_request_model->save(false)) {
-    //                     $model->uploadFile();
-    //                     $parks = $model->park_id;
-    //                     SafariOperatorRequestPark::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
-    //                     if ($parks) {
-    //                         foreach ($parks as $park) {
-    //                             $safarioperatorrequestpark = new SafariOperatorRequestPark();
-    //                             $safarioperatorrequestpark->safari_operator_request_id = $model->safari_operator_request_model->id;
-    //                             $safarioperatorrequestpark->park_id = $park;
-    //                             $safarioperatorrequestpark->save(false);
-    //                         }
-    //                     }
-
-
-    //                     $activities = $model->offers_other_wildlifeactivities;
-    //                     SafariOperatorRequestActivities::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
-    //                     if ($activities) {
-    //                         foreach ($activities as $activity) {
-    //                             $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
-    //                             $safarioperatorrequestactivity->safari_operator_request_id = $model->safari_operator_request_model->id;
-    //                             $safarioperatorrequestactivity->wildlife_activity_id = $activity;
-    //                             $safarioperatorrequestactivity->save(false);
-    //                         }
-    //                     }
-    //                     $model->safari_operator_request_model->is_approved = 1;
-    //                     if ($model->safari_operator_request_model->save(false)) {
-    //                         $safari_operator = $model->safari_operator_request_model->safariapproved($model->safari_operator_request_model);
-    //                         if ($safari_operator) {
-    //                             \Yii::$app->session->setFlash('success', 'Safari Update Successfully');
-    //                             return $this->redirect(['index']);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->safari_operator_request_model->loadDefaultValues();
-    //     }
-
-    //     return $this->render('update_new', [
-    //         'model' => $model,
-    //     ]);
-    // }
-
-
-
-    // public function actionValidate($id)
-    // {
-    //     $formmodel = $this->findModel($id);
-    //     $model = new SafariOperatorForm($formmodel);
-
-
-    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    //         return \yii\widgets\ActiveForm::validate($model);
-    //     }
-    // }
+   
 
     public function actionValidate($id)
     {
@@ -370,45 +271,6 @@ class SafariOperatorController extends Controller
             'safari_operator_model' => $safari_operator_delete_model,
         ]);
     }
-
-    // public function actionChangeLogo($id)
-    // {
-    //     $safari_operator_logo_model = $this->findModel($id);
-    //     $model = new SafariOperatorLogoForm($safari_operator_logo_model);
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             if ($model->validate()) {
-    //                 if ($model->safari_operator_logo_model->save(false)) {
-    //                     \Yii::$app->session->setFlash('success', 'Successfully Changed');
-    //                     return $this->redirect(['index']);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->safari_operator_logo_model->loadDefaultValues();
-    //     }
-    //     return $this->renderAjax('_logo_form', [
-    //         'model' => $model,
-    //         'safari_operator_logo_model' => $safari_operator_logo_model,
-    //     ]);
-    // }
-
-    // public function actionRedirectPartner($id)
-    // {
-    //     $safari_operator = $this->findModel($id);
-    //     return $this->redirect(Yii::$app->urlManagerPartner->createAbsoluteUrl([
-    //         '/check-in',
-    //         'username' => $safari_operator->user->username,
-    //         'google_source_id' => $safari_operator->user->google_source_id,
-    //     ]));
-    // }
-
-    // public function actionRedirectPartner($id)
-    // {
-    //     $safari_operator = $this->findModel($id);
-    //      \Yii::$app->response->redirect(Yii::$app->params['partner_url'] . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id)->send();
-    //     // return $this->redirect(Yii::$app->params['partner_url'] . '/check-in?username=' . $safari_operator->user->username . '&google_source_id=' . $safari_operator->user->google_source_id);
-    // }
 
     public function actionTemporaryDelete($id)
     {
@@ -448,21 +310,6 @@ class SafariOperatorController extends Controller
         }
     }
 
-    public function actionOperatorParks($id)
-    {
-        $operator_model = $this->findModel($id);
-
-        $query =  SafariOperatorPark::find()->where(['status' => SafariOperatorPark::STATUS_ACTIVE, 'safari_operator_id' => $operator_model->id]);
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-        return $this->render('operator_parks_list', ['dataProvider' => $dataProvider, 'operator_model' => $operator_model]);
-    }
 
     public function actionRemovePark($id, $park_id)
     {
