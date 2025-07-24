@@ -130,12 +130,19 @@
 .assign-tabs .tab-content::-webkit-scrollbar {
     display: none;
 }
-.sendNotificationBtn {
+.sendNotificationBtn.suportChatNotificationBtn {
     position: sticky;
-    top: 25px;
-    z-index: 10;
+    bottom: 85%;
+    z-index: 0;
     background: #EEEEEE;
     padding: 10px 0;
+}
+.sendNotificationBtn.suportChatNotificationBtn button{
+
+    position: absolute;
+    top: -33px;
+    left: 45%;
+    z-index: 0;
 }
 .breadcrumb-header.assignPara {
 

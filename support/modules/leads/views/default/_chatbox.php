@@ -8,8 +8,8 @@ use yii\helpers\Url;
 ?>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div class="d-flex gap-3 mb-4">
-            <div>
+        <div class="">
+            <div class="position-relative z-1">
                 <?php
                 if ($chat) {
                     if ($chats = $chat->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
@@ -150,7 +150,7 @@ use yii\helpers\Url;
                 }
                 ?>
             </div>
-            <div class="sendNotificationBtn pb-0 mt-2">
+            <div class="sendNotificationBtn suportChatNotificationBtn pb-0 mt-2">
                 <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
             </div>
         </div>
