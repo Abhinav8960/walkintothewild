@@ -14,8 +14,9 @@ $this->title = 'Leads';
 ?>
 
 <?= $this->render('_upper_view', ['leadModel' => $searchModel]) ?>
-
-<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="mt-3">
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+</div>
 <div class="table-wrapper">
     <div class="table-responsive">
         <div class="min-width-table">

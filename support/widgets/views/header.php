@@ -10,12 +10,12 @@
      <ul class="nav-right d-flex align-items-center justify-content-center gap-4">
             <li class="nav-item " id="dropdown-pro">
          <div class="supportIcons d-flex align-items-center gap-4">
-           <div class="ed-du-img">
+           <!-- <div class="ed-du-img">
                <a href=""><img src="<?= $this->params['baseurl'] ?>/images/inbox.png" class="card-img-top" alt=""></a>
            </div>
            <div class="ed-du-img">   
             <a href=""><img src="<?= $this->params['baseurl'] ?>/images/bell.png" class="card-img-top" alt=""></a>
-           </div>
+           </div> -->
           </div>
        </li>
        <li class="nav-item " id="dropdown-pro">
