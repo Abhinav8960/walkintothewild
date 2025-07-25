@@ -50,43 +50,43 @@ foreach ($park as $key => $role) {
                                     <tr>
                                         <td style="width: 60%;">Business Name:</td>
                                         <td style="width: 50%;">
-                                            <p>Shivsakti</p>
+                                            <p><?= isset($model->business_name) ? $model->business_name : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Address:</td>
                                         <td>
-                                            <p>Noida sector 62</p>
+                                            <p><?= isset($model->address) ? $model->address : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Phone Number: </td>
                                         <td>
-                                            <p>8825317553</p>
+                                            <p><?= isset($model->phone_no) ? $model->phone_no : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Legal entity Email:</td>
                                         <td>
-                                            <p>annu@gmail.com</p>
+                                            <p><?= isset($model->email) ? $model->email : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Category:</td>
                                         <td>
-                                            <p>Safari Tour Operator</p>
+                                            <p><?= isset($model->category_id) ? $model->category_id	 : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>PAN Number:</td>
                                         <td>
-                                            <p>DFY1533SF</p>
+                                            <p><?= isset($model->pan_number) ? $model->pan_number : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Approved Status:</td>
                                         <td>
-                                            <p>Yes</p>
+                                            <p><?= isset($model->is_approved) ? $model->is_approved : '' ?></p>
                                         </td>
                                     </tr>
                                 </tbody>
