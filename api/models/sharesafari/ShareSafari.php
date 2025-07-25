@@ -104,7 +104,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'share_safari_days';
             // $fields[] = 'safari_plan';
             $fields['safari_plan'] = function ($model) {
-                return GeneralModel::apicommentConversion($model->safari_plan);
+                return GeneralModel::maskContactInfoInString($model->safari_plan);
             };
             $fields[] = 'urls';
             $fields[] = 'types';
