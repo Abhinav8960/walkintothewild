@@ -68,7 +68,6 @@ class DefaultController extends  Controller
         $searchModel->custom_status = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        // $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams, \Yii::$app->user->identity->operator->id);
 
         return $this->render(
             'index',

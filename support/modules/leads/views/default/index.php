@@ -13,6 +13,7 @@ $this->title = 'Leads';
 // $this->params['title'] = $this->title;
 ?>
 
+<?= $this->render('_upper_view', ['leadModel' => $searchModel]) ?>
 
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="table-wrapper">
