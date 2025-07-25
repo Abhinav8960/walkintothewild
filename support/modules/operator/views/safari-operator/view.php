@@ -48,7 +48,7 @@ foreach ($park as $key => $role) {
                             <table class="table w-100 border-0 border_o d-inline-block py-3 bg-white">
                                 <tbody class="tbody-leads sighting-leads py-5 w-100">
                                     <tr>
-                                        <td style="width: 60%;">Business Name:</td>
+                                        <td style="width: 10%;">Business Name:</td>
                                         <td style="width: 50%;">
                                             <p><?= isset($model->business_name) ? $model->business_name : '' ?></p>
                                         </td>
@@ -74,7 +74,13 @@ foreach ($park as $key => $role) {
                                     <tr>
                                         <td>Category:</td>
                                         <td>
-                                            <p><?= isset($model->category_id) ? $model->category_id	 : '' ?></p>
+                                            <p>
+                                                <?php
+                                                if ($model->category_id) {
+                                                    echo isset(GeneralModel::operatorcategory()[$model->category_id]) ? GeneralModel::operatorcategory()[$model->category_id] : '';
+                                                }
+                                                ?>
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -86,7 +92,15 @@ foreach ($park as $key => $role) {
                                     <tr>
                                         <td>Approved Status:</td>
                                         <td>
-                                            <p><?= isset($model->is_approved) ? $model->is_approved : '' ?></p>
+                                            <p>
+                                                <?php
+                                                if ($model->is_approved) {
+                                                    echo isset(GeneralModel::yesnooption()[$model->is_approved]) ? GeneralModel::yesnooption()[$model->is_approved] : '';
+                                                } else {
+                                                    echo 'No';
+                                                }
+                                                ?>
+                                            </p>
                                         </td>
                                     </tr>
                                 </tbody>
