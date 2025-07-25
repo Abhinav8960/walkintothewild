@@ -8,23 +8,12 @@
 
 
      <ul class="nav-right d-flex align-items-center justify-content-center gap-4">
-       <!-- <li class="nav-item dropdown">
-             <a class="nav-link count-indicator ">
-               <i class="mdi mdi-email"></i>
-             </a>
-           </li>
-           <li class="nav-item dropdown">
-             <a class="nav-link count-indicator ">
-               <i class="mdi mdi-bell"></i>
-             </a>
-           </li> -->
             <li class="nav-item " id="dropdown-pro">
          <div class="supportIcons d-flex align-items-center gap-4">
            <div class="ed-du-img">
                <a href=""><img src="<?= $this->params['baseurl'] ?>/images/inbox.png" class="card-img-top" alt=""></a>
            </div>
-           <div class="ed-du-img">
-            
+           <div class="ed-du-img">   
             <a href=""><img src="<?= $this->params['baseurl'] ?>/images/bell.png" class="card-img-top" alt=""></a>
            </div>
           </div>
@@ -32,12 +21,11 @@
        <li class="nav-item " id="dropdown-pro">
          <div class="d-flex align-items-center">
            <div class="dorpdown-profile me-0">
-             <img src="<?= isset($safarioperator) && $safarioperator->imagepath ? $safarioperator->imagepath : $this->params['baseurl'] . '/images/default_witw.png' ?>" alt="logo">
+             <img src="<?= isset($user) && $user->profile_display_image ? $user->profile_display_image : $this->params['baseurl'] . '/images/default_witw.png' ?>" alt="logo">
            </div>
            <div class="d-lg-block d-none">
              <div class="dropdoen-detail-profile d-flex ">
-               <!-- <p class="pt-1"><?= isset($safarioperator) ? $safarioperator->business_name : '' ?>&nbsp;</p> -->
-                <p class="pt-1 mb-0">Ankit Kankane Safaris&nbsp;</p>
+                <p class="pt-1 mb-0"><?= isset($user) ? $user->name : '' ?>&nbsp;</p>
                <!-- <i class="mdi mdi-menu-down d-none d-sm-block"></i> -->
              </div>
            </div>
