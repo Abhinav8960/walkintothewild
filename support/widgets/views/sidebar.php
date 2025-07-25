@@ -241,6 +241,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         </li>
 
+
+        <li class="navItems mb-2">
+            <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
+                                                                '/user/default/index',
+                                                                '/user/default/create',
+                                                                '/user/default/view',
+                                                            )) ? 'active' : '' ?>" href="/user/default/index">
+                <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                    '/user/default/index',
+                                                                                                    '/user/default/create',
+                                                                                                    '/user/default/view',
+                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                <span class="hide-slide-menu"> User List</span>
+            </a>
+        </li>
+
+
+
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>

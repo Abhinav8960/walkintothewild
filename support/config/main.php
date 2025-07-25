@@ -45,6 +45,10 @@ return [
         'sharesafari' => [
             'class' => 'support\modules\sharesafari\Module',
         ],
+
+        'user' => [
+            'class' => 'support\modules\user\Module',
+        ],
         
     ],
 
