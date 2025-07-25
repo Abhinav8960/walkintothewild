@@ -9,63 +9,29 @@ class NovaAppAsset extends AssetBundle
 
     public $sourcePath = '@support/themes/nova/assets/';
     public $css = [
-        'css/icons.css',
-        'css/skin-modes.css',
-        // 'css/style-dark.css',
-        // 'css/style-transparent.css',
-        'css/style.css',
-        // 'css/frontend_style.css',
-        // 'plugins/bootstrap/css/bootstrap.min.css',
-        // 'plugins/perfect-scrollbar/p-scrollbar.css',
-        // 'plugins/sidebar/sidebar.css',
-        // 'plugins/select2/css/select2.min.css',
+        'css/main.css',
+        'css/core.css',
+        'css/custom.css',
+        'css/support.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.0.96/css/materialdesignicons.min.css',
+        'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
-        'js/script.js',
-        'plugins/accordion/accordion.min.js',
-        'plugins/bootstrap/js/popper.min.js',
-        'plugins/chart.js/Chart.bundle.min.js',
-        'plugins/ionicons/ionicons.js',
-        'plugins/moment/moment.js',
-        'js/apexcharts.js',
-        'plugins/jquery-sparkline/jquery.sparkline.min.js',
-        'plugins/raphael/raphael.min.js',
-        'plugins/perfect-scrollbar/perfect-scrollbar.min.js',
-        'js/eva-icons.min.js',
-        'plugins/sidebar/sidebar.js',
-        'plugins/sidebar/sidebar-custom.js',
-        'plugins/side-menu/sidemenu.js',
-        'js/sticky.js',
-        'plugins/notify/js/notifIt.js',
-        'js/circle-progress.min.js',
-        'js/chart-circle.js',
-        'js/apexcharts.js',
-        'plugins/chart.js/Chart.bundle.min.js',
-        'js/custom.js',
-        'plugins/datatable/js/jquery.dataTables.min.js',
-        'plugins/datatable/js/dataTables.bootstrap5.js',
-        'plugins/datatable/dataTables.responsive.min.js',
-        'plugins/datatable/responsive.bootstrap5.min.js',
-        'js/themecolor.js',
-        'https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js',
-        'https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js',
-
-        'https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js',
-        'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js',
-        'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js',
-        'https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js',
-        'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js',
-        'https://code.highcharts.com/highcharts.js',
-        
-
+          // 'node_modules/bootstrap/dist/js/bootstrap.js',
+        // 'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+        // 'https://code.jquery.com/jquery-3.6.1.js',
+        'js/main.js',
+        'js/custom.js'
+    
     ];
 
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
-        'yii\bootstrap5\BootstrapPluginAsset',
+         // 'yii\web\YiiAsset',
+         'yii\bootstrap5\BootstrapAsset',
+         'yii\bootstrap5\BootstrapPluginAsset',
     ];
 }

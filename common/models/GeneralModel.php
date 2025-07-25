@@ -2161,4 +2161,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
         return $types[$type] ?? '';
     }
+
+    public static function operatortype($legal_entity_type)
+    {
+        $operator_types = [1 => 'PROP_WRITER', 2 => 'PVT_LTD' , 3 => 'LLP'];
+        return $operator_types[$legal_entity_type] ?? '';
+    }
 }

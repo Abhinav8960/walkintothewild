@@ -1,0 +1,290 @@
+<?php
+
+use common\models\GeneralModel;
+use yii\helpers\Html;
+
+use yii\widgets\Pjax;
+use yii\grid\GridView;
+use yii\helpers\Url;
+
+$this->title = 'Sightings';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
+// $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
+?>
+<?php Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => false,
+    'enableReplaceState' => false,
+    'timeout' => false,
+]); ?>
+
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                <div class='col-md-4 text-start mb-2'>{summary}</div>
+                <div class='col-md-4 text-center mb-2'>{pager}</div>
+                <div class='col-md-4'></div>
+            </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
+                'columns' => [
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 1%;'],
+                    ],
+                    [
+                        'label' => 'Thumbnail',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::tag('div', Html::img($model->thumbnail, [
+                                'alt' => 'Uploaded Image',
+                            ]), ['class' => 'thumb-wrapper','style' => 'text-align: center;']);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Partner Name',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $imageUrl = isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png';
+                            $name = isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                            return '<a href="' . Url::toRoute(['/operator/safari-operator/view', 'id' => isset($model->safarioperator) ? $model->safarioperator->id : '']) . '" ><img src="' . $imageUrl . '" alt="" style="max-height:30px;"> <span style="color: black !important;">' . Html::encode($name) . '</span></a>';
+                        },
+                    ],
+                    [
+                        'label' => 'Date',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y", strtotime($model->post_datetime));
+                        }
+                    ],
+                    // [
+                    //     'label' => 'Sighting Details',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'headerOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->description;
+                    //     }
+                    // ],
+                    [
+                        'label' => 'Animal',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->animalDetail->name;
+                        }
+                    ],
+                    [
+                        'label' => 'Session',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->safariSessionDetail->title;
+                        }
+                    ],
+                    [
+                        'label' => 'Park',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->locationDetail->title;
+                        }
+                    ],
+                    [
+                        'label' => 'Comments',
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            // return Html::button($model->comments_count, [
+                            //     'value' => Url::toRoute(['comment-listing', 'id' => $model->id]),
+                            //     'class' => 'comment-popup btn btn-info',
+                            // ]);
+                            return $model->comment_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Likes',
+                        'contentOptions' => ['style' => '10%; text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->like_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Duration',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->v_duration . ' seconds';
+                        }
+                    ],
+
+                    [
+                        'label' => 'Size',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::formatSizeUnits($model->v_size);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Uploaded At',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date("F j, Y, g:i a", $model->created_at);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Status',
+                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->newstatuslabel;
+                        }
+                    ],
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 25%; text-align: left;'],
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a(
+                                    '<i class="mdi mdi-eye"></i>',
+                                    ['/sightings/default/view', 'id' => $model->id],
+                                    [
+                                        'class' => 'action-icon',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' =>  Url::toRoute(['sighting-delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'View',
+                            //         ]
+                            //     );
+                            // },
+                            // 'check' => function ($url, $model) {
+                            //     if ($model->show_in_front == 1) {
+                            //         return Html::a('<i class="fa fa-toggle-on"></i>', ['mark-as-daily', 'id' => $model->id], [
+                            //             'class' => 'btn btn-xs btn-success',
+                            //             'data-method' => 'post',
+                            //             'data-confirm' => 'Are you sure to remove this sighting from Daily Update?',
+                            //             'title' => 'Remove ',
+                            //             'data-bs-toggle' => "tooltip"
+                            //         ]);
+                            //     } else {
+                            //         return Html::a('<i class="fa fa-toggle-off"></i>', ['mark-as-daily', 'id' => $model->id], [
+                            //             'class' => 'btn btn-xs btn-warning',
+                            //             'data-method' => 'post',
+                            //             'data-confirm' => 'Are you sure to show this sighting in Daily Update?',
+                            //             'title' => 'Show in Front',
+                            //             'data-bs-toggle' => "tooltip"
+                            //         ]);
+                            //     }
+                            // },
+                            // 'suspend' => function ($url, $model) {
+                            //     return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'suspend_button_title' => 'Inactive', 'active_title' => 'Sighting', 'suspend_title' => 'Sighting']);
+                            // },
+                        ]
+                    ],
+
+                ],
+            ]); ?>
+        </div>
+    </div>
+</div>
+
+<?php Pjax::end(); ?>
+
+
+<!-- <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Details
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+
+<div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Comments
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='commentContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Delete
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='deleteContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    // $('.sighting-popup').on('click', function () {
+    //     $('#modalAction').modal('show')
+	// 	.find('#modalContent')
+	// 	.load($(this).attr('value'));
+	// });
+
+    $('.comment-popup').on('click', function () {
+        $('#commentAction').modal('show')
+		.find('#commentContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.delete-popup').on('click', function () {
+        $('#deleteAction').modal('show')
+		.find('#deleteContent')
+		.load($(this).attr('value'));
+	});
+
+
+JS;
+$this->registerJs($script);
+?>

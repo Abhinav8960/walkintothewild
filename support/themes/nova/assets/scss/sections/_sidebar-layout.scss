@@ -1,0 +1,65 @@
+.sidebar-layout-icon{
+
+
+    @media(min-width:992px){
+
+        .navbar{
+            left: 70px !important; 
+        }
+        
+        .main-header{
+
+            width: calc(100% - 70px);
+            transition: all 0.25s ease;
+           -webkit-transition: all 0.25s ease;
+        }
+         .side_bar{
+
+           width: 70px;
+        }
+        .sidebar-brand-wrapper{
+
+            width: 70px;
+        }
+        .nav{
+            .hide-slide-menu{
+
+                display: none;
+            }
+            .nav-icon{
+
+                width: 35px;
+                padding: 15px;
+                height: 35px;
+            }
+            .color-item{
+
+               margin: -15px 0px;
+            }
+        }
+        .top-sidebar-head{
+            .hide-slide-menu{
+
+                display: none;
+            }
+          .mini-logo{
+
+            display: block !important;
+          }
+        }
+    }
+}
+
+@media(max-width:991.98px){
+    .side_bar-mobile{
+        transform: translateX(0%) !important;
+        -webkit-transform: translateX(0%) !important;
+        -moz-transform: translateX(0%) !important;
+        -ms-transform: translateX(0%) !important;
+        -o-transform: translateX(0%) !important;
+        
+      
+}
+   
+}
+
