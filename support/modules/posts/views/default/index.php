@@ -39,7 +39,7 @@ $this->title = 'Posts';
                             if ($model->filepath) {
                                 return Html::tag('div', Html::img(Yii::$app->params['s3_endpoint'] . '/' . $model->filepath, [
                                     'alt' => 'Uploaded Image',
-                                ]), ['style' => 'text-align: center;']);
+                                ]), ['class' => 'thumb-wrapper','style' => 'text-align: center;']);
                             }
                             return '';
                         }
