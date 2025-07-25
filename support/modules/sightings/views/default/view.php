@@ -86,7 +86,10 @@ $this->params['title'] = $this->title;
                                 <div class="sightings-parent-card sightings-parent-card-view">
                                     <div class="card p-2 border-0 bg-white">
                                         <a href="">
-                                            <img src="<?= $model->full_file_path ?>" alt="">
+                                            <video width='215px' height='300px' controls>
+                                                <source src='<?= $model->full_file_path ?>' type='video/mp4'>
+                                            </video>
+                                            <!-- <img src="<?= $model->full_file_path ?>" alt=""> -->
                                             <!-- <img
                                     src="<?= $this->params['baseurl'] ?>/images/Article-2.jpg" class="card-img-top sightings-video"alt="">  -->
                                             <!-- <img src="/assets/a8486371/images/shigtingimage-one.png" class="card-img-top sightings-video" alt=""> -->
@@ -149,14 +152,14 @@ $this->params['title'] = $this->title;
                                 <div class="postcomment d-flex gap-2 pt-3 w-100">
 
                                     <div class="avatar">
-                                        <!-- <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"> -->
-                                            <img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $comments->user->profile_display_image ?>">
+                                        <!-- <a href="/user/default/profile?user_id=<?= $comments->user->id ?>" data-discover="true"> -->
+                                        <img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $comments->user->profile_display_image ?>">
                                         </a>
                                     </div>
                                     <div class="text_com">
                                         <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                            <!-- <a href="/user/default/profile?user_id=<?=$comments->user->id?>" data-discover="true"><span class="comment-author"> -->
-                                                <?= $comments->user->name ?></span>
+                                            <!-- <a href="/user/default/profile?user_id=<?= $comments->user->id ?>" data-discover="true"><span class="comment-author"> -->
+                                            <?= $comments->user->name ?></span>
                                             <!-- </a> -->
                                             <span class="userDate-time"><?= date("F j, Y", $comments->created_at) . ' , ' . date("H:i:s A", $comments->created_at) ?></span>
                                         </div>
@@ -173,14 +176,14 @@ $this->params['title'] = $this->title;
                                                 <?php foreach ($replies as $reply) { ?>
                                                     <div class="postcomment d-flex gap-2 pt-2 w-100">
                                                         <div class="avatar">
-                                                            <!-- <a href="/user/default/profile?user_id=<?=$reply->user->id?>" data-discover="true"> -->
-                                                                <img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $reply->user->profile_display_image ?>">
+                                                            <!-- <a href="/user/default/profile?user_id=<?= $reply->user->id ?>" data-discover="true"> -->
+                                                            <img alt="Profile" class="rounded-circle bg-info" title="user-image" src="<?= $reply->user->profile_display_image ?>">
                                                             <!-- </a> -->
                                                         </div>
                                                         <div class="text_com">
                                                             <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                                                <!-- <a href="/user/default/profile?user_id=<?=$reply->user->id?>" data-discover="true"> -->
-                                                                    <span class="comment-author"><?= $reply->user->name ?></span>
+                                                                <!-- <a href="/user/default/profile?user_id=<?= $reply->user->id ?>" data-discover="true"> -->
+                                                                <span class="comment-author"><?= $reply->user->name ?></span>
                                                                 <!-- </a> -->
                                                                 <span class="userDate-time"><?= date("F j, Y", $reply->created_at) . ' , ' . date("H:i:s A", $reply->created_at) ?></span>
                                                             </div>
@@ -196,7 +199,7 @@ $this->params['title'] = $this->title;
                         } ?>
                     </div>
 
-                    <?= $this->render('_comment_form', ['comment_model' => $comment_model,'model'=>$model]) ?>
+                    <?= $this->render('_comment_form', ['comment_model' => $comment_model, 'model' => $model]) ?>
 
                 </div>
             </div>
