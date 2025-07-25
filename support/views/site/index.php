@@ -2,11 +2,11 @@
 
 /** @var yii\web\View $this */
 
-use business\assets\AppAsset;
+use support\assets\AppAsset;
 use common\models\GeneralModel;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Dashboard';

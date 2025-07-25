@@ -10,7 +10,7 @@ AppAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Bussiness Sign in | Walk Into the Wild';
+$this->title = 'Support Sign in | Walk Into the Wild';
 $this->params['title'] = $this->title;
 ?>
 <div class="modal fade _standard-text mobile_loginconditions show" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" data-backdrop="static" data-keyboard="false" aria-modal="true" style="display: block;">

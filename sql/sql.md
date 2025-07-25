@@ -73,3 +73,7 @@ ALTER TABLE `chat_message` ADD `is_system_generated` BOOLEAN NOT NULL DEFAULT FA
 ALTER TABLE `master_notification_template` CHANGE `module_type` `module_type` INT NULL DEFAULT NULL COMMENT '1 => \'Package\', 2 => \'Safari\', 3 => \'Fixed Departure\', 4 => \'User\', 5 => \'Operator\', 6 =>\'Chat\',\r\n7 => \'comment/review\',\r\n8 =>\'quote\' ,\r\n9 => \'post\',\r\n10 => \'sighting\'';
 INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '9', 'New Post', '{{username}} just shared a new post.', 'Take a look!', '1', '1735806556', '30', '1735806556', '30');
 INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`, `message`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, '10', 'New Sighting', 'New sighting alert!', 'Tap to see the latest update.', '1', '1735806556', '30', '1735806556', '30');
+
+
+<!-- support user column added -->
+ALTER TABLE `user` ADD `is_support_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_admin`;
