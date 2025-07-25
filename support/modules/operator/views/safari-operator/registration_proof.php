@@ -22,7 +22,7 @@ $this->params['title'] = $this->title;
                         <div class="card cardMainImage h-100">
                             <div class="d-flex justify-content-between align-items-center mb-2 cardText">
                                 <span>Registration Number:</span>
-                                <p class="mb-0">HDH6545</p>
+                                <p class="mb-0"><?= isset($model->registration_number) ? $model->registration_number : '' ?></p>
                             </div>
                             <img src="<?= $this->params['baseurl'] ?>/images/prof.png"
                                 class="card-img-top object-fit-cover w-100" alt="">
@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
                         <div class="card cardMainImage h-100">
                             <div class="d-flex justify-content-between align-items-center mb-2 cardText">
                                 <span>PAN Number:</span>
-                                <p class="mb-0">HDH6545</p>
+                                <p class="mb-0"><?= isset($model->pan_number) ? $model->pan_number : '' ?></p>
                             </div>
                             <img src="<?= $this->params['baseurl'] ?>/images/prof.png"
                                 class="card-img-top object-fit-cover w-100" alt="">

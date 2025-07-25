@@ -23,16 +23,25 @@ $this->params['title'] = $this->title;
                             <tr>
                                 <td style="width: 17%;">Operated Park:</td>
                                 <td style="width: 83%;">
-                                    <p>oindrila.pharma</p>
+                                    <p>
+                                        <?php 
+                                        $html_park = '';
+                                        $park = GeneralModel::operatorpark($model->id);
+                                        foreach ($park as $key => $role) {
+                                            if (isset(GeneralModel::safariparkoption()[$key])) {
+                                                $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
+                                            }
+                                        }
+
+                                        echo !empty($html_park) ? substr($html_park, 0, -2) : 'N/A';
+                                        ?>
+                                    </p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>About Business:</td>
                                 <td>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                        Lorem Ipsum has been the industry's standard dummy text ever since the
-                                        1500s, when an unknown printer took a galley of type and scrambled it to
-                                        make a type specimen book. It has survived not only five centuries, </p>
+                                    <p><?= isset($model->about_business) ? $model->about_business : '' ?></p>
                                 </td>
                             </tr>
 
@@ -43,11 +52,11 @@ $this->params['title'] = $this->title;
                             <div class="card cardMainImage h-100">
                                 <div class="d-flex justify-content-between align-items-center mb-3 cardText">
                                     <span>Registration Number:</span>
-                                    <p class="mb-0">HDH6545</p>
+                                    <p class="mb-0"><?= isset($model->registration_number) ? $model->registration_number : '' ?></p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2 cardText">
                                     <span>PAN Number:</span>
-                                    <p class="mb-0">HDH6545</p>
+                                    <p class="mb-0"><?= isset($model->pan_number) ? $model->pan_number : '' ?></p>
                                 </div>
                                 <img src="<?= $this->params['baseurl'] ?>/images/prof.png"
                                     class="card-img-top object-fit-cover w-100" alt="">
@@ -58,11 +67,11 @@ $this->params['title'] = $this->title;
                             <div class="card cardMainImage h-100">
                                 <div class="d-flex justify-content-between align-items-center mb-3 cardText">
                                     <span>PAN Number:</span>
-                                    <p class="mb-0">HDH6545</p>
+                                    <p class="mb-0"><?= isset($model->registration_number) ? $model->registration_number : '' ?></p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2 cardText">
                                     <span>PAN Number:</span>
-                                    <p class="mb-0">HDH6545</p>
+                                    <p class="mb-0"><?= isset($model->pan_number) ? $model->pan_number : '' ?></p>
                                 </div>
                                 <img src="<?= $this->params['baseurl'] ?>/images/prof.png"
                                     class="card-img-top object-fit-cover w-100" alt="">

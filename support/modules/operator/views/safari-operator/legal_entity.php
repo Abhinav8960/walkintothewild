@@ -23,45 +23,44 @@ $this->params['title'] = $this->title;
                             <table class="table w-100 border-0 border_o d-inline-block py-3 bg-white">
                                 <tbody class="tbody-leads sighting-leads py-5 w-100">
                                     <tr>
-                                        <td style="width: 60%;">Legal Entity Business Name:</td>
+                                        <td style="width: 10%;">Legal entity Type:</td>
                                         <td style="width: 50%;">
-                                            <p>Shivsakti</p>
+                                            <p>
+                                                <?php
+                                                if ($model->legal_entity_type) {
+                                                    echo $model->legal_entity_type ? GeneralModel::operatortype($model->legal_entity_type) : '' ;
+                                                } ?>
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Address:</td>
+                                        <td>Legal entity Name</td>
                                         <td>
-                                            <p>Noida sector 62</p>
+                                            <p><?= isset($model->operator_name) ? $model->operator_name : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Phone Number: </td>
+                                        <td>Legal entity Phone Number:</td>
                                         <td>
-                                            <p>8825317553</p>
+                                            <p><?= isset($model->operator_phone_no) ? $model->operator_phone_no : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Legal entity Email:</td>
                                         <td>
-                                            <p>annu@gmail.com</p>
+                                            <p><?= isset($model->operator_email) ? $model->operator_email : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Category:</td>
+                                        <td>Legal entity WhatsApp Number </td>
                                         <td>
-                                            <p>Safari Tour Operator</p>
+                                            <p><?= isset($model->legal_entity_whatsapp) ? $model->legal_entity_whatsapp : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>PAN Number:</td>
                                         <td>
-                                            <p>DFY1533SF</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Approved Status:</td>
-                                        <td>
-                                            <p>Yes</p>
+                                            <p><?= isset($model->pan_number) ? $model->pan_number : '' ?></p>
                                         </td>
                                     </tr>
                                 </tbody>

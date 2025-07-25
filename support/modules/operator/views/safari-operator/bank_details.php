@@ -23,33 +23,21 @@ $this->params['title'] = $this->title;
                             <table class="table w-100 border-0 border_o d-inline-block py-3 bg-white">
                                 <tbody class="tbody-leads sighting-leads py-5 w-100">
                                     <tr>
-                                        <td style="width: 60%;">Business Name:</td>
+                                        <td style="width: 60%;">Bank Name:</td>
                                         <td style="width: 50%;">
-                                            <p>Shivsakti</p>
+                                            <p><?= isset($model->bank_name) ? $model->bank_name : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Address:</td>
+                                        <td>Account Holder Name:</td>
                                         <td>
-                                            <p>Noida sector 62</p>
+                                            <p><?= isset($model->account_holder_name) ? $model->account_holder_name : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Phone Number: </td>
+                                        <td>IFSC Code: </td>
                                         <td>
-                                            <p>8825317553</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Legal entity Email:</td>
-                                        <td>
-                                            <p>annu@gmail.com</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Category:</td>
-                                        <td>
-                                            <p>Safari Tour Operator</p>
+                                            <p><?= isset($model->ifsc_number) ? $model->ifsc_number : '' ?></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -58,19 +46,13 @@ $this->params['title'] = $this->title;
                                             <p>DFY1533SF</p>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Approved Status:</td>
-                                        <td>
-                                            <p>Yes</p>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="identification-photo">
-                            <p class="mb-1">Pan Photo: </p>
+                            <p class="mb-1">Cancel Check Copy: </p>
                             <a href="/">
                                 <img src="<?= $this->params['baseurl'] ?>/images/pancard.png" alt=""
                                     class="w-100 h-100 object-fit-cover">
