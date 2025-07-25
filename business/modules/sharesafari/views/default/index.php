@@ -87,6 +87,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                             return $model->total_seat;
                         }
                     ],
+                    [
+                        'label' => 'Share Seat',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 15%;text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->share_seat;
+                        }
+                    ],
                     // [
                     //     'label' => 'Joined',
                     //     'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
@@ -138,8 +147,20 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{update}&nbsp{view}',
+                        'template' => '{seat}&nbsp{update}&nbsp{view}',
                         'buttons' => [
+                            'seat' => function ($url, $model) {
+                                if ($model->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
+                                    return Html::button(
+                                        '<img src="' . $this->params['baseurl']  . '/images/person-seat.svg" alt="" width="20" height="20">',
+                                        [
+                                            'value' => Url::toRoute(['/sharesafari/default/update-seat', 'id' => $model->id]),
+                                            'class' => 'btn p-0 change-menuicon seatAction',
+                                            'title' => 'View',
+                                        ]
+                                    );
+                                }
+                            },
                             'update' => function ($url, $model) {
                                 if ($model->status == ShareSafariVersion::EDIATBLE_STATUS) {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
@@ -148,10 +169,18 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                                         'title' => 'View',
 
                                     ]);
+                                } else if ($model->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                ', ['/sharesafari/default/copy-with-edit', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+
+                                    ]);
+                                } else {
+                                    return Html::tag('span', '', [
+                                        'style' => 'display:inline-block;width:25px;height:25px;'
+                                    ]);
                                 }
-                                return Html::tag('span', '', [
-                                    'style' => 'display:inline-block;width:25px;height:25px;'
-                                ]);
                             },
                             'view' => function ($url, $model) {
                                 return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->id], [
@@ -166,3 +195,31 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
         </div>
     </div>
 </div>
+
+
+<div class="modal fade _standard-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Update Seat</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.seatAction').on('click', function () {
+        $('#exampleModal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+
+?>
