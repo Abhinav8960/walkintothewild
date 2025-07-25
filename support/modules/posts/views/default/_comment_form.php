@@ -10,7 +10,8 @@ use yii\bootstrap5\ActiveForm;
 <input type="hidden" value="TOKEN_HERE" name="_csrf-frontend">
 <div class="comments-persons px-0 pt-4">
     <div class="postcomment d-flex gap-3">
-        <div class="avatar"><a href="/user/default/profile?user_id=<?=$model->supportuser->id?>" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="<?= $model->supportuser->profile_display_image ?>"></a>
+        <!-- <div class="avatar"><a href="/user/default/profile?user_id=<?=$model->supportuser->id?>" data-discover="true"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="<?= $model->supportuser->profile_display_image ?>"></a> -->
+        <div class="avatar"><img alt="" width="30" height="30" class="me-1 d-xl-inline-flex rounded-circle bg-info" src="<?= $model->supportuser->profile_display_image ?>">
         </div>
         <div class="text-area">
             <div class="mb-3 field-sharesafaricommentform-comment required">
