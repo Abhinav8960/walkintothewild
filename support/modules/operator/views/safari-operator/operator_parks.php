@@ -15,14 +15,14 @@ $this->params['title'] = $this->title;
     <div class="assign-tabs operatorTab">
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="table-wrapper">
+                <div class="table-wrapper shadow-none rounded-0">
                     <div class="table-responsive">
                         <div class="min-width-table">
                             <?= GridView::widget([
                                 'dataProvider' => $dataProvider,
                                 'layout' => "{items}\n<div class='row align-items-center mt-3'>
-                            <div class='col-md-4'></div>
-                        </div>",
+                                            <div class='col-md-4'></div>
+                                            </div>",
                                 'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                                 'columns' => [
                                     [
