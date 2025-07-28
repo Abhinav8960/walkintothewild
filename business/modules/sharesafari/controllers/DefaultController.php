@@ -72,7 +72,8 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariVersionSearch();
-        $searchModel->status = ShareSafariVersion::EDIATBLE_STATUS;
+        $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS, ShareSafariVersion::SEND_FOR_APPROVAL_STATUS];
+        // $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS];
         $searchModel->host_user_id = $safari_operator->id;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
@@ -459,7 +460,7 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-   
+
     protected function isFdOwner()
     {
         $id = Yii::$app->request->get('id');
@@ -844,7 +845,7 @@ class DefaultController extends Controller
     //     return true;
     // }
 
-     /**
+    /**
      * Create ShareSafariFaqForm.
      * 
      * @return mixed
