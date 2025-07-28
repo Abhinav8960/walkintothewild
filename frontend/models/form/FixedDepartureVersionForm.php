@@ -7,7 +7,7 @@ use common\interfaces\StatusInterface;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariVersion;
 
-class SharedSafariVersionForm extends \yii\base\Model
+class FixedDepartureVersionForm extends \yii\base\Model
 {
     public $shared_safari_model;
     public $share_safari_title;

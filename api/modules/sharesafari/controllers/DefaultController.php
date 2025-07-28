@@ -16,7 +16,7 @@ use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
 use api\models\sharesafari\form\SharedSafariForm;
-use api\models\sharesafari\form\SharedSafariVersionForm;
+use api\models\sharesafari\form\FixedDepartureVersionForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\sharesafari\ShareSafariHistory;
 use api\models\sharesafari\ShareSafariIntrested;
@@ -1239,7 +1239,7 @@ class DefaultController extends SafariController
     //     // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
     //     //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
     //     // }
-    //     $model = new SharedSafariVersionForm();
+    //     $model = new FixedDepartureVersionForm();
     //     $model->host_user_id = $this->userinfoId;
     //     $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
     //     $model->type = 1;

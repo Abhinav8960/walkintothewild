@@ -4,7 +4,7 @@ namespace api\models\sharesafari\form;
 
 use yii\base\Model;
 
-class SharedSafariVersionForm extends \frontend\models\form\SharedSafariVersionForm
+class FixedDepartureVersionForm extends \frontend\models\form\FixedDepartureVersionForm
 {
     public function rules()
     {
