@@ -1,38 +1,33 @@
 <?php
 
-namespace support\modules\leads;
+namespace support\modules\log;
 
-use common\models\operator\SafariOperator;
 use Yii;
-use yii\web\ForbiddenHttpException;
 
 /**
- * leads module definition class
+ * admin module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'support\modules\leads\controllers';
+    public $controllerNamespace = 'support\modules\log\controllers';
 
     /**
      * {@inheritdoc}
      */
     public function init()
     {
-
         if (!Yii::$app->request->isConsoleRequest) {
             if (!Yii::$app->user->identity) {
                 \Yii::$app->response->redirect('/site/login')->send();
             } else {
-                if (!(Yii::$app->user->identity->is_support_user)) {
+                if (!(Yii::$app->user->identity->is_report_manager || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin)) {
                     throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Support User can View this page.');
                 }
             }
         }
-        
         parent::init();
-
     }
 }

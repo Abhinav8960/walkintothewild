@@ -1,20 +1,18 @@
 <?php
 
-namespace support\modules\leads;
+namespace support\modules\flag;
 
-use common\models\operator\SafariOperator;
 use Yii;
-use yii\web\ForbiddenHttpException;
 
 /**
- * leads module definition class
+ * admin module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'support\modules\leads\controllers';
+    public $controllerNamespace = 'support\modules\flag\controllers';
 
     /**
      * {@inheritdoc}
@@ -31,8 +29,6 @@ class Module extends \yii\base\Module
                 }
             }
         }
-        
         parent::init();
-
     }
 }
