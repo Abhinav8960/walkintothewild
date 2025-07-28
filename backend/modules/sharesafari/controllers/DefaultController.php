@@ -156,6 +156,98 @@ class DefaultController extends Controller
     }
 
 
+
+    public function actionOrganizeSafari($id)
+    {
+        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $model = new SharedSafariRequestForm($shared_safari_model);
+        $model->share_safari_id = $id;
+        $model->status = ShareSafariRequest::STATUS_ACTIVE;
+        $model->action_url = '/sharesafari/default/organize-safari?id=' . $id . '';
+        $model->action_validate_url = '/sharesafari/default/validate?id=' . $id;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->shared_safari_request_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_request_model->id);
+
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
+                        return $this->redirect(['index']);
+                    }
+                } else {
+                    print_r($model->errors);
+                    exit;
+                }
+            }
+        } else {
+            $model->shared_safari_request_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('organize_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('organize_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
+    public function actionOrganizeSafariNew()
+    {
+        if (Yii::$app->user->identity) {
+            if (Yii::$app->user->identity->is_safari_operator == 1) {
+                $model = new SharedSafariRequestForm();
+                $model->host_user_id = Yii::$app->user->identity->id;
+                $model->status = ShareSafariRequest::STATUS_ACTIVE;
+                $model->action_url = '/sharesafari/default/organize-safari-new';
+                $model->action_validate_url = '/sharesafari/default/validate';
+                if ($this->request->isPost) {
+                    if ($model->load($this->request->post())) {
+                        $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
+                        if ($model->validate()) {
+                            $model->initializeForm();
+                            if ($model->shared_safari_request_model->save(false)) {
+                                $model->UploadFiles($model->shared_safari_request_model->id);
+                                if ($model->shared_safari_request_model->user) {
+                                    $user = $model->shared_safari_request_model->user;
+                                    $to_mail = $user->email;
+                                    $subject = 'New Safari Request';
+                                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
+                                    $req = ['username' => $user->name];
+                                    MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                                }
+
+                                \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
+                                return $this->redirect(['index']);
+                            }
+                        } else {
+                            print_r($model->errors);
+                            die();
+                        }
+                    }
+                } else {
+                    $model->shared_safari_request_model->loadDefaultValues();
+                }
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('organize_form_new', [
+                        'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('organize_form_new', [
+                        'model' => $model,
+                    ]);
+                }
+            } else {
+                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
+            }
+        }
+    }
+
     public function actionValidate($id = null)
     {
 
