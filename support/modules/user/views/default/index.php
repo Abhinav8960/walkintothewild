@@ -35,14 +35,14 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         'class' => 'yii\grid\SerialColumn',
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
-                    [
-                        'label' => 'Login ID',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->username;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Login ID',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->username;
+                    //     }
+                    // ],
                     // [
                     //     'label' => 'Full Name',
                     //     'contentOptions' => ['style' => 'width: 20%;'],
@@ -53,7 +53,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     // ],
                     [
                         'label' => 'User Name',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $name = $model->name ?? '';
@@ -68,17 +68,17 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             );
                         },
                     ],
-                    [
-                        'label' => 'Mobile Number',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->mobile_no) ? $model->mobile_no : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Mobile Number',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->mobile_no) ? $model->mobile_no : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Mobile Verified User',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->is_mobile_no_verified == 1) {
@@ -98,7 +98,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             if ($device_count) {
                                 return Html::button($device_count, [
                                     'value' => Url::to(['/user/user-device/user-device', 'user_id' => $model->id]),
-                                    'class' => 'btn btn-info pop-up change-menuicon',
+                                    'class' => 'intrested btn-danger',
                                     'title' => 'View',
                                 ]);
                             }
@@ -107,7 +107,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     ],
                     [
                         'label' => 'Role',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->rolelabels;
@@ -115,26 +115,26 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     ],
                     [
                         'label' => 'User Flag',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->userflaged) ? $model->userflaged->user_flag : '';
                         }
                     ],
                     'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
+                    'updated_at:dateTime:Last Updated',
                     [
-                        'label' => 'Update',
+                        'label' => 'status',
                         'value' => function ($model) {
-                            return Html::a('<i class="fa fa-edit text-white"></i>', ['/user/default/update?user_id=' . $model->id], ['class' => 'btn btn-info', 'title' => 'Update User', 'data-bs-toggle' => "tooltip"]);
+                            // return Html::a('<i class="fa fa-edit text-white"></i>', ['/user/default/update?user_id=' . $model->id], ['class' => 'btn btn-info', 'title' => 'Update User', 'data-bs-toggle' => "tooltip"]);
                         },
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
+                        'headerOptions' => [''],
+                        'contentOptions' => [''],
                         'visible' => $isvisible,
                     ],
                     [
-                        'header' => 'Block',
+                        'header' => 'action',
                         'value' => function ($model) {
                             if ($model->blocked_at) {
                                 return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
@@ -155,8 +155,8 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             }
                         },
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
+                        'headerOptions' => [''],
+                        'contentOptions' => [''],
                     ],
                     // [
                     //     'label' => 'Delete',
