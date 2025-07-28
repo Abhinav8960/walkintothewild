@@ -12,8 +12,48 @@ return [
     'controllerNamespace' => 'support\controllers',
     'bootstrap' => ['log', '\support\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
+
     'modules' => [
+        'leads' => [
+            'class' => 'support\modules\leads\Module',
+        ],
+
+        'sightings' => [
+            'class' => 'support\modules\sightings\Module',
+        ],
+
+        'posts' => [
+            'class' => 'support\modules\posts\Module',
+        ],
+
+        'operator' => [
+            'class' => 'support\modules\operator\Module',
+        ],
+        
+        'galleryapproval' => [
+            'class' => 'support\modules\galleryapproval\Module',
+        ],
+
+        'gallery' => [
+            'class' => 'support\modules\gallery\Module',
+        ],
+
+        'package' => [
+            'class' => 'support\modules\package\Module',
+        ],
+
+        'sharesafari' => [
+            'class' => 'support\modules\sharesafari\Module',
+        ],
+
+        'user' => [
+            'class' => 'support\modules\user\Module',
+        ],
+        
     ],
+
+
+
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
@@ -67,9 +107,16 @@ return [
         'definitions' => [
             \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
             'yii\bootstrap5\LinkPager' => [
-                'firstPageLabel' => 'First',
-                'lastPageLabel' => 'Last',
-                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+                'options' => ['class' => 'pagination mb-0 d-flex gap-4 align-items-center'],
+                'listOptions' => ['class' => ['pagination mb-0 d-flex gap-4 align-items-center']],
+                'linkOptions' => ['class' => ''],
+                'linkContainerOptions' => ['class' => ['page-item page-text']],
+                'disabledPageCssClass' => 'disabled',
+                'activePageCssClass' => 'active',
+                'prevPageLabel' => '<span class="page-link button_nextprve button_prve">Prev</span>',
+                'nextPageLabel' => '<span class="page-link button_nextprve active">Next</span>',
+                'firstPageLabel' => false,
+                'lastPageLabel' => false,
             ],
         ],
     ],
