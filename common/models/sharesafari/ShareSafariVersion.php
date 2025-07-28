@@ -18,6 +18,10 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     const SEND_FOR_APPROVAL_STATUS = 2;
     const EDIATBLE_STATUS = 3;
     const TERMINATED_STATUS = 4;
+
+
+    const TYPE_SAFARI = 1;
+    const TYPE_FIXED_DEPARTURE = 2;
     /**
      * {@inheritdoc}
      */
