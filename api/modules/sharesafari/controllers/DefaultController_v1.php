@@ -36,7 +36,7 @@ use yii\web\UploadedFile;
 /**
  * Site controller
  */
-class DefaultController extends SafariController
+class DefaultController_v1 extends SafariController
 {
     /**
      * @inheritdoc
@@ -157,11 +157,12 @@ class DefaultController extends SafariController
         // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
         //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
         // }
-        $model = new SharedSafariVersionForm();
+        $model = new SharedSafariForm();
         $model->host_user_id = $this->userinfoId;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = ShareSafari::TYPE_SAFARI;
         $model->host_type = 1;
+        $model->version = 1;
 
 
         if ($login_user = $this->userinfo) {
@@ -181,9 +182,9 @@ class DefaultController extends SafariController
 
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->share_safari_version_model->save()) {
-                // $model->share_safari_version_model->savehistory();
-                $model->UploadFiles($model->share_safari_version_model->id);
+            if ($model->shared_safari_model->save()) {
+                $model->shared_safari_model->savehistory();
+                $model->UploadFiles($model->shared_safari_model->id);
                 // if ($model->shared_safari_model->user) {
                 //     /**User Info Who created safari */
                 //     $user = $model->shared_safari_model->user;
