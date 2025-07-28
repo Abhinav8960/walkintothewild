@@ -10,13 +10,22 @@ use yii\helpers\Url;
 <div class="commentCount mb-4">
     <h6> Comments</h6>
 </div>
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'headerOptions' => ['style' => 'width: 1%;'],
+                    ],
                     [
                         'label' => 'User',
                         'contentOptions' => ['style' => 'width: 20%;'],
@@ -51,20 +60,20 @@ use yii\helpers\Url;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{replies}&nbsp;&nbsp;{flag}',
+                        'template' => '{replies}&nbsp;&nbsp;{flag}&nbsp;',
                         'buttons' => [
                             'replies' => function ($url, $model) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                return Html::button('<i class="mdi mdi-reply"></i>', [
                                     'value' => Url::toRoute(['replyview', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning choose-option mb-2',
+                                    'class' => 'btn p-0 change-menuicon choose-option mb-2',
                                     'title' => 'Replies'
                                 ]);
                             },
 
                             'flag' => function ($url, $model) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                return Html::button('<i class="mdi mdi-eye"></i>', [
                                     'value' => Url::toRoute(['flagview', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning flag-option mb-2',
+                                    'class' => 'btn p-0 change-menuicon flag-option mb-2',
                                     'title' => 'Flag'
                                 ]);
                             },
@@ -74,10 +83,10 @@ use yii\helpers\Url;
                         'header' => 'Delete',
                         'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                         'value' => function ($model) {
-                            return    Html::a('<i class="fa fa-trash"></i>', ['deletecomment', 'id' => $model->id], [
+                            return    Html::a('<i class="mdi mdi-delete"></i>', ['deletecomment', 'id' => $model->id], [
                                 'style' => 'color: white !important; text-decoration:none;',
                                 'title' => 'Delete Comment',
-                                'class' => 'btn btn-danger',
+                                'class' => 'btn p-0 change-menuicon',
                                 'data-method' => 'POST',
                                 'data-confirm' => 'Are you Sure you want to delete this Comment?',
                                 'data-pjax' => "0"
