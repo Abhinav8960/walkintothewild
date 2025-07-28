@@ -35,6 +35,7 @@ use yii\widgets\ActiveForm;
     <?php } ?>
 
 
+
     <div class="col-12 mb-3">
         <div class="filterBar bg-transparent">
             <div class="filters">
