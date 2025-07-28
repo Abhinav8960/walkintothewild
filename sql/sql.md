@@ -77,3 +77,5 @@ INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`
 
 <!-- support user column added -->
 ALTER TABLE `user` ADD `is_support_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_admin`;
+
+ALTER TABLE `safari_park` ADD `short_name` VARCHAR(255) NULL DEFAULT NULL AFTER `title`;
