@@ -131,7 +131,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
 
                                     ]);
                                 } else if ($model->displayShareSafari->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
-                                    if ($share_safari = ShareSafari::find()->where(['id' => $model->share_safari_id])->andWhere(['IS NOT', 'editable_version', null])->limit(1)->one()) {
+                                    if ($share_safari = ShareSafari::find()->where(['id' => $model->share_safari_id])->andWhere(['pending_for_approval_version' => null])->limit(1)->one()) {
                                         $share_safari_version = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['version' => $share_safari->editable_version])->limit(1)->one();
                                         return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
                                         ', ['/sharesafari/default/update', 'id' => $share_safari_version->id], [
