@@ -69,3 +69,12 @@ use yii\widgets\ActiveForm;
 </div>
 
 <?php ActiveForm::end(); ?>
+
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
+JS;
+$this->registerJs($js);
+?>

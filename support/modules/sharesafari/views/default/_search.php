@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                 <div class="filterItem position-relative">
                     <label>User:</label>
                     <?= $form->field($model, 'host_user_id')->widget(Select2::class, [
-                        'initValueText' => $model->user ? $model->user->name . '(' . $model->user->email . ')' : '',
+                        'initValueText' => $model->user ? $model->user->name : '',
                         'options' => ['placeholder' => 'Select User', 'multiple' => false,'class' => 'search-border'],
                         'pluginOptions' => [
                             'width' => '350px',
@@ -62,7 +62,7 @@ use yii\widgets\ActiveForm;
 <?php ActiveForm::end(); ?>
 <?php
 $js = <<<JS
-    $('safari-searchform') . on('change', function() {
+    $('form') . on('change', function() {
         $(this) . closest('form') . submit();
     });  
 JS;
