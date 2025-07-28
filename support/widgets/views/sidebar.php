@@ -70,7 +70,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </li>
 
 
-<?php if(false){ ?>
         <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
                                                         "/operator/safari-operator/index",
                                                         "/operator/safari-operator/view",
@@ -259,7 +258,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-<?php } ?>
 
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">

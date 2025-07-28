@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
-        'id' => 'Searchform'
+        'id' => 'user-search-form'
     ],
     'method' => 'post',
     'fieldConfig' => [
@@ -34,38 +34,83 @@ use yii\widgets\ActiveForm;
         </div>
     <?php } ?>
 
-    <div class="col-md-2">
-        <?= $form->field($model, 'id')->widget(Select2::class, [
-            'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
-            'options' => ['placeholder' => 'Select User', 'multiple' => false],
-            'pluginOptions' => [
-                'allowClear' => true,
-                'minimumInputLength' => 1,
-                'ajax' => [
-                    'url' => \yii\helpers\Url::toRoute(['user-list']),
-                    'dataType' => 'json',
-                    'data' => new JsExpression('function(params) { return {q:params.term}; }'),
-                    'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
-                ],
-                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-            ],
-        ]); ?>
-    </div>
 
-    <div class="col-md-2">
-        <?= $form->field($model, 'is_mobile_no_verified')->dropDownList(
-            GeneralModel::mobileVerfied(),
-            [
-                'prompt' => 'Select by Verified Mobile',
-            ]
-        ) ?>
+    <div class="col-12 mb-3">
+        <div class="filterBar">
+            <div class="filters">
+                <div class="filterItem position-relative">
+                    <label>User:</label>
+                    <?= $form->field($model, 'id')->widget(Select2::class, [
+                        'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
+                        'options' => ['placeholder' => 'Select User', 'multiple' => false],
+                        'pluginOptions' => [
+                            'width' => '350px',
+                            'allowClear' => true,
+                            'minimumInputLength' => 1,
+                            'containerCssClass' => 'custom-select2', //adding custom css to select2 wigdet 
+                            'ajax' => [
+                                'url' => \yii\helpers\Url::toRoute(['user-list']),
+                                'dataType' => 'json',
+                                'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                                'processResults' => new JsExpression('function(data) { return { results: data.results }; }'),
+                            ],
+                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        ],
+                    ]); ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
 
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(['10' => 'Active', '9' => 'Inactive'], ['placeholder' => 'Search by Status'])->label(false) ?>
-    </div>
-    <div class="col-md-2">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+                <div class="filterItem position-relative">
+                    <label>Verified Mobile:</label>
+                    <?= $form->field($model, 'is_mobile_no_verified')->dropDownList(
+                        GeneralModel::mobileVerfied(),
+                        [
+                            'prompt' => 'Select by Verified Mobile',
+                        ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+
+                <div class="filterItem position-relative">
+                    <label>Status:</label>
+                    <?= $form->field($model, 'status')->dropDownList(['10' => 'Active', '9' => 'Inactive'], ['placeholder' => 'Search by Status'])->label(false) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$searchjs = <<<JS
+$('#user-search-form').on('change', function() {
+    $(this).submit();
+});
+JS;
+$this->registerJs($searchjs);
+?>
+
+
+
+<style>
+    .custom-select2 {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    color: #44444F !important;
+    cursor: pointer !important;
+    padding: 4px 50px 4px 8px !important;
+    font-size: 16px !important;
+}
+.custom-select2 .select2-selection__placeholder {
+    color: #44444F !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}
+
+
+</style>
