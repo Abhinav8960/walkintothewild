@@ -37,10 +37,6 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new ShareSafariSearch();
-
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_support_user)) {
-            $searchModel->host_user_id = Yii::$app->user->identity->id;
-        }
         $searchModel->report_days = 'all';
         $searchModel->custom_status = 3;
         $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
@@ -55,10 +51,6 @@ class DefaultController extends Controller
     public function actionFixedDeparture()
     {
         $searchModel = new ShareSafariSearch();
-
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_support_user)) {
-            $searchModel->host_user_id = Yii::$app->user->identity->id;
-        }
         $searchModel->report_days = 'all';
         $searchModel->status = 1;
         $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
