@@ -328,4 +328,18 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
         }
     }
+
+
+    public function getLiveShareSafari()
+    {
+        return $this->hasOne(ShareSafariVersion::class, ['share_safari_id' => 'share_safari_id'])->andWhere(['status' => ShareSafariVersion::APPROVED_AND_LIVE_STATUS]);
+    }
+
+    public function getDisplayShareSafari()
+    {
+        if (!empty($this->liveShareSafari)) {
+            return $this->liveShareSafari;
+        }
+        return $this;
+    }
 }

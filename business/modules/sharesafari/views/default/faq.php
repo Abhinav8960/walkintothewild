@@ -30,7 +30,7 @@ $this->params['title'] = $this->title;
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item mb-3">
                                     <?php
-                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list, 'url' => Url::toRoute(['update-faq', 'id' => $model->share_safari_id, 'faq_id' => $faq->id])]);
+                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list, 'url' => Url::toRoute(['update-faq', 'id' => $shared_safari_departure_version_model->id, 'faq_id' => $faq->id])]);
                                     ?>
                                 </div>
                             </div>
