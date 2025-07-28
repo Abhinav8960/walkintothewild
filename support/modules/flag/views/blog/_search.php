@@ -25,15 +25,20 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-2">
-        <?= $form->field($model, 'blog_id')->dropDownList(
-            BlogCommentSearch::getBloglist(),
-            [
-                'prompt' => 'Select Blog',
-            ]
-        ) ?>
-    </div>
-    <!-- <div class="col-md-2">
+    <div class="col-12 mb-3">
+        <div class="filterBar">
+            <div class="filters">
+
+                <div class="filterItem position-relative">
+                    <label>Blog:</label>
+                    <?= $form->field($model, 'blog_id')->dropDownList(
+                        BlogCommentSearch::getBloglist(),
+                        [
+                            'prompt' => 'Select Blog',
+                        ]
+                    ) ?>
+                </div>
+                <!-- <div class="col-md-2">
         <?= $form->field($model, 'flaged')->dropDownList(
             ['0' => 'Not Flaged', '1' => 'Flaged'],
             [
@@ -41,7 +46,13 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div> -->
-   
+
+                <i class="fa-solid fa-caret-down"></i>
+
+            </div>
+
+        </div>
+    </div>
 </div>
 <?php ActiveForm::end(); ?>
 
