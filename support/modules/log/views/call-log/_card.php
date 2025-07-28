@@ -36,46 +36,94 @@ $call_dialed_succesfully = $call_dialed_succesfully->count();
 
 ?>
 
-<div class="row ">
-    <div class="col-md-12 d-flex">
-        <div class="col-md-2">
-            <div class="card mb-3 " style="min-height: 120px;  border: 2px solid green; border-radius: 8px;">
-                <div class="card-body position-relative">
-                    <h5 class=" text-opacity-80 mb-3 fs-16px">Call Requests</h5>
-                    <div class="  text-opacity-80 text-end colorammount">Count: <?= $call_request ?></div>
+<section class="listCard mx-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Call Requests</p>
+                        </div>
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center">
+                                <img src="<?= $this->params['baseurl'] ?>/images/lead_dashboard.svg"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                            <?php if ($call_request) { ?>
+                                <div class="numbwrCount">
+                                    <h3><?= $call_request ?></h3>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="numbwrCount">
+                                    <h3>0</h3>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Successfull Calls</p>
+                        </div>
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #FFF4EE;">
+                                <img src="<?= $this->params['baseurl'] ?>/images/fixeddepa.png"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                            <?php if ($call_dialed_succesfully) { ?>
+                                <div class="numbwrCount">
+                                    <h3><?= $call_dialed_succesfully ?></h3>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="numbwrCount">
+                                    <h3>0</h3>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="mainCard py-3 px-3">
+                    <div class="cardChild">
+                        <div class="text-card mb-3">
+                            <p>Dialed Users</p>
+                        </div>
+                        <div class="numbwrCount d-flex gap-5">
+                            <div class="iconsDiv mb-2 d-flex justify-content-center align-items-center" style="background-color: #DDFFE7;">
+                                <img src="<?= $this->params['baseurl'] ?>/images/package.png"
+                                    class="" alt="" style="width: 11px; height: 11px; object-fit: cover;">
+                            </div>
+                            <?php if ($call_dialed_attempted) { ?>
+                                <div class="numbwrCount">
+                                    <h3><?= $call_dialed_attempted ?></h3>
+                                </div>
+                            <?php } else {  ?>
+                                <div class="numbwrCount">
+                                    <h3>0</h3>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-2">
-            <div class="card mb-3 " style="min-height: 120px;  border: 2px solid green; border-radius: 8px;">
-                <div class="card-body position-relative">
-                    <h5 class=" text-opacity-80 mb-3 fs-16px">Calls Dial</h5>
-                    <div class="  text-opacity-80 text-end colorammount">Count: <?= $call_dialed_attempted ?></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="card mb-3 " style="min-height: 120px;  border: 2px solid green; border-radius: 8px;">
-                <div class="card-body position-relative">
-                    <h5 class=" text-opacity-80 mb-3 fs-16px">Calls Connected</h5>
-                    <div class="  text-opacity-80 text-end colorammount">Count: <?= $call_dialed_succesfully ?></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="card mb-3 " style="min-height: 120px;  border: 2px solid green; border-radius: 8px;">
-                <div class="card-body position-relative">
-                    <h5 class=" text-opacity-80 mb-3 fs-16px">Calls Connected</h5>
-                    <div class="  text-opacity-80 text-end colorammount">Count: <?= $call_dialed_succesfully ?></div>
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
+</section>
 
-</div>
+
+<style>
+    .editBtn a {
+        background-color: #237F40;
+        color: #ffffff;
+        border: 0;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 700;
+        padding: 10px 50px;
+    }
+</style>

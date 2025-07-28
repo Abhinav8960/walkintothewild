@@ -10,20 +10,30 @@ $this->params['breadcrumbs'][] =  ['label' => 'Call Log', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
-<div class="card">
-    <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?php echo $this->render('_card', ['model' => $searchModel]); ?>
-        <div id="w1-button" class="mb-3"></div>
 
-        <div class="table-responsive">
+<?php echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php echo $this->render('_card', ['model' => $searchModel]); ?>
+
+
+<div class="table-wrapper mt-4">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'headerOptions' => ['style' => 'width: 1%;'],
+                    ],
                     [
                         'label' => 'Operator',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        // 'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "";
@@ -37,7 +47,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'User',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        // 'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = '<a href="/user/default/profile?user_id=' . $model->callerUser1->id . '" class="text-primary" style="color: green !important;">' . $model->callerUser1->name . '</a>';
@@ -48,7 +58,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Recording',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 25%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
 
@@ -59,58 +69,24 @@ $this->params['title'] = $this->title;
                                 <source src="' . $url . '" type="audio/mpeg" style="width:20px">
                                 audio not supported.
                               </audio>';
-                            }
-                            elseif($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')
-                            {
+                            } elseif ($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer') {
                                 return '<p class="text-warning" style="color: red !important;">Call Not Received</p>';
                             }
                             return '';
                         }
                     ],
-                    // [
-                    //     'label' => 'Dial Status',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->dial_status) ? $model->dial_status : '';
-                    //     }
-                    // ],
 
-                     [
+                    [
                         'label' => 'Call Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }
                     ],
-                    // [
-                    //     'label' => 'Recording Duration',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->rec_duration) ? $model->rec_duration : '';
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Call Type',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->call_type) ? $model->call_type : '';
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Call Status',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->call_status) ? $model->call_status : '';
-                    //     }
-                    // ],
                     [
                         'label' => 'DateTime',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->datetime) ? date('Y-m-d h:i A', strtotime($model->datetime)) : '';
@@ -118,7 +94,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Duration',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->duration) ? $model->duration : '';
@@ -126,7 +102,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Call Request Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->call_request_status) ? $model->call_request_status : '';
@@ -134,7 +110,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Call Request Message',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->call_request_message) ? $model->call_request_message : '';
