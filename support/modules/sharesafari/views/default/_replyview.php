@@ -17,9 +17,9 @@ Pjax::begin([
     'timeout' => false,
 ]);
 ?>
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -52,9 +52,9 @@ Pjax::begin([
                         'template' => '{flag}',
                         'buttons' => [
                             'flag' => function ($url, $model) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                return Html::button('<i class="mdi mdi-eye"></i>', [
                                     'value' => Url::toRoute(['flagview', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning flag-option mb-2',
+                                    'class' => 'btn p-0 change-menuicon flag-option mb-2',
                                     'title' => 'Flag'
                                 ]);
                             },
