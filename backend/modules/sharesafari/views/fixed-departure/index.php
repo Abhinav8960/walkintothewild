@@ -84,7 +84,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->user->name) ? $model->user->name : '';
+                            return isset($model->organizedbyname) ? $model->organizedbyname : '';
                         }
                     ],
 

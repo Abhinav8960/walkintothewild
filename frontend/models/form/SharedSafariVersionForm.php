@@ -40,6 +40,9 @@ class SharedSafariVersionForm extends \yii\base\Model
     public $share_safari_id;
     public $version;
 
+    public $image;
+    public $filepath;
+
 
     public function __construct(?ShareSafariVersion $share_safari_version_model = null)
     {
@@ -100,6 +103,7 @@ class SharedSafariVersionForm extends \yii\base\Model
             // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['created_at'], 'safe'],
             [['share_safari_id', 'version'], 'integer'],
+            [['image', 'filepath'], 'string'],
 
 
         ];
@@ -179,6 +183,8 @@ class SharedSafariVersionForm extends \yii\base\Model
 
         $this->share_safari_version_model->share_safari_id = $this->share_safari_id;
         $this->share_safari_version_model->version = $this->version;
+        $this->share_safari_version_model->image = $this->image;
+        $this->share_safari_version_model->filepath = $this->filepath;
     }
 
 
