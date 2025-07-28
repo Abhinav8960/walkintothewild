@@ -322,6 +322,15 @@
 
     margin-top: 4px;
 }
+.scroll-custom{
+    height: 735px;
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+.scroll-custom::-webkit-scrollbar {
+    display: none; 
+}
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
         display: none;

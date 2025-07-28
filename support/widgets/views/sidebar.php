@@ -20,6 +20,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <span class="mdi mdi-menu"></span>
             </button>
         </li>
+        <div class="scroll-custom">
         <li class="navItems mb-2">
             <a href="/" class="navLinks d-flex align-items-center <?= in_array($active_url, ['/']) ? 'active' : '' ?>">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
@@ -491,7 +492,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </ul>
 
         </li>
-
+</div>
         <li class="navItems navitemLogout mb-2 ms-0">
             <a class="navLinks  d-flex align-items-center" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post">
                 <span class="nav-icon me-1"><img src="<?= $this->params['baseurl'] ?>/images/Icon_material-twotone-logout.svg" alt="" width="25" height="25"></span>
