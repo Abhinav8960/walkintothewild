@@ -9,7 +9,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Fixed Departure';
+$this->title = 'Fixed Departure Approval List';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -87,22 +87,14 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             return isset($model->user->name) ? $model->user->name : '';
                         }
                     ],
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->statuslabel;
-                        }
-                    ],
 
-                   [
+                    [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{approved}{view}',
                         'buttons' => [
-                           
+
                             'approved' => function ($url, $model) {
                                 if ($model->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
                                     return Html::a(
