@@ -958,6 +958,7 @@ p {
   cursor: pointer;
   padding: 4px 50px 4px 8px;
   font-size: 16px;
+  -webkit-appearance: none;
 }
 
 .actions {

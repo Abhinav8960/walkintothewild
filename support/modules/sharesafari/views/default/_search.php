@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-12 mb-3">
-        <div class="filterBar">
+        <div class="filterBar bg-transparent">
             <div class="filters">
 
                 <div class="filterItem position-relative">
