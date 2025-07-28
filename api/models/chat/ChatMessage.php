@@ -6,6 +6,7 @@ use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use api\models\User;
 use common\models\chat\ChatMessageHistory;
+use common\models\GeneralModel;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
 
@@ -57,6 +58,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $fields = [
             'id',
             'message' => function () {
+                if ($this->chat->chat_type == 2) {
+                    return GeneralModel::maskContactInfoInString($this->message);
+                }
                 return $this->message;
             },
             'is_edited' => function () {
@@ -127,7 +131,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery', 'is_system_generated','transaction_id'], 'safe'],
+            [['gallery', 'is_system_generated', 'transaction_id'], 'safe'],
         ];
     }
 
