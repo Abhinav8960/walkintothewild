@@ -45,7 +45,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             [['share_safari_title'], 'string'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
-            [['image', 'filepath'], 'string', 'max' => 512],
+            [['image_filepath'], 'string', 'max' => 512],
             [['safari_plan', 'website_url', 'share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'delete_reason'], 'string'],
             [['start_date', 'end_date', 'cut_off_date', 'gallery_json'], 'safe'],
             [['share_safari_id', 'share_safari_title', 'host_user_id', 'version'], 'required'],
@@ -74,8 +74,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'cut_off_date' => 'Cut Off Date',
-            'image' => 'Image',
-            'filepath' => 'Filepath',
+            'image_filepath' => 'Image Filepath',
             'stay_category_id' => 'Stay Category ID',
             'estimate_price_min' => 'Estimate Price Min',
             'estimate_price_max' => 'Estimate Price Max',
@@ -147,7 +146,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     public function getSharedimagepath()
     {
 
-        return isset($this->filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image_filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->image_filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()

@@ -54,7 +54,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $partner_gallery_id;
     public $gallery_json;
     public $image;
-    public $filepath;
+    public $image_filepath;
     public $created_at;
 
     public $shared_safari_departure_version_model;
@@ -105,7 +105,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->dinner_included = $this->shared_safari_departure_version_model->dinner_included;
             $this->meal_not_included = $this->shared_safari_departure_version_model->meal_not_included;
 
-            $this->filepath = $this->shared_safari_departure_version_model->filepath;
+            $this->image_filepath = $this->shared_safari_departure_version_model->image_filepath;
             $this->created_at = $this->shared_safari_departure_version_model->created_at;
             $this->partner_gallery_id = $this->shared_safari_departure_version_model->partner_gallery_id;
 
@@ -133,7 +133,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['partner_gallery_id'], 'integer'],
             [['gallery_json'], 'safe'],
             [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
-            [['filepath'], 'string'],
+            [['image_filepath'], 'string'],
 
 
         ];
@@ -179,7 +179,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             'total_seat' => 'Total Seat',
             'partner_gallery_id' => 'Gallery Id',
             'gallery_json' => 'Gallery Json',
-            'filepath' => 'FilePath',
+            'image_filepath' => 'Image FilePath',
             'status' => 'Status',
         ];
     }
@@ -278,8 +278,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $filePath = $storagePath . '/' . $fileName;
             if ($fileName) {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->image, $filePath, $fileName, true)) {
-                    $this->shared_safari_departure_version_model->image = $fileName;
-                    $this->shared_safari_departure_version_model->filepath = $filePath;
+                    $this->shared_safari_departure_version_model->image_filepath = $filePath;
                     $this->shared_safari_departure_version_model->save(false);
                 }
             }

@@ -194,7 +194,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 <?php  } ?>
                 <?php
-                if ($model->shared_safari_departure_version_model->image) { ?>
+                if ($model->shared_safari_departure_version_model->image_filepath) { ?>
                     <div class="col-lg-6 ">
                         <div class="row">
                             <div class="col-lg-12 ">

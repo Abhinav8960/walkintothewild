@@ -91,8 +91,7 @@ class FixedDepartureController extends Controller
             $fixed_departure->start_date = $model->start_date;
             $fixed_departure->end_date = $model->end_date;
             $fixed_departure->cut_off_date = $model->cut_off_date;
-            $fixed_departure->image = $model->image;
-            $fixed_departure->filepath = $model->filepath;
+            $fixed_departure->image_filepath = $model->image_filepath;
             $fixed_departure->stay_category_id = $model->stay_category_id;
             $fixed_departure->estimate_price_min = $model->estimate_price_min;
             $fixed_departure->estimate_price_max = $model->estimate_price_max;
