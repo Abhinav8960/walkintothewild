@@ -142,10 +142,10 @@ class DefaultController extends SafariController
 
     public function actionOrganizeSafari()
     {
-        if ($this->userinfo->is_mobile_no_verified == 0) {
-            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
-            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
-        }
+        // if ($this->userinfo->is_mobile_no_verified == 0) {
+        //     $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+        //     return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
+        // }
 
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
@@ -158,24 +158,26 @@ class DefaultController extends SafariController
         //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
         // }
         $model = new SharedSafariVersionForm();
+        $model->host_partner_id = null;
         $model->host_user_id = $this->userinfoId;
+        $model->user_id = $this->userinfoId;
         // $model->status = ShareSafari::STATUS_ACTIVE;
         $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
         $model->type = ShareSafariVersion::TYPE_SAFARI;
         $model->host_type = 1;
 
 
-        if ($login_user = $this->userinfo) {
-            if ($login_user->x_url <> '') {
-                $model->website_url = $login_user->x_url;
-            }
-            if ($login_user->insta_url <> '') {
-                $model->website_url = $login_user->insta_url;
-            }
-            if ($login_user->facebook_url <> '') {
-                $model->website_url = $login_user->facebook_url;
-            }
-        }
+        // if ($login_user = $this->userinfo) {
+        //     if ($login_user->x_url <> '') {
+        //         $model->website_url = $login_user->x_url;
+        //     }
+        //     if ($login_user->insta_url <> '') {
+        //         $model->website_url = $login_user->insta_url;
+        //     }
+        //     if ($login_user->facebook_url <> '') {
+        //         $model->website_url = $login_user->facebook_url;
+        //     }
+        // }
 
         $model->attributes = $this->request;
         $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
@@ -1319,8 +1321,9 @@ class DefaultController extends SafariController
 
             $share_safari->share_safari_title = $model->share_safari_title;
             $share_safari->type = $model->type;
-            $share_safari->share_safari_request_id = $model->share_safari_request_id;
             $share_safari->host_user_id = $model->host_user_id;
+            $share_safari->host_partner_id = $model->host_partner_id;
+            $share_safari->user_id = $model->user_id;
             $share_safari->host_type = $model->host_type;
             $share_safari->park_id = $model->park_id;
             $share_safari->share_safari_agenda_id = $model->share_safari_agenda_id;
@@ -1328,25 +1331,17 @@ class DefaultController extends SafariController
             $share_safari->start_date = $model->start_date;
             $share_safari->end_date = $model->end_date;
             $share_safari->cut_off_date = $model->cut_off_date;
-            $share_safari->image = $model->image;
-            $share_safari->filepath = $model->filepath;
+            $share_safari->image_filepath = $model->image_filepath;
             $share_safari->stay_category_id = $model->stay_category_id;
             $share_safari->estimate_price_min = $model->estimate_price_min;
             $share_safari->estimate_price_max = $model->estimate_price_max;
             $share_safari->cost_per_person = $model->cost_per_person;
             $share_safari->safari_plan = $model->safari_plan;
-            $share_safari->website_url = $model->website_url;
             $share_safari->total_seat = $model->total_seat;
             $share_safari->share_seat = $model->share_seat;
             $share_safari->tour_duration = $model->tour_duration;
             $share_safari->share_safari_inclusion = $model->share_safari_inclusion;
             $share_safari->share_safari_exclusion = $model->share_safari_exclusion;
-            $share_safari->share_safari_terms_condtition = $model->share_safari_terms_condtition;
-            $share_safari->privacy_policy = $model->privacy_policy;
-            $share_safari->change_policy = $model->change_policy;
-            $share_safari->what_you_must_carry = $model->what_you_must_carry;
-            $share_safari->date_change_policy = $model->date_change_policy;
-            $share_safari->refund_policy = $model->refund_policy;
             $share_safari->getting_there = $model->getting_there;
             $share_safari->breakfast_included = $model->breakfast_included;
             $share_safari->lunch_included = $model->lunch_included;

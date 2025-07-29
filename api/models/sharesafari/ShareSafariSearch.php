@@ -31,6 +31,7 @@ class ShareSafariSearch extends ShareSafari
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'share_safari_title'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max', 'type', 'is_published_on_api', 'is_published_on_web'], 'safe'],
+            [['host_partner_id', 'user_id'], 'integer'],
         ];
     }
 
@@ -62,7 +63,7 @@ class ShareSafariSearch extends ShareSafari
         END"
             ))
             ->leftJoin('user', 'share_safari.type = ' . ShareSafari::TYPE_SAFARI . ' AND share_safari.host_user_id = user.id')
-            ->leftJoin('safari_operator', 'share_safari.type = ' . ShareSafari::TYPE_FIXED_DEPARTURE . ' AND share_safari.host_user_id = safari_operator.id')
+            ->leftJoin('safari_operator', 'share_safari.type = ' . ShareSafari::TYPE_FIXED_DEPARTURE . ' AND share_safari.host_partner_id = safari_operator.id')
             ->andWhere(['>=', 'start_date', date("Y-m-d")]);
 
 
@@ -88,6 +89,8 @@ class ShareSafariSearch extends ShareSafari
         $query->andFilterWhere([
             'share_safari.id' => $this->id,
             'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.host_partner_id' => $this->host_partner_id,
+            'share_safari.user_id' => $this->user_id,
             'share_safari.type' => $this->type,
             'share_safari.host_type' => $this->host_type,
             'share_safari.park_id' => $this->park_id,

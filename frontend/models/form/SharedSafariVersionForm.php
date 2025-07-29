@@ -13,7 +13,6 @@ class SharedSafariVersionForm extends \yii\base\Model
 
     public $share_safari_title;
     public $host_user_id;
-    public $share_safari_request_id;
     public $host_type;
     public $park_id;
     public $share_safari_agenda_id;
@@ -28,7 +27,7 @@ class SharedSafariVersionForm extends \yii\base\Model
     public $share_seat;
     public $status;
     public $shared_safari_image;
-    public $website_url;
+    // public $website_url;
     public $type;
     public $tour_duration;
 
@@ -40,8 +39,11 @@ class SharedSafariVersionForm extends \yii\base\Model
     public $share_safari_id;
     public $version;
 
-    public $image;
-    public $filepath;
+    // public $image;
+    public $image_filepath;
+    public $host_partner_id;
+    public $user_id;
+
 
 
     public function __construct(?ShareSafariVersion $share_safari_version_model = null)
@@ -58,10 +60,8 @@ class SharedSafariVersionForm extends \yii\base\Model
             $this->version = $this->share_safari_version_model->version;
 
             $this->share_safari_title =  $this->share_safari_version_model->share_safari_title;
-            $this->host_user_id =  $this->share_safari_version_model->host_user_id;
             $this->host_type =  $this->share_safari_version_model->host_type;
             $this->type =  $this->share_safari_version_model->type;
-            $this->share_safari_request_id =  $this->share_safari_version_model->share_safari_request_id;
             $this->park_id =  $this->share_safari_version_model->park_id;
             $this->share_safari_agenda_id =  $this->share_safari_version_model->share_safari_agenda_id;
             $this->no_of_safari =  $this->share_safari_version_model->no_of_safari;
@@ -73,10 +73,13 @@ class SharedSafariVersionForm extends \yii\base\Model
             $this->safari_plan =  $this->share_safari_version_model->safari_plan;
             $this->total_seat =  $this->share_safari_version_model->total_seat;
             $this->share_seat =  $this->share_safari_version_model->share_seat;
-            $this->website_url =  $this->share_safari_version_model->website_url;
+            // $this->website_url =  $this->share_safari_version_model->website_url;
             $this->tour_duration =  $this->share_safari_version_model->tour_duration;
             $this->status =  $this->share_safari_version_model->status;
             $this->created_at =  $this->share_safari_version_model->created_at;
+            $this->host_user_id =  $this->share_safari_version_model->host_user_id;
+            $this->host_partner_id =  $this->share_safari_version_model->host_partner_id;
+            $this->user_id =  $this->share_safari_version_model->user_id;
         }
     }
 
@@ -85,7 +88,7 @@ class SharedSafariVersionForm extends \yii\base\Model
         return [
 
             [['share_safari_title', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => '{attribute} : Required'],
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
+            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['share_safari_title'], 'string', 'max' => 255],
             // [
@@ -103,7 +106,9 @@ class SharedSafariVersionForm extends \yii\base\Model
             // [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['created_at'], 'safe'],
             [['share_safari_id', 'version'], 'integer'],
-            [['image', 'filepath'], 'string'],
+            // [['image', 'filepath'], 'string'],
+            [['image_filepath'], 'string'],
+            [['host_partner_id','user_id'],'integer'],
 
 
         ];
@@ -126,6 +131,8 @@ class SharedSafariVersionForm extends \yii\base\Model
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
+            'host_partner_id' => 'Host Partner ID',
+            'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
             'share_safari_agenda_id' => 'Share Safari Agenda ID',
@@ -154,7 +161,6 @@ class SharedSafariVersionForm extends \yii\base\Model
         $this->share_safari_version_model->share_safari_title = $this->share_safari_title;
         $this->share_safari_version_model->host_type = $this->host_type;
         $this->share_safari_version_model->type = $this->type;
-        $this->share_safari_version_model->share_safari_request_id = $this->share_safari_request_id;
         $this->share_safari_version_model->park_id = $this->park_id;
         $this->share_safari_version_model->share_safari_agenda_id = $this->share_safari_agenda_id;
         $this->share_safari_version_model->no_of_safari = $this->no_of_safari;
@@ -172,7 +178,7 @@ class SharedSafariVersionForm extends \yii\base\Model
             $this->share_safari_version_model->share_seat = $this->share_seat;
         }
 
-        $this->share_safari_version_model->website_url = $this->website_url;
+        // $this->share_safari_version_model->website_url = $this->website_url;
 
 
         $this->share_safari_version_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
@@ -183,8 +189,11 @@ class SharedSafariVersionForm extends \yii\base\Model
 
         $this->share_safari_version_model->share_safari_id = $this->share_safari_id;
         $this->share_safari_version_model->version = $this->version;
-        $this->share_safari_version_model->image = $this->image;
-        $this->share_safari_version_model->filepath = $this->filepath;
+        // $this->share_safari_version_model->image = $this->image;
+        $this->share_safari_version_model->image_filepath = $this->image_filepath;
+        $this->share_safari_version_model->host_partner_id = $this->host_partner_id;
+        $this->share_safari_version_model->user_id = $this->user_id;
+
     }
 
 
@@ -199,8 +208,8 @@ class SharedSafariVersionForm extends \yii\base\Model
             $filePath = $storagePath . '/' . $fileName;
             if ($fileName) {
                 if ($etag =  \common\Helper\FsHelper::saveUploadedFile($this->shared_safari_image, $filePath, $fileName, true)) {
-                    $this->share_safari_version_model->image = $fileName;
-                    $this->share_safari_version_model->filepath = $filePath;
+                    // $this->share_safari_version_model->image = $fileName;
+                    $this->share_safari_version_model->image_filepath = $filePath;
                     $this->share_safari_version_model->save(false);
                 }
             }
@@ -238,6 +247,8 @@ class SharedSafariVersionForm extends \yii\base\Model
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
         $m->host_user_id = $this->host_user_id;
+        $m->host_partner_id = $this->host_partner_id;
+        $m->user_id = $this->user_id;
         $m->status = 0;
         $m->save(false);
         return $m->id;
