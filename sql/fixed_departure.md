@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 24, 2025 at 01:30 PM
+-- Generation Time: Jul 29, 2025 at 06:20 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
--- PHP Version: 8.1.2-1ubuntu2.21
+-- PHP Version: 8.1.2-1ubuntu2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,13 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `share_safari_version` (
   `id` int NOT NULL,
+  `share_safari_title` varchar(255) NOT NULL,
   `share_safari_id` int NOT NULL,
   `version` int NOT NULL DEFAULT '1',
-  `share_safari_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` int DEFAULT NULL,
-  `share_safari_request_id` int DEFAULT NULL,
-  `host_user_id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
+  `host_user_id` int DEFAULT NULL,
+  `host_partner_id` int DEFAULT NULL,
+  `user_id` int NOT NULL,
   `host_type` int DEFAULT NULL,
   `park_id` int DEFAULT NULL,
   `share_safari_agenda_id` int DEFAULT NULL,
@@ -43,8 +43,7 @@ CREATE TABLE `share_safari_version` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `cut_off_date` date DEFAULT NULL,
-  `image` varchar(512) DEFAULT NULL,
-  `filepath` varchar(512) DEFAULT NULL,
+  `image_filepath` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `stay_category_id` int DEFAULT NULL,
   `estimate_price_min` int DEFAULT NULL,
   `estimate_price_max` int DEFAULT NULL,
@@ -56,25 +55,18 @@ CREATE TABLE `share_safari_version` (
   `tour_duration` int DEFAULT NULL,
   `share_safari_inclusion` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `share_safari_exclusion` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `share_safari_terms_condtition` longtext,
-  `privacy_policy` longtext,
-  `change_policy` longtext,
-  `what_you_must_carry` longtext,
-  `date_change_policy` longtext,
-  `refund_policy` longtext,
   `getting_there` longtext,
   `breakfast_included` tinyint NOT NULL DEFAULT '0',
   `lunch_included` tinyint NOT NULL DEFAULT '0',
   `dinner_included` tinyint NOT NULL DEFAULT '0',
   `meal_not_included` tinyint NOT NULL DEFAULT '0',
-  `mail_sent` int DEFAULT '0',
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
   `updated_by` int DEFAULT NULL,
   `delete_reason_id` tinyint DEFAULT NULL,
   `delete_reason` text,
-  `status` int DEFAULT '1',
+  `status` int DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable,4=>Terminated',
   `is_published_on_api` tinyint(1) NOT NULL DEFAULT '1',
   `is_published_on_web` tinyint(1) NOT NULL DEFAULT '1',
   `total_view` int NOT NULL DEFAULT '0',
@@ -93,7 +85,7 @@ CREATE TABLE `share_safari_version` (
 --
 ALTER TABLE `share_safari_version`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `host_user_id` (`host_user_id`,`park_id`,`start_date`,`end_date`,`estimate_price_min`,`estimate_price_max`,`cost_per_person`,`total_seat`,`status`);
+  ADD KEY `host_user_id` (`park_id`,`start_date`,`end_date`,`estimate_price_min`,`estimate_price_max`,`cost_per_person`,`total_seat`,`status`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
