@@ -17,4 +17,12 @@ ALTER TABLE share_safari_park ADD version VARCHAR(255) NULL DEFAULT NULL AFTER i
 ALTER TABLE `share_safari` DROP `image`;
 ALTER TABLE `share_safari` CHANGE `filepath` `image_filepath` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 ALTER TABLE `share_safari` DROP `share_safari_request_id`;
+ALTER TABLE `share_safari` DROP `mail_sent`;
+ALTER TABLE `share_safari`
+  DROP `share_safari_terms_condtition`,
+  DROP `privacy_policy`,
+  DROP `change_policy`,
+  DROP `what_you_must_carry`,
+  DROP `date_change_policy`,
+  DROP `refund_policy`;
 
