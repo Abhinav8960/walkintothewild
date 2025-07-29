@@ -425,6 +425,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                                                                                                     )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Sighting Comment</span></a>
                 </li>
 
+                <?php if(false){ ?>
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                                     "/flag/blog/index",
@@ -436,6 +437,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                                                                                                     "/flag/blog/flagview",
                                                                                                                                                                                 )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Blog Comment</span></a>
                 </li>
+                <?php } ?>
             </ul>
 
         </li>
