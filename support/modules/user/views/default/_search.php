@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
                         'initValueText' => $model->id ? GeneralModel::name_with_email($model->id) : '',
                         'options' => ['placeholder' => 'Select User', 'multiple' => false],
                         'pluginOptions' => [
-                            'width' => '450px',
+                            'width' => '300px',
                             'allowClear' => true,
                             'minimumInputLength' => 1,
                             'containerCssClass' => 'custom-select2', //adding custom css to select2 wigdet 

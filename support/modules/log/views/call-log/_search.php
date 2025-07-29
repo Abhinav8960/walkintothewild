@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row">
     <div class="col-12 mb-3">
-        <div class="filterBar">
+        <div class="filterBar bg-transparent">
             <div class="filters">
 
                 <div class="filterItem position-relative">
@@ -44,10 +44,10 @@ use yii\widgets\ActiveForm;
                 <div class="filterItem position-relative">
                     <label>Date Range:</label>
                     <?= $form->field($model, 'date_range', [
-                        'options' => ['class' => 'drp-container mb-2']
+                        'options' => ['class' => 'drp-container mb-0 cursor-pointer']
                     ])->widget(DateRangePicker::class, [
                         'convertFormat' => true,
-                        'options' => ['placeholder' => 'Enter Date Range'],
+                        'options' => ['placeholder' => 'Enter Date Range', 'class' => 'form-control border-0 bg-transparent'],
                         'pluginOptions' => [
                             // 'singleDatePicker' => true,
                             'showDropdowns' => true,

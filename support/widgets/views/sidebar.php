@@ -251,7 +251,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     '/user/default/index',
                                                                                                     '/user/default/create',
                                                                                                     '/user/default/view',
-                                                                                                )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
+                                                                                                )) ? 'user_active.png' : 'userIcon.png' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu"> User List</span>
             </a>
         </li>
@@ -346,7 +346,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/flag/user-post/index",
                                                                                                     "/flag/user-post/view",
                                                                                                     "/flag/user-post/flagview",
-                                                                                                )) ? 'safari_active.png' : 'safari.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Flag<a href="" class="drop_imagesCC">
+                                                                                                )) ? 'operator_active.png' : 'operator.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Flag<a href="" class="drop_imagesCC">
                         <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
                     </a></span>
             </a>
@@ -470,7 +470,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                     "/log/default/view",
                                                                                                     "/log/call-log/index",
                                                                                                     "/log/call-log/view",
-                                                                                                )) ? 'safari_active.png' : 'safari.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Log<a href="" class="drop_imagesCC">
+                                                                                                )) ? 'log_active.png' : 'log.png' ?>" alt="" width="17" height="20"></span> <span class="side-menu__label hide-slide-menu">Log<a href="" class="drop_imagesCC">
                         <img src="<?= $this->params['baseurl'] ?>/images/dropdownicon.png" class="card-img-top" alt="">
                     </a></span>
             </a>
