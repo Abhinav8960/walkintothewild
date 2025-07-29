@@ -49,8 +49,8 @@ class FixedDepartureController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
-        return $this->render('view', [
-            'package' => $model,
+        return $this->render('_fixed_view', [
+            'share_safari' => $model,
             'faqs' => $faqs,
         ]);
     }

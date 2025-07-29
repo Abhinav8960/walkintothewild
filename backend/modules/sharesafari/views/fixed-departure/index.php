@@ -111,14 +111,18 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                                     );
                                 }
                             },
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['/packageapproval/default/view', 'id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'View',
+                            'view' => function ($url, $model) {
+                                return  Html::a(
+                                    '<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ',
+                                    ['view', 'id' => $model->id],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
 
-                            //     ]);
-                            // },
+                                    ]
+                                );
+                            },
                         ]
                     ],
                 ],
