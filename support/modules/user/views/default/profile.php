@@ -43,23 +43,36 @@ $this->params['title'] = $this->title;
                                     'timeout' => false,
                                 ]);
                                 ?>
-                                <div class="table-responsive">
-                                    <?= GridView::widget([
-                                        'dataProvider' => $dataProvider,
-                                        'columns' => [
-                                            ['class' => 'yii\grid\SerialColumn'],
-                                            [
-                                                'label' => 'Full Name',
-                                                'contentOptions' => ['style' => 'width: 30%;'],
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a(Html::img($model->user->profile_display_image ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->user->name, ['profile', 'user_id' => $model->user->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
-                                                }
-                                            ],
-                                            'created_at:dateTime:Following Start at',
-                                            'user.created_at:dateTime:Joined at',
-                                        ],
-                                    ]); ?>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <div class="min-width-table">
+                                            <?= GridView::widget([
+                                                'dataProvider' => $dataProvider,
+                                                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                                                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                                                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                                                            <div class='col-md-4'></div>
+                                                            </div>",
+                                                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
+                                                'columns' => [
+                                                    [
+                                                        'class' => 'yii\grid\SerialColumn',
+                                                        'headerOptions' => ['style' => 'width: 1%;'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Full Name',
+                                                        'contentOptions' => ['style' => 'width: 30%;'],
+                                                        'format' => 'raw',
+                                                        'value' => function ($model) {
+                                                            return Html::a(Html::img($model->user->profile_display_image ? $model->user->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->user->name, ['profile', 'user_id' => $model->user->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
+                                                        }
+                                                    ],
+                                                    'created_at:dateTime:Following Start at',
+                                                    'user.created_at:dateTime:Joined at',
+                                                ],
+                                            ]); ?>
+                                        </div>
+                                    </div>
                                 </div>
                                 <?php Pjax::end(); ?>
                             </div>
@@ -73,23 +86,36 @@ $this->params['title'] = $this->title;
                                 ]);
                                 ?>
                                 <h3>Following List</h3>
-                                <div class="table-responsive">
-                                    <?= GridView::widget([
-                                        'dataProvider' => $following_dataProvider,
-                                        'columns' => [
-                                            ['class' => 'yii\grid\SerialColumn'],
-                                            [
-                                                'label' => 'Full Name',
-                                                'contentOptions' => ['style' => 'width: 30%;'],
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a(Html::img($model->follower->profile_display_image ? $model->follower->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->follower->name, ['profile', 'user_id' => $model->follower->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
-                                                }
-                                            ],
-                                            'created_at:dateTime:Following Start at',
-                                            'follower.created_at:dateTime:Joined at',
-                                        ],
-                                    ]); ?>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <div class="min-width-table">
+                                            <?= GridView::widget([
+                                                'dataProvider' => $following_dataProvider,
+                                                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                                                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                                                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                                                            <div class='col-md-4'></div>
+                                                            </div>",
+                                                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
+                                                'columns' => [
+                                                    [
+                                                        'class' => 'yii\grid\SerialColumn',
+                                                        'headerOptions' => ['style' => 'width: 1%;'],
+                                                    ],
+                                                    [
+                                                        'label' => 'Full Name',
+                                                        'contentOptions' => ['style' => 'width: 30%;'],
+                                                        'format' => 'raw',
+                                                        'value' => function ($model) {
+                                                            return Html::a(Html::img($model->follower->profile_display_image ? $model->follower->profile_display_image : $this->params['baseurl'] . '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $model->follower->name, ['profile', 'user_id' => $model->follower->id], ['style' => 'color:black !important;', 'data-pjax' => "0"]);
+                                                        }
+                                                    ],
+                                                    'created_at:dateTime:Following Start at',
+                                                    'follower.created_at:dateTime:Joined at',
+                                                ],
+                                            ]); ?>
+                                        </div>
+                                    </div>
                                 </div>
                                 <?php Pjax::end(); ?>
                             </div>
