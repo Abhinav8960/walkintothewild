@@ -96,9 +96,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
             $fields[] = 'share_safari_inclusion';
             $fields[] = 'share_safari_exclusion';
-            $fields[] = 'share_safari_terms_condtition';
-            $fields[] = 'date_change_policy';
-            $fields[] = 'refund_policy';
+            // $fields[] = 'share_safari_terms_condtition';
+            // $fields[] = 'date_change_policy';
+            // $fields[] = 'refund_policy';
             $fields[] = 'getting_there';
             $fields[] = 'includeds';
             $fields[] = 'share_safari_days';
