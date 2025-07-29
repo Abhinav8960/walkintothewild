@@ -18,38 +18,38 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaA
 <div class="table-wrapper">
     <div class="table-responsive">
         <div class="min-width-table">
-        <div class='row align-items-center mt-3 '>
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <td class="px-5 col-md-3"><b>Comment:</b></td>
-                    <td class="px-5 wrap-text"><?= ucfirst($review->comment) ?></td>
-                </tr>
-                <tr>
-                    <td class="px-5"><b>Package:</b></td>
-                    <td class="px-5"><?= isset($review->package) ? ucfirst($review->package->package_name) : '' ?></td>
-                </tr>
-                <tr>
-                    <td class="px-5"><b>Comment By:</b></td>
-                    <td class="px-5"><?= isset($review->user) ?  ucfirst($review->user->name) : '' ?></td>
-                </tr>
-                <tr>
-                    <td class="px-5"><b>Date:</b></td>
-                    <td class="px-5"><?= date('d-m-Y', $review->created_at) ?></td>
-                </tr>
-                <tr>
-                    <td class="px-5"><b>Status:</b></td>
-                    <td class="px-5">
-                        <?php
-                        $c_status = "Active";
-                        if ($review->status == '2') {
-                            $c_status = "Delete";
-                        }
-                        echo $c_status; ?></td>
-                </tr>
-            </table>
+            <div class='row align-items-center mt-3 '>
+                <table class="table tablecustoms table-striped align-middle w-100">
+                    <tr>
+                        <td class="px-5 col-md-3"><b>Comment:</b></td>
+                        <td class="px-5 wrap-text"><?= ucfirst($review->comment) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Package:</b></td>
+                        <td class="px-5"><?= isset($review->package) ? ucfirst($review->package->package_name) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Comment By:</b></td>
+                        <td class="px-5"><?= isset($review->user) ?  ucfirst($review->user->name) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Date:</b></td>
+                        <td class="px-5"><?= date('d-m-Y', $review->created_at) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Status:</b></td>
+                        <td class="px-5">
+                            <?php
+                            $c_status = "Active";
+                            if ($review->status == '2') {
+                                $c_status = "Delete";
+                            }
+                            echo $c_status; ?></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="table-wrapper mt-3">
