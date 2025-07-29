@@ -13,3 +13,8 @@ ALTER TABLE share_safari_included ADD version VARCHAR(255) NULL DEFAULT NULL AFT
 ALTER TABLE witw_production.share_safari_included DROP INDEX share_safari_id, ADD UNIQUE share_safari_id (share_safari_id, include_id, version) USING BTREE;
 ALTER TABLE share_safari_park ADD version VARCHAR(255) NULL DEFAULT NULL AFTER id;
 
+
+ALTER TABLE `share_safari` DROP `image`;
+ALTER TABLE `share_safari` CHANGE `filepath` `image_filepath` VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+ALTER TABLE `share_safari` DROP `share_safari_request_id`;
+

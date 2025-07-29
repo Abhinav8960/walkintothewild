@@ -49,11 +49,11 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             [['share_safari_title'], 'string'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['share_safari_inclusion', 'share_safari_exclusion'], 'string', 'max' => 2000],
-            [['image', 'filepath'], 'string', 'max' => 512],
-            [['safari_plan', 'website_url', 'share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'delete_reason'], 'string'],
+            [['image_filepath'], 'string', 'max' => 512],
+            [['safari_plan', 'getting_there', 'delete_reason'], 'string'],
             [['start_date', 'end_date', 'cut_off_date', 'gallery_json'], 'safe'],
             [['share_safari_id', 'share_safari_title', 'host_user_id', 'version'], 'required'],
-            [['share_safari_id', 'version', 'type', 'share_safari_request_id', 'host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent', 'created_at', 'created_by', 'updated_at', 'updated_by', 'delete_reason_id', 'status', 'is_published_on_api', 'is_published_on_web', 'total_view', 'pined_safari', 'final_approved_at', 'partner_gallery_id'], 'integer'],
+            [['share_safari_id', 'version', 'type', 'host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent', 'created_at', 'created_by', 'updated_at', 'updated_by', 'delete_reason_id', 'status', 'is_published_on_api', 'is_published_on_web', 'total_view', 'pined_safari', 'final_approved_at', 'partner_gallery_id'], 'integer'],
 
         ];
     }
@@ -69,7 +69,6 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             'version' => 'Version',
             'share_safari_title' => 'Share Safari Title',
             'type' => 'Type',
-            'share_safari_request_id' => 'Share Safari Request ID',
             'host_user_id' => 'Host User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
@@ -78,25 +77,17 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'cut_off_date' => 'Cut Off Date',
-            'image' => 'Image',
-            'filepath' => 'Filepath',
+            'image_filepath' => 'Image Filepath',
             'stay_category_id' => 'Stay Category ID',
             'estimate_price_min' => 'Estimate Price Min',
             'estimate_price_max' => 'Estimate Price Max',
             'cost_per_person' => 'Cost Per Person',
             'safari_plan' => 'Safari Plan',
-            'website_url' => 'Website Url',
             'total_seat' => 'Total Seat',
             'share_seat' => 'Share Seat',
             'tour_duration' => 'Tour Duration',
             'share_safari_inclusion' => 'Share Safari Inclusion',
             'share_safari_exclusion' => 'Share Safari Exclusion',
-            'share_safari_terms_condtition' => 'Share Safari Terms Condtition',
-            'privacy_policy' => 'Privacy Policy',
-            'change_policy' => 'Change Policy',
-            'what_you_must_carry' => 'What You Must Carry',
-            'date_change_policy' => 'Date Change Policy',
-            'refund_policy' => 'Refund Policy',
             'getting_there' => 'Getting There',
             'breakfast_included' => 'Breakfast Included',
             'lunch_included' => 'Lunch Included',
@@ -151,7 +142,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     public function getSharedimagepath()
     {
 
-        return isset($this->filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image_filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->image_filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()

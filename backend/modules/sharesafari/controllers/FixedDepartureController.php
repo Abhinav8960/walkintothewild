@@ -82,7 +82,6 @@ class FixedDepartureController extends Controller
 
             $fixed_departure->share_safari_title = $model->share_safari_title;
             $fixed_departure->type = $model->type;
-            $fixed_departure->share_safari_request_id = $model->share_safari_request_id;
             $fixed_departure->host_user_id = $model->host_user_id;
             $fixed_departure->host_type = $model->host_type;
             $fixed_departure->park_id = $model->park_id;
@@ -91,25 +90,17 @@ class FixedDepartureController extends Controller
             $fixed_departure->start_date = $model->start_date;
             $fixed_departure->end_date = $model->end_date;
             $fixed_departure->cut_off_date = $model->cut_off_date;
-            $fixed_departure->image = $model->image;
-            $fixed_departure->filepath = $model->filepath;
+            $fixed_departure->image_filepath = $model->image_filepath;
             $fixed_departure->stay_category_id = $model->stay_category_id;
             $fixed_departure->estimate_price_min = $model->estimate_price_min;
             $fixed_departure->estimate_price_max = $model->estimate_price_max;
             $fixed_departure->cost_per_person = $model->cost_per_person;
             $fixed_departure->safari_plan = $model->safari_plan;
-            $fixed_departure->website_url = $model->website_url;
             $fixed_departure->total_seat = $model->total_seat;
             $fixed_departure->share_seat = $model->share_seat;
             $fixed_departure->tour_duration = $model->tour_duration;
             $fixed_departure->share_safari_inclusion = $model->share_safari_inclusion;
             $fixed_departure->share_safari_exclusion = $model->share_safari_exclusion;
-            $fixed_departure->share_safari_terms_condtition = $model->share_safari_terms_condtition;
-            $fixed_departure->privacy_policy = $model->privacy_policy;
-            $fixed_departure->change_policy = $model->change_policy;
-            $fixed_departure->what_you_must_carry = $model->what_you_must_carry;
-            $fixed_departure->date_change_policy = $model->date_change_policy;
-            $fixed_departure->refund_policy = $model->refund_policy;
             $fixed_departure->getting_there = $model->getting_there;
             $fixed_departure->breakfast_included = $model->breakfast_included;
             $fixed_departure->lunch_included = $model->lunch_included;
