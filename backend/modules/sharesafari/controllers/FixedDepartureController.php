@@ -82,7 +82,6 @@ class FixedDepartureController extends Controller
 
             $fixed_departure->share_safari_title = $model->share_safari_title;
             $fixed_departure->type = $model->type;
-            $fixed_departure->share_safari_request_id = $model->share_safari_request_id;
             $fixed_departure->host_user_id = $model->host_user_id;
             $fixed_departure->host_type = $model->host_type;
             $fixed_departure->park_id = $model->park_id;
@@ -102,12 +101,6 @@ class FixedDepartureController extends Controller
             $fixed_departure->tour_duration = $model->tour_duration;
             $fixed_departure->share_safari_inclusion = $model->share_safari_inclusion;
             $fixed_departure->share_safari_exclusion = $model->share_safari_exclusion;
-            $fixed_departure->share_safari_terms_condtition = $model->share_safari_terms_condtition;
-            $fixed_departure->privacy_policy = $model->privacy_policy;
-            $fixed_departure->change_policy = $model->change_policy;
-            $fixed_departure->what_you_must_carry = $model->what_you_must_carry;
-            $fixed_departure->date_change_policy = $model->date_change_policy;
-            $fixed_departure->refund_policy = $model->refund_policy;
             $fixed_departure->getting_there = $model->getting_there;
             $fixed_departure->breakfast_included = $model->breakfast_included;
             $fixed_departure->lunch_included = $model->lunch_included;
