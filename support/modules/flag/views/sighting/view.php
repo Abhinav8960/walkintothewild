@@ -10,48 +10,55 @@ $this->params['title'] = $this->title;
 $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaAppAsset')->baseUrl;
 
 ?>
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <td class="px-3"><b>Comment:</b></td>
-                    <td class="px-3"><?= ucfirst($flag_comment->comment) ?></td>
-                </tr>
-                <tr>
-                    <td class="px-3"><b>Comment By:</b></td>
-                    <td class="px-3"><?= isset($flag_comment->user) ? ucfirst($flag_comment->user->name) : '' ?></td>
-                </tr>
-                <tr>
-                    <td class="px-3"><b>Date:</b></td>
-                    <td class="px-3"><?= date('d-m-Y', $flag_comment->created_at) ?></td>
-                </tr>
-                <tr>
-                    <td class="px-3"><b>Status:</b></td>
-                    <td class="px-3">
-                        <?php
-                        $c_status = "Active";
-                        if ($flag_comment->status == '-1') {
-                            $c_status = "Delete";
-                        }
-                        echo $c_status; ?></td>
-                </tr>
-            </table>
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
+            <div class='row align-items-center mt-3 '>
+                <table class="table tablecustoms table-striped align-middle w-100">
+                    <tr>
+                        <td class="px-5 col-md-3"><b>Comment:</b></td>
+                        <td class="px-5 wrap-text"><?= ucfirst($flag_comment->comment) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Comment By:</b></td>
+                        <td class="px-5"><?= isset($flag_comment->user) ? ucfirst($flag_comment->user->name) : '' ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Date:</b></td>
+                        <td class="px-5"><?= date('d-m-Y', $flag_comment->created_at) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="px-5"><b>Status:</b></td>
+                        <td class="px-5">
+                            <?php
+                            $c_status = "Active";
+                            if ($flag_comment->status == '-1') {
+                                $c_status = "Delete";
+                            }
+                            echo $c_status; ?></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 
-<div class="card">
-    <div class="card-body">
-        <div id="w1-button" class="mb-3"></div>
-        <div class="table-responsive">
+<div class="table-wrapper mt-3">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'headerOptions' => ['style' => 'width: 1%;'],
                     ],
                     [
                         'label' => 'Date',
@@ -113,9 +120,9 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaA
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">', [
+                            return Html::button('<i class="mdi mdi-pencil"></i>', [
                                 'value' => Url::toRoute(['edit', 'id' => $model->id]),
-                                'class' => 'btn btn-warning flag-action mb-2',
+                                'class' => 'btn p-0 change-menuicon flag-action mb-2',
                                 'title' => 'Edit'
                             ]);
                         }
@@ -156,3 +163,10 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
+
+<style>
+    .tablecustoms tbody .wrap-text {
+        white-space: normal !important;
+        text-overflow: initial !important;
+    }
+</style>

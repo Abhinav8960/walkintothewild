@@ -129,7 +129,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaA
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button('<i class="mdi mdi-eye"></i>', [
+                            return Html::button('<i class="mdi mdi-pencil"></i>', [
                                 'value' => Url::toRoute(['edit', 'id' => $model->id]),
                                 'class' => 'btn p-0 change-menuicon flag-action mb-2',
                                 'title' => 'Edit'
