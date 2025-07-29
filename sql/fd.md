@@ -3,14 +3,14 @@ ALTER TABLE `share_safari` ADD `live_version` INT NULL DEFAULT NULL AFTER `pined
 
 ALTER TABLE share_safari_day ADD version VARCHAR(255) NULL DEFAULT NULL AFTER share_safari_id;
 ALTER TABLE share_safari_day ADD partner_gallery_id INT NULL DEFAULT NULL AFTER day_note, ADD gallery_json JSON NULL DEFAULT NULL AFTER partner_gallery_id;
-ALTER TABLE witw_production.share_safari_day DROP INDEX share_safari_id, ADD UNIQUE share_safari_id (share_safari_id, day, version) USING BTREE;
+ALTER TABLE share_safari_day DROP INDEX share_safari_id, ADD UNIQUE share_safari_id (share_safari_id, day, version) USING BTREE;
 
 ALTER TABLE `share_safari_faq` ADD `master_faq_id` INT NULL DEFAULT NULL AFTER `id`;
 
 
 ALTER TABLE share_safari_faq ADD version VARCHAR(255) NULL DEFAULT NULL AFTER share_safari_id;
 ALTER TABLE share_safari_included ADD version VARCHAR(255) NULL DEFAULT NULL AFTER id;
-ALTER TABLE witw_production.share_safari_included DROP INDEX share_safari_id, ADD UNIQUE share_safari_id (share_safari_id, include_id, version) USING BTREE;
+ALTER TABLE share_safari_included DROP INDEX share_safari_id, ADD UNIQUE share_safari_id (share_safari_id, include_id, version) USING BTREE;
 ALTER TABLE share_safari_park ADD version VARCHAR(255) NULL DEFAULT NULL AFTER id;
 
 
@@ -30,5 +30,5 @@ ALTER TABLE `share_safari` ADD `host_partner_id` INT NULL DEFAULT NULL AFTER `ho
 
 ALTER TABLE `share_safari` CHANGE `host_user_id` `host_user_id` INT NULL DEFAULT NULL;
 
-ALTER TABLE `prod_witw_23`.`share_safari` DROP INDEX `host_user_id`, ADD INDEX `host_user_id` (`park_id`, `start_date`, `end_date`, `estimate_price_min`, `estimate_price_max`, `cost_per_person`, `total_seat`, `status`) USING BTREE;
+ALTER TABLE `share_safari` DROP INDEX `host_user_id`, ADD INDEX `host_user_id` (`park_id`, `start_date`, `end_date`, `estimate_price_min`, `estimate_price_max`, `cost_per_person`, `total_seat`, `status`) USING BTREE;
 
