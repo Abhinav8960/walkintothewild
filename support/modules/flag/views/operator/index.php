@@ -109,10 +109,8 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaA
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
-
-
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
+                                return  Html::a('<i class="mdi mdi-eye"></i>',
+                                ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'name' => 'View',
                                 ]);
