@@ -21,7 +21,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<?php if (Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/urlshortner",
