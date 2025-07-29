@@ -46,7 +46,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $lunch_included;
     public $dinner_included;
     public $meal_not_included;
-    public $mail_sent;
 
     public $action_url;
     public $action_validate_url;
@@ -127,7 +126,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
-            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent'], 'default', 'value' => 0],
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['share_safari_id', 'version'], 'integer'],
             [['partner_gallery_id'], 'integer'],
