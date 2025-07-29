@@ -97,7 +97,6 @@ class FixedDepartureController extends Controller
             $fixed_departure->estimate_price_max = $model->estimate_price_max;
             $fixed_departure->cost_per_person = $model->cost_per_person;
             $fixed_departure->safari_plan = $model->safari_plan;
-            $fixed_departure->website_url = $model->website_url;
             $fixed_departure->total_seat = $model->total_seat;
             $fixed_departure->share_seat = $model->share_seat;
             $fixed_departure->tour_duration = $model->tour_duration;
