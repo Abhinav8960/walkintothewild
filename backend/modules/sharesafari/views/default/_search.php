@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-2">
         <?= $form->field($model, 'host_user_id')->widget(Select2::class, [
-            'initValueText' => $model->user ? $model->user->name . '(' . $model->user->email . ')' : '',
+            'initValueText' => $model->hostUser ? $model->hostUser->name . '(' . $model->hostUser->email . ')' : '',
             'options' => ['placeholder' => 'Select User', 'multiple' => false],
             'pluginOptions' => [
                 'allowClear' => true,

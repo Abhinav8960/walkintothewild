@@ -83,6 +83,8 @@ class FixedDepartureController extends Controller
             $fixed_departure->share_safari_title = $model->share_safari_title;
             $fixed_departure->type = $model->type;
             $fixed_departure->host_user_id = $model->host_user_id;
+            $fixed_departure->host_partner_id = $model->host_partner_id;
+            $fixed_departure->user_id = $model->user_id;
             $fixed_departure->host_type = $model->host_type;
             $fixed_departure->park_id = $model->park_id;
             $fixed_departure->share_safari_agenda_id = $model->share_safari_agenda_id;

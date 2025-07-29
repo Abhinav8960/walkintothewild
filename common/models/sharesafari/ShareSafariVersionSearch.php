@@ -36,7 +36,7 @@ class ShareSafariVersionSearch extends ShareSafariVersion
     public function rules()
     {
         return [
-            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['host_user_id','host_partner_id','user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'report_days', 'type'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web', 'cut_off_date'], 'safe'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
@@ -461,6 +461,8 @@ class ShareSafariVersionSearch extends ShareSafariVersion
             'id' => $this->id,
             'share_safari_version.type' => $this->type,
             'share_safari_version.host_user_id' => $this->host_user_id,
+            'share_safari_version.host_partner_id' => $this->host_partner_id,
+            'share_safari_version.user_id' => $this->user_id,
             'share_safari_version.host_type' => $this->host_type,
             'share_safari_version.park_id' => $this->park_id,
             'share_safari_version.share_safari_agenda_id' => $this->share_safari_agenda_id,

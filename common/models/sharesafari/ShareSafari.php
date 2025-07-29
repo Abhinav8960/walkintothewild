@@ -96,6 +96,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['safari_plan'], 'string'],
             [['image', 'filepath'], 'string'],
+            [['host_partner_id','user_id'],'integer'],
         ];
     }
 
@@ -107,6 +108,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
+            'host_partner_id' => 'Host Partner ID',
+            'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
             'share_safari_agenda_id' => 'Share Safari Agenda ID',
@@ -147,14 +150,19 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     }
 
 
-    public function getUser()
+    // public function getUser()
+    // {
+    //     return $this->hasOne(User::className(), ['id' => 'host_user_id']);
+    // }
+
+    public function getHostUser()
     {
         return $this->hasOne(User::className(), ['id' => 'host_user_id']);
     }
 
     public function getSafarioperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'host_user_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'host_partner_id']);
     }
 
 
@@ -199,8 +207,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getOrganizedbyname()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            // return $this->user ? $this->user->name : 'N/A';
-            return $this->user ? $this->user->Safarioperatorname : 'N/A';
+            // return $this->hostUser ? $this->hostUser->name : 'N/A';
+            return $this->hostUser ? $this->hostUser->Safarioperatorname : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
         }
@@ -209,7 +217,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getOrganizedbyuserhandel()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->user_handle : 'N/A';
+            return $this->hostUser ? $this->hostUser->user_handle : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
         }
@@ -217,7 +225,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getOrganizedbyimage()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->profileimage : '';
+            return $this->hostUser ? $this->hostUser->profileimage : '';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return $this->safarioperator &&  $this->safarioperator->logo  ? $this->safarioperator->imagepath : '';
         }
@@ -225,7 +233,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getOrganizedbyprofileurl()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user ? $this->user->user_handle : '']);
+            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->hostUser ? $this->hostUser->user_handle : '']);
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->safarioperator ? $this->safarioperator->slug : '']);
         }
@@ -249,7 +257,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getOrganizedslug()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->user_handle : 'N/A';
+            return $this->hostUser ? $this->hostUser->user_handle : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->safarioperator) ? $this->safarioperator->slug : "N/A";
         }
@@ -291,8 +299,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getSharesafarifollowerlist()
     {
-        if ($this->user &&  $this->user->userfollowers) {
-            return $this->user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
+        if ($this->hostUser &&  $this->hostUser->userfollowers) {
+            return $this->hostUser->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
         }
     }
 
