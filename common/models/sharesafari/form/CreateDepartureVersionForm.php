@@ -14,7 +14,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
     public $type;
     public $share_safari_title;
-    public $host_user_id;
     public $host_type;
     public $park_list;
     public $park_id;
@@ -32,12 +31,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $share_safari_inclusion;
     public $share_safari_exclusion;
     public $share_safari_included;
-    public $share_safari_terms_condtition;
-    public $privacy_policy;
-    public $change_policy;
-    public $what_you_must_carry;
-    public $date_change_policy;
-    public $refund_policy;
     public $getting_there;
     public $rand_text;
     public $cut_off_date;
@@ -46,7 +39,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $lunch_included;
     public $dinner_included;
     public $meal_not_included;
-    public $mail_sent;
 
     public $action_url;
     public $action_validate_url;
@@ -57,9 +49,13 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $image_filepath;
     public $created_at;
 
+    public $host_user_id;
+    public $host_partner_id;
+    public $user_id;
+
     public $shared_safari_departure_version_model;
 
-    public function __construct(ShareSafariVersion $shared_safari_departure_version_model = null)
+    public function __construct(?ShareSafariVersion $shared_safari_departure_version_model = null)
     {
         $this->shared_safari_departure_version_model = Yii::createObject([
             'class' => ShareSafariVersion::class
@@ -74,9 +70,8 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
             $this->type =  $this->shared_safari_departure_version_model->type;
             $this->share_safari_title =  $this->shared_safari_departure_version_model->share_safari_title;
-            $this->host_user_id =  $this->shared_safari_departure_version_model->host_user_id;
             $this->host_type =  $this->shared_safari_departure_version_model->host_type;
-
+            
             $this->share_safari_agenda_id =  $this->shared_safari_departure_version_model->share_safari_agenda_id;
             $this->no_of_safari =  $this->shared_safari_departure_version_model->no_of_safari;
             $this->start_date =  $this->shared_safari_departure_version_model->start_date;
@@ -89,27 +84,25 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->share_seat =  $this->shared_safari_departure_version_model->share_seat;
             $this->tour_duration =  $this->shared_safari_departure_version_model->tour_duration;
             $this->status =  $this->shared_safari_departure_version_model->status;
-
+            
             $this->share_safari_inclusion = $this->shared_safari_departure_version_model->share_safari_inclusion;
             $this->share_safari_exclusion = $this->shared_safari_departure_version_model->share_safari_exclusion;
-            $this->share_safari_terms_condtition = $this->shared_safari_departure_version_model->share_safari_terms_condtition;
-            $this->privacy_policy = $this->shared_safari_departure_version_model->privacy_policy;
-            $this->change_policy = $this->shared_safari_departure_version_model->change_policy;
-            $this->what_you_must_carry = $this->shared_safari_departure_version_model->what_you_must_carry;
-            $this->date_change_policy = $this->shared_safari_departure_version_model->date_change_policy;
-            $this->refund_policy = $this->shared_safari_departure_version_model->refund_policy;
             $this->getting_there = $this->shared_safari_departure_version_model->getting_there;
-
+            
             $this->breakfast_included = $this->shared_safari_departure_version_model->breakfast_included;
             $this->lunch_included = $this->shared_safari_departure_version_model->lunch_included;
             $this->dinner_included = $this->shared_safari_departure_version_model->dinner_included;
             $this->meal_not_included = $this->shared_safari_departure_version_model->meal_not_included;
-
+            
             $this->image_filepath = $this->shared_safari_departure_version_model->image_filepath;
             $this->created_at = $this->shared_safari_departure_version_model->created_at;
             $this->partner_gallery_id = $this->shared_safari_departure_version_model->partner_gallery_id;
-
+            
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_version_model->share_safari_id, 'version' => $this->shared_safari_departure_version_model->version])->column(); //abb multiple park ko store karenge
+
+            $this->host_user_id =  $this->shared_safari_departure_version_model->host_user_id;
+            $this->host_partner_id =  $this->shared_safari_departure_version_model->host_partner_id;
+            $this->user_id =  $this->shared_safari_departure_version_model->user_id;
         }
     }
 
@@ -127,13 +120,14 @@ class CreateDepartureVersionForm extends \yii\base\Model
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
-            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'mail_sent'], 'default', 'value' => 0],
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['share_safari_id', 'version'], 'integer'],
             [['partner_gallery_id'], 'integer'],
             [['gallery_json'], 'safe'],
             [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             [['image_filepath'], 'string'],
+            [['host_partner_id','user_id'],'integer'],
 
 
         ];
@@ -152,7 +146,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
     {
         $scenarios = parent::scenarios();
         $scenarios['inclusion'] = ['share_safari_inclusion', 'share_safari_exclusion', 'share_safari_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
-        $scenarios['policy_info'] = ['share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
+        // $scenarios['policy_info'] = ['share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['getting_there'] = ['getting_there', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         return $scenarios;
     }
@@ -166,6 +160,8 @@ class CreateDepartureVersionForm extends \yii\base\Model
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
+            'host_partner_id' => 'Host Partner ID',
+            'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
             'share_safari_agenda_id' => 'Share Safari Agenda ID',
@@ -190,6 +186,8 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
         $m->host_user_id = $this->host_user_id;
+        $m->host_partner_id = $this->host_partner_id;
+        $m->user_id = $this->user_id;
         $m->status = 0;
         $m->save(false);
         return $m->id;
@@ -206,10 +204,14 @@ class CreateDepartureVersionForm extends \yii\base\Model
         if ($this->share_safari_id == null) {
             $this->share_safari_id = $this->getShareSafariId();
         }
+
+        $this->shared_safari_departure_version_model->host_user_id = $this->host_user_id;
+        $this->shared_safari_departure_version_model->host_partner_id = $this->host_partner_id;
+        $this->shared_safari_departure_version_model->user_id = $this->user_id;
+
         $this->shared_safari_departure_version_model->share_safari_id = $this->share_safari_id;
         $this->shared_safari_departure_version_model->version = $this->version;
         $this->shared_safari_departure_version_model->type = $this->type;
-        $this->shared_safari_departure_version_model->host_user_id = $this->host_user_id;
         $this->shared_safari_departure_version_model->share_safari_title = $this->share_safari_title;
         $this->shared_safari_departure_version_model->host_type = $this->host_type; // iss bhi check karna ha
         $this->shared_safari_departure_version_model->type = $this->type;
@@ -235,12 +237,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
         $this->shared_safari_departure_version_model->share_safari_inclusion = $this->share_safari_inclusion;
         $this->shared_safari_departure_version_model->share_safari_exclusion = $this->share_safari_exclusion;
-        $this->shared_safari_departure_version_model->share_safari_terms_condtition = $this->share_safari_terms_condtition;
-        $this->shared_safari_departure_version_model->privacy_policy = $this->privacy_policy;
-        $this->shared_safari_departure_version_model->change_policy = $this->change_policy;
-        $this->shared_safari_departure_version_model->what_you_must_carry = $this->what_you_must_carry;
-        $this->shared_safari_departure_version_model->date_change_policy = $this->date_change_policy;
-        $this->shared_safari_departure_version_model->refund_policy = $this->refund_policy;
         $this->shared_safari_departure_version_model->getting_there = $this->getting_there;
 
 
