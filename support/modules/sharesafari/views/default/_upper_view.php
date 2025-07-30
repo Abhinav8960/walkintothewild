@@ -16,7 +16,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-12 mb-4">
                 <div class="topParent d-flex justify-content-between align-items-center">
                     <div class="packageTitle">
-                        <!-- <h2>Fixed Departure : <?= $share_safari->share_safari_title ?></h2> -->
+                        <h2>Fixed Departure : <?= $share_safari->share_safari_title ?></h2>
                     </div>
                 </div>
             </div>

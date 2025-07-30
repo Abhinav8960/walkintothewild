@@ -4,14 +4,14 @@ use frontend\assets\FrontAppAsset;
 use support\assets\AppAsset;
 use yii\helpers\Url;
 
-FrontAppAsset::register($this);
+// FrontAppAsset::register($this);
 AppAsset::register($this);
 
 $webasset = $this->assetManager->getBundle('\support\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Fixed Departure';
-$this->params['title'] = $this->title;
+// $this->params['title'] = $this->title;
 
 ?>
 
