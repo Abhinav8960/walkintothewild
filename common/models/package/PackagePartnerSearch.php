@@ -54,7 +54,7 @@ class PackagePartnerSearch extends Package
         return [
             [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'owned_by_id'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name', 'version'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
             [['package_image', 'report_days'], 'safe'],
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by', 'package_start_date', 'package_end_date'], 'safe'],
@@ -113,7 +113,7 @@ class PackagePartnerSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
-            'version' => $this->version,
+            // 'version' => $this->version,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
             'stay_category_id' => $this->stay_category_id,
