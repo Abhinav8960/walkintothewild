@@ -2,6 +2,7 @@
 
 namespace backend\modules\sharesafari\controllers;
 
+use api\models\sharesafari\ShareSafari as ApiShareSafari;
 use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariDay;
@@ -12,6 +13,7 @@ use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariVersion;
 use common\models\sharesafari\ShareSafariVersionSearch;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -113,6 +115,9 @@ class FixedDepartureController extends Controller
             $fixed_departure->status = ShareSafari::STATUS_ACTIVE;
             $fixed_departure->save(false);
 
+            $fixed_departure->static_json  = $this->prepareJson($fixed_departure->id);
+            $fixed_departure->save(false);
+
             $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
             $model->final_approved_at = time();
 
@@ -141,7 +146,7 @@ class FixedDepartureController extends Controller
     private function copyWithEdit($id)
     {
         $m = $this->findModel($id);
-        
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $newModel = $this->copyWithEditFixedDeparture($id);
@@ -327,5 +332,46 @@ class FixedDepartureController extends Controller
     //     }
     // }
 
+    public function prepareJson($id)
+    {
+        $share_safari = ApiShareSafari::find()->where(['id' => $id])->limit(1)->one();
 
+
+        $json = [
+            'share_safari' => [
+                'share_safari_title' => $share_safari->share_safari_title,
+                'slug' => $share_safari->slug,
+                'no_of_safari' => $share_safari->no_of_safari,
+                'start_date' => $share_safari->start_date,
+                'end_date' => $share_safari->end_date,
+                'cut_off_date' => $share_safari->cut_off_date,
+                'total_seat' => $share_safari->total_seat,
+                'share_seat' => $share_safari->share_seat,
+                'types' => $share_safari->types,
+                'organized_by_name' => $share_safari->organizedbyname,
+                'organized_by_image' => $share_safari->organizedbyimage,
+                'organized_slug' => $share_safari->organizedslug,
+                'shared_image_path' => $share_safari->sharedimagepath,
+                'seat_full_status' => $share_safari->seat_full_status,
+                'park_title' => $share_safari->park_title,
+                'park_slug' => $share_safari->park_slug,
+                'cost_per_person' => $share_safari->cost_per_person,
+                'breakfast_included' => $share_safari->breakfast_included,
+                'lunch_included' => $share_safari->lunch_included,
+                'dinner_included' => $share_safari->dinner_included,
+                'meal_not_included' => $share_safari->meal_not_included,
+                'meals_label' => $share_safari->meals_label,
+                'share_safari_inclusion' => $share_safari->share_safari_inclusion,
+                'share_safari_exclusion' => $share_safari->share_safari_exclusion,
+                'getting_there' => $share_safari->getting_there,
+                'safari_plan' => $share_safari->safari_plan,
+                'share_safari_agenda' => $share_safari->share_safari_agenda,
+                'stay_category_display' => $share_safari->stay_category_display,
+                'parks' => $share_safari->parks,
+                'stay_category_id' => $share_safari->stay_category_id,
+            ],
+        ];
+
+        return json_encode($json);
+    }
 }
