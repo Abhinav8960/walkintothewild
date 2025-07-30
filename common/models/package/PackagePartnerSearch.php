@@ -16,12 +16,12 @@ class PackagePartnerSearch extends PackageVersion
 {
     public $park_id;
     public $month_id;
-    public $estimated_price_filter_min = 1000;
-    public $estimated_price_filter_max = 50000;
+    public $estimated_price_filter_min = 0;
+    public $estimated_price_filter_max = 0;
     public $no_of_safari_min = 1;
-    public $no_of_safari_max = 10;
+    public $no_of_safari_max = 0;
     public $no_of_night_min = 0;
-    public $no_of_night_max = 10;
+    public $no_of_night_max = 0;
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
@@ -31,6 +31,7 @@ class PackagePartnerSearch extends PackageVersion
     public $package_end_date;
     public $cost_per_person_min;
     public $cost_per_person_max;
+
 
     public $business_name;
 
