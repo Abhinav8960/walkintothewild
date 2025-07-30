@@ -6,13 +6,13 @@ use common\models\GeneralModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 use DateTime;
 
 /**
  * PackageVersionSearch represents the model behind the search form of `common\models\package\Package`.
  */
-class PackagePartnerSearch extends PackageVersion
+class PackagePartnerSearch extends Package
 {
     public $park_id;
     public $month_id;
@@ -128,7 +128,7 @@ class PackagePartnerSearch extends PackageVersion
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            PackageVersion::tableName() . '.status' => $this->status,
+            Package::tableName() . '.status' => $this->status,
         ]);
 
 
