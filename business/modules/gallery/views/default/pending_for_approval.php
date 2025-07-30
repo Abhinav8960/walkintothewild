@@ -40,7 +40,7 @@ $this->title = 'Gallery';
                                         <button type="btn">Pending for Approval</button>
                                     </div> -->
 
-                                    <!-- <div class="dropdown-wrapper" tabindex="0">
+                                    <div class="dropdown-wrapper" tabindex="0">
                                         <a href="#" class="dot-icon">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
@@ -50,7 +50,7 @@ $this->title = 'Gallery';
                                             </a>
 
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                 </div>
                                 <div class="card-body d-flex justify-content-between">
