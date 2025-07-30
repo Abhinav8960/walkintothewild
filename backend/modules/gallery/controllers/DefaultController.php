@@ -21,8 +21,6 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PartnerGallerySearch();
-        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        // $searchModel->is_approved = 1;
         $searchModel->is_live = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -34,21 +32,14 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('danger', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
-        $searchModel = new PartnerGalleryImageSearch();
-        $searchModel->partner_gallery_id = $partner_gallery_model->id;
-        $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('view', [
-            'model' => $partner_gallery_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'partner_gallery_model' => $partner_gallery_model,
         ]);
     }
 }

@@ -79,3 +79,6 @@ INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`
 ALTER TABLE `user` ADD `is_support_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_admin`;
 
 ALTER TABLE `safari_park` ADD `short_name` VARCHAR(255) NULL DEFAULT NULL AFTER `title`;
+
+ALTER TABLE `partner_gallery` DROP `can_send_for_approval`;
+ALTER TABLE `partner_gallery_version` DROP `can_send_for_approval`;

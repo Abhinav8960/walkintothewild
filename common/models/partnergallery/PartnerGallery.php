@@ -77,7 +77,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['safari_operator_id', 'title', 'slug'], 'required'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id','gallery_images_count'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id','gallery_images_count','user_id'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             // [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
@@ -162,7 +162,6 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         $version_form_model->title = $this->title;
         $version_form_model->slug = $this->slug;
         $version_form_model->remark = $this->remark;
-        $version_form_model->can_send_for_approval = $this->can_send_for_approval;
         $version_form_model->live_images = $this->live_images;
         $version_form_model->in_draft = $this->in_draft;
         $version_form_model->is_approved = $this->is_approved;

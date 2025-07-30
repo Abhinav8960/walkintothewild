@@ -530,4 +530,15 @@ class TempController extends Controller
 
         echo 'Done';
     }
+
+
+    public function actionUpdateGalleryUserId()
+    {
+        $galleries = PartnerGallery::find()->all();
+        foreach($galleries as $gallery)
+        {
+            $gallery->user_id = $gallery->created_by;
+            $gallery->save(false);
+        }
+    }
 }
