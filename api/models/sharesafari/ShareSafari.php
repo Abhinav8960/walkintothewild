@@ -163,14 +163,19 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     }
 
 
-    public function getUser()
+    // public function getUser()
+    // {
+    //     return $this->hasOne(User::className(), ['id' => 'host_user_id']);
+    // }
+
+     public function getHostUser()
     {
         return $this->hasOne(User::className(), ['id' => 'host_user_id']);
     }
 
     public function getPartner()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'host_user_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'host_partner_id']);
     }
 
 
@@ -210,7 +215,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getShared_image_path()
     {
 
-        return isset($this->filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image_filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->image_filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
@@ -243,7 +248,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_by_name()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->name : 'N/A';
+            return $this->hostUser ? $this->hostUser->name : 'N/A';
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
@@ -252,7 +257,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_by_userhandel()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->user_handle : 'N/A';
+            return $this->hostUser ? $this->hostUser->user_handle : 'N/A';
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->businessname : "N/A";
         }
@@ -260,7 +265,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_by_image()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->profile_display_image : '';
+            return $this->hostUser ? $this->hostUser->profile_display_image : '';
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return $this->partner &&  $this->partner->logo  ? $this->partner->imagepath : '';
         }
@@ -268,7 +273,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_by_profileurl()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user ? $this->user->user_handle : '']);
+            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->hostUser ? $this->hostUser->user_handle : '']);
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->partner ? $this->partner->slug : '']);
         }
@@ -281,14 +286,14 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getIncludeds()
     {
-        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id', 'version' => 'live_version']);
 
         // return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id'])->via('sharesafariIncludeds');
     }
 
     public function getShare_safari_days()
     {
-        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
+        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id', 'version' => 'live_version']);
     }
 
     public function getSharesafarigallery()
@@ -299,7 +304,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganized_slug()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->user_handle : 'N/A';
+            return $this->hostUser ? $this->hostUser->user_handle : 'N/A';
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->slug : "N/A";
         }
@@ -369,7 +374,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSharesafariFaqs()
     {
-        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id'])->where(['share_safari_faq.status' => ShareSafariFaq::STATUS_ACTIVE]);
+        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id', 'version' => 'live_version'])->where(['share_safari_faq.status' => ShareSafariFaq::STATUS_ACTIVE]);
     }
 
     public function getFaqs()
@@ -459,7 +464,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getOrganizedId()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user ? $this->user->id : '';
+            return $this->hostUser ? $this->hostUser->id : '';
         } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return isset($this->partner) ? $this->partner->user->id : '';
         }
@@ -500,7 +505,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getIs_safari_operator()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            if ($user = $this->user) {
+            if ($user = $this->hostUser) {
                 return $user->operator ? true : false;
             }
             return false;
