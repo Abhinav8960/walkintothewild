@@ -150,7 +150,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <h6 class="titler_safari"><i class="fa-solid fa-location-dot me-1"></i><?= $share_safari->park->title ?></h6>
                                 <p class="mb-0 ">Organized by <a href=""
-                                        data-discover="true"><strong><?= isset($share_safari->safarioperator->business_name) ? $share_safari->safarioperator->business_name : '' ?></strong></a></p>
+                                        data-discover="true"><strong><?= isset($share_safari->safarioperator->business_name) ? $share_safari->safarioperator->business_name : 'N/A' ?></strong></a></p>
                             </div>
                         </div>
 
