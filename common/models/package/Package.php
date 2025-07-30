@@ -364,8 +364,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
             return 'Included';
         }
-
-
         return 'Not Included';
     }
 
@@ -413,5 +411,15 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $slug = \yii\helpers\Inflector::slug($package_name) . '-' . $count;
         }
         return $slug;
+    }
+
+    public function getEditable_package()
+    {
+        return $this->hasOne(PackageVersion::className(), ['package_id' => 'id', 'version' => 'editable_version']);
+    }
+
+    public function getLive_package()
+    {
+        return $this->hasOne(PackageVersion::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
 }

@@ -509,4 +509,162 @@ class PackageVersionSearch extends PackageVersion
 
         return $dataProvider;
     }
+
+     public function packagesearch($params)
+    {
+        $query = Package::find();
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => [
+                'pageSize' => 50,
+            ],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'no_of_day' => $this->no_of_day,
+            'version' => $this->version,
+            'start_location' => $this->start_location,
+            'end_location' => $this->end_location,
+            'stay_category_id' => $this->stay_category_id,
+            'package_inclusion' => $this->package_inclusion,
+            'package_description' => $this->package_description,
+            'package_exclusion' => $this->package_exclusion,
+            'package_terms_condtition' => $this->package_terms_condtition,
+            'owned_by_id' => $this->owned_by_id,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
+            'is_published_on_web' => $this->is_published_on_web,
+            'is_published_on_api' => $this->is_published_on_api,
+            PackageVersion::tableName() . '.status' => $this->status,
+        ]);
+
+
+
+        $query->andFilterWhere(['like', 'package_name', $this->package_name]);
+
+
+        if ($this->cost_per_person_min && $this->cost_per_person_max) {
+            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->cost_per_person_min, $this->cost_per_person_max]);
+        }
+
+
+        if ($this->no_of_night_min && $this->no_of_night_max) {
+            if ($this->no_of_night_max >= 10) {
+                $dataProvider->query->andWhere('no_of_night>=' . $this->no_of_night_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_night', $this->no_of_night_min, $this->no_of_night_max]);
+            }
+        }
+
+        if ($this->no_of_safari_min && $this->no_of_safari_max) {
+            if ($this->no_of_safari_max >= 10) {
+                $dataProvider->query->andWhere('no_of_safari>=' . $this->no_of_safari_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_safari', $this->no_of_safari_min, $this->no_of_safari_max]);
+            }
+        }
+
+
+        if ($this->month_id) {
+            $query->andWhere("MONTH(start_date)=" . $this->month_id);
+            // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
+        }
+
+
+
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
+
+        if ($this->package_include) {
+            $query->joinwith(['packageincluded' => function ($package_include_query) {
+                $package_include_query->andFilterWhere(['include_id' => $this->package_include]);
+            }]);
+        }
+
+        if ($this->package_feature) {
+            $query->joinwith(['packagefeatures' => function ($package_feature_query) {
+                $package_feature_query->andFilterWhere(['feature_id' => $this->package_feature]);
+            }]);
+        }
+
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == '1') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '2') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '3') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '4') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['cost_per_person' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '5') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['popular_package' => SORT_DESC]
+                ];
+            }
+        }
+
+        if ($this->business_name) {
+            $query->joinwith(['safarioperator' => function ($safari_operator_query) {
+                $safari_operator_query->andFilterWhere(['like', 'safari_operator.business_name', $this->business_name]);
+            }]);
+        }
+
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+
+        if ($this->custom_status != null) {
+            switch ($this->custom_status) {
+                // case 0:
+                //     $query->andWhere(['status' => 0]);
+                //     break;
+                case 1:
+                    $query->andWhere(['status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere(['status' => 2]);
+                    break;
+                case 3:
+                    $query->andWhere(['status' => 3]);
+                    break;
+                case 4:
+                    $query->andWhere(['status' => [0, 4]]);
+                    break;
+            };
+        }
+
+        return $dataProvider;
+    }
 }

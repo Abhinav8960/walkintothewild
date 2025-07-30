@@ -142,12 +142,21 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         }
                     ],
 
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->statustags;
+                    //     }
+                    // ],
+
                     [
-                        'label' => 'Status',
+                        'label' => 'Is Live',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statustags;
+                            return $model->live_version != null ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>';
                         }
                     ],
 
@@ -160,9 +169,9 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'buttons' => [
 
                             'update' => function ($url, $model) {
-                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
+                                if (isset($model->editable_package)) {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
-                                ', ['/package/default/update', 'id' => $model->id], [
+                                ', ['/package/default/update', 'id' => $model->editable_package->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
 
@@ -173,10 +182,19 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                 ]);
                             },
                             'view' => function ($url, $model) {
-                                return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-                                ]);
+                                 if (isset($model->live_package)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->live_package->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                 }
+                                if (isset($model->editable_package)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->editable_package->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                }
+
                             },
 
                             // 'SentforApproval' => function ($url, $model) {
