@@ -138,7 +138,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 12%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->max_booking_date) ? date("F j, Y, g:i a", strtotime($model->max_booking_date)) : '';
+                            return isset($model->max_booking_date) ? date("F j, Y", strtotime($model->max_booking_date)) : '';
                         }
                     ],
 
