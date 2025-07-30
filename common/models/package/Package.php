@@ -422,4 +422,12 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return $this->hasOne(PackageVersion::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
+
+    public function getDisplay_package()
+    {
+        if ($this->live_package) {
+            return $this;
+        }
+        return $this->editable_package;
+    }
 }

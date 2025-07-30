@@ -6,22 +6,22 @@ use common\models\GeneralModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 use DateTime;
 
 /**
  * PackageVersionSearch represents the model behind the search form of `common\models\package\Package`.
  */
-class PackagePartnerSearch extends PackageVersion
+class PackagePartnerSearch extends Package
 {
     public $park_id;
     public $month_id;
-    public $estimated_price_filter_min = 1000;
-    public $estimated_price_filter_max = 50000;
+    public $estimated_price_filter_min = 0;
+    public $estimated_price_filter_max = 0;
     public $no_of_safari_min = 1;
-    public $no_of_safari_max = 10;
+    public $no_of_safari_max = 0;
     public $no_of_night_min = 0;
-    public $no_of_night_max = 10;
+    public $no_of_night_max = 0;
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
@@ -31,6 +31,7 @@ class PackagePartnerSearch extends PackageVersion
     public $package_end_date;
     public $cost_per_person_min;
     public $cost_per_person_max;
+
 
     public $business_name;
 
@@ -127,7 +128,7 @@ class PackagePartnerSearch extends PackageVersion
             'updated_by' => $this->updated_by,
             'is_published_on_web' => $this->is_published_on_web,
             'is_published_on_api' => $this->is_published_on_api,
-            PackageVersion::tableName() . '.status' => $this->status,
+            Package::tableName() . '.status' => $this->status,
         ]);
 
 
@@ -227,13 +228,13 @@ class PackagePartnerSearch extends PackageVersion
                 //     $query->andWhere(['status' => 0]);
                 //     break;
                 case 1:
-                    $query->andWhere(['IS NOT ', 'live_version' => null]);
+                    $query->andWhere(['IS NOT ', 'live_version' , null]);
                     break;
                 case 2:
-                    $query->andWhere(['IS NOT ', 'pending_for_approval_version' => null]);
+                    $query->andWhere(['IS NOT ', 'pending_for_approval_version' , null]);
                     break;
                 case 3:
-                    $query->andWhere(['IS NOT ', 'editable_version' => null]);
+                    $query->andWhere(['IS NOT ', 'editable_version' , null]);
                     break;
                
             };
