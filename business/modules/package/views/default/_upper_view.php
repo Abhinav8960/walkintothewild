@@ -29,7 +29,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
+                        <?php if ($package->package->pending_for_approval_version == null) { ?>
                             <div class="edinBtn">
                                 <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
                             </div>
