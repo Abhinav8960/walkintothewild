@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use common\models\package\PackageVersion;
+use common\models\sharesafari\ShareSafariIncluded;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -141,11 +142,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                         <div class="d-flex flex-column pt-3 col-lg-8 col-md-9">
                             <div class="safrititles ">
-                                <h2 class="m-0 lh-1 d-inline font-devator"><?= $share_safari->share_safari_title ?></h2>
+                                <a href="<?= Yii::$app->params['frontend_url'] . '/sharedsafari/' . $share_safari->organizedslug . '/' . $share_safari->slug  ?>">
+                                    <h5><?= $share_safari->share_safari_title ?></h5>
+                                </a>
                                 <div class="date_bx">
-                                    <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?><span class="text-muted"> / Cutoff Date</span> <?= date('d M y', strtotime($share_safari->cut_off_date)) ?></h6>
+                                    <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:black;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
                                 </div>
-                                <h6><?= $share_safari->park->title ?></h6>
+                                <h6 class="titler_safari"><i class="fa-solid fa-location-dot me-1"></i><?= $share_safari->park->title ?></h6>
                                 <p class="mb-0 ">Organized by <a href=""
                                         data-discover="true"><strong><?= isset($share_safari->safarioperator->business_name) ? $share_safari->safarioperator->business_name : '' ?></strong></a></p>
                             </div>
@@ -155,27 +158,36 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="pt-lg-0 pt-4 col-lg-4">
                     <div class="ps-1 row">
-                        <div class="  mb-3 col-sm-6 col-12">
+                        <div class="mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
                                 <div class="iconImg"><img src="<?= $this->params['baseurl'] ?>/images/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration"></div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= $share_safari->start_date ?> Start Date , <?= $share_safari->end_date ?>End Date</p>
+                                    <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mb-3 col-sm-6 col-12">
+                            <div class="safridetails_form d-flex align-items-center gap-4  ">
+                                <div class="iconImg">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
+                                </div>
+                                <div class="text-form">
+                                    <p class="mb-0"><?php
+                                                    $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+
+                                                    echo ($pick_drop_includes) ? 'Included' : 'Not Included';
+                                                    ?></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="  mb-3 col-sm-6 col-12">
                             <div class="safridetails_form d-flex align-items-center gap-4 ">
                                 <div class="iconImg"> <img src="<?= $this->params['baseurl'] ?>/images/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                 </div>
                                 <div class="text-form">
-                                    <p class="mb-0"><?= $share_safari->no_of_safari ?> <?php
-                                                                                        if ($share_safari->type == 1) {
-                                                                                            echo 'Shared Safari';
-                                                                                        } elseif ($share_safari->type == 2) {
-                                                                                            echo 'Private Safari';
-                                                                                        } else {
-                                                                                            echo 'Shared Safari';
-                                                                                        } ?>
+                                    <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari
                                     </p>
                                 </div>
                             </div>
