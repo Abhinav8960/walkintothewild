@@ -34,7 +34,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
 
                         <div class="col-md-3">
                             <div class="safritimg">
-                                <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                                <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/images/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                             </div>
 
                         </div>
@@ -159,7 +159,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                     <div class="comments-persons">
                         <div class="postcomment d-flex gap-2">
                             <div class="avatar">
-                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/images/dpmain.png' ?>" alt="">
                             </div>
                             <div class="text_com">
                                 <h6 class="nameavatr"><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></h6>
