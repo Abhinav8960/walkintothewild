@@ -15,7 +15,7 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
 <div class="card">
     <div class="card-body">
         <div id="w1-button" class="mb-3"></div>
-
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
