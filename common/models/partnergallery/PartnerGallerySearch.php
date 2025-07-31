@@ -18,7 +18,7 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count','is_live'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by',  'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count','is_live'], 'integer'],
             [['custom_filter'], 'safe'],
         ];
     }
@@ -65,7 +65,6 @@ class PartnerGallerySearch extends PartnerGallery
             'is_approved' => $this->is_approved,
             'is_live' => $this->is_live,
             'send_for_approval' => $this->send_for_approval,
-            'can_send_for_approval' => $this->can_send_for_approval,
             // 'created_at' => $this->created_at,
             // 'created_by' => $this->created_by,
             // 'updated_at' => $this->updated_at,

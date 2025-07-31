@@ -52,17 +52,17 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                         'label' => 'Number of Images',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->gallery_count;
+                            return $model->live_gallery_images_count;
                         }
                     ],
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->newstatuslabel;
+                    //     }
+                    // ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',

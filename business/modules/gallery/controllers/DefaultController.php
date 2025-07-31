@@ -112,6 +112,7 @@ class DefaultController extends Controller
 
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
+        $model->user_id = Yii::$app->user->identity->id;
         $model->status = PartnerGallery::STATUS_ACTIVE;
         $model->in_draft = 1;
 
@@ -356,14 +357,6 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        // if ($partner_gallery_model->can_send_for_approval === PartnerGallery::CANNOT_SEND_FOR_APPROVAL) {
-        //     \Yii::$app->session->setFlash('error', 'This gallery already send for approval!!!');
-        //     return $this->redirect(['index']);
-        // }
-
-        // $partner_gallery_model->can_send_for_approval = PartnerGallery::CANNOT_SEND_FOR_APPROVAL;
-        // $partner_gallery_model->remark = NULL;
-
         $partner_gallery_model->send_for_approval = 1;
         $partner_gallery_model->in_draft = 0;
         $partner_gallery_model->remark = null;
@@ -424,6 +417,41 @@ class DefaultController extends Controller
 
         $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
         if ($partner_gallery_model->save(false)) {
+
+            $gallery_images = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id])->all();
+            if ($gallery_images) {
+                foreach ($gallery_images as $image) {
+                    $image->status = 0;
+                    $image->save(false);
+                }
+            }
+
+            if (!empty($partner_gallery_model->live_images)) {
+                $gallery = json_decode($partner_gallery_model->live_images, true);
+
+                if (is_array($gallery) && isset($gallery['images']) && is_array($gallery['images'])) {
+                    foreach ($gallery['images'] as $img) {
+                        $partner_gallery_image = PartnerGalleryImage::find()->where(['id' => $img['id']])->limit(1)->one();
+
+                        if ($partner_gallery_image) {
+                            $path = parse_url($img['gallery_image_path'], PHP_URL_PATH);
+                            $relativePath = ltrim($path, '/');
+                            $filename = basename(parse_url($img['gallery_image_path'], PHP_URL_PATH));
+
+                            $partner_gallery_image->status = 1;
+                            $partner_gallery_image->title = $img['title'];
+                            $partner_gallery_image->filepath = $relativePath;
+                            $partner_gallery_image->caption = $img['caption'];
+                            $partner_gallery_image->sequence = $img['sequence'];
+                            $partner_gallery_image->set_as_thumbnail = $img['set_as_thumbnail'];
+                            $partner_gallery_image->original_filename = null;
+                            $partner_gallery_image->file = $filename;
+                            $partner_gallery_image->save(false);
+                        }
+                    }
+                }
+            }
+
             \Yii::$app->session->setFlash('error', 'Gallery Deleted Successfully!!!');
             return $this->redirect(['index']);
         }
@@ -434,12 +462,13 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
 
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'is_approved' => 1, 'in_draft' => 0, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery not available for draft!!!');
         }
         $partner_gallery_model->is_approved = 0;
         $partner_gallery_model->in_draft = 1;
+        $partner_gallery_model->status = PartnerGallery::STATUS_ACTIVE;
 
 
         if ($partner_gallery_model->save(false)) {
@@ -458,14 +487,8 @@ class DefaultController extends Controller
             return $this->redirect(['index']);
         }
 
-        // $searchModel = new PartnerGalleryImageSearch();
-        // $searchModel->status = PartnerGalleryImage::STATUS_ACTIVE;
-        // $searchModel->partner_gallery_id = $partner_gallery_model->id;
-        // $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('approved_view', [
             'partner_gallery_model' => $partner_gallery_model,
-            // 'searchModel' => $searchModel,
         ]);
     }
 
