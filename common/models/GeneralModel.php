@@ -2124,8 +2124,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [
             '1' => 'Live',
             '2' => 'Pending',
-            '3' => 'Draft',
-            '4' => 'Terminated',
+            // '3' => 'Draft',
+            // '4' => 'Terminated',
         ];
     }
 

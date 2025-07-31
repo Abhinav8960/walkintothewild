@@ -76,7 +76,7 @@ class DefaultController extends Controller
 
         if ($partner_gallery_model->save(false)) {
             $partner_gallery_model->versionsave();
-            \Yii::$app->session->setFlash('danger', 'Gallery Approved SuccessFully!!!');
+            \Yii::$app->session->setFlash('success', 'Gallery Approved SuccessFully!!!');
             return $this->redirect(['index']);
         }
     }

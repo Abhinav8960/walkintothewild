@@ -5,8 +5,14 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Collection ' . '(' . $model->title . ')';
+$this->title = 'Collection ' . '(' . $partner_gallery_model->title . ')';
 $this->params['title'] = $this->title;
+
+$gallery = null;
+if (!empty($partner_gallery_model->live_images)) {
+    $gallery = json_decode($partner_gallery_model->live_images, true);
+}
+
 ?>
 
 
@@ -16,71 +22,12 @@ $this->params['title'] = $this->title;
         <div id="w1-button" class="mb-3"></div>
 
         <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <h5>Current Images</h5>
-                <div class="table-responsive">
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'layout' => "{items}\n{pager}",
-                        'columns' => [
-                            [
-                                'class' => 'yii\grid\SerialColumn',
-                                'contentOptions' => ['style' => 'width: 5%;'],
-                            ],
-                            [
-                                'label' => 'Title',
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return isset($model->title) ? $model->title : '';
-                                }
-                            ],
-                            [
-                                'label' => 'Caption',
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return isset($model->caption) ? $model->caption : '';
-                                }
-                            ],
-
-                            [
-                                'label' => 'Gallery',
-                                'format' => 'raw',
-                                'headerOptions' => ['style' => 'text-align: center;'],
-                                'value' => function ($model) {
-                                    return Html::tag('div', Html::img($model->gallery_image, [
-                                        'alt' => 'Uploaded Image',
-                                        'style' => 'width:20%; height: 20%;',
-                                    ]), ['style' => 'text-align: center;']);
-                                }
-                            ],
-                            [
-                                'label' => 'Set as Thumbnail',
-                                'format' => 'raw',
-                                'headerOptions' => ['style' => 'text-align: center;'],
-                                'value' => function ($model) {
-                                    return $model->set_as_thumbnail == 1 ? 'Yes' : 'No';
-                                }
-                            ],
-
-                            [
-                                'label' => 'Status',
-                                'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return $model->newstatuslabel;
-                                }
-                            ],
-
-                        ],
-                    ]); ?>
-                </div>
-            </div>
             <?php
-            if ($model && !empty($model->live_images)) {
-                $live_arr = json_decode($model->live_images, true);
+            if ($partner_gallery_model && !empty($partner_gallery_model->live_images)) {
+                $live_arr = json_decode($partner_gallery_model->live_images, true);
                 if ($live_arr['images']) {
             ?>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-12 col-md-12">
                         <h5>Live Images</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -101,7 +48,7 @@ $this->params['title'] = $this->title;
                                             <td><?= $count ?></td>
                                             <td><?= isset($live['title']) ? $live['title'] : '' ?></td>
                                             <td><?= isset($live['caption']) ? $live['caption'] : '' ?></td>
-                                            <td><img src="<?= isset($live['gallery_image_path']) ? $live['gallery_image_path'] : '' ?>" alt="Gallery" style = "width:50px; height: 50px; text-align: center;"></td>
+                                            <td><img src="<?= isset($live['gallery_image_path']) ? $live['gallery_image_path'] : '' ?>" alt="Gallery" style="width:50px; height: 50px; text-align: center;"></td>
                                             <td>
                                                 <?php
                                                 if ($live['set_as_thumbnail']) {

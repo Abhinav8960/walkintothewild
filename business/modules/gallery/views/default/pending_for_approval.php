@@ -40,6 +40,18 @@ $this->title = 'Gallery';
                                         <button type="btn">Pending for Approval</button>
                                     </div> -->
 
+                                    <div class="dropdown-wrapper" tabindex="0">
+                                        <a href="#" class="dot-icon">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">
+                                                <p>Delete</p>
+                                            </a>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="card-body d-flex justify-content-between">
                                     <p class="mb-0"><?= $model->title ?></p>

@@ -15,7 +15,7 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
 <div class="card">
     <div class="card-body">
         <div id="w1-button" class="mb-3"></div>
-
+        <?= $this->render('_search', ['model' => $searchModel]) ?>
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -52,17 +52,17 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                         'label' => 'Number of Images',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->gallery_count;
+                            return $model->live_gallery_images_count;
                         }
                     ],
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->newstatuslabel;
+                    //     }
+                    // ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',

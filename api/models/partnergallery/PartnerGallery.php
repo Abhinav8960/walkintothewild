@@ -36,13 +36,13 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
                 return 0;
             },
             'can_send_for_approval' =>  function () {
-                return (bool) $this->can_send_for_approval;
+                return (bool) $this->send_for_approval;
             },
             'can_edit' =>  function () {
-                return (bool) $this->can_send_for_approval;
+                return (bool) $this->in_draft;
             },
-            'gallery_status_label' => function () {
-                return $this->can_send_for_approval == 1 ? "Send for Approval" : null;
+            'gallery_status_label' => function ($model) {
+                return $model->getStatusLabel();
             }
         ];
 
@@ -101,4 +101,15 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
     //         }, $this->galleryActiveImages),
     //     ];
     // }
+
+    public function getStatuslabel()
+    {
+        if ($this->in_draft == 1) {
+            return "In Draft";
+        } else if ($this->send_for_approval == 1) {
+            return "Send for Approval";
+        } else if ($this->is_approved == 1) {
+            return "Approved";
+        }
+    }
 }

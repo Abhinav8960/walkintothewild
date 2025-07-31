@@ -12,13 +12,12 @@ class PartnerGalleryForm extends model
 {
     public $title;
     public $safari_operator_id;
+    public $user_id;
     public $status;
     public $status_option = [];
     public $partner_gallery_model;
 
-    public $can_send_for_approval;
-    public $park_id;
-    
+    public $park_id;  
     public $in_draft;
 
 
@@ -51,7 +50,7 @@ class PartnerGalleryForm extends model
     {
         return [
             [['title', 'status', 'park_id'], 'required'],
-            [['status', 'safari_operator_id', 'can_send_for_approval', 'park_id', 'in_draft'], 'integer'],
+            [['status', 'safari_operator_id', 'park_id', 'in_draft','user_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
             // [['title'], 'validateUniqueTitle'],
 
@@ -66,6 +65,7 @@ class PartnerGalleryForm extends model
         return [
             'title' => 'Title',
             'safari_operator_id' => 'Safari Operator ID',
+            'user_id' => 'User ID',
             'park_id' => "Park ID",
             'status' => 'Status',
         ];
@@ -79,9 +79,9 @@ class PartnerGalleryForm extends model
     {
         $this->partner_gallery_model->title = $this->title;
         $this->partner_gallery_model->safari_operator_id = $this->safari_operator_id;
+        $this->partner_gallery_model->user_id = $this->user_id;
         $this->partner_gallery_model->park_id = $this->park_id;
         $this->partner_gallery_model->in_draft = $this->in_draft;
-        $this->partner_gallery_model->can_send_for_approval = $this->can_send_for_approval;
         $this->partner_gallery_model->status = $this->status;
     }
 

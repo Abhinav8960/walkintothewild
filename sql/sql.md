@@ -80,3 +80,9 @@ ALTER TABLE `user` ADD `is_support_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `i
 
 ALTER TABLE `safari_park` ADD `short_name` VARCHAR(255) NULL DEFAULT NULL AFTER `title`;
 ALTER TABLE `user` DROP `is_adminstrator`;
+
+ALTER TABLE `partner_gallery` DROP `can_send_for_approval`;
+ALTER TABLE `partner_gallery_version` DROP `can_send_for_approval`;
+
+ALTER TABLE `partner_gallery` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
+ALTER TABLE `partner_gallery_version` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;

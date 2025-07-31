@@ -20,6 +20,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
+use common\models\package\PackagePartnerSearch;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGallerySearch;
 use Yii;
@@ -78,11 +79,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageVersionSearch();
+        $searchModel = new PackagePartnerSearch();
         // $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
         $searchModel->owned_by_id = $this->operatormodel()->id;
 
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
