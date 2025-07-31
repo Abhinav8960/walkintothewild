@@ -2,6 +2,7 @@
 
 namespace api\models;
 
+use Codeception\Scenario;
 use common\models\EmailVerification;
 use common\models\User;
 use common\models\UserSession;
@@ -31,15 +32,33 @@ class SignupForm extends Model
     public $firebase_token;
     public $otp;
 
+    public $password;
+    public $confirm_password;
+
+    const SCENARIO_SIGNUP_VIA_PASSWORD = 'signup_via_password';
+    const SCENARIO_SIGNUP_VIA_OTP = 'signup_via_otp';
+
     /**
      * {@inheritdoc}
      */
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_SIGNUP_VIA_PASSWORD => ['email','password','confirm_password'],
+            self::SCENARIO_SIGNUP_VIA_OTP => ['email','name','mobile_no'],
+        ];
+    }
+
     public function rules()
     {
         return [
             [['device', 'platform', 'platform_version', 'browser', 'user_platform_version', 'application_version', 'browser_version', 'firebase_token', 'avatar', 'otp'], 'safe'],
-            [['email', 'name', 'mobile_no'], 'required'],
+            [['email','password','confirm_password'], 'required','on' => self::SCENARIO_SIGNUP_VIA_PASSWORD],
+            [['email', 'name', 'mobile_no'], 'required','on' => self::SCENARIO_SIGNUP_VIA_OTP],
             ['email', 'email'],
+            ['password', 'string', 'min' => 6],
+            ['confirm_password', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match.'],
         ];
     }
 
@@ -87,6 +106,33 @@ class SignupForm extends Model
         }
         $this->addErrors($user->getErrors());
         return null;
+    }
+
+
+    public function signupwithpassword()
+    {
+
+        if (!$this->validate()) {
+            return null;
+        }
+    
+        $user = new User();
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->username = $this->email;
+        $user->signup_via_otp = 1;
+        $user->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
+        // $autoPassword = $this->name . '@1234'; 
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+        $user->status = User::STATUS_ACTIVE;
+    
+        if ($user->save()) {
+            return $user;
+        }
+        $this->addErrors($user->getErrors());
+        return null;
+
     }
     
 

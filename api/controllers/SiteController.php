@@ -17,6 +17,7 @@ use common\models\operator\SafariOperator as OperatorSafariOperator;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\EmailVerification;
+use common\models\MobileVerification;
 use common\models\User;
 use common\models\UserDeleteRequest;
 use common\models\UserDeleteRequestForm;
@@ -31,7 +32,7 @@ use Yii;
  */
 class SiteController extends RestController
 {
-    
+
     /**
      * @inheritdoc
      */
@@ -42,7 +43,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test','signup','mail-otp-verification'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'signup', 'mail-otp-verification', 'signup-via-password'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -54,7 +55,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test','signup','mail-otp-verification'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'signup', 'mail-otp-verification', 'signup-via-password'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -82,8 +83,9 @@ class SiteController extends RestController
                     'test' => ['GET'],
                     'refundpolicy' => ['GET'],
                     'cancellation' => ['GET'],
-                    'signup' =>['POST'],
-                    'mail-otp-verification'=>['POST']
+                    'signup' => ['POST'],
+                    'mail-otp-verification' => ['POST'],
+                    'signup-via-password' => ['POST'],
                 ],
             ],
         ];
@@ -748,12 +750,13 @@ class SiteController extends RestController
     public function actionSignup()
     {
         $model = new SignupForm();
+        $model->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_OTP);
         if ($model->load(Yii::$app->request->post(), '')) {
             if (!$model->validate()) {
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
             $existingUser = User::find()->where([
-                'email' => $model->email, 
+                'email' => $model->email,
                 'signup_via_otp' => 1,
                 'status' => User::STATUS_ACTIVE
             ])->one();
@@ -765,12 +768,28 @@ class SiteController extends RestController
             Yii::$app->session->set('signup_mobile_no', $model->mobile_no);
 
             $this->sendmailOtp($model->email, $model->name);
-            return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email and mobile!']); 
+            // $this->sendmobileOtp($model->mobile_no);
+            return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email and mobile!']);
         }
         return Yii::$app->api->sendFailedStringResponse(['Invalid request'], 400);
     }
-    
 
+
+    public function sendmobileOtp($mobile_no)
+    {
+        $model = new MobileVerification();
+        $model->user_id = 0;
+        $model->mobile_no = $mobile_no;
+        $model->otp = rand(100000, 999999);
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+        $model->status = 1;
+
+        if ($model->save(false)) {
+            new \common\events\user\MobileNoVerification($model->user_id, $model->mobile_no, $model->otp, '');
+            return true;
+        }
+        return false;
+    }
 
     public function sendmailOtp($email, $name)
     {
@@ -780,10 +799,9 @@ class SiteController extends RestController
         $model->otp = rand(100000, 999999);
         $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
         $model->status = 1;
-        // $model->name = $name; // Store name for use at user creation
-    
+        // $model->name = $name; 
+
         if ($model->save(false)) {
-            // Send email (replace with your event/notification code)
             new \common\events\user\EmailVerification(
                 0,
                 $email,
@@ -795,12 +813,12 @@ class SiteController extends RestController
         }
         return false;
     }
-    
+
 
     public function actionMailOtpVerification()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
+
         $email = Yii::$app->session->get('signup_email');
         $name = Yii::$app->session->get('signup_name');
         $mobile_no = Yii::$app->session->get('signup_mobile_no');
@@ -808,14 +826,14 @@ class SiteController extends RestController
         // $email = Yii::$app->request->post('email');
         $otpByUser = Yii::$app->request->post('otp_by_user');
         // $name = Yii::$app->request->post('name');
-    
+
         if (!$email || !$otpByUser || !$name) {
             return [
                 'success' => false,
                 'message' => 'Email, Name, or OTP missing'
             ];
         }
-    
+
         $otp_record = EmailVerification::find()
             ->where([
                 'email' => $email,
@@ -823,35 +841,36 @@ class SiteController extends RestController
             ])
             ->orderBy(['id' => SORT_DESC])
             ->one();
-    
+
         if (!$otp_record) {
-            return [ 'success' => false, 'message' => 'OTP record not found' ];
+            return ['success' => false, 'message' => 'OTP record not found'];
         }
         if ($otp_record->otp != $otpByUser) {
-            return [ 'success' => false, 'message' => 'Incorrect OTP' ];
+            return ['success' => false, 'message' => 'Incorrect OTP'];
         }
         if (strtotime($otp_record->exp_datetime) < time()) {
-            return [ 'success' => false, 'message' => 'OTP has expired' ];
+            return ['success' => false, 'message' => 'OTP has expired'];
         }
-    
+
         $otp_record->status = 2;
         $otp_record->otp_by_user = $otpByUser;
         $otp_record->source_type = EmailVerification::SIGNUP_MAIL;
         $otp_record->save(false);
-    
+
         $signupmodel = new SignupForm();
+        $signupmodel->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_OTP);
         $signupmodel->email = $email;
         $signupmodel->name = $name;
         $signupmodel->mobile_no = $mobile_no;
         if ($user = $signupmodel->signup()) {
-            $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel); 
+            $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel);
             $data = ['access_token' => $accesstoken->token];
             return Yii::$app->api->sendResponse($data);
         } else {
             return Yii::$app->api->sendFailedStringResponse($signupmodel->firstErrors, 400);
         }
     }
-    
+
     private function RateLimit($rateLimitKey, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration)
     {
         $cache = Yii::$app->cache;
@@ -904,5 +923,37 @@ class SiteController extends RestController
             $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
         }
         return true;
+    }
+
+
+    public function actionSignupViaPassword()
+    {
+        $model = new SignupForm();
+        $model->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_PASSWORD);
+        if (!$model->load(Yii::$app->request->post(), '')) {
+            return Yii::$app->api->sendFailedStringResponse(['Invalid request'], 400);
+        }
+
+        if (!$model->validate()) {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+
+        $existingUser = User::find()->where(['email' => $model->email])->one();
+        if ($existingUser !== null) {
+            return Yii::$app->api->sendFailedStringResponse(['Email is already registered and active.']);
+        }
+
+        if ($model->password !== $model->confirm_password) {
+            return Yii::$app->api->sendFailedStringResponse(['Passwords do not match.'], 400);
+        }
+
+        if ($user = $model->signupwithpassword()) {
+            $accesstoken = Yii::$app->api->createAccesstoken($user, $model);
+            $data = ['access_token' => $accesstoken->token];
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return Yii::$app->api->sendResponse($data);
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
     }
 }

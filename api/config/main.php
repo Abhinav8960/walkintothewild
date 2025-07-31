@@ -111,6 +111,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                
+                'signup-via-password' =>'site/signup-via-password',
                 'signup' => 'site/signup',
                 'mail-otp-verification'=>'site/mail-otp-verification',
 
