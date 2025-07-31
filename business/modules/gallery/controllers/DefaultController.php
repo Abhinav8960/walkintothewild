@@ -436,6 +436,7 @@ class DefaultController extends Controller
                         if ($partner_gallery_image) {
                             $path = parse_url($img['gallery_image_path'], PHP_URL_PATH);
                             $relativePath = ltrim($path, '/');
+                            $filename = basename(parse_url($img['gallery_image_path'], PHP_URL_PATH));
 
                             $partner_gallery_image->status = 1;
                             $partner_gallery_image->title = $img['title'];
@@ -443,12 +444,14 @@ class DefaultController extends Controller
                             $partner_gallery_image->caption = $img['caption'];
                             $partner_gallery_image->sequence = $img['sequence'];
                             $partner_gallery_image->set_as_thumbnail = $img['set_as_thumbnail'];
+                            $partner_gallery_image->original_filename = null;
+                            $partner_gallery_image->file = $filename;
                             $partner_gallery_image->save(false);
                         }
                     }
                 }
             }
-            
+
             \Yii::$app->session->setFlash('error', 'Gallery Deleted Successfully!!!');
             return $this->redirect(['index']);
         }
