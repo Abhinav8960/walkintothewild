@@ -41,7 +41,7 @@ class SharedSafariVersionForm extends \yii\base\Model
 
     // public $image;
     public $image_filepath;
-    public $host_partner_id;
+    public $safari_operator_id;
     public $user_id;
 
 
@@ -78,7 +78,7 @@ class SharedSafariVersionForm extends \yii\base\Model
             $this->status =  $this->share_safari_version_model->status;
             $this->created_at =  $this->share_safari_version_model->created_at;
             $this->host_user_id =  $this->share_safari_version_model->host_user_id;
-            $this->host_partner_id =  $this->share_safari_version_model->host_partner_id;
+            $this->safari_operator_id =  $this->share_safari_version_model->safari_operator_id;
             $this->user_id =  $this->share_safari_version_model->user_id;
         }
     }
@@ -108,7 +108,7 @@ class SharedSafariVersionForm extends \yii\base\Model
             [['share_safari_id', 'version'], 'integer'],
             // [['image', 'filepath'], 'string'],
             [['image_filepath'], 'string'],
-            [['host_partner_id','user_id'],'integer'],
+            [['safari_operator_id','user_id'],'integer'],
 
 
         ];
@@ -131,7 +131,7 @@ class SharedSafariVersionForm extends \yii\base\Model
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
-            'host_partner_id' => 'Host Partner ID',
+            'safari_operator_id' => 'Host Partner ID',
             'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
@@ -191,7 +191,7 @@ class SharedSafariVersionForm extends \yii\base\Model
         $this->share_safari_version_model->version = $this->version;
         // $this->share_safari_version_model->image = $this->image;
         $this->share_safari_version_model->image_filepath = $this->image_filepath;
-        $this->share_safari_version_model->host_partner_id = $this->host_partner_id;
+        $this->share_safari_version_model->safari_operator_id = $this->safari_operator_id;
         $this->share_safari_version_model->user_id = $this->user_id;
 
     }
@@ -247,7 +247,7 @@ class SharedSafariVersionForm extends \yii\base\Model
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
         $m->host_user_id = $this->host_user_id;
-        $m->host_partner_id = $this->host_partner_id;
+        $m->safari_operator_id = $this->safari_operator_id;
         $m->user_id = $this->user_id;
         $m->status = 0;
         $m->save(false);

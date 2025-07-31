@@ -175,7 +175,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getPartner()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'host_partner_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id']);
     }
 
 

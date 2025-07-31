@@ -24,7 +24,7 @@ class FixedDepartureController extends Controller
             $share_safari_version_model->version = 1;
             $share_safari_version_model->type = $share_safari->type;
             $share_safari_version_model->host_user_id = $share_safari->host_user_id;
-            $share_safari_version_model->host_partner_id = $share_safari->host_partner_id;
+            $share_safari_version_model->safari_operator_id = $share_safari->safari_operator_id;
             $share_safari_version_model->user_id = $share_safari->user_id;
             $share_safari_version_model->host_type = $share_safari->host_type;
             $share_safari_version_model->park_id = $share_safari->park_id;
@@ -67,7 +67,7 @@ class FixedDepartureController extends Controller
     {
         $share_safaris = ShareSafari::find()->where(['type' => 2])->all();
         foreach ($share_safaris as $share_safari) {
-            $share_safari->host_partner_id = $share_safari->host_user_id;
+            $share_safari->safari_operator_id = $share_safari->host_user_id;
             $share_safari->host_user_id = null;
             $share_safari->user_id = $share_safari->created_by;
             $share_safari->editable_version = 1;
@@ -81,7 +81,7 @@ class FixedDepartureController extends Controller
             $share_safari_version_model->version = 1;
             $share_safari_version_model->type = $share_safari->type;
             $share_safari_version_model->host_user_id = $share_safari->host_user_id;
-            $share_safari_version_model->host_partner_id = $share_safari->host_partner_id;
+            $share_safari_version_model->safari_operator_id = $share_safari->safari_operator_id;
             $share_safari_version_model->user_id = $share_safari->user_id;
             $share_safari_version_model->host_type = $share_safari->host_type;
             $share_safari_version_model->park_id = $share_safari->park_id;

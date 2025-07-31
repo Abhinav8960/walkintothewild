@@ -158,7 +158,7 @@ class DefaultController extends SafariController
         //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
         // }
         $model = new SharedSafariVersionForm();
-        $model->host_partner_id = null;
+        $model->safari_operator_id = null;
         $model->host_user_id = $this->userinfoId;
         $model->user_id = $this->userinfoId;
         // $model->status = ShareSafari::STATUS_ACTIVE;
@@ -1322,7 +1322,7 @@ class DefaultController extends SafariController
             $share_safari->share_safari_title = $model->share_safari_title;
             $share_safari->type = $model->type;
             $share_safari->host_user_id = $model->host_user_id;
-            $share_safari->host_partner_id = $model->host_partner_id;
+            $share_safari->safari_operator_id = $model->safari_operator_id;
             $share_safari->user_id = $model->user_id;
             $share_safari->host_type = $model->host_type;
             $share_safari->park_id = $model->park_id;

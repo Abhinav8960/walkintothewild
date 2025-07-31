@@ -96,7 +96,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
             [['safari_plan'], 'string'],
             [['image', 'filepath'], 'string'],
-            [['host_partner_id','user_id'],'integer'],
+            [['safari_operator_id','user_id'],'integer'],
         ];
     }
 
@@ -108,7 +108,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
-            'host_partner_id' => 'Host Partner ID',
+            'safari_operator_id' => 'Host Partner ID',
             'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
@@ -162,7 +162,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function getSafarioperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'host_partner_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id']);
     }
 
 

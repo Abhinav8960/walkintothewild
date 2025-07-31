@@ -74,7 +74,7 @@ class DefaultController extends Controller
         $searchModel = new ShareSafariVersionSearch();
         $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS, ShareSafariVersion::SEND_FOR_APPROVAL_STATUS];
         // $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS];
-        $searchModel->host_partner_id = $safari_operator->id;
+        $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -106,7 +106,7 @@ class DefaultController extends Controller
         $model = new CreateDepartureVersionForm();
 
         $model->host_user_id =  null;
-        $model->host_partner_id =  $safari_operator->id;
+        $model->safari_operator_id =  $safari_operator->id;
         $model->user_id =  Yii::$app->user->identity->id;
 
         $model->type = 2;
@@ -473,7 +473,7 @@ class DefaultController extends Controller
         $operator = $this->module->operatormodel();
         $model = ShareSafariVersion::findOne(['id' => $id]);
 
-        if ($model && $model->host_partner_id == $operator->id) {
+        if ($model && $model->safari_operator_id == $operator->id) {
             return true;
         }
         return false;

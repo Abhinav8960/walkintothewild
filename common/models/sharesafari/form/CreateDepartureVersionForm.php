@@ -50,7 +50,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
     public $created_at;
 
     public $host_user_id;
-    public $host_partner_id;
+    public $safari_operator_id;
     public $user_id;
 
     public $shared_safari_departure_version_model;
@@ -101,7 +101,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_version_model->share_safari_id, 'version' => $this->shared_safari_departure_version_model->version])->column(); //abb multiple park ko store karenge
 
             $this->host_user_id =  $this->shared_safari_departure_version_model->host_user_id;
-            $this->host_partner_id =  $this->shared_safari_departure_version_model->host_partner_id;
+            $this->safari_operator_id =  $this->shared_safari_departure_version_model->safari_operator_id;
             $this->user_id =  $this->shared_safari_departure_version_model->user_id;
         }
     }
@@ -127,7 +127,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['gallery_json'], 'safe'],
             [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             [['image_filepath'], 'string'],
-            [['host_partner_id','user_id'],'integer'],
+            [['safari_operator_id','user_id'],'integer'],
 
 
         ];
@@ -160,7 +160,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
         return [
             'id' => 'ID',
             'host_user_id' => 'Host User ID',
-            'host_partner_id' => 'Host Partner ID',
+            'safari_operator_id' => 'Host Partner ID',
             'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
@@ -186,7 +186,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
         $m->host_user_id = $this->host_user_id;
-        $m->host_partner_id = $this->host_partner_id;
+        $m->safari_operator_id = $this->safari_operator_id;
         $m->user_id = $this->user_id;
         $m->status = 0;
         $m->save(false);
@@ -206,7 +206,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
         }
 
         $this->shared_safari_departure_version_model->host_user_id = $this->host_user_id;
-        $this->shared_safari_departure_version_model->host_partner_id = $this->host_partner_id;
+        $this->shared_safari_departure_version_model->safari_operator_id = $this->safari_operator_id;
         $this->shared_safari_departure_version_model->user_id = $this->user_id;
 
         $this->shared_safari_departure_version_model->share_safari_id = $this->share_safari_id;

@@ -34,7 +34,7 @@ CREATE TABLE `share_safari_version` (
   `version` int NOT NULL DEFAULT '1',
   `type` int DEFAULT NULL,
   `host_user_id` int DEFAULT NULL,
-  `host_partner_id` int DEFAULT NULL,
+  `safari_operator_id` int DEFAULT NULL,
   `user_id` int NOT NULL,
   `host_type` int DEFAULT NULL,
   `park_id` int DEFAULT NULL,

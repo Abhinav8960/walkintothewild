@@ -54,7 +54,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             [['start_date', 'end_date', 'cut_off_date', 'gallery_json'], 'safe'],
             [['share_safari_id', 'share_safari_title', 'version'], 'required'],
             [['share_safari_id', 'version', 'type', 'host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'created_at', 'created_by', 'updated_at', 'updated_by', 'delete_reason_id', 'status', 'is_published_on_api', 'is_published_on_web', 'total_view', 'pined_safari', 'final_approved_at', 'partner_gallery_id'], 'integer'],
-            [['host_user_id', 'host_partner_id', 'user_id'], 'integer'],
+            [['host_user_id', 'safari_operator_id', 'user_id'], 'integer'],
 
         ];
     }
@@ -71,7 +71,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             'share_safari_title' => 'Share Safari Title',
             'type' => 'Type',
             'host_user_id' => 'Host User ID',
-            'host_partner_id' => 'Host Partner ID',
+            'safari_operator_id' => 'Host Partner ID',
             'user_id' => 'User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',
@@ -136,7 +136,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
 
     public function getSafarioperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'host_partner_id']);
+        return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id']);
     }
 
 

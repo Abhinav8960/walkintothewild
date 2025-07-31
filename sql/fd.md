@@ -26,7 +26,7 @@ ALTER TABLE `share_safari`
   DROP `date_change_policy`,
   DROP `refund_policy`;
 
-ALTER TABLE `share_safari` ADD `host_partner_id` INT NULL DEFAULT NULL AFTER `host_user_id`, ADD `user_id` INT NOT NULL AFTER `host_partner_id`;
+ALTER TABLE `share_safari` ADD `safari_operator_id` INT NULL DEFAULT NULL AFTER `host_user_id`, ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
 
 ALTER TABLE `share_safari` CHANGE `host_user_id` `host_user_id` INT NULL DEFAULT NULL;
 

@@ -69,8 +69,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Number Of Safari',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'width: 15%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->displayShareSafari->no_of_safari;
@@ -78,8 +78,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Number Of Seat',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'width: 15%;text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->displayShareSafari->total_seat;
@@ -87,8 +87,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
                     [
                         'label' => 'Share Seat',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'width: 15%;text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->displayShareSafari->share_seat;

@@ -26,7 +26,7 @@ class SharedSafariVersionForm extends \frontend\models\form\SharedSafariVersionF
             ['start_date', 'compare', 'compareValue' => date("Y-m-d"), 'operator' => '>='],
             [['version'], 'integer'],
             [['image_filepath'], 'string'],
-            [['host_partner_id', 'user_id'], 'integer'],
+            [['safari_operator_id', 'user_id'], 'integer'],
 
         ];
     }
