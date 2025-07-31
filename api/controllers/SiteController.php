@@ -768,6 +768,26 @@ class SiteController extends RestController
             Yii::$app->session->set('signup_name', $model->name);
             Yii::$app->session->set('signup_mobile_no', $model->mobile_no);
 
+
+
+            $cache = Yii::$app->cache;
+            $rateLimitDuration = 30; // 5 minutes in seconds
+            $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
+            $blockDuration = 10800; // 3 hours in seconds
+            $rateLimitKeys = [];
+    
+            $rateLimitKeys[] = 'kyc_phone_verification_' . $model->mobile_no;
+    
+            foreach ($rateLimitKeys as $key) {
+                $requestCount = $cache->get($key);
+                $rateCheck = $this->RateLimit($key, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration);
+                if ($rateCheck !== true) {
+                    return $rateCheck;
+                }
+            }
+    
+
+
             $this->sendmailOtp($model->email, $model->name);
             $this->sendmobileOtp($model->mobile_no);
             return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email and mobile!']);
@@ -942,7 +962,7 @@ class SiteController extends RestController
                 $headers->add('X-Rate-Limit-Reset', time() + $rateLimitDuration);
             }
         } elseif ($requestCount >= $rateLimitMaxRequests) {
-            $blockKey = 'mobile_verification_block_' . $model->user_id;
+            $blockKey = 'mobile_verification_block_' . $model->mobile_no;
             $blockStatus = $cache->get($blockKey);
 
             if ($blockStatus === false) {
