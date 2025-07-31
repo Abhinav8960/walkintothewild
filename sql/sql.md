@@ -85,3 +85,7 @@ ALTER TABLE `partner_gallery_version` DROP `can_send_for_approval`;
 
 ALTER TABLE `partner_gallery` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
 ALTER TABLE `partner_gallery_version` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
+
+ALTER TABLE partner_gallery_image
+DROP original_filename,
+DROP file;
