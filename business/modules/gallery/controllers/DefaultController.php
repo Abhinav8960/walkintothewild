@@ -417,6 +417,38 @@ class DefaultController extends Controller
 
         $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
         if ($partner_gallery_model->save(false)) {
+
+            $gallery_images = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id])->all();
+            if ($gallery_images) {
+                foreach ($gallery_images as $image) {
+                    $image->status = 0;
+                    $image->save(false);
+                }
+            }
+
+            if (!empty($partner_gallery_model->live_images)) {
+                $gallery = json_decode($partner_gallery_model->live_images, true);
+
+                if (is_array($gallery) && isset($gallery['images']) && is_array($gallery['images'])) {
+                    foreach ($gallery['images'] as $img) {
+                        $partner_gallery_image = PartnerGalleryImage::find()->where(['id' => $img['id']])->limit(1)->one();
+
+                        if ($partner_gallery_image) {
+                            $path = parse_url($img['gallery_image_path'], PHP_URL_PATH);
+                            $relativePath = ltrim($path, '/');
+
+                            $partner_gallery_image->status = 1;
+                            $partner_gallery_image->title = $img['title'];
+                            $partner_gallery_image->filepath = $relativePath;
+                            $partner_gallery_image->caption = $img['caption'];
+                            $partner_gallery_image->sequence = $img['sequence'];
+                            $partner_gallery_image->set_as_thumbnail = $img['set_as_thumbnail'];
+                            $partner_gallery_image->save(false);
+                        }
+                    }
+                }
+            }
+            
             \Yii::$app->session->setFlash('error', 'Gallery Deleted Successfully!!!');
             return $this->redirect(['index']);
         }
