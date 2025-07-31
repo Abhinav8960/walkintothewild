@@ -35,6 +35,11 @@ class RequestSanitization extends \yii\base\Component
             'park',
             'filter-parklist',
             'plan',
+            'signup',
+            'mail-otp-verification',
+            'signup-via-password',
+            'mobile-otp-verification',
+
         ];
 
         $requestPath = explode('/', Yii::$app->request->getPathInfo());

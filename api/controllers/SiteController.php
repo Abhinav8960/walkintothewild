@@ -43,7 +43,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'signup', 'mail-otp-verification', 'signup-via-password'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'signup', 'mail-otp-verification', 'signup-via-password','mobile-otp-verification'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,7 +55,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'signup', 'mail-otp-verification', 'signup-via-password'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'signup', 'mail-otp-verification', 'signup-via-password','mobile-otp-verification'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -86,6 +86,7 @@ class SiteController extends RestController
                     'signup' => ['POST'],
                     'mail-otp-verification' => ['POST'],
                     'signup-via-password' => ['POST'],
+                    'mobile-otp-verification'=>['POST'],
                 ],
             ],
         ];
@@ -768,7 +769,7 @@ class SiteController extends RestController
             Yii::$app->session->set('signup_mobile_no', $model->mobile_no);
 
             $this->sendmailOtp($model->email, $model->name);
-            // $this->sendmobileOtp($model->mobile_no);
+            $this->sendmobileOtp($model->mobile_no);
             return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email and mobile!']);
         }
         return Yii::$app->api->sendFailedStringResponse(['Invalid request'], 400);
@@ -813,6 +814,62 @@ class SiteController extends RestController
         }
         return false;
     }
+
+    public function actionMobileOtpVerification()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $email = Yii::$app->session->get('signup_email');
+        $name = Yii::$app->session->get('signup_name');
+        $mobile_no = Yii::$app->session->get('signup_mobile_no');
+
+        $otpByUser = Yii::$app->request->post('otp_by_user');
+
+        if (!$mobile_no || !$otpByUser || !$name) {
+            return [
+                'success' => false,
+                'message' => 'Email, Name, or OTP missing'
+            ];
+        }
+
+        $otp_record = MobileVerification::find()
+            ->where([
+                'mobile_no' => $mobile_no,
+                'status' => 1
+            ])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        if (!$otp_record) {
+            return ['success' => false, 'message' => 'OTP record not found'];
+        }
+        if ($otp_record->otp != $otpByUser) {
+            return ['success' => false, 'message' => 'Incorrect OTP'];
+        }
+        if (strtotime($otp_record->exp_datetime) < time()) {
+            return ['success' => false, 'message' => 'OTP has expired'];
+        }
+
+        $otp_record->status = 2;
+        $otp_record->otp_by_user = $otpByUser;
+        $otp_record->source_type = MobileVerification::CALLING_NUMBER;
+        $otp_record->save(false);
+
+        $signupmodel = new SignupForm();
+        $signupmodel->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_OTP);
+        $signupmodel->email = $email;
+        $signupmodel->name = $name;
+        $signupmodel->mobile_no = $mobile_no;
+        if ($signupmodel->signup()) {
+            // $accesstoken = Yii::$app->api->createAccesstoken($user, $signupmodel);
+            // $data = ['access_token' => $accesstoken->token];
+            return Yii::$app->api->sendResponse('success');
+        } else {
+            return Yii::$app->api->sendFailedStringResponse($signupmodel->firstErrors, 400);
+        }
+    }
+
+
 
 
     public function actionMailOtpVerification()
