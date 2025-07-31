@@ -1017,7 +1017,7 @@ class SiteController extends RestController
 
         $existingUser = User::find()->where(['email' => $model->email])->one();
         if ($existingUser !== null) {
-            return Yii::$app->api->sendFailedStringResponse(['Email is already registered and active.']);
+            return Yii::$app->api->sendFailedStringResponse(['User is already registered and active.']);
         }
 
         if ($model->password !== $model->confirm_password) {
