@@ -67,7 +67,8 @@ class PartnerGalleryImage extends \yii\db\ActiveRecord implements \common\interf
             [['partner_gallery_id'], 'required'],
             [['partner_gallery_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','set_as_thumbnail'], 'integer'],
             [['caption'], 'string'],
-            [['original_filename', 'filepath', 'file'], 'string', 'max' => 512],
+            // [['original_filename', 'filepath', 'file'], 'string', 'max' => 512],
+            [['filepath'], 'string', 'max' => 512],
             [['title'], 'string', 'max' => 255],
             [['set_as_thumbnail'],'default', 'value' => 0]
         ];
@@ -81,9 +82,9 @@ class PartnerGalleryImage extends \yii\db\ActiveRecord implements \common\interf
         return [
             'id' => 'ID',
             'partner_gallery_id' => 'Partner Gallery ID',
-            'original_filename' => 'Original Filename',
+            // 'original_filename' => 'Original Filename',
             'filepath' => 'Filepath',
-            'file' => 'File',
+            // 'file' => 'File',
             'title' => 'Title',
             'caption' => 'Caption',
             'status' => 'Status',

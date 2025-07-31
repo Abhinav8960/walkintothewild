@@ -444,8 +444,6 @@ class DefaultController extends Controller
                             $partner_gallery_image->caption = $img['caption'];
                             $partner_gallery_image->sequence = $img['sequence'];
                             $partner_gallery_image->set_as_thumbnail = $img['set_as_thumbnail'];
-                            $partner_gallery_image->original_filename = null;
-                            $partner_gallery_image->file = $filename;
                             $partner_gallery_image->save(false);
                         }
                     }
