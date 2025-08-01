@@ -194,7 +194,7 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     public function getOrganizedbyimage()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->hostUser ? $this->hostUser->profileimage : '';
+            return $this->hostUser ? $this->hostUser->profile_display_image : '';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             return $this->safarioperator &&  $this->safarioperator->logo  ? $this->safarioperator->imagepath : '';
         }
