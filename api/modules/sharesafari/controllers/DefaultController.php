@@ -143,10 +143,10 @@ class DefaultController extends SafariController
 
     public function actionOrganizeSafari()
     {
-        // if ($this->userinfo->is_mobile_no_verified == 0) {
-        //     $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
-        //     return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
-        // }
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
+        }
 
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
@@ -1313,8 +1313,8 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
-        // $transaction = Yii::$app->db->beginTransaction();
-        // try {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
             if (!empty($share_safari->live_version)) {
                 $this->terminateShareSafari($share_safari_id, $share_safari->live_version);
             }
@@ -1360,11 +1360,11 @@ class DefaultController extends SafariController
             $model->final_approved_at = null;
 
             $model->save(false);
-        // } catch (\Exception $e) {
-        //     Yii::error($e->getMessage());
-        //     $transaction->rollBack();
-        // }
-        // $transaction->commit();
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
+        $transaction->commit();
     }
 
 
