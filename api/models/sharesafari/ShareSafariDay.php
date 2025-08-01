@@ -10,9 +10,11 @@ class ShareSafariDay extends \common\models\sharesafari\ShareSafariDay
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'image_path';
+        // $fields[] = 'image_path';
         $hold_fields = [
             'id',
+            'version',
+            'partner_gallery_id',
             'share_safari_id',
             'start_location',
             'end_location',

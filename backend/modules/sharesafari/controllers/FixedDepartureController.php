@@ -115,7 +115,7 @@ class FixedDepartureController extends Controller
             $fixed_departure->status = ShareSafari::STATUS_ACTIVE;
             $fixed_departure->save(false);
 
-            $fixed_departure->static_json  = $this->prepareJson($fixed_departure->id);
+            $fixed_departure->static_data_json  = $this->prepareJson($fixed_departure->id);
             $fixed_departure->save(false);
 
             $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
@@ -334,6 +334,7 @@ class FixedDepartureController extends Controller
 
     public function prepareJson($id)
     {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ApiShareSafari::find()->where(['id' => $id])->limit(1)->one();
 
 
@@ -367,8 +368,11 @@ class FixedDepartureController extends Controller
                 'safari_plan' => $share_safari->safari_plan,
                 'share_safari_agenda' => $share_safari->share_safari_agenda,
                 'stay_category_display' => $share_safari->stay_category_display,
-                'parks' => $share_safari->parks,
                 'stay_category_id' => $share_safari->stay_category_id,
+
+                'parks' => ArrayHelper::toArray($share_safari->parks),
+                'includeds' => ArrayHelper::toArray($share_safari->includeds),
+                'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
             ],
         ];
 

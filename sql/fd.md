@@ -32,3 +32,5 @@ ALTER TABLE `share_safari` CHANGE `host_user_id` `host_user_id` INT NULL DEFAULT
 
 ALTER TABLE `share_safari` DROP INDEX `host_user_id`, ADD INDEX `host_user_id` (`park_id`, `start_date`, `end_date`, `estimate_price_min`, `estimate_price_max`, `cost_per_person`, `total_seat`, `status`) USING BTREE;
 
+ALTER TABLE `share_safari` ADD `static_data_json` JSON NULL DEFAULT NULL AFTER `gallery_json`;
+
