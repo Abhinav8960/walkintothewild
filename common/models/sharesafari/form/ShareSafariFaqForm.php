@@ -23,10 +23,10 @@ class ShareSafariFaqForm extends \yii\base\Model
     /**
      * @param [type] $share_safari_faq_model
      */
-    public function __construct(ShareSafariFaq $share_safari_faq_model = null)
+    public function __construct(?ShareSafariFaq $share_safari_faq_model = null)
     {
         $this->share_safari_faq_model = Yii::createObject([
-            'class' => ShareSafariFaq::className()
+            'class' => ShareSafariFaq::class
         ]);
         if ($share_safari_faq_model != null) {
             $this->share_safari_faq_model = $share_safari_faq_model;

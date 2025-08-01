@@ -34,3 +34,8 @@ ALTER TABLE `share_safari` DROP INDEX `host_user_id`, ADD INDEX `host_user_id` (
 
 ALTER TABLE `share_safari` ADD `static_data_json` JSON NULL DEFAULT NULL AFTER `gallery_json`;
 
+ALTER TABLE `share_safari_day` CHANGE `version` `version` INT NULL DEFAULT NULL;
+ALTER TABLE `share_safari_faq` CHANGE `version` `version` INT NULL DEFAULT NULL;
+ALTER TABLE `share_safari_included` CHANGE `version` `version` INT NULL DEFAULT NULL;
+ALTER TABLE `share_safari_park` CHANGE `version` `version` INT NULL DEFAULT NULL;
+

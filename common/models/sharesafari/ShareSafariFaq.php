@@ -63,7 +63,7 @@ class ShareSafariFaq extends \yii\db\ActiveRecord implements \common\interfaces\
             [['share_safari_id', 'faq_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['answer'], 'string'],
             [['question'], 'string', 'max' => 512],
-            [['master_faq_id'],'integer'],
+            [['master_faq_id','version'],'integer'],
         ];
     }
 
