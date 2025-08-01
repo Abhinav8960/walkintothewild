@@ -759,6 +759,12 @@ class DefaultController extends Controller
                     $model->share_seat = $newModel->share_seat;
                     $model->save(false);
 
+                    $share_safari_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->id])->andWhere(['version' => $model->editable_version])->limit(1)->one();
+                    if ($share_safari_version) {
+                        $share_safari_version->share_seat = $model->share_seat;
+                        $share_safari_version->save(false);
+                    }
+
                     Yii::$app->session->setFlash('success', 'Seat Update Successfully');
                 } catch (\Exception $e) {
                     Yii::error($e->getMessage());
