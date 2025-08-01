@@ -31,6 +31,7 @@ use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -1312,8 +1313,8 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
+        // $transaction = Yii::$app->db->beginTransaction();
+        // try {
             if (!empty($share_safari->live_version)) {
                 $this->terminateShareSafari($share_safari_id, $share_safari->live_version);
             }
@@ -1352,15 +1353,18 @@ class DefaultController extends SafariController
             $share_safari->status = ShareSafari::STATUS_ACTIVE;
             $share_safari->save(false);
 
+            $share_safari->static_data_json = $this->prepareJson($share_safari->id);
+            $share_safari->save(false);
+
             $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
             $model->final_approved_at = null;
 
             $model->save(false);
-        } catch (\Exception $e) {
-            Yii::error($e->getMessage());
-            $transaction->rollBack();
-        }
-        $transaction->commit();
+        // } catch (\Exception $e) {
+        //     Yii::error($e->getMessage());
+        //     $transaction->rollBack();
+        // }
+        // $transaction->commit();
     }
 
 
@@ -1413,5 +1417,51 @@ class DefaultController extends SafariController
             return true;
         }
         return false;
+    }
+
+    public function prepareJson($id)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        $json = [
+            'share_safari' => [
+                'share_safari_title' => $share_safari->share_safari_title,
+                'slug' => $share_safari->slug,
+                'no_of_safari' => $share_safari->no_of_safari,
+                'start_date' => $share_safari->start_date,
+                'end_date' => $share_safari->end_date,
+                'cut_off_date' => $share_safari->cut_off_date,
+                'total_seat' => $share_safari->total_seat,
+                'share_seat' => $share_safari->share_seat,
+                'types' => $share_safari->types,
+                'organized_by_name' => $share_safari->organizedbyname,
+                'organized_by_image' => $share_safari->organizedbyimage,
+                'organized_slug' => $share_safari->organizedslug,
+                'shared_image_path' => $share_safari->sharedimagepath,
+                'seat_full_status' => $share_safari->seat_full_status,
+                'park_title' => $share_safari->park_title,
+                'park_slug' => $share_safari->park_slug,
+                'cost_per_person' => $share_safari->cost_per_person,
+                'breakfast_included' => $share_safari->breakfast_included,
+                'lunch_included' => $share_safari->lunch_included,
+                'dinner_included' => $share_safari->dinner_included,
+                'meal_not_included' => $share_safari->meal_not_included,
+                'meals_label' => $share_safari->meals_label,
+                'share_safari_inclusion' => $share_safari->share_safari_inclusion,
+                'share_safari_exclusion' => $share_safari->share_safari_exclusion,
+                'getting_there' => $share_safari->getting_there,
+                'safari_plan' => $share_safari->safari_plan,
+                'share_safari_agenda' => $share_safari->share_safari_agenda,
+                'stay_category_display' => $share_safari->stay_category_display,
+                'stay_category_id' => $share_safari->stay_category_id,
+                'parks' => ArrayHelper::toArray($share_safari->parks),
+                'includeds' => ArrayHelper::toArray($share_safari->includeds),
+                'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
+            ],
+        ];
+
+        return json_encode($json);
     }
 }
