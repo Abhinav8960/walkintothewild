@@ -281,6 +281,7 @@ class DefaultController extends SafariController
             $share_safari_intrested->user_id = $this->userinfoId;
             $share_safari_intrested->status = 1;
             $share_safari_intrested->intrested_at = time();
+            $share_safari_intrested->version = $share_safari->live_version;
             if ($share_safari_intrested->save(false)) {
                 /* Login User Info */
                 $user = $this->userinfo;
@@ -346,6 +347,7 @@ class DefaultController extends SafariController
             $share_safari_intrested->user_id = $this->userinfoId;
             $share_safari_intrested->status = 0; //UNfollow
             $share_safari_intrested->unintrested_at = time();
+            $share_safari_intrested->version = $share_safari->live_version;
             if ($share_safari_intrested->save(false)) {
                 FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
                 $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.unjoin_success');
@@ -507,7 +509,7 @@ class DefaultController extends SafariController
         }
 
         $model = new ShareSafariCommentForm();
-        $model->version = $share_safari->version;
+        $model->version = $share_safari->live_version;
         $model->attributes = $this->request;
         if ($model->validate()) {
             /**To Creator */
@@ -569,7 +571,7 @@ class DefaultController extends SafariController
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
-        $replymodel->version = $share_safari->version;
+        $replymodel->version = $share_safari->live_version;
 
         $replymodel->attributes = $this->request;
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();

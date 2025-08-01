@@ -9,6 +9,56 @@ use yii\console\Controller;
 
 class FixedDepartureController extends Controller
 {
+    public function actionStep1()
+    {
+        $db = Yii::$app->db;
+
+        $transaction = $db->beginTransaction();
+        try {
+            // Drop copy tables if they exist
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_comment")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_day")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_faq")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_gallery")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_history")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_included")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_intrested")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_park")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_share_safari_comment_report")->execute();
+
+            // Create structure from original tables
+            $db->createCommand("CREATE TABLE backup_share_safari LIKE share_safari")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_comment LIKE share_safari_comment")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_day LIKE share_safari_day")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_faq LIKE share_safari_faq")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_gallery LIKE share_safari_gallery")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_history LIKE share_safari_history")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_included LIKE share_safari_included")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_intrested LIKE share_safari_intrested")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_park LIKE share_safari_park")->execute();
+            $db->createCommand("CREATE TABLE backup_share_safari_comment_report LIKE share_safari_comment_report")->execute();
+
+            // Insert data into new tables
+            $db->createCommand("INSERT INTO backup_share_safari SELECT * FROM share_safari")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_comment SELECT * FROM share_safari_comment")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_day SELECT * FROM share_safari_day")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_faq SELECT * FROM share_safari_faq")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_gallery SELECT * FROM share_safari_gallery")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_history SELECT * FROM share_safari_history")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_included SELECT * FROM share_safari_included")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_intrested SELECT * FROM share_safari_intrested")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_park SELECT * FROM share_safari_park")->execute();
+            $db->createCommand("INSERT INTO backup_share_safari_comment_report SELECT * FROM share_safari_comment_report")->execute();
+
+            $transaction->commit();
+            echo "Tables duplicated successfully.";
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     public function actionStep2()
     {
         $share_safaris = ShareSafari::find()->where(['type' => 1])->all();
