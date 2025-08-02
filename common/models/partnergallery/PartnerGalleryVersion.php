@@ -15,7 +15,6 @@ use Yii;
  * @property string $title
  * @property string $slug
  * @property string|null $remark
- * @property int|null $can_send_for_approval
  * @property string|null $live_images
  * @property int|null $status
  * @property int|null $created_at
@@ -35,6 +34,26 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
         return 'partner_gallery_version';
     }
 
+    
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -43,7 +62,7 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
         return [
             [['park_id', 'remark', 'live_images', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
-            [['version', 'safari_operator_id', 'park_id', 'can_send_for_approval', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by','live_gallery_images_count','gallery_images_count'], 'integer'],
+            [['version', 'safari_operator_id', 'park_id',  'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'live_gallery_images_count', 'gallery_images_count', 'user_id'], 'integer'],
             [['live_images'], 'string'],
             [['title', 'slug', 'remark'], 'string', 'max' => 255],
         ];
@@ -62,7 +81,6 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
             'title' => 'Title',
             'slug' => 'Slug',
             'remark' => 'Remark',
-            'can_send_for_approval' => 'Can Send For Approval',
             'live_images' => 'Live Images',
             'status' => 'Status',
             'created_at' => 'Created At',
