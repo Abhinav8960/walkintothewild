@@ -151,12 +151,13 @@ class DefaultController extends Controller
                         die();
                         \Yii::$app->session->setFlash('error', 'Failed to create package.');
                     }
-                } else {
-                    print_r($model->getErrors());
-                    print_r($model->package_version_model->getErrors());
-                    die();
-                    \Yii::$app->session->setFlash('error', 'Failed to create package.');
-                }
+                } 
+                // else {
+                //     print_r($model->getErrors());
+                //     print_r($model->package_version_model->getErrors());
+                //     die();
+                //     \Yii::$app->session->setFlash('error', 'Failed to create package.');
+                // }
             }
         } else {
             $model->package_version_model->loadDefaultValues();
