@@ -74,7 +74,6 @@ class DefaultController extends Controller
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariVersionSearch();
         $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS, ShareSafariVersion::SEND_FOR_APPROVAL_STATUS];
-        // $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS];
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
 
@@ -532,7 +531,6 @@ class DefaultController extends Controller
             $m->status = ShareSafariVersion::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
             $this->updateFixedDepartureStatus($m->share_safari_id, $m->version, $m->status);
-            // $this->copyFixedDeparture($id);
             Yii::$app->session->setFlash('success', 'FixedDeparture sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());

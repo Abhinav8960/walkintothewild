@@ -568,16 +568,16 @@ class ShareSafariVersionSearch extends ShareSafariVersion
                 //     $query->andWhere(['status' => 0]);
                 //     break;
                 case 1:
-                    $query->andWhere(['status' => 1]);
+                    $query->andWhere(['share_safari_version.status' => 1]);
                     break;
                 case 2:
-                    $query->andWhere(['status' => 2]);
+                    $query->andWhere(['share_safari_version.status' => 2]);
                     break;
                 case 3:
-                    $query->andWhere(['status' => 3]);
+                    $query->andWhere(['share_safari_version.status' => 3]);
                     break;
                 case 4:
-                    $query->andWhere(['status' => [0, 4]]);
+                    $query->andWhere(['share_safari_version.status' => [0, 4]]);
                     break;
             };
         }
