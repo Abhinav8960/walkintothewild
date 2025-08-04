@@ -1165,4 +1165,24 @@ class DefaultController extends SafariController
         ]);
         return $this->querySender($dataProvider, $rootIndexName = "intrested_users");
     }
+
+    public function actionBooking($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+
+        if ($share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "This safari can not Booked!!!"]);
+        }
+        if ($share_safari->host_user_id == $this->userinfoId) {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Host You can't Book this safari!!!"]);
+        }
+        
+        if(){
+
+        }
+        
+    }
 }
