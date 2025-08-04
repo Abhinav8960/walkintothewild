@@ -3,6 +3,7 @@
 namespace backend\modules\userdeleterequest\controllers;
 
 use common\models\UserDeleteRequest;
+use common\models\UserDeleteRequestSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -18,15 +19,12 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => UserDeleteRequest::find(),
-            'pagination' => [
-                'pageSize' => 20, 
-            ],
-        ]);
+        $searchModel = new UserDeleteRequestSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->post());
     
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 

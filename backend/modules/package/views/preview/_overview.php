@@ -23,7 +23,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-4 mb-3">
+                                                <!-- <div class="col-lg-4 mb-3">
                                                     <div class="titles_locations">
                                                         <h6 class="fs-5">Start Location</h6>
                                                         <p><?= $packageday->start_location ?></p>
@@ -34,7 +34,7 @@
                                                         <h6 class="fs-5">End Location</h6>
                                                         <p><?= $packageday->end_location ?></p>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!-- <div class="col-lg-4 mb-3">
                                                     <div class="titles_locations">
                                                         <h6 class="fs-5">Hotel Stay Home</h6>
@@ -66,7 +66,7 @@
                                                 </div> -->
                                             </div>
 
-                                            <div class="titles_locations pt-4">
+                                            <!-- <div class="titles_locations pt-4">
                                                 <h6 class="fs-5">Images</h6>
                                             </div>
 
@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="titles_locations pt-4">
                                                 <h6 class="fs-5">Map</h6>
-                                            </div>
+                                            </div> -->
                                             <?php
 
                                             $latitude = $packageday->latitude;
@@ -89,13 +89,13 @@
 
                                             if (!empty($latitude) && !empty($longitude)) {
                                             ?>
-                                                <div class="col-lg-4 mb-2">
+                                                <!-- <div class="col-lg-4 mb-2">
                                                     <div class="hotelImages">
 
                                                         <iframe width="400" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
                                                         </iframe>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             <?php } ?>
                                         </div>
                                     </div>

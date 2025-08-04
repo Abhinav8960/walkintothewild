@@ -65,12 +65,13 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     {
         return [
             [['package_id', 'day'], 'required'],
-            [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'partner_gallery_id'], 'integer'],
             [['day_description', 'day_activity', 'day_accommodation', 'day_note'], 'string'],
             [['day_title', 'version'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day', 'version'], 'unique', 'targetAttribute' => ['package_id', 'day', 'version']],
             [['original_filename'], 'string', 'max' => 512],
+            [['gallery_json'], 'safe'],
         ];
     }
 
@@ -100,13 +101,15 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+            'partner_gallery_id' => 'Partner Gallery Id',
+            'gallery_json' => 'Gallery Json',
         ];
     }
 
     public function getImagepath()
     {
         if ($this->day_image != '') {
-            return '/package/day/' . $this->id . '/' . $this->day_image;
+            return \Yii::$app->params['s3_endpoint'] . '/' . $this->day_image;
         }
     }
 }

@@ -6,7 +6,9 @@ use api\models\leads\LeadPartnerQuotes;
 use Yii;
 use api\models\User;
 use common\models\chat\ChatMessageHistory;
+use common\models\GeneralModel;
 use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGalleryVersion;
 
 /**
  * This is the model class for table "chat_message".
@@ -56,6 +58,9 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $fields = [
             'id',
             'message' => function () {
+                if ($this->chat->chat_type == 2) {
+                    return GeneralModel::maskContactInfoInString($this->message);
+                }
                 return $this->message;
             },
             'is_edited' => function () {
@@ -99,7 +104,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
             unset($fields['message']);
 
             $fields['gallery'] = function () {
-                return json_decode($this->gallery, true);
+                // return json_decode($this->gallery, true);
+                return isset($this->partnerGalleryVersion) ? json_decode($this->partnerGalleryVersion->live_images, true) : null;
             };
             // $fields['thumbnail_url'] = function () {
             //     return $this->getGalleryThumbnail();
@@ -125,7 +131,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['gallery', 'is_system_generated'], 'safe'],
+            [['gallery', 'is_system_generated', 'transaction_id'], 'safe'],
         ];
     }
 
@@ -190,6 +196,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $history->is_call_request = $this->is_call_request == 1 ? 1 : 0;
         $history->data = $this->data;
         $history->gallery = $this->gallery;
+        $history->partner_gallery_version_id = $this->partner_gallery_version_id;
+        $history->transaction_id = $this->transaction_id;
         $history->created_at = $this->created_at;
         $history->created_by = $this->created_by;
         $history->updated_at = $this->updated_at;
@@ -283,5 +291,10 @@ class ChatMessage extends \common\models\chat\ChatMessage
             return $call->recording_url;
         }
         return '';
+    }
+
+    public function getPartnerGalleryVersion()
+    {
+        return $this->hasOne(PartnerGalleryVersion::class, ['id' => 'partner_gallery_version_id']);
     }
 }

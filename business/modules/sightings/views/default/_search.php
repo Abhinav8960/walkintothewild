@@ -18,50 +18,73 @@ use kartik\daterange\DateRangePicker;
     ],
 ]); ?>
 <div class="row">
-    <!-- <div class="col-md-2">
-        <?php echo $form->field($model, 'description')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
-    </div> -->
+    <div class="col-12 mb-3">
+        <div class="filterBar">
+            <div class="filters">
+                <!-- <div class="filterItem position-relative">
+                    <label>Date:</label>
+                    <?= $form->field($model, 'date_range', [
+                        'template' => '{input}',
+                    ])->widget(DateRangePicker::classname(), [
+                        'options' => [
+                            'placeholder' => 'Select Sighting Date',
+                            'class' => 'search-border'
+                        ],
+                    ]); ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div> -->
 
-    <div class="col-md-2">
-        <?= $form->field($model, 'date_range', [
-            // 'addon' => ['prepend' => ['content' => '<i class="fas fa-calendar-alt"></i>']],
-            'options' => ['class' => 'drp-container mb-2']
-        ])->widget(DateRangePicker::classname(), [
-            'options' => ['placeholder' => 'Select Sighting Date'],
-        ]);
-        ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'master_animal_id')->dropDownList(
-            GeneralModel::animalfilteroption(),
-            [
-                'prompt' => 'Select Animal',
-            ]
-        ) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'safari_session_id')->dropDownList(
-            GeneralModel::safarisessionoption(),
-            [
-                'prompt' => 'Select Session',
-            ]
-        ) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'location')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
-            [
-                'prompt' => 'Select Park',
-            ]
-        ) ?>
-    </div>
-    <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::newstatusoption(),
-            [
-                'prompt' => 'Select Status',
-            ]
-        ) ?>
+                <div class="filterItem position-relative">
+                    <label>Animal:</label>
+                    <?= $form->field($model, 'master_animal_id')->dropDownList(
+                        GeneralModel::animalfilteroption(),
+                        [
+                            'prompt' => 'Select Animal',
+                            'class' => 'search-border'
+                        ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+                <div class="filterItem position-relative">
+                    <label>Session:</label>
+                    <?= $form->field($model, 'safari_session_id')->dropDownList(
+                        GeneralModel::safarisessionoption(),
+                        [
+                            'prompt' => 'Select Session',
+                            'class' => 'search-border'
+                        ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+                <div class="filterItem position-relative">
+                    <label>Park:</label>
+                    <?= $form->field($model, 'location')->dropDownList(
+                        \yii\helpers\ArrayHelper::map(SafariPark::find()->orderby(['safari_park.title' => SORT_ASC])->all(), 'id', 'title'),
+                        [
+                            'prompt' => 'Select Park',
+                            'class' => 'search-border'
+
+                        ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+                <div class="filterItem position-relative">
+                    <label>Status:</label>
+                    <?= $form->field($model, 'status')->dropDownList(
+                        GeneralModel::newstatusoption(),
+                        [
+                            'prompt' => 'Select Status',
+                            'class' => 'search-border'
+                        ]
+                    ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
@@ -74,3 +97,16 @@ $js = <<<JS
 JS;
 $this->registerJs($js);
 ?>
+
+<style>
+    .filterItem input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-weight: 600;
+        color: #44444F !important;
+        cursor: pointer;
+        padding: 4px 50px 4px 8px;
+        font-size: 16px;
+    }
+</style>

@@ -15,6 +15,7 @@ AppAsset::register($this);
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
+        
         <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#09422D;color:#EFF8F5;', 'title' => 'Approved']) ?>
         <?= Html::button(
             '<i class="fa fa-times" style="font-size:15px; color:#DA2F49; margin-right:5px;"></i>Reject',
@@ -153,6 +154,20 @@ AppAsset::register($this);
 </div>
 
 
+<!-- <div class="modal fade _standard-text" id="discount-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Platform Discount</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='discountContent'></div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
 
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -188,6 +203,15 @@ function rejection() {
 	});
 }
 rejection();
+
+// function discount() {
+// 	$('.discountPopup').on('click', function () {
+//         $('#discount-modal').modal('show')
+// 		.find('#discountContent')
+// 		.load($(this).attr('value'));
+// 	});
+// }
+// discount();
 JS;
 $this->registerJs($script);
 ?>

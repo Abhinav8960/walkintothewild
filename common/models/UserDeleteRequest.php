@@ -19,9 +19,18 @@ use Yii;
 class UserDeleteRequest extends \yii\db\ActiveRecord
 {
 
+
+    const OBJECTIVE = "user_delete_request";
+
+
     public function behaviors()
     {
         return [
+            [
+                'class' => \common\behaviors\FootprintsBehavior::class,
+                'objective' => self::OBJECTIVE,
+                'collection' => \common\models\trackings\Footprints::MODEL_USER_DELETE_REQUEST,
+            ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
@@ -75,6 +84,11 @@ class UserDeleteRequest extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {

@@ -116,6 +116,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['package_name'], 'string', 'max' => 512],
             ['cancellation_reason', 'required', 'on' => 'reject'],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+            [['discount_in_percentage', 'price_after_discount'], 'default', 'value' => 0.00],
+            [['discount_in_value'], 'default', 'value' => 0.00],
+
 
         ];
     }
@@ -361,8 +364,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
             return 'Included';
         }
-
-
         return 'Not Included';
     }
 
@@ -410,5 +411,23 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $slug = \yii\helpers\Inflector::slug($package_name) . '-' . $count;
         }
         return $slug;
+    }
+
+    public function getEditable_package()
+    {
+        return $this->hasOne(PackageVersion::className(), ['package_id' => 'id', 'version' => 'editable_version']);
+    }
+
+    public function getLive_package()
+    {
+        return $this->hasOne(PackageVersion::className(), ['package_id' => 'id', 'version' => 'live_version']);
+    }
+
+    public function getDisplay_package()
+    {
+        if ($this->live_package) {
+            return $this;
+        }
+        return $this->editable_package;
     }
 }

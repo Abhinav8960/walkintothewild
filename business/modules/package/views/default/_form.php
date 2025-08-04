@@ -2,9 +2,15 @@
 
 
 use common\models\GeneralModel;
+use common\models\partnergallery\PartnerGallery;
+use Google\Api\ResourceDescriptor\Style;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 
@@ -18,113 +24,275 @@ use kartik\datetime\DateTimePicker;
 ]); ?>
 <div class="row">
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_name')->textInput([
-            'maxlength' => true,
-            'placeholder' => 'Enter Package Name',
-        ])->label('PACKAGE NAME <span class="necessary">*</span>') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select'])->label('DAY/NIGHT <span class="necessary">*</span>') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'safari_type')->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Select'])->label('SAFARI TYPE <span class="necessary">*</span>') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'no_of_safari')->textInput([
-            'maxlength' => true,
-            'placeholder' => 'Enter Number of Safaris',
-        ])->label('NUMBER OF SAFARIS') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'start_location')->textInput([
-            'maxlength' => true,
-            'placeholder' => 'Enter Start Location',
-        ])->label('TOUR START') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'end_location')->textInput([
-            'maxlength' => true,
-            'placeholder' => 'Enter End Location',
-        ])->label('TOUR END') ?>
-    </div>
-
-
-    <!-- <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('START DATE') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('END DATE') ?>
-    </div> -->
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label('Maximum Booking Date') ?>
-    </div>
-
-    <?php
-    if ($model->package_version_model->package_image) { ?>
-        <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_image')->fileInput()->label('PACKAGE IMAGE (JPEG / JPG / PNG / 250kb)') ?>
+    <div class="col-md-6">
+        <div class="form_boxes mb-3">
+            <label for="">Package Name<span>*</span></label>
+            <?= $form->field($model, 'package_name')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter Package Name',
+                'class' => 'form-control'
+            ])->label(false) ?>
         </div>
-        <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="75" height="75"></img>'; ?>
-        </div>
-    <?php } else { ?>
-        <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_image')->fileInput()->label('PACKAGE IMAGE (JPEG / JPG / PNG / 250kb)') ?>
-        </div>
-    <?php  } ?>
-
-
-    <?php
-    if ($model->package_version_model->package_banner_image) { ?>
-        <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_banner_image')->fileInput()->label('BANNER IMAGE (JPEG / JPG / PNG / 250kb)') ?>
-        </div>
-        <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_version_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
-        </div>
-    <?php } else { ?>
-        <div class="col-md-6 col-lg-3">
-            <?= $form->field($model, 'package_banner_image')->fileInput()->label('BANNER IMAGE (JPEG / JPG / PNG / 250kb)') ?>
-        </div>
-    <?php  } ?>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
-            'options' => ['placeholder' => 'Select', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('SAFARI PARK') ?>
     </div>
 
-    
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Select'])->label('ACCOMDATION') ?>
+    <div class="col-md-6">
+        <div class="form_boxes mb-3">
+            <label for="">Safari Park<span>*</span></label>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::operatorsafariparkoption($safari_operator->id),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-md-3 row-cols-lg-5">
+        <div class="form_boxes mb-3">
+            <label for="">Day / Night <span>*</span></label>
+            <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Safari Type<span>*</span></label>
+            <?= $form->field($model, 'safari_type')->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Number of Safaris <span>*</span></label>
+            <?= $form->field($model, 'no_of_safari')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter Number of Safaris',
+            ])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Vehicle <span>*</span></label>
+            <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Theme <span>*</span></label>
+            <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
+    </div>
+
+    <div class="row row-cols-md-3 row-cols-lg-4">
+        <div class="form_boxes mb-3">
+            <label for="">Tour Start Place </label>
+            <?= $form->field($model, 'start_location')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter Start Location',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Tour End Place</label>
+            <?= $form->field($model, 'end_location')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter End Location',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+
+        <div class="form_boxes mb-3">
+            <label for="">Stay Category<span>*</span></label>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packagemetastaycategory(), ['prompt' => 'Open this select menu', 'class' => 'form-select form-select-lg'])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3 position-relative">
+            <label for="">Package Feature <span>*</span></label>
+            <div class="select2-angle-wrapper position-relative">
+                <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
+                    'theme' => \kartik\select2\Select2::THEME_KRAJEE,
+                    'data' => GeneralModel::packagefeatureoption(),
+                    'options' => [
+                        'multiple' => true,
+                        'autocomplete' => 'off',
+                        'class' => 'form-select form-select-lg mb-3',
+                    ],
+                    'pluginOptions' => [
+                        'placeholder' => 'Open this select menu',
+                    ],
+                ])->label(false) ?>
+                <i class="fa fa-angle-down select2-angle-icon"></i>
+            </div>
+        </div>
+        <!-- <div class="form_boxes mb-3">
+            <label for="">Start Date <span>*</span></label>
+            <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
+        </div> -->
+        <!-- <div class="form_boxes mb-3">
+            <label for="">End Date <span>*</span></label>
+            <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
+        </div> -->
+
     </div>
 
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'cost_per_person')->textInput([
-            'maxlength' => true,
-            'placeholder' => 'Enter Cost Per Person',
-        ])->label('COST PER PERSON') ?>
+    <div class="row row-cols-md-3 row-cols-lg-5">
+        <div class="form_boxes mb-3">
+            <label for="">Cost Per 1 Person <span>*</span></label>
+            <?= $form->field($model, 'cost_per_person')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+        <div class="form_boxes mb-3">
+            <label for="">Cost Per 2 Person <span>*</span></label>
+            <?= $form->field($model, 'cost_per_two_person')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+
+        <div class="form_boxes mb-3">
+            <label for="">Validity Date</label>
+            <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
+        </div>
+
     </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <?php
+                if ($model->package_version_model->partner_gallery_id) { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Gallery</label>
+                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
+
+                                        <div class="displayImage d-flex flex-column gap-2">
+                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                            <label for="">Attach Gallery</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:35px;">
+                                <?php
+                                $thumbnail_path = PartnerGallery::find()->where(['id' => $model->package_version_model->partner_gallery_id])->limit(1)->one(); ?>
+                                <img src="<?= isset($thumbnail_path->thumbnail) ? $thumbnail_path->thumbnail : ''  ?>" width="200px" height="200px" class="selectImage" id="preview">
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Gallery
+                                    </label>
+                                    <div class="galleryModal d-flex flex-column justify-center align-items-center position-relative" data-url="<?= Url::toRoute(['gallery-popup', 'context' => 'partner_gallery_id', 'preview' => 'preview']) ?>">
+
+                                        <div class="displayImage d-flex flex-column gap-2">
+                                            <img src="<?= $this->params['baseurl'] ?>/images/Group.png" alt="">
+                                            <label for="">Attach Gallery</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="checkModal">
+                                <div class="col-lg-12 fadeImage" style="margin-top:35px;">
+                                    <img src="" class="selectImage" alt="" id="preview" style=" width: 100%; height: 100%; object-fit: contain;" ;>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php  } ?>
+                <?php
+                if ($model->package_version_model->package_image) { ?>
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)
+                                    </label>
+                                    <div class="form-group mt-2">
+                                        <label for="fileField" class="attachment">
+                                            <div class="row btn-file">
+                                                <div class="btn-file__actions">
+                                                    <div
+                                                        class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
+                                                            <i class="fa fa-plus fa-lg fa-fw"
+                                                                aria-hidden="true"></i>
+                                                            <div class="visible-xs-block"></div>
+                                                            Select file
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField"])->label(false) ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="external-preview mt-2">
+                                <?php echo '<img src="' . $model->package_version_model->imagepath . '" width="200px" height="200px" id="imagePreviewBottom"></img>'; ?>
+                                <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="form_boxes mb-3">
+                                    <label for="">Package DP (JPEG / JPG / PNG / 250kb)</label>
+                                    <div class="form-group mt-2">
+                                        <label for="fileField1" class="attachment">
+                                            <div class="row btn-file">
+                                                <div class="btn-file__actions">
+                                                    <div class="btn-file__actions__item col-xs-12 text-center" style="height:200px;">
+                                                        <div class="btn-file__actions__item--shadow" style="margin-top:40px;">
+                                                            <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true"></i>
+                                                            <div class="visible-xs-block"></div>
+                                                            Select file
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?= $form->field($model, 'package_image')->fileInput(['id' => "fileField1"])->label(false) ?>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="external-preview mt-2">
+                                    <img id="imagePreviewBottom" src="#" alt="Image Preview" style="display:none; max-height: 200px; border: 1px solid #ccc;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php  } ?>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form_boxes mt-2">
+                <label for="">Overview</label>
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Overview Detail ', 'class' => 'form-control'])->label(false) ?>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
 
     <!-- <div class="col-md-6 col-lg-3">
@@ -139,41 +307,30 @@ use kartik\datetime\DateTimePicker;
     </div> -->
 
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::packagefeatureoption(),
-            'options' => ['placeholder' => 'Select', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ])->label('Package Feature') ?>
-    </div>
+    <div class="row">
+        <!-- <div class="col-lg-6">
+            <div class="form_boxes mb-3">
+                <label for="">Overview <span>*</span></label>
+                <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '1', 'placeholder' => 'Itinerary Detail', 'class' => 'form-control'])->label(false) ?>
+
+            </div>
+        </div> -->
 
 
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select'])->label('VEHICLE') ?>
-    </div>
-
-
-    <div class="col-md-6 col-lg-3">
-        <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select'])->label('THEME') ?>
-    </div>
-
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'package_description')->textarea(['rows' => '1', 'placeholder' => 'Description Detail '])->label('Description') ?>
-    </div>
-
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '1', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="creat-safri float-start w-auto gap-2">
-            <?= Html::a('Cancel', ['index'], ['class' => 'btn btn-primary']) ?>
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-info']) ?>
+
+<?= $form->field($model, 'partner_gallery_id')->hiddenInput(['id' => 'partner_gallery_id'])->label(false) ?>
+
+
+<div class="row pt-2">
+    <div class="col-md-8">
+        <?= $form->errorSummary($model, ['class' => 'alert alert-danger', 'header' => '']) ?>
+    </div>
+    <div class="col-lg-4">
+        <div class="d-flex gap-3 justify-content-end">
+            <?= Html::a('Cancel', ['index'], ['class' => 'button-created', 'style' => 'color:#464A53; border:1px solid #DDDFE1;']) ?>
+            <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
         </div>
     </div>
 </div>
@@ -181,15 +338,44 @@ use kartik\datetime\DateTimePicker;
 <?php ActiveForm::end(); ?>
 
 
-<style>
-    .ck-editor__editable {
-        min-height: 350px;
-    }
-</style>
+<div class="modal fade _standard-text" id="gallery-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header justify-content-space-between">
+                <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Gallery</h1>
+                <button type="button" class="btn" style="background-color:#152f1b; color:#fff;" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">OK</span>
+                </button>
+
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='gallerymodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <?php
 $script = <<< JS
-editor('packageversionform-package_description');
-editor('packageversionform-package_itinerary_overview');
+
+function galleryfunction() {
+	  $('.galleryModal').on('click', function () {
+        var url = $(this).data('url');
+        var partner_gallery_id = $('#partner_gallery_id').val();
+        var queryparams = "";
+        if(partner_gallery_id != ''){
+        queryparams = "&partner_gallery_id="+partner_gallery_id;
+        }
+        $('#gallery-modal').modal('show')
+            .find('#gallerymodalContent')
+            .load(url+''+queryparams);
+    });
+}
+galleryfunction();
 JS;
 $this->registerJs($script);
 ?>
@@ -217,3 +403,64 @@ $gst_script = <<< JS
 JS;
 $this->registerJs($gst_script);
 ?>
+
+
+
+<style>
+    .select2-angle-wrapper {
+        position: relative;
+    }
+
+    .select2-angle-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #888;
+        font-size: 16px;
+    }
+
+    .galleryModal h1 {
+
+        color: red;
+    }
+
+    .form_boxes .galleryModal {
+
+        padding: 35px;
+        font-size: 1.5em;
+        color: #d3e0e9;
+        cursor: pointer;
+        border: 2px dashed #d3e0e9 !important;
+        height: 200px;
+        border-radius: 15px;
+        margin-top: 10px;
+    }
+
+    .galleryModal img {
+
+        margin: auto;
+        width: 30px;
+        object-fit: cover;
+    }
+
+    .galleryModal .selectImage {
+
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .displayImage {
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .fadeImage {
+        display: none;
+    }
+</style>

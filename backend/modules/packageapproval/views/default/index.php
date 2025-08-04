@@ -125,25 +125,25 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '{approved}{view}{reject}',
+                        'template' => '{view}{reject}',
                         'buttons' => [
                            
-                            'approved' => function ($url, $model) {
-                                if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
-                                    return Html::a(
-                                        'Approve',
-                                        [Url::toRoute(['approved', 'package_id' => $model->package_id, 'version' => $model->version])],
-                                        [
-                                            'data' => [
-                                                'confirm' => 'Are you sure you want to approve this package?',
-                                                'method' => 'post',
-                                            ],
-                                            'class' => 'btn btn-orange  m-2',
-                                            'title' => 'Approve'
-                                        ]
-                                    );
-                                }
-                            },
+                            // 'approved' => function ($url, $model) {
+                            //     if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+                            //         return Html::a(
+                            //             'Approve',
+                            //             [Url::toRoute(['approved', 'package_id' => $model->package_id, 'version' => $model->version])],
+                            //             [
+                            //                 'data' => [
+                            //                     'confirm' => 'Are you sure you want to approve this package?',
+                            //                     'method' => 'post',
+                            //                 ],
+                            //                 'class' => 'btn btn-orange  m-2',
+                            //                 'title' => 'Approve'
+                            //             ]
+                            //         );
+                            //     }
+                            // },
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/packageapproval/default/view', 'id' => $model->id], [

@@ -4,6 +4,7 @@ namespace business\modules\package\controllers;
 
 use common\models\master\faq\MasterFaq;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageVersionForm;
@@ -19,8 +20,12 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
+use common\models\package\PackagePartnerSearch;
+use common\models\partnergallery\PartnerGallery;
+use common\models\partnergallery\PartnerGallerySearch;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -74,11 +79,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageVersionSearch();
-        $searchModel->status = PackageVersion::EDIATBLE_STATUS;
+        $searchModel = new PackagePartnerSearch();
+        // $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
         $searchModel->owned_by_id = $this->operatormodel()->id;
 
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -138,19 +143,21 @@ class DefaultController extends Controller
                         }
 
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
-                        return $this->redirect(['update', 'id' => $model->package_version_model->id]);
+                        // return $this->redirect(['update', 'id' => $model->package_version_model->id]);
+                        return $this->redirect(['itinerary', 'id' => $model->package_version_model->id]);
                     } else {
                         print_r($model->getErrors());
                         print_r($model->package_version_model->getErrors());
                         die();
                         \Yii::$app->session->setFlash('error', 'Failed to create package.');
                     }
-                } else {
-                    print_r($model->getErrors());
-                    print_r($model->package_version_model->getErrors());
-                    die();
-                    \Yii::$app->session->setFlash('error', 'Failed to create package.');
-                }
+                } 
+                // else {
+                //     print_r($model->getErrors());
+                //     print_r($model->package_version_model->getErrors());
+                //     die();
+                //     \Yii::$app->session->setFlash('error', 'Failed to create package.');
+                // }
             }
         } else {
             $model->package_version_model->loadDefaultValues();
@@ -233,6 +240,7 @@ class DefaultController extends Controller
 
     public function actionItinerary($id, $day = 1)
     {
+        $safari_operator = $this->operatormodel();
         $package_version_model = $this->findModel($id);
 
         $package_day_model = $this->findModelDay($package_version_model->package_id, $package_version_model->version, $day);
@@ -266,6 +274,7 @@ class DefaultController extends Controller
         return $this->render('itinerary', [
             'package_version_model' => $package_version_model,
             'model' => $model,
+            'safari_operator' => $safari_operator,
         ]);
     }
 
@@ -392,17 +401,52 @@ class DefaultController extends Controller
 
     public function actionFaq($id)
     {
+        $safari_operator = $this->operatormodel();
         $package_version_model = $this->findModel($id);
+
+        $park_array = PackageSafariPark::find()->where(['package_id' => $package_version_model->package_id, 'version' => $package_version_model->version])->select('park_id')->asArray()->column();
+
+        $faqList = SafariOperatorFaq::find()
+            ->where(['safari_operator_id' => $safari_operator->id])
+            ->andWhere(['park_id' => $park_array])
+            ->select(['id', 'question'])
+            ->asArray()
+            ->all();
+
+        $drop_down_list = ArrayHelper::map($faqList, 'id', 'question');
+
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_version_model->package_id;
         $searchModel->version = $package_version_model->version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $faqs = $dataProvider->getModels();
 
+
+        $model = new PackageFaqForm();
+        $model->package_id = $package_version_model->package_id;
+        $model->version = $package_version_model->version;
+        $model->status = PackageFaq::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_faq_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['faq', 'id' => $package_version_model->id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_faq_model->loadDefaultValues();
+        }
 
         return $this->render('faq', [
             'package_version_model' => $package_version_model,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'faqs' => $faqs,
+            'model' => $model,
+            'drop_down_list' => $drop_down_list,
         ]);
     }
 
@@ -450,28 +494,54 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
+    // public function actionUpdateFaq($id, $package_id, $faq_id)
+    // {
+    //     $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
+    //     $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
+    //     $model = new PackageFaqForm($faq_model);
+    //     $model->package_id = $package_version_model->package_id;
+    //     $model->version = $package_version_model->version;
+    //     $model->status = PackageFaq::STATUS_ACTIVE;
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->package_faq_model->save(false)) {
+    //                     $faq = new MasterFaq();
+    //                     $faq->question = $model->question;
+    //                     $faq->answer = $model->answer;
+    //                     $faq->position = 0;
+    //                     $faq->status = MasterFaq::STATUS_ACTIVE;
+    //                     if ($faq->save(false)) {
+    //                         $model->package_faq_model->faq_id = $faq->id;
+    //                         $model->package_faq_model->save(false);
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+    //                     return $this->redirect(['faq', 'id' => $package_version_model->id]);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->package_faq_model->loadDefaultValues();
+    //     }
+
+
+    //     return $this->redirect(['faq', 'id' => $package_version_model->id]);
+    // }
+
     public function actionUpdateFaq($id, $package_id, $faq_id)
     {
-        $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
+        $package_version_model = PackageVersion::find()->where(['package_id' => $package_id])->andWhere(['status'=>PackageVersion::EDIATBLE_STATUS])->limit(1)->one();
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
         $model->version = $package_version_model->version;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
+            if ($model->validate()) {
+                $model->initializeForm();
+                if ($faq_model->load($this->request->post())) {
                     if ($model->package_faq_model->save(false)) {
-                        $faq = new MasterFaq();
-                        $faq->question = $model->question;
-                        $faq->answer = $model->answer;
-                        $faq->position = 0;
-                        $faq->status = MasterFaq::STATUS_ACTIVE;
-                        if ($faq->save(false)) {
-                            $model->package_faq_model->faq_id = $faq->id;
-                            $model->package_faq_model->save(false);
-                        }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['faq', 'id' => $package_version_model->id]);
                     }
@@ -482,13 +552,9 @@ class DefaultController extends Controller
         }
 
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create_faq', [
-                'model' => $model,
-                'package_version_model' => $package_version_model,
-            ]);
-        }
+        return $this->redirect(['faq', 'id' => $package_version_model->id]);
     }
+
 
 
 
@@ -551,23 +617,22 @@ class DefaultController extends Controller
             echo "<pre>";
             print_r($e->getMessage());
             die();
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['index']);
         }
         $transaction->commit();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['index']);
     }
 
     public function actionCopyPackage($id)
     {
-
         $m = $this->findModel($id);
         $transaction = Yii::$app->db->beginTransaction();
         try {
 
-            $this->copyPackageNow($id, true);
+            $newModel = $this->copyPackageNow($id, true);
             // $this->updatePackageStatus($m->uuid, $m->version, $m->status);
-            Yii::$app->session->setFlash('success', 'Package copy successfully');
+            Yii::$app->session->setFlash('success', 'Package copied successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
@@ -578,7 +643,7 @@ class DefaultController extends Controller
         }
         $transaction->commit();
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['update', 'id' => $newModel->id]);
     }
 
 
@@ -859,5 +924,40 @@ class DefaultController extends Controller
             return $operator;
         }
         throw new ForbiddenHttpException('You are not Allowed to access this Page');
+    }
+
+
+    public function actionGetMasterFaq($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $faq = SafariOperatorFaq::findOne($id);
+
+        if ($faq) {
+            return [
+                'success' => true,
+                'question' => $faq->question,
+                'answer' => $faq->answer,
+            ];
+        }
+
+        return ['success' => false];
+    }
+
+    public function actionGalleryPopup($context, $preview)
+    {
+        $safari_operator = $this->operatormodel();
+        $searchModel = new PartnerGallerySearch();
+        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->is_live = 1;
+        $searchModel->safari_operator_id = $safari_operator->id;
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->renderAjax('_gallery_popup', [
+            'dataProvider' => $dataProvider,
+            'context' => $context,
+            'preview' => $preview
+        ]);
     }
 }

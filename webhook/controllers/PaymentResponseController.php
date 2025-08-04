@@ -110,7 +110,7 @@ class PaymentResponseController extends Controller
 
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
-            $this->prepareChat($transaction->lead_partner_quotes_id, $message, $transaction->status);
+            $this->prepareChat($transaction->id,$transaction->lead_partner_quotes_id, $message, $transaction->status);
             $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->status);
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
@@ -264,7 +264,7 @@ class PaymentResponseController extends Controller
         }
     }
 
-    private function prepareChat($quotation_id, $message, $status)
+    private function prepareChat($transaction_id,$quotation_id, $message, $status)
     {
 
         // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();
@@ -330,6 +330,7 @@ class PaymentResponseController extends Controller
         $chat_message->chat_id = $chat_model->id;
         $chat_message->message = $message;
         $chat_message->is_system_generated = 1;
+        $chat_message->transaction_id = $transaction_id;
         // $chat_message->is_quotation_message = false;
         // $chat_message->quotation_id = $quotation->id;
         // $chat_message->is_quotation_active = false;

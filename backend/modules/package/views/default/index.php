@@ -65,6 +65,28 @@ $this->params['buttons'][] = Html::a('Package Reject List', [Url::toRoute(['reje
                         }
                     ],
                     [
+                        'label' => 'Discount Type',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->discount_type == 1) {
+                                return "Percentage";
+                            } else if ($model->discount_type == 2) {
+                                return "Value";
+                            };
+                        }
+                    ],
+                    [
+                        'label' => 'Price After Discount',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->price_after_discount);
+                        }
+                    ],
+                    [
                         'label' => 'Feature',
                         'format' => 'raw',
                         'value' => function ($model) {

@@ -39,6 +39,15 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                     ],
 
                     [
+                        'label' => 'Short Name',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->short_name ?? '';
+                        }
+                    ],
+
+                    [
                         'label' => 'Safari Cost',
                         'contentOptions' => ['style' => 'width: 10%;text-align: right;'],
                         'format' => 'raw',

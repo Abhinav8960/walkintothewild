@@ -31,6 +31,7 @@ class Footprints extends \yii\db\ActiveRecord
     const MODEL_PACKAGE = 2;
     const MODEL_POSTS = 3;
     const MODEL_SIGHTING = 4;
+    const MODEL_USER_DELETE_REQUEST = 5;
 
     /**
      * {@inheritdoc}
