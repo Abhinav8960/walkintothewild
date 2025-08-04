@@ -19,21 +19,20 @@ $strtotime_end_date = !empty($end_date) ? strtotime($end_date) : null;
 $call_request = ChatMessage::find()->andWhere(['status' => 1, 'is_call_request' => 1]);
 $call_dialed_attempted = CallLog::find()->where(['status' => CallLog::STATUS_ACTIVE]);
 $call_dialed_succesfully = CallLog::find()->where(['status' => CallLog::STATUS_ACTIVE, 'dial_status' => 'ANSWERED']);
+$users_called = CallLog::find()->where(['status' => CallLog::STATUS_ACTIVE])->andWhere(['<>', ['dial_status' => null]]);
+
 
 if (!empty($strtotime_start_date) && !empty($strtotime_end_date)) {
     $call_request =  $call_request->andFilterWhere(['between', 'created_at', $strtotime_start_date, $strtotime_end_date]);
 }
 if (!empty($start_date) && !empty($end_date)) {
-    $call_dialed_attempted =  $call_dialed_attempted->andFilterWhere(['between', 'datetime', $start_date, $end_date])->count();
-    $call_dialed_succesfully =  $call_dialed_succesfully->andFilterWhere(['between', 'datetime', $start_date, $end_date])->count();
+    $call_dialed_attempted =  $call_dialed_attempted->andFilterWhere(['between', 'datetime', $start_date, $end_date]);
+    $call_dialed_succesfully =  $call_dialed_succesfully->andFilterWhere(['between', 'datetime', $start_date, $end_date]);
     $users_called = $users_called->andFilterWhere(['between', 'datetime', $start_date, $end_date]);
 }
 $call_request = $call_request->count();
 $call_dialed_attempted = $call_dialed_attempted->count();
 $call_dialed_succesfully = $call_dialed_succesfully->count();
-
-
-
 ?>
 
 <section class="listCard mx-3">
