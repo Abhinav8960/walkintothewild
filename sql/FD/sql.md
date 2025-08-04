@@ -1,0 +1,1 @@
+ALTER TABLE `transaction`  ADD `source` INT NOT NULL DEFAULT '1' COMMENT '1=>Lead,2=>share safari'  AFTER `id`;
