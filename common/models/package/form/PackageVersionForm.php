@@ -412,8 +412,11 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->max_booking_date = $this->max_booking_date ? $this->max_booking_date : date('Y-m-d', strtotime('+1 year'));
         $this->package_version_model->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
-            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-            $this->package_version_model->gallery_json = $live->live_images;
+            // $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+             if(!empty($live)){
+                $this->package_version_model->gallery_json = $live->live_images;
+            }
         }
 
         // if ($this->package_version_model->package_slug == '') {

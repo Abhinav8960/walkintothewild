@@ -75,7 +75,7 @@ class DayItineraryForm  extends \yii\base\Model
     public function rules()
     {
         return [
-            [['package_id', 'version', 'day', 'day_title','day_description'], 'required'],
+            [['package_id', 'version', 'day', 'day_title', 'day_description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner', 'partner_gallery_id'], 'integer'],
@@ -140,8 +140,10 @@ class DayItineraryForm  extends \yii\base\Model
         $this->package_day_model->status = $this->status;
         $this->package_day_model->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
-            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-            $this->package_day_model->gallery_json = $live->live_images;
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if (!empty($live)) {
+                $this->package_day_model->gallery_json = $live->live_images;
+            }
         }
     }
 
