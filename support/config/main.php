@@ -57,6 +57,10 @@ return [
         'log' => [
             'class' => 'support\modules\log\Module',
         ],
+
+        'externaloperator' => [
+            'class' => 'support\modules\externaloperator\Module',
+        ],
         
     ],
 
