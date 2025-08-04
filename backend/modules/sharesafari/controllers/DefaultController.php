@@ -156,7 +156,7 @@ class DefaultController extends Controller
     }
 
 
- 
+
     public function actionOrganizeSafari($id)
     {
         $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();

@@ -45,8 +45,8 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content_tour" id="tab22">
-            <!-- Safari Parks content goes here -->
+        <!-- <div class="tab-content_tour" id="tab22">
+            Safari Parks content goes here
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -63,9 +63,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-content_tour" id="tab23">
-            <!-- Safari Parks content goes here -->
+        </div> -->
+        <!-- <div class="tab-content_tour" id="tab23">
+            Safari Parks content goes here
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -82,9 +82,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="tab-content_tour " id="tab24">
+        <!-- <div class="tab-content_tour " id="tab24">
 
             <div class="row">
                 <div class="col-md-12">
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
 
         <div class="tab-content_tour" id="tab25">
             <!-- Shared Safari content goes here -->
