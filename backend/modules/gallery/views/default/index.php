@@ -84,6 +84,17 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                                 );
                             },
 
+                            // 'delete' => function ($url, $model) {
+                            //     return Html::button(
+                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                            //         [
+                            //             'value' => Url::toRoute(['delete', 'id' => $model->id]),
+                            //             'class' => 'btn p-0 change-menuicon delete-popup',
+                            //             'title' => 'Delete',
+                            //         ]
+                            //     );
+                            // },
+
                         ]
                     ],
 
@@ -92,3 +103,34 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="deleteAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Gallery Delete
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='deleteContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.delete-popup').on('click', function () {
+        $('#deleteAction').modal('show')
+		.find('#deleteContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+?>

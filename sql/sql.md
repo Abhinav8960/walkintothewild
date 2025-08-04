@@ -89,3 +89,5 @@ ALTER TABLE `partner_gallery_version` ADD `user_id` INT NOT NULL AFTER `safari_o
 ALTER TABLE partner_gallery_image
 DROP original_filename,
 DROP file;
+
+ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `remark`;
