@@ -81,8 +81,8 @@ class DefaultController extends Controller
     {
         $searchModel = new PackagePartnerSearch();
         $searchModel->owned_by_id = $this->operatormodel()->id;
+        $searchModel->custom_status = 4;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['!=', 'status', -1]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
