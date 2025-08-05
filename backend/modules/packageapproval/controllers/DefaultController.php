@@ -547,7 +547,7 @@ class DefaultController extends Controller
 
 
         $json = [
-            'share_safari' => [
+            'package' => [
                 'package_display_name' => $package->package_display_name,
                 'package_name' => $package->package_name,
                 'package_slug' => $package->package_slug,
