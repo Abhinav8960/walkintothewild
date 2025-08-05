@@ -552,7 +552,7 @@ class TempController extends Controller
     }
 
 
-    public function actionRemovePackageExceptLive()
+     public function actionRemovePackageExceptLive()
     {
 
         $packages = Package::find()
@@ -574,9 +574,7 @@ class TempController extends Controller
             Package::updateAll(
                 ['status' => -1],
                 [
-                    'and',
-                    ['status' => 1],
-                    ['not in', 'id', $keepIds]
+                    'NOT IN', 'id', $keepIds
                 ]
             );
         }
