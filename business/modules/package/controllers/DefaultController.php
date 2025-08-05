@@ -58,13 +58,18 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'copy-package', 'copy-with-edit'],
+                        'actions' => ['view'],
                         'allow' => $this->isPackageOwner(),
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'actions' => ['itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
                         'allow' => $this->isPackageOwner(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['update', 'copy-with-edit'],
+                        'allow' => $this->isPackageUpdate(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -576,6 +581,19 @@ class DefaultController extends Controller
         $model = PackageVersion::findOne(['id' => $id]);
 
         if ($model && $model->safari_operator_id == $operator->id) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function isPackageUpdate()
+    {
+        $id = Yii::$app->request->get('id');
+
+        $operator = $this->operatormodel();
+        $model = Package::findOne(['id' => $id]);
+
+        if ($model && $model->safari_operator_id == $operator->id && $model->edit_status = 1) {
             return true;
         }
         return false;
