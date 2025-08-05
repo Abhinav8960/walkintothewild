@@ -97,7 +97,7 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = ExternalOperator::findOne(['id' => $id, 'status' => [ExternalOperator::STATUS_ACTIVE]])) !== null) {
+        if (($model = ExternalOperator::findOne(['id' => $id])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

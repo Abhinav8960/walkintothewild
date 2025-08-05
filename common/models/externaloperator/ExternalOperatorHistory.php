@@ -11,7 +11,7 @@ use Yii;
  * This is the model class for table "external_operator".
  *
  * @property int $id
- * @property int|null $user_id
+ * @property int|null $parent_id
  * @property string|null $operator_name
  * @property string|null $email
  * @property string|null $phone_no
@@ -30,24 +30,17 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class ExternalOperator extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ExternalOperatorHistory extends \yii\db\ActiveRecord 
 {
 
-    use CommanRelationship;
-
-
-    const CALL_DONE = 1;
-    const CALL_NOT_DONE = 0;
-    const EMAIL_DONE = 1;
-    const EMAIL_NOT_DONE = 0;
-
+    
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'external_operator';
+        return 'external_operator_history';
     }
 
     
@@ -80,6 +73,7 @@ class ExternalOperator extends \yii\db\ActiveRecord implements \common\interface
         return [
             [['operator_name', 'email', 'phone_no', 'website', 'address', 'owner_name', 'owner_email', 'owner_phone_no', 'traffic', 'engagement', 'seo_performance', 'google_rating', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status','is_call_done','is_mail_send'], 'default', 'value' => 0],
+            [['parent_id'],'required'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by','is_call_done','is_mail_send'], 'integer'],
             [['operator_name', 'email', 'phone_no', 'website', 'owner_name', 'owner_email', 'owner_phone_no', 'traffic', 'engagement', 'seo_performance', 'google_rating'], 'string', 'max' => 255],
             [['address'], 'string', 'max' => 500],
@@ -93,6 +87,7 @@ class ExternalOperator extends \yii\db\ActiveRecord implements \common\interface
     {
         return [
             'id' => 'ID',
+            'parent_id'=>'Parent ID',
             'operator_name' => 'Operator Name',
             'email' => 'Email',
             'phone_no' => 'Phone No',
@@ -114,36 +109,4 @@ class ExternalOperator extends \yii\db\ActiveRecord implements \common\interface
             'updated_by' => 'Updated By',
         ];
     }
-
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-
-    public function getParkList(){
-        return $this->hasMany(ExternalOperatorParks :: class , ['external_operator_id'=>'id']) ->where(['status' => 1])->orderBy(['id'=>SORT_DESC]);
-    }
-
-    public static function callstatusoption()
-    {
-        return [self::CALL_DONE => "YES", self::CALL_NOT_DONE => "NO"];
-    }
-
-    public static function emailstatusoption()
-    {
-        return [self::EMAIL_DONE => "YES", self::EMAIL_NOT_DONE => "NO"];
-    }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        $historyModel = new ExternalOperatorHistory();
-        $historyModel->attributes = $this->attributes;
-        $historyModel->parent_id = $this->id;
-
-        if (!$historyModel->save(false)) {
-            Yii::error('Failed to save User Post History: ' . print_r($historyModel->errors, true), __METHOD__);
-        }
-    }
-
 }
