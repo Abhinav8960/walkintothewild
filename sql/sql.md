@@ -91,3 +91,5 @@ DROP original_filename,
 DROP file;
 
 ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `remark`;
+
+ALTER TABLE `package` ADD `static_json` LONGTEXT NULL DEFAULT NULL AFTER `price_after_discount`;
