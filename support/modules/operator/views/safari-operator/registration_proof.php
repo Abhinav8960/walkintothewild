@@ -29,8 +29,8 @@ $this->params['title'] = $this->title;
                                 class="card-img-top object-fit-cover w-100" alt=""> -->
 
                             <?php if (!empty($model->registration_copy_upload)) {
-                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->registration_copy_upload); // assumes thumbnail has same path + .jpg
-                                // $thumbPath = $this->params['baseurl'] . '/images/prof.png';
+                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->registration_copy_upload); // assumes thumbnail has same path + .jpg
+                                $thumbPath = $this->params['baseurl'] . '/images/prof.png';
                             ?>
                                 <button type="button"
                                     value="<?= Url::to(['file-view', 'filepath' => $model->registration_copy_upload]) ?>"
@@ -56,8 +56,8 @@ $this->params['title'] = $this->title;
                                 class="card-img-top object-fit-cover w-100" alt=""> -->
 
                             <?php if (!empty($model->pan_upload)) {
-                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->pan_upload); // assumes thumbnail has same path + .jpg
-                                // $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
+                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->pan_upload); // assumes thumbnail has same path + .jpg
+                                $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
                             ?>
                                 <button type="button"
                                     value="<?= Url::to(['file-view', 'filepath' => $model->pan_upload]) ?>"

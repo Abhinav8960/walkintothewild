@@ -120,8 +120,8 @@ foreach ($park as $key => $role) {
                             <p class="mb-1">Pan Photo: </p>
 
                             <?php if (!empty($model->pan_upload)) {
-                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->pan_upload); // assumes thumbnail has same path + .jpg
-                                // $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
+                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->pan_upload); // assumes thumbnail has same path + .jpg
+                                $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
                             ?>
                                 <button type="button"
                                     value="<?= Url::to(['file-view', 'filepath' => $model->pan_upload]) ?>"

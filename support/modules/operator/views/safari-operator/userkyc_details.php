@@ -66,8 +66,8 @@ $this->params['title'] = $this->title;
                                 </a> -->
 
                                 <?php if (!empty($model->kyc_pan_upload)) {
-                                    $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->kyc_pan_upload); // assumes thumbnail has same path + .jpg
-                                    // $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
+                                    // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->kyc_pan_upload); // assumes thumbnail has same path + .jpg
+                                    $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
                                 ?>
                                     <button type="button"
                                         value="<?= Url::to(['file-view', 'filepath' => $model->kyc_pan_upload]) ?>"
@@ -102,8 +102,8 @@ $this->params['title'] = $this->title;
                                             </a> -->
 
                                             <?php if (!empty($model->aadhar_front_upload)) {
-                                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->aadhar_front_upload); // assumes thumbnail has same path + .jpg
-                                                // $thumbPath = $this->params['baseurl'] . '/images/prof.png';
+                                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->aadhar_front_upload); // assumes thumbnail has same path + .jpg
+                                                $thumbPath = $this->params['baseurl'] . '/images/prof.png';
                                             ?>
                                                 <button type="button"
                                                     value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_front_upload]) ?>"
@@ -129,8 +129,8 @@ $this->params['title'] = $this->title;
                                             </a> -->
 
                                             <?php if (!empty($model->aadhar_back_upload)) {
-                                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->aadhar_back_upload); // assumes thumbnail has same path + .jpg
-                                                // $thumbPath = $this->params['baseurl'] . '/images/prof.png';
+                                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->aadhar_back_upload); // assumes thumbnail has same path + .jpg
+                                                $thumbPath = $this->params['baseurl'] . '/images/prof.png';
                                             ?>
                                                 <button type="button"
                                                     value="<?= Url::to(['file-view', 'filepath' => $model->aadhar_back_upload]) ?>"
