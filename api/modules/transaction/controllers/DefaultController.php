@@ -527,12 +527,12 @@ class DefaultController extends RestController
         if (empty($model)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
         }
+        
         $quotation = \api\models\leads\LeadPartnerQuotes::find()->andWhere(['id' => $model->lead_partner_quote_id])->one();
 
         if (empty($quotation)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quotation not found."]);
         }
-
 
         if (isset($quotation->lead->package_id)) {
             $title = "Package - " . $quotation->lead->package->package_name;
