@@ -161,7 +161,7 @@ class PackageVersionForm extends \yii\base\Model
                 // 'maxWidth' => 350,
                 // 'maxHeight' => 350,
             ],
-            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id','cost_per_two_person'], 'required', 'on' => ['create', 'update']],
+            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_two_person'], 'required', 'on' => ['create', 'update']],
             [['package_park'], 'required', 'on' => ['create']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
@@ -347,12 +347,55 @@ class PackageVersionForm extends \yii\base\Model
     {
         $m = new Package();
         $m->package_name = $this->package_name;
-        $m->package_slug = Package::generateUnqiueSlug($this->package_name);
         $m->owned_by_id = $this->owned_by_id;
-        $m->status = 0;
+        $m->package_slug = Package::generateUnqiueSlug($this->package_name);
+        $m->package_agenda_id = $this->package_agenda_id;
+        $m->no_of_day = $this->no_of_day;
+        if ($this->no_of_day) {
+            $m->no_of_night = $this->no_of_day - 1;
+        }
+        $m->safari_type = $this->safari_type;
+        $m->no_of_safari = $this->no_of_safari;
+        $m->start_location = $this->start_location;
+        $m->end_location = $this->end_location;
+        $m->start_date = $this->start_date;
+        $m->end_date = $this->end_date;
+        $m->stay_category_id = $this->stay_category_id;
+        $m->cost_per_person = $this->cost_per_person;
+        $m->cost_per_two_person = $this->cost_per_two_person;
+        $m->total_price = (float)$this->cost_per_person;
+        $m->type = $this->type;
+        $m->package_description = $this->package_description;
+        $m->package_itinerary_overview = $this->package_itinerary_overview;
+        $m->package_inclusion = $this->package_inclusion;
+        $m->package_exclusion = $this->package_exclusion;
+        $m->package_terms_condtition = $this->package_terms_condtition;
+        $m->privacy_policy = $this->privacy_policy;
+        $m->change_policy = $this->change_policy;
+        $m->what_you_must_carry = $this->what_you_must_carry;
+        $m->date_change_policy = $this->date_change_policy;
+        $m->refund_policy = $this->refund_policy;
+        $m->getting_there = $this->getting_there;
+        $m->master_vehicle_id = $this->master_vehicle_id;
+        $m->breakfast_included = $this->breakfast_included;
+        $m->lunch_included = $this->lunch_included;
+        $m->dinner_included = $this->dinner_included;
+        $m->meal_not_included = $this->meal_not_included;
+        $m->max_booking_date = $this->max_booking_date;
+        $m->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if (!empty($live)) {
+                $m->gallery_json = $live->live_images;
+            }
+        }
+        $m->edit_status = 1;
+        $m->pending_status = 0;
+        $m->status = 10; //create status
         $m->save(false);
         return $m->id;
     }
+
     public function initializeForm()
     {
         if ($this->package_id == null) {
@@ -387,11 +430,22 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->date_change_policy = $this->date_change_policy;
         $this->package_version_model->refund_policy = $this->refund_policy;
         $this->package_version_model->getting_there = $this->getting_there;
-
         $this->package_version_model->breakfast_included = $this->breakfast_included;
         $this->package_version_model->lunch_included = $this->lunch_included;
         $this->package_version_model->dinner_included = $this->dinner_included;
         $this->package_version_model->meal_not_included = $this->meal_not_included;
+        $this->package_version_model->total_price = (float)$this->cost_per_person;
+        $this->package_version_model->status = $this->status;
+        $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
+        $this->package_version_model->popular_package = $this->popular_package;
+        $this->package_version_model->max_booking_date = $this->max_booking_date ? $this->max_booking_date : date('Y-m-d', strtotime('+1 year'));
+        $this->package_version_model->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if (!empty($live)) {
+                $this->package_version_model->gallery_json = $live->live_images;
+            }
+        }
 
         // $this->package_version_model->type = $this->type;
         // if ($this->type == 1) { // With GST
@@ -401,23 +455,6 @@ class PackageVersionForm extends \yii\base\Model
         // } else { // Without GST
         //     $this->package_version_model->total_price = (float)$this->cost_per_person;
         // }
-        $this->package_version_model->total_price = (float)$this->cost_per_person;
-
-
-        $this->package_version_model->status = $this->status;
-
-        // $this->package_version_model->package_slug = $this->package_slug;
-        $this->package_version_model->master_vehicle_id = $this->master_vehicle_id;
-        $this->package_version_model->popular_package = $this->popular_package;
-        $this->package_version_model->max_booking_date = $this->max_booking_date ? $this->max_booking_date : date('Y-m-d', strtotime('+1 year'));
-        $this->package_version_model->partner_gallery_id = $this->partner_gallery_id;
-        if ($this->partner_gallery_id) {
-            // $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
-             if(!empty($live)){
-                $this->package_version_model->gallery_json = $live->live_images;
-            }
-        }
 
         // if ($this->package_version_model->package_slug == '') {
         //     $without_space_string = str_replace(' ', '-', strtolower($this->package_version_model->safarioperator->business_name));

@@ -58,13 +58,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Package model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Package the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findModel($id)
     {
         if (($model = PackageVersion::findOne(['id' => $id])) !== null) {
@@ -136,6 +130,8 @@ class DefaultController extends Controller
             $package->gallery_json = $model->gallery_json;
             $package->price_after_discount = $model->cost_per_person;
             $package->status = Package::STATUS_ACTIVE;
+            $package->edit_status = 0;
+            $package->pending_status = 0;
             $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
@@ -543,5 +539,4 @@ class DefaultController extends Controller
             return $model;
         }
     }
-
 }
