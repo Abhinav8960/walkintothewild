@@ -8,6 +8,7 @@ use common\models\chat\ChatMessage;
 use common\models\chat\ChatMessageHistory;
 use common\models\cms\banner\Banner;
 use common\models\cms\frontendbanner\FrontendBanner;
+use common\models\feeds\Feeds;
 use common\models\leads\Lead;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\notification\MasterNotificationTemplate;
@@ -575,6 +576,7 @@ class TempController extends Controller
         }
     }
 
+
     public function actionStep2()
     {
 
@@ -586,13 +588,18 @@ class TempController extends Controller
         $keepIds = [];
 
         foreach ($packages as $pack) {
-            $keepIds[] = $pack->id;
-            $pack->edit_status = 0;
-            $pack->pending_status = 0;
-            $pack->editable_version = null;
-            $pack->pending_for_approval_version = null;
-            $pack->static_json = $this->prepareJson($pack->id);
-            $pack->save(false);
+            $operator = SafariOperator::find()->where(['id' => $pack->safari_operator_id])->limit(1)->one();
+            if ($operator) {
+                if ($operator->status == 1) {
+                    $keepIds[] = $pack->id;
+                    $pack->edit_status = 0;
+                    $pack->pending_status = 0;
+                    $pack->editable_version = null;
+                    $pack->pending_for_approval_version = null;
+                    $pack->static_json = $this->prepareJson($pack->id);
+                    $pack->save(false);
+                }
+            }
         }
 
         if (!empty($keepIds)) {
@@ -667,4 +674,21 @@ class TempController extends Controller
 
         return json_encode($json);
     }
+
+    // public function actionStep4()
+    // {
+    //     $feed_models = Feeds::find()->where(['collection' => 2, 'status' => 1])->all();
+    //     foreach ($feed_models as $feed) {
+    //         $package = Package::find()->where(['id' => $feed->collection_id, 'status' => 1])->limit(1)->one();
+    //         if ($package) {
+    //             $operator = SafariOperator::find()->where(['id' => $package->safari_operator_id, 'status' => 1])->limit(1)->one();
+    //             if ($operator) {
+    //                 $feed->status = 1;
+    //             } else {
+    //                 $feed->status = 0;
+    //             }
+    //             $feed->save(false);
+    //         }
+    //     }
+    // }
 }
