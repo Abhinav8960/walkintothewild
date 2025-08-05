@@ -567,7 +567,7 @@ class TempController extends Controller
             $pack->edit_status = 0;
             $pack->pending_status = 0;
             $pack->editable_version = null;
-            $pack->pending_for_approval = null;
+            $pack->pending_for_approval_version = null;
             $pack->save(false);
         }
         if (!empty($keepIds)) {
