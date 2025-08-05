@@ -39,6 +39,8 @@ class DefaultController extends Controller
         $model = new ExternalOperatorForm();
         $model->setScenario(ExternalOperatorForm::SCENARIO_DEFAULT);
         $model->status = ExternalOperator::STATUS_ACTIVE;
+        $model->is_call_done = ExternalOperator::CALL_NOT_DONE;
+        $model->is_mail_send = ExternalOperator::EMAIL_NOT_DONE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -63,6 +65,7 @@ class DefaultController extends Controller
     {
         $externaloperator_model = $this->findModel($id);
         $model = new ExternalOperatorForm($externaloperator_model);
+        $model->setScenario(ExternalOperatorForm::SCENARIO_DEFAULT);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {

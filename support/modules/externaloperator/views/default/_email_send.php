@@ -13,15 +13,18 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row g-3">
 
-    <?php if ($model->id){ ?>
+    <?php if ($model->externaloperator_model->id) { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'is_mail_send')->dropDownList(
-                ExternalOperator::emailstatusoption(),
-                ['prompt' => 'Select Email Status', 'class' => 'form-select']
-            )->label('Edit Email Status') ?>
+            <div class="form_boxes mb-3">
+                <label for="">Edit Email Status<span>*</span></label>
+                <?= $form->field($model, 'is_mail_send')->dropDownList(
+                    ExternalOperator::emailstatusoption(),
+                    ['prompt' => 'Select Email Status', 'class' => 'form-select']
+                )->label(false) ?>
+            </div>
         </div>
     <?php } ?>
-<hr>
+    <hr>
     <div class="col-12">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success text-white px-4']) ?>
     </div>

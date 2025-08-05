@@ -79,11 +79,10 @@ class ExternalOperator extends \yii\db\ActiveRecord implements \common\interface
     {
         return [
             [['operator_name', 'email', 'phone_no', 'website', 'address', 'owner_name', 'owner_email', 'owner_phone_no', 'traffic', 'engagement', 'seo_performance', 'google_rating', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status','is_call_done','is_mail_send'], 'default', 'value' => 0],
+            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by','is_call_done','is_mail_send'], 'integer'],
             [['operator_name', 'email', 'phone_no', 'website', 'owner_name', 'owner_email', 'owner_phone_no', 'traffic', 'engagement', 'seo_performance', 'google_rating'], 'string', 'max' => 255],
             [['address'], 'string', 'max' => 500],
-            [['is_call_done','is_mail_send'],'integer'],
         ];
     }
 

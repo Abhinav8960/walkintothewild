@@ -68,7 +68,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     <div class="col-md-4">
         <div class="form_boxes mb-3">
-        <label for="">Website<span>*</span></label>
+        <label for="">Website<span></span></label>
             <?= $form->field($model, 'website')->textInput(['maxlength' => true, 'placeholder' => 'Enter Operator Website'])->label(false) ?>
         </div>
     </div>
@@ -86,7 +86,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     <div class="col-md-4">
         <div class="form_boxes mb-3">
-        <label for="">Owner Name Rating<span>*</span></label>
+        <label for="">Owner Name<span>*</span></label>
             <?= $form->field($model, 'owner_name')->textInput(['placeholder' => 'Owner Name'])->label(false) ?>
         </div>
     </div>
@@ -111,28 +111,28 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     <div class="col-md-3">
         <div class="form_boxes mb-3">
-        <label for="">Traffic<span>*</span></label>
+        <label for="">Traffic<span></span></label>
             <?= $form->field($model, 'traffic')->textInput(['placeholder' => 'Traffic'])->label(false) ?>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form_boxes mb-3">
-        <label for="">Engagement<span>*</span></label>
+        <label for="">Engagement<span></span></label>
             <?= $form->field($model, 'engagement')->textInput(['placeholder' => 'Engagement'])->label(false) ?>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form_boxes mb-3">
-        <label for="">SEO Performance<span>*</span></label>
+        <label for="">SEO Performance<span></span></label>
             <?= $form->field($model, 'seo_performance')->textInput(['placeholder' => 'SEO Performance'])->label(false) ?>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form_boxes mb-3">
-        <label for="">Google Rating<span>*</span></label>
+        <label for="">Google Rating<span></span></label>
             <?= $form->field($model, 'google_rating')->textInput(['placeholder' => 'Google Rating'])->label(false) ?>
         </div>
     </div>

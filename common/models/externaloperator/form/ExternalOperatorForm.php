@@ -73,7 +73,7 @@ class ExternalOperatorForm extends \yii\base\Model
     public function scenarios()
     {
         return [
-          self::SCENARIO_DEFAULT => ['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name'],
+          self::SCENARIO_DEFAULT => ['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name','owner_phone_no','owner_email'],
           self::SCENARIO_CALL_DONE => ['is_call_done'],
           self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
         ];
@@ -84,15 +84,16 @@ class ExternalOperatorForm extends \yii\base\Model
     public function rules()
     {
         $rules = [
-            [['id','phone_no','status'], 'integer'],
-            [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name'], 'required','on' => self::SCENARIO_DEFAULT],
-            [['phone_no', 'owner_phone_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
+            [['id','phone_no','status','owner_phone_no'], 'integer'],
+            [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name','owner_phone_no','owner_email'], 'required','on' => self::SCENARIO_DEFAULT],
+            [['phone_no', 'owner_phone_no'], 'match', 'pattern' => '/^[6-9]\d{9}$/','message' => 'Invalid Phone number.'],
             [['owner_email', 'email'], 'email'],
             [['google_rating'], 'number'],
             [['google_rating'], 'number', 'max' => 5],
-            [['address','email', 'website', 'operator_name', 'phone_no','traffic','engagement','seo_performance'], 'string', 'max' => 255],
+            [['email', 'website', 'operator_name', 'phone_no','traffic','engagement','seo_performance'], 'string', 'max' => 255],
+            [['address'], 'string', 'max' => 500],
             [['status'], 'default', 'value' => 1],
-            [['operator_name'], 'default', 'value' => 0],
+            [['is_call_done','is_mail_send'], 'default', 'value' => 0],
             [['park_list'], 'safe'],
             [['website'], 'url', 'defaultScheme' => 'http'],
             [['is_call_done'],'required','on' => self::SCENARIO_CALL_DONE],
@@ -153,9 +154,5 @@ class ExternalOperatorForm extends \yii\base\Model
 
         $this->externaloperator_model->is_call_done = $this->is_call_done;
         $this->externaloperator_model->is_mail_send = $this->is_mail_send;
-
-        // if ($this->park_list) {
-        //     $this->externaloperator_model->park_id = $this->park_list[0];
-        // }
     }
 }

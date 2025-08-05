@@ -1,4 +1,5 @@
 <?php
+
 use common\models\externaloperator\ExternalOperator;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
@@ -10,12 +11,15 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row g-3">
 
-    <?php if ($model->id){ ?>
+    <?php if ($model->externaloperator_model->id) { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'is_call_done')->dropDownList(
-                ExternalOperator::callstatusoption(),
-                ['prompt' => 'Select Call Status', 'class' => 'form-select']
-            )->label('Edit Call Status') ?>
+            <div class="form_boxes mb-3">
+                <label for="">Edit Call Status<span>*</span></label>
+                <?= $form->field($model, 'is_call_done')->dropDownList(
+                    ExternalOperator::callstatusoption(),
+                    ['prompt' => 'Select Call Status', 'class' => 'form-select']
+                )->label(false) ?>
+            </div>
         </div>
     <?php } ?>
 
