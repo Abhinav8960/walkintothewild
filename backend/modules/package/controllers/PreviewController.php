@@ -148,6 +148,7 @@ class PreviewController extends Controller
     {
         $package_delete_model = Package::find()->where(['id' => $id])->limit(1)->one();
         $model = new PackageDeleteForm($package_delete_model);
+        $model->status = -1;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
