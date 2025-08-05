@@ -37,7 +37,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return mb_strimwidth($model->package_name, 0, 40, "...");
+                            return mb_strimwidth($model->display_package->package_name, 0, 40, "...");
                         }
                     ],
                     [
@@ -45,7 +45,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_day . ' Days, ' . $model->no_of_night . ' Nights';
+                            return $model->display_package->no_of_day . ' Days, ' . $model->display_package->no_of_night . ' Nights';
                         }
                     ],
                     [
@@ -54,7 +54,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'contentOptions' => ['style' => 'text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return GeneralModel::number_format_indian($model->cost_per_person);
+                            return GeneralModel::number_format_indian($model->display_package->cost_per_person);
                         }
                     ],
                     [
@@ -63,7 +63,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'contentOptions' => ['style' => 'text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_safari;
+                            return $model->display_package->no_of_safari;
                         }
                     ],
                     [
@@ -71,7 +71,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->stay_category_id) ? GeneralModel::packagemetastaycategory()[$model->stay_category_id] : '';
+                            return isset($model->display_package->stay_category_id) ? GeneralModel::packagemetastaycategory()[$model->display_package->stay_category_id] : '';
                         }
                     ],
 
@@ -138,16 +138,25 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'headerOptions' => ['style' => 'width: 12%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->max_booking_date) ? date("F j, Y, g:i a", strtotime($model->max_booking_date)) : '';
+                            return isset($model->display_package->max_booking_date) ? date("F j, Y", strtotime($model->display_package->max_booking_date)) : '';
                         }
                     ],
 
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->statustags;
+                    //     }
+                    // ],
+
                     [
-                        'label' => 'Status',
+                        'label' => 'Is Live',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statustags;
+                            return $model->live_version != null ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>';
                         }
                     ],
 
@@ -160,9 +169,9 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'buttons' => [
 
                             'update' => function ($url, $model) {
-                                if ($model->status == PackageVersion::EDIATBLE_STATUS) {
+                                if (isset($model->editable_package)) {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
-                                ', ['/package/default/update', 'id' => $model->id], [
+                                ', ['/package/default/update', 'id' => $model->editable_package->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
 
@@ -173,10 +182,19 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                 ]);
                             },
                             'view' => function ($url, $model) {
-                                return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-                                ]);
+                                 if (isset($model->live_package)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->live_package->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                 }
+                                if (isset($model->editable_package)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['/package/default/view', 'id' => $model->editable_package->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                }
+
                             },
 
                             // 'SentforApproval' => function ($url, $model) {

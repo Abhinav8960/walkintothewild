@@ -18,7 +18,7 @@ class PartnerGalleryVersionSearch extends PartnerGalleryVersion
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'can_send_for_approval', 'is_approved', 'send_for_approval', 'in_draft'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_approved', 'send_for_approval', 'in_draft'], 'integer'],
             [['custom_filter','is_live'], 'safe'],
         ];
     }

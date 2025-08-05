@@ -74,7 +74,7 @@ class PartnerGalleryImageForm extends model
         return [
             'id' => 'ID',
             'partner_gallery_id' => 'Partner Gallery ID',
-            'original_filename' => 'Original Filename',
+            // 'original_filename' => 'Original Filename',
             'filepath' => 'Filepath',
             'file' => 'File',
             'title' => 'Title',
@@ -108,9 +108,9 @@ class PartnerGalleryImageForm extends model
 
             if ($fileName) {
                 if ($etag =  FsHelper::saveUploadedFile($this->file, $filePath, $fileName, true)) {
-                    $this->partner_gallery_image_model->file = $fileName;
+                    // $this->partner_gallery_image_model->file = $fileName;
                     $this->partner_gallery_image_model->filepath = $filePath;
-                    $this->partner_gallery_image_model->original_filename = $this->file->name;
+                    // $this->partner_gallery_image_model->original_filename = $this->file->name;
                     $this->partner_gallery_image_model->save(false);
                 }
             }

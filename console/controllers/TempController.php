@@ -11,6 +11,7 @@ use common\models\leads\Lead;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\operator\SafariOperator;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\partnergalleryimage\PartnerGalleryImage;
@@ -529,5 +530,25 @@ class TempController extends Controller
         }
 
         echo 'Done';
+    }
+
+
+    public function actionUpdateGalleryUserId()
+    {
+        $galleries = PartnerGallery::find()->all();
+        foreach($galleries as $gallery)
+        {
+            $gallery->user_id = $gallery->created_by;
+            $gallery->save(false);
+        }
+
+        $versions = PartnerGalleryVersion::find()->all();
+
+        foreach($versions as $version)
+        {
+            $operator = SafariOperator::find()->where(['id'=>$version->safari_operator_id])->limit(1)->one();
+            $version->user_id = $operator->user_id;
+            $version->save(false);
+        }
     }
 }

@@ -11,7 +11,6 @@ class PartnerGalleryRejectionForm extends model
 
     public $rejection_model;
     public $remark;
-    public $can_send_for_approval;
     public $in_draft;
     public $is_approved;
     public $send_for_approval;
@@ -40,7 +39,7 @@ class PartnerGalleryRejectionForm extends model
     {
         return [
             [['remark'], 'required'],
-            [['can_send_for_approval','in_draft','send_for_approval','is_approved'], 'integer'],
+            [['in_draft','send_for_approval','is_approved'], 'integer'],
 
         ];
     }
@@ -62,7 +61,6 @@ class PartnerGalleryRejectionForm extends model
     public function initializeForm()
     {
         $this->rejection_model->remark = $this->remark;
-        // $this->rejection_model->can_send_for_approval = $this->can_send_for_approval;
         $this->rejection_model->in_draft = $this->in_draft;
         $this->rejection_model->send_for_approval = $this->send_for_approval;
         $this->rejection_model->is_approved = $this->is_approved;
