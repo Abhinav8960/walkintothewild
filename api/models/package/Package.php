@@ -99,6 +99,8 @@ class Package extends \common\models\package\Package
             $fields[] = 'package_agenda_id';
             $fields[] = 'stay_category_id';
             $fields[] = 'max_booking_date';
+            $fields[] = 'gallery_json';
+            $fields[] = 'price_after_discount';
             $fields[] = 'status';
         }
         return $fields;
@@ -142,7 +144,7 @@ class Package extends \common\models\package\Package
 
     public function getMaster_package_with_included()
     {
-    
+
         $arr = [
             1 => [
                 'id' => 1,
