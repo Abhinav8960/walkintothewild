@@ -73,7 +73,7 @@ class ExternalOperatorForm extends \yii\base\Model
     public function scenarios()
     {
         return [
-          self::SCENARIO_DEFAULT => ['operator_name','phone_no','address','park_list','email','owner_name','owner_phone_no','owner_email','website','traffic','engagement','seo_performance','google_rating'],
+          self::SCENARIO_DEFAULT => ['operator_name','phone_no','address','park_list','email','owner_name','owner_phone_no','owner_email','website','traffic','engagement','seo_performance','google_rating','status'],
           self::SCENARIO_CALL_DONE => ['is_call_done'],
           self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
         ];
