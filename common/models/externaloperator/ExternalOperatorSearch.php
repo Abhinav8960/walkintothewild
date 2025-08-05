@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 class ExternalOperatorSearch extends ExternalOperator
 {
 
-    public $operator_name;
+    // public $operator_name;
 
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class ExternalOperatorSearch extends ExternalOperator
     public function rules()
     {
         return [
-            [['status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
+            [['status'], 'integer'],
             [['operator_name'], 'string','max'=>255],
         ];
     }
@@ -64,15 +64,9 @@ class ExternalOperatorSearch extends ExternalOperator
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'operator_name'=>$this->operator_name,
         ]);
-
-        $query->andFilterWhere(['like', 'operator_name', $this->operator_name]);
-
-        
+                
         return $dataProvider;
     } 
 }

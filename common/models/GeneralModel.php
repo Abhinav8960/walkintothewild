@@ -2180,6 +2180,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     public static function externaloperatorslist()
     {
         $external_operator = ExternalOperator::find()->where(['status' => ExternalOperator::STATUS_ACTIVE])->orderBy(['operator_name' => SORT_ASC]);
-        return ArrayHelper::map($external_operator->all(), 'id', 'operator_name');
+        return ArrayHelper::map($external_operator->all(), 'operator_name', 'operator_name');
     }
 }
