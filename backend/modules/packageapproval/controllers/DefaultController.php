@@ -548,7 +548,7 @@ class DefaultController extends Controller
 
     public function prepareJson($id)
     {
-        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+        $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
         $package = ApiPackage::find()->where(['id' => $id])->limit(1)->one();
 
 
