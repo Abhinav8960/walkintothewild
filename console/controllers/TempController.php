@@ -14,6 +14,7 @@ use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
+use common\models\package\PackageVersion;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\partnergalleryimage\PartnerGalleryImage;
@@ -553,8 +554,28 @@ class TempController extends Controller
         }
     }
 
+    public function actionStep1()
+    {
+        $package = Package::find()->all();
+        foreach ($package as $pack) {
+            $operator = SafariOperator::find()->where(['id' => $pack->safari_operator_id])->limit(1)->one();
+            if ($operator) {
+                $pack->user_id = $operator->user_id;
+            }
+            $pack->save(false);
+        }
 
-    public function actionRemovePackageExceptLive()
+        $version = PackageVersion::find()->all();
+        foreach ($version as $pack) {
+            $operator = SafariOperator::find()->where(['id' => $pack->safari_operator_id])->limit(1)->one();
+            if ($operator) {
+                $pack->user_id = $operator->user_id;
+            }
+            $pack->save(false);
+        }
+    }
+
+    public function actionStep2()
     {
 
         $packages = Package::find()
@@ -573,15 +594,16 @@ class TempController extends Controller
             $pack->static_json = $this->prepareJson($pack->id);
             $pack->save(false);
         }
+
         if (!empty($keepIds)) {
-            Package::updateAll(
-                ['status' => -1],
-                [
-                    'NOT IN',
-                    'id',
-                    $keepIds
-                ]
-            );
+            $otherPackages = Package::find()
+                ->where(['not in', 'id', $keepIds])
+                ->all();
+
+            foreach ($otherPackages as $other) {
+                $other->status = -1;
+                $other->save(false);
+            }
         }
     }
 
