@@ -38,7 +38,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 {
 
     const OBJECTIVE = "package";
-
+    const PACKAGE_LIVE = 1;
+    const PACKAGE_EXPIRED = 0;
 
     use \common\traits\CommanRelationship;
     /**
@@ -413,5 +414,14 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $slug = \yii\helpers\Inflector::slug($package_name) . '-' . $count;
         }
         return $slug;
+    }
+
+    public function getLivestatustags()
+    {
+        if ($this->status == Package::PACKAGE_LIVE) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+        } else if ($this->status == Package::PACKAGE_EXPIRED) {
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        }
     }
 }

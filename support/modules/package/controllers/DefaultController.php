@@ -20,6 +20,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
+use common\models\package\PackageSearch;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGallerySearch;
 use Yii;
@@ -47,7 +48,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PackageVersionSearch();
+        $searchModel = new PackageSearch();
         $searchModel->status = Package::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

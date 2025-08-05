@@ -146,7 +146,7 @@ $this->title = 'Package';
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statustags;
+                            return $model->livestatustags;
                         }
                     ],
 
