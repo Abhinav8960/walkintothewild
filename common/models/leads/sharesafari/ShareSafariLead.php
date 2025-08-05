@@ -1,6 +1,8 @@
 <?php
+
 namespace common\models\leads\sharesafari;
 
+use common\models\GeneralModel;
 use Yii;
 
 /**
@@ -41,7 +43,7 @@ use Yii;
 class ShareSafariLead extends \yii\db\ActiveRecord
 {
 
-     public function behaviors()
+    public function behaviors()
     {
         return [
             \yii\behaviors\TimestampBehavior::className(),
@@ -114,4 +116,34 @@ class ShareSafariLead extends \yii\db\ActiveRecord
         ];
     }
 
+    public function generateInstallment()
+    {
+
+        if ($this->installment <= 0) {
+            $this->installment = 1; // Default to 1 if not set or invalid
+        }
+        $model = new ShareSafariLeadInstallment();
+        $model->share_safari_lead_id = $this->id;
+        $model->share_safari_id = $this->share_safari_id;
+        $model->share_safari_user_id = $this->share_safari_user_id;
+        $model->share_safari_partner_id = $this->share_safari_partner_id;
+        $model->version = $this->version;
+        $model->type = $this->type;
+        $model->user_id = $this->user_id;
+        $model->name = $this->name;
+        $model->email = $this->email;
+        // $model->amount = $this->net_price / $this->installment; //
+        $model->amount = $this->net_price;
+        $model->due_datetime = date('Y-m-d H:i:s', strtotime("+2 minutes")); // Example: due in 2 Minutes
+        $model->notes = $this->notes;
+        // $model->payment_link = null; // Assuming no payment link for now
+        $model->payment_hash = GeneralModel::encrypt($this->id); // Assuming no payment hash for now
+        $model->transaction_id = null; // Assuming no transaction ID for now
+        $model->payment_gateway = null; // Assuming same payment gateway as lead
+        $model->transaction_datetime = null; // Assuming no transaction datetime for now        
+        $model->created_by = $this->created_by;
+        $model->updated_by = $this->updated_by;
+        $model->status = 0; // Assuming status is 0 for new installment
+        return $model->save(false);
+    }
 }

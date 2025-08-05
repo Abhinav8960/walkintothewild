@@ -30,7 +30,7 @@ use Yii;
  * @property int|null $updated_by
  * @property int $status 0=>not received, 1=> received
  */
-class ShareSafariInstallment extends \yii\db\ActiveRecord
+class ShareSafariLeadInstallment extends \yii\db\ActiveRecord
 {
 
     public function behaviors()
@@ -45,7 +45,7 @@ class ShareSafariInstallment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'share_safari_installment';
+        return 'share_safari_lead_installment';
     }
 
     /**
@@ -59,7 +59,7 @@ class ShareSafariInstallment extends \yii\db\ActiveRecord
             [['share_safari_id', 'share_safari_user_id', 'version', 'type', 'name', 'email'], 'required'],
             [['share_safari_id', 'share_safari_user_id', 'share_safari_partner_id', 'version', 'type', 'user_id', 'transaction_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['amount'], 'number'],
-            [['due_datetime', 'transaction_datetime'], 'safe'],
+            [['due_datetime', 'transaction_datetime','installment','share_safari_lead_id'], 'safe'],
             [['notes', 'name', 'email', 'payment_link', 'payment_hash'], 'string', 'max' => 255],
         ];
     }

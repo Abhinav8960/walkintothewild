@@ -15,6 +15,7 @@ use frontend\models\form\CreateDepartureForm;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
+use api\models\leads\sharesafari\ShareSafariLead;
 use api\models\sharesafari\form\SharedSafariForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\sharesafari\ShareSafariHistory;
@@ -22,6 +23,7 @@ use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
+use common\models\leads\sharesafari\form\ShareSafariLeadForm;
 // use api\models\UserWishlist;
 use common\models\UserWishlist;
 use frontend\models\ReplyForm;
@@ -51,10 +53,10 @@ class DefaultController extends SafariController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update'],
+                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update', 'booking'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'booking'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -1168,7 +1170,9 @@ class DefaultController extends SafariController
 
     public function actionBooking($slug)
     {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
         }
@@ -1176,13 +1180,32 @@ class DefaultController extends SafariController
         if ($share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "This safari can not Booked!!!"]);
         }
+
         if ($share_safari->host_user_id == $this->userinfoId) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Host You can't Book this safari!!!"]);
         }
-        
-        if(){
 
+        $model = new ShareSafariLeadForm();
+        $model->attributes = $this->request;
+        $model->share_safari_id = $share_safari->id;
+        $model->share_safari_user_id = $share_safari->host_user_id;
+        $model->share_safari_partner_id = $share_safari->partner->id;
+        $model->user_id = $this->userinfoId;
+        $model->version = $share_safari->version;
+
+        if ($model->validate()) {
+            $lead = $model->store($share_safari, $this->userinfo);
+            if ($lead != false) {
+                // FrontendNotificationHelper::sharedSafariBooking($model->share_safari_booking_model);
+                // return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Booking created successfully"]);
+                $model = ShareSafariLead::find()->where(['id' => $lead])->one();
+                $data['share_safari_info'] = $model->toArray();
+                return Yii::$app->api->sendResponse($data);
+            }
+            return Yii::$app->api->sendResponse($data = ['status' => $lead], ['message' => "Facing Technical issue, Please try again later!"]);
+        } else {
+
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
-        
     }
 }
