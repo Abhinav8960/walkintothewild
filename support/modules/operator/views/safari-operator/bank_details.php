@@ -60,8 +60,8 @@ $this->params['title'] = $this->title;
                             <!-- </a> -->
 
                             <?php if (!empty($model->cancel_check_upload)) {
-                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->cancel_check_upload); // assumes thumbnail has same path + .jpg
-                                $thumbPath = $this->params['baseurl'] . '/images/prof.png';
+                                $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->cancel_check_upload); // assumes thumbnail has same path + .jpg
+                                // $thumbPath = $this->params['baseurl'] . '/images/prof.png';
                             ?>
                                 <button type="button"
                                     value="<?= Url::to(['file-view', 'filepath' => $model->cancel_check_upload]) ?>"

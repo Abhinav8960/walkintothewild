@@ -63,8 +63,8 @@ $this->params['title'] = $this->title;
                                     class="card-img-top object-fit-cover w-100" alt=""> -->
 
                                 <?php if (!empty($model->gstDetail->gst_upload_path)) {
-                                    // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->gstDetail->gst_upload_path); // assumes thumbnail has same path + .jpg
-                                    $thumbPath = $this->params['baseurl'] . '/images/prof.png';
+                                    $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->gstDetail->gst_upload_path); // assumes thumbnail has same path + .jpg
+                                    // $thumbPath = $this->params['baseurl'] . '/images/prof.png';
                                 ?>
                                     <button type="button"
                                         value="<?= Url::to(['file-view', 'filepath' => $model->gstDetail->gst_upload_path]) ?>"
