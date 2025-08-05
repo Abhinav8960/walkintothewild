@@ -582,6 +582,7 @@ class TempController extends Controller
 
         $packages = Package::find()
             ->where(['status' => 1])
+            ->andWhere(['>=', 'cost_per_person', 1000])
             ->andWhere(['IS NOT', 'live_version', null])
             ->all();
 
