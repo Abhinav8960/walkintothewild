@@ -73,7 +73,7 @@ class ExternalOperatorForm extends \yii\base\Model
     public function scenarios()
     {
         return [
-          self::SCENARIO_DEFAULT => ['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name','owner_phone_no','owner_email'],
+          self::SCENARIO_DEFAULT => ['operator_name','phone_no','address','park_list','email','owner_name','owner_phone_no','owner_email','website','traffic','engagement','seo_performance','google_rating'],
           self::SCENARIO_CALL_DONE => ['is_call_done'],
           self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
         ];
@@ -88,7 +88,6 @@ class ExternalOperatorForm extends \yii\base\Model
             [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name','owner_phone_no','owner_email'], 'required','on' => self::SCENARIO_DEFAULT],
             [['phone_no', 'owner_phone_no'], 'match', 'pattern' => '/^[6-9]\d{9}$/','message' => 'Invalid Phone number.'],
             [['owner_email', 'email'], 'email'],
-            [['google_rating'], 'number'],
             [['google_rating'], 'number', 'max' => 5],
             [['email', 'website', 'operator_name', 'phone_no','traffic','engagement','seo_performance'], 'string', 'max' => 255],
             [['address'], 'string', 'max' => 500],
