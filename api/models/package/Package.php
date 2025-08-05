@@ -99,6 +99,8 @@ class Package extends \common\models\package\Package
             $fields[] = 'package_agenda_id';
             $fields[] = 'stay_category_id';
             $fields[] = 'max_booking_date';
+            $fields[] = 'gallery_json';
+            $fields[] = 'price_after_discount';
             $fields[] = 'status';
         }
         return $fields;
@@ -142,7 +144,7 @@ class Package extends \common\models\package\Package
 
     public function getMaster_package_with_included()
     {
-    
+
         $arr = [
             1 => [
                 'id' => 1,
@@ -272,12 +274,12 @@ class Package extends \common\models\package\Package
     public function getSafarioperatorUser()
     {
         return $this->partner ? $this->partner->user : null;
-        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+        // return $this->hasOne(User::className(), ['id' => 'safari_operator_id']);
     }
 
     public function getPartner()
     {
-        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 
     public function getMastervehicle()
@@ -450,7 +452,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_wishlist.user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 
@@ -496,7 +498,7 @@ class Package extends \common\models\package\Package
     public function getCan_reply()
     {
         $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ((!empty($login_partner) && $this->owned_by_id == $login_partner->id)) {
+        if ((!empty($login_partner) && $this->safari_operator_id == $login_partner->id)) {
             return true;
         }
         return false;

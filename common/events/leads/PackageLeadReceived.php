@@ -33,7 +33,7 @@ class PackageLeadReceived extends Event
     {
         $this->user = User::find()->where(['id' => $user_id])->one();
         $this->package = $package;
-        $this->partner = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
+        $this->partner = SafariOperator::find()->where(['id' => $package->safari_operator_id])->limit(1)->one();
         $this->to_mail = $this->partner->email;
         $this->chat_url  = \Yii::$app->params['frontend_url'] . '/' . $this->user->user_handle . "/" . $chat_hash;
         $this->engine  = \Yii::$app->engine;
@@ -76,7 +76,7 @@ class PackageLeadReceived extends Event
                     'title'                             => $this->title(),
                     'message'                           => $this->message(),
                     'sent_data'                         => MasterNotificationTemplate::prepareSendData($this->title(), $this->message(), ['objective' => Package::OBJECTIVE, 'package_slug' => $this->package->package_slug]),
-                    'user_id'                           => $this->package->owned_by_id,
+                    'user_id'                           => $this->package->safari_operator_id,
                     'image_url'                         => NULL,
                     'action'                            => NULL,
                 ]

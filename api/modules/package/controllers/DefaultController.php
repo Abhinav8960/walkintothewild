@@ -88,8 +88,8 @@ class DefaultController extends RestController
     {
         $searchModel = new PackageSearch();
         $searchModel->status = Package::STATUS_ACTIVE;
-        // $searchModel->custom_sort_by = 5;
-        $condition = "owned_by_id IN (SELECT id from safari_operator WHERE status=1)";
+        $searchModel->custom_sort_by = 5;
+        $condition = "safari_operator_id IN (SELECT id from safari_operator WHERE status=1)";
 
         return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "packages", $condition);
     }
@@ -171,9 +171,8 @@ class DefaultController extends RestController
             $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Package']);
             return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
-        if ($this->userinfo && isset($package->partner) && $package->owned_by_id != $package->partner->id) {
-            $message = Yii::$app->api->messageManager->getMessage('common.operator_reply_restricted');
-            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
+        if ($this->userinfo && isset($package->partner) && $package->safari_operator_id != $package->partner->id) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot Reply!!!"]);
         }
 
         $replymodel = new PackageReplyForm();

@@ -116,7 +116,7 @@ class PackageController extends RestController
         }
         $searchModel = new PackageVersionSearch();
         $searchModel->status = PackageVersion::EDIATBLE_STATUS;
-        $searchModel->owned_by_id = $safari_operator->id;
+        $searchModel->safari_operator_id = $safari_operator->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "partnersearch");
     }
 
@@ -131,7 +131,7 @@ class PackageController extends RestController
         }
         $model = new PackageVersionForm();
         $model->status = PackageVersion::EDIATBLE_STATUS;
-        $model->owned_by_id = $safari_operator->id;
+        $model->safari_operator_id = $safari_operator->id;
         $model->scenario = 'create';
 
         $model->attributes = $this->request;
@@ -612,9 +612,9 @@ class PackageController extends RestController
      * @return Package the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($slug, $owned_by_id)
+    protected function findModel($slug, $safari_operator_id)
     {
-        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['safari_operator_id' => $safari_operator_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
         $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');

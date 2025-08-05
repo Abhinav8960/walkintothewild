@@ -70,7 +70,7 @@ class PackageLeadForm extends Model
             $lead->source = Lead::SOURCE_PACKAGE;
             $lead->package_id = $package_id;
             $lead->package_version = $package->live_version;
-            $lead->operator_id = $package->owned_by_id;
+            $lead->operator_id = $package->safari_operator_id;
             $lead->name = $this->name ?? $login_user->name;
             $lead->email = $this->email ?? $login_user->email;
             $lead->phone = $this->phone;
@@ -102,7 +102,7 @@ class PackageLeadForm extends Model
 
         $assign_to_partner = new LeadPartners();
         $assign_to_partner->lead_id = $lead->id;
-        $assign_to_partner->partner_id = $package->owned_by_id;
+        $assign_to_partner->partner_id = $package->safari_operator_id;
         $assign_to_partner->status = true;
         $assign_to_partner->created_by = $login_user->id;
         $assign_to_partner->updated_by = $login_user->id;

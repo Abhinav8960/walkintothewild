@@ -22,7 +22,7 @@ class PackageVersionSearch extends PackageVersion
     public $custom_sort_by;
     public $package_name;
     public $report_days;
-    public $owned_by_id;
+    public $safari_operator_id;
 
     public $report_days_option = [
         'all' => 'All',
@@ -39,7 +39,7 @@ class PackageVersionSearch extends PackageVersion
     public function rules()
     {
         return [
-            [['no_of_day', 'owned_by_id', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['no_of_day', 'safari_operator_id', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['cost_per_person'], 'safe'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
@@ -109,7 +109,7 @@ class PackageVersionSearch extends PackageVersion
             'package.status' => $this->status,
             'package.is_published_on_web' => $this->is_published_on_web,
             'package.is_published_on_api' => $this->is_published_on_api,
-            'owned_by_id' => $this->owned_by_id,
+            'safari_operator_id' => $this->safari_operator_id,
 
         ]);
 
@@ -205,7 +205,7 @@ class PackageVersionSearch extends PackageVersion
     public function managesearch($params, $safari_operator_id)
     {
         $query =  PackageVersion::find()->where([
-            'owned_by_id' => $safari_operator_id
+            'safari_operator_id' => $safari_operator_id
         ]);
 
         // add conditions that should always apply here
@@ -274,7 +274,7 @@ class PackageVersionSearch extends PackageVersion
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'owned_by_id' => $this->owned_by_id,
+            'safari_operator_id' => $this->safari_operator_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

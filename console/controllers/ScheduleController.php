@@ -85,7 +85,7 @@ class ScheduleController extends Controller
     {
         $safari_operators = SafariOperator::find()->where(['status' => SafariOperator::STATUS_SUSPEND])->all();
         foreach ($safari_operators as $operator) {
-            $packages = Package::find()->where(['owned_by_id' => $operator->id])->all();
+            $packages = Package::find()->where(['safari_operator_id' => $operator->id])->all();
             foreach ($packages as $pack) {
                 $pack->status = Package::STATUS_SUSPEND;
                 $pack->save(false);
