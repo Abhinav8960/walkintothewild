@@ -452,7 +452,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_wishlist.user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 

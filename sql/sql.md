@@ -94,3 +94,5 @@ ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL
 
 ALTER TABLE `package` ADD `edit_status` INT NOT NULL DEFAULT '0' AFTER `editable_version`, ADD `pending_status` INT NOT NULL DEFAULT '0' AFTER `edit_status`;
 ALTER TABLE `package` ADD `static_json` LONGTEXT NULL DEFAULT NULL AFTER `price_after_discount`;
+ALTER TABLE `package` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
+ALTER TABLE `package_version` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;

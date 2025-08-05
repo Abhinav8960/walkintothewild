@@ -124,6 +124,7 @@ class DefaultController extends Controller
         $model = new PackageVersionForm();
         $model->status = PackageVersion::EDIATBLE_STATUS;
         $model->safari_operator_id = $safari_operator->id;
+        $model->user_id = Yii::$app->user->identity->id;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {

@@ -13,6 +13,7 @@ use common\models\partnergallery\PartnerGallery;
 class PackageVersionForm extends \yii\base\Model
 {
     public $safari_operator_id;
+    public $user_id;
     public $package_id;
     public $version;
     public $package_name;
@@ -96,6 +97,7 @@ class PackageVersionForm extends \yii\base\Model
         if ($package_version_model != null) {
             $this->package_version_model = $package_version_model;
             $this->safari_operator_id = $this->package_version_model->safari_operator_id;
+            $this->user_id = $this->package_version_model->user_id;
             $this->package_id = $this->package_version_model->package_id;
             $this->version = $this->package_version_model->version;
             $this->package_name = $this->package_version_model->package_name;
@@ -189,7 +191,7 @@ class PackageVersionForm extends \yii\base\Model
             [['day_title'], 'string', 'max' => 512],
             [['day_description'], 'string', 'max' => 2000],
             [['getting_there'], 'string', 'max' => 2000],
-            [['partner_gallery_id'], 'integer'],
+            [['partner_gallery_id','user_id'], 'integer'],
             [['gallery_json'], 'safe'],
 
 
@@ -348,6 +350,7 @@ class PackageVersionForm extends \yii\base\Model
         $m = new Package();
         $m->package_name = $this->package_name;
         $m->safari_operator_id = $this->safari_operator_id;
+        $m->user_id = $this->user_id;
         $m->package_slug = Package::generateUnqiueSlug($this->package_name);
         $m->package_agenda_id = $this->package_agenda_id;
         $m->no_of_day = $this->no_of_day;
@@ -404,6 +407,7 @@ class PackageVersionForm extends \yii\base\Model
         $this->package_version_model->package_id = $this->package_id;
         $this->package_version_model->version = $this->version;
         $this->package_version_model->safari_operator_id = $this->safari_operator_id;
+        $this->package_version_model->user_id = $this->user_id;
         $this->package_version_model->package_name = $this->package_name;
         $this->package_version_model->package_agenda_id = $this->package_agenda_id;
         $this->package_version_model->no_of_day = $this->no_of_day;

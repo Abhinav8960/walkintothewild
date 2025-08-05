@@ -118,6 +118,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
             [['discount_in_percentage', 'price_after_discount'], 'default', 'value' => 0.00],
             [['discount_in_value'], 'default', 'value' => 0.00],
+            [['user_id'], 'integer'],
 
 
         ];

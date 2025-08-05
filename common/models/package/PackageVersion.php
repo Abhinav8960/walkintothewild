@@ -117,7 +117,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512],
             [['max_booking_date'], 'safe'],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
-            [['partner_gallery_id'], 'integer'],
+            [['partner_gallery_id','user_id'], 'integer'],
             [['gallery_json'], 'safe'],
 
 

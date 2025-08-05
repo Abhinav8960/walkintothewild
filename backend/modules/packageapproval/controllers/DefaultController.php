@@ -87,6 +87,7 @@ class DefaultController extends Controller
 
             $package->package_name = $model->package_name;
             $package->safari_operator_id = $model->safari_operator_id;
+            $package->user_id = $model->user_id;
             $package->package_agenda_id = $model->package_agenda_id;
             $package->no_of_day = $model->no_of_day;
             $package->no_of_night = $model->no_of_night;
