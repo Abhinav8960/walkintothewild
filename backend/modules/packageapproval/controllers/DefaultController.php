@@ -185,23 +185,15 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                // $transaction = Yii::$app->db->beginTransaction();
-                // try {
+
                 $package->pending_for_approval_version = null;
                 $package->save(false);
-
                 $model->status = PackageVersion::NOT_APPROVED_STATUS;
                 $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;
                 $model->save(false);
-                // } catch (\Exception $e) {
-                //     Yii::error($e->getMessage());
-                //     $transaction->rollBack();
-                //     Yii::$app->session->setFlash('error', 'Failed to reject package.');
-                //     return $this->redirect(Yii::$app->request->referrer);
-                // }
-                // $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
                 return $this->redirect(['index']);
+                
             }
         }
 

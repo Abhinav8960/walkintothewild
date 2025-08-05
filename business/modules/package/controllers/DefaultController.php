@@ -934,4 +934,20 @@ class DefaultController extends Controller
         }
         return true;
     }
+
+    public function actionInactive($id)
+    {
+        $package = Package::find()->where(['id' => $id])->limit(1)->one();
+        if ($package->status == 1) {
+            $package->status = 0;
+            $package->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Package Inactive Successfully');
+        } else {
+            $package->status = 1;
+            $package->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Package Active Successfully');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }

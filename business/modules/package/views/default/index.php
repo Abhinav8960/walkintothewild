@@ -98,7 +98,12 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->live_version != null ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>';
+                            // return $model->live_version != null ? '<span class="badge bg-success">Yes</span>' : '<span class="badge bg-danger">No</span>';
+                            if ($model->status == 1) {
+                                return '<span class="badge bg-success">Yes</span>';
+                            } else {
+                                return '<span class="badge bg-danger">No</span>';
+                            }
                         }
                     ],
 
@@ -156,7 +161,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}',
+                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{sent}&nbsp{inactive}',
                         'buttons' => [
 
                             'update' => function ($url, $model) {
@@ -191,6 +196,28 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
                                     ]);
+                                }
+                            },
+
+                            'inactive' => function ($url, $model) {
+                                if ($model->status == 1 || $model->status == 0) {
+                                    if ($model->status == 1) {
+                                        return Html::a('<i class="fa fa-toggle-on"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-success',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to inactive this package?',
+                                            'title' => 'Unblock User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    } else if ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-toggle-off"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-danger',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to active this package?',
+                                            'title' => 'Block User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    }
                                 }
                             },
                         ]
