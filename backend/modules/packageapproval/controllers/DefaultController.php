@@ -187,6 +187,7 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
 
                 $package->pending_for_approval_version = null;
+                $package->pending_status = 0;
                 $package->save(false);
                 $model->status = PackageVersion::NOT_APPROVED_STATUS;
                 $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;

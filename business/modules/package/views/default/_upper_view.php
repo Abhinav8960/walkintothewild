@@ -15,7 +15,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-12 mb-4">
                 <div class="topParent d-flex justify-content-between align-items-center">
                     <div class="packageTitle">
-                        <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?></h2>
+                        <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?>
+                            <?php if (!empty($package->cancellation_reason)) { ?>
+                                <span style='color:red'>
+                                    <?= '(' . $package->cancellation_reason . ')' ?>
+                                </span>
+                            <?php } ?>
+                        </h2>
                     </div>
                     <div class="butonsParent d-flex align-items-center gap-3">
                         <?php if ($var = $package->package) { ?>
