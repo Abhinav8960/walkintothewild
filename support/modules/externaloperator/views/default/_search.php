@@ -32,6 +32,7 @@ use kartik\daterange\DateRangePicker;
                             'class' => 'search-border'
                         ]
                     ) ?>
+                <i class="fa-solid fa-caret-down"></i>
                 </div>
 
 
@@ -45,6 +46,7 @@ use kartik\daterange\DateRangePicker;
                             'class' => 'search-border'
                         ]
                     ) ?>
+                    <i class="fa-solid fa-caret-down"></i>
                 </div>
             </div>
         </div>
