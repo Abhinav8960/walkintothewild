@@ -79,7 +79,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         "/galleryapproval/default/index",
                                                         "/gallery/default/view",
                                                         "/operatorapproval/default/index",
-                                                        "/operatorapproval/default/view"
+                                                        "/operatorapproval/default/view",
+                                                        "/externaloperator/default/index",
+                                                        "/externaloperator/default/create",
+                                                        "/externaloperator/default/update"
                                                     )) ? "is-expanded" : "" ?>">
 
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
@@ -97,7 +100,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     "/galleryapproval/default/index",
                                     "/gallery/default/view",
                                     "/operatorapproval/default/index",
-                                    "/operatorapproval/default/view"
+                                    "/operatorapproval/default/view",
+                                    "/externaloperator/default/index",
+                                    "/externaloperator/default/create",
+                                    "/externaloperator/default/update",
                                 )) ? "true" : "false" ?>"
                 aria-controls="operatorMenu">
 
@@ -120,7 +126,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     "/galleryapproval/default/index",
                                                     "/gallery/default/view",
                                                     "/operatorapproval/default/index",
-                                                    "/operatorapproval/default/view"
+                                                    "/operatorapproval/default/view",
+                                                    "/externaloperator/default/index",
+                                                    "/externaloperator/default/create",
+                                                    "/externaloperator/default/update"
                                                 )) ? "show" : "" ?>" id="operatorMenu">
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
@@ -152,6 +161,18 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                                                                                                         )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                 </li>
 
+
+                <li class="navItems mb-2">
+                    <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
+                                                                                    "/externaloperator/default/index",
+                                                                                    "/externaloperator/default/create",
+                                                                                    "/externaloperator/default/update"
+                                                                                )) ? "active" : "" ?>" href="/externaloperator/default/index"><img src="<?= $this->params['baseurl'] ?>/images/<?= in_array($active_url, array(
+                                                                                                                                                                                                    "/externaloperator/default/index",
+                                                                                                                                                                                                    "/externaloperator/default/create",
+                                                                                                                                                                                                    "/externaloperator/default/update"
+                                                                                                                                                                                                )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">External Operator List</span></a>
+                </li>
 
             </ul>
 
