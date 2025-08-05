@@ -12,6 +12,7 @@ use common\models\master\animal\MasterAnimal;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\operator\SafariOperator;
+use common\models\package\Package;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\partnergalleryimage\PartnerGalleryImage;
@@ -536,19 +537,48 @@ class TempController extends Controller
     public function actionUpdateGalleryUserId()
     {
         $galleries = PartnerGallery::find()->all();
-        foreach($galleries as $gallery)
-        {
+        foreach ($galleries as $gallery) {
             $gallery->user_id = $gallery->created_by;
             $gallery->save(false);
         }
 
         $versions = PartnerGalleryVersion::find()->all();
 
-        foreach($versions as $version)
-        {
-            $operator = SafariOperator::find()->where(['id'=>$version->safari_operator_id])->limit(1)->one();
+        foreach ($versions as $version) {
+            $operator = SafariOperator::find()->where(['id' => $version->safari_operator_id])->limit(1)->one();
             $version->user_id = $operator->user_id;
             $version->save(false);
+        }
+    }
+
+
+    public function actionRemovePackageExceptLive()
+    {
+
+        $packages = Package::find()
+            ->where(['status' => 1])
+            ->andWhere(['IS NOT', 'live_version', null])
+            ->all();
+
+        $keepIds = [];
+
+        foreach ($packages as $pack) {
+            $keepIds[] = $pack->id;
+            $pack->edit_status = 0;
+            $pack->pending_status = 0;
+            $pack->editable_version = null;
+            $pack->pending_for_approval = null;
+            $pack->save(false);
+        }
+        if (!empty($keepIds)) {
+            Package::updateAll(
+                ['status' => -1],
+                [
+                    'and',
+                    ['status' => 1],
+                    ['not in', 'id', $keepIds]
+                ]
+            );
         }
     }
 }
