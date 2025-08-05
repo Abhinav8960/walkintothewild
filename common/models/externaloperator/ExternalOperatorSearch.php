@@ -10,6 +10,8 @@ use yii\data\ActiveDataProvider;
 class ExternalOperatorSearch extends ExternalOperator
 {
 
+    public $operator_name;
+
     /**
      * {@inheritdoc}
      */
@@ -17,7 +19,7 @@ class ExternalOperatorSearch extends ExternalOperator
     {
         return [
             [['status', 'created_by', 'created_at', 'updated_at', 'updated_by'], 'integer'],
-            [['operator_name'], 'string'],
+            [['operator_name'], 'string','max'=>255],
         ];
     }
 
@@ -61,13 +63,14 @@ class ExternalOperatorSearch extends ExternalOperator
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'operator_name' => $this->operator_name,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'operator_name', $this->operator_name]);
 
         
         return $dataProvider;

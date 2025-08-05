@@ -37,6 +37,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new ExternalOperatorForm();
+        $model->setScenario(ExternalOperatorForm::SCENARIO_DEFAULT);
         $model->status = ExternalOperator::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -60,8 +61,8 @@ class DefaultController extends Controller
 
     public function actionUpdate($id)
     {
-        $externaoperator_model = $this->findModel($id);
-        $model = new ExternalOperatorForm($externaoperator_model);
+        $externaloperator_model = $this->findModel($id);
+        $model = new ExternalOperatorForm($externaloperator_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -138,12 +139,18 @@ class DefaultController extends Controller
 
     public function actionCallDone($id)
     {
-        $model = $this->findModel($id);
-
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                \Yii::$app->session->setFlash('success', 'Call status updated successfully.');
-                return $this->redirect(['index']);
+        $externaloperator_model = $this->findModel($id);
+        $model = new ExternalOperatorForm($externaloperator_model);
+        $model->setScenario(ExternalOperatorForm::SCENARIO_CALL_DONE);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->externaloperator_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Call status updated successfully.');
+                        return $this->redirect(['index']);
+                    }
+                }
             }
         }
         return $this->renderAjax('_call_done', ['model' => $model]);
@@ -151,11 +158,18 @@ class DefaultController extends Controller
 
     public function actionEmailSend($id)
     {
-        $model = $this->findModel($id);
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                \Yii::$app->session->setFlash('success', 'Email status updated successfully.');
-                return $this->redirect(['index']);
+        $externaloperator_model = $this->findModel($id);
+        $model = new ExternalOperatorForm($externaloperator_model);
+        $model->setScenario(ExternalOperatorForm::SCENARIO_EMAIL_SEND);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->externaloperator_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Email status updated successfully.');
+                        return $this->redirect(['index']);
+                    }
+                }
             }
         }
         return $this->renderAjax('_email_send', ['model' => $model]);

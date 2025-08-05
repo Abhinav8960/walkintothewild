@@ -52,7 +52,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                     ],
                     
                     [
-                        'label' => 'Operator Name',
+                        'label' => 'Partner Name',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {

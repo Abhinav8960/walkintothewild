@@ -9,6 +9,11 @@ use Yii;
 
 class ExternalOperatorForm extends \yii\base\Model
 {
+
+    const SCENARIO_CALL_DONE = 'call_done';
+    const SCENARIO_EMAIL_SEND = 'email_send';
+
+
     public $id;
     public $park_id;
     public $operator_name;
@@ -26,6 +31,9 @@ class ExternalOperatorForm extends \yii\base\Model
     public $status;
     public $park_list;
     public $externaloperator_model;
+
+    public $is_call_done;
+    public $is_mail_send;
 
     public function __construct(ExternalOperator $externaloperator_model = null)
     {
@@ -54,11 +62,22 @@ class ExternalOperatorForm extends \yii\base\Model
             $this->park_list =  ExternalOperatorParks::find()->select('park_id')->where(['external_operator_id' => $this->externaloperator_model->id, 'status' => 1])->column();
             $this->status = $this->externaloperator_model->status;
 
+            $this->is_call_done = $this->externaloperator_model->is_call_done;
+            $this->is_mail_send = $this->externaloperator_model->is_mail_send;
+
         }
 
         // $this->status_option = GeneralModel::statusoption();
     }
 
+    public function scenarios()
+    {
+        return [
+          self::SCENARIO_DEFAULT => ['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name'],
+          self::SCENARIO_CALL_DONE => ['is_call_done'],
+          self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
+        ];
+    }
     /**
      * {@inheritdoc}is_offer_premium_budget
      */
@@ -66,7 +85,7 @@ class ExternalOperatorForm extends \yii\base\Model
     {
         $rules = [
             [['id','phone_no','status'], 'integer'],
-            [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name'], 'required'],
+            [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name'], 'required','on' => self::SCENARIO_DEFAULT],
             [['phone_no', 'owner_phone_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['owner_email', 'email'], 'email'],
             [['google_rating'], 'number'],
@@ -76,6 +95,8 @@ class ExternalOperatorForm extends \yii\base\Model
             [['operator_name'], 'default', 'value' => 0],
             [['park_list'], 'safe'],
             [['website'], 'url', 'defaultScheme' => 'http'],
+            [['is_call_done'],'required','on' => self::SCENARIO_CALL_DONE],
+            [['is_mail_send'],'required','on' => self::SCENARIO_EMAIL_SEND],
         ];
 
         return $rules;
@@ -103,6 +124,8 @@ class ExternalOperatorForm extends \yii\base\Model
             'engagement'=>'Engagement',
             'seo_performance'=>'SEO Performance',
             'status' => 'Status',
+            'is_call_done'=>'Is Call Done',
+            'is_mail_send'=>'Is Mail Send',
         ];
     }
 
@@ -127,6 +150,9 @@ class ExternalOperatorForm extends \yii\base\Model
         $this->externaloperator_model->traffic = $this->traffic;
         $this->externaloperator_model->google_rating = $this->google_rating;
         $this->externaloperator_model->status = $this->status;
+
+        $this->externaloperator_model->is_call_done = $this->is_call_done;
+        $this->externaloperator_model->is_mail_send = $this->is_mail_send;
 
         // if ($this->park_list) {
         //     $this->externaloperator_model->park_id = $this->park_list[0];

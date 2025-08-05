@@ -26,7 +26,7 @@ use kartik\daterange\DateRangePicker;
                 <div class="filterItem position-relative">
                     <label>Partner:</label>
                     <?= $form->field($model, 'operator_name')->dropDownList(
-                        GeneralModel::operatorslist(),
+                        GeneralModel::externaloperatorslist(),
                         [
                             'prompt' => 'Select Partner Name',
                             'class' => 'search-border'
