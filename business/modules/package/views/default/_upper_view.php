@@ -18,17 +18,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?></h2>
                     </div>
                     <div class="butonsParent d-flex align-items-center gap-3">
-                        <?php if ($package->package->edit_status == 1) { ?>
-                            <div class="col-lg-2">
-                                <div class="editBtn float-end">
-                                    <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->package_id])], ['title' => 'Edit']) ?>
+                        <?php if ($var = $package->package) { ?>
+                            <?php if ($var->edit_status == 1) { ?>
+                                <div class="col-lg-2">
+                                    <div class="editBtn float-end">
+                                        <?= Html::a('Edit', [Url::toRoute(['update', 'id' => $package->package_id])], ['title' => 'Edit']) ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php } ?>
-                        <?php if ($package->package->status != 1) { ?>
-                            <div class="edinBtn">
-                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
-                            </div>
+                            <?php } ?>
+                            <?php if ($var->status != 1) { ?>
+                                <div class="edinBtn">
+                                    <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
+                                </div>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                 </div>
