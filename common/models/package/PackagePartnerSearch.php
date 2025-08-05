@@ -255,7 +255,7 @@ class PackagePartnerSearch extends Package
                 //     $query->andWhere(['IS NOT ', 'editable_version', null]);
                 //     break;
                 case 4:
-                    $query->andWhere(['IS NOT', Package::tableName() . '.status', -1]);
+                    $query->andWhere(['!=', Package::tableName() . '.status', -1]);
                     break;
             };
         }
