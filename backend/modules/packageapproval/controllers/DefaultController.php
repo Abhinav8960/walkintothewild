@@ -86,7 +86,7 @@ class DefaultController extends Controller
             $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
 
             $package->package_name = $model->package_name;
-            $package->owned_by_id = $model->owned_by_id;
+            $package->safari_operator_id = $model->safari_operator_id;
             $package->package_agenda_id = $model->package_agenda_id;
             $package->no_of_day = $model->no_of_day;
             $package->no_of_night = $model->no_of_night;

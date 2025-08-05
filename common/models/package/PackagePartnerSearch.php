@@ -52,7 +52,7 @@ class PackagePartnerSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'owned_by_id'], 'safe'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'safari_operator_id'], 'safe'],
             [['cost_per_person'], 'safe'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
@@ -121,7 +121,7 @@ class PackagePartnerSearch extends Package
             'package_description' => $this->package_description,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
-            'owned_by_id' => $this->owned_by_id,
+            'safari_operator_id' => $this->safari_operator_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

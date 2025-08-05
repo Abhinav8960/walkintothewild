@@ -28,7 +28,7 @@ use kartik\datetime\DateTimePicker;
             if ((!$model->package_version_model->id)) { ?>
 
                 <div class="col-md-3">
-                    <?= $form->field($model, 'owned_by_id')->dropDownList(GeneralModel::safariparkoperatoroption(), ['prompt' => 'Select person who owns the package'])->label('Person who owns the package') ?>
+                    <?= $form->field($model, 'safari_operator_id')->dropDownList(GeneralModel::safariparkoperatoroption(), ['prompt' => 'Select person who owns the package'])->label('Person who owns the package') ?>
                 </div>
             <?php } ?>
             <div class="col-md-3">

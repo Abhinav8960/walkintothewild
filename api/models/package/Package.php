@@ -274,12 +274,12 @@ class Package extends \common\models\package\Package
     public function getSafarioperatorUser()
     {
         return $this->partner ? $this->partner->user : null;
-        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+        // return $this->hasOne(User::className(), ['id' => 'safari_operator_id']);
     }
 
     public function getPartner()
     {
-        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 
     public function getMastervehicle()
@@ -498,7 +498,7 @@ class Package extends \common\models\package\Package
     public function getCan_reply()
     {
         $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ((!empty($login_partner) && $this->owned_by_id == $login_partner->id)) {
+        if ((!empty($login_partner) && $this->safari_operator_id == $login_partner->id)) {
             return true;
         }
         return false;

@@ -17,7 +17,7 @@ $total_package = $query->asArray()->one();
 
 
 $query1 = Package::find()
-    ->select("COUNT(DISTINCT owned_by_id) as total_data")
+    ->select("COUNT(DISTINCT safari_operator_id) as total_data")
     ->where(['!=', 'package.status', Package::STATUS_DELETE])
     ->joinWith('safarioperator')
     ->andWhere(['safari_operator.status' => 1])

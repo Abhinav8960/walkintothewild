@@ -86,7 +86,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         // return [
         //     [['package_name'], 'required'],
-        //     [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package','owned_by_id','package_agenda_id','safari_type'], 'integer'],
+        //     [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package','safari_operator_id','package_agenda_id','safari_type'], 'integer'],
         //     [['cost_per_person'], 'number'],
         //     [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition', 'uuid', 'version', 'cancellation_reason'], 'string'],
         //     [['package_name'], 'string', 'max' => 512],
@@ -101,13 +101,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         // ];
 
         return [
-            [['owned_by_id', 'package_agenda_id', 'safari_type', 'start_location', 'end_location', 'start_date', 'end_date', 'package_image', 'package_banner_image', 'stay_category_id', 'type', 'gst_percentage', 'package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'master_vehicle_id', 'cancellation_reason', 'popular_package', 'delete_reason_id', 'delete_reason', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['safari_operator_id', 'package_agenda_id', 'safari_type', 'start_location', 'end_location', 'start_date', 'end_date', 'package_image', 'package_banner_image', 'stay_category_id', 'type', 'gst_percentage', 'package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'master_vehicle_id', 'cancellation_reason', 'popular_package', 'delete_reason_id', 'delete_reason', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['total_view'], 'default', 'value' => 0],
             [['total_price'], 'default', 'value' => 0.00],
             [['is_published_on_api'], 'default', 'value' => 1],
             // [['status'], 'default', 'value' => 3],
             [['package_name'], 'required'],
-            [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
+            [['safari_operator_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
             [['start_date', 'end_date', 'status', 'package_slug', 'max_booking_date'], 'safe'],
             [['live_version', 'pending_for_approval_version', 'editable_version'], 'safe'],
             [['cost_per_person', 'total_price'], 'number'],
@@ -245,12 +245,12 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function getUser()
     {
         return $this->safarioperator ? $this->safarioperator->user : null;
-        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+        // return $this->hasOne(User::className(), ['id' => 'safari_operator_id']);
     }
 
     public function getSafarioperator()
     {
-        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 
     public function getMastervehicle()

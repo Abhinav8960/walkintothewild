@@ -12,7 +12,7 @@ use common\models\partnergallery\PartnerGallery;
 
 class PackageVersionForm extends \yii\base\Model
 {
-    public $owned_by_id;
+    public $safari_operator_id;
     public $package_id;
     public $version;
     public $package_name;
@@ -95,7 +95,7 @@ class PackageVersionForm extends \yii\base\Model
         $this->version = 'v1';
         if ($package_version_model != null) {
             $this->package_version_model = $package_version_model;
-            $this->owned_by_id = $this->package_version_model->owned_by_id;
+            $this->safari_operator_id = $this->package_version_model->safari_operator_id;
             $this->package_id = $this->package_version_model->package_id;
             $this->version = $this->package_version_model->version;
             $this->package_name = $this->package_version_model->package_name;
@@ -172,7 +172,7 @@ class PackageVersionForm extends \yii\base\Model
             // [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'match', 'pattern' => '/^[a-zA-Z\s-]+$/', 'message' => 'Only letters, spaces, and hyphens are allowed.'],
             [['start_location', 'end_location'], 'string', 'max' => 215],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'package_id', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'safari_operator_id', 'package_id', 'version', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
             [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'popular_package'], 'integer'],
             [['day_activity', 'day_accommodation', 'day_note'], 'string'],
@@ -225,7 +225,7 @@ class PackageVersionForm extends \yii\base\Model
             'end_location',
             'start_date',
             'end_date',
-            'owned_by_id',
+            'safari_operator_id',
             'type',
             'gst_percentage',
             'total_price',
@@ -347,7 +347,7 @@ class PackageVersionForm extends \yii\base\Model
     {
         $m = new Package();
         $m->package_name = $this->package_name;
-        $m->owned_by_id = $this->owned_by_id;
+        $m->safari_operator_id = $this->safari_operator_id;
         $m->package_slug = Package::generateUnqiueSlug($this->package_name);
         $m->package_agenda_id = $this->package_agenda_id;
         $m->no_of_day = $this->no_of_day;
@@ -403,7 +403,7 @@ class PackageVersionForm extends \yii\base\Model
         }
         $this->package_version_model->package_id = $this->package_id;
         $this->package_version_model->version = $this->version;
-        $this->package_version_model->owned_by_id = $this->owned_by_id;
+        $this->package_version_model->safari_operator_id = $this->safari_operator_id;
         $this->package_version_model->package_name = $this->package_name;
         $this->package_version_model->package_agenda_id = $this->package_agenda_id;
         $this->package_version_model->no_of_day = $this->no_of_day;
@@ -460,7 +460,7 @@ class PackageVersionForm extends \yii\base\Model
         //     $without_space_string = str_replace(' ', '-', strtolower($this->package_version_model->safarioperator->business_name));
         //     $package_name = str_replace(' ', '-', strtolower($this->package_version_model->package_name));
         //     $string = preg_replace('/[^A-Za-z0-9\-]/', '', ($without_space_string . '-' . $package_name));
-        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_version_model->owned_by_id . time() . '-safari-package';
+        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_version_model->safari_operator_id . time() . '-safari-package';
         //     $this->package_version_model->package_slug = $slug;
         // }
     }

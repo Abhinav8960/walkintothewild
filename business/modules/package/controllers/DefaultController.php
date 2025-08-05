@@ -80,7 +80,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackagePartnerSearch();
-        $searchModel->owned_by_id = $this->operatormodel()->id;
+        $searchModel->safari_operator_id = $this->operatormodel()->id;
         $searchModel->custom_status = 4;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -118,7 +118,7 @@ class DefaultController extends Controller
         $safari_operator = $this->operatormodel();
         $model = new PackageVersionForm();
         $model->status = PackageVersion::EDIATBLE_STATUS;
-        $model->owned_by_id = $safari_operator->id;
+        $model->safari_operator_id = $safari_operator->id;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -575,7 +575,7 @@ class DefaultController extends Controller
         $operator = $this->operatormodel();
         $model = PackageVersion::findOne(['id' => $id]);
 
-        if ($model && $model->owned_by_id == $operator->id) {
+        if ($model && $model->safari_operator_id == $operator->id) {
             return true;
         }
         return false;
