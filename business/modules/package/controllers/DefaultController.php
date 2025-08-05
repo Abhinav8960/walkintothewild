@@ -81,8 +81,8 @@ class DefaultController extends Controller
     {
         $searchModel = new PackagePartnerSearch();
         $searchModel->owned_by_id = $this->operatormodel()->id;
-        $searchModel->status != -1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['!=', 'status', -1]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -553,7 +553,7 @@ class DefaultController extends Controller
         }
         $transaction->commit();
 
-        return $this->redirect(['update', 'id' => $newModel->id]);
+        return $this->redirect(['update', 'id' => $newModel->package_id]);
     }
 
 
@@ -775,8 +775,8 @@ class DefaultController extends Controller
         $newModel->package_name = $model->package_name;
         $newModel->package_slug = Package::generateUnqiueSlug($newModel->package_name);
         $newModel->editable_version = 'v1';
-        $newModel->id = null; // Set the ID to null for the new record
-        $newModel->status = Package::STATUS_SUSPEND;
+        $newModel->id = null;
+        $newModel->status = Package::STATUS_CREATE;
         $newModel->save(false);
         return $newModel->id;
     }

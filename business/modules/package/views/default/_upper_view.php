@@ -18,10 +18,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h2>Package : <?= mb_strimwidth($package->package_name, 0, 40, "...") ?></h2>
                     </div>
                     <div class="butonsParent d-flex align-items-center gap-3">
-                        <!-- <div class="edinBtn saveBtn">
-                            <button type="btn">Save</button>
-                        </div> -->
-
                         <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
                             <div class="col-lg-2">
                                 <div class="editBtn float-end">
@@ -34,22 +30,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
                             </div>
                         <?php } ?>
-                        <div class="edinBtn copyBtn">
+                        <!-- <div class="edinBtn copyBtn">
                             <?= Html::a('Copy', [Url::toRoute(['copy-package', 'id' => $package->id])], ['title' => 'Copy']) ?>
-                        </div>
-                        <!-- <div class="versions">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Versions
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item mb-2" href="#">Version 1.0</a></li>
-                                <li><a class="dropdown-item mb-2" href="#">Version 2.0</a></li>
-                                <li><a class="dropdown-item mb-2" href="#">Version 3.0</a></li>
-                            </ul>
                         </div> -->
-
                     </div>
                 </div>
             </div>
