@@ -45,6 +45,9 @@ $this->title = 'Gallery';
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu">
+                                            <a href="<?= Url::toRoute(['move-to-draft', 'id' => $model->id]) ?>">
+                                                <p>Edit</p>
+                                            </a>
                                             <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">
                                                 <p>Delete</p>
                                             </a>
