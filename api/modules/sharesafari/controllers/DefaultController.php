@@ -1241,7 +1241,7 @@ class DefaultController extends SafariController
 
        
         if ($response['status'] == 1) {
-            return Yii::$app->api->sendResponse($data = $response['data']);
+            return Yii::$app->api->sendResponse($data = $response);
         } else {
             return Yii::$app->api->sendResponse($data = [], ['message' => $response['message']]);
         }

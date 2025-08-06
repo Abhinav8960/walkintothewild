@@ -103,7 +103,7 @@ class payuPayment
             $t->lead_partner_quotes_id = NULL;
 
             $t->lead_partner_quote_installments_id = null;
-            $t->safaris = null;
+            $t->safaris = $share_safari_lead->shareSafari->no_of_safari ?? 1;
             $t->travelers = $share_safari_lead->shareSafariLead->quantity;
             $t->stay_category_id = $share_safari_lead->shareSafari->stay_category_id;
             $t->billing_name = $share_safari_lead->shareSafariLead->name;

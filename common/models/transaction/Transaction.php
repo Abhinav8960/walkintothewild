@@ -142,20 +142,24 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function rules()
     {
         return [
-            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'default', 'value' => null],
+            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source', 'parent_id', 'remark'], 'default', 'value' => null],
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['user_id', 'reference_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
+            [['source', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id'], 'safe'],
+            [['user_id', 'reference_id',  'order_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
             [['user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['addional_notes'], 'string'],
-            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'utm_source'], 'safe'],
+            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'utm_source', 'param1', 'param2', 'param3', 'param4', 'param5', 'payment_gateway_tracking_id', 'bank_reference_no', 'refunded_amount', 'last_refund_date', 'refund_status'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
-            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'string', 'max' => 255],
+            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 3],
             [['phone'], 'string', 'max' => 50],
             [['billing_zip'], 'string', 'max' => 30],
             [['billing_tel'], 'string', 'max' => 20],
+            [['payment_gateway_tracking_id', 'bank_reference_no'], 'string', 'max' => 100],
+            [['transaction_type'], 'default', 'value' => 'c'],
+            [['transaction_type'], 'string', 'max' => 1],
         ];
     }
 
@@ -232,12 +236,12 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public static function orderId($identifier, $source = 'L')
     {
-        return 'O'.$source.'-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
+        return 'O' . $source . '-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 
     public static function referenceId($identifier, $source = 'L')
     {
-        return 'R'.$source.'-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
+        return 'R' . $source . '-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 
     public function afterSave($insert, $changedAttributes)
