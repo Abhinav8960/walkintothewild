@@ -1229,7 +1229,7 @@ class DefaultController extends SafariController
 
         if (in_array($payment_gateway, [ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU, ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU_LABEL])) {
             $payment_gateway_instance = new \common\components\payments\payu\payuPayment();
-              $response = $payment_gateway_instance->initiateShareSafariLeadPayment($share_safari_lead, $productinfo = $share_safari_lead->shareSafari->share_safari_title.' Booking',);
+              $response = $payment_gateway_instance->initiateShareSafariLeadPayment($share_safari_lead, $productinfo = $share_safari_lead->shareSafari->share_safari_title.' Booking', Transaction::SOURCE_SHARE_SAFARI);
 
         } 
         // elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {

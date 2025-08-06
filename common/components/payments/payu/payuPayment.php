@@ -24,7 +24,7 @@ class payuPayment
         $this->host_url = Yii::$app->params['payu']['host_url'];
     }
 
-    public function initiateShareSafariLeadPayment($share_safari_lead, $productinfo, $source = NULL)
+    public function initiateShareSafariLeadPayment($share_safari_lead, $productinfo, $sourceId = 1)
     {
         if (!$share_safari_lead instanceof ShareSafariLeadInstallment) {
             return [
@@ -32,12 +32,17 @@ class payuPayment
                 'message' => 'Invalid payment request'
             ];
         }
-        $this->source = $source;
+        $this->source_id = $sourceId;
+        if ($this->source_id == Transaction::SOURCE_LEAD) {
+            $this->source = 'L';
+        } elseif ($this->source_id == Transaction::SOURCE_SHARE_SAFARI) {
+            $this->source = 'FD';
+        }
         // try {
-        $udf1 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $source);
-        $udf2 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $source);
+        $txnid = Transaction::transactionId($share_safari_lead->shareSafariLead->id, $this->source);
+        $udf1 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $this->source);
+        $udf2 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $this->source);
         $amount = $share_safari_lead->amount;
-        $txnid = $orderId;
         $productinfo = "Safari Booking Payment";
         $firstname = $share_safari_lead->shareSafariLead->name;
         $email = $share_safari_lead->shareSafariLead->email;
@@ -112,8 +117,8 @@ class payuPayment
             $t->lead_id = $share_safari_lead->shareSafariLead->id;
             $t->partner_id = $share_safari_lead->shareSafari->partner->id;
             $t->park_id = $share_safari_lead->shareSafari->park_id;
-            $t->order_id = $payuData['txnid'];
-            $t->reference_id = $payuData['udf1'];
+            $t->order_id = $payuData['udf1'];
+            $t->reference_id = $payuData['udf2'];
             $t->currency = 'INR'; // Assuming INR
             $t->received_amount = $payuData['amount'];
             $t->payment_gateway = Transaction::PAYMENT_GATEWAY_PAYU;
