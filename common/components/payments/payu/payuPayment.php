@@ -127,8 +127,10 @@ class payuPayment
             $t->phone = $share_safari_lead->shareSafariLead->phone;
             $t->start_date = $share_safari_lead->shareSafariLead->start_date;
             $t->end_date = $share_safari_lead->shareSafariLead->end_date;
-            $t->validity_date = date('Y-m-d H:i:s');
-            $t->permit_booking_date = date('Y-m-d H:i:s');
+            // $t->validity_date = date('Y-m-d H:i:s');
+            // $t->permit_booking_date = date('Y-m-d H:i:s');
+            $t->validity_date = $share_safari_lead->shareSafari->cut_off_date != null ? $share_safari_lead->shareSafari->cut_off_date :  date('Y-m-d H:i:s', strtotime('+1 day'));
+            $t->permit_booking_date = date('Y-m-d H:i:s', strtotime('+10 minutes'));
             $t->partner_selling_price = $payuData['amount'];
             $t->plateform_partner_fees_percentage = 0;
             $t->plateform_partner_fees = 0;
