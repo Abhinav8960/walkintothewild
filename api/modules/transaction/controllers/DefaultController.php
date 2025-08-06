@@ -85,7 +85,7 @@ class DefaultController extends RestController
         $data = [];
         $store = $data['payu'] = [
             'key' => $merchantKey,
-            'txnid' => $orderId,
+            'txnid' => str_replace('-', '', $orderId),
             'amount' => $amount,
             'productinfo' => 'Lead Partner Quote Payment',
             'firstname' => $model->name,
@@ -527,7 +527,7 @@ class DefaultController extends RestController
         if (empty($model)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
         }
-        
+
         $quotation = \api\models\leads\LeadPartnerQuotes::find()->andWhere(['id' => $model->lead_partner_quote_id])->one();
 
         if (empty($quotation)) {
