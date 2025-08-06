@@ -76,6 +76,7 @@ class DefaultController extends RestController
         }
 
         // Prepare transaction details
+        $transactionId = Transaction::transactionId($model->id);
         $orderId = Transaction::orderId($model->id);
         $reference_id = Transaction::referenceId($model->id);
         $amount = $model->partner_selling_price;
@@ -85,7 +86,7 @@ class DefaultController extends RestController
         $data = [];
         $store = $data['payu'] = [
             'key' => $merchantKey,
-            'txnid' => str_replace('-', '', $orderId),
+            'txnid' => $transactionId,
             'amount' => $amount,
             'productinfo' => 'Lead Partner Quote Payment',
             'firstname' => $model->name,
