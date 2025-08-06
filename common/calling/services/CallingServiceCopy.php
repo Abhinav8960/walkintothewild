@@ -89,7 +89,6 @@ class CallingServiceCopy
         $this->call_model->call_initiated_partner_id = $this->call_initiated_partner_id;
         $this->call_model->status = CallLog::STATUS_FAILED;
         return $this->call_model->save(false);
-        
     }
 
     /**
@@ -132,7 +131,7 @@ class CallingServiceCopy
             }
         }
         $this->call_model->call_request_status = $arr_contents['status'];
-        $this->call_model->call_request_message = "";
+        $this->call_model->call_request_message = $arr_contents['message'];
         $this->call_model->save(false);
         return $this->call_model->status;
     }

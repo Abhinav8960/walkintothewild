@@ -774,7 +774,7 @@ class SiteController extends RestController
         $callingService = new \common\calling\services\CallingServiceCopy(1,2,3,938,12,8960874641,938,9315723354,938);
         $result = $callingService->callNow();;
         if($result){
-            return "success";
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Called Successfully!"]);
         }
     }
 
