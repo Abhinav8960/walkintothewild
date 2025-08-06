@@ -112,6 +112,7 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
 
+                'login-via-password'=>'site/login-via-password',
                 'signup-via-password' =>'site/signup-via-password',
                 'signup' => 'site/signup',
                 'mail-otp-verification'=>'site/mail-otp-verification',

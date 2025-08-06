@@ -39,6 +39,7 @@ class RequestSanitization extends \yii\base\Component
             'mail-otp-verification',
             'signup-via-password',
             'mobile-otp-verification',
+            'login-via-password',
 
         ];
 

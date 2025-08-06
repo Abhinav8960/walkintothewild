@@ -7,6 +7,7 @@ use api\behaviours\Verbcheck;
 use api\models\cms\contentmanagement\ContentManagement;
 use api\models\operator\SafariOperator;
 use api\models\CanSocialLoginForm;
+use api\models\LoginForm;
 use api\models\MasterMetaTableInfoSearch;
 use api\models\OtpVerificationSocialLoginForm;
 use api\models\SignupForm;
@@ -43,7 +44,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'signup', 'mail-otp-verification', 'signup-via-password','mobile-otp-verification'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'signup', 'mail-otp-verification', 'signup-via-password', 'mobile-otp-verification', 'login-via-password'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -55,7 +56,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'signup', 'mail-otp-verification', 'signup-via-password','mobile-otp-verification'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'signup', 'mail-otp-verification', 'signup-via-password', 'mobile-otp-verification', 'login-via-password'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -86,7 +87,8 @@ class SiteController extends RestController
                     'signup' => ['POST'],
                     'mail-otp-verification' => ['POST'],
                     'signup-via-password' => ['POST'],
-                    'mobile-otp-verification'=>['POST'],
+                    'mobile-otp-verification' => ['POST'],
+                    'login-via-password' => ['POST']
                 ],
             ],
         ];
@@ -775,9 +777,9 @@ class SiteController extends RestController
             $rateLimitMaxRequests = 6; // Maximum allowed requests in the time window
             $blockDuration = 10800; // 3 hours in seconds
             $rateLimitKeys = [];
-    
+
             $rateLimitKeys[] = 'kyc_phone_verification_' . $model->mobile_no;
-    
+
             foreach ($rateLimitKeys as $key) {
                 $requestCount = $cache->get($key);
                 $rateCheck = $this->RateLimit($key, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration);
@@ -785,7 +787,7 @@ class SiteController extends RestController
                     return $rateCheck;
                 }
             }
-    
+
 
 
             $this->sendmailOtp($model->email, $model->name);
@@ -1033,4 +1035,28 @@ class SiteController extends RestController
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
+
+//     public function actionLoginViaPassword()
+// {
+//     $model = new LoginForm();
+
+//     if (!$model->load(Yii::$app->request->post(), '')) {
+//         return Yii::$app->api->sendFailedStringResponse(['Invalid request'], 400);
+//     }
+
+//     if (!$model->validate()) {
+//         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+//     }
+
+//     if ($model->login()) {
+//         $user = $model->getUser(); 
+//         $accessToken = Yii::$app->api->createAccesstoken($user, $model);
+//         $data = ['access_token' => $accessToken->token];
+//         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//         return Yii::$app->api->sendResponse($data);
+//     } else {
+//         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+//     }
+// }
+
 }
