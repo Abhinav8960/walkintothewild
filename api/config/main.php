@@ -111,6 +111,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+
+                'test-call' => 'site/test-call',
                 'site/test' => 'site/test',
                 'mobile-no-verification' => 'site/mobile-no-verification',
                 'verify-mobile-no' => 'site/verify-mobile-no',
