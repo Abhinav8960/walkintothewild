@@ -35,11 +35,10 @@ class CallingServiceCopy
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no = null, $request_caller_2_user_id = null)
-    {
-       
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no , $request_caller_2_user_id)
+    {   
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
-        $this->request_vnm = \Yii::$app->params['airphone_api_vnm'];
+        $this->request_vnm = rand(1,1000000);
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
         $this->request_caller_1_no = $request_caller_1_no;
@@ -57,6 +56,7 @@ class CallingServiceCopy
      */
     public function callNow()
     {
+      
         if (empty($this->chat_id) || empty($this->lead_id) || empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
             \Yii::error('Missing required parameters for call: ' . json_encode([
                 'chat_id' => $this->chat_id,
@@ -65,8 +65,9 @@ class CallingServiceCopy
                 'request_caller_1_user_id' => $this->request_caller_1_user_id
             ]), __METHOD__);
             return false;
+            
         }
-        return $this->queue() && $this->callImmediately() && $this->preparechat();
+        return $this->queue() && $this->callImmediately();
     }
 
     /**
@@ -88,6 +89,7 @@ class CallingServiceCopy
         $this->call_model->call_initiated_partner_id = $this->call_initiated_partner_id;
         $this->call_model->status = CallLog::STATUS_FAILED;
         return $this->call_model->save(false);
+        
     }
 
     /**
@@ -95,11 +97,14 @@ class CallingServiceCopy
      */
     private function callImmediately()
     {
+        
         $url = \Yii::$app->params['airphone_api_host_url'];
         $options = [
-            'vnm' => \Yii::$app->params['airphone_api_vnm'],
-            'agent' => $this->request_caller_2_no,
-            'caller' => $this->request_caller_1_no,
+            'user_id' => '99985561',
+            // 'agent' => $this->request_caller_2_no,
+            // 'caller' => $this->request_caller_1_no,
+            'from' => $this->request_caller_1_no,
+            'to' => $this->request_caller_2_no,
             'token' => \Yii::$app->params['airphone_api_token'],
             'reqId' => $this->reference_id
         ];
@@ -114,61 +119,62 @@ class CallingServiceCopy
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
             return false;
         }
+      
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
 
         // print_r([$response->content, $options]);
         // die();
         if (is_array($arr_contents) && !empty($arr_contents)) {
-            if (isset($arr_contents['status']) && strtolower($arr_contents['status']) == 'success') {
-                $this->call_model->unique_id = $arr_contents['unique_id'];
+            if (isset($arr_contents['status']) && strtolower($arr_contents['status'])) {
+                $this->call_model->unique_id = rand(1,999999);
                 $this->call_model->status = CallLog::STATUS_SUCCESS;
             }
         }
         $this->call_model->call_request_status = $arr_contents['status'];
-        $this->call_model->call_request_message = $arr_contents['message'];
+        $this->call_model->call_request_message = "";
         $this->call_model->save(false);
         return $this->call_model->status;
     }
 
 
 
-    private function preparechat()
-    {
-        $chat_model = Chat::find()
-            ->andWhere(['id' => $this->call_model->chat_id])
-            ->andWhere(['chat_type' => 2])
-            ->one();
+    // private function preparechat()
+    // {
+    //     $chat_model = Chat::find()
+    //         ->andWhere(['id' => $this->call_model->chat_id])
+    //         ->andWhere(['chat_type' => 2])
+    //         ->one();
 
-        if (!$chat_model) {
-            return false;
-        }
+    //     if (!$chat_model) {
+    //         return false;
+    //     }
 
-        $message = "Voice Call";
+    //     $message = "Voice Call";
 
-        $chat_message = new ChatMessage();
-        $chat_message->chat_id = $chat_model->id;
-        $chat_message->call_id = $this->call_model->id;
-        $chat_message->message = $message;
-        $chat_message->is_call_message = true;
-        $chat_message->status = 1;
-        $chat_message->sender_id = $this->call_initiated_user_id;
+    //     $chat_message = new ChatMessage();
+    //     $chat_message->chat_id = $chat_model->id;
+    //     $chat_message->call_id = $this->call_model->id;
+    //     $chat_message->message = $message;
+    //     $chat_message->is_call_message = true;
+    //     $chat_message->status = 1;
+    //     $chat_message->sender_id = $this->call_initiated_user_id;
 
-        if ($chat_message->save(false)) {
+    //     if ($chat_message->save(false)) {
 
-            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
-            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
-            $chat->last_message_at = time();
-            $chat->call_id = $this->call_model->id;
-            $chat->is_call_request = false;
-            $chat->sender_id = $this->call_initiated_user_id;
-            $chat->is_lead_chat_open_for_user = 1;
-            $chat->status = 1;
-            $chat->is_seen = 0;
-            $chat->created_at = time();
-            return $chat->save(false);
-        }
+    //         $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+    //         $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+    //         $chat->last_message_at = time();
+    //         $chat->call_id = $this->call_model->id;
+    //         $chat->is_call_request = false;
+    //         $chat->sender_id = $this->call_initiated_user_id;
+    //         $chat->is_lead_chat_open_for_user = 1;
+    //         $chat->status = 1;
+    //         $chat->is_seen = 0;
+    //         $chat->created_at = time();
+    //         return $chat->save(false);
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }

@@ -771,7 +771,7 @@ class SiteController extends RestController
 
     public function actionTestCall()
     {
-        $callingService = new \common\calling\services\CallingServiceCopy(8960874641,9315723354);
+        $callingService = new \common\calling\services\CallingServiceCopy(1,2,3,938,12,8960874641,938,9315723354,938);
         $result = $callingService->callNow();;
         if($result){
             return "success";
