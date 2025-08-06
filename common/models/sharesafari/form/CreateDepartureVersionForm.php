@@ -7,6 +7,7 @@ use Yii;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariVersion;
+
 class CreateDepartureVersionForm extends \yii\base\Model
 {
     public $share_safari_id;
@@ -71,7 +72,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->type =  $this->shared_safari_departure_version_model->type;
             $this->share_safari_title =  $this->shared_safari_departure_version_model->share_safari_title;
             $this->host_type =  $this->shared_safari_departure_version_model->host_type;
-            
+
             $this->share_safari_agenda_id =  $this->shared_safari_departure_version_model->share_safari_agenda_id;
             $this->no_of_safari =  $this->shared_safari_departure_version_model->no_of_safari;
             $this->start_date =  $this->shared_safari_departure_version_model->start_date;
@@ -84,20 +85,20 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $this->share_seat =  $this->shared_safari_departure_version_model->share_seat;
             $this->tour_duration =  $this->shared_safari_departure_version_model->tour_duration;
             $this->status =  $this->shared_safari_departure_version_model->status;
-            
+
             $this->share_safari_inclusion = $this->shared_safari_departure_version_model->share_safari_inclusion;
             $this->share_safari_exclusion = $this->shared_safari_departure_version_model->share_safari_exclusion;
             $this->getting_there = $this->shared_safari_departure_version_model->getting_there;
-            
+
             $this->breakfast_included = $this->shared_safari_departure_version_model->breakfast_included;
             $this->lunch_included = $this->shared_safari_departure_version_model->lunch_included;
             $this->dinner_included = $this->shared_safari_departure_version_model->dinner_included;
             $this->meal_not_included = $this->shared_safari_departure_version_model->meal_not_included;
-            
+
             $this->image_filepath = $this->shared_safari_departure_version_model->image_filepath;
             $this->created_at = $this->shared_safari_departure_version_model->created_at;
             $this->partner_gallery_id = $this->shared_safari_departure_version_model->partner_gallery_id;
-            
+
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_version_model->share_safari_id, 'version' => $this->shared_safari_departure_version_model->version])->column(); //abb multiple park ko store karenge
 
             $this->host_user_id =  $this->shared_safari_departure_version_model->host_user_id;
@@ -127,7 +128,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['gallery_json'], 'safe'],
             [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             [['image_filepath'], 'string'],
-            [['safari_operator_id','user_id'],'integer'],
+            [['safari_operator_id', 'user_id'], 'integer'],
 
 
         ];
@@ -185,9 +186,13 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $m = new ShareSafari();
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
+
         $m->host_user_id = $this->host_user_id;
         $m->safari_operator_id = $this->safari_operator_id;
         $m->user_id = $this->user_id;
+
+        $m->edit_status = 1;
+        $m->pending_status = 0;
         $m->status = 0;
         $m->save(false);
         return $m->id;
@@ -251,8 +256,10 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
         $this->shared_safari_departure_version_model->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
-            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-            $this->shared_safari_departure_version_model->gallery_json = $live->live_images;
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if(!empty($live)){
+                $this->shared_safari_departure_version_model->gallery_json = $live->live_images;
+            }
         }
     }
 
