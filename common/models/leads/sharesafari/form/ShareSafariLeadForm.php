@@ -201,7 +201,10 @@ class ShareSafariLeadForm extends Model
             $lead->transaction_datetime = null; // Assuming no transaction datetime for now
             $lead->payment_gateway = 1; // Assuming PayU as default payment gateway
             $lead->is_payment_expired = 0; // Assuming payment not expired
-            $lead->collection = $share_safari->toArray() ?? null;
+            $collection = $share_safari->toArray(); // Unset interested_users to avoid circular reference
+            unset($collection['interested_users']); // Unset interested_users to avoid circular reference
+            
+            $lead->collection = $collection ?? null;
 
             $lead->status = 1;
             $lead->save(false) && $lead->generateInstallment();

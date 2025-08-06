@@ -2,6 +2,7 @@
 
 namespace common\models\leads\sharesafari;
 
+use common\models\sharesafari\ShareSafari;
 use Yii;
 
 /**
@@ -30,8 +31,12 @@ use Yii;
  * @property int|null $updated_by
  * @property int $status 0=>not received, 1=> received
  */
-class ShareSafariLeadInstallment extends \yii\db\ActiveRecord
+class ShareSafariLeadInstallment extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+
+    public const STATUS_PENDING = 0;
+    public const STATUS_SUCCESS = 1;
+    public const STATUS_FAILED = 2;
 
     public function behaviors()
     {
@@ -59,7 +64,7 @@ class ShareSafariLeadInstallment extends \yii\db\ActiveRecord
             [['share_safari_id', 'share_safari_user_id', 'version', 'type', 'name', 'email'], 'required'],
             [['share_safari_id', 'share_safari_user_id', 'share_safari_partner_id', 'version', 'type', 'user_id', 'transaction_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['amount'], 'number'],
-            [['due_datetime', 'transaction_datetime','installment','share_safari_lead_id'], 'safe'],
+            [['due_datetime', 'transaction_datetime', 'installment', 'share_safari_lead_id'], 'safe'],
             [['notes', 'name', 'email', 'payment_link', 'payment_hash'], 'string', 'max' => 255],
         ];
     }
@@ -95,4 +100,13 @@ class ShareSafariLeadInstallment extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getShareSafariLead()
+    {
+        return $this->hasOne(ShareSafariLead::class, ['id' => 'share_safari_lead_id']);
+    }
+
+    public function getShareSafari()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
+    }
 }

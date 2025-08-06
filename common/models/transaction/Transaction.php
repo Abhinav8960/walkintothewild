@@ -78,6 +78,9 @@ use Yii;
 class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
+    public const SOURCE_LEAD = 1;
+    public const SOURCE_SHARE_SAFARI = 2;
+
     public const STATUS_INITIATED = 0;
     public const STATUS_SUCCESS = 1;
     public const STATUS_FAILED = 2;
@@ -227,14 +230,14 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     }
 
 
-    public static function orderId($identifier)
+    public static function orderId($identifier, $source = 'L')
     {
-        return 'O-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
+        return 'O'.$source.'-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 
-    public static function referenceId($identifier)
+    public static function referenceId($identifier, $source = 'L')
     {
-        return 'R-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
+        return 'R'.$source.'-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
     }
 
     public function afterSave($insert, $changedAttributes)

@@ -2,9 +2,10 @@
 
 namespace api\models\leads\sharesafari;
 
+use api\models\sharesafari\ShareSafari;
 use Yii;
 
-class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareSafariLeadInstallment
+class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareSafariLeadInstallment 
 {
 
     public function fields()
@@ -35,6 +36,11 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             // 'updated_by',
             // 'status',
         ];
+    }
+
+    public function getShareSafari()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 
 }

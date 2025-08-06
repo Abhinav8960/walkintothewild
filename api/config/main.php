@@ -149,6 +149,7 @@ return [
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/flagreason' => 'sharesafari/default/flagreason',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
+                'sharesafari/<slug>/<action>/<payment_hash>/<payment_gateway>' => 'sharesafari/default/<action>',
                 'posts' => 'posts/default/index',
                 'posts-images' => 'posts/default/posts-images',
                 'posts/<action>' => 'posts/default/<action>',

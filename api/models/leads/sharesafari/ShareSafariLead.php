@@ -4,6 +4,7 @@ namespace api\models\leads\sharesafari;
 
 use common\models\GeneralModel;
 use api\models\leads\sharesafari\ShareSafariLeadInstallment;
+use api\models\User;
 use Yii;
 
 
@@ -27,7 +28,10 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
             'name',
             'email',
             'phone',
-            'start_date'=> function () {
+            'profile_display_image' => function () {
+                return $this->user->profile_display_image ?? null;
+            },
+            'start_date' => function () {
                 return $this->start_date ? date('Y-m-d', strtotime($this->start_date)) : null;
             },
             'end_date' => function () {
@@ -38,10 +42,10 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
             'net_price',
             'cost_per_quantity',
             'payment_details',
-            // 'collection' => function () {
-            //     return $this->collection;
-            //     // return $this->collection != null ? json_decode($this->collection, true) : [];
-            // },
+            'collection' => function () {
+                return $this->collection;
+                // return $this->collection != null ? json_decode($this->collection, true) : [];
+            },
             // 'status',
         ];
     }
@@ -49,6 +53,11 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
     public function getPayment_details()
     {
         return $this->hasMany(ShareSafariLeadInstallment::class, ['share_safari_lead_id' => 'id']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     // public function getPaymentDetails()

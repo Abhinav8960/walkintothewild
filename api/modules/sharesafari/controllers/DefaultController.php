@@ -16,6 +16,7 @@ use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\cms\flagreason\Flagreason;
 use api\models\leads\sharesafari\ShareSafariLead;
+use api\models\leads\sharesafari\ShareSafariLeadInstallment;
 use api\models\sharesafari\form\SharedSafariForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\sharesafari\ShareSafariHistory;
@@ -24,6 +25,7 @@ use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
 use common\models\leads\sharesafari\form\ShareSafariLeadForm;
+use common\models\transaction\Transaction;
 // use api\models\UserWishlist;
 use common\models\UserWishlist;
 use frontend\models\ReplyForm;
@@ -1206,6 +1208,42 @@ class DefaultController extends SafariController
         } else {
 
             return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        }
+    }
+
+    public function actionInitiateBooking($payment_hash, $payment_gateway)
+    {
+        $share_safari_lead = ShareSafariLeadInstallment::find()->andWhere(['payment_hash' => $payment_hash])->andWhere(['<=', 'due_datetime', date('Y-m-d H:i:s')])->one();
+        if (!$share_safari_lead) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Booking Not Found, Or Payment Link Expired!!!"]);
+        }
+
+        if ($share_safari_lead->status == ShareSafariLeadInstallment::STATUS_SUCCESS) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Booking already Done!!!"]);
+        }
+
+        if (!in_array($payment_gateway, [Transaction::PAYMENT_GATEWAY_PAYU, Transaction::PAYMENT_GATEWAY_PAYU_LABEL])) {
+            $payment_gateway = 'payu';
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Payment Gateway not supported!!!"]);
+        }
+
+        if (in_array($payment_gateway, [ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU, ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU_LABEL])) {
+            $payment_gateway_instance = new \common\components\payments\payu\payuPayment();
+              $response = $payment_gateway_instance->initiateShareSafariLeadPayment($share_safari_lead, $productinfo = $share_safari_lead->shareSafari->share_safari_title.' Booking',);
+
+        } 
+        // elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {
+        //     return $this->payu($lead_partner_quotes_id);
+        // }
+        else{
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Payment Gateway not supported!!!"]);
+        }
+
+       
+        if ($response['status'] == 1) {
+            return Yii::$app->api->sendResponse($data = $response['data']);
+        } else {
+            return Yii::$app->api->sendResponse($data = [], ['message' => $response['message']]);
         }
     }
 }

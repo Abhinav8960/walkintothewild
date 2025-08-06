@@ -3,6 +3,7 @@
 namespace common\models\leads\sharesafari;
 
 use common\models\GeneralModel;
+use common\models\sharesafari\ShareSafari;
 use Yii;
 
 /**
@@ -40,7 +41,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class ShareSafariLead extends \yii\db\ActiveRecord
+class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
     public function behaviors()
@@ -145,5 +146,10 @@ class ShareSafariLead extends \yii\db\ActiveRecord
         $model->updated_by = $this->updated_by;
         $model->status = 0; // Assuming status is 0 for new installment
         return $model->save(false);
+    }
+
+    public function getShareSafari()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 }
