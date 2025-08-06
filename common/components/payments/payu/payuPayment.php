@@ -58,7 +58,7 @@ class payuPayment
         // }
     }
 
-    private function initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2)
+    private function initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2, $lead_partner_quotes_id = null, $lead_partner_quote_installments_id = null, $lead_partner_id = null, $addional_notes = null)
     {
 
         $payuData = $data['payu'] = [
@@ -105,15 +105,15 @@ class payuPayment
 
             $t->utm_source = $utm_source;
             $t->user_id = $share_safari_lead->shareSafariLead->user_id;
-            $t->lead_partner_quotes_id = NULL;
+            $t->lead_partner_quotes_id = $lead_partner_quotes_id;
 
-            $t->lead_partner_quote_installments_id = null;
+            $t->lead_partner_quote_installments_id = $lead_partner_quote_installments_id;
             $t->safaris = $share_safari_lead->shareSafari->no_of_safari ?? 1;
             $t->travelers = $share_safari_lead->shareSafariLead->quantity;
             $t->stay_category_id = $share_safari_lead->shareSafari->stay_category_id;
             $t->billing_name = $share_safari_lead->shareSafariLead->name;
 
-            $t->lead_partner_id = null;
+            $t->lead_partner_id = $lead_partner_id;
             $t->lead_id = $share_safari_lead->shareSafariLead->id;
             $t->partner_id = $share_safari_lead->shareSafari->partner->id;
             $t->park_id = $share_safari_lead->shareSafari->park_id;
@@ -136,7 +136,7 @@ class payuPayment
             $t->plateform_customer_discount = 0;
             $t->net_payment_price = $payuData['amount'];
             $t->installment = $share_safari_lead->installment ?? 1;
-            $t->addional_notes = null;
+            $t->addional_notes = $addional_notes;
             $t->addtional_data = json_encode($data);
             // $t->billing_name = $model->name;
             // $t->billing_address = $model->billing_address;

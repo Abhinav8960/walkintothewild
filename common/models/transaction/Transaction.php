@@ -260,7 +260,6 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     private function makebooking()
     {
-
         // Generate PDF
         $content = GeneralModel::generatePdfContent('@common/templates/payments/payment_receipt.php', [
             'transaction' => $this,
