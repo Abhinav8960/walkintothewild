@@ -79,6 +79,7 @@ INSERT INTO `master_notification_template` (`id`, `module_type`, `type`, `title`
 ALTER TABLE `user` ADD `is_support_user` BOOLEAN NOT NULL DEFAULT FALSE AFTER `is_admin`;
 
 ALTER TABLE `safari_park` ADD `short_name` VARCHAR(255) NULL DEFAULT NULL AFTER `title`;
+ALTER TABLE `user` DROP `is_adminstrator`;
 
 ALTER TABLE `partner_gallery` DROP `can_send_for_approval`;
 ALTER TABLE `partner_gallery_version` DROP `can_send_for_approval`;
@@ -91,3 +92,8 @@ DROP original_filename,
 DROP file;
 
 ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `remark`;
+
+ALTER TABLE `package` ADD `edit_status` INT NOT NULL DEFAULT '0' AFTER `editable_version`, ADD `pending_status` INT NOT NULL DEFAULT '0' AFTER `edit_status`;
+ALTER TABLE `package` ADD `static_json` LONGTEXT NULL DEFAULT NULL AFTER `price_after_discount`;
+ALTER TABLE `package` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;
+ALTER TABLE `package_version` ADD `user_id` INT NOT NULL AFTER `safari_operator_id`;

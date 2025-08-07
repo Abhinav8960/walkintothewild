@@ -2,22 +2,24 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\web\Controller;
+use api\components\Api;
+use api\components\MessageManager;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
 use common\models\cms\blog\Blog;
-use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
 use common\models\package\PackageQuote;
 use common\models\sharesafari\ShareSafari;
-//use common\models\trierror\BackendErrorLog;
-//use common\models\trierror\form\BackendErrorLogForm;
+use common\models\LoginForm;
+use common\models\MailLog;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use Yii;
+// use common\models\trierror\BackendErrorLog;
+// use common\models\trierror\form\BackendErrorLogForm;
 use common\models\trierror\form\ErrorLogForm;
 use common\models\urlshortner\UrlShortner;
 use Google\Auth\CredentialSource\UrlSource;
@@ -43,7 +45,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'auth'],
+                        'actions' => ['logout', 'index', 'auth', 'clear-cache'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -96,142 +98,158 @@ class SiteController extends Controller
         $endOfLastMonth = strtotime('last day of last month 23:59:59');
 
         $todaynew_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
             ->count();
 
         $thisweek_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
             ->count();
 
         $thismonth_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
             ->count();
 
         $total_new_operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->count();
 
-
-
         $todayoperator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
             ->count();
 
         $thisweek_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
             ->count();
 
         $thismonth_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
             ->count();
 
         $total_operator_request_quote = OperatorQuote::find()->where(['status' => OperatorQuote::STATUS_ACTIVE])->count();
 
-
         $todaynew_package = Package::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => Package::STATUS_ACTIVE])
             ->count();
 
         $thisweek_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => Package::STATUS_ACTIVE])
             ->count();
 
         $thismonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => Package::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Package::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => Package::STATUS_ACTIVE])
             ->count();
 
         $total_new_package = Package::find()->where(['status' => Package::STATUS_ACTIVE])->count();
 
-
         $todaypackage_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
             ->count();
 
         $thisweek_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
             ->count();
 
         $thismonth_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
             ->count();
 
         $total_package_request_quote = PackageQuote::find()->where(['status' => PackageQuote::STATUS_ACTIVE])->count();
 
-
-
         $todaynew_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
             ->count();
 
         $thisweek_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
             ->count();
 
         $thismonth_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
             ->count();
 
         $lastmonth_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
             ->count();
 
         $total_new_share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])->count();
 
-
-
         $todaynew_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
             ->count();
 
         $thisweek_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
             ->count();
 
         $thismonth_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
             ->count();
 
         $lastmonth_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
             ->count();
 
         $total_new_fixed_departure = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])->count();
 
-
-
         $todaynew_blog = Blog::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Blog::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $today_start, $today_end])
+            ->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
         $thisweek_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Blog::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
+            ->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
         $thismonth_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Blog::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
+            ->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Blog::STATUS_ACTIVE])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
+            ->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
         $total_new_blog = Blog::find()->where(['status' => Blog::STATUS_ACTIVE])->count();
-
-
 
         return $this->render('index', [
             'todaynew_operator' => $todaynew_operator,
@@ -239,42 +257,31 @@ class SiteController extends Controller
             'thismonth_new_operator' => $thismonth_new_operator,
             'lastmonth_new_operator' => $lastmonth_new_operator,
             'total_new_operator' => $total_new_operator,
-
-
             'todayoperator_request_quote' => $todayoperator_request_quote,
             'thisweek_operator_request_quote' => $thisweek_operator_request_quote,
             'thismonth_operator_request_quote' => $thismonth_operator_request_quote,
             'lastmonth_operator_request_quote' => $lastmonth_operator_request_quote,
             'total_operator_request_quote' => $total_operator_request_quote,
-
             'todaynew_package' => $todaynew_package,
             'thisweek_new_package' => $thisweek_new_package,
             'thismonth_new_package' => $thismonth_new_package,
             'lastmonth_new_package' => $lastmonth_new_package,
             'total_new_package' => $total_new_package,
-
-
-
             'todaypackage_request_quote' => $todaypackage_request_quote,
             'thisweek_package_request_quote' => $thisweek_package_request_quote,
             'thismonth_package_request_quote' => $thismonth_package_request_quote,
             'lastmonth_package_request_quote' => $lastmonth_package_request_quote,
             'total_package_request_quote' => $total_package_request_quote,
-
-
             'todaynew_share_safari' => $todaynew_share_safari,
             'thisweek_new_share_safari' => $thisweek_new_share_safari,
             'thismonth_new_share_safari' => $thismonth_new_share_safari,
             'lastmonth_new_share_safari' => $lastmonth_new_share_safari,
             'total_new_share_safari' => $total_new_share_safari,
-
-
             'todaynew_fixed_departure' => $todaynew_fixed_departure,
             'thisweek_new_fixed_departure' => $thisweek_new_fixed_departure,
             'thismonth_new_fixed_departure' => $thismonth_new_fixed_departure,
             'lastmonth_new_fixed_departure' => $lastmonth_new_fixed_departure,
             'total_new_fixed_departure' => $total_new_fixed_departure,
-
             'todaynew_blog' => $todaynew_blog,
             'thisweek_new_blog' => $thisweek_new_blog,
             'thismonth_new_blog' => $thismonth_new_blog,
@@ -326,10 +333,11 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-
         $session = Yii::$app->session;
         if ($session->get('user_session_id')) {
-            Yii::$app->db->createCommand()
+            Yii::$app
+                ->db
+                ->createCommand()
                 ->delete('user_session', ['id' => $session->get('user_session_id')])
                 ->execute();
             $session->remove('user_session_id');
@@ -339,13 +347,10 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-
     public function onAuthSuccess($client)
     {
         (new AuthHandler($client))->handle();
     }
-
-
 
     /**
      * Redirect Url to another link
@@ -365,45 +370,45 @@ class SiteController extends Controller
     }
 
     /*
-    public function actionError()
-    {
-        $exception = Yii::$app->errorHandler->exception;
-       
-        $request = Yii::$app->request;
-        $user_session_id = Yii::$app->user->id;
-        $error_type = $exception->statusCode;
-        $error_msg = $exception->getMessage();
-        $pathInfo = $request->pathInfo;
-        $source = $request->userAgent;
-        $request_url = $request->absoluteUrl;
-        $reference_url = $request->referrer;
-        $method = $request->getMethod();
-        $ip_address = $request->getRemoteIP();
-        $error_model = new BackendErrorLogForm();
-        $error_model->scenario = 'create';
-        $error_model->backend_errorlog->setAttributes([
-            'error_type'            => $error_type,
-            'request_url'           => $request_url,
-            'reference_url'         => $reference_url,
-            'ip_address'            => $ip_address,
-            'request_type'          => $method,
-            'error_msg'             => $error_msg,
-            'user_session_id'       => $user_session_id,
-            'source'                => $source,
-            'user_agent'            => Yii::$app->request->userAgent,
-        ]);
-        $error_model->backend_errorlog->save(false);
-
-        return $this->render(
-            'error',
-            [
-                'name' => $exception->getMessage() . '(#' . $exception->statusCode . ')',
-                'message' => $exception->getMessage(),
-                'exception' => $exception
-            ]
-        );
-    }
-    */
+     * public function actionError()
+     * {
+     *     $exception = Yii::$app->errorHandler->exception;
+     *
+     *     $request = Yii::$app->request;
+     *     $user_session_id = Yii::$app->user->id;
+     *     $error_type = $exception->statusCode;
+     *     $error_msg = $exception->getMessage();
+     *     $pathInfo = $request->pathInfo;
+     *     $source = $request->userAgent;
+     *     $request_url = $request->absoluteUrl;
+     *     $reference_url = $request->referrer;
+     *     $method = $request->getMethod();
+     *     $ip_address = $request->getRemoteIP();
+     *     $error_model = new BackendErrorLogForm();
+     *     $error_model->scenario = 'create';
+     *     $error_model->backend_errorlog->setAttributes([
+     *         'error_type'            => $error_type,
+     *         'request_url'           => $request_url,
+     *         'reference_url'         => $reference_url,
+     *         'ip_address'            => $ip_address,
+     *         'request_type'          => $method,
+     *         'error_msg'             => $error_msg,
+     *         'user_session_id'       => $user_session_id,
+     *         'source'                => $source,
+     *         'user_agent'            => Yii::$app->request->userAgent,
+     *     ]);
+     *     $error_model->backend_errorlog->save(false);
+     *
+     *     return $this->render(
+     *         'error',
+     *         [
+     *             'name' => $exception->getMessage() . '(#' . $exception->statusCode . ')',
+     *             'message' => $exception->getMessage(),
+     *             'exception' => $exception
+     *         ]
+     *     );
+     * }
+     */
 
     public function actionRedirectUrl($short_id)
     {
@@ -427,4 +432,46 @@ class SiteController extends Controller
     // 'failureUrl' => 'http://admin.walkintothewild.io/payu/failure',
     // 'cancelUrl' => 'http://app.walkintothewild.io/payu/cancel',
 
+    public function actionPayuResponse()
+    {
+        $data = Yii::$app->request->post();
+
+        \Yii::info('PayU Response: ' . json_encode($data), 'payu');
+
+        if (isset($data['status']) && $data['status'] == 'success') {
+            // Handle success response
+            // You can process the payment details here
+            Yii::$app->session->setFlash('success', 'Payment successful!');
+        } else {
+            // Handle failure response
+            Yii::$app->session->setFlash('error', 'Payment failed or cancelled.');
+        }
+
+        return $this->redirect(Yii::$app->params['partner_url'] . '/payu-response/' . $data['txnid']);
+    }
+    // public function actionClearCache()
+    // {
+    //     MessageManager::clearAllCache();
+    //     Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+    //     return $this->redirect(['index']);
+    // }
+
+    public function actionClearCache()
+    {
+        $cachePaths = [
+            '@api/runtime/message-cache',
+            // '@business/runtime/cache',
+            // '@backend/runtime/cache',
+        ];
+        foreach ($cachePaths as $path) {
+            $cache = new \yii\caching\FileCache([
+                'cachePath' => Yii::getAlias($path),
+            ]);
+            $manager = new \api\components\MessageManager();
+            $manager->clearCache($cache);
+        }
+
+        Yii::$app->session->setFlash('success', 'Cache cleared successfully.');
+        return $this->redirect(['index']);
+    }
 }

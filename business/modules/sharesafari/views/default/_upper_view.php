@@ -3,6 +3,7 @@
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIncluded;
+use common\models\sharesafari\ShareSafariVersion;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -18,11 +19,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="packageTitle">
                         <h2>Fixed Departure : <?= Html::encode($share_safari->share_safari_title) ?></h2>
                     </div>
-                    <div class="butonsParent d-flex align-items-center gap-3">
-                        <div class="edinBtn">
-                            <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
-                        </div>
-                    </div>
+                    <?php
+                    if ($var = $share_safari->fixed_departure) {
+                        if ($var->edit_status == 1 && $var->status != 1) {
+                    ?>
+                            <div class="butonsParent d-flex align-items-center gap-3">
+                                <div class="edinBtn">
+                                    <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
+                                </div>
+                            </div>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
@@ -112,7 +119,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?php
-                                                    $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+                                                    $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->share_safari_id, 'include_id' => 3, 'selection' => 1, 'status' => 1, 'version' => $share_safari->version])->limit(1)->one();
 
                                                     echo ($pick_drop_includes) ? 'Included' : 'Not Included';
                                                     ?></p>

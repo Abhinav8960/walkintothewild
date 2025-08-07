@@ -60,9 +60,9 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['park_id', 'remark', 'live_images', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 1],
-            [['version', 'safari_operator_id', 'park_id',  'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'live_gallery_images_count', 'gallery_images_count', 'user_id'], 'integer'],
+            [['park_id', 'remark',  'created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
+            [['listing_status'], 'default', 'value' => 1],
+            [['version', 'safari_operator_id', 'park_id',  'listing_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['live_images'], 'string'],
             [['title', 'slug', 'remark'], 'string', 'max' => 255],
         ];
@@ -82,7 +82,7 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
             'slug' => 'Slug',
             'remark' => 'Remark',
             'live_images' => 'Live Images',
-            'status' => 'Status',
+            'listing_status' => 'Lisitng Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -100,14 +100,14 @@ class PartnerGalleryVersion extends \yii\db\ActiveRecord
         return null;
     }
 
-    public function getGallery_count()
-    {
-        $gallery_count = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->partner_gallery_id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
-        if ($gallery_count > 0) {
-            return $gallery_count;
-        }
-        return 0;
-    }
+    // public function getGallery_count()
+    // {
+    //     $gallery_count = PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->partner_gallery_id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+    //     if ($gallery_count > 0) {
+    //         return $gallery_count;
+    //     }
+    //     return 0;
+    // }
 
     public function getPartnerGallery()
     {

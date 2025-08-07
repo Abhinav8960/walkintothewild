@@ -26,7 +26,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-12">
                 <div class="form_boxes mb-3">
                     <label for="">How to reach</label>
-                    <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach','class'=>'form-control rounded-0'])->label(false) ?>
+                    <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach', 'class' => 'form-control rounded-0'])->label(false) ?>
                 </div>
             </div>
         </div>

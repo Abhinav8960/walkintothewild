@@ -70,7 +70,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-        <!-- <li class="navItems mb-2">
+        <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/sharesafari/default/index",
                                                                 "/sharesafari/default/create",
@@ -81,7 +81,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'fd_active.svg' : 'fd.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu">My Fixed Departures</span>
             </a>
-        </li> -->
+        </li>
 
 
         <!-- <li class="navItems mb-2">

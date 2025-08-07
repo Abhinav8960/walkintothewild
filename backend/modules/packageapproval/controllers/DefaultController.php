@@ -2,6 +2,7 @@
 
 namespace backend\modules\packageapproval\controllers;
 
+use api\models\package\Package as ApiPackage;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageDiscountForm;
@@ -17,6 +18,7 @@ use common\models\package\PackageSafariPark;
 use common\models\package\PackageVersionSearch;
 use common\models\package\Package;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -58,13 +60,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Package model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Package the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findModel($id)
     {
         if (($model = PackageVersion::findOne(['id' => $id])) !== null) {
@@ -90,7 +86,8 @@ class DefaultController extends Controller
             $model = PackageVersion::find()->where(['package_id' => $package_id, 'version' => $version])->one();
 
             $package->package_name = $model->package_name;
-            $package->owned_by_id = $model->owned_by_id;
+            $package->safari_operator_id = $model->safari_operator_id;
+            $package->user_id = $model->user_id;
             $package->package_agenda_id = $model->package_agenda_id;
             $package->no_of_day = $model->no_of_day;
             $package->no_of_night = $model->no_of_night;
@@ -136,6 +133,11 @@ class DefaultController extends Controller
             $package->gallery_json = $model->gallery_json;
             $package->price_after_discount = $model->cost_per_person;
             $package->status = Package::STATUS_ACTIVE;
+            $package->edit_status = 0;
+            $package->pending_status = 0;
+            $package->save(false);
+
+            $package->static_json = $this->prepareJson($package->id);
             $package->save(false);
 
             $model->status = PackageVersion::APPROVED_AND_LIVE_STATUS;
@@ -184,23 +186,16 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                // $transaction = Yii::$app->db->beginTransaction();
-                // try {
-                $package->pending_for_approval_version = null;
-                $package->save(false);
 
+                $package->pending_for_approval_version = null;
+                $package->pending_status = 0;
+                $package->save(false);
                 $model->status = PackageVersion::NOT_APPROVED_STATUS;
                 $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;
                 $model->save(false);
-                // } catch (\Exception $e) {
-                //     Yii::error($e->getMessage());
-                //     $transaction->rollBack();
-                //     Yii::$app->session->setFlash('error', 'Failed to reject package.');
-                //     return $this->redirect(Yii::$app->request->referrer);
-                // }
-                // $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
                 return $this->redirect(['index']);
+                
             }
         }
 
@@ -544,4 +539,65 @@ class DefaultController extends Controller
         }
     }
 
+
+    public function prepareJson($id)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
+        $package = ApiPackage::find()->where(['id' => $id])->limit(1)->one();
+
+
+        $json = [
+            'package' => [
+                'package_display_name' => $package->package_display_name,
+                'package_name' => $package->package_name,
+                'package_slug' => $package->package_slug,
+                'primary_park' => $package->primary_park,
+                'primary_park_slug' => $package->primary_park_slug,
+                'no_of_day' => $package->no_of_day,
+                'no_of_night' => $package->no_of_night,
+                'no_of_safari' => $package->no_of_safari,
+
+                'package_description' => $package->package_description,
+                'image_path' => $package->image_path,
+                'image_banner_path' => $package->image_banner_path,
+                'package_day_night_labels' => $package->package_day_night_labels,
+                'pick_and_drop' => $package->pick_and_drop,
+                'pick_and_drop_display' => $package->pick_and_drop_display,
+                'stay_category_id' => $package->stay_category_id,
+                'stay_category_display' => $package->stay_category_display,
+                'meals_listing' => $package->meals_listing,
+                'breakfast_included' => $package->breakfast_included,
+                'lunch_included' => $package->lunch_included,
+                'dinner_included' => $package->dinner_included,
+                'meal_not_included' => $package->meal_not_included,
+                'start_location' => $package->start_location,
+                'end_location' => $package->end_location,
+                'start_date' => $package->start_date,
+                'end_date' => $package->end_date,
+                'package_itinerary_overview' => $package->package_itinerary_overview,
+                'package_inclusion' => $package->package_inclusion,
+                'package_exclusion' => $package->package_exclusion,
+                'getting_there' => $package->getting_there,
+                'meals' => $package->meals,
+                'meals_label' => $package->meals_label,
+                'type' => $package->type,
+                'master_vehicle_id' => $package->master_vehicle_id,
+                'safari_type' => $package->safari_type,
+                'gst_percentage' => $package->gst_percentage,
+                'package_agenda_id' => $package->package_agenda_id,
+                'max_booking_date' => $package->max_booking_date,
+                
+                'package_park' => ArrayHelper::toArray($package->package_park),
+                'master_package_with_included' => ArrayHelper::toArray($package->master_package_with_included),
+                'package_days' => ArrayHelper::toArray($package->package_days),
+                'faqs' => ArrayHelper::toArray($package->faqs),
+                'package_features_name' => ArrayHelper::toArray($package->package_features_name),
+
+                'partner_gallery_id' => $package->partner_gallery_id,
+                'gallery_json' => $package->gallery_json
+            ],
+        ];
+
+        return json_encode($json);
+    }
 }

@@ -45,9 +45,9 @@ if (isset(Yii::$app->user->identity->can_login) && !\Yii::$app->user->identity->
 										<div class="ms-3 my-auto">
 											<?php if (Yii::$app->user->identity) {
 												$roles = [];
-												if (Yii::$app->user->identity->is_adminstrator == 1) {
-													$roles[] = "Administrator";
-												}
+												// if (Yii::$app->user->identity->is_adminstrator == 1) {
+												// 	$roles[] = "Administrator";
+												// }
 												if (Yii::$app->user->identity->is_admin == 1) {
 													$roles[] = "Admin";
 												}

@@ -42,7 +42,7 @@ class ShareSafariParklist extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['share_safari_id', 'park_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['share_safari_id', 'park_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'version'], 'integer'],
         ];
     }
 

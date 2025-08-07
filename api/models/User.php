@@ -55,7 +55,7 @@ class User extends \common\models\User
             "user_bio",
             "date_of_birth",
             "token_key",
-            "is_adminstrator",
+            // "is_adminstrator",
             "is_admin",
             "is_birding_operator",
             "is_cms_manager",
@@ -96,7 +96,7 @@ class User extends \common\models\User
                 "password_hash",
                 "auth_key",
                 "token_key",
-                "is_adminstrator",
+                // "is_adminstrator",
                 "is_admin",
                 "is_birding_operator",
                 "is_cms_manager",
@@ -242,10 +242,10 @@ class User extends \common\models\User
     public function getJoined_safari_count()
     {
         if ($this->id == \Yii::$app->params['active_user_id']) {
-            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
+            $joined_by = ShareSafariIntrested::find()->where(['share_safari_intrested.user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
             return $joined_by;
         } else {
-            $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
+            $joined_by = ShareSafariIntrested::find()->where(['share_safari_intrested.user_id' => $this->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")])->andWhere(['share_safari_intrested.status' => ShareSafariIntrested::STATUS_ACTIVE, 'share_safari.status' => ShareSafari::STATUS_ACTIVE])->count();
             return $joined_by;
         }
     }

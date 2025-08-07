@@ -69,7 +69,7 @@ class CreateQuoteChatController extends Controller
           //end save done quote chat
 
           if ($package) {
-            $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
+            $operator = SafariOperator::find()->where(['id' => $package->safari_operator_id])->limit(1)->one();
             $to_mail = $operator->email;
             $subject = 'New Quote Request for ' . $package->packagename . '';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;

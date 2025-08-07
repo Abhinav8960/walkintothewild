@@ -1,8 +1,6 @@
 <?php
 
-
 use yii\widgets\ActiveForm;
-
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -15,35 +13,59 @@ use yii\widgets\ActiveForm;
         'template' => '{input}{error}',
     ],
 ]); ?>
-<div class="row">
+
+<div class="row pb-4">
     <div class="col-12">
-        <div class="filterBar">
-            <div class="filters">
-                <div class="filterItem position-relative">
-                    <label>Start Date:</label>
-                    <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
+        <div class="d-flex align-items-center filter-areaParent w-100">
+            <div class="">
+                <div class="d-flex flex-wrap align-items-center gap-4">
+
+                    <div class="">
+                        <div class="filter-one d-flex gap-2">
+                            <span>Start Date Range:</span>
+                            <input type="date" placeholder="dd/mm/yyyy" id="visible_start_date" value="<?= $model->start_date ?>">
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="filter-one d-flex gap-2">
+                            <span>End Date Range:</span>
+                            <input type="date" placeholder="dd/mm/yyyy" id="visible_end_date" value="<?= $model->end_date ?>">
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="filter-one d-flex gap-2">
+                            <span>Cut Off Date Range:</span>
+                            <input type="date" placeholder="dd/mm/yyyy" id="visible_cut_off_date" value="<?= $model->cut_off_date ?>">
+                        </div>
+                    </div>
+
                 </div>
-                <div class="filterItem position-relative">
-                    <label>End Date:</label>
-                    <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
-                </div>
-                <div class="filterItem position-relative">
-                    <label>Cut off Date:</label>
-                    <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date', 'class' => 'form-control search-border']); ?>
-                </div>
+
+                <?= $form->field($model, 'start_date')->hiddenInput(['id' => 'start_date_input', 'class' => 'form-control search-border'])->label(false); ?>
+                <?= $form->field($model, 'end_date')->hiddenInput(['id' => 'end_date_input', 'class' => 'form-control search-border'])->label(false); ?>
+                <?= $form->field($model, 'cut_off_date')->hiddenInput(['id' => 'cut_off_date_input', 'class' => 'form-control search-border'])->label(false); ?>
             </div>
         </div>
-
     </div>
 </div>
 
 <?php ActiveForm::end(); ?>
 
+
 <?php
 $js = <<<JS
-    $('form') . on('change', function() {
-        $(this) . closest('form') . submit();
-    });  
+$('#visible_start_date, #visible_end_date, #visible_cut_off_date').on('change',function()
+{
+    $('#start_date_input').val($('#visible_start_date').val());
+    $('#end_date_input').val($('#visible_end_date').val());
+    $('#cut_off_date_input').val($('#visible_cut_off_date').val());
+    $('#Searchform').submit();
+})
+
+
+
 JS;
 $this->registerJs($js);
 ?>

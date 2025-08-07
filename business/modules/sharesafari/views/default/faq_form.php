@@ -24,11 +24,21 @@ $form = ActiveForm::begin([
 <div id="collapse_<?= $question_no ?>" class="accordion-collapse collapse show"
     aria-labelledby="heading_<?= $question_no ?>" data-bs-parent="#accordionExample">
     <div class="accordion-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_boxes mb-3">
+                    <label for="">Master FAQs</label>
+                    <?= $form->field($model, 'master_faq_id')->dropDownList($drop_down_list, ['prompt' => 'Select FAQ', 'id' => "faq-master_faq_id-$question_no"])->label(false) ?>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form_boxes mb-3">
                     <label for="">Question</label>
-                    <?= $form->field($model, 'question')->textarea(['rows' => '2', 'placeholder' => 'Question', 'class' => 'form-control'])->label(false) ?>
+                    <?= $form->field($model, 'question')->textarea(['id' => "faq-question-$question_no", 'rows' => '2', 'placeholder' => 'Question', 'class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
         </div>
@@ -36,7 +46,7 @@ $form = ActiveForm::begin([
             <div class="col-lg-12">
                 <div class="form_boxes mb-3">
                     <label for="">Overview <span>*</span></label>
-                    <?= $form->field($model, 'answer')->textarea(['rows' => '2', 'placeholder' => 'Answer', 'class' => 'form-control'])->label(false) ?>
+                    <?= $form->field($model, 'answer')->textarea(['id' => "faq-answer-$question_no", 'rows' => '2', 'placeholder' => 'Answer', 'class' => 'form-control'])->label(false) ?>
 
                 </div>
             </div>
@@ -45,12 +55,7 @@ $form = ActiveForm::begin([
             <div class="col-12">
                 <div
                     class="d-flex gap-3 justify-content-end align-items-center">
-                    <?php if (isset($faq_model) && $faq_model->id) { ?>
-                        <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
-                    <?php } else { ?>
-                        <?= Html::submitButton('Create', ['class' => 'button-created create']) ?>
-                    <?php } ?>
-
+                    <?= Html::submitButton(isset($faq_model) && $faq_model->id ? 'Update' : 'Create', ['class' => 'button-created create']) ?>
                 </div>
             </div>
         </div>
@@ -58,3 +63,28 @@ $form = ActiveForm::begin([
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$ajaxUrl = Url::to(['get-master-faq']);
+$script = <<<JS
+$('#faq-master_faq_id-$question_no').on('change', function() {
+    var faqId = $(this).val();
+    if (faqId) {
+        $.ajax({
+            url: '{$ajaxUrl}',
+            type: 'GET',
+            data: {id: faqId},
+            success: function(data) {
+                $('#faq-question-$question_no').val(data.success ? data.question : '');
+                $('#faq-answer-$question_no').val(data.success ? data.answer : '');
+            }
+        });
+    } else {
+        $('#faq-question-$question_no').val('');
+        $('#faq-answer-$question_no').val('');
+    }
+});
+JS;
+
+$this->registerJs($script);
+?>

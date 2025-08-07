@@ -38,7 +38,7 @@ class DefaultController extends Controller
     {
         $searchModel = new ShareSafariSearch();
 
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
+        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !Yii::$app->user->identity->is_admin) {
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
         $searchModel->report_days = 'all';
@@ -56,10 +56,10 @@ class DefaultController extends Controller
     {
         $searchModel = new ShareSafariSearch();
 
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
+        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !Yii::$app->user->identity->is_admin) {
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
-        $searchModel->report_days = 'all';
+
         $searchModel->status = 1;
         $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
 
@@ -343,6 +343,7 @@ class DefaultController extends Controller
         $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $share_safari->id;
+        $searchModel->version = $share_safari->live_version;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 

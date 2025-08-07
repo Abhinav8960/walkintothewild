@@ -10,7 +10,7 @@ $this->title = 'List of Users';
 $this->params['breadcrumbs_home_url'] = '/user/default/index';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 1 || Yii::$app->user->identity->is_admin == 1)) {
+if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin == 1) {
     $isvisible = true;
     $this->params['buttons'][] = Html::a('<i class="fa fa-plus"></i> Register New User', ['create'], ['class' => 'btn  btn-orange']);
 } else {

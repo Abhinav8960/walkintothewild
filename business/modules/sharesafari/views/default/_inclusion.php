@@ -6,7 +6,7 @@ use common\models\sharesafari\ShareSafariIncluded;
 // Retrieve selected package inclusions
 $share_safari_included = ShareSafariIncluded::find()
     ->select(['include_id', 'selection'])
-    ->where(['share_safari_id' => $share_safari->id, 'status' => 1])
+    ->where(['share_safari_id' => $share_safari->share_safari_id, 'version' => $share_safari->version, 'status' => 1])
     ->asArray()
     ->all();
 

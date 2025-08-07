@@ -16,7 +16,7 @@ class UserRegistrationForm extends Model
     public $name;
     public $password;
     public $role_id;
-    public $is_adminstrator;
+    // public $is_adminstrator;
     public $is_admin;
     public $is_safari_operator;
     public $is_birding_operator;
@@ -54,7 +54,7 @@ class UserRegistrationForm extends Model
             ['username', 'string', 'min' => 3, 'max' => 50],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
-            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'is_report_manager', 'is_community_manager'], 'safe'],
+            [['is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'is_report_manager', 'is_community_manager'], 'safe'],
             ['email', 'email'],
             [
                 'email',
@@ -88,7 +88,7 @@ class UserRegistrationForm extends Model
         $this->user_model->username = $this->username;
         $this->user_model->name = $this->name;
         $this->user_model->email = $this->email;
-        $this->user_model->is_adminstrator = 0;
+        // $this->user_model->is_adminstrator = 0;
         $this->user_model->is_admin = 0;
         $this->user_model->is_safari_operator = 0;
         $this->user_model->is_birding_operator = 0;
@@ -96,9 +96,9 @@ class UserRegistrationForm extends Model
         $this->user_model->is_resort_manager = 0;
         $this->user_model->is_report_manager = 0;
         $this->user_model->is_community_manager = 0;
-        if (in_array(1, $this->role_id)) {
-            $this->user_model->is_adminstrator = 1;
-        }
+        // if (in_array(1, $this->role_id)) {
+        //     $this->user_model->is_adminstrator = 1;
+        // }
         if (in_array(2, $this->role_id)) {
             $this->user_model->is_admin = 1;
         }

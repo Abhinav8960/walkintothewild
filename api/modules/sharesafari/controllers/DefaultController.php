@@ -18,6 +18,7 @@ use api\models\cms\flagreason\Flagreason;
 use api\models\leads\sharesafari\ShareSafariLead;
 use api\models\leads\sharesafari\ShareSafariLeadInstallment;
 use api\models\sharesafari\form\SharedSafariForm;
+use api\models\sharesafari\form\SharedSafariVersionForm;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\sharesafari\ShareSafariHistory;
 use api\models\sharesafari\ShareSafariIntrested;
@@ -26,6 +27,7 @@ use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
 use common\models\leads\sharesafari\form\ShareSafariLeadForm;
 use common\models\transaction\Transaction;
+use common\models\sharesafari\ShareSafariVersion;
 // use api\models\UserWishlist;
 use common\models\UserWishlist;
 use frontend\models\ReplyForm;
@@ -33,6 +35,7 @@ use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -125,15 +128,18 @@ class DefaultController extends SafariController
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Share Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if (!in_array($share_safari->status, [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT])) {
-            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => $message]);
         }
 
         if ($share_safari->start_date < date('Y-m-d')) {
-            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari Expired!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.expired', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => $message]);
         }
 
         return Yii::$app->api->sendResponse($data = ['data' => $share_safari]);
@@ -142,46 +148,51 @@ class DefaultController extends SafariController
     public function actionOrganizeSafari()
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
         }
 
         $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
 
         if ($operator) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator can not create Shared safari!"]);
+            $message = Yii::$app->api->messageManager->getMessage('share_safari.organize_safari.operator_restricted');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
         //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
         // }
-        $model = new SharedSafariForm();
+        $model = new SharedSafariVersionForm();
+        $model->safari_operator_id = null;
         $model->host_user_id = $this->userinfoId;
-        $model->status = ShareSafari::STATUS_ACTIVE;
-        $model->type = ShareSafari::TYPE_SAFARI;
+        $model->user_id = $this->userinfoId;
+        // $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
+        $model->type = ShareSafariVersion::TYPE_SAFARI;
         $model->host_type = 1;
-        $model->version = 1;
 
 
-        if ($login_user = $this->userinfo) {
-            if ($login_user->x_url <> '') {
-                $model->website_url = $login_user->x_url;
-            }
-            if ($login_user->insta_url <> '') {
-                $model->website_url = $login_user->insta_url;
-            }
-            if ($login_user->facebook_url <> '') {
-                $model->website_url = $login_user->facebook_url;
-            }
-        }
+        // if ($login_user = $this->userinfo) {
+        //     if ($login_user->x_url <> '') {
+        //         $model->website_url = $login_user->x_url;
+        //     }
+        //     if ($login_user->insta_url <> '') {
+        //         $model->website_url = $login_user->insta_url;
+        //     }
+        //     if ($login_user->facebook_url <> '') {
+        //         $model->website_url = $login_user->facebook_url;
+        //     }
+        // }
 
         $model->attributes = $this->request;
         $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
 
         if ($model->validate()) {
             $model->initializeForm();
-            if ($model->shared_safari_model->save()) {
-                $model->shared_safari_model->savehistory();
-                $model->UploadFiles($model->shared_safari_model->id);
+            if ($model->share_safari_version_model->save()) {
+                // $model->share_safari_version_model->savehistory();
+                $model->UploadFiles($model->share_safari_version_model->id);
+                $this->autoApproved($model->share_safari_version_model->share_safari_id, $model->share_safari_version_model->version);
                 // if ($model->shared_safari_model->user) {
                 //     /**User Info Who created safari */
                 //     $user = $model->shared_safari_model->user;
@@ -232,9 +243,12 @@ class DefaultController extends SafariController
                 //     );
                 //     }
                 // }
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari created successfully"]);
+
+                $message = Yii::$app->api->messageManager->getMessage('common.creation_success', ['{var}' => 'Shared Safari']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not created successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed', ['{var}' => 'Shared Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -242,15 +256,16 @@ class DefaultController extends SafariController
 
     public function actionJoin($slug)
     {
-
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         if ($this->userinfo) {
             if ($this->userinfo->partner) {
-                return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
+                $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.individuals_only_join');
+                return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
             }
             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
             if (!$share_safari_intrested) {
@@ -270,6 +285,7 @@ class DefaultController extends SafariController
             $share_safari_intrested->user_id = $this->userinfoId;
             $share_safari_intrested->status = 1;
             $share_safari_intrested->intrested_at = time();
+            $share_safari_intrested->version = $share_safari->live_version;
             if ($share_safari_intrested->save(false)) {
                 /* Login User Info */
                 $user = $this->userinfo;
@@ -292,9 +308,11 @@ class DefaultController extends SafariController
 
                 // FirebaseNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                 // FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
+                $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Joined!"]);
+            $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_failed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
     }
 
@@ -306,12 +324,14 @@ class DefaultController extends SafariController
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
         if ($this->userinfo->partner) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to unjoin a shared safari. Tour operators cannot participate in shared safaris."]);
+            $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.individuals_only_unjoin');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
 
@@ -331,11 +351,14 @@ class DefaultController extends SafariController
             $share_safari_intrested->user_id = $this->userinfoId;
             $share_safari_intrested->status = 0; //UNfollow
             $share_safari_intrested->unintrested_at = time();
+            $share_safari_intrested->version = $share_safari->live_version;
             if ($share_safari_intrested->save(false)) {
                 FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
-                return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You unjoined this shared safari!"]);
+                $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.unjoin_success');
+                return   Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not unjoined!"]);
+            $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.unjoin_failed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
     }
 
@@ -345,11 +368,13 @@ class DefaultController extends SafariController
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         if ($this->userinfo && $this->userinfo->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not allowed to perform this!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_allowed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
@@ -362,29 +387,35 @@ class DefaultController extends SafariController
         $wishlist->item_type = 'share-safari';
         $wishlist->status = 1;
         if ($wishlist->save(false)) {
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You added share safari to wishlist!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.wishlist_added', ['{var}' => 'Share Safari']);
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added share safari to wishlist!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.wishlist_add_failed', ['{var}' => 'Share Safari']);
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionUnwishlist($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         if ($this->userinfo && $this->userinfo->partner) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not allowed to perform this!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_allowed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
         if ($wishlist) {
             $wishlist->status = 0;
             if ($wishlist->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You removed share safari from wishlist!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.wishlist_removed', ['{var}' => 'Share Safari']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not removed share safari from wishlist!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.wishlist_remove_failed', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
     }
 
@@ -445,25 +476,29 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         if ($this->userinfo) {
             if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                 if ($this->userinfo->partner) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't comment on this safari!!!"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
 
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
                 if ($this->userinfo->partner) {
                     if ($this->userinfo->partner->id != $share_safari->host_user_id) {
-                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't comment on this safari!!!"]);
+                        $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 } else {
                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
                     if (!$share_safari_intrested) {
-                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                        $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 }
             }
@@ -471,13 +506,14 @@ class DefaultController extends SafariController
             if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->host_user_id != $this->userinfoId) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
                 if (!$share_safari_intrested) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                    $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
         }
 
         $model = new ShareSafariCommentForm();
-        $model->version = $share_safari->version;
+        $model->version = $share_safari->live_version;
         $model->attributes = $this->request;
         if ($model->validate()) {
             /**To Creator */
@@ -487,7 +523,8 @@ class DefaultController extends SafariController
                 // FirebaseNotificationHelper::safaricommentintrested($share_safari, $this->userinfo);
                 // $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
                 // return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$this->sharesafari->id);
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.comment_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
 
@@ -500,25 +537,29 @@ class DefaultController extends SafariController
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
 
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         if ($this->userinfo) {
             if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
                 if ($this->userinfo->partner) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't reply on this safari!!!"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.operator_reply_restricted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
 
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
                 if ($this->userinfo->partner) {
                     if ($this->userinfo->partner->id != $share_safari->host_user_id) {
-                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are Operator You can't reply on this safari!!!"]);
+                        $message = Yii::$app->api->messageManager->getMessage('common.operator_reply_restricted');
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 } else {
                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
                     if (!$share_safari_intrested) {
-                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                        $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                     }
                 }
             }
@@ -526,14 +567,15 @@ class DefaultController extends SafariController
             if ($share_safari->type == ShareSafari::TYPE_SAFARI && $share_safari->host_user_id != $this->userinfoId) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
                 if (!$share_safari_intrested) {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You can not join this safari!!!"]);
+                    $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             }
         }
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
-        $replymodel->version = $share_safari->version;
+        $replymodel->version = $share_safari->live_version;
 
         $replymodel->attributes = $this->request;
         $on_comment = ShareSafariComment::find()->where(['id' => $parent_id])->limit(1)->one();
@@ -580,7 +622,8 @@ class DefaultController extends SafariController
                     $replymodel->NotifyUser($reply, []);
                 }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.reply_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
 
@@ -592,12 +635,14 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $comments = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->limit(1)->one();
         if ($comments->user_id == $this->userinfoId) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.flag_restricted');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new ShareSafariCommentReportForm();
@@ -621,7 +666,8 @@ class DefaultController extends SafariController
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reported successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.report_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -634,14 +680,16 @@ class DefaultController extends SafariController
         if ($reasons) {
             return Yii::$app->api->sendResponse($data = $reasons);
         }
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not found !!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.not_found');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionCommentView($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         // $commentlist = ShareSafariComment::find()->where(['share_safari_id' => $share_safari->id, 'status' => 1])->andWhere(['parent_id' => null])->all();
 
@@ -661,10 +709,12 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => 'Includes not found']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Includes']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['includes' => $this->serializeData($share_safari->includeds)]);
     }
@@ -673,10 +723,12 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => 'Days not found']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Days']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['days' => $this->serializeData($share_safari->sharesafaridays)]);
     }
@@ -685,10 +737,12 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => 'Gallery not found']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['gallery' => $this->serializeData($share_safari->sharesafarigallery)]);
     }
@@ -697,10 +751,12 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($share_safari && $share_safari->type != ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => 'Faqs not found']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Faqs']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         return Yii::$app->api->sendResponse($data = ['faqs' => $this->serializeData($share_safari->sharesafariFaqs)]);
     }
@@ -771,60 +827,63 @@ class DefaultController extends SafariController
     //     ]);
     // }
 
-    public function actionUpdate($slug)
-    {
-        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
-        if ($shared_safari_model->host_user_id != $this->userinfoId) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You cannot Update this safari!!!"]);
-        }
-        $model = new SharedSafariForm($shared_safari_model);
-        $model->status = ShareSafari::STATUS_ACTIVE;
-        $model->version = $shared_safari_model->version + 1;
-        $model->attributes = $this->request;
-        $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
+    // public function actionUpdate($slug)
+    // {
+    //     $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+    //     if ($shared_safari_model->host_user_id != $this->userinfoId) {
+    //         $message = Yii::$app->api->messageManager->getMessage('common.update_restricted', ['{var}' => 'Safari']);
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+    //     }
+    //     $model = new SharedSafariForm($shared_safari_model);
+    //     $model->status = ShareSafari::STATUS_ACTIVE;
+    //     $model->version = $shared_safari_model->version + 1;
+    //     $model->attributes = $this->request;
+    //     $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
 
-        if ($model->validate()) {
-            $model->initializeForm();
-            if ($model->shared_safari_model->save(false)) {
-                $model->shared_safari_model->savehistory();
-                $model->UploadFiles($model->shared_safari_model->id);
-                /* All Joined User*/
-                $intrested_users = $shared_safari_model->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->asArray()->all();
-                // if ($intrested_users) {
-                //     foreach ($intrested_users as $intrest) {
-                //         $user = $intrest->user;
-                //         $username = $user->name;
-                //         $to_mail = $user->username;
-                //         $creator_name = $shared_safari_model->organizedbyname;
-                //         $subject = 'Update Shared Safari | ' . substr($shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-                //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_SAFARI_CREATEDBY_USER;
-                //         $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']);
-                //         $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
-                //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
-                //         }
-                //     }
-                // }
+    //     if ($model->validate()) {
+    //         $model->initializeForm();
+    //         if ($model->shared_safari_model->save(false)) {
+    //             $model->shared_safari_model->savehistory();
+    //             $model->UploadFiles($model->shared_safari_model->id);
+    //             /* All Joined User*/
+    //             $intrested_users = $shared_safari_model->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->asArray()->all();
+    //             // if ($intrested_users) {
+    //             //     foreach ($intrested_users as $intrest) {
+    //             //         $user = $intrest->user;
+    //             //         $username = $user->name;
+    //             //         $to_mail = $user->username;
+    //             //         $creator_name = $shared_safari_model->organizedbyname;
+    //             //         $subject = 'Update Shared Safari | ' . substr($shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+    //             //         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UPDATE_SAFARI_CREATEDBY_USER;
+    //             //         $shared_safari_url = Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']);
+    //             //         $req = ['creator_name' => $creator_name, 'shared_safari' => $shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
+    //             //         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+    //             //         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+    //             //             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+    //             //         }
+    //             //     }
+    //             // }
 
-                // FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
-                // print_r(json_encode($intrested_users));
-                // die();
-                if ($intrested_users) {
-                    // new \common\events\sharesafari\SafariUpdatedByUser(
-                    //     $intrested_users,
-                    //     $this->userinfoId,
-                    //     $model->shared_safari_model->user->name,
-                    //     $model->shared_safari_model->user->email,
-                    //     $model->shared_safari_model->id
-                    // );
-                }
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Shared safari updated successfully"]);
-            }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Shared safari not updated successfully"]);
-        }
-        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
-    }
+    //             // FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
+    //             // print_r(json_encode($intrested_users));
+    //             // die();
+    //             if ($intrested_users) {
+    //                 // new \common\events\sharesafari\SafariUpdatedByUser(
+    //                 //     $intrested_users,
+    //                 //     $this->userinfoId,
+    //                 //     $model->shared_safari_model->user->name,
+    //                 //     $model->shared_safari_model->user->email,
+    //                 //     $model->shared_safari_model->id
+    //                 // );
+    //             }
+    //             $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Shared Safari']);
+    //             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+    //         }
+    //         $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Shared Safari']);
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+    //     }
+    //     return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    // }
 
 
     public function actionMightIntrested()
@@ -849,7 +908,8 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug, 'type' => 1])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari History Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari History']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $columns = $this->sharedsafaricolumn();
@@ -930,7 +990,8 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug, 'type' => 2, 'mail_sent' => 1])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Fixed History Not found!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Fixed History']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $columns = $this->fixeddeparturecolumn();
@@ -1157,7 +1218,8 @@ class DefaultController extends SafariController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (!$share_safari) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $ShareSafariIntrested = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['share_safari_intrested.status' => 1])->joinWith('user')->andWhere(['user.status' => 10]);
@@ -1245,5 +1307,244 @@ class DefaultController extends SafariController
         } else {
             return Yii::$app->api->sendResponse($data = [], ['message' => $response['message']]);
         }
+    }
+
+    // public function actionOrganizeSafari()
+    // {
+    //     if ($this->userinfo->is_mobile_no_verified == 0) {
+    //         $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+    //         return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
+    //     }
+
+    //     $operator = SafariOperator::find()->where(['user_id' => $this->userinfo ? $this->userinfoId : null])->limit(1)->one();
+
+    //     if ($operator) {
+    //         $message = Yii::$app->api->messageManager->getMessage('share_safari.organize_safari.operator_restricted');
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+    //     }
+
+    //     // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
+    //     //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
+    //     // }
+    //     $model = new SharedSafariVersionForm();
+    //     $model->host_user_id = $this->userinfoId;
+    //     $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
+    //     $model->type = 1;
+    //     $model->host_type = 1;
+    //     $model->version = 1;
+
+
+    //     if ($login_user = $this->userinfo) {
+    //         if ($login_user->x_url <> '') {
+    //             $model->website_url = $login_user->x_url;
+    //         }
+    //         if ($login_user->insta_url <> '') {
+    //             $model->website_url = $login_user->insta_url;
+    //         }
+    //         if ($login_user->facebook_url <> '') {
+    //             $model->website_url = $login_user->facebook_url;
+    //         }
+    //     }
+
+    //     $model->attributes = $this->request;
+    //     $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
+
+    //     if ($model->validate()) {
+    //         $model->initializeForm();
+    //         if ($model->shared_safari_model->save()) {
+    //             $model->UploadFiles($model->shared_safari_model->share_safari_id);
+
+    //             $m = ShareSafari::find()->where(['id' => $model->shared_safari_model->share_safari_id])->limit(1)->one();
+    //             if ($m) {
+    //                 $m->host_type = $model->host_type;
+    //                 $m->type = $model->type;
+    //                 $m->share_safari_request_id = $model->share_safari_request_id;
+    //                 $m->park_id = $model->park_id;
+    //                 $m->share_safari_agenda_id = $model->share_safari_agenda_id;
+    //                 $m->no_of_safari = $model->no_of_safari;
+    //                 $m->start_date = $model->start_date;
+    //                 $m->end_date = $model->end_date;
+    //                 $m->stay_category_id = $model->stay_category_id;
+    //                 $m->estimate_price_min = $model->estimate_price_min;
+    //                 $m->estimate_price_max = $model->estimate_price_max;
+    //                 $m->safari_plan = $model->safari_plan;
+    //                 $m->total_seat = $model->total_seat;
+    //                 $m->share_seat = $model->share_seat;
+    //                 $m->website_url = $model->website_url;
+    //                 $m->tour_duration = abs((round(strtotime($model->end_date) - strtotime($model->start_date)) / (60 * 60 * 24))) + 1;
+    //                 $m->status = 1;
+    //                 $m->live_version = 1;
+    //                 $m->save(false);
+    //             }
+
+    //             $message = Yii::$app->api->messageManager->getMessage('common.creation_success', ['{var}' => 'Shared Safari']);
+    //             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+    //         }
+    //         $message = Yii::$app->api->messageManager->getMessage('common.creation_failed', ['{var}' => 'Shared Safari']);
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+    //     }
+
+    //     return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    // }
+
+    public function autoApproved($share_safari_id, $version)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $share_safari_id])->one();
+        if (empty($share_safari)) {
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if (!empty($share_safari->live_version)) {
+                $this->terminateShareSafari($share_safari_id, $share_safari->live_version);
+            }
+            $model = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari_id, 'version' => $version])->one();
+
+            $share_safari->share_safari_title = $model->share_safari_title;
+            $share_safari->type = $model->type;
+            $share_safari->host_user_id = $model->host_user_id;
+            $share_safari->safari_operator_id = $model->safari_operator_id;
+            $share_safari->user_id = $model->user_id;
+            $share_safari->host_type = $model->host_type;
+            $share_safari->park_id = $model->park_id;
+            $share_safari->share_safari_agenda_id = $model->share_safari_agenda_id;
+            $share_safari->no_of_safari = $model->no_of_safari;
+            $share_safari->start_date = $model->start_date;
+            $share_safari->end_date = $model->end_date;
+            $share_safari->cut_off_date = $model->cut_off_date;
+            $share_safari->image_filepath = $model->image_filepath;
+            $share_safari->stay_category_id = $model->stay_category_id;
+            $share_safari->estimate_price_min = $model->estimate_price_min;
+            $share_safari->estimate_price_max = $model->estimate_price_max;
+            $share_safari->cost_per_person = $model->cost_per_person;
+            $share_safari->safari_plan = $model->safari_plan;
+            $share_safari->total_seat = $model->total_seat;
+            $share_safari->share_seat = $model->share_seat;
+            $share_safari->tour_duration = $model->tour_duration;
+            $share_safari->share_safari_inclusion = $model->share_safari_inclusion;
+            $share_safari->share_safari_exclusion = $model->share_safari_exclusion;
+            $share_safari->getting_there = $model->getting_there;
+            $share_safari->breakfast_included = $model->breakfast_included;
+            $share_safari->lunch_included = $model->lunch_included;
+            $share_safari->dinner_included = $model->dinner_included;
+            $share_safari->meal_not_included = $model->meal_not_included;
+            $share_safari->pending_for_approval_version = null;
+            $share_safari->live_version = $version;
+            $share_safari->edit_status = 1;
+            $share_safari->status = ShareSafari::STATUS_ACTIVE;
+            $share_safari->save(false);
+
+            $share_safari->static_data_json = $this->prepareJson($share_safari->id);
+            $share_safari->save(false);
+
+            $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
+            $model->final_approved_at = null;
+
+            $model->save(false);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+        }
+        $transaction->commit();
+    }
+
+
+
+
+    public function actionUpdate($slug)
+    {
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        if (!$shared_safari_model || $shared_safari_model->host_user_id != $this->userinfoId) {
+            $message = Yii::$app->api->messageManager->getMessage('common.update_restricted', ['{var}' => 'Safari']);
+            return Yii::$app->api->sendResponse(['status' => 0], ['message' => $message]);
+        }
+
+        $share_safari_version_model = ShareSafariVersion::find()
+            ->where(['share_safari_id' => $shared_safari_model->id])
+            ->andWhere(['status' => ShareSafariVersion::APPROVED_AND_LIVE_STATUS])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(1)
+            ->one();
+
+
+        $model = new SharedSafariVersionForm();
+        $model->attributes = $share_safari_version_model->attributes;
+        $model->share_safari_id = $share_safari_version_model->share_safari_id;
+        $model->version = $share_safari_version_model->version + 1;
+        $model->attributes = $this->request;
+        $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
+
+
+        if ($model->validate()) {
+            $model->initializeForm();
+
+            if ($model->share_safari_version_model->save(false)) {
+                $model->UploadFiles($model->share_safari_version_model->id);
+                $this->autoApproved($model->share_safari_version_model->share_safari_id, $model->share_safari_version_model->version);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Shared Safari']);
+                return Yii::$app->api->sendResponse(['status' => 1], ['message' => $message]);
+            }
+        }
+        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+    }
+
+
+    private function terminateShareSafari($share_safari_id, $version)
+    {
+        $model = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari_id, 'version' => $version])->one();
+        if ($model) {
+            $model->status = ShareSafariVersion::TERMINATED_STATUS;
+            $model->save(false);
+            return true;
+        }
+        return false;
+    }
+
+    public function prepareJson($id)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        $json = [
+            'share_safari' => [
+                'share_safari_title' => $share_safari->share_safari_title,
+                'slug' => $share_safari->slug,
+                'no_of_safari' => $share_safari->no_of_safari,
+                'start_date' => $share_safari->start_date,
+                'end_date' => $share_safari->end_date,
+                'cut_off_date' => $share_safari->cut_off_date,
+                'total_seat' => $share_safari->total_seat,
+                'share_seat' => $share_safari->share_seat,
+                'types' => $share_safari->types,
+                'organized_by_name' => $share_safari->organizedbyname,
+                'organized_by_image' => $share_safari->organizedbyimage,
+                'organized_slug' => $share_safari->organizedslug,
+                'shared_image_path' => $share_safari->sharedimagepath,
+                'seat_full_status' => $share_safari->seat_full_status,
+                'park_title' => $share_safari->park_title,
+                'park_slug' => $share_safari->park_slug,
+                'cost_per_person' => $share_safari->cost_per_person,
+                'breakfast_included' => $share_safari->breakfast_included,
+                'lunch_included' => $share_safari->lunch_included,
+                'dinner_included' => $share_safari->dinner_included,
+                'meal_not_included' => $share_safari->meal_not_included,
+                'meals_label' => $share_safari->meals_label,
+                'share_safari_inclusion' => $share_safari->share_safari_inclusion,
+                'share_safari_exclusion' => $share_safari->share_safari_exclusion,
+                'getting_there' => $share_safari->getting_there,
+                'safari_plan' => $share_safari->safari_plan,
+                'share_safari_agenda' => $share_safari->share_safari_agenda,
+                'stay_category_display' => $share_safari->stay_category_display,
+                'stay_category_id' => $share_safari->stay_category_id,
+                'parks' => ArrayHelper::toArray($share_safari->parks),
+                'includeds' => ArrayHelper::toArray($share_safari->includeds),
+                'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
+            ],
+        ];
+
+        return json_encode($json);
     }
 }

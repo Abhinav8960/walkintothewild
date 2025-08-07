@@ -25,6 +25,8 @@ class DefaultController extends Controller
         $searchModel = new PackageSearch();
         $searchModel->status = Package::STATUS_ACTIVE;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere("safari_operator_id IN (SELECT id from safari_operator WHERE status=1)");
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,

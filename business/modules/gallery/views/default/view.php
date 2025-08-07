@@ -16,22 +16,18 @@ $this->title = 'Gallery';
             <div class="galleryViewMain-parent d-flex justify-content-between align-items-center">
                 <div class="gallary-title">
                     <p>
-                        Gallery View
-                        <?php if ($partner_gallery_model->remark != null) {
-                            echo '(' . $partner_gallery_model->remark . ')';
-                        } ?>
+                        Gallery View <?php if ($partner_gallery_model->remark != null) {
+                                            echo '(' . $partner_gallery_model->remark . ')';
+                                        } ?>
                     </p>
                 </div>
                 <div class="selectandsearchmain d-flex align-items-center gap-4">
-                    <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                    <?php if ($partner_gallery_model->edit_status == 1) { ?>
                         <div class="createGalleryButton-parent d-flex justify-content-center align-items-center">
                             <button value="<?= Url::toRoute(['create-gallery', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="galleryCreateAction"><i
                                     class="fa-solid fa-plus"></i></button>
-
-
                         </div>
                         <div class="d-flex align-items-center gap-4">
-                            <!-- <a href="<?= Url::toRoute(['set-sequence', 'partner_gallery_id' => $partner_gallery_model->id]) ?>" class="sequenceBtn">Set sequence</a> -->
                             <a class="button-created new" href="<?= Url::toRoute(['send-for-approval', 'id' => $partner_gallery_model->id]) ?>">Send
                                 For Approval</a>
                         </div>
@@ -46,15 +42,15 @@ $this->title = 'Gallery';
                         <p class="mb-1">Title</p>
                         <div class="d-flex align-items-center gap-5">
                             <p class="mb-0"><?= $partner_gallery_model->title ?></p>
-                            <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                            <?php if ($partner_gallery_model->edit_status == 1) { ?>
                                 <div class="active-btn inDraf-inner-butn">
                                     <a href="">In Draft</a>
                                 </div>
-                            <?php } else if ($partner_gallery_model->send_for_approval == 1) { ?>
+                            <?php } else if ($partner_gallery_model->edit_status == 2) { ?>
                                 <div class="active-btn pending-inner-butn">
                                     <a href="">Pending for Approval</a>
                                 </div>
-                            <?php } else if ($partner_gallery_model->is_approved == 1) { ?>
+                            <?php } else if ($partner_gallery_model->listing_status == 1) { ?>
                                 <div class="active-btn approve-inner-butn">
                                     <a href="">Approve</a>
                                 </div>
@@ -100,7 +96,7 @@ $this->title = 'Gallery';
                             <div class="position-relative">
                                 <img src="<?= $model->gallery_image ?>"
                                     class="card-img-top" alt="">
-                                <?php if ($partner_gallery_model->in_draft == 1) { ?>
+                                <?php if ($partner_gallery_model->edit_status == 1) { ?>
                                     <div class="dropdown-wrapper">
                                         <a href="#" class="dot-icon">
                                             <i class="fas fa-ellipsis-v"></i>

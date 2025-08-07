@@ -84,7 +84,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['is_adminstrator', 'is_admin', 'is_support_user','is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
+            [['is_admin', 'is_support_user','is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
             [['user_handle', 'user_bio', 'user_flaged', 'mobile_no', 'is_mobile_no_verified', 'mobile_no_verified_at'], 'safe']
         ];
     }
@@ -190,7 +190,7 @@ class User extends ActiveRecord implements IdentityInterface
             ->where(['username' => $username, 'status' => self::STATUS_ACTIVE])
             ->andWhere([
                 'OR',
-                ['is_adminstrator' => 1],
+                // ['is_adminstrator' => 1],
                 ['is_admin' => 1],
                 ['is_support_user'=>1],
                 ['is_cms_manager' => 1],
@@ -513,9 +513,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function getRolelabels()
     {
         $roles = [];
-        if ($this->is_adminstrator == 1) {
-            $roles[] = "Administrator";
-        }
+        // if ($this->is_adminstrator == 1) {
+        //     $roles[] = "Administrator";
+        // }
         if ($this->is_admin == 1) {
             $roles[] = "Admin";
         }
