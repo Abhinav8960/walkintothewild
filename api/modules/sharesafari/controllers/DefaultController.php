@@ -1213,7 +1213,7 @@ class DefaultController extends SafariController
 
     public function actionInitiateBooking($payment_hash, $payment_gateway)
     {
-        $share_safari_lead = ShareSafariLeadInstallment::find()->andWhere(['payment_hash' => $payment_hash])->andWhere(['<=', 'due_datetime', date('Y-m-d H:i:s')])->one();
+        $share_safari_lead = ShareSafariLeadInstallment::find()->andWhere(['payment_hash' => $payment_hash])->andWhere(['>=', 'due_datetime', date('Y-m-d H:i:s')])->one();
         if (!$share_safari_lead) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Booking Not Found, Or Payment Link Expired!!!"]);
         }
