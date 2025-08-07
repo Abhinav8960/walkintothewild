@@ -126,6 +126,11 @@ class ShareSafariLeadForm extends Model
                 'tooSmall' => 'Seat must be at least 1'
             ],
 
+            [
+                ['seat'],
+                'validateSeatAvailability'
+            ],
+
             // Safe attributes for massive assignment
             [
                 [
@@ -171,45 +176,63 @@ class ShareSafariLeadForm extends Model
         ];
     }
 
+    /**
+     * Validates that the requested number of seats does not exceed available seats
+     * @param string $attribute
+     * @param array $params
+     */
+    public function validateSeatAvailability($attribute, $params)
+    {
+        $share_safari = \common\models\sharesafari\ShareSafari::findOne($this->share_safari_id);
+        if ($share_safari) {
+            $available_seats = $share_safari->share_seat;
+            if ($this->$attribute > $available_seats) {
+                $this->addError($attribute, "Cannot book more than {$available_seats} available seats");
+            }
+        } else {
+            $this->addError($attribute, 'Invalid safari selected');
+        }
+    }
+
     public function store($share_safari, $login_user)
     {
 
         // $transaction = \Yii::$app->db->beginTransaction();
         // try {
-            $lead = new ShareSafariLead();
-            $lead->share_safari_id = $share_safari->id;
-            $lead->share_safari_user_id = $share_safari->host_user_id;
-            $lead->share_safari_partner_id = $share_safari->partner->id ?? null;
-            $lead->version = $share_safari->version;
-            $lead->type = $share_safari->type;
-            $lead->quantity = $this->seat;
-            $lead->notes = null;
-            $lead->user_id = $login_user->id;
-            $lead->name = $login_user->name;
-            $lead->email = $login_user->email;
-            $lead->phone = $login_user->mobile_no;
-            $lead->start_date = $share_safari->start_date;
-            $lead->end_date = $share_safari->end_date;
-            $lead->cost_per_quantity = $share_safari->cost_per_person;
-            $lead->gross_price = $this->seat * $share_safari->cost_per_person;
-            $lead->discount = 0; // Assuming no discount for now
-            $lead->net_price = $lead->gross_price - $this->discount;
-            $lead->installment = $this->installment;
-            $lead->received_amount = 0; // Assuming no amount received for now
-            $lead->is_payment_received = 0; // Assuming payment not received yet
-            $lead->payment_receipt = null; // Assuming no payment receipt for now
-            $lead->transaction_datetime = null; // Assuming no transaction datetime for now
-            $lead->payment_gateway = 1; // Assuming PayU as default payment gateway
-            $lead->is_payment_expired = 0; // Assuming payment not expired
-            $collection = $share_safari->toArray(); // Unset interested_users to avoid circular reference
-            unset($collection['interested_users']); // Unset interested_users to avoid circular reference
-            
-            $lead->collection = $collection ?? null;
+        $lead = new ShareSafariLead();
+        $lead->share_safari_id = $share_safari->id;
+        $lead->share_safari_user_id = $share_safari->host_user_id;
+        $lead->share_safari_partner_id = $share_safari->partner->id ?? null;
+        $lead->version = $share_safari->version;
+        $lead->type = $share_safari->type;
+        $lead->quantity = $this->seat;
+        $lead->notes = null;
+        $lead->user_id = $login_user->id;
+        $lead->name = $login_user->name;
+        $lead->email = $login_user->email;
+        $lead->phone = $login_user->mobile_no;
+        $lead->start_date = $share_safari->start_date;
+        $lead->end_date = $share_safari->end_date;
+        $lead->cost_per_quantity = $share_safari->cost_per_person;
+        $lead->gross_price = $this->seat * $share_safari->cost_per_person;
+        $lead->discount = 0; // Assuming no discount for now
+        $lead->net_price = $lead->gross_price - $this->discount;
+        $lead->installment = $this->installment;
+        $lead->received_amount = 0; // Assuming no amount received for now
+        $lead->is_payment_received = 0; // Assuming payment not received yet
+        $lead->payment_receipt = null; // Assuming no payment receipt for now
+        $lead->transaction_datetime = null; // Assuming no transaction datetime for now
+        $lead->payment_gateway = 1; // Assuming PayU as default payment gateway
+        $lead->is_payment_expired = 0; // Assuming payment not expired
+        $collection = $share_safari->toArray(); // Unset interested_users to avoid circular reference
+        unset($collection['interested_users']); // Unset interested_users to avoid circular reference
 
-            $lead->status = 1;
-            $lead->save(false) && $lead->generateInstallment();
-            // $transaction->commit();
-            return $lead->id;
+        $lead->collection = $collection ?? null;
+
+        $lead->status = 1;
+        $lead->save(false) && $lead->generateInstallment();
+        // $transaction->commit();
+        return $lead->id;
         // } catch (\Exception $e) {
         //     // If any exception occurs, rollback the transaction
         //     $transaction->rollBack();
