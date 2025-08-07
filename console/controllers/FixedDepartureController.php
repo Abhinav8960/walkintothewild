@@ -142,7 +142,7 @@ class FixedDepartureController extends Controller
                 'cut_off_date' => $share_safari->cut_off_date,
                 'total_seat' => $share_safari->total_seat,
                 'share_seat' => $share_safari->share_seat,
-                'types' => $share_safari->types,
+                'type' => $share_safari->type,
                 'organized_by_name' => $share_safari->organizedbyname,
                 'organized_by_image' => $share_safari->organizedbyimage,
                 'organized_slug' => $share_safari->organizedslug,
