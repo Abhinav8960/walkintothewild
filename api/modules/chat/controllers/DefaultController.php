@@ -552,12 +552,11 @@ class DefaultController extends RestController
                     $operator_user_id,
                     $call_initiated_user_id,
                     $call_initiated_partner_id,
-                    8960874641,
+                    $request_caller_1_no,
                     $request_caller_1_user_id,
-                    9315723354,
+                    $request_caller_2_no,
                     $request_caller_2_user_id
                 );
-
 
                 // Call the callNow method
                 $result = $callingService->callNow();
