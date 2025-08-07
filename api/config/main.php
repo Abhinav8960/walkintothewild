@@ -101,14 +101,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
-                    'except' => ['Call-error*'],
-                ],
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error','warning'],
-                    'categories' => ['Call-error*'],
-                    'logFile' => '@runtime/logs/Call.log',
-                ],
+                ],                
             ],
         ],
 

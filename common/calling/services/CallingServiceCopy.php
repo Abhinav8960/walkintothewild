@@ -116,7 +116,6 @@ class CallingServiceCopy
             ->send();
         if (!$response->isOk) {
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
-            // \Yii::error("Call initiation failed: " . $response->content, 'Call-error');
             return false;
         }
       
