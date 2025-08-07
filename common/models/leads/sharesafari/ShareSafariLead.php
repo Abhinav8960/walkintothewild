@@ -153,9 +153,10 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
         return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 
-    public function openChat($share_safari_lead_id){
+    public function openChat($share_safari_lead_id)
+    {
 
-        
+        return true; // add chat opening logic
 
     }
 }
