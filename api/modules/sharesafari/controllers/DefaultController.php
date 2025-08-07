@@ -1252,8 +1252,8 @@ class DefaultController extends SafariController
         $model = new ShareSafariLeadForm();
         $model->attributes = $this->request;
         $model->share_safari_id = $share_safari->id;
-        $model->share_safari_user_id = $share_safari->host_user_id;
-        $model->share_safari_partner_id = $share_safari->partner->id;
+        $model->share_safari_user_id = $share_safari->user_id;
+        $model->share_safari_partner_id = $share_safari->safari_operator_id;
         $model->user_id = $this->userinfoId;
         $model->version = $share_safari->live_version;
 
