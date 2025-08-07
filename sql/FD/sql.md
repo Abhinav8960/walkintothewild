@@ -20,3 +20,6 @@ ALTER TABLE `transaction_events` CHANGE `lead_partner_quote_id` `lead_partner_qu
 
 
 ALTER TABLE `share_safari_lead_installment` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `installment`;
+
+ALTER TABLE `booking` CHANGE `lead_partner_quotes_id` `lead_partner_quotes_id` INT NULL DEFAULT NULL;
+ALTER TABLE `booking` CHANGE `lead_partner_id` `lead_partner_id` INT NULL DEFAULT NULL;
