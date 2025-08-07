@@ -118,6 +118,9 @@ class CallingServiceCopy
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
             return false;
         }
+
+        \Yii::info('Informational call log', 'call-error');
+
       
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
