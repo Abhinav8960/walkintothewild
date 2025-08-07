@@ -116,6 +116,7 @@ class CallingServiceCopy
             ->send();
         if (!$response->isOk) {
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
+            // \Yii::error("Call initiation failed: " . $response->content, 'Call-error');
             return false;
         }
       
@@ -126,12 +127,12 @@ class CallingServiceCopy
         // die();
         if (is_array($arr_contents) && !empty($arr_contents)) {
             if (isset($arr_contents['status']) && strtolower($arr_contents['status'])) {
-                $this->call_model->unique_id = rand(1,999999);
+                $this->call_model->unique_id = $arr_contents['unique_id'] ?? null;
                 $this->call_model->status = CallLog::STATUS_SUCCESS;
             }
         }
         $this->call_model->call_request_status = $arr_contents['status'];
-        $this->call_model->call_request_message = $arr_contents['message'];
+        $this->call_model->call_request_message = $arr_contents['message'] ?? null;
         $this->call_model->save(false);
         return $this->call_model->status;
     }

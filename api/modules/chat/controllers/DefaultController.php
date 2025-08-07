@@ -479,7 +479,7 @@ class DefaultController extends RestController
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            $chat_model = Chat::find()->andWhere(['or', ['quser_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
                 return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
             }
@@ -546,15 +546,15 @@ class DefaultController extends RestController
                 $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
                 // Instantiate the CallingService
-                $callingService = new \common\calling\services\CallingService(
+                $callingService = new \common\calling\services\CallingServiceCopy(
                     $chat_id,
                     $lead_id,
                     $operator_user_id,
                     $call_initiated_user_id,
                     $call_initiated_partner_id,
-                    $request_caller_1_no,
+                    8960874641,
                     $request_caller_1_user_id,
-                    $request_caller_2_no,
+                    9315723354,
                     $request_caller_2_user_id
                 );
 
