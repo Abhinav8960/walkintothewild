@@ -105,7 +105,7 @@ class payuPayment
             $t->source = $this->source_id;
 
             $t->utm_source = $utm_source;
-            $t->share_safari_lead_id = $$share_safari_lead->shareSafariLead->id;
+            $t->share_safari_lead_id = $share_safari_lead->share_safari_lead_id;
             $t->share_safari_lead_installment_id = $share_safari_lead->id;
             $t->share_safari_id = $share_safari_lead->share_safari_id;
             $t->share_safari_version = $share_safari_lead->version;
