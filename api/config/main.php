@@ -105,7 +105,7 @@ return [
                 
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning', 'info'],
+                    'levels' => ['info'],
                     'categories' => ['call-error'],
                     'logFile' => '@api/runtime/logs/Call.log',
                 ],
