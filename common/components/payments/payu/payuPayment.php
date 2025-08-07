@@ -40,8 +40,9 @@ class payuPayment
         }
         // try {
         $txnid = Transaction::transactionId($share_safari_lead->shareSafariLead->id, $this->source);
-        $udf1 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $this->source);
-        $udf2 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $this->source);
+        $udf1 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $this->source);
+        $udf2 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $this->source);
+       
         $amount = $share_safari_lead->amount;
         $productinfo = "Safari Booking Payment";
         $firstname = $share_safari_lead->shareSafariLead->name;
