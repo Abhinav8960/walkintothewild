@@ -843,7 +843,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->is_live = 1;
+        $searchModel->listing_status = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
 
         $dataProvider = $searchModel->search($this->request->queryParams);

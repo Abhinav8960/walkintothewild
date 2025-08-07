@@ -115,6 +115,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             $fields[] = 'share_safari_agenda_id';
             $fields[] = 'stay_category_id';
             $fields[] = 'status';
+            $fields[] = 'partner_gallery_id';
+            $fields[] = 'gallery_json';
         }
         return $fields;
     }
@@ -168,7 +170,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     //     return $this->hasOne(User::className(), ['id' => 'host_user_id']);
     // }
 
-     public function getHostUser()
+    public function getHostUser()
     {
         return $this->hasOne(User::className(), ['id' => 'host_user_id']);
     }
