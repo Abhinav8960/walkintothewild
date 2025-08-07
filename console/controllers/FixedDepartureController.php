@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use api\models\sharesafari\ShareSafari as ApiShareSafari;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariVersion;
 use Yii;
@@ -130,7 +131,7 @@ class FixedDepartureController extends Controller
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
 
-        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $share_safari = ApiShareSafari::find()->where(['id' => $id])->limit(1)->one();
 
         $json = [
             'share_safari' => [
@@ -142,7 +143,7 @@ class FixedDepartureController extends Controller
                 'cut_off_date' => $share_safari->cut_off_date,
                 'total_seat' => $share_safari->total_seat,
                 'share_seat' => $share_safari->share_seat,
-                'type' => $share_safari->type,
+                'types' => $share_safari->types,
                 'organized_by_name' => $share_safari->organizedbyname,
                 'organized_by_image' => $share_safari->organizedbyimage,
                 'organized_slug' => $share_safari->organizedslug,
