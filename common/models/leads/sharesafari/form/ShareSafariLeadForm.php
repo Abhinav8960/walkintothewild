@@ -203,7 +203,7 @@ class ShareSafariLeadForm extends Model
         $lead->share_safari_id = $share_safari->id;
         $lead->share_safari_user_id = $share_safari->host_user_id;
         $lead->share_safari_partner_id = $share_safari->partner->id ?? null;
-        $lead->version = $share_safari->version;
+        $lead->version = $share_safari->live_version;
         $lead->type = $share_safari->type;
         $lead->quantity = $this->seat;
         $lead->notes = null;
