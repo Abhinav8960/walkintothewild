@@ -146,7 +146,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['source', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id'], 'safe'],
+            [['source', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
             [['user_id', 'reference_id',  'order_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
             [['user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['addional_notes'], 'string'],
@@ -286,7 +286,13 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
 
         $booking = new \common\models\bookings\Booking();
+        $booking->source = $this->source;
+        
         $booking->transaction_id = $this->id;
+        $booking->share_safari_lead_id = $this->share_safari_lead_id;
+        $booking->share_safari_lead_installment_id = $this->share_safari_lead_installment_id;
+        $booking->share_safari_id = $this->share_safari_id;
+        $booking->share_safari_version = $this->share_safari_version;
         $booking->order_id = $this->order_id;
         $booking->currency = $this->currency;
         $booking->reference_id = $this->reference_id; // use the same

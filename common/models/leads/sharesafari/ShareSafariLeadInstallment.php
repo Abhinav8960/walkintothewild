@@ -59,7 +59,7 @@ class ShareSafariLeadInstallment extends \yii\db\ActiveRecord implements \common
     public function rules()
     {
         return [
-            [['share_safari_partner_id', 'notes', 'user_id', 'amount', 'due_datetime', 'payment_link', 'payment_hash', 'transaction_id', 'payment_gateway', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['share_safari_partner_id', 'notes', 'user_id', 'amount', 'due_datetime', 'payment_link', 'payment_hash', 'transaction_id', 'payment_gateway', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by', 'payment_receipt'], 'default', 'value' => null],
             [['status', 'is_payment_received'], 'default', 'value' => 0],
             [['share_safari_id', 'share_safari_user_id', 'version', 'type', 'name', 'email'], 'required'],
             [['share_safari_id', 'share_safari_user_id', 'share_safari_partner_id', 'version', 'type', 'user_id', 'transaction_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],

@@ -3,6 +3,9 @@
 namespace common\models\bookings;
 
 use common\models\leads\LeadPartners;
+use common\models\leads\sharesafari\ShareSafariLead;
+use common\models\leads\sharesafari\ShareSafariLeadInstallment;
+use common\models\transaction\Transaction;
 use Yii;
 
 /**
@@ -117,7 +120,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['transaction_id', 'reference_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
             [['transaction_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'lead_partner_quotes_id'], 'integer'],
             [['addional_notes'], 'string'],
-            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'payment_receipt'], 'safe'],
+            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'payment_receipt', 'source', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 3],
@@ -191,15 +194,55 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->status == 1 && $insert) {
-            // lead booking status update
-            $this->updateLeadBookingStatus();
-            // close lead chat
-            $this->closeLeadChat();
-            // close all payment links
+            if ($this->source == Transaction::SOURCE_LEAD) {
+                // lead booking status update
+                $this->updateLeadBookingStatus();
+                // close lead chat
+                $this->closeLeadChat();
+                // close all payment links
+            }
+            if ($this->source == Transaction::SOURCE_SHARE_SAFARI) {
+                // share safari booking status update
+                $this->updateSafaribookingLeadBookingStatus();
+                // close lead chat
+                $this->openChatSafaribookingLeadChat();
+            }
             $this->closePaymentLinks();
             // send booking confirmation email
             // $this->sendBookingConfirmationEmail();
         }
+    }
+
+    private function updateSafaribookingLeadBookingStatus()
+    {
+        $lead = ShareSafariLead::findOne($this->share_safari_lead_id);
+        if ($lead) {
+            $lead->is_payment_received = 1;
+            $lead->payment_receipt = $this->payment_receipt ?? NULL;
+            $lead->payment_gateway = $this->payment_gateway;
+            // $lead->transaction_id = $this->transaction_id;
+            // $lead->transaction_datetime = $this->transaction_datetime;
+            $lead->save(false);
+        }
+
+        $leadInstallment = ShareSafariLeadInstallment::findOne($this->share_safari_lead_installment_id);
+        if ($leadInstallment) {
+            $leadInstallment->is_payment_received = 1;
+            $leadInstallment->payment_receipt = $this->payment_receipt ?? NULL;
+            $leadInstallment->payment_gateway = $this->payment_gateway;
+            $leadInstallment->transaction_id = $this->transaction_id;
+            $leadInstallment->transaction_datetime = $this->transaction_datetime;
+            $leadInstallment->save(false);
+        }
+    }
+
+    private function openChatSafaribookingLeadChat()
+    {
+        $leadInstallment = ShareSafariLead::findOne($this->share_safari_lead_id);
+        if ($leadInstallment) {
+            return  $leadInstallment->openChat($this->share_safari_lead_id);
+        }
+        return true;
     }
 
 
@@ -215,6 +258,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $lead->transaction_datetime = $this->transaction_datetime;
             $lead->save(false);
         }
+
         $leadPartner = LeadPartners::findOne($this->lead_partner_id);
         if ($leadPartner) {
             $leadPartner->is_payment_received = 1;
@@ -223,6 +267,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $leadPartner->transaction_datetime = $this->transaction_datetime;
             $leadPartner->save(false);
         }
+
         $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
         if ($leadPartnerQuotes) {
             $leadPartnerQuotes->is_payment_received = 1;

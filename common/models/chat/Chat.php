@@ -23,8 +23,9 @@ use common\models\operator\SafariOperator;
  */
 class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
-    const CHAT_TYPE_DIRECT = 1;
-    const CHAT_TYPE_QUOTE = 2;
+    const CHAT_TYPE_DIRECT          = 1;
+    const CHAT_TYPE_QUOTE           = 2;
+    const CHAT_TYPE_SHARE_SAFARI    = 3;
 
     const OBJECTIVE_DIRECT = "direct_chat";
     const OBJECTIVE_QUOTE = "quote_chat";
@@ -84,7 +85,6 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         return $this->hasMany(ChatMessage::className(), ['chat_id' => 'id']);
     }
-
 
     public function getUser()
     {
