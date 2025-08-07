@@ -6,6 +6,7 @@ use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariVersion;
 use Yii;
 use yii\console\Controller;
+use yii\helpers\ArrayHelper;
 
 class FixedDepartureController extends Controller
 {
@@ -64,14 +65,16 @@ class FixedDepartureController extends Controller
         $share_safaris = ShareSafari::find()->where(['type' => 1])->all();
         foreach ($share_safaris as $share_safari) {
             $share_safari->user_id = $share_safari->host_user_id;
-            $share_safari->live_version = 1;
+            $share_safari->live_version = $share_safari->version;
+            $share_safari->static_data_json = $this->prepareJson($share_safari->id);
+            $share_safari->edit_status = 1;
             $share_safari->save(false);
 
             $share_safari_version_model = new ShareSafariVersion();
 
             $share_safari_version_model->share_safari_title = $share_safari->share_safari_title;
             $share_safari_version_model->share_safari_id = $share_safari->id;
-            $share_safari_version_model->version = 1;
+            $share_safari_version_model->version = $share_safari->live_version;
             $share_safari_version_model->type = $share_safari->type;
             $share_safari_version_model->host_user_id = $share_safari->host_user_id;
             $share_safari_version_model->safari_operator_id = $share_safari->safari_operator_id;
@@ -122,7 +125,53 @@ class FixedDepartureController extends Controller
             $safari->save(false);
         }
     }
-    
+
+    public function prepareJson($id)
+    {
+        $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
+
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+        $json = [
+            'share_safari' => [
+                'share_safari_title' => $share_safari->share_safari_title,
+                'slug' => $share_safari->slug,
+                'no_of_safari' => $share_safari->no_of_safari,
+                'start_date' => $share_safari->start_date,
+                'end_date' => $share_safari->end_date,
+                'cut_off_date' => $share_safari->cut_off_date,
+                'total_seat' => $share_safari->total_seat,
+                'share_seat' => $share_safari->share_seat,
+                'types' => $share_safari->types,
+                'organized_by_name' => $share_safari->organizedbyname,
+                'organized_by_image' => $share_safari->organizedbyimage,
+                'organized_slug' => $share_safari->organizedslug,
+                'shared_image_path' => $share_safari->sharedimagepath,
+                'seat_full_status' => $share_safari->seat_full_status,
+                'park_title' => $share_safari->park_title,
+                'park_slug' => $share_safari->park_slug,
+                'cost_per_person' => $share_safari->cost_per_person,
+                'breakfast_included' => $share_safari->breakfast_included,
+                'lunch_included' => $share_safari->lunch_included,
+                'dinner_included' => $share_safari->dinner_included,
+                'meal_not_included' => $share_safari->meal_not_included,
+                'meals_label' => $share_safari->meals_label,
+                'share_safari_inclusion' => $share_safari->share_safari_inclusion,
+                'share_safari_exclusion' => $share_safari->share_safari_exclusion,
+                'getting_there' => $share_safari->getting_there,
+                'safari_plan' => $share_safari->safari_plan,
+                'share_safari_agenda' => $share_safari->share_safari_agenda,
+                'stay_category_display' => $share_safari->stay_category_display,
+                'stay_category_id' => $share_safari->stay_category_id,
+                'parks' => ArrayHelper::toArray($share_safari->parks),
+                'includeds' => ArrayHelper::toArray($share_safari->includeds),
+                'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
+            ],
+        ];
+
+        return json_encode($json);
+    }
+
     // public function actionStep3()
     // {
     //     $share_safaris = ShareSafari::find()->where(['type' => 2])->all();
