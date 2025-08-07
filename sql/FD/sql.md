@@ -17,3 +17,6 @@ ALTER TABLE `transaction` CHANGE `lead_partner_quotes_id` `lead_partner_quotes_i
 ALTER TABLE `transaction` CHANGE `payment_gateway_tracking_id` `payment_gateway_tracking_id` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `bank_reference_no` `bank_reference_no` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 
 ALTER TABLE `transaction_events` CHANGE `lead_partner_quote_id` `lead_partner_quote_id` INT NULL DEFAULT NULL;
+
+
+ALTER TABLE `share_safari_lead_installment` ADD `is_payment_received` BOOLEAN NOT NULL DEFAULT FALSE AFTER `installment`;

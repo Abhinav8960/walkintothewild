@@ -18,7 +18,7 @@ class ShareSafariLeadInstallmentSearch extends ShareSafariLeadInstallment
     {
         return [
             [['id', 'share_safari_id', 'share_safari_user_id', 'share_safari_partner_id', 'version', 'type', 'user_id', 'transaction_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
-            [['notes', 'name', 'email', 'due_datetime', 'payment_link', 'payment_hash', 'transaction_datetime'], 'safe'],
+            [['notes', 'name', 'email', 'due_datetime', 'payment_link', 'payment_hash', 'transaction_datetime','is_payment_received'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -42,7 +42,7 @@ class ShareSafariLeadInstallmentSearch extends ShareSafariLeadInstallment
      */
     public function search($params, $formName = null)
     {
-        $query = ShareSafariInstallment::find();
+        $query = ShareSafariLeadInstallment::find();
 
         // add conditions that should always apply here
 

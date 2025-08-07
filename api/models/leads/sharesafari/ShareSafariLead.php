@@ -52,7 +52,8 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
 
     public function getPayment_details()
     {
-        return $this->hasMany(ShareSafariLeadInstallment::class, ['share_safari_lead_id' => 'id']);
+        // return $this->hasOne(ShareSafariLeadInstallment::class, ['share_safari_lead_id' => 'id'])-->andWhere(['is_payment_received' => 1]);
+        return $this->hasOne(ShareSafariLeadInstallment::class, ['share_safari_lead_id' => 'id']);
     }
 
     public function getUser()

@@ -60,11 +60,11 @@ class ShareSafariLeadInstallment extends \yii\db\ActiveRecord implements \common
     {
         return [
             [['share_safari_partner_id', 'notes', 'user_id', 'amount', 'due_datetime', 'payment_link', 'payment_hash', 'transaction_id', 'payment_gateway', 'transaction_datetime', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 0],
+            [['status', 'is_payment_received'], 'default', 'value' => 0],
             [['share_safari_id', 'share_safari_user_id', 'version', 'type', 'name', 'email'], 'required'],
             [['share_safari_id', 'share_safari_user_id', 'share_safari_partner_id', 'version', 'type', 'user_id', 'transaction_id', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
             [['amount'], 'number'],
-            [['due_datetime', 'transaction_datetime', 'installment', 'share_safari_lead_id'], 'safe'],
+            [['due_datetime', 'transaction_datetime', 'installment', 'share_safari_lead_id', 'is_payment_received'], 'safe'],
             [['notes', 'name', 'email', 'payment_link', 'payment_hash'], 'string', 'max' => 255],
         ];
     }
