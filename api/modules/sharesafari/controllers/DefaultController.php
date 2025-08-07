@@ -1352,6 +1352,7 @@ class DefaultController extends SafariController
             $share_safari->meal_not_included = $model->meal_not_included;
             $share_safari->pending_for_approval_version = null;
             $share_safari->live_version = $version;
+            $share_safari->edit_status = 1;
             $share_safari->status = ShareSafari::STATUS_ACTIVE;
             $share_safari->save(false);
 

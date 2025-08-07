@@ -262,60 +262,6 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
     }
 
 
-    // public function getSharesafarifollowerlist()
-    // {
-    //     if ($this->hostUser &&  $this->hostUser->userfollowers) {
-    //         return $this->hostUser->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
-    //     }
-    // }
-
-    // public function getFixeddeparturefollowerlist()
-    // {
-    //     if ($this->safarioperator && $this->safarioperator->followerlist) {
-    //         return $this->safarioperator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
-    //     }
-    // }
-
-
-    // public function savehistory()
-    // {
-
-    //     $historyModel = new ShareSafariHistory();
-    //     $historyModel->attributes = $this->attributes;
-    //     $historyModel->parent_id = $this->id;
-
-    //     if (!$historyModel->save(false)) {
-    //         Yii::error('Failed to save ShareSafariHistory: ' . print_r($historyModel->errors, true), __METHOD__);
-    //     }
-    // }
-
-    // public function getSharedSafariHistory()
-    // {
-    //     $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_SAFARI])->count();
-    //     if ($count >= 2) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // public function getFixedDepartureHistory()
-    // {
-    //     $count = ShareSafariHistory::find()->where(['parent_id' => $this->id, 'status' => ShareSafariHistory::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'mail_sent' => 1])->count();
-    //     if ($count >= 2) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
-    // public function getCommentCount()
-    // {
-    //     $count = ShareSafariComment::find()->where(['share_safari_id' => $this->id])->andWhere(['status' => 1])->count();
-    //     if ($count > 0) {
-    //         return $count;
-    //     }
-    //     return 0;
-    // }
-
     public function getStatustags()
     {
         if ($this->status == ShareSafariVersion::NOT_APPROVED_STATUS) {
@@ -343,5 +289,10 @@ class ShareSafariVersion extends \yii\db\ActiveRecord implements \common\interfa
             return $this->liveShareSafari;
         }
         return $this;
+    }
+
+    public function getFixed_departure()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 }

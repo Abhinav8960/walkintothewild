@@ -96,11 +96,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     ],
 
                     [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'label' => 'Is Live',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->displayShareSafari->statustags;
+                            if ($model->status == 1) {
+                                return '<span class="badge bg-success">Yes</span>';
+                            } else {
+                                return '<span class="badge bg-danger">No</span>';
+                            }
                         }
                     ],
 
@@ -108,49 +112,77 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{seat}&nbsp{update}&nbsp{view}',
+                        'template' => '{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
                         'buttons' => [
                             'seat' => function ($url, $model) {
-                                if ($model->displayShareSafari->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
+                                if ($model->status == 1) {
                                     return Html::button(
                                         '<img src="' . $this->params['baseurl']  . '/images/person-seat.svg" alt="" width="20" height="20">',
                                         [
-                                            'value' => Url::toRoute(['/sharesafari/default/update-seat', 'id' => $model->displayShareSafari->id]),
+                                            'value' => Url::toRoute(['update-seat', 'id' => $model->id]),
                                             'class' => 'btn p-0 change-menuicon seatAction',
                                             'title' => 'View',
                                         ]
                                     );
                                 }
                             },
+
                             'update' => function ($url, $model) {
-                                if ($model->status == ShareSafariVersion::EDIATBLE_STATUS) {
+                                if ($model->edit_status != 0) {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
-                                ', ['/sharesafari/default/update', 'id' => $model->id], [
+                                ', ['update', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'View',
 
                                     ]);
-                                } else if ($model->displayShareSafari->status == ShareSafariVersion::APPROVED_AND_LIVE_STATUS) {
-                                    if ($share_safari = ShareSafari::find()->where(['id' => $model->share_safari_id])->andWhere(['pending_for_approval_version' => null])->limit(1)->one()) {
-                                        $share_safari_version = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari->id])->andWhere(['version' => $share_safari->editable_version])->limit(1)->one();
-                                        return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
-                                        ', ['/sharesafari/default/update', 'id' => $share_safari_version->id], [
-                                            'class' => 'btn p-0 change-menuicon',
-                                            'title' => 'View',
+                                } else if ($model->edit_status == 0) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                ', ['copy-with-edit', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
 
-                                        ]);
-                                    }
-                                } else {
-                                    return Html::tag('span', '', [
-                                        'style' => 'display:inline-block;width:25px;height:25px;'
+                                    ]);
+                                }
+                                return Html::tag('span', '', [
+                                    'style' => 'display:inline-block;width:25px;height:25px;'
+                                ]);
+                            },
+
+                            'view' => function ($url, $model) {
+                                if (isset($model->live_fd)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->live_fd->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                }
+                                if (isset($model->editable_fd)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->editable_fd->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
                                     ]);
                                 }
                             },
-                            'view' => function ($url, $model) {
-                                return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-                                ]);
+
+                            'inactive' => function ($url, $model) {
+                                if ($model->status != 10) {
+                                    if ($model->status == 1) {
+                                        return Html::a('<i class="fa fa-toggle-on"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-success',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to inactive this package?',
+                                            'title' => 'Unblock User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    } else if ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-toggle-off"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-danger',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to active this package?',
+                                            'title' => 'Block User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    }
+                                }
                             },
                         ]
                     ],

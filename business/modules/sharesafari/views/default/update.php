@@ -4,10 +4,10 @@
 /* @var $model apps\models\employee\Employee */
 
 $this->title = 'Fixed Departure : ' . $shared_safari_departure_version_model->share_safari_title . '';
-$this->params['breadcrumbs_home_url'] = '#';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['title'] = $this->title;
 ?>
+
+<?= $this->render('_form_upper_view', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model]) ?>
+
 <div class="tabs-formswrapper mx-3">
     <?= $this->render('_navbar', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model, 'overview_active' => 'active']) ?>
 

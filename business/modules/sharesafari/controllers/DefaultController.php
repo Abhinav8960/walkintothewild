@@ -18,6 +18,7 @@ use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariParklist;
+use common\models\sharesafari\ShareSafariSearch;
 use common\models\sharesafari\ShareSafariVersion;
 use common\models\sharesafari\ShareSafariVersionSearch;
 use Yii;
@@ -45,7 +46,7 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'delete', 'inactive', 'copy-with-edit', 'update-seat'],
                 'rules' => [
                     [
                         'actions' => ['index', 'create'],
@@ -53,12 +54,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'copy-fixed-departure'],
-                        'allow' => $this->isFdOwner(),
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'actions' => ['view', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'delete', 'inactive', 'copy-with-edit', 'update-seat'],
                         'allow' =>  $this->isFdOwner(),
                         'roles' => ['@'],
                     ],
@@ -72,10 +68,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        $searchModel = new ShareSafariVersionSearch();
-        $searchModel->status = [ShareSafariVersion::EDIATBLE_STATUS, ShareSafariVersion::SEND_FOR_APPROVAL_STATUS];
+        $searchModel = new ShareSafariSearch();
         $searchModel->safari_operator_id = $safari_operator->id;
-        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'status', -1]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -105,15 +101,13 @@ class DefaultController extends Controller
 
         $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureVersionForm();
-
+        $model->status = ShareSafariVersion::EDIATBLE_STATUS;
         $model->host_user_id =  null;
         $model->safari_operator_id =  $safari_operator->id;
         $model->user_id =  Yii::$app->user->identity->id;
-
         $model->type = 2;
-        $model->host_type = 3;
+        $model->host_type = 3; //check it
 
-        $model->status = ShareSafariVersion::EDIATBLE_STATUS;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -122,8 +116,12 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->shared_safari_departure_version_model->save()) {
                         $model->uploadFile();
+                        $share_safari = ShareSafari::find()->where(['id' => $model->shared_safari_departure_version_model->share_safari_id, 'status' => 10])->limit(1)->one();
+                        if ($share_safari) {
+                            $share_safari->image_filepath = $model->shared_safari_departure_version_model->image_filepath;
+                            $share_safari->save(false);
+                        }
                         $this->updateFixedDepartureStatus($model->share_safari_id, $model->version, ShareSafariVersion::EDIATBLE_STATUS);
-
                         $parks = $model->park_list;
                         if ($parks) {
                             foreach ($parks as $park) {
@@ -164,7 +162,8 @@ class DefaultController extends Controller
     public function actionUpdate($id)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_version_model = ShareSafariVersion::find()->where(['share_safari_id' => $id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['id' => $id])->andWhere(['IN', 'status', [10, 1]])->limit(1)->one();
+        $shared_safari_departure_version_model = ShareSafariVersion::find()->where(['share_safari_id' => $id, 'version' => $share_safari->editable_version])->limit(1)->one();
         $model = new CreateDepartureVersionForm($shared_safari_departure_version_model);
 
         if ($this->request->isPost) {
@@ -479,29 +478,6 @@ class DefaultController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionCopyFixedDeparture($id)
-    {
-        $m = $this->findModel($id);
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-
-            $this->copyFixedDeparture($id, true);
-            Yii::$app->session->setFlash('success', 'FixedDeparture copy successfully');
-        } catch (\Exception $e) {
-            Yii::error($e->getMessage());
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
-            echo "<pre>";
-            print_r($e->getMessage());
-            die();
-        }
-        $transaction->commit();
-
-        return $this->redirect(Yii::$app->request->referrer);
-    }
-
-
-
 
     public function actionGalleryPopup($context, $preview)
     {
@@ -536,10 +512,11 @@ class DefaultController extends Controller
         return ['success' => false];
     }
 
+
     public function actionUpdateSeat($id)
     {
-
-        $m = $this->findModel($id);
+        $share_safari = ShareSafari::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        $m = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari->id, 'version' => $share_safari->live_version])->limit(1)->one();
         $share_seat_model = new ShareSeatForm($m);
 
         if (Yii::$app->request->isAjax && $share_seat_model->load(Yii::$app->request->post())) {
@@ -591,10 +568,11 @@ class DefaultController extends Controller
         return $this->renderAjax('_seat_update', ['share_seat_model' => $share_seat_model]);
     }
 
+
     private function autoApproval($id, $share_seat)
     {
         $model = ShareSafariVersion::findOne($id);
-        $last_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->share_safari_id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        $last_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->share_safari_id, 'status' => 1])->orderBy(['id' => SORT_DESC])->limit(1)->one();
 
         if ($model) {
 
@@ -617,54 +595,6 @@ class DefaultController extends Controller
     }
 
 
-    public function actionCopyWithEdit($id)
-    {
-
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $newModel = $this->copyWithEditFixedDeparture($id);
-        } catch (\Exception $e) {
-            Yii::error($e->getMessage());
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
-            echo "<pre>";
-            print_r($e->getMessage());
-            die();
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        $transaction->commit();
-        return $this->redirect(['update', 'id' => $newModel->id]);
-    }
-
-
-    private function copyWithEditFixedDeparture($id, $isNewRecord = false)
-    {
-        $model = ShareSafariVersion::findOne($id);
-
-        if ($model) {
-            $newModel = new ShareSafariVersion();
-            $newModel->attributes = $model->attributes;
-            $this->version = $newModel->version = $model->version + 1;
-
-            $newModel->id = null;
-            $newModel->status = ShareSafariVersion::EDIATBLE_STATUS;
-            $newModel->save(false);
-
-            $this->CopyFixedDepartureDay($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            $this->CopyFixedDepartureIncluded($model->share_safari_id, $model->version, $newModel->share_safari_id);;
-            $this->CopyFixedDepartureSafariPark($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            $this->CopyFixedDepartureFaq($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            // $this->updateFixedDepartureStatus($newModel->share_safari_id, $newModel->version, ShareSafariVersion::EDIATBLE_STATUS);
-            $model = ShareSafari::find()->where(['id' => $newModel->share_safari_id])->one();
-            $model->editable_version = $newModel->version;
-            $model->save(false);
-
-            return $newModel;
-        }
-        return true;
-    }
-
-
 
     private function updateFixedDepartureStatus($share_safari_id, $version, $status)
     {
@@ -677,12 +607,11 @@ class DefaultController extends Controller
         }
         if ($status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
-            $model->pending_status = 1;
+            $model->edit_status = 2;
         }
         if ($status == ShareSafariVersion::EDIATBLE_STATUS) {
             $model->editable_version = $version;
         }
-        $model->edit_status = 1;
         if ($model->save(false)) {
             $this->terminateFixedDeparture($share_safari_id);
             return true;
@@ -711,48 +640,141 @@ class DefaultController extends Controller
         return true;
     }
 
-    private function copyFixedDeparture($id, $isNewRecord = false)
+
+
+
+    public function actionDelete($id)
     {
-        $model = ShareSafariVersion::findOne($id);
+        $share_safari_version_model = $this->findModel($id);
+        if ($share_safari_version_model) {
+            $share_safari_version_model->status = ShareSafariVersion::TERMINATED_STATUS;
+            if ($share_safari_version_model->save(false)) {
+                $model = ShareSafari::find()->where(['id' => $share_safari_version_model->share_safari_id])->one();
+                if ($model->status == 10) {
+                    $model->status = ShareSafari::STATUS_DELETE;
+                }
+                $model->edit_status = 0;
+                $model->editable_version = null;
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Fixed Departure Delete successfully');
+                    return $this->redirect(['index']);
+                }
+            }
+        }
+        Yii::$app->session->setFlash('error', 'Fixed Departure Not Delete successfully');
+        return $this->redirect(['index']);
+    }
+
+
+    protected function findModelDay($share_safari_id, $day, $version)
+    {
+        if (($model = ShareSafariDay::findOne(['share_safari_id' => $share_safari_id, 'version' => $version, 'day' => $day, 'status' => [ShareSafariDay::STATUS_ACTIVE, ShareSafariDay::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = ShareSafariVersion::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    protected function isFdOwner()
+    {
+        $id = Yii::$app->request->get('id');
+
+        $operator = $this->module->operatormodel();
+        $model = ShareSafariVersion::findOne(['id' => $id]);
+
+        if ($model && $model->safari_operator_id == $operator->id) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function isFixedDepartureEditable()
+    {
+        $id = Yii::$app->request->get('id');
+        $model = ShareSafariVersion::findOne(['id' => $id]);
+        if ($model) {
+            return $model->status == ShareSafariVersion::EDIATBLE_STATUS;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function actionCopyWithEdit($id)
+    {
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $newModel = $this->copyWithEditFixedDeparture($id);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $transaction->commit();
+        return $this->redirect(['update', 'id' => $newModel->share_safari_id]);
+    }
+
+
+    private function copyWithEditFixedDeparture($id, $isNewRecord = false)
+    {
+        $model = ShareSafari::findOne($id);
+        $share_safari_version_model = ShareSafariVersion::find()->where(['share_safari_id' => $model->id, 'version' => $model->live_version])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        $last_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
 
         if ($model) {
             $newModel = new ShareSafariVersion();
-            $newModel->attributes = $model->attributes;
-            $this->version = $newModel->version = $model->version + 1;
+            $newModel->attributes = $share_safari_version_model->attributes;
+            $this->version = $newModel->version = $last_version->version + 1;
 
-            if ($isNewRecord) {
-                $newModel->share_safari_id = $this->newFixedDeparture($model);
-                $this->version =  $newModel->version = 1;
-            }
-            $newModel->id = null; // Set the ID to null for the new record
+            $newModel->id = null;
             $newModel->status = ShareSafariVersion::EDIATBLE_STATUS;
             $newModel->save(false);
-            if (!$isNewRecord) {
 
-                // $this->CopyFixedDepartureComment($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            }
-            $this->CopyFixedDepartureDay($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            $this->CopyFixedDepartureIncluded($model->share_safari_id, $model->version, $newModel->share_safari_id);;
-            $this->CopyFixedDepartureSafariPark($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            $this->CopyFixedDepartureFaq($model->share_safari_id, $model->version, $newModel->share_safari_id);
-            $this->updateFixedDepartureStatus($newModel->share_safari_id, $newModel->version, ShareSafariVersion::EDIATBLE_STATUS);
+            $this->CopyFixedDepartureDay($share_safari_version_model->share_safari_id, $share_safari_version_model->version, $newModel->share_safari_id);
+            $this->CopyFixedDepartureIncluded($share_safari_version_model->share_safari_id, $share_safari_version_model->version, $newModel->share_safari_id);;
+            $this->CopyFixedDepartureSafariPark($share_safari_version_model->share_safari_id, $share_safari_version_model->version, $newModel->share_safari_id);
+            $this->CopyFixedDepartureFaq($share_safari_version_model->share_safari_id, $share_safari_version_model->version, $newModel->share_safari_id);
+
+
+            $model->editable_version = $newModel->version;
+            $model->edit_status = 1;
+            $model->save(false);
 
             return $newModel;
         }
         return true;
     }
 
-    private function newFixedDeparture($model)
+
+    public function actionInactive($id)
     {
-        $newModel = new ShareSafari();
-        $newModel->share_safari_title = $model->share_safari_title;
-        $newModel->slug = ShareSafari::generateUnqiueSlug($newModel->share_safari_title);
-        $newModel->editable_version = 1;
-        $newModel->id = null;
-        $newModel->status = ShareSafari::STATUS_SUSPEND;
-        $newModel->save(false);
-        return $newModel->id;
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        if ($share_safari->status == 1) {
+            $share_safari->status = 0;
+            $share_safari->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Fixed Departure Inactive Successfully');
+        } else {
+            $share_safari->status = 1;
+            $share_safari->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Fixed Departure Active Successfully');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
+
+
 
     private function CopyFixedDepartureDay($old_share_safari_id, $old_version, $new_share_safari_id)
     {
@@ -829,16 +851,6 @@ class DefaultController extends Controller
         return true;;
     }
 
-    protected function isFixedDepartureEditable()
-    {
-        $id = Yii::$app->request->get('id');
-        $model = ShareSafariVersion::findOne(['id' => $id]);
-        if ($model) {
-            return $model->status == ShareSafariVersion::EDIATBLE_STATUS;
-        } else {
-            return false;
-        }
-    }
 
     public function prepareJson($id)
     {
@@ -884,36 +896,5 @@ class DefaultController extends Controller
         ];
 
         return json_encode($json);
-    }
-
-
-
-    protected function findModelDay($share_safari_id, $day, $version)
-    {
-        if (($model = ShareSafariDay::findOne(['share_safari_id' => $share_safari_id, 'version' => $version, 'day' => $day, 'status' => [ShareSafariDay::STATUS_ACTIVE, ShareSafariDay::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-    }
-
-    protected function findModel($id)
-    {
-        if (($model = ShareSafariVersion::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-
-    protected function isFdOwner()
-    {
-        $id = Yii::$app->request->get('id');
-
-        $operator = $this->module->operatormodel();
-        $model = ShareSafariVersion::findOne(['id' => $id]);
-
-        if ($model && $model->safari_operator_id == $operator->id) {
-            return true;
-        }
-        return false;
     }
 }

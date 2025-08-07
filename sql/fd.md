@@ -39,3 +39,6 @@ ALTER TABLE `share_safari_faq` CHANGE `version` `version` INT NULL DEFAULT NULL;
 ALTER TABLE `share_safari_included` CHANGE `version` `version` INT NULL DEFAULT NULL;
 ALTER TABLE `share_safari_park` CHANGE `version` `version` INT NULL DEFAULT NULL;
 
+
+ALTER TABLE `share_safari` ADD `edit_status` INT NOT NULL DEFAULT '0' COMMENT '0 => Nothing,\r\n1 => Edit\r\n2 => Pending' AFTER `editable_version`;
+

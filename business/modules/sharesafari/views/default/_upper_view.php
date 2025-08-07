@@ -20,14 +20,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h2>Fixed Departure : <?= Html::encode($share_safari->share_safari_title) ?></h2>
                     </div>
                     <?php
-                    if ($share_safari->status == ShareSafariVersion::EDIATBLE_STATUS) {
+                    if ($var = $share_safari->fixed_departure) {
+                        if ($var->edit_status == 1 && $var->status != 1) {
                     ?>
-                        <div class="butonsParent d-flex align-items-center gap-3">
-                            <div class="edinBtn">
-                                <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
+                            <div class="butonsParent d-flex align-items-center gap-3">
+                                <div class="edinBtn">
+                                    <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $share_safari->id])], ['title' => 'Send For Approval']) ?>
+                                </div>
                             </div>
-                        </div>
-                    <?php } ?>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>

@@ -147,7 +147,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
     {
         $scenarios = parent::scenarios();
         $scenarios['inclusion'] = ['share_safari_inclusion', 'share_safari_exclusion', 'share_safari_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
-        // $scenarios['policy_info'] = ['share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['getting_there'] = ['getting_there', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         return $scenarios;
     }
@@ -186,14 +185,41 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $m = new ShareSafari();
         $m->share_safari_title = $this->share_safari_title;
         $m->slug = ShareSafari::generateUnqiueSlug($this->share_safari_title);
-
         $m->host_user_id = $this->host_user_id;
         $m->safari_operator_id = $this->safari_operator_id;
         $m->user_id = $this->user_id;
-
+        $m->share_safari_title = $this->share_safari_title;
+        $m->host_type = $this->host_type;
+        $m->type = $this->type;
+        $m->share_safari_agenda_id = $this->share_safari_agenda_id;
+        $m->no_of_safari = $this->no_of_safari;
+        $m->start_date = $this->start_date;
+        $m->end_date = $this->end_date;
+        $m->cut_off_date = $this->cut_off_date;
+        $m->stay_category_id = $this->stay_category_id;
+        $m->cost_per_person = $this->cost_per_person;
+        $m->safari_plan = $this->safari_plan;
+        $m->total_seat = $this->total_seat;
+        $m->share_seat = $this->share_seat;
+        $m->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
+        $m->status = $this->status;
+        $m->share_safari_inclusion = $this->share_safari_inclusion;
+        $m->share_safari_exclusion = $this->share_safari_exclusion;
+        $m->getting_there = $this->getting_there;
+        $m->breakfast_included = $this->breakfast_included;
+        $m->lunch_included = $this->lunch_included;
+        $m->dinner_included = $this->dinner_included;
+        $m->meal_not_included = $this->meal_not_included;
+        $m->park_id = $this->park_id;
+        $m->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if (!empty($live)) {
+                $m->gallery_json = $this->gallery_json;
+            }
+        }
         $m->edit_status = 1;
-        $m->pending_status = 0;
-        $m->status = 0;
+        $m->status = 10;
         $m->save(false);
         return $m->id;
     }
@@ -216,7 +242,6 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
         $this->shared_safari_departure_version_model->share_safari_id = $this->share_safari_id;
         $this->shared_safari_departure_version_model->version = $this->version;
-        $this->shared_safari_departure_version_model->type = $this->type;
         $this->shared_safari_departure_version_model->share_safari_title = $this->share_safari_title;
         $this->shared_safari_departure_version_model->host_type = $this->host_type; // iss bhi check karna ha
         $this->shared_safari_departure_version_model->type = $this->type;
@@ -230,11 +255,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $this->shared_safari_departure_version_model->safari_plan = $this->safari_plan;
         $this->shared_safari_departure_version_model->total_seat = $this->total_seat;
 
-        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
-            $this->shared_safari_departure_version_model->share_seat = 0;
-        } else {
-            $this->shared_safari_departure_version_model->share_seat = $this->share_seat;
-        }
+        $this->shared_safari_departure_version_model->share_seat = $this->share_seat;
 
         $this->shared_safari_departure_version_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
         $this->shared_safari_departure_version_model->status = $this->status;
@@ -257,10 +278,16 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $this->shared_safari_departure_version_model->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
-            if(!empty($live)){
+            if (!empty($live)) {
                 $this->shared_safari_departure_version_model->gallery_json = $live->live_images;
             }
         }
+
+        // if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
+        //     $this->shared_safari_departure_version_model->share_seat = 0;
+        // } else {
+        //     $this->shared_safari_departure_version_model->share_seat = $this->share_seat;
+        // }
     }
 
 

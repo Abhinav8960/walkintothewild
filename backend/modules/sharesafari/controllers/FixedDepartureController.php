@@ -111,7 +111,9 @@ class FixedDepartureController extends Controller
             $fixed_departure->dinner_included = $model->dinner_included;
             $fixed_departure->meal_not_included = $model->meal_not_included;
             $fixed_departure->pending_for_approval_version = null;
+            $fixed_departure->editable_version = null;
             $fixed_departure->live_version = $version;
+            $fixed_departure->edit_status = 0;
             $fixed_departure->status = ShareSafari::STATUS_ACTIVE;
             $fixed_departure->save(false);
 
@@ -122,7 +124,6 @@ class FixedDepartureController extends Controller
             $model->final_approved_at = time();
 
             $model->save(false);
-            $this->copyWithEdit($model->id);
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
             $transaction->rollBack();
