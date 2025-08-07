@@ -2,9 +2,10 @@
 
 namespace common\models\bookings;
 
+use api\models\leads\sharesafari\ShareSafariLead;
 use common\models\leads\LeadPartners;
-use common\models\leads\sharesafari\ShareSafariLead;
 use common\models\leads\sharesafari\ShareSafariLeadInstallment;
+use common\models\sharesafari\ShareSafari;
 use common\models\transaction\Transaction;
 use Yii;
 
@@ -233,6 +234,12 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $leadInstallment->transaction_id = $this->transaction_id;
             $leadInstallment->transaction_datetime = $this->transaction_datetime;
             $leadInstallment->save(false);
+        }
+
+        $shareSafari = ShareSafari::findOne($this->share_safari_id);
+        if ($shareSafari) {
+            $shareSafari->booked_seat += $shareSafari->booked_seat;
+            $shareSafari->save(false);
         }
     }
 

@@ -1255,7 +1255,7 @@ class DefaultController extends SafariController
         $model->share_safari_user_id = $share_safari->host_user_id;
         $model->share_safari_partner_id = $share_safari->partner->id;
         $model->user_id = $this->userinfoId;
-        $model->version = $share_safari->version;
+        $model->version = $share_safari->live_version;
 
         if ($model->validate()) {
             $lead = $model->store($share_safari, $this->userinfo);

@@ -37,3 +37,5 @@ ALTER TABLE `transaction` CHANGE `share_shafari_version` `share_safari_version` 
 ALTER TABLE `booking` CHANGE `share_shafari_lead_id` `share_safari_lead_id` INT NULL DEFAULT NULL, CHANGE `share_shafari_id` `share_safari_id` INT NULL DEFAULT NULL;
 ALTER TABLE `share_safari_lead_installment` ADD `payment_receipt` VARCHAR(255) NULL DEFAULT NULL AFTER `is_payment_received`;
 ALTER TABLE `chat` CHANGE `chat_type` `chat_type` TINYINT NOT NULL DEFAULT '1' COMMENT '1=>direct chat, 2 =>lead chat,3=>share safari chat';
+
+ALTER TABLE `share_safari` ADD `booked_seat` INT NOT NULL DEFAULT '0' AFTER `share_seat`;
