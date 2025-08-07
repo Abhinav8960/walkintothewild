@@ -119,7 +119,7 @@ class FixedDepartureController extends Controller
 
     public function actionStep3()
     {
-        $share_safaris = ShareSafari::find()->where(['type' => 1])->all();
+        $share_safaris = ShareSafari::find()->where(['type' => 2])->all();
         foreach ($share_safaris as $safari) {
             $safari->status = -1;
             $safari->save(false);

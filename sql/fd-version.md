@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 29, 2025 at 06:20 PM
+-- Generation Time: Aug 07, 2025 at 04:31 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.22
 
@@ -84,8 +84,7 @@ CREATE TABLE `share_safari_version` (
 -- Indexes for table `share_safari_version`
 --
 ALTER TABLE `share_safari_version`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `host_user_id` (`park_id`,`start_date`,`end_date`,`estimate_price_min`,`estimate_price_max`,`cost_per_person`,`total_seat`,`status`) USING BTREE;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
