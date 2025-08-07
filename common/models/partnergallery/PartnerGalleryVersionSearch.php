@@ -18,8 +18,8 @@ class PartnerGalleryVersionSearch extends PartnerGalleryVersion
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_approved', 'send_for_approval', 'in_draft'], 'integer'],
-            [['custom_filter','is_live'], 'safe'],
+            [['safari_operator_id', 'lisitng_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['custom_filter'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class PartnerGalleryVersionSearch extends PartnerGalleryVersion
      */
     public function search($params)
     {
-        $query = PartnerGalleryVersion::find()->where(['status' => PartnerGallery::STATUS_ACTIVE]);
+        $query = PartnerGalleryVersion::find();
 
         // add conditions that should always apply here
 
@@ -61,11 +61,7 @@ class PartnerGalleryVersionSearch extends PartnerGalleryVersion
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
-            'in_draft' => $this->in_draft,
-            'is_approved' => $this->is_approved,
-            'is_live' => $this->is_live,
-            'send_for_approval' => $this->send_for_approval,
-            'status' => $this->status,
+            'lisitng_status' => $this->lisitng_status,
         ]);
 
        

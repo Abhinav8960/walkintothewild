@@ -32,7 +32,7 @@ class LeadPartnerQuoteInstallments extends \common\models\leads\LeadPartnerQuote
         $fields = [
             'amount',
             'payment_initiate_link',
-            // 'payment_hash',
+            'payment_hash',
             'before_datetime',
         ];
         return $fields;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 24, 2025 at 01:36 PM
+-- Generation Time: Jul 14, 2025 at 05:13 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.21
 
@@ -24,64 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `share_safari_version`
+-- Table structure for table `partner_gallery_version`
 --
 
-DROP TABLE IF EXISTS `share_safari_version`;
-CREATE TABLE `share_safari_version` (
+DROP TABLE IF EXISTS `partner_gallery_version`;
+CREATE TABLE `partner_gallery_version` (
   `id` int NOT NULL,
-  `share_safari_id` int NOT NULL,
-  `version` int NOT NULL DEFAULT '1',
-  `share_safari_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `type` int DEFAULT NULL,
-  `share_safari_request_id` int DEFAULT NULL,
-  `host_user_id` int NOT NULL,
-  `host_type` int DEFAULT NULL,
+  `partner_gallery_id` int NOT NULL,
+  `version` int NOT NULL,
+  `safari_operator_id` int NOT NULL,
   `park_id` int DEFAULT NULL,
-  `share_safari_agenda_id` int DEFAULT NULL,
-  `no_of_safari` int DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `cut_off_date` date DEFAULT NULL,
-  `image` varchar(512) DEFAULT NULL,
-  `filepath` varchar(512) DEFAULT NULL,
-  `stay_category_id` int DEFAULT NULL,
-  `estimate_price_min` int DEFAULT NULL,
-  `estimate_price_max` int DEFAULT NULL,
-  `cost_per_person` int DEFAULT NULL,
-  `safari_plan` text,
-  `website_url` text,
-  `total_seat` int DEFAULT NULL,
-  `share_seat` int DEFAULT NULL,
-  `tour_duration` int DEFAULT NULL,
-  `share_safari_inclusion` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `share_safari_exclusion` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `share_safari_terms_condtition` longtext,
-  `privacy_policy` longtext,
-  `change_policy` longtext,
-  `what_you_must_carry` longtext,
-  `date_change_policy` longtext,
-  `refund_policy` longtext,
-  `getting_there` longtext,
-  `breakfast_included` tinyint NOT NULL DEFAULT '0',
-  `lunch_included` tinyint NOT NULL DEFAULT '0',
-  `dinner_included` tinyint NOT NULL DEFAULT '0',
-  `meal_not_included` tinyint NOT NULL DEFAULT '0',
-  `mail_sent` int DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `can_send_for_approval` int DEFAULT '1',
+  `live_images` longtext,
+  `is_live` int NOT NULL DEFAULT '0',
+  `status` int DEFAULT '1',
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
-  `delete_reason_id` tinyint DEFAULT NULL,
-  `delete_reason` text,
-  `status` int DEFAULT '3' COMMENT '0=Not Approved,1=>Approved and Live,2=>Send For Approval,3=Editable,4=>Terminated',
-  `is_published_on_api` tinyint(1) NOT NULL DEFAULT '1',
-  `is_published_on_web` tinyint(1) NOT NULL DEFAULT '1',
-  `total_view` int NOT NULL DEFAULT '0',
-  `pined_safari` int DEFAULT NULL,
-  `final_approved_at` int DEFAULT NULL,
-  `partner_gallery_id` int DEFAULT NULL,
-  `gallery_json` json DEFAULT NULL
+  `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -89,20 +52,19 @@ CREATE TABLE `share_safari_version` (
 --
 
 --
--- Indexes for table `share_safari_version`
+-- Indexes for table `partner_gallery_version`
 --
-ALTER TABLE `share_safari_version`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `host_user_id` (`host_user_id`,`park_id`,`start_date`,`end_date`,`estimate_price_min`,`estimate_price_max`,`cost_per_person`,`total_seat`,`status`);
+ALTER TABLE `partner_gallery_version`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `share_safari_version`
+-- AUTO_INCREMENT for table `partner_gallery_version`
 --
-ALTER TABLE `share_safari_version`
+ALTER TABLE `partner_gallery_version`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 

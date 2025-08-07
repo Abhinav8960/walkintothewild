@@ -6,7 +6,6 @@ namespace business\modules\gallery\controllers;
 use common\models\partnergallery\form\PartnerGalleryForm;
 use common\models\partnergallery\PartnerGallery;
 use common\models\partnergallery\PartnerGallerySearch;
-use common\models\partnergallery\PartnerGalleryVersion;
 use common\models\partnergallery\PartnerGalleryVersionSearch;
 use common\models\partnergalleryimage\form\PartnerGalleryImageForm;
 use common\models\partnergalleryimage\PartnerGalleryImage;
@@ -43,7 +42,7 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image', 'gallery-delete', 'draft-gallery', 'gallery-permanent-delete', 'move-to-draft'],
+                        'actions' => ['view', 'switch', 'edit-gallery', 'send-for-approval', 'update-thumbnail', 'update-gallery-image', 'gallery-delete', 'draft-gallery', 'gallery-permanent-delete'],
                         'allow' => $this->isOwner(),
                         'roles' => ['@'],
                     ],
@@ -61,10 +60,10 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->edit_status = 1;
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->in_draft = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['IN', 'listing_status', [10, 1]]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -77,7 +76,9 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->listing_status = PartnerGallery::STATUS_ACTIVE;
+        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        // $searchModel->is_approved = 1;
+        $searchModel->is_live = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -92,10 +93,10 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->edit_status = 2;
+        $searchModel->status = PartnerGallery::STATUS_ACTIVE;
+        $searchModel->send_for_approval = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere(['IN', 'listing_status', [10, 1]]);
 
         return $this->render('pending_for_approval', [
             'searchModel' => $searchModel,
@@ -111,8 +112,9 @@ class DefaultController extends Controller
 
         $model = new PartnerGalleryForm();
         $model->safari_operator_id = $safari_operator_model->id;
-        $model->listing_status = PartnerGallery::STATUS_CREATE;
-        $model->edit_status = 1;
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->status = PartnerGallery::STATUS_ACTIVE;
+        $model->in_draft = 1;
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -124,7 +126,6 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->partner_gallery_model->save()) {
-                        $model->partner_gallery_model->versionsave();
                         \Yii::$app->session->setFlash('success', 'Gallery added successfully');
                         return $this->redirect(['index']);
                     }
@@ -142,7 +143,7 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
@@ -163,7 +164,7 @@ class DefaultController extends Controller
 
     public function actionCreateGallery($partner_gallery_id)
     {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
@@ -204,181 +205,6 @@ class DefaultController extends Controller
         return $this->renderAjax('create_gallery', [
             'model' => $model,
         ]);
-    }
-
-
-    public function actionSendForApproval($id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'edit_status' => 1, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
-        if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
-            return $this->redirect(['index']);
-        }
-        $partner_gallery_model->edit_status = 2;
-        $partner_gallery_model->remark = NULL;
-        $partner_gallery_model->send_for_approval_time = date('Y-m-d H:i:s');
-
-        if ($partner_gallery_model->save(false)) {
-            $version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partner_gallery_model->id, 'listing_status' => 1])->limit(1)->one();
-            if ($version) {
-                $version->listing_status = 2;
-                $version->send_for_approval_time =  $partner_gallery_model->send_for_approval_time;
-                $version->save(false);
-            }
-            \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
-            return $this->redirect(['index']);
-        }
-    }
-
-
-    public function actionDraftGallery($id)
-    {
-        $safari_operator = $this->module->operatormodel();
-
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => 1])->limit(1)->one();
-        if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery not available for draft!!!');
-        }
-        $partner_gallery_model->edit_status = 1;
-
-        if ($partner_gallery_model->save(false)) {
-            \Yii::$app->session->setFlash('success', 'Done!!!');
-        } else {
-            \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
-        }
-        return $this->redirect(['index']);
-    }
-
-
-    public function actionEditGallery($id)
-    {
-        $safari_operator_model = $this->module->operatormodel();
-
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id,  'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
-        if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
-            return $this->redirect(['index']);
-        }
-
-        $model = new PartnerGalleryForm($partner_gallery_model);
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->partner_gallery_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully!!!');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        } else {
-            $model->partner_gallery_model->loadDefaultValues();
-        }
-
-        return $this->renderAjax('update', [
-            'model' => $model,
-            'safari_operator_model' => $safari_operator_model,
-        ]);
-    }
-
-    public function actionMoveToDraft($id)
-    {
-        $safari_operator_model = $this->module->operatormodel();
-
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id, 'edit_status' => 2, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
-        if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
-            return $this->redirect(['index']);
-        }
-
-        $partner_gallery_model->edit_status = 1;
-
-        if ($partner_gallery_model->save(false)) {
-            return $this->redirect(['index']);
-        }
-    }
-
-
-
-    public function actionSetSequence($partner_gallery_id)
-    {
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-        if (!$partner_gallery_model) {
-            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
-            return $this->redirect(['index']);
-        }
-
-        $searchModel = new PartnerGalleryImageSearch();
-        $searchModel->partner_gallery_id = $partner_gallery_model->id;
-        $dataProvider = $searchModel->search($this->request->queryParams, false);
-        $dataProvider->pagination = false;
-
-        return $this->render('set_sequence', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
-        ]);
-    }
-
-    public function actionUpdateSequence()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $ids = Yii::$app->request->post('ids');
-        if (!is_array($ids)) {
-            throw new BadRequestHttpException('Invalid data format.');
-        }
-        $count = 1;
-        foreach ($ids as $id) {
-            PartnerGalleryImage::updateAll(
-                ['sequence' => $count],
-                ['id' => $id]
-            );
-            $count++;
-        }
-
-        Yii::$app->session->setFlash('success', 'Image order updated successfully.');
-
-        return ['status' => 'success'];
-    }
-
-
-    private function isOwner()
-    {
-        $id = Yii::$app->request->get('id');
-        $safari_operator_model = $this->module->operatormodel();
-        $model = PartnerGallery::findOne(['id' => $id]);
-        if ($model && $model->safari_operator_id == $safari_operator_model->id) {
-            return true;
-        }
-        return false;
-    }
-
-    public function actionUpdateThumbnail($partner_gallery_id, $id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
-
-        if (!$partner_gallery_model) {
-            return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
-        }
-
-        $update_model = PartnerGalleryImage::updateAll(['set_as_thumbnail' => 0], ['partner_gallery_id' => $partner_gallery_id]);
-
-        $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
-        if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-
-        $model->set_as_thumbnail = 1;
-        if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', 'Updated successfully.');
-            return $this->redirect(Yii::$app->request->referrer);
-        }
     }
 
     public function actionSwitch($id)
@@ -441,28 +267,155 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionGalleryDelete($id)
+    /**
+     * Set Sequence of Privacy Policy
+     *
+     * @return void
+     */
+    public function actionSetSequence($partner_gallery_id)
     {
-        $safari_operator = $this->module->operatormodel();
-
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE]])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
         }
 
-        if ($partner_gallery_model->listing_status == 10) {
-            $partner_gallery_model->edit_status = 0;
-            $partner_gallery_model->listing_status = PartnerGallery::STATUS_DELETE;
-            $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partner_gallery_model->id, 'listing_status' => 1])->limit(1)->one();
-            if ($partner_gallery_version) {
-                $partner_gallery_version->status = -1;
-                $partner_gallery_version->save(false);
-            }
-        } else {
-            $partner_gallery_model->edit_status = 0;
+        $searchModel = new PartnerGalleryImageSearch();
+        $searchModel->partner_gallery_id = $partner_gallery_model->id;
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider->pagination = false;
+
+        return $this->render('set_sequence', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionUpdateSequence()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $ids = Yii::$app->request->post('ids');
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Invalid data format.');
+        }
+        $count = 1;
+        foreach ($ids as $id) {
+            PartnerGalleryImage::updateAll(
+                ['sequence' => $count],
+                ['id' => $id]
+            );
+            $count++;
         }
 
+        Yii::$app->session->setFlash('success', 'Image order updated successfully.');
+
+        return ['status' => 'success'];
+    }
+
+
+    private function isOwner()
+    {
+        $id = Yii::$app->request->get('id');
+        $safari_operator_model = $this->module->operatormodel();
+        $model = PartnerGallery::findOne(['id' => $id]);
+        if ($model && $model->safari_operator_id == $safari_operator_model->id) {
+            return true;
+        }
+        return false;
+    }
+
+    public function actionUpdateThumbnail($partner_gallery_id, $id)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $partner_gallery_id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+
+        if (!$partner_gallery_model) {
+            return Yii::$app->api->sendResponse(['status' => 0], ['message' => "Gallery Not Found!!!"]);
+        }
+
+        $update_model = PartnerGalleryImage::updateAll(['set_as_thumbnail' => 0], ['partner_gallery_id' => $partner_gallery_id]);
+
+        $model = PartnerGalleryImage::find()->where(['id' => $id, 'partner_gallery_id' => $partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model->set_as_thumbnail = 1;
+        if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', 'Updated successfully.');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+    }
+
+
+    public function actionSendForApproval($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'in_draft' => 1, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        $partner_gallery_model->send_for_approval = 1;
+        $partner_gallery_model->in_draft = 0;
+        $partner_gallery_model->remark = null;
+
+        if ($partner_gallery_model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Gallery Send For Approval!!!');
+            return $this->redirect(['index']);
+        }
+    }
+
+    public function actionEditGallery($id)
+    {
+        $safari_operator_model = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator_model->id,  'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        $model = new PartnerGalleryForm($partner_gallery_model);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->partner_gallery_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully!!!');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->partner_gallery_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('update', [
+            'model' => $model,
+            'safari_operator_model' => $safari_operator_model,
+        ]);
+    }
+
+
+    public function actionGalleryDelete($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
+            return $this->redirect(['index']);
+        }
+
+        $partner_gallery_model->status = PartnerGallery::STATUS_SUSPEND;
         if ($partner_gallery_model->save(false)) {
 
             $gallery_images = PartnerGalleryImage::find()->where(['partner_gallery_id' => $partner_gallery_model->id])->all();
@@ -475,6 +428,7 @@ class DefaultController extends Controller
 
             if (!empty($partner_gallery_model->live_images)) {
                 $gallery = json_decode($partner_gallery_model->live_images, true);
+
                 if (is_array($gallery) && isset($gallery['images']) && is_array($gallery['images'])) {
                     foreach ($gallery['images'] as $img) {
                         $partner_gallery_image = PartnerGalleryImage::find()->where(['id' => $img['id']])->limit(1)->one();
@@ -502,7 +456,26 @@ class DefaultController extends Controller
         return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionDraftGallery($id)
+    {
+        $safari_operator = $this->module->operatormodel();
 
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $id, 'safari_operator_id' => $safari_operator->id])->limit(1)->one();
+        if (!$partner_gallery_model) {
+            \Yii::$app->session->setFlash('error', 'Gallery not available for draft!!!');
+        }
+        $partner_gallery_model->is_approved = 0;
+        $partner_gallery_model->in_draft = 1;
+        $partner_gallery_model->status = PartnerGallery::STATUS_ACTIVE;
+
+
+        if ($partner_gallery_model->save(false)) {
+            \Yii::$app->session->setFlash('success', 'Done!!!');
+        } else {
+            \Yii::$app->session->setFlash('error', 'Technical Issue!!!');
+        }
+        return $this->redirect(['index']);
+    }
 
     public function actionApprovedView($id)
     {

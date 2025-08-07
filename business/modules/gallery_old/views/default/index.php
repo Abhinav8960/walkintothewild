@@ -52,6 +52,10 @@ $this->title = 'Gallery';
                                         </div>
                                     </div>
 
+                                    <!-- <div class="approve-btn not-approve-btn inDraft-btn">
+                                        <button type="btn">In Draft</button>
+                                    </div> -->
+
 
                                 </div>
                                 <div class="card-body d-flex justify-content-between">

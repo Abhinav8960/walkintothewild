@@ -12,13 +12,12 @@ class PartnerGalleryForm extends model
 {
     public $title;
     public $safari_operator_id;
-    public $user_id;
-    public $status;
+    public $listing_status;
     public $status_option = [];
     public $partner_gallery_model;
 
     public $park_id;  
-    public $in_draft;
+    public $edit_status;
 
 
     public function __construct(?PartnerGallery $partner_gallery_model = null)
@@ -35,8 +34,8 @@ class PartnerGalleryForm extends model
             $this->title = $this->partner_gallery_model->title;
             $this->safari_operator_id = $this->partner_gallery_model->safari_operator_id;
             $this->park_id = $this->partner_gallery_model->park_id;
-            $this->in_draft = $this->partner_gallery_model->in_draft;
-            $this->status = $this->partner_gallery_model->status;
+            $this->edit_status = $this->partner_gallery_model->edit_status;
+            $this->listing_status = $this->partner_gallery_model->listing_status;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -49,8 +48,8 @@ class PartnerGalleryForm extends model
     public function rules()
     {
         return [
-            [['title', 'status', 'park_id'], 'required'],
-            [['status', 'safari_operator_id', 'park_id', 'in_draft','user_id'], 'integer'],
+            [['title', 'listing_status', 'park_id'], 'required'],
+            [['listing_status', 'safari_operator_id', 'park_id', 'edit_status'], 'integer'],
             [['title'], 'string', 'max' => 255],
             // [['title'], 'validateUniqueTitle'],
 
@@ -65,9 +64,8 @@ class PartnerGalleryForm extends model
         return [
             'title' => 'Title',
             'safari_operator_id' => 'Safari Operator ID',
-            'user_id' => 'User ID',
             'park_id' => "Park ID",
-            'status' => 'Status',
+            'listing_status' => 'Listing Status',
         ];
     }
     /**
@@ -79,10 +77,9 @@ class PartnerGalleryForm extends model
     {
         $this->partner_gallery_model->title = $this->title;
         $this->partner_gallery_model->safari_operator_id = $this->safari_operator_id;
-        $this->partner_gallery_model->user_id = $this->user_id;
         $this->partner_gallery_model->park_id = $this->park_id;
-        $this->partner_gallery_model->in_draft = $this->in_draft;
-        $this->partner_gallery_model->status = $this->status;
+        $this->partner_gallery_model->edit_status = $this->edit_status;
+        $this->partner_gallery_model->listing_status = $this->listing_status;
     }
 
     public function validateUniqueTitle($attribute, $params)

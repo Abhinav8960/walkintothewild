@@ -11,7 +11,7 @@ class PartnerGalleryDeletionForm extends model
 
     public $deletion_model;
     public $delete_reason;
-    public $status;
+    public $listing_status;
 
 
     public function __construct(?PartnerGallery $deletion_model = null)
@@ -36,7 +36,7 @@ class PartnerGalleryDeletionForm extends model
     public function rules()
     {
         return [
-            [['delete_reason', 'status'], 'required'],
+            [['delete_reason', 'listing_status'], 'required'],
         ];
     }
 
@@ -57,6 +57,6 @@ class PartnerGalleryDeletionForm extends model
     public function initializeForm()
     {
         $this->deletion_model->delete_reason = $this->delete_reason;
-        $this->deletion_model->status = $this->status;
+        $this->deletion_model->listing_status = $this->listing_status;
     }
 }

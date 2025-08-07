@@ -6,6 +6,7 @@ $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Gallery';
+
 ?>
 
 
@@ -22,41 +23,82 @@ $this->title = 'Gallery';
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-4">
-                        <?= $this->render('_search', ['model' => $searchModel]) ?>
+                        <?= $this->render('_approved_search', ['model' => $searchModel]) ?>
                         <button class="button-created new createAction" value="<?= Url::toRoute(['create']) ?>">Create</button>
                     </div>
                 </div>
             </div>
+
             <?php if ($dataProvider) {
-                foreach ($dataProvider->getModels() as $model) { ?>
+                foreach ($dataProvider->getModels() as $model) {
+                    if (!empty($model->live_images)) {
+                        $gallery = json_decode($model->live_images, true);
+                    }
+            ?>
                     <div class="col-xxl-3 col-xl-3 col-lg-4 md-6 col-12 mb-3">
                         <div class="galleryCard">
                             <div class="card p-0 border-0 bg-transparent">
                                 <div class="position-relative">
-                                    <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
+                                    <a href="<?= Url::toRoute(['approved-view', 'id' => $model->id]) ?>"> <img src="<?= $gallery['thumbnail'] ?>"
                                             class="card-img-top" alt=""></a>
 
-                                    <div class="dropdown-wrapper" tabindex="0">
-                                        <a href="#" class="dot-icon">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu">
-                                            <p>
-                                                <button value="<?= Url::toRoute(['edit-gallery', 'id' => $model->id]) ?>" class="galleryParetnAction">Edit</button>
-                                            </p>
 
-                                            <a href="<?= Url::toRoute(['gallery-delete', 'id' => $model->id]) ?>">
-                                                <p>Delete</p>
+                                    <?php
+                                    if ($model->is_approved == 1 && $model->in_draft == 0) {
+                                    ?>
+                                        <div class="dropdown-wrapper" tabindex="0">
+                                            <a href="#" class="dot-icon">
+                                                <i class="fas fa-ellipsis-v"></i>
                                             </a>
 
+                                            <div class="dropdown-menu">
+
+                                                <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">
+                                                    <p>Edit</p>
+                                                </a>
+
+
+                                                <!-- <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
+                                                <p>Delete</p>
+                                            </a> -->
+
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php
+                                    } else if ($model->status == 0) {
+                                    ?>
+                                        <div class="dropdown-wrapper" tabindex="0">
+                                            <a href="#" class="dot-icon">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu">
+
+                                                <a href="<?= Url::toRoute(['draft-gallery', 'id' => $model->id]) ?>">
+                                                    <p>Edit</p>
+                                                </a>
+
+
+                                                <!-- <a href="<?= Url::toRoute(['gallery-permanent-delete', 'id' => $model->id]) ?>">
+                                                <p>Delete</p>
+                                            </a> -->
+
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+
+                                    <!-- <div class="approve-btn not-approve-btn approveBtn">
+                                        <button type="btn">Approve</button>
+                                    </div> -->
 
 
                                 </div>
+
                                 <div class="card-body d-flex justify-content-between">
-                                    <p class="mb-0"><?= $model->title ?></p>
-                                    <p class="mb-0"><?= $model->gallery_count ?></p>
+                                    <p class="mb-0"><?= $gallery['title'] ?></p>
+                                    <p class="mb-0"><?= $gallery['image_count'] ?></p>
                                 </div>
 
                             </div>

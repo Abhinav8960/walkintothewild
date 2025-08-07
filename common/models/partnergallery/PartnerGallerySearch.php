@@ -19,7 +19,7 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by',  'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count', 'is_live'], 'integer'],
+            [['safari_operator_id', 'listing_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'edit_status', 'live_gallery_images_count', 'gallery_images_count'], 'integer'],
             [['custom_filter', 'business_name'], 'safe'],
         ];
     }
@@ -42,7 +42,7 @@ class PartnerGallerySearch extends PartnerGallery
      */
     public function search($params)
     {
-        $query = PartnerGallery::find()->where(['partner_gallery.status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]]);
+        $query = PartnerGallery::find()->where(['partner_gallery.listing_status' => [PartnerGallery::STATUS_CREATE, PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -62,15 +62,8 @@ class PartnerGallerySearch extends PartnerGallery
         $query->andFilterWhere([
             'partner_gallery.id' => $this->id,
             'partner_gallery.safari_operator_id' => $this->safari_operator_id,
-            'partner_gallery.in_draft' => $this->in_draft,
-            'partner_gallery.is_approved' => $this->is_approved,
-            'partner_gallery.is_live' => $this->is_live,
-            'partner_gallery.send_for_approval' => $this->send_for_approval,
-            // 'created_at' => $this->created_at,
-            // 'created_by' => $this->created_by,
-            // 'updated_at' => $this->updated_at,
-            // 'updated_by' => $this->updated_by,
-            'partner_gallery.status' => $this->status,
+            'partner_gallery.edit_status' => $this->edit_status,
+            'partner_gallery.listing_status' => $this->listing_status,
         ]);
 
         if ($this->custom_filter) {
