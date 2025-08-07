@@ -42,3 +42,11 @@ ALTER TABLE `share_safari_park` CHANGE `version` `version` INT NULL DEFAULT NULL
 
 ALTER TABLE `share_safari` ADD `edit_status` INT NOT NULL DEFAULT '0' COMMENT '0 => Nothing,\r\n1 => Edit\r\n2 => Pending' AFTER `editable_version`;
 
+
+
+First run cron
+php yii fixed-departure/step-1;
+php yii fixed-departure/step-2;
+php yii fixed-departure/step-3;
+
+ALTER TABLE `share_safari` DROP `version`;
