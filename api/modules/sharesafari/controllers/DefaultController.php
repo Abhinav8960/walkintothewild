@@ -1436,8 +1436,6 @@ class DefaultController extends SafariController
                 'start_date' => $share_safari->start_date,
                 'end_date' => $share_safari->end_date,
                 'cut_off_date' => $share_safari->cut_off_date,
-                'total_seat' => $share_safari->total_seat,
-                'share_seat' => $share_safari->share_seat,
                 'types' => $share_safari->types,
                 'organized_by_name' => $share_safari->organizedbyname,
                 'organized_by_image' => $share_safari->organizedbyimage,
@@ -1467,4 +1465,5 @@ class DefaultController extends SafariController
 
         return json_encode($json);
     }
+
 }
