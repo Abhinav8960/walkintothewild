@@ -35,10 +35,10 @@ class CallingService
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no , $request_caller_2_user_id)
-    {   
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id)
+    {
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
-        $this->request_vnm = rand(1,1000000);
+        $this->request_vnm = time() .rand(1, 1000);
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
         $this->request_caller_1_no = $request_caller_1_no;
@@ -56,7 +56,7 @@ class CallingService
      */
     public function callNow()
     {
-      
+
         if (empty($this->chat_id) || empty($this->lead_id) || empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
             \Yii::error('Missing required parameters for call: ' . json_encode([
                 'chat_id' => $this->chat_id,
@@ -65,7 +65,6 @@ class CallingService
                 'request_caller_1_user_id' => $this->request_caller_1_user_id
             ]), __METHOD__);
             return false;
-            
         }
         return $this->queue() && $this->callImmediately();
     }
@@ -96,10 +95,10 @@ class CallingService
      */
     private function callImmediately()
     {
-        
+
         $url = \Yii::$app->params['airphone_api_host_url'];
         $options = [
-            'user_id' => '99985561',
+            'user_id' => \Yii::$app->params['99985561'],
             // 'agent' => $this->request_caller_2_no,
             // 'caller' => $this->request_caller_1_no,
             'from' => $this->request_caller_1_no,
@@ -121,7 +120,7 @@ class CallingService
 
         \Yii::info('Informational call log', 'call-error');
 
-      
+
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
 
