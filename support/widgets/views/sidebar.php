@@ -140,7 +140,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                                                                                                                     "/operator/safari-operator/index/view",
                                                                                                                                                                                                 )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Operator List</span></a>
                 </li>
-
+<?php if(false) { ?>
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
                                                                                     "/galleryapproval/default/index",
@@ -160,7 +160,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                                                                                                             "/gallery/default/view"
                                                                                                                                                                                         )) ? 'dropdowncircleicons.png' : 'dropdowncircleicons.png' ?>" alt="" class="me-2 circleImages-sidebar"><span class="hide-slide-menu">Gallery List</span></a>
                 </li>
-
+<?php } ?>
 
                 <li class="navItems mb-2">
                     <a class="navLinks navinnerLink d-flex align-items-center <?= in_array($active_url, array(
@@ -195,6 +195,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         </li>
 
+        <?php if(false) { ?>
 
         <li class="navItems mb-2 position-relative <?= in_array($active_url, array(
                                                         "/sharesafari/default/index",
@@ -261,7 +262,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         </li>
 
-
+<?php  } ?>
         <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 '/user/default/index',
