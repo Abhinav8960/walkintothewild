@@ -150,10 +150,10 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
     }
 
 
-    // public function getUser()
-    // {
-    //     return $this->hasOne(User::className(), ['id' => 'host_user_id']);
-    // }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'host_user_id']);
+    }
 
     public function getHostUser()
     {
