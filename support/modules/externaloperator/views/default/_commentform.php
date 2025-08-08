@@ -14,7 +14,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="row g-3">
 
     <?php if ($model->externaloperator_model->id) { ?>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form_boxes mb-3">
                 <label for="">Comment<span>*</span></label>
                 <?= $form->field($model, 'comment')->textInput(['maxlength' => true, 'placeholder' => 'Enter your Comment'])->label(false) ?>
