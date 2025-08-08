@@ -145,6 +145,8 @@ class payuPayment
             $t->installment = $share_safari_lead->installment ?? 1;
             $t->addional_notes = $addional_notes;
             $t->addtional_data = json_encode($data);
+            $t->user_id = $share_safari_lead->shareSafariLead->user_id;
+
             // $t->billing_name = $model->name;
             // $t->billing_address = $model->billing_address;
             // $t->billing_city = $model->billing_city;

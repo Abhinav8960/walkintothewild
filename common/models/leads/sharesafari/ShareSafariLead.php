@@ -135,7 +135,7 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
         $model->email = $this->email;
         // $model->amount = $this->net_price / $this->installment; //
         $model->amount = $this->net_price;
-        $model->due_datetime = date('Y-m-d H:i:s', strtotime("+2 minutes")); // Example: due in 2 Minutes
+        $model->due_datetime = date('Y-m-d H:i:s', strtotime("+15 minutes")); // Example: due in 2 Minutes
         $model->notes = $this->notes;
         // $model->payment_link = null; // Assuming no payment link for now
         $model->payment_hash = GeneralModel::encrypt($this->id); // Assuming no payment hash for now
