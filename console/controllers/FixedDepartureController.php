@@ -127,6 +127,15 @@ class FixedDepartureController extends Controller
         }
     }
 
+    public function actionStep4()
+    {
+        $share_safaris = ShareSafari::find()->where(['type' => 1])->all();
+        foreach ($share_safaris as $share_safari) {
+            $share_safari->static_data_json = $this->prepareJson($share_safari->id);
+            $share_safari->save(false);
+        }
+    }
+
     public function prepareJson($id)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
