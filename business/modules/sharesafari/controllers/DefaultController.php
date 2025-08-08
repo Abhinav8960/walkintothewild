@@ -54,10 +54,15 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'delete', 'inactive', 'copy-with-edit', 'update-seat'],
+                        'actions' => ['view',  'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'delete'],
                         'allow' =>  $this->isFdOwner(),
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['update', 'inactive', 'copy-with-edit', 'update-seat'],
+                        'allow' =>  true,
+                        'roles' => ['@'],
+                    ]
 
                 ],
 
@@ -695,6 +700,19 @@ class DefaultController extends Controller
         }
         return false;
     }
+
+    protected function isFdUpdate()
+    {
+        $id = Yii::$app->request->get('id');
+        $operator = $this->module->operatormodel();
+        $model = ShareSafari::findOne(['id' => $id]);
+
+        if ($model && $model->safari_operator_id == $operator->id && $model->edit_status = 1) {
+            return true;
+        }
+        return false;
+    }
+
 
     protected function isFixedDepartureEditable()
     {
