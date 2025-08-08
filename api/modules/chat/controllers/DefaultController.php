@@ -546,7 +546,7 @@ class DefaultController extends RestController
                 $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
                 // Instantiate the CallingService
-                $callingService = new \common\calling\services\CallingServiceCopy(
+                $callingService = new \common\calling\services\CallingService(
                     $chat_id,
                     $lead_id,
                     $operator_user_id,

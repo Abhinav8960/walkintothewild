@@ -14,7 +14,7 @@ use api\models\OtpVerificationSocialLoginForm;
 use api\models\SocialLoginForm;
 use api\models\UserMobileNoVerificationForm;
 use api\models\VerifySocialLoginForm;
-use common\calling\services\CallingServiceCopy;
+use common\calling\services\CallingService;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\operator\SafariOperator as OperatorSafariOperator;
