@@ -46,7 +46,9 @@ ALTER TABLE `share_safari` ADD `edit_status` INT NOT NULL DEFAULT '0' COMMENT '0
 
 First run cron
 php yii fixed-departure/step-1;
+run version table
 php yii fixed-departure/step-2;
 php yii fixed-departure/step-3;
 
 ALTER TABLE `share_safari` DROP `version`;
+ALTER TABLE `share_safari_intrested` ADD `version` INT NULL DEFAULT NULL AFTER `share_safari_id`;

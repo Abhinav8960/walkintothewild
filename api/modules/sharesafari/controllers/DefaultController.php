@@ -23,6 +23,7 @@ use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
+use common\models\sharesafari\form\ShareSafariStatusForm;
 use common\models\sharesafari\ShareSafariVersion;
 // use api\models\UserWishlist;
 use common\models\UserWishlist;
@@ -54,10 +55,10 @@ class DefaultController extends SafariController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update'],
+                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update', 'update-status'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'update-status'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -90,7 +91,8 @@ class DefaultController extends SafariController
                     'fixed-departure-gallery' => ['GET'],
                     'fixed-departure-faqs' => ["GET"],
                     'might-intrested' => ['GET'],
-                    'share-safari-history' => ['GET']
+                    'share-safari-history' => ['GET'],
+                    'update-status' => ['POST'],
 
                 ],
             ],
@@ -155,30 +157,13 @@ class DefaultController extends SafariController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
-        // if ($operator && $operator->status <> SafariOperator::STATUS_ACTIVE) {
-        //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Operator is deactivate can not create Shared safari!"]);
-        // }
         $model = new SharedSafariVersionForm();
         $model->safari_operator_id = null;
         $model->host_user_id = $this->userinfoId;
         $model->user_id = $this->userinfoId;
-        // $model->status = ShareSafari::STATUS_ACTIVE;
         $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
         $model->type = ShareSafariVersion::TYPE_SAFARI;
         $model->host_type = 1;
-
-
-        // if ($login_user = $this->userinfo) {
-        //     if ($login_user->x_url <> '') {
-        //         $model->website_url = $login_user->x_url;
-        //     }
-        //     if ($login_user->insta_url <> '') {
-        //         $model->website_url = $login_user->insta_url;
-        //     }
-        //     if ($login_user->facebook_url <> '') {
-        //         $model->website_url = $login_user->facebook_url;
-        //     }
-        // }
 
         $model->attributes = $this->request;
         $model->shared_safari_image = UploadedFile::getInstanceByName('shared_safari_image');
@@ -186,7 +171,6 @@ class DefaultController extends SafariController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->share_safari_version_model->save()) {
-                // $model->share_safari_version_model->savehistory();
                 $model->UploadFiles($model->share_safari_version_model->id);
                 $this->autoApproved($model->share_safari_version_model->share_safari_id, $model->share_safari_version_model->version);
                 // if ($model->shared_safari_model->user) {
@@ -1445,8 +1429,8 @@ class DefaultController extends SafariController
                 'park_title' => $share_safari->park_title,
                 'park_slug' => $share_safari->park_slug,
                 'cost_per_person' => (int) ceil($share_safari->cost_per_person),
-                'estimate_price_min' =>(int) ceil($share_safari->estimate_price_min),
-                'estimate_price_max' =>(int) ceil($share_safari->estimate_price_max),
+                'estimate_price_min' => (int) ceil($share_safari->estimate_price_min),
+                'estimate_price_max' => (int) ceil($share_safari->estimate_price_max),
                 'breakfast_included' => (bool) $share_safari->breakfast_included,
                 'lunch_included' => (bool) $share_safari->lunch_included,
                 'dinner_included' => (bool) $share_safari->dinner_included,
@@ -1468,5 +1452,27 @@ class DefaultController extends SafariController
         ];
 
         return json_encode($json);
+    }
+
+    public function actionUpdateStatus($slug)
+    {
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug, 'type' => 1])->limit(1)->one();
+        if ($shared_safari_model->host_user_id != $this->userinfoId) {
+            $message = Yii::$app->api->messageManager->getMessage('common.update_restricted', ['{var}' => 'Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+        }
+        $model = new ShareSafariStatusForm($shared_safari_model);
+        $model->attributes = $this->request;
+
+        if ($model->validate()) {
+            $model->initializeForm();
+            if ($model->shared_safari_status_model->save(false)) {
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Shared Safari']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
+            }
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Shared Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+        }
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 }
