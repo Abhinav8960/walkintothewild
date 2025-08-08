@@ -93,7 +93,7 @@ class SafariBookedByUser extends Event
                 ]
 
             ],
-            'firebase' => $this->prepareFirebaseTemplate()
+            // 'firebase' => $this->prepareFirebaseTemplate()
         ];
         return $arr;
     }
