@@ -1444,11 +1444,13 @@ class DefaultController extends SafariController
                 'seat_full_status' => $share_safari->seat_full_status,
                 'park_title' => $share_safari->park_title,
                 'park_slug' => $share_safari->park_slug,
-                'cost_per_person' => $share_safari->cost_per_person,
-                'breakfast_included' => $share_safari->breakfast_included,
-                'lunch_included' => $share_safari->lunch_included,
-                'dinner_included' => $share_safari->dinner_included,
-                'meal_not_included' => $share_safari->meal_not_included,
+                'cost_per_person' => (int) ceil($share_safari->cost_per_person),
+                'estimate_price_min' =>(int) ceil($share_safari->estimate_price_min),
+                'estimate_price_max' =>(int) ceil($share_safari->estimate_price_max),
+                'breakfast_included' => (bool) $share_safari->breakfast_included,
+                'lunch_included' => (bool) $share_safari->lunch_included,
+                'dinner_included' => (bool) $share_safari->dinner_included,
+                'meal_not_included' => (bool) $share_safari->meal_not_included,
                 'meals_label' => $share_safari->meals_label,
                 'share_safari_inclusion' => $share_safari->share_safari_inclusion,
                 'share_safari_exclusion' => $share_safari->share_safari_exclusion,
@@ -1460,10 +1462,11 @@ class DefaultController extends SafariController
                 'parks' => ArrayHelper::toArray($share_safari->parks),
                 'includeds' => ArrayHelper::toArray($share_safari->includeds),
                 'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
+                'partner_gallery_id' => $share_safari->partner_gallery_id,
+                'gallery_json' => $share_safari->gallery_json
             ],
         ];
 
         return json_encode($json);
     }
-
 }
