@@ -30,6 +30,9 @@ class Package extends \common\models\package\Package
             'cost_per_person' => function () {
                 return (int) ceil($this->cost_per_person);
             },
+            'cost_per_two_person' => function () {
+                return (int) ceil($this->cost_per_two_person);
+            },
             'total_price' => function () {
                 return (int) ceil($this->total_price);
             },

@@ -195,7 +195,6 @@ class DefaultController extends Controller
                 $model->save(false);
                 Yii::$app->session->setFlash('success', 'Package rejected successfully.');
                 return $this->redirect(['index']);
-                
             }
         }
 
@@ -556,6 +555,9 @@ class DefaultController extends Controller
                 'no_of_day' => $package->no_of_day,
                 'no_of_night' => $package->no_of_night,
                 'no_of_safari' => $package->no_of_safari,
+                'cost_per_person' => $package->cost_per_person,
+                'cost_per_two_person' => (int) ceil($package->cost_per_two_person),
+                'price_after_discount' => (int) ceil($package->price_after_discount),
 
                 'package_description' => $package->package_description,
                 'image_path' => $package->image_path,
@@ -566,10 +568,10 @@ class DefaultController extends Controller
                 'stay_category_id' => $package->stay_category_id,
                 'stay_category_display' => $package->stay_category_display,
                 'meals_listing' => $package->meals_listing,
-                'breakfast_included' => $package->breakfast_included,
-                'lunch_included' => $package->lunch_included,
-                'dinner_included' => $package->dinner_included,
-                'meal_not_included' => $package->meal_not_included,
+                'breakfast_included' => (bool) $package->breakfast_included,
+                'lunch_included' => (bool) $package->lunch_included,
+                'dinner_included' => (bool) $package->dinner_included,
+                'meal_not_included' => (bool) $package->meal_not_included,
                 'start_location' => $package->start_location,
                 'end_location' => $package->end_location,
                 'start_date' => $package->start_date,
@@ -586,7 +588,7 @@ class DefaultController extends Controller
                 'gst_percentage' => $package->gst_percentage,
                 'package_agenda_id' => $package->package_agenda_id,
                 'max_booking_date' => $package->max_booking_date,
-                
+
                 'package_park' => ArrayHelper::toArray($package->package_park),
                 'master_package_with_included' => ArrayHelper::toArray($package->master_package_with_included),
                 'package_days' => ArrayHelper::toArray($package->package_days),
