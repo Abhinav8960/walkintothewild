@@ -98,7 +98,7 @@ class CallingService
 
         $url = \Yii::$app->params['airphone_api_host_url'];
         $options = [
-            'user_id' => \Yii::$app->params['99985561'],
+            'user_id' => \Yii::$app->params['airphone_api_user_id'],
             // 'agent' => $this->request_caller_2_no,
             // 'caller' => $this->request_caller_1_no,
             'from' => $this->request_caller_1_no,
