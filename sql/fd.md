@@ -42,11 +42,15 @@ ALTER TABLE `share_safari_park` CHANGE `version` `version` INT NULL DEFAULT NULL
 
 ALTER TABLE `share_safari` ADD `edit_status` INT NOT NULL DEFAULT '0' COMMENT '0 => Nothing,\r\n1 => Edit\r\n2 => Pending' AFTER `editable_version`;
 
+ALTER TABLE `share_safari` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `static_data_json`;
+ALTER TABLE `share_safari_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
+ALTER TABLE `share_safari_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
 
 
 First run cron
 php yii fixed-departure/step-1;
 run version table
+ALTER TABLE `share_safari_version` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
 php yii fixed-departure/step-2;
 php yii fixed-departure/step-3;
 

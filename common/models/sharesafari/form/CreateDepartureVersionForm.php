@@ -46,6 +46,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
 
     public $partner_gallery_id;
     public $gallery_json;
+    public $gallery_version;
     public $image;
     public $image_filepath;
     public $created_at;
@@ -124,7 +125,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
             ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
             [['share_safari_id', 'version'], 'integer'],
-            [['partner_gallery_id'], 'integer'],
+            [['partner_gallery_id','gallery_version'], 'integer'],
             [['gallery_json'], 'safe'],
             [['image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             [['image_filepath'], 'string'],
@@ -175,6 +176,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             'total_seat' => 'Total Seat',
             'partner_gallery_id' => 'Gallery Id',
             'gallery_json' => 'Gallery Json',
+            'gallery_version' => 'Gallery Version',
             'image_filepath' => 'Image FilePath',
             'status' => 'Status',
         ];
@@ -216,6 +218,9 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $m->gallery_json = $this->gallery_json;
+                if (!empty($live->version)) {
+                    $m->gallery_version = $live->version;
+                }
             }
         }
         $m->edit_status = 1;
@@ -280,6 +285,9 @@ class CreateDepartureVersionForm extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $this->shared_safari_departure_version_model->gallery_json = $live->live_images;
+                if (!empty($live->version)) {
+                    $this->shared_safari_departure_version_model->gallery_version = $live->version;
+                }
             }
         }
 

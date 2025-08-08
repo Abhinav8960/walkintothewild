@@ -115,6 +115,9 @@ class FixedDepartureController extends Controller
             $fixed_departure->live_version = $version;
             $fixed_departure->edit_status = 0;
             $fixed_departure->status = ShareSafari::STATUS_ACTIVE;
+            $fixed_departure->partner_gallery_id = $model->partner_gallery_id;
+            $fixed_departure->gallery_json = $model->gallery_json;
+            $fixed_departure->gallery_version = $model->gallery_version;
             $fixed_departure->save(false);
 
             $fixed_departure->static_data_json  = $this->prepareJson($fixed_departure->id);
@@ -374,7 +377,8 @@ class FixedDepartureController extends Controller
                 'includeds' => ArrayHelper::toArray($share_safari->includeds),
                 'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
                 'partner_gallery_id' => $share_safari->partner_gallery_id,
-                'gallery_json' => $share_safari->gallery_json
+                'gallery_json' => $share_safari->gallery_json,
+                'gallery_version' => $share_safari->gallery_version
             ],
         ];
 

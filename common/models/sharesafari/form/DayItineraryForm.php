@@ -34,6 +34,7 @@ class DayItineraryForm  extends \yii\base\Model
 
     public $partner_gallery_id;
     public $gallery_json;
+    public $gallery_version;
 
 
     /**
@@ -67,6 +68,7 @@ class DayItineraryForm  extends \yii\base\Model
 
             $this->partner_gallery_id = $this->share_safari_day_model->partner_gallery_id;
             $this->gallery_json = $this->share_safari_day_model->gallery_json;
+            $this->gallery_version = $this->share_safari_day_model->gallery_version;
         }
     }
 
@@ -104,8 +106,9 @@ class DayItineraryForm  extends \yii\base\Model
                 'skipOnEmpty' => true,
             ],
             [['day_description'], 'string', 'max' => 2000],
-            [['partner_gallery_id'],'integer'],
+            [['partner_gallery_id','gallery_version'], 'integer'],
             [['gallery_json'], 'safe'],
+            
         ];
     }
 
@@ -141,8 +144,11 @@ class DayItineraryForm  extends \yii\base\Model
 
         $this->share_safari_day_model->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
-            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             $this->share_safari_day_model->gallery_json = $live->live_images;
+            if (!empty($live->version)) {
+                $this->share_safari_day_model->gallery_version = $live->version;
+            }
         }
     }
 
