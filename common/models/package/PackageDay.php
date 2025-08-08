@@ -71,7 +71,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day', 'version'], 'unique', 'targetAttribute' => ['package_id', 'day', 'version']],
             [['original_filename'], 'string', 'max' => 512],
-            [['gallery_json'], 'safe'],
+            [['gallery_json','gallery_version'], 'safe'],
         ];
     }
 
@@ -103,6 +103,7 @@ class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewS
             'updated_by' => 'Updated By',
             'partner_gallery_id' => 'Partner Gallery Id',
             'gallery_json' => 'Gallery Json',
+            'gallery_version' => 'Gallery Version',
         ];
     }
 

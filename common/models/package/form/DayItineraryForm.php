@@ -143,6 +143,9 @@ class DayItineraryForm  extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $this->package_day_model->gallery_json = $live->live_images;
+                if (!empty($live->version)) {
+                    $this->package_day_model->gallery_version = $live->version;
+                }
             }
         }
     }

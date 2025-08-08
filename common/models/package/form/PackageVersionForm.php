@@ -83,6 +83,7 @@ class PackageVersionForm extends \yii\base\Model
     public $cost_per_two_person;
     public $partner_gallery_id;
     public $gallery_json;
+    public $gallery_version;
 
     /**
      * @param [type] $package_version_model
@@ -191,7 +192,7 @@ class PackageVersionForm extends \yii\base\Model
             [['day_title'], 'string', 'max' => 512],
             [['day_description'], 'string', 'max' => 2000],
             [['getting_there'], 'string', 'max' => 2000],
-            [['partner_gallery_id','user_id'], 'integer'],
+            [['partner_gallery_id', 'gallery_version', 'user_id'], 'integer'],
             [['gallery_json'], 'safe'],
 
 
@@ -240,6 +241,7 @@ class PackageVersionForm extends \yii\base\Model
             'max_booking_date',
             'partner_gallery_id',
             'gallery_json',
+            'gallery_version',
         ];
         $scenarios['update'] = [
             'package_name',
@@ -278,6 +280,7 @@ class PackageVersionForm extends \yii\base\Model
             'max_booking_date',
             'partner_gallery_id',
             'gallery_json',
+            'gallery_version',
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -336,6 +339,7 @@ class PackageVersionForm extends \yii\base\Model
             'max_booking_date' => 'Max Booking Date',
             'partner_gallery_id' => 'Gallery Id',
             'gallery_json' => 'Gallery Json',
+            'gallery_version' => 'Gallery Version',
             'status' => 'Status',
         ];
     }
@@ -390,6 +394,9 @@ class PackageVersionForm extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $m->gallery_json = $live->live_images;
+                if (!empty($live->version)) {
+                    $m->gallery_version = $live->version;
+                }
             }
         }
         $m->edit_status = 1;
@@ -448,6 +455,9 @@ class PackageVersionForm extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $this->package_version_model->gallery_json = $live->live_images;
+                if (!empty($live->version)) {
+                $this->package_version_model->gallery_version = $live->version;
+                }
             }
         }
 
