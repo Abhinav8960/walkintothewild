@@ -33,10 +33,10 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
                 return $this->user->profile_display_image ?? null;
             },
             'start_date' => function () {
-                return $this->start_date ? date('Y-m-d', strtotime($this->start_date)) : null;
+                return $this->start_date ? date('M d, Y', strtotime($this->start_date)) : null;
             },
             'end_date' => function () {
-                return $this->end_date ? date('Y-m-d', strtotime($this->end_date)) : null;
+                return $this->end_date ? date('M d, Y', strtotime($this->end_date)) : null;
             },
             'gross_price',
             'discount',
@@ -55,8 +55,8 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
                     'meals_label' => $this->shareSafari->meals_label,
                     'meals_label' => $this->shareSafari->meals_label,
                     'includeds' => $this->shareSafari->includeds,
-                    'start_date' => $this->shareSafari->start_date ? date('Y-m-d', strtotime($this->shareSafari->start_date)) : null,
-                    'end_date' => $this->shareSafari->end_date ? date('Y-m-d', strtotime($this->shareSafari->end_date)) : null,
+                    'start_date' => $this->shareSafari->start_date ? date('M d, Y', strtotime($this->shareSafari->start_date)) : null,
+                    'end_date' => $this->shareSafari->end_date ? date('M d, Y', strtotime($this->shareSafari->end_date)) : null,
                 ];
                 // return $this->collection != null ? json_decode($this->collection, true) : [];
             },

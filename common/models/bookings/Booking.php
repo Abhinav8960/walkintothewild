@@ -199,17 +199,23 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
                 // close lead chat
                 $this->closeLeadChat();
                 // close all payment links
+                $this->closePaymentLinks();
             }
             if ($this->source == Transaction::SOURCE_SHARE_SAFARI) {
                 // share safari booking status update
                 $this->updateSafaribookingLeadBookingStatus();
-                // close lead chat
+                // open share safari lead chat
                 $this->openChatSafaribookingLeadChat();
+                // open share safari lead chat
+                $this->sendShareSafariBookingConfirmationEmail();
             }
-            $this->closePaymentLinks();
             // send booking confirmation email
             // $this->sendBookingConfirmationEmail();
         }
+    }
+
+    private function sendShareSafariBookingConfirmationEmail(){
+        return true;
     }
 
     private function updateSafaribookingLeadBookingStatus()
@@ -328,4 +334,6 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         }
         return true;
     }
+
+    
 }
