@@ -14,7 +14,7 @@ use yii;
 /**
  * Default controller for the `error` module
  */
-class DeepCall extends Controller
+class DeepCallController extends Controller
 {
 
     /**
