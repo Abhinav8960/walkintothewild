@@ -12,102 +12,100 @@ use api\models\UserWishlist;
 use Yii;
 use common\models\User;
 
-class Package extends \common\models\package\Package
+class Package_old extends \common\models\package\Package
 {
     public function fields()
     {
-        $fields['package'] = function ($model) {
-            $data = $model->static_json;
-            if (is_string($data)) {
-                $data = json_decode($data, true);
-            }
-            return isset($data['package']) ? $data['package'] : null;
-        };
+        $fields = [
+            // 'id',
+            'package_display_name',
+            'package_name',
+            'package_slug',
+            'primary_park',
+            'primary_park_slug',
+            'no_of_day',
+            'no_of_night',
+            'no_of_night',
+            'no_of_safari',
+            'cost_per_person' => function () {
+                return (int) ceil($this->cost_per_person);
+            },
+            'cost_per_two_person' => function () {
+                return (int) ceil($this->cost_per_two_person);
+            },
+            'total_price' => function () {
+                return (int) ceil($this->total_price);
+            },
+            'package_description',
+            'image_path',
+            'image_banner_path',
+            'is_wishlist',
+            'package_day_night_labels',
+            'pick_and_drop',
+            'pick_and_drop_display',
+            // 'package_range',
+            'stay_category_display',
+            'meals_listing',
+            'partner',
+            'comment_count',
+            'urls',
+            'lunch_included' => function () {
+                return (bool)$this->lunch_included;
+            },
+            'dinner_included' => function () {
+                return (bool)$this->dinner_included;
+            },
+            'meal_not_included' => function () {
+                return (bool)$this->meal_not_included;
+            },
+            'breakfast_included' => function () {
+                return (bool)$this->breakfast_included;
+            },
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'status'
+        ];
+        $fields[] = 'resource_uri';
+        $fields[] = 'can_comment';
+        $fields[] = 'can_reply';
+        // $fields[] = 'image_thumbnail';
+        $fields[] = 'image_thumbnails';
+        // $fields[] = 'banner_thumbnail';
+        $fields[] = 'banner_thumbnails';
 
-        $fields['user'] = function ($model) {
-            return [
-                'is_wishlist' => $model->is_wishlist,
-                'comment_count' => $model->comment_count,
-                'resource_uri' => $model->resource_uri,
-                'can_comment'  => $model->can_comment,
-                'can_reply'    => $model->can_reply,
-            ];
-        };
+        if (in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL])) {
+            $fields[] = 'package_itinerary_overview';
+            $fields[] = 'master_package_with_included';
+            $fields[] = 'package_inclusion';
+            $fields[] = 'package_exclusion';
+            $fields[] = 'package_terms_condtition';
+            $fields[] = 'privacy_policy';
+            $fields[] = 'change_policy';
+            $fields[] = 'what_you_must_carry';
+            $fields[] = 'date_change_policy';
+            $fields[] = 'refund_policy';
+            $fields[] = 'getting_there';
+            $fields[] = 'pick_and_drop';
+            $fields[] = 'meals';
+            $fields[] = 'meals_label';
 
-        $fields['dynamic'] = function ($model) {
-            return [
-                'price_after_discount' => $model->price_after_discount,
-            ];
-        };
-
-        $fields['partner'] = function ($model) {
-            return $model->partner;
-        };
-
-        $fields['urls'] = function ($model) {
-            return $model->urls;
-        };
-
-        if (!in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL])) {
-            $fields['package'] = function ($model) {
-                return [
-                    'package_display_name' => $model->package_display_name,
-                    'package_name' => $model->package_name,
-                    'package_slug' => $model->package_slug,
-                    'primary_park' => $model->primary_park,
-                    'primary_park_slug' => $model->primary_park_slug,
-                    'no_of_day' => $model->no_of_day,
-                    'no_of_night' => $model->no_of_night,
-                    'no_of_safari' => $model->no_of_safari,
-                    'cost_per_person' => (int) ceil($model->cost_per_person),
-                    'cost_per_two_person' => (int) ceil($model->cost_per_two_person),
-                    'total_price' => (int) ceil($model->total_price),
-                    'package_description' => $model->package_description,
-                    'image_path' => $model->image_path,
-                    'image_banner_path' => $model->image_banner_path,
-                    'package_day_night_labels' => $model->package_day_night_labels,
-                    'pick_and_drop' => $model->pick_and_drop,
-                    'pick_and_drop_display' => $model->pick_and_drop_display,
-                    'stay_category_display' => $model->stay_category_display,
-                    'meals_listing' => $model->meals_listing,
-                    'lunch_included' => (bool)$model->lunch_included,
-                    'dinner_included' => (bool)$model->dinner_included,
-                    'meal_not_included' => (bool)$model->meal_not_included,
-                    'breakfast_included' => (bool)$model->breakfast_included,
-                    'start_location' => $model->start_location,
-                    'end_location' => $model->end_location,
-                    'start_date' => $model->start_date,
-                    'end_date' => $model->end_date,
-                    'status' => $model->status,
-                ];
-            };
-
-            $fields['user'] = function ($model) {
-                return [
-                    'is_wishlist' => $model->is_wishlist,
-                    'comment_count' => $model->comment_count,
-                    'resource_uri' => $model->resource_uri,
-                    'can_comment'  => $model->can_comment,
-                    'can_reply'    => $model->can_reply,
-                ];
-            };
-
-            $fields['dynamic'] = function ($model) {
-                return [
-                    'price_after_discount' => $model->price_after_discount,
-                ];
-            };
-
-            $fields['partner'] = function ($model) {
-                return $model->partner;
-            };
-
-            $fields['urls'] = function ($model) {
-                return $model->urls;
-            };
+            $fields[] = 'package_park';
+            $fields[] = 'package_days';
+            $fields[] = 'faqs';
+            $fields[] = 'type';
+            $fields[] = 'master_vehicle_id';
+            $fields[] = 'package_features_name';
+            $fields[] = 'safari_type';
+            $fields[] = 'gst_percentage';
+            $fields[] = 'package_agenda_id';
+            $fields[] = 'stay_category_id';
+            $fields[] = 'max_booking_date';
+            $fields[] = 'gallery_json';
+            $fields[] = 'price_after_discount';
+            $fields[] = 'status';
         }
-
-
         return $fields;
     }
 
