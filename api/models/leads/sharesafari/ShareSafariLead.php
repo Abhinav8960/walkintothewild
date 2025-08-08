@@ -4,6 +4,7 @@ namespace api\models\leads\sharesafari;
 
 use common\models\GeneralModel;
 use api\models\leads\sharesafari\ShareSafariLeadInstallment;
+use api\models\sharesafari\ShareSafari;
 use api\models\User;
 use Yii;
 
@@ -42,8 +43,21 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
             'net_price',
             'cost_per_quantity',
             'payment_details',
-            'collection' => function () {
-                return $this->collection;
+            'share_safari' => function () {
+                return  [
+                    'share_safari_title' => $this->shareSafari->share_safari_title,
+                    'partner' => $this->shareSafari->partner,
+                    'park_title' => $this->shareSafari->park_title,
+                    'park_slug' => $this->shareSafari->park_slug,
+                    'no_of_safari' => $this->shareSafari->no_of_safari,
+                    'share_safari_agenda' => $this->shareSafari->share_safari_agenda,
+                    'stay_category_display' => $this->shareSafari->stay_category_display,
+                    'meals_label' => $this->shareSafari->meals_label,
+                    'meals_label' => $this->shareSafari->meals_label,
+                    'includeds' => $this->shareSafari->includeds,
+                    'start_date' => $this->shareSafari->start_date ? date('Y-m-d', strtotime($this->shareSafari->start_date)) : null,
+                    'end_date' => $this->shareSafari->end_date ? date('Y-m-d', strtotime($this->shareSafari->end_date)) : null,
+                ];
                 // return $this->collection != null ? json_decode($this->collection, true) : [];
             },
             // 'status',
@@ -59,6 +73,11 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getShareSafari()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 
     // public function getPaymentDetails()
