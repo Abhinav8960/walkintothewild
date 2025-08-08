@@ -41,7 +41,6 @@ use Yii;
  * @property int $installment
  * @property float $received_amount
  * @property string|null $addtional_data
- * @property string|null $datetime_of_approval_by_admin
  * @property string|null $quotation_filepath
  * @property int $is_payment_received
  * @property string|null $transaction_datetime
@@ -114,14 +113,14 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function rules()
     {
         return [
-            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
+            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
             [['transaction_id', 'reference_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
             [['transaction_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'lead_partner_quotes_id'], 'integer'],
             [['addional_notes'], 'string'],
-            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'payment_receipt', 'source', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
+            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'transaction_datetime', 'payment_receipt', 'source', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
             [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 3],
@@ -166,7 +165,6 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             'installment' => 'Installment',
             'received_amount' => 'Received Amount',
             'addtional_data' => 'Addtional Data',
-            'datetime_of_approval_by_admin' => 'Datetime Of Approval By Admin',
             'quotation_filepath' => 'Quotation Filepath',
             'is_payment_received' => 'Is Payment Received',
             'transaction_datetime' => 'Transaction Datetime',
@@ -232,13 +230,15 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $leadInstallment->payment_receipt = $this->payment_receipt ?? NULL;
             $leadInstallment->payment_gateway = $this->payment_gateway;
             $leadInstallment->transaction_id = $this->transaction_id;
+            // $leadInstallment->received_amount = $this->received_amount;
             $leadInstallment->transaction_datetime = $this->transaction_datetime;
+            $leadInstallment->status = ShareSafariLeadInstallment::STATUS_SUCCESS;
             $leadInstallment->save(false);
         }
 
         $shareSafari = ShareSafari::findOne($this->share_safari_id);
         if ($shareSafari) {
-            $shareSafari->booked_seat += $shareSafari->booked_seat;
+            $shareSafari->booked_seat += $this->travelers;
             $shareSafari->save(false);
         }
     }

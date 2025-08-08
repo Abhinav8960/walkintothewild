@@ -39,3 +39,11 @@ ALTER TABLE `share_safari_lead_installment` ADD `payment_receipt` VARCHAR(255) N
 ALTER TABLE `chat` CHANGE `chat_type` `chat_type` TINYINT NOT NULL DEFAULT '1' COMMENT '1=>direct chat, 2 =>lead chat,3=>share safari chat';
 
 ALTER TABLE `share_safari` ADD `booked_seat` INT NOT NULL DEFAULT '0' AFTER `share_seat`;
+
+ALTER TABLE `booking`
+  DROP `share_shafari_lead_id`,
+  DROP `share_shafari_id`,
+  DROP `share_shafari_version`;
+
+ALTER TABLE `booking`
+  DROP `datetime_of_approval_by_admin`;

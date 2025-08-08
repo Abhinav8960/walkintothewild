@@ -1,24 +1,20 @@
 <?php
 
-namespace common\models\transaction;
+namespace common\models\bookings;
 
-use common\models\GeneralModel;
-use common\models\leads\LeadPartnerQuotes;
-use common\models\leads\Lead;
-use common\models\meta\MetaStayCategory;
-use common\models\operator\OperatorQuote;
-use common\models\operator\SafariOperator;
-use common\models\park\SafariPark;
+use api\models\leads\sharesafari\ShareSafariLead;
+use common\models\leads\LeadPartners;
+use common\models\leads\sharesafari\ShareSafariLeadInstallment;
+use common\models\sharesafari\ShareSafari;
+use common\models\transaction\Transaction;
 use Yii;
 
 /**
- * This is the model class for table "transaction".
+ * This is the model class for table "booking".
  *
  * @property int $id
- * @property int $user_id
+ * @property int $transaction_id
  * @property string $reference_id
- * @property int $lead_partner_quotes_id
- * @property int $lead_partner_quote_installments_id
  * @property string $order_id
  * @property string $currency
  * @property int $lead_partner_id
@@ -42,10 +38,9 @@ use Yii;
  * @property float $partner_net_selling_price
  * @property float $plateform_customer_discount
  * @property float $net_payment_price
- * @property int $installment Installment_id
+ * @property int $installment
  * @property float $received_amount
  * @property string|null $addtional_data
- * @property string|null $datetime_of_approval_by_admin
  * @property string|null $quotation_filepath
  * @property int $is_payment_received
  * @property string|null $transaction_datetime
@@ -67,35 +62,11 @@ use Yii;
  * @property string|null $param3
  * @property string|null $param4
  * @property string|null $param5
- * @property string|null $device
- * @property string|null $platform
- * @property string|null $platform_version
- * @property string|null $browser
- * @property string|null $browser_version
- * @property string|null $application_version
- * @property int|null $status 0=>initiated,1=>Success,2=>Failed,3=>Hold,4=>Refunded
+ * @property int|null $status
  */
-class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
 
-    public const SOURCE_LEAD = 1;
-    public const SOURCE_SHARE_SAFARI = 2;
-
-    public const STATUS_INITIATED = 0;
-    public const STATUS_SUCCESS = 1;
-    public const STATUS_FAILED = 2;
-    public const STATUS_HOLD = 3;
-    public const STATUS_REFUNDED = 4;
-    public const STATUS_CONFLICT = 5;
-
-
-    public const PAYMENT_GATEWAY_PAYU = 1;
-    public const PAYMENT_GATEWAY_ICICI = 2;
-    public const PAYMENT_GATEWAY_HDFC = 3;
-
-    public const PAYMENT_GATEWAY_PAYU_LABEL = "payu";
-    public const PAYMENT_GATEWAY_ICICI_LABEL = "icici";
-    public const PAYMENT_GATEWAY_HDFC_LABEL = "hdfc";
 
 
     /**
@@ -108,9 +79,9 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
                 'class' => \yii\behaviors\BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => 'updated_by',
-                // 'value' => function () {
-                //     return $this->getActiveUserId();
-                // },
+                'value' => function () {
+                    return $this->getActiveUserId(); // Use current user ID or null if guest
+                },
             ],
             [
                 'class' => \yii\behaviors\TimestampBehavior::className(),
@@ -125,7 +96,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     protected function getActiveUserId()
     {
-        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'];
+        return \Yii::$app->user->identity->id ?? \Yii::$app->params['active_user_id'] ?? null;
     }
 
     /**
@@ -133,7 +104,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
      */
     public static function tableName()
     {
-        return 'transaction';
+        return 'booking';
     }
 
     /**
@@ -142,27 +113,22 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function rules()
     {
         return [
-            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source', 'parent_id', 'remark'], 'default', 'value' => null],
+            [['park_id', 'addional_notes', 'name', 'email', 'phone', 'validity_date', 'permit_booking_date', 'addtional_data', 'quotation_filepath', 'transaction_datetime', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'default', 'value' => null],
             [['currency'], 'default', 'value' => 'INR'],
             [['is_payment_received'], 'default', 'value' => 0],
             [['status'], 'default', 'value' => 1],
-            [['source', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
-            [['user_id', 'reference_id',  'order_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
-            [['user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
+            [['transaction_id', 'reference_id', 'order_id', 'lead_partner_id', 'lead_id', 'partner_id', 'safaris', 'travelers', 'stay_category_id', 'start_date', 'end_date', 'partner_selling_price', 'plateform_partner_fees_percentage', 'partner_net_selling_price', 'net_payment_price', 'billing_name'], 'required'],
+            [['transaction_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'lead_partner_quotes_id'], 'integer'],
             [['addional_notes'], 'string'],
-            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'transaction_datetime', 'utm_source', 'param1', 'param2', 'param3', 'param4', 'param5', 'payment_gateway_tracking_id', 'bank_reference_no', 'refunded_amount', 'last_refund_date', 'refund_status'], 'safe'],
+            [['start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'transaction_datetime', 'payment_receipt', 'source', 'share_safari_lead_id', 'share_safari_lead_installment_id', 'share_safari_id', 'share_safari_version'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
-            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version'], 'string', 'max' => 255],
+            [['reference_id', 'order_id', 'name', 'email', 'quotation_filepath', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_country', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5'], 'string', 'max' => 255],
             [['currency'], 'string', 'max' => 3],
             [['phone'], 'string', 'max' => 50],
             [['billing_zip'], 'string', 'max' => 30],
             [['billing_tel'], 'string', 'max' => 20],
-            [['payment_gateway_tracking_id', 'bank_reference_no'], 'string', 'max' => 100],
-            [['transaction_type'], 'default', 'value' => 'c'],
-            [['transaction_type'], 'string', 'max' => 1],
         ];
     }
-
 
     /**
      * {@inheritdoc}
@@ -171,10 +137,8 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
+            'transaction_id' => 'Transaction ID',
             'reference_id' => 'Reference ID',
-            'lead_partner_quotes_id' => 'Lead Partner Quotes ID',
-            'lead_partner_quote_installments_id' => 'Lead Partner Quote Installments ID',
             'order_id' => 'Order ID',
             'currency' => 'Currency',
             'lead_partner_id' => 'Lead Partner ID',
@@ -201,7 +165,6 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             'installment' => 'Installment',
             'received_amount' => 'Received Amount',
             'addtional_data' => 'Addtional Data',
-            'datetime_of_approval_by_admin' => 'Datetime Of Approval By Admin',
             'quotation_filepath' => 'Quotation Filepath',
             'is_payment_received' => 'Is Payment Received',
             'transaction_datetime' => 'Transaction Datetime',
@@ -223,192 +186,146 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
             'param3' => 'Param3',
             'param4' => 'Param4',
             'param5' => 'Param5',
-            'device' => 'Device',
-            'platform' => 'Platform',
-            'platform_version' => 'Platform Version',
-            'browser' => 'Browser',
-            'browser_version' => 'Browser Version',
-            'application_version' => 'Application Version',
             'status' => 'Status',
         ];
     }
 
-    public static function transactionId($identifier)
-    {
-        return 't' . date('ymdHis') . '' . $identifier;
-    }
-
-
-    public static function orderId($identifier, $source = 'L')
-    {
-        return 'O' . $source . '-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
-    }
-
-    public static function referenceId($identifier, $source = 'L')
-    {
-        return 'R' . $source . '-' . uniqid() . '-' . date('ym') . '-' . time() . '-' . $identifier;
-    }
-
     public function afterSave($insert, $changedAttributes)
     {
-        // if ststus is 1 the create a row in booking table
-        if ($this->status == self::STATUS_SUCCESS) {
-            $this->makebooking();
+        if ($this->status == 1 && $insert) {
+            if ($this->source == Transaction::SOURCE_LEAD) {
+                // lead booking status update
+                $this->updateLeadBookingStatus();
+                // close lead chat
+                $this->closeLeadChat();
+                // close all payment links
+            }
+            if ($this->source == Transaction::SOURCE_SHARE_SAFARI) {
+                // share safari booking status update
+                $this->updateSafaribookingLeadBookingStatus();
+                // close lead chat
+                $this->openChatSafaribookingLeadChat();
+            }
+            $this->closePaymentLinks();
+            // send booking confirmation email
+            // $this->sendBookingConfirmationEmail();
         }
-        parent::afterSave($insert, $changedAttributes);
     }
 
-    private function makebooking()
+    private function updateSafaribookingLeadBookingStatus()
     {
-        // Generate PDF
-        $content = GeneralModel::generatePdfContent('@common/templates/payments/payment_receipt.php', [
-            'transaction' => $this,
-        ]);
-        $pdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'mpdf']);
-        $pdf->WriteHTML($content);
-        $pdfFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'payment_receipt_' . $this->reference_id . '.pdf';
-        $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
-
-        // Upload PDF to RFS
-        $uploadedFile = new \yii\web\UploadedFile([
-            'name' => 'payment_receipt_' . $this->reference_id . '.pdf',
-            'tempName' => $pdfFilePath,
-            'type' => 'application/pdf',
-            'size' => filesize($pdfFilePath),
-            'error' => UPLOAD_ERR_OK,
-        ]);
-
-        $fileName = 'payment_receipt_' . $this->reference_id . '.pdf';
-        $filePath = 'payment_receipts/' . date('ym') . '/' . $fileName;
-
-        // $checksum = \common\Helper\FsHelper::restrictedsaveUploadedFile($uploadedFile, $filePath, $fileName);
-        $checksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
-
-
-        $booking = new \common\models\bookings\Booking();
-        $booking->source = $this->source;
-        
-        $booking->transaction_id = $this->id;
-        $booking->share_safari_lead_id = $this->share_safari_lead_id;
-        $booking->share_safari_lead_installment_id = $this->share_safari_lead_installment_id;
-        $booking->share_safari_id = $this->share_safari_id;
-        $booking->share_safari_version = $this->share_safari_version;
-        $booking->order_id = $this->order_id;
-        $booking->currency = $this->currency;
-        $booking->reference_id = $this->reference_id; // use the same
-        $booking->lead_partner_quotes_id = $this->lead_partner_quotes_id;
-        $booking->payment_receipt = $filePath;
-        // $booking->lead_partner_quote_installments_id = $this->lead_partner_quote_installments_id;
-        $booking->lead_partner_id = $this->lead_partner_id;
-        $booking->lead_id = $this->lead_id;
-        $booking->partner_id = $this->partner_id;
-        $booking->park_id = $this->park_id;
-        $booking->addional_notes = $this->addional_notes;
-        $booking->safaris = $this->safaris;
-        $booking->travelers = $this->travelers;
-        $booking->stay_category_id = $this->stay_category_id;
-        $booking->name = $this->name;
-        $booking->email = $this->email;
-        $booking->phone = $this->phone;
-        $booking->start_date = $this->start_date;
-        $booking->end_date = $this->end_date;
-        $booking->validity_date = $this->validity_date;
-        $booking->permit_booking_date = $this->permit_booking_date;
-        $booking->partner_selling_price = $this->partner_selling_price;
-        $booking->plateform_partner_fees_percentage = $this->plateform_partner_fees;
-        $booking->plateform_partner_fees = $this->plateform_partner_fees;
-        $booking->partner_net_selling_price = $this->partner_net_selling_price;
-        $booking->plateform_customer_discount = $this->plateform_customer_discount;
-        $booking->net_payment_price = $this->net_payment_price;
-        $booking->installment = $this->installment;
-        $booking->received_amount = $this->received_amount;
-        $booking->addtional_data = $this->addtional_data;
-        $booking->datetime_of_approval_by_admin = $this->datetime_of_approval_by_admin;
-        $booking->quotation_filepath = $this->quotation_filepath;
-        $booking->is_payment_received = 1;
-        $booking->transaction_datetime = $this->transaction_datetime;
-        $booking->billing_name = $this->billing_name;
-        $booking->billing_address = $this->billing_address;
-        $booking->billing_city = $this->billing_city;
-        $booking->billing_state = $this->billing_state;
-        $booking->billing_zip = $this->billing_zip;
-        $booking->billing_country = $this->billing_country;
-        $booking->billing_tel = $this->billing_tel;
-        $booking->billing_email = $this->billing_email;
-        $booking->param1 = $this->param1;
-        $booking->param2 = $this->param2;
-        $booking->param3 = $this->param3;
-        $booking->param4 = $this->param4;
-        $booking->param5 = $this->param5;
-        $booking->status = 1; // initial status is 0 (initiated)
-        // set the status to 1
-        $booking->status = 1;
-        return $booking->save(false);
-    }
-
-
-
-    public function getStatusLabel()
-    {
-        $arr = [
-            self::STATUS_INITIATED => "INITIATED",
-            self::STATUS_SUCCESS => "SUCCESS",
-            self::STATUS_FAILED => "FAILED",
-            self::STATUS_HOLD => "HOLD",
-            self::STATUS_REFUNDED => "REFUNDED",
-            self::STATUS_CONFLICT => "CONFLICT"
-        ];
-        return ucfirst($arr[$this->status]) ?? '';
-    }
-
-    public function getQuotation()
-    {
-        // lead_partner_quotes_id
-        return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'lead_partner_quotes_id']);
-    }
-
-    public function getPark()
-    {
-        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
-    }
-
-    public function getPark_label()
-    {
-        return $this->park->title ?? null;
-    }
-
-    public function getLead()
-    {
-        return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
-    }
-
-    public function getPartner()
-    {
-        return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
-    }
-
-    public function getStaycatgory()
-    {
-        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
-    }
-
-
-    public function getStaycatgory_lable()
-    {
-        return $this->staycatgory->title ?? null;
-    }
-
-    public function getTransactionEvents()
-    {
-        return $this->hasMany(TransactionEvents::className(), ['lead_partner_quote_id' => 'lead_partner_quotes_id'])->orderBy(['id' => SORT_ASC]);
-    }
-
-    public function triggerTransactionEvent()
-    {
-        if ($this->status == self::STATUS_SUCCESS) {
-
-            return \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_SUCCESS, $this->lead_id, $this->lead_partner_quotes_id, $this->id);
+        $lead = ShareSafariLead::findOne($this->share_safari_lead_id);
+        if ($lead) {
+            $lead->is_payment_received = 1;
+            $lead->payment_receipt = $this->payment_receipt ?? NULL;
+            $lead->payment_gateway = $this->payment_gateway;
+            // $lead->transaction_id = $this->transaction_id;
+            // $lead->transaction_datetime = $this->transaction_datetime;
+            $lead->save(false);
         }
-        return  \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_STATUS_FAILED, $this->lead_id, $this->lead_partner_quotes_id, $this->id);
+
+        $leadInstallment = ShareSafariLeadInstallment::findOne($this->share_safari_lead_installment_id);
+        if ($leadInstallment) {
+            $leadInstallment->is_payment_received = 1;
+            $leadInstallment->payment_receipt = $this->payment_receipt ?? NULL;
+            $leadInstallment->payment_gateway = $this->payment_gateway;
+            $leadInstallment->transaction_id = $this->transaction_id;
+            // $leadInstallment->received_amount = $this->received_amount;
+            $leadInstallment->transaction_datetime = $this->transaction_datetime;
+            $leadInstallment->status = ShareSafariLeadInstallment::STATUS_SUCCESS;
+            $leadInstallment->save(false);
+        }
+
+        $shareSafari = ShareSafari::findOne($this->share_safari_id);
+        if ($shareSafari) {
+            $shareSafari->booked_seat += $this->travelers;
+            $shareSafari->save(false);
+        }
+    }
+
+    private function openChatSafaribookingLeadChat()
+    {
+        $leadInstallment = ShareSafariLead::findOne($this->share_safari_lead_id);
+        if ($leadInstallment) {
+            return  $leadInstallment->openChat($this->share_safari_lead_id);
+        }
+        return true;
+    }
+
+
+
+    private function updateLeadBookingStatus()
+    {
+        $lead = \common\models\leads\Lead::findOne($this->lead_id);
+        if ($lead) {
+            $lead->is_payment_received = 1;
+            $lead->payment_receipt = $this->payment_receipt ?? NULL;
+            $lead->payment_gateway = $this->payment_gateway;
+            $lead->transaction_id = $this->transaction_id;
+            $lead->transaction_datetime = $this->transaction_datetime;
+            $lead->save(false);
+        }
+
+        $leadPartner = LeadPartners::findOne($this->lead_partner_id);
+        if ($leadPartner) {
+            $leadPartner->is_payment_received = 1;
+            $leadPartner->payment_gateway = $this->payment_gateway;
+            $leadPartner->transaction_id = $this->transaction_id;
+            $leadPartner->transaction_datetime = $this->transaction_datetime;
+            $leadPartner->save(false);
+        }
+
+        $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
+        if ($leadPartnerQuotes) {
+            $leadPartnerQuotes->is_payment_received = 1;
+            $leadPartnerQuotes->payment_receipt = $this->payment_receipt ?? NULL;
+            $leadPartnerQuotes->payment_gateway = $this->payment_gateway;
+            $leadPartnerQuotes->transaction_id = $this->transaction_id;
+            $leadPartnerQuotes->transaction_datetime = $this->transaction_datetime;
+            $leadPartnerQuotes->save(false);
+            \common\models\leads\LeadPartnerQuotes::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "Payment received against lead"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0]] // Condition
+            );
+        }
+
+        $leadPartnerQuoteInstallments = \common\models\leads\LeadPartnerQuoteInstallments::findOne(['lead_partner_quote_id' => $this->lead_partner_quotes_id]);
+        // Update the installment status if it exists
+        // This assumes that the installment is linked to the lead and partner quote
+        if ($leadPartnerQuoteInstallments) {
+            $leadPartnerQuoteInstallments->is_payment_received = 1;
+            $leadPartnerQuoteInstallments->payment_receipt = $this->payment_receipt ?? NULL;
+            $leadPartnerQuoteInstallments->status = \common\models\leads\LeadPartnerQuoteInstallments::STATUS_RECEIVED;
+            $leadPartnerQuoteInstallments->payment_gateway = $this->payment_gateway;
+            $leadPartnerQuoteInstallments->transaction_id = $this->transaction_id;
+            $leadPartnerQuoteInstallments->transaction_datetime = $this->transaction_datetime;
+            $leadPartnerQuoteInstallments->save(false);
+
+            \common\models\leads\LeadPartnerQuoteInstallments::updateAll(
+                ['is_payment_expired' => 1, 'payment_expired_datetime' => date('Y-m-d H:i:s'), 'payment_expired_reason' => "Payment received against lead"], // Set `is_payment_expired` to 1
+                ['and', ['lead_id' => $this->lead_id], ['is_payment_expired' => 0]] // Condition
+            );
+        }
+    }
+
+    private function closeLeadChat()
+    {
+        $leadPartnerQuotes = \common\models\leads\LeadPartnerQuotes::findOne(['id' => $this->lead_partner_quotes_id]);
+        if ($leadPartnerQuotes) {
+            return  $leadPartnerQuotes->closeChat($this->lead_partner_quotes_id) && $leadPartnerQuotes->markQuoteInactiveInChat($this->lead_id);
+        }
+        return true;
+    }
+
+    private function closePaymentLinks()
+    {
+        $leadPartnerQuoteInstallments = \common\models\leads\LeadPartnerQuoteInstallments::findAll(['lead_partner_quote_id' => $this->lead_partner_quotes_id, 'is_payment_received' => 0]);
+        if (!empty($leadPartnerQuoteInstallments)) {
+            foreach ($leadPartnerQuoteInstallments as $installment) {
+                $installment->is_payment_expired = 1;
+                $installment->save(false);
+            }
+        }
+        return true;
     }
 }
