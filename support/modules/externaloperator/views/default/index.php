@@ -35,7 +35,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 1%;'],
+                        // 'contentOptions' => ['style' => 'width: 10%;'],
                     ],
                     [
                         'label' => 'Park Name',
@@ -53,7 +53,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                     
                     [
                         'label' => 'Partner Name',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->operator_name) ? $model->operator_name : '';
@@ -109,7 +109,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 25%; text-align: left;'],
-                        'template' => '{edit}&nbsp;{delete}&nbsp;{call_done}&nbsp;{email_send}',
+                        'template' => '{edit}&nbsp;{delete}&nbsp;{call_done}&nbsp;{email_send}&nbsp;{comment}',
                         'buttons' => [
                             // 'view' => function ($url, $model) {
                             //     return Html::a(
@@ -163,6 +163,16 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                 );
                             },
 
+                            'comment' => function ($url, $model) {
+                                return Html::button('<i class="mdi mdi-comment"></i>',
+                                    [
+                                        'value' =>  Url::toRoute(['comment', 'id' => $model->id]),
+                                        'class' => 'btn p-0 change-menuicon comment-popup',
+                                        'title' => 'Comment',
+                                    ]
+                                );
+                            },
+
                         ]
                     ],
 
@@ -208,6 +218,25 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
     </div>
 </div>
 
+
+<div class="modal fade" id="commentAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header popHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Comment
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='commentcheck'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <?php
 $script = <<< JS
 
@@ -220,6 +249,12 @@ $script = <<< JS
     $('.email-popup').on('click', function () {
         $('#emailAction').modal('show')
 		.find('#emailcheck')
+		.load($(this).attr('value'));
+	});
+
+    $('.comment-popup').on('click', function () {
+        $('#commentAction').modal('show')
+		.find('#commentcheck')
 		.load($(this).attr('value'));
 	});
 

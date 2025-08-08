@@ -12,6 +12,7 @@ class ExternalOperatorForm extends \yii\base\Model
 
     const SCENARIO_CALL_DONE = 'call_done';
     const SCENARIO_EMAIL_SEND = 'email_send';
+    const SCENARIO_COMMENT = 'comment';
 
 
     public $id;
@@ -34,6 +35,7 @@ class ExternalOperatorForm extends \yii\base\Model
 
     public $is_call_done;
     public $is_mail_send;
+    public $comment;
 
     public function __construct(ExternalOperator $externaloperator_model = null)
     {
@@ -64,6 +66,7 @@ class ExternalOperatorForm extends \yii\base\Model
 
             $this->is_call_done = $this->externaloperator_model->is_call_done;
             $this->is_mail_send = $this->externaloperator_model->is_mail_send;
+            $this->comment = $this->externaloperator_model->comment;
 
         }
 
@@ -76,6 +79,7 @@ class ExternalOperatorForm extends \yii\base\Model
           self::SCENARIO_DEFAULT => ['operator_name','phone_no','address','park_list','email','owner_name','owner_phone_no','owner_email','website','traffic','engagement','seo_performance','google_rating','status'],
           self::SCENARIO_CALL_DONE => ['is_call_done'],
           self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
+          self::SCENARIO_COMMENT => ['comment'],
         ];
     }
     /**
@@ -90,13 +94,14 @@ class ExternalOperatorForm extends \yii\base\Model
             [['owner_email', 'email'], 'email'],
             [['google_rating'], 'number', 'max' => 5],
             [['email', 'website', 'operator_name', 'phone_no','traffic','engagement','seo_performance'], 'string', 'max' => 255],
-            [['address'], 'string', 'max' => 500],
+            [['address','comment'], 'string', 'max' => 500],
             [['status'], 'default', 'value' => 1],
             [['is_call_done','is_mail_send'], 'default', 'value' => 0],
             [['park_list'], 'safe'],
             [['website'], 'url', 'defaultScheme' => 'http'],
             [['is_call_done'],'required','on' => self::SCENARIO_CALL_DONE],
             [['is_mail_send'],'required','on' => self::SCENARIO_EMAIL_SEND],
+            [['comment'],'required','on' => self::SCENARIO_COMMENT],
         ];
 
         return $rules;
@@ -126,6 +131,7 @@ class ExternalOperatorForm extends \yii\base\Model
             'status' => 'Status',
             'is_call_done'=>'Is Call Done',
             'is_mail_send'=>'Is Mail Send',
+            'comment'=>'Comment'
         ];
     }
 
@@ -153,5 +159,6 @@ class ExternalOperatorForm extends \yii\base\Model
 
         $this->externaloperator_model->is_call_done = $this->is_call_done;
         $this->externaloperator_model->is_mail_send = $this->is_mail_send;
+        $this->externaloperator_model->comment = $this->comment;
     }
 }

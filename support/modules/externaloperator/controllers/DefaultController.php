@@ -178,6 +178,25 @@ class DefaultController extends Controller
         return $this->renderAjax('_email_send', ['model' => $model]);
     }
 
+    public function actionComment($id)
+    {
+        $externaloperator_model = $this->findModel($id);
+        $model = new ExternalOperatorForm($externaloperator_model);
+        $model->setScenario(ExternalOperatorForm::SCENARIO_COMMENT);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->externaloperator_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Commented successfully.');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        }
+        return $this->renderAjax('_commentform', ['model' => $model]);
+    }
+
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
