@@ -56,7 +56,7 @@ class DeepCallController extends Controller
     public function actionIndex()
     {
         $data = Yii::$app->request->post();
-        return "GODBLESSYOU";
         \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($data), 'deep-call');
+        return "GODBLESSYOU";
     }
 }
