@@ -631,6 +631,9 @@ class TempController extends Controller
                 'no_of_day' => $package->no_of_day,
                 'no_of_night' => $package->no_of_night,
                 'no_of_safari' => $package->no_of_safari,
+                'cost_per_person' => $package->cost_per_person,
+                'cost_per_two_person' => (int) ceil($package->cost_per_two_person),
+                'price_after_discount' => (int) ceil($package->price_after_discount),
 
                 'package_description' => $package->package_description,
                 'image_path' => $package->image_path,
@@ -641,10 +644,10 @@ class TempController extends Controller
                 'stay_category_id' => $package->stay_category_id,
                 'stay_category_display' => $package->stay_category_display,
                 'meals_listing' => $package->meals_listing,
-                'breakfast_included' => $package->breakfast_included,
-                'lunch_included' => $package->lunch_included,
-                'dinner_included' => $package->dinner_included,
-                'meal_not_included' => $package->meal_not_included,
+                'breakfast_included' => (bool) $package->breakfast_included,
+                'lunch_included' => (bool) $package->lunch_included,
+                'dinner_included' => (bool) $package->dinner_included,
+                'meal_not_included' => (bool) $package->meal_not_included,
                 'start_location' => $package->start_location,
                 'end_location' => $package->end_location,
                 'start_date' => $package->start_date,
@@ -669,7 +672,8 @@ class TempController extends Controller
                 'package_features_name' => ArrayHelper::toArray($package->package_features_name),
 
                 'partner_gallery_id' => $package->partner_gallery_id,
-                'gallery_json' => $package->gallery_json
+                'gallery_json' => $package->gallery_json,
+                'gallery_version' => $package->gallery_version
             ],
         ];
 
