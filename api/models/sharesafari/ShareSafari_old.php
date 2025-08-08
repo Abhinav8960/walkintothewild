@@ -21,7 +21,7 @@ use common\models\GeneralModel;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
-     public function fields()
+    public function fields()
     {
 
 
@@ -120,120 +120,6 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
         return $fields;
     }
-    // public function fields()
-    // {
-
-    //     $fields['static'] = function ($model) {
-    //         $data = $model->static_data_json;
-    //         if (is_string($data)) {
-    //             $data = json_decode($data, true);
-    //         }
-    //         return isset($data['share_safari']) ? $data['share_safari'] : null;
-    //     };
-
-    //     $fields['user'] = function ($model) {
-    //         return [
-    //             'have_you_joined' => $model->have_you_joined,
-    //             'is_wishlist' => $model->is_wishlist,
-    //             'is_followed' => $model->is_followed,
-    //             'interseted_user_count'  => $model->interseted_user_count,
-    //             'resource_uri'    => $model->resource_uri,
-    //             'can_comment'    => $model->can_comment,
-    //             'can_reply'    => $model->can_reply,
-    //         ];
-    //     };
-
-    //     $fields['dynamic'] = function ($model) {
-    //         return [
-    //             'total_seat' => $model->total_seat,
-    //             'share_seat' => $model->share_seat,
-    //         ];
-    //     };
-
-    //     if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-    //         $fields['partner'] = function ($model) {
-    //             return $model->partner;
-    //         };
-    //     }
-
-    //     $fields['interested_users'] = function () {
-    //         return $this->intrestedUserLimited;
-    //     };
-
-    //     $fields['urls'] = function ($model) {
-    //         return $model->urls;
-    //     };
-
-    //     $fields['other'] = function ($model) {
-    //         return [
-    //             'witw_average_rating' => $model->witw_average_rating,
-    //             'witw_review_count' => $model->witw_review_count,
-    //             'is_safari_operator' => $model->is_safari_operator,
-    //         ];
-    //     };
-
-    //     if (!in_array(\Yii::$app->controller->layout, [self::SHARE_SAFARI_API_LAYOUT_FULL])) {
-    //         $fields['static'] = function ($model) {
-    //             return [
-    //                 'share_safari_title' => $model->share_safari_title,
-    //                 'slug' => $model->slug,
-    //                 'no_of_safari' => $model->no_of_safari,
-    //                 'start_date' => $model->start_date,
-    //                 'end_date' => $model->end_date,
-    //                 'cut_off_date' => $model->cut_off_date,
-    //                 'types' => $model->types,
-    //                 'organized_by_name' => $model->organized_by_name,
-    //                 'organized_by_image' => $model->organized_by_image,
-    //                 'organized_slug' => $model->organized_slug,
-    //                 'shared_image_path' => $model->shared_image_path,
-    //                 'seat_full_status' => $model->seat_full_status,
-    //                 'park_title' => $model->park_title,
-    //                 'park_slug' => $model->park_slug,
-    //                 'cost_per_person' => (int) ceil($model->cost_per_person),
-    //                 'estimate_price_min' => (int) ceil($model->estimate_price_min),
-    //                 'estimate_price_max' => (int) ceil($model->estimate_price_max),
-    //                 'status' => $model->status,
-    //             ];
-    //         };
-
-    //         $fields['user'] = function ($model) {
-    //             return [
-    //                 'have_you_joined' => $model->have_you_joined,
-    //                 'is_wishlist' => $model->is_wishlist,
-    //                 'is_followed' => $model->is_followed,
-    //                 'interseted_user_count'  => $model->interseted_user_count,
-    //                 'resource_uri'    => $model->resource_uri,
-    //                 'can_comment'    => $model->can_comment,
-    //                 'can_reply'    => $model->can_reply,
-    //             ];
-    //         };
-
-    //         $fields['dynamic'] = function ($model) {
-    //             return [
-    //                 'total_seat' => $model->total_seat,
-    //                 'share_seat' => $model->share_seat,
-    //             ];
-    //         };
-
-    //         $fields['interested_users'] = function () {
-    //             return $this->intrestedUserLimited;
-    //         };
-
-    //         $fields['urls'] = function ($model) {
-    //             return $model->urls;
-    //         };
-
-    //         $fields['other'] = function ($model) {
-    //             return [
-    //                 'witw_average_rating' => $model->witw_average_rating,
-    //                 'witw_review_count' => $model->witw_review_count,
-    //                 'is_safari_operator' => $model->is_safari_operator,
-    //             ];
-    //         };
-    //     }
-
-    //     return $fields;
-    // }
 
 
 
