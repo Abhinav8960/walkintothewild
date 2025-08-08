@@ -214,7 +214,19 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         }
     }
 
-    private function sendShareSafariBookingConfirmationEmail(){
+    private function sendShareSafariBookingConfirmationEmail()
+    {
+
+        new \common\events\sharesafari\SafariBookedByUser(
+            $email =  $this->email,
+            $name =  $this->name,
+            $shared_safari_id =  $this->share_safari_id,
+            $referenceId = $this->reference_id,
+            $amount = $this->received_amount,
+            $booked_seat = $this->travelers,
+            $start_date = $this->start_date,
+            $end_date = $this->end_date,
+        );
         return true;
     }
 
@@ -334,6 +346,4 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         }
         return true;
     }
-
-    
 }

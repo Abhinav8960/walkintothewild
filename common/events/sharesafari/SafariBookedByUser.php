@@ -12,7 +12,6 @@ use yii\base\Event;
 
 class SafariBookedByUser extends Event
 {
-    public $userId;
     public $email;
     public $name;
     public $templates;
@@ -25,9 +24,9 @@ class SafariBookedByUser extends Event
     public $booked_seat;
     public $type;
     public $shared_safari_title;
-    public $transactionId;
-    public $refencerId;
+    public $referenceId;
     public $amount;
+    public $park;
     protected $shared_safari;
     protected $engine;
 
@@ -39,16 +38,17 @@ class SafariBookedByUser extends Event
     protected $mail_template_code = 'SSBU';  // New Safari Created By User mail to admin
 
 
-    public function __construct($userId, $email, $name, $shared_safari_id, $transactionId, $refencerId, $amount)
+    public function __construct($email, $name, $shared_safari_id, $referenceId, $amount, $booked_seat, $start_date, $end_date)
     {
 
-        $this->userId = $userId;
-        $this->email = $email;
         $this->name = $name;
+        $this->email = $email;
         $this->shared_safari_id = $shared_safari_id;
-        $this->transactionId = $transactionId;
-        $this->refencerId = $refencerId;
+        $this->referenceId = $referenceId;
         $this->amount = $amount;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
+        $this->booked_seat = $booked_seat;
         $this->engine = \Yii::$app->engine;
         $this->prepareData();
         $this->broadcast();
@@ -75,16 +75,19 @@ class SafariBookedByUser extends Event
                     'subject' => $this->shared_safari_title . 'Booked, get ready for adventure!!',
                     'mail_template_id' => $this->emailTemplateId(),
                     'params' => [
-                        'username' => $this->name,
-                        'email' => $this->email,
+                        'name' => $this->name,
+                        // 'email' => $this->email,
                         // 'shared_safari' => $this->shared_safari_name,
                         'shared_safari_title' => $this->shared_safari_title,
                         'no_of_safari' => $this->no_of_safari,
                         'start_date' => $this->start_date,
                         'end_date' => $this->end_date,
                         'booked_seat' => $this->booked_seat,
+                        'referenceId' => $this->referenceId,
+                        'amount' => $this->amount,
+                        'park' => $this->park,
                     ],
-                    'to_mail' => Yii::$app->params['adminEmail'],
+                    'to_mail' => $this->email,
                     'cc' => [],
                     'bcc' => [],
                 ]
@@ -106,15 +109,12 @@ class SafariBookedByUser extends Event
 
 
 
-
     public function prepareData()
     {
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_title = $this->shared_safari->share_safari_title;
-        $this->no_of_safari = $this->shared_safari->no_of_safari;
-        $this->start_date = $this->shared_safari->start_date;
-        $this->end_date = $this->shared_safari->end_date;
-        $this->booked_seat = $this->shared_safari->booked_seat;
+        $this->shared_safari_title = $this->shared_safari->share_safari_title;        
+        $this->no_of_safari = $this->shared_safari->no_of_safari;        
+        $this->park = $this->shared_safari->park->title;
 
 
         // $this->sent_data = [
