@@ -21,7 +21,7 @@ use common\models\GeneralModel;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
-    public function fields()
+     public function fields()
     {
 
         $fields = [];
@@ -41,139 +41,55 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                     )
                 );
             }
-
-            $fields['user'] = function ($model) {
-                return [
-                    'have_you_joined' => $model->have_you_joined,
-                    'is_wishlist' => $model->is_wishlist,
-                    'is_followed' => $model->is_followed,
-                    'interseted_user_count'  => $model->interseted_user_count,
-                    'resource_uri'    => $model->resource_uri,
-                    'can_comment'    => $model->can_comment,
-                    'can_reply'    => $model->can_reply,
-                ];
-            };
-
-            $fields['dynamic'] = function ($model) {
-                return [
-                    'total_seat' => $model->total_seat,
-                    'share_seat' => $model->share_seat,
-                ];
-            };
-
-            if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-                $fields['partner'] = function ($model) {
-                    return $model->partner;
-                };
-            }
-
-            $fields['interested_users'] = function () {
-                return $this->intrestedUserLimited;
-            };
-
-            $fields['urls'] = function ($model) {
-                return $model->urls;
-            };
-
-            $fields['other'] = function ($model) {
-                return [
-                    'witw_average_rating' => $model->witw_average_rating,
-                    'witw_review_count' => $model->witw_review_count,
-                    'is_safari_operator' => $model->is_safari_operator,
-                ];
-            };
         } else {
-            $fields['share_safari_title'] = function () {
-                return $this->share_safari_title;
-            };
-            $fields['slug'] = function () {
-                return $this->slug;
-            };
-            $fields['no_of_safari'] = function () {
-                return $this->no_of_safari;
-            };
-            $fields['start_date'] = function () {
-                return $this->start_date;
-            };
-            $fields['end_date'] = function () {
-                return $this->end_date;
-            };
-            $fields['cut_off_date'] = function () {
-                return $this->cut_off_date;
-            };
-            $fields['types'] = function () {
-                return $this->types;
-            };
-            $fields['organized_by_name'] = function () {
-                return $this->organized_by_name;
-            };
-            $fields['organized_by_image'] = function () {
-                return $this->organized_by_image;
-            };
-            $fields['organized_slug'] = function () {
-                return $this->organized_slug;
-            };
-            $fields['shared_image_path'] = function () {
-                return $this->shared_image_path;
-            };
-            $fields['seat_full_status'] = function () {
-                return $this->seat_full_status;
-            };
-            $fields['park_title'] = function () {
-                return $this->park_title;
-            };
-            $fields['park_slug'] = function () {
-                return $this->park_slug;
-            };
-            $fields['cost_per_person'] = function () {
-                return (int) ceil($this->cost_per_person);
-            };
-            $fields['estimate_price_min'] = function () {
-                return (int) ceil($this->estimate_price_min);
-            };
-            $fields['estimate_price_max'] = function () {
-                return (int) ceil($this->estimate_price_max);
-            };
-            $fields['status'] = function () {
-                return $this->status;
-            };
 
-            $fields['user'] = function ($model) {
-                return [
-                    'have_you_joined' => $model->have_you_joined,
-                    'is_wishlist' => $model->is_wishlist,
-                    'is_followed' => $model->is_followed,
-                    'interseted_user_count'  => $model->interseted_user_count,
-                    'resource_uri'    => $model->resource_uri,
-                    'can_comment'    => $model->can_comment,
-                    'can_reply'    => $model->can_reply,
-                ];
-            };
-
-            $fields['dynamic'] = function ($model) {
-                return [
-                    'total_seat' => $model->total_seat,
-                    'share_seat' => $model->share_seat,
-                ];
-            };
-
-            $fields['interested_users'] = function () {
-                return $this->intrestedUserLimited;
-            };
-
-            $fields['urls'] = function ($model) {
-                return $model->urls;
-            };
-
-            $fields['other'] = function ($model) {
-                return [
-                    'witw_average_rating' => $model->witw_average_rating,
-                    'witw_review_count' => $model->witw_review_count,
-                    'is_safari_operator' => $model->is_safari_operator,
-                ];
-            };
+            $fields = [
+                'share_safari_title',
+                'slug',
+                'no_of_safari',
+                'start_date',
+                'end_date',
+                'cut_off_date',
+                'cost_per_person' => function () {
+                    return (int) ceil($this->cost_per_person);
+                },
+                'estimate_price_min' => function () {
+                    return (int) ceil($this->estimate_price_min);
+                },
+                'estimate_price_max' => function () {
+                    return (int) ceil($this->estimate_price_max);
+                },
+                'types',
+                'organized_by_name',
+                'organized_by_image',
+                'organized_slug',
+                'shared_image_path',
+                'seat_full_status',
+                'park_title',
+                'park_slug',
+                'status'
+            ];
         }
 
+        $fields =  array_merge($fields, [
+            'have_you_joined',
+            'is_wishlist',
+            'is_followed',
+            'interseted_user_count',
+            'resource_uri',
+            'can_comment',
+            'can_reply',
+            'total_seat',
+            'share_seat',
+            'partner',
+            'interested_users' => function () { //
+                return $this->intrestedUserLimited;
+            },
+            'urls',
+            'witw_average_rating',
+            'witw_review_count',
+            'is_safari_operator',
+        ]);
         return $fields;
     }
 

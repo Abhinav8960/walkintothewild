@@ -14,7 +14,7 @@ use common\models\User;
 
 class Package extends \common\models\package\Package
 {
-    public function fields()
+     public function fields()
     {
         $fields = [];
 
@@ -33,137 +33,68 @@ class Package extends \common\models\package\Package
                     )
                 );
             }
-
-            $fields['user'] = function ($model) {
-                return [
-                    'is_wishlist' => $model->is_wishlist,
-                    'comment_count' => $model->comment_count,
-                    'resource_uri' => $model->resource_uri,
-                    'can_comment'  => $model->can_comment,
-                    'can_reply'    => $model->can_reply,
-                ];
-            };
-
-            $fields['dynamic'] = function ($model) {
-                return [
-                    'price_after_discount' => $model->price_after_discount,
-                ];
-            };
-
-            $fields['partner'] = function ($model) {
-                return $model->partner;
-            };
-
-            $fields['urls'] = function ($model) {
-                return $model->urls;
-            };
         } else {
-
-            $fields['package_display_name'] = function () {
-                return $this->package_display_name;
-            };
-            $fields['package_name'] = function () {
-                return $this->package_name;
-            };
-            $fields['package_slug'] = function () {
-                return $this->package_slug;
-            };
-            $fields['primary_park'] = function () {
-                return $this->primary_park;
-            };
-            $fields['primary_park_slug'] = function () {
-                return $this->primary_park_slug;
-            };
-            $fields['no_of_day'] = function () {
-                return $this->no_of_day;
-            };
-            $fields['no_of_night'] = function () {
-                return $this->no_of_night;
-            };
-            $fields['no_of_safari'] = function () {
-                return $this->no_of_safari;
-            };
-            $fields['cost_per_person'] = function () {
-                return (int) ceil($this->cost_per_person);
-            };
-            $fields['cost_per_two_person'] = function () {
-                return (int) ceil($this->cost_per_two_person);
-            };
-            $fields['total_price'] = function () {
-                return (int) ceil($this->total_price);
-            };
-            $fields['package_description'] = function () {
-                return $this->package_description;
-            };
-            $fields['image_path'] = function () {
-                return $this->image_path;
-            };
-            $fields['image_banner_path'] = function () {
-                return $this->image_banner_path;
-            };
-            $fields['package_day_night_labels'] = function () {
-                return $this->package_day_night_labels;
-            };
-            $fields['pick_and_drop'] = function () {
-                return $this->pick_and_drop;
-            };
-            $fields['pick_and_drop_display'] = function () {
-                return $this->pick_and_drop_display;
-            };
-            $fields['stay_category_display'] = function () {
-                return $this->stay_category_display;
-            };
-            $fields['meals_listing'] = function () {
-                return $this->meals_listing;
-            };
-            $fields['lunch_included'] = function () {
-                return (bool)$this->lunch_included;
-            };
-            $fields['dinner_included'] = function () {
-                return (bool)$this->dinner_included;
-            };
-            $fields['meal_not_included'] = function () {
-                return (bool)$this->meal_not_included;
-            };
-            $fields['breakfast_included'] = function () {
-                return (bool)$this->breakfast_included;
-            };
-            $fields['start_location'] = function () {
-                return $this->start_location;
-            };
-            $fields['end_location'] = function () {
-                return $this->end_location;
-            };
-            $fields['start_date'] = function () {
-                return $this->start_date;
-            };
-            $fields['end_date'] = function () {
-                return $this->end_date;
-            };
-            $fields['status'] = function () {
-                return $this->status;
-            };
-            $fields['user'] = function ($model) {
-                return [
-                    'is_wishlist' => $model->is_wishlist,
-                    'comment_count' => $model->comment_count,
-                    'resource_uri' => $model->resource_uri,
-                    'can_comment'  => $model->can_comment,
-                    'can_reply'    => $model->can_reply,
-                ];
-            };
-            $fields['dynamic'] = function ($model) {
-                return [
-                    'price_after_discount' => $model->price_after_discount,
-                ];
-            };
-            $fields['partner'] = function ($model) {
-                return $model->partner;
-            };
-            $fields['urls'] = function ($model) {
-                return $model->urls;
-            };
+            $fields = [
+                'package_display_name',
+                'package_name',
+                'package_slug',
+                'primary_park',
+                'primary_park_slug',
+                'no_of_day',
+                'no_of_night',
+                'no_of_safari',
+                'cost_per_person' => function () {
+                    return (int) ceil($this->cost_per_person);
+                },
+                'cost_per_two_person' => function () {
+                    return (int) ceil($this->cost_per_two_person);
+                },
+                'total_price' => function () {
+                    return (int) ceil($this->total_price);
+                },
+                'package_description',
+                'image_path',
+                'image_banner_path',
+                'package_day_night_labels',
+                'pick_and_drop',
+                'pick_and_drop_display',
+                'stay_category_display',
+                'meals_listing',
+                'lunch_included' => function () {
+                    return (bool)$this->lunch_included;
+                },
+                'dinner_included' => function () {
+                    return (bool)$this->dinner_included;
+                },
+                'meal_not_included' => function () {
+                    return (bool)$this->meal_not_included;
+                },
+                'breakfast_included' => function () {
+                    return (bool)$this->breakfast_included;
+                },
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'status'
+            ];
         }
+
+        $fields =  array_merge($fields, [
+            'price_after_discount' => function () {
+                return (int) ceil($this->price_after_discount);
+            },
+            'partner',
+            'is_wishlist',
+            'comment_count',
+            'resource_uri',
+            'can_comment',
+            'can_reply',
+            'urls',
+        ]);
+
+        $fields[] = 'image_thumbnails';
+        $fields[] = 'banner_thumbnails';
 
         return $fields;
     }
