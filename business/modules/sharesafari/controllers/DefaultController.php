@@ -60,7 +60,7 @@ class DefaultController extends Controller
                     ],
                     [
                         'actions' => ['update', 'inactive', 'copy-with-edit', 'update-seat'],
-                        'allow' =>  true,
+                        'allow' =>  $this->isFdUpdate(),
                         'roles' => ['@'],
                     ]
 
