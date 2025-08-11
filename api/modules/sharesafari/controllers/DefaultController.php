@@ -1562,8 +1562,7 @@ class DefaultController extends SafariController
             if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
                 if ($this->userinfo->partner) {
                     if ($this->userinfo->partner->id != $share_safari->host_user_id) {
-                        $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
-                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are an operator. You can not message!"]);
                     }
                 }
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
