@@ -63,7 +63,8 @@ $this->params['title'] = $this->title;
                             } elseif ($model->service == \common\models\CallLog::SERVICE_AIR_PHONE && ($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')) {
                                 return '<p class="text-warning" style="color: red !important;">Call Not Received</p>';
                             } elseif ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
-                                return \common\models\CallLog::callStatusList($model->call_status) ?? '';
+                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
+
                             }
                             return '';
                         }
@@ -132,7 +133,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
 
                             if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
-                                return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
+                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
                             }
                             return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }
