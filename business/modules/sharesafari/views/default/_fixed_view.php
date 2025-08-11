@@ -28,6 +28,28 @@ $this->title = 'Fixed Departure';
                                     <div class="itrnTextCard py-4">
                                         <h6 class="pb-3">About Trip / Overview</h6>
                                         <p><?= $share_safari->safari_plan ?></p>
+                                        <?php if ($share_safari->partner_gallery_id && !empty($share_safari->gallery_json)) {
+                                            $gallery_images = json_decode($share_safari->gallery_json, true);
+                                            $images = $gallery_images['images'];
+                                        ?>
+                                            <h6>Accomodation Images</h6>
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    <?php foreach ($images as $index => $image) { ?>
+                                                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                                            <img class="d-block w-100 rounded carousel-img" src="<?= $image['gallery_image_path'] ?>" alt="<?= htmlspecialchars($image['title']) ?>">
+                                                            <div class="carousel-caption d-none d-md-block">
+                                                                <h5><?= $image['title'] ?></h5>
+                                                                <p><?= $image['caption'] ?></p>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+
+                                            </div>
+
+
+                                        <?php } ?>
                                     </div>
                                 </div>
 
