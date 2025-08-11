@@ -707,7 +707,7 @@ class DefaultController extends Controller
         $operator = $this->module->operatormodel();
         $model = ShareSafari::findOne(['id' => $id]);
 
-        if ($model && $model->safari_operator_id == $operator->id && $model->edit_status == 1) {
+        if ($model && $model->safari_operator_id == $operator->id) {
             return true;
         }
         return false;
