@@ -28,7 +28,7 @@ class DeepCallController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index','save-call-log'],
                         'allow' => true,
                     ],
 
@@ -37,7 +37,8 @@ class DeepCallController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'index' => ['POST', 'GET']
+                    'index' => ['POST', 'GET'],
+                    'save-call-log' => ['POST', 'GET']
                 ],
             ],
         ];
@@ -55,17 +56,27 @@ class DeepCallController extends Controller
 
     public function actionIndex()
     {
-        $data = Yii::$app->request->post();
+        $pushReport = Yii::$app->request->post('push_report');
         \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($data), 'deep-call');
 
+        // First decode the JSON string
+        $decodedReport = json_decode($pushReport, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            Yii::error('JSON decode error: ' . json_last_error_msg(), 'deep-call');
+            throw new \Exception('Invalid JSON format');
+        }
+
+        
         if (Yii::$app->request->isPost) {
-            $json = json_encode($data);
-            $arr = json_decode($json, true);
-            if (isset($arr['api_para']['userId']) && isset($arr['api_para']['reqId'])) {
-                $userId = $arr['api_para']['userId'];
-                $reqId = $arr['api_para']['reqId'];
+            // Parse the nested data
+           $data = json_decode($decodedReport['push_report'], true);
+            
+            if (isset($data['api_para']['userId']) && isset($data['api_para']['reqId'])) {
+                $userId = $data['api_para']['userId'];
+                $reqId = $data['api_para']['reqId'];
                 // Save the call log data
-                $this->saveCallLog($arr);
+                $this->saveCallLog($data);
                 \Yii::info("User ID: $userId, Request ID: $reqId", 'deep-call');
             } else {
                 \Yii::error('Invalid data received', 'deep-call');
@@ -79,7 +90,11 @@ class DeepCallController extends Controller
     // private function saveCallLog($data)
     public function actionSaveCallLog()
     {
-        $data = json_decode('{\"api_para\":{\"userId\":\"99985561\",\"fromType\":\"number\",\"from\":\"9650901148\",\"toType\":\"number\",\"to\":\"9315723354\",\"reqId\":\"rIhwk_1754661511_W_jMI\"},\"contactListData\":{},\"did\":null,\"cType\":\"CTC\",\"campId\":0,\"excAdm\":75,\"ivrSTime\":\"2025-08-08 19:28:32\",\"ivrETime\":\"2025-08-08 19:28:51\",\"ivrDuration\":19,\"userId\":\"99985561\",\"cNumber\":\"919315723354\",\"masterNumCTC\":\"919650901148\",\"masterAgent\":\"\",\"masterAgentNumber\":\"\",\"masterGroupId\":0,\"talkDuration\":8,\"agentOnCallDuration\":0,\"callId\":\"2me2nb2r2175466151149712937\",\"firstAttended\":\"from\",\"firstAnswerTime\":\"2025-08-08 19:28:35\",\"lastHangupTime\":\"2025-08-08 19:28:51\",\"lastFirstDuration\":16,\"custAnswerSTime\":\"2025-08-08 19:28:43\",\"custAnswerETime\":\"2025-08-08 19:28:51\",\"custAnswerDuration\":48,\"callStatus\":3,\"ivrExecuteFlow\":null,\"HangupBySourceDetected\":0,\"forward\":\"false\",\"totalHoldDuration\":0,\"totalCreditsUsed\":{\"freeHit\":2,\"paidHit\":0,\"amount\":0},\"ivrIdArr\":[],\"aAnsH\":[],\"aH\":[],\"nH\":[\"919315723354\",\"919650901148\"],\"recordings\":[{\"nodeid\":\"to\",\"visitId\":\"1754661514686\",\"file\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"time\":\"2025-08-08 19:28:43\"}],\"voiceMail\":[],\"DTMF\":[],\"cliArr\":{\"9650901148\":[\"917557180901\"],\"9315723354\":[\"917557180901\"]},\"aHDetail\":[],\"nHDetail\":[{\"CTC\":\"to\",\"status\":\"answered\",\"recording\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"ping\":\"direct\",\"number\":\"919315723354\",\"visitId\":\"1754661514686\",\"nodeId\":\"#1\",\"totalRingDuration\":8,\"totalHoldDuration\":0,\"talkDuration\":8,\"talkSTime\":\"2025-08-08 19:28:43\",\"talkETime\":\"2025-08-08 19:28:51\",\"answerSTime\":\"2025-08-08 19:28:43\",\"answerETime\":\"2025-08-08 19:28:51\",\"answerDuration\":8,\"cli\":\"917557180901\",\"retry\":0,\"recordingUrl\":\"https://s-ct3.sarv.com/v2/recording/direct/99985561/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\"},{\"CTC\":\"from\",\"status\":\"answered\",\"recording\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"ping\":\"direct\",\"number\":\"919650901148\",\"visitId\":\"1754661511518\",\"nodeId\":\"#1\",\"totalRingDuration\":3,\"totalHoldDuration\":0,\"talkDuration\":8,\"talkSTime\":\"2025-08-08 19:28:43\",\"talkETime\":\"2025-08-08 19:28:51\",\"answerSTime\":\"2025-08-08 19:28:35\",\"answerETime\":\"2025-08-08 19:28:51\",\"answerDuration\":16,\"cli\":\"917557180901\",\"retry\":0,\"recordingUrl\":\"https://s-ct3.sarv.com/v2/recording/direct/99985561/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\"}],\"modules\":[],\"callDisposition\":\"[]\",\"callBack\":\"\"}', true);
+       // First remove escaped quotes and decode
+        $jsonString = stripslashes('{\"api_para\":{\"userId\":\"99985561\",\"fromType\":\"number\",\"from\":\"9650901148\",\"toType\":\"number\",\"to\":\"9315723354\",\"reqId\":\"rIhwk_1754661511_W_jMI\"},\"contactListData\":{},\"did\":null,\"cType\":\"CTC\",\"campId\":0,\"excAdm\":75,\"ivrSTime\":\"2025-08-08 19:28:32\",\"ivrETime\":\"2025-08-08 19:28:51\",\"ivrDuration\":19,\"userId\":\"99985561\",\"cNumber\":\"919315723354\",\"masterNumCTC\":\"919650901148\",\"masterAgent\":\"\",\"masterAgentNumber\":\"\",\"masterGroupId\":0,\"talkDuration\":8,\"agentOnCallDuration\":0,\"callId\":\"2me2nb2r2175466151149712937\",\"firstAttended\":\"from\",\"firstAnswerTime\":\"2025-08-08 19:28:35\",\"lastHangupTime\":\"2025-08-08 19:28:51\",\"lastFirstDuration\":16,\"custAnswerSTime\":\"2025-08-08 19:28:43\",\"custAnswerETime\":\"2025-08-08 19:28:51\",\"custAnswerDuration\":48,\"callStatus\":3,\"ivrExecuteFlow\":null,\"HangupBySourceDetected\":0,\"forward\":\"false\",\"totalHoldDuration\":0,\"totalCreditsUsed\":{\"freeHit\":2,\"paidHit\":0,\"amount\":0},\"ivrIdArr\":[],\"aAnsH\":[],\"aH\":[],\"nH\":[\"919315723354\",\"919650901148\"],\"recordings\":[{\"nodeid\":\"to\",\"visitId\":\"1754661514686\",\"file\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"time\":\"2025-08-08 19:28:43\"}],\"voiceMail\":[],\"DTMF\":[],\"cliArr\":{\"9650901148\":[\"917557180901\"],\"9315723354\":[\"917557180901\"]},\"aHDetail\":[],\"nHDetail\":[{\"CTC\":\"to\",\"status\":\"answered\",\"recording\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"ping\":\"direct\",\"number\":\"919315723354\",\"visitId\":\"1754661514686\",\"nodeId\":\"#1\",\"totalRingDuration\":8,\"totalHoldDuration\":0,\"talkDuration\":8,\"talkSTime\":\"2025-08-08 19:28:43\",\"talkETime\":\"2025-08-08 19:28:51\",\"answerSTime\":\"2025-08-08 19:28:43\",\"answerETime\":\"2025-08-08 19:28:51\",\"answerDuration\":8,\"cli\":\"917557180901\",\"retry\":0,\"recordingUrl\":\"https://s-ct3.sarv.com/v2/recording/direct/99985561/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\"},{\"CTC\":\"from\",\"status\":\"answered\",\"recording\":\"/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\",\"ping\":\"direct\",\"number\":\"919650901148\",\"visitId\":\"1754661511518\",\"nodeId\":\"#1\",\"totalRingDuration\":3,\"totalHoldDuration\":0,\"talkDuration\":8,\"talkSTime\":\"2025-08-08 19:28:43\",\"talkETime\":\"2025-08-08 19:28:51\",\"answerSTime\":\"2025-08-08 19:28:35\",\"answerETime\":\"2025-08-08 19:28:51\",\"answerDuration\":16,\"cli\":\"917557180901\",\"retry\":0,\"recordingUrl\":\"https://s-ct3.sarv.com/v2/recording/direct/99985561/202508/2me2nb2r2175466151149712937_9315723354_2025-8-8-19-28-43_CTC.mp3\"}],\"modules\":[],\"callDisposition\":\"[]\",\"callBack\":\"\"}');
+        
+            // Decode JSON with error checking
+        $data = json_decode($jsonString, true);
 
         $callLog = \common\models\CallLog::find()->where(['reference_id' => $data['api_para']['reqId']])->one();
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
@@ -116,26 +131,28 @@ class DeepCallController extends Controller
         $callLog->hangup_by_source_detected = $data['HangupBySourceDetected'] ?? null;
         $callLog->forward = $data['forward'] ?? null;
         $callLog->total_hold_duration = $data['totalHoldDuration'] ?? null;
-        $callLog->total_credits_used = json_encode($data['totalCreditsUsed']) ?? null;
-        $callLog->ivr_id_arr = json_encode($data['ivrIdArr']) ?? null;
-        $callLog->a_ans_h = json_encode($data['aAnsH']) ?? null;
-        $callLog->a_h = json_encode($data['aH']) ?? null;
-        $callLog->n_h = json_encode($data['nH']) ?? null;
-        $callLog->recordings = json_encode($data['recordings']) ?? null;
-        $callLog->voice_mail = json_encode($data['voiceMail']) ?? null;
-        $callLog->dtmf = json_encode($data['DTMF']) ?? null;
-        $callLog->cli_arr = json_encode($data['cliArr']) ?? null;
-        $callLog->a_h_detail = json_encode($data['aHDetail']) ?? null;
-        $callLog->n_h_detail = json_encode($data['nHDetail']) ?? null;
-        $callLog->modules = json_encode($data['modules']) ?? null;
-        $callLog->call_disposition = $data['callDisposition'] ?? null;
-        $callLog->call_back = $data['callBack'] ?? null;
-        $callLog->created_updated = time();
+        // $callLog->total_credits_used = json_encode($data['totalCreditsUsed']) ?? null;
+        // $callLog->ivr_id_arr = json_encode($data['ivrIdArr']) ?? null;
+        // $callLog->a_ans_h = json_encode($data['aAnsH']) ?? null;
+        // $callLog->a_h = json_encode($data['aH']) ?? null;
+        // $callLog->n_h = json_encode($data['nH']) ?? null;
+        // $callLog->recordings = json_encode($data['recordings']) ?? null;
+        // $callLog->voice_mail = json_encode($data['voiceMail']) ?? null;
+        // $callLog->dtmf = json_encode($data['DTMF']) ?? null;
+        // $callLog->cli_arr = json_encode($data['cliArr']) ?? null;
+        // $callLog->a_h_detail = json_encode($data['aHDetail']) ?? null;
+        // $callLog->n_h_detail = json_encode($data['nHDetail']) ?? null;
+        // $callLog->modules = json_encode($data['modules']) ?? null;
+        // $callLog->call_disposition = $data['callDisposition'] ?? null;
+        // $callLog->call_back = $data['callBack'] ?? null;
+        // $callLog->created_updated = time();
         if (!$callLog->save()) {
+            echo "Failed to save call log: " . json_encode($callLog->getErrors());
             \Yii::error('Failed to save call log: ' . json_encode($callLog->getErrors()), 'deep-call');
             return false; // Return false if saving failed
         }
         $this->saveCallLogNumbersDetails($data, $callLog->id);
+        echo "Call log saved successfully with ID: " . $callLog->id;
         return true; // Return true if saved successfully
     }
 

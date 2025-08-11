@@ -27,7 +27,7 @@ use Yii;
  * @property int $retry
  * @property string|null $recording_url
  * @property int $created_at
- * @property int $created_updated
+ * @property int $updated_at
  */
 class CallLogNumbersDetails extends \common\models\trierror\ActiveLogRecord implements \common\interfaces\NewStatusInterface
 {
@@ -62,10 +62,10 @@ class CallLogNumbersDetails extends \common\models\trierror\ActiveLogRecord impl
     {
         return [
             [['talk_duration', 'talk_s_time', 'talk_e_time', 'answer_s_time', 'answer_e_time', 'answer_duration', 'recording_url'], 'default', 'value' => null],
-            [['call_log_id', 'ctc', 'status', 'ping', 'number', 'visit_id', 'node_id', 'total_ring_duration', 'total_hold_duration', 'cli', 'retry', 'created_at', 'created_updated'], 'required'],
-            [['call_log_id', 'visit_id', 'total_ring_duration', 'total_hold_duration', 'talk_duration', 'answer_s_time', 'answer_e_time', 'answer_duration', 'retry', 'created_at', 'created_updated'], 'integer'],
-            [['talk_s_time', 'talk_e_time'], 'safe'],
-            [['ctc', 'status', 'ping', 'number', 'node_id', 'cli', 'recording_url'], 'string', 'max' => 255],
+            [['call_log_id', 'ctc', 'status', 'ping', 'number', 'visit_id', 'node_id', 'total_ring_duration', 'total_hold_duration', 'cli', 'retry', 'created_at', 'updated_at'], 'required'],
+            [['call_log_id',  'total_ring_duration', 'total_hold_duration', 'talk_duration', 'answer_s_time', 'answer_e_time', 'answer_duration', 'retry', 'created_at', 'updated_at'], 'integer'],
+            [['talk_s_time', 'talk_e_time','visit_id'], 'safe'],
+            [['ctc', 'status', 'ping', 'number', 'node_id', 'cli', 'recording_url','visit_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -95,7 +95,7 @@ class CallLogNumbersDetails extends \common\models\trierror\ActiveLogRecord impl
             'retry' => 'Retry',
             'recording_url' => 'Recording Url',
             'created_at' => 'Created At',
-            'created_updated' => 'Created Updated',
+            'updated_at' => 'Updated At',
         ];
     }
 }
