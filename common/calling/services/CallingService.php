@@ -140,42 +140,42 @@ class CallingService
 
 
 
-    // private function preparechat()
-    // {
-    //     $chat_model = Chat::find()
-    //         ->andWhere(['id' => $this->call_model->chat_id])
-    //         ->andWhere(['chat_type' => 2])
-    //         ->one();
+   private function preparechat()
+    {
+        $chat_model = Chat::find()
+            ->andWhere(['id' => $this->call_model->chat_id])
+            ->andWhere(['chat_type' => 2])
+            ->one();
 
-    //     if (!$chat_model) {
-    //         return false;
-    //     }
+        if (!$chat_model) {
+            return false;
+        }
 
-    //     $message = "Voice Call";
+        $message = "Voice Call";
 
-    //     $chat_message = new ChatMessage();
-    //     $chat_message->chat_id = $chat_model->id;
-    //     $chat_message->call_id = $this->call_model->id;
-    //     $chat_message->message = $message;
-    //     $chat_message->is_call_message = true;
-    //     $chat_message->status = 1;
-    //     $chat_message->sender_id = $this->call_initiated_user_id;
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->call_id = $this->call_model->id;
+        $chat_message->message = $message;
+        $chat_message->is_call_message = true;
+        $chat_message->status = 1;
+        $chat_message->sender_id = $this->call_initiated_user_id;
 
-    //     if ($chat_message->save(false)) {
+        if ($chat_message->save(false)) {
 
-    //         $chat = Chat::find()->where(['id' => $chat_model->id])->one();
-    //         $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
-    //         $chat->last_message_at = time();
-    //         $chat->call_id = $this->call_model->id;
-    //         $chat->is_call_request = false;
-    //         $chat->sender_id = $this->call_initiated_user_id;
-    //         $chat->is_lead_chat_open_for_user = 1;
-    //         $chat->status = 1;
-    //         $chat->is_seen = 0;
-    //         $chat->created_at = time();
-    //         return $chat->save(false);
-    //     }
+            $chat = Chat::find()->where(['id' => $chat_model->id])->one();
+            $chat->last_message = \common\models\GeneralModel::strMaxlength($message);
+            $chat->last_message_at = time();
+            $chat->call_id = $this->call_model->id;
+            $chat->is_call_request = false;
+            $chat->sender_id = $this->call_initiated_user_id;
+            $chat->is_lead_chat_open_for_user = 1;
+            $chat->status = 1;
+            $chat->is_seen = 0;
+            $chat->created_at = time();
+            return $chat->save(false);
+        }
 
-    //     return false;
-    // }
+        return false;
+    }
 }
