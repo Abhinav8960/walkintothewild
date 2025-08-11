@@ -66,7 +66,7 @@ class CallingService
             ]), __METHOD__);
             return false;
         }
-        return $this->queue() && $this->callImmediately();
+        return $this->queue() && $this->callImmediately() && $this->preparechat();
     }
 
     /**
