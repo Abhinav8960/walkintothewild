@@ -82,7 +82,6 @@ class GalleryController extends Controller
                 if ($partnerGallery) {
                     $partnerGallery->version = $lastVersion->version;
                     $partnerGallery->save(false);
-                    echo "Updated partner gallery ID {$partnerGalleryId} to version {$lastVersion->version}\n";
                 }
             }
         }
