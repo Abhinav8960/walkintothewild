@@ -1,6 +1,6 @@
 <ul class="mynav nav-tabs flex-row mt-4">
     <li class="nav-item" role="presentation">
-        <a href="/package/default/update?id=<?= $package->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
+        <a href="/package/default/update?id=<?= $package->package_id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
     </li>
     <li class="nav-item" role="presentation">
         <a href="/package/default/itinerary?id=<?= $package->id ?>" class="nav-link <?= isset($itinerary_active) ? $itinerary_active : '' ?>">Itinerary</a>
