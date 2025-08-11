@@ -101,8 +101,8 @@ class CallingService
             'user_id' => \Yii::$app->params['airphone_api_user_id'],
             // 'agent' => $this->request_caller_2_no,
             // 'caller' => $this->request_caller_1_no,
-            'from' => $this->request_caller_1_no,
-            'to' => $this->request_caller_2_no,
+            'from' => $this->request_caller_2_no, // This is the number from which the call is made
+            'to' => $this->request_caller_1_no, // This is the number to be called
             'token' => \Yii::$app->params['airphone_api_token'],
             'reqId' => $this->reference_id
         ];
