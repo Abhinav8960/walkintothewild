@@ -12,3 +12,7 @@ ALTER TABLE `call_log` CHANGE `master_agent_number` `master_agent_number` VARCHA
 ALTER TABLE `call_log_numbers_details` CHANGE `created_updated` `updated_at` INT NOT NULL;
 
 ALTER TABLE `call_log_numbers_details` CHANGE `visit_id` `visit_id` VARCHAR(255) NOT NULL;
+
+ALTER TABLE `call_log` CHANGE `ivr_duration` `ivr_duration` INT NULL DEFAULT NULL;
+
+ALTER TABLE `call_log` CHANGE `service_user_id` `service_user_id` INT NULL DEFAULT NULL, CHANGE `master_group_id` `master_group_id` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL, CHANGE `last_first_duration` `last_first_duration` INT NULL DEFAULT NULL, CHANGE `cust_answer_duration` `cust_answer_duration` INT NULL DEFAULT NULL, CHANGE `hangup_by_source_detected` `hangup_by_source_detected` INT NULL DEFAULT NULL, CHANGE `total_hold_duration` `total_hold_duration` INT NULL DEFAULT NULL;
