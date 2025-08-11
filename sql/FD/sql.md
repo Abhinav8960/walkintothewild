@@ -49,3 +49,6 @@ ALTER TABLE `booking`
   DROP `datetime_of_approval_by_admin`;
 
   INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'SSBU', 'share safari booked by user', 'sharesafaribookedbyuser-html', '1', NULL, NULL, '1716971669', '1');
+
+
+  ALTER TABLE `chat` ADD `share_safari_id` INT NULL DEFAULT NULL AFTER `chat_type`;

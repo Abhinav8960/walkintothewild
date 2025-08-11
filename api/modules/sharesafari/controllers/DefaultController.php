@@ -14,6 +14,8 @@ use common\models\sharesafari\ShareSafariParklist;
 use frontend\models\form\CreateDepartureForm;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
+use api\models\chat\Chat;
+use api\models\chat\ChatMessage;
 use api\models\cms\flagreason\Flagreason;
 use api\models\leads\sharesafari\ShareSafariLead;
 use api\models\leads\sharesafari\ShareSafariLeadInstallment;
@@ -61,7 +63,7 @@ class DefaultController extends SafariController
                 'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update', 'booking'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'booking'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'booking', 'chat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -1291,17 +1293,16 @@ class DefaultController extends SafariController
 
         if (in_array($payment_gateway, [ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU, ShareSafariLeadInstallment::PAYMENT_GATEWAY_PAYU_LABEL])) {
             $payment_gateway_instance = new \common\components\payments\payu\payuPayment();
-              $response = $payment_gateway_instance->initiateShareSafariLeadPayment($share_safari_lead, $productinfo = $share_safari_lead->shareSafari->share_safari_title.' Booking', Transaction::SOURCE_SHARE_SAFARI);
-
-        } 
+            $response = $payment_gateway_instance->initiateShareSafariLeadPayment($share_safari_lead, $productinfo = $share_safari_lead->shareSafari->share_safari_title . ' Booking', Transaction::SOURCE_SHARE_SAFARI);
+        }
         // elseif (in_array($payment_gateway, [LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU, LeadPartnerQuoteInstallments::PAYMENT_GATEWAY_PAYU_LABEL])) {
         //     return $this->payu($lead_partner_quotes_id);
         // }
-        else{
+        else {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Payment Gateway not supported!!!"]);
         }
 
-       
+
         if ($response['status'] == 1) {
             return Yii::$app->api->sendResponse($data = $response);
         } else {
@@ -1546,5 +1547,70 @@ class DefaultController extends SafariController
         ];
 
         return json_encode($json);
+    }
+
+    public function actionChat($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
+        if (!$share_safari) {
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+        }
+
+        if ($this->userinfo) {
+
+            if ($share_safari->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                if ($this->userinfo->partner) {
+                    if ($this->userinfo->partner->id != $share_safari->host_user_id) {
+                        $message = Yii::$app->api->messageManager->getMessage('common.operator_comment_restricted');
+                        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+                    }
+                }
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                if (!$share_safari_intrested) {
+                    $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+                }
+
+                $message = \Yii::$app->request->post('message', '');
+                if (empty($message)) {
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message can not be empty!!!"]);
+                }
+
+                // prepare chat if not avalable between user and share safari and operators user id
+                $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'user_id' => $this->userinfoId, 'recipient_user_id' => $share_safari->host_user_id])->one();
+                if (!empty($chat)) {
+                    $chat_model = new Chat();
+                    $chat_model->generateChatHash();
+                    $chat_model->chat_type = Chat::CHAT_TYPE_SHARE_SAFARI;
+                    $chat_model->sender_id = $this->userinfoId;
+                    $chat_model->user_id = $this->userinfoId;
+                    $chat_model->recipient_user_id = $share_safari->host_user_id;
+                    $chat_model->share_safari_id = $share_safari->id;
+                }
+                $chat_model->last_message = \common\models\GeneralModel::strMaxWord($message);
+                $chat_model->last_message_at = time();
+                $chat_model->call_id = null;
+                $chat_model->is_call_request = false;
+                $chat_model->status = 1;
+                $chat_model->is_seen = 0;
+                $chat_model->created_at = time();
+                $chat_model->created_by = $this->userinfoId->id;
+                $chat_model->updated_at = time();
+                $chat_model->updated_by = $this->userinfoId->id;
+                $chat_model->save(false);
+
+                $chat_message = new ChatMessage();
+                $chat_message->chat_id = $chat_model->id;
+                $chat_message->message = $message;
+                $chat_message->partner_gallery_version_id = null;
+                $chat_message->gallery = null;
+                $chat_message->data = null;
+                $chat_message->status = 1;
+                $chat_message->created_by = $this->userinfo->id;
+                $chat_message->save(false);
+            }
+        }
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "you can not chat on this safari!!!"]);
     }
 }

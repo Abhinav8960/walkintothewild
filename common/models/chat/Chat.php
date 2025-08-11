@@ -53,7 +53,8 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['user_id', 'lead_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_call_request', 'sender_id', 'is_lead_chat_open_for_user', 'is_closed'], 'integer'],
+            [['user_id', 'lead_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'is_seen', 'is_quote_accept', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_call_request', 'sender_id', 'is_lead_chat_open_for_user', 'is_closed','share_safari_id'], 'integer'],
+            [['share_safari_id'],'safe'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
