@@ -57,7 +57,7 @@ class DeepCallController extends Controller
     public function actionIndex()
     {
         $pushReport = Yii::$app->request->post('push_report');
-        \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($data), 'deep-call');
+        \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($pushReport), 'deep-call');
 
         // First remove escaped quotes and decode
         $jsonString = stripslashes($pushReport);
