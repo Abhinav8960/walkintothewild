@@ -1,6 +1,6 @@
 <ul class="mynav nav-tabs flex-row mt-4">
     <li class="nav-item" role="presentation">
-        <a href="/sharesafari/default/update?id=<?= $shared_safari_departure_version_model->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
+        <a href="/sharesafari/default/update?id=<?= $shared_safari_departure_version_model->share_safari_id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>">Overview</a>
     </li>
     <li class="nav-item" role="presentation">
         <a href="/sharesafari/default/itinerary?id=<?= $shared_safari_departure_version_model->id ?>" class="nav-link <?= isset($itinerary_active) ? $itinerary_active : '' ?>">Itinerary</a>
