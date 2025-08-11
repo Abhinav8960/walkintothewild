@@ -680,20 +680,4 @@ class TempController extends Controller
         return json_encode($json);
     }
 
-    // public function actionStep4()
-    // {
-    //     $feed_models = Feeds::find()->where(['collection' => 2, 'status' => 1])->all();
-    //     foreach ($feed_models as $feed) {
-    //         $package = Package::find()->where(['id' => $feed->collection_id, 'status' => 1])->limit(1)->one();
-    //         if ($package) {
-    //             $operator = SafariOperator::find()->where(['id' => $package->safari_operator_id, 'status' => 1])->limit(1)->one();
-    //             if ($operator) {
-    //                 $feed->status = 1;
-    //             } else {
-    //                 $feed->status = 0;
-    //             }
-    //             $feed->save(false);
-    //         }
-    //     }
-    // }
 }
