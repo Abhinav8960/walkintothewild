@@ -556,7 +556,7 @@ class DefaultController extends Controller
                 'no_of_day' => $package->no_of_day,
                 'no_of_night' => $package->no_of_night,
                 'no_of_safari' => $package->no_of_safari,
-                'cost_per_person' => $package->cost_per_person,
+                'cost_per_person' => (int) ceil($package->cost_per_person),
                 'cost_per_two_person' => (int) ceil($package->cost_per_two_person),
                 'price_after_discount' => (int) ceil($package->price_after_discount),
 

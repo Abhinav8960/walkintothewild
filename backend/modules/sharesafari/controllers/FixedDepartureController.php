@@ -373,6 +373,7 @@ class FixedDepartureController extends Controller
                 'share_safari_agenda' => $share_safari->share_safari_agenda,
                 'stay_category_display' => $share_safari->stay_category_display,
                 'stay_category_id' => $share_safari->stay_category_id,
+                'faqs' => ArrayHelper::toArray($share_safari->faqs),
                 'parks' => ArrayHelper::toArray($share_safari->parks),
                 'includeds' => ArrayHelper::toArray($share_safari->includeds),
                 'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),

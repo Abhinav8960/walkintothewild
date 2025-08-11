@@ -1447,8 +1447,9 @@ class DefaultController extends SafariController
                 'stay_category_display' => $share_safari->stay_category_display,
                 'stay_category_id' => $share_safari->stay_category_id,
                 'parks' => ArrayHelper::toArray($share_safari->parks),
-                'includeds' => ArrayHelper::toArray($share_safari->includeds),
-                'share_safari_days' => ArrayHelper::toArray($share_safari->share_safari_days),
+                'faqs' => [],
+                'includeds' => [],
+                'share_safari_days' => [],
                 'partner_gallery_id' => $share_safari->partner_gallery_id,
                 'gallery_json' => $share_safari->gallery_json
             ],
