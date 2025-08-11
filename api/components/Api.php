@@ -90,7 +90,7 @@ class Api extends Component
         // return $response = json_encode($response);
         if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
 
-            echo $this->encyptResponse($response);
+            return $this->encyptResponse($response);
         }
 
         echo json_encode($response);
