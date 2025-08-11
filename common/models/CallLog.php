@@ -308,4 +308,30 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
             21 => 'Cust. Hangup' //	To Hangup
         ];
     }
+
+    public static function callStatusForChatList()
+    {
+
+        return [
+            3 => 'Call Connetced', //Both Answered
+            4 => 'Call not connected.',    //To Ans. - From Unans.
+            5 => 'Cust. Ans',    //To Ans
+            6 => 'Call not connected', //	To Unans - From Ans.
+            7 => 'Call not connected', //From Unanswered
+            8 => 'Call not connected', //	To Unans.
+            9 => 'Call not connected', //	Both Unanswered
+            10 => 'Call not connected', //	From Ans.
+            11 => 'Call not connected', //	Rejected Call
+            12 => 'Call not connected', //	Skipped
+            13 => 'Call not connected', //	From Failed
+            14 => 'Call not connected', //	To Failed - From Ans.
+            15 => 'Call not connected', //	To Failed
+            16 => 'Call not connected', //	To Ans - From Failed
+            17 => 'Busy', //	From Busy
+            18 => 'Call not connected', //	To Ans. - From Not Found
+            19 => 'Call not connected', //	To Unans. - From Busy
+            20 => 'Call not connected', //	To Hangup in Queue
+            21 => 'Call not connected' //	To Hangup
+        ];
+    }
 }

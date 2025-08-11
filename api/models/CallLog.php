@@ -93,7 +93,8 @@ class CallLog extends \common\models\CallLog
 
     public function getCallstatuslabel()
     {
-        $callStatusLabels = [
+        if($this->service == \common\models\CallLog::SERVICE_AIR_PHONE) {
+            $callStatusLabels = [
             'ANSWERED' => 'Call Connetced',
             'NOANSWER' => 'Call not connected',
             'BUSY' => 'Busy',
@@ -102,5 +103,10 @@ class CallLog extends \common\models\CallLog
             return isset($callStatusLabels[$this->dial_status]) ? $callStatusLabels[$this->dial_status] : 'Call Initiated';
         }
         return 'Call Initiated';
+        } elseif ($this->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+            return $this->call_status ? \common\models\CallLog::callStatusForChatList()[$this->call_status] : 'Call Initiated';
+        } 
+        return 'Call Initiated';
+        
     }
 }
