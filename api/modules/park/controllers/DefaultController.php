@@ -125,9 +125,10 @@ class DefaultController extends RestController
         }
 
         if ($model->status != SafariPark::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['data' => $model], ['message' => "Park Not in use!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_in_use',['{var}'=> 'Park']);
+            return Yii::$app->api->sendResponse($data = ['data' => $model->toArray()], ['message' => $message]);
         }
-        return Yii::$app->api->sendResponse($data = ['data' => $model]);
+        return Yii::$app->api->sendResponse($data = ['data' => $model->toArray()]);
     }
 
 
