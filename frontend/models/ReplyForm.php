@@ -94,7 +94,8 @@ class ReplyForm extends Model
     {
         if($reply->status == 1){
             $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
-            return new  \common\events\sharesafari\SafariCommentByUser($reply->share_safari->slug,$user->name,$reply->share_safari_id);     
+            $share_safari = ShareSafari::find()->where(['status'=>ShareSafari::STATUS_ACTIVE])->andWhere(['id'=>$reply->share_safari_id])->one();
+            return new  \common\events\sharesafari\SafariCommentByUser($share_safari->slug,$user->name,$reply->share_safari_id);     
         }
        
     }
