@@ -21,7 +21,7 @@ use common\models\GeneralModel;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
-     public function fields()
+    public function fields()
     {
 
         $fields = [];
@@ -67,7 +67,6 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 'seat_full_status',
                 'park_title',
                 'park_slug',
-                'status'
             ];
         }
 
@@ -90,6 +89,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'witw_average_rating',
             'witw_review_count',
             'is_safari_operator',
+            'status',
         ]);
         return $fields;
     }
