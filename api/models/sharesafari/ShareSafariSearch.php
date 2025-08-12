@@ -192,7 +192,7 @@ class ShareSafariSearch extends ShareSafari
 
     public function managesearch($params, $safari_operator_id)
     {
-        $query = ShareSafari::find()->where(['host_user_id' => $safari_operator_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
+        $query = ShareSafari::find()->where(['safari_operator_id' => $safari_operator_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
 
 
         // add conditions that should always apply here
@@ -217,6 +217,7 @@ class ShareSafariSearch extends ShareSafari
         $query->andFilterWhere([
             'id' => $this->id,
             'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.safari_operator_id' => $this->safari_operator_id,
             'share_safari.park_id' => $this->park_id,
             'share_safari.host_type' => $this->host_type,
             'share_safari.status' => $this->status,

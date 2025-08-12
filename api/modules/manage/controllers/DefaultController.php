@@ -72,6 +72,8 @@ class DefaultController extends RestController
 
     public function actionEditRequest()
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $safari_operator_id = $safari_operator->id;
 

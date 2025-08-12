@@ -94,6 +94,8 @@ class SharedsafariController extends RestController
 
     public function actionCreateFixedDeparture()
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureForm();
         $model->host_user_id =  $safari_operator->id;
@@ -150,6 +152,8 @@ class SharedsafariController extends RestController
 
     public function actionUpdateFixedDeparture($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
@@ -239,6 +243,8 @@ class SharedsafariController extends RestController
 
     public function actionItinerary($slug, $day = 1)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $share_safari_id = $shared_safari_departure_model->id;
@@ -271,6 +277,8 @@ class SharedsafariController extends RestController
 
     public function actionInclusion($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -330,6 +338,8 @@ class SharedsafariController extends RestController
 
     public function actionGettingThere($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -355,6 +365,8 @@ class SharedsafariController extends RestController
 
     public function actionPolicyInfo($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
@@ -379,6 +391,8 @@ class SharedsafariController extends RestController
 
     public function actionFaqs($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
@@ -393,6 +407,8 @@ class SharedsafariController extends RestController
      */
     public function actionCreateFaq($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new ShareSafariFaqForm();
@@ -426,6 +442,8 @@ class SharedsafariController extends RestController
 
     public function actionGallery($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -436,6 +454,8 @@ class SharedsafariController extends RestController
 
     public function actionCreateGallery($slug, $id = null)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -467,6 +487,8 @@ class SharedsafariController extends RestController
 
     public function actionUpdateFaq($slug, $faq_id)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
