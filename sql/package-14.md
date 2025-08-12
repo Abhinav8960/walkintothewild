@@ -11,3 +11,6 @@ ALTER TABLE `package_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gal
 
 php yii package-temp/step-1;
 php yii package-temp/step-2;
+
+ALTER TABLE `chat_message` ADD `partner_gallery_version` INT NULL DEFAULT NULL AFTER `partner_gallery_version_id`;
+ALTER TABLE `chat_message_history` ADD `partner_gallery_version` INT NULL DEFAULT NULL AFTER `partner_gallery_version_id`;

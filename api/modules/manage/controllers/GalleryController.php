@@ -66,7 +66,7 @@ class GalleryController extends RestController
 
         $safari_operator = $this->module->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        $searchModel->is_live = 1;
+        $searchModel->listing_status = 1;
         // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
         $searchModel->safari_operator_id = $safari_operator->id;
 

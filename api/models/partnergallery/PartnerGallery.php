@@ -13,40 +13,33 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
 
         $fields = [
-            // 'id',
             'title',
             'slug',
             'private_url',
-            // 'public_url',
             'thumbnail',
             'status' =>  function () {
-                return (bool) $this->status;
+                return $this->listing_status == 1 ? true : false;
             },
             'can_share' =>  function () {
-                return !empty($this->live_images) ?  true : false;
+                return  $this->listing_status == 1 ? true : false;
             },
             'gallery_image_count' => function () {
-                return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
+                return (int) $this->gallery_images_count;
             },
             'live_image_count' => function () {
-                if (!empty($this->live_images)) {
-                    $c_arr =  json_decode($this->live_images, true);
-                    return $c_arr['image_count'] ?? 0;
-                }
-                return 0;
+                return (int) $this->live_gallery_images_count;
             },
             'can_send_for_approval' =>  function () {
-                return (bool) $this->send_for_approval;
+                return  $this->edit_status == 1 ? true : false;
             },
             'can_edit' =>  function () {
-                return (bool) $this->in_draft;
+                return $this->edit_status == 1 ? true : false;
             },
             'gallery_status_label' => function ($model) {
                 return $model->getStatusLabel();
             }
         ];
 
-        // Add images field if the layout matches
         if (in_array(\Yii::$app->controller->layout, [self::PARTNER_GALLERY_API_LAYOUT_FULL])) {
             $fields['images'] = $this->galleryActiveImages;
             unset($fields['private_url']);
@@ -81,11 +74,7 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getGalleryActiveImages()
     {
-        // return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
-        if (!empty($this->live_images)) {
-            $c_arr =  json_decode($this->live_images, true);
-            return $c_arr['images'] ?? [];
-        }
+        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
     }
 
     // public function PrepareFullResponse()
@@ -104,11 +93,11 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getStatuslabel()
     {
-        if ($this->in_draft == 1) {
+        if ($this->edit_status == 1) {
             return "In Draft";
-        } else if ($this->send_for_approval == 1) {
+        } else if ($this->edit_status == 2) {
             return "Send for Approval";
-        } else if ($this->is_approved == 1) {
+        } else if ($this->listing_status == 1) {
             return "Approved";
         }
     }

@@ -135,7 +135,7 @@ class DefaultController extends RestController
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
         if (!$chat) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
         if ($chat->chat_type == 1 && $chat->sender_id != $this->userinfo->id) {
@@ -170,7 +170,7 @@ class DefaultController extends RestController
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'User']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
@@ -178,7 +178,7 @@ class DefaultController extends RestController
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
+                $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
                 return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
             // if ($chat_model->is_closed == 1) {
@@ -214,6 +214,7 @@ class DefaultController extends RestController
         $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
         $gallery = null;
         $partner_gallery_version_id = null;
+        $partner_gallery_version = null;
         if (empty($message) && empty($gallery_slug)) {
             $message = Yii::$app->api->messageManager->getMessage('common.message_required');
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
@@ -225,16 +226,17 @@ class DefaultController extends RestController
             if ($partnerGallery) {
                 // Safely call toArray() if $gallery is not null
                 //  $gallery = json_encode($partnerGallery->PrepareFullResponse());
-                $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['is_live' => 1])->limit(1)->one();
+                $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['version' => $partnerGallery->version])->limit(1)->one();
                 $partner_gallery_version_id = $partner_gallery_version->id;
+                $partner_gallery_version = $partnerGallery->version;
                 $gallery = $partnerGallery->live_images;
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -255,6 +257,7 @@ class DefaultController extends RestController
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
         $chat_message->partner_gallery_version_id = $partner_gallery_version_id ?? null;
+        $chat_message->partner_gallery_version = $partner_gallery_version ?? null;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
@@ -400,7 +403,7 @@ class DefaultController extends RestController
 
         if ($model->validate()) {
             if ($model->request($this->userinfo)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval',['{var}'=>'Quatation']);
+                $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval', ['{var}' => 'Quatation']);
                 return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
@@ -445,7 +448,7 @@ class DefaultController extends RestController
     {
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Gallery']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -460,16 +463,16 @@ class DefaultController extends RestController
     {
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'User']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 400);
         }
-        $message = Yii::$app->api->messageManager->getMessage('common.found',['{var}'=>'Chat']);
+        $message = Yii::$app->api->messageManager->getMessage('common.found', ['{var}' => 'Chat']);
         return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => $message]);
     }
 
@@ -483,7 +486,7 @@ class DefaultController extends RestController
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'User']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
@@ -491,11 +494,11 @@ class DefaultController extends RestController
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
+                $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
                 return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
         } else {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Chat']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         };
 
@@ -624,10 +627,10 @@ class DefaultController extends RestController
             if ($chat) {
                 Chat::lastMessageUpdate($chat, $last_message);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Message']);
+            $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Message']);
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => $message]);
         } else {
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Message']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Message']);
             return Yii::$app->api->sendResponse([], ['message' => $message], 500);
         }
     }
@@ -664,7 +667,7 @@ class DefaultController extends RestController
             if ($chat) {
                 Chat::lastMessageUpdate($chat, $last_message);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.deleted',['{var}'=>'Message']);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted', ['{var}' => 'Message']);
             return Yii::$app->api->sendResponse(['status' => 1], ['message' => $message]);
         } else {
             $message = Yii::$app->api->messageManager->getMessage('common.delete_failed');

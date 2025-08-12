@@ -197,6 +197,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $history->data = $this->data;
         $history->gallery = $this->gallery;
         $history->partner_gallery_version_id = $this->partner_gallery_version_id;
+        $history->partner_gallery_version = $this->partner_gallery_version;
         $history->transaction_id = $this->transaction_id;
         $history->created_at = $this->created_at;
         $history->created_by = $this->created_by;

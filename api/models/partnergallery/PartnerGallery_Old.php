@@ -1,12 +1,12 @@
 <?php
 
-// namespace api\models\partnergallery;
+namespace api\models\partnergallery;
 
 use api\models\park\SafariPark;
 use api\models\partnergalleryimage\PartnerGalleryImage;
 use Yii;
 
-class PartnerGallery extends \common\models\partnergallery\PartnerGallery
+class PartnerGallery_Old extends \common\models\partnergallery\PartnerGallery
 {
     public function fields()
     {
@@ -22,43 +22,25 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
             'status' =>  function () {
                 return (bool) $this->status;
             },
-            // 'can_share' =>  function () {
-            //     return !empty($this->live_images) ?  true : false;
-            // },
             'can_share' =>  function () {
-                return (bool) $this->is_live;
+                return !empty($this->live_images) ?  true : false;
             },
-            // 'gallery_image_count' => function () {
-            //     return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
-            // },
             'gallery_image_count' => function () {
-                return (int) $this->gallery_images_count;
+                return PartnerGalleryImage::find()->where(['partner_gallery_id' => $this->id, 'status' => PartnerGalleryImage::STATUS_ACTIVE])->count();
             },
-            // 'live_image_count' => function () {
-            //     if (!empty($this->live_images)) {
-            //         $c_arr =  json_decode($this->live_images, true);
-            //         return $c_arr['image_count'] ?? 0;
-            //     }
-            //     return 0;
-            // },
             'live_image_count' => function () {
-               return (int) $this->live_gallery_images_count;
+                if (!empty($this->live_images)) {
+                    $c_arr =  json_decode($this->live_images, true);
+                    return $c_arr['image_count'] ?? 0;
+                }
+                return 0;
             },
-            // 'can_send_for_approval' =>  function () {
-            //     return (bool) $this->can_send_for_approval;
-            // },
             'can_send_for_approval' =>  function () {
                 return (bool) $this->send_for_approval;
             },
-            // 'can_edit' =>  function () {
-            //     return (bool) $this->can_send_for_approval;
-            // },
             'can_edit' =>  function () {
                 return (bool) $this->in_draft;
             },
-            // 'gallery_status_label' => function () {
-            //     return $this->can_send_for_approval == 1 ? "Send for Approval" : null;
-            // }
             'gallery_status_label' => function ($model) {
                 return $model->getStatusLabel();
             }
@@ -99,7 +81,11 @@ class PartnerGallery extends \common\models\partnergallery\PartnerGallery
 
     public function getGalleryActiveImages()
     {
-        return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
+        // return $this->hasMany(PartnerGalleryImage::class, ['partner_gallery_id' => 'id'])->andWhere(['partner_gallery_image.status' => 1])->orderBy(['partner_gallery_image.sequence' => SORT_ASC]);
+        if (!empty($this->live_images)) {
+            $c_arr =  json_decode($this->live_images, true);
+            return $c_arr['images'] ?? [];
+        }
     }
 
     // public function PrepareFullResponse()

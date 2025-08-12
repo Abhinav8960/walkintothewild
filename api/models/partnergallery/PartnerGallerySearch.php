@@ -17,7 +17,8 @@ class PartnerGallerySearch extends PartnerGallery
     {
         return [
             [['safari_operator_id', 'title'], 'safe'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count', 'is_live'], 'integer'],
+            // [['safari_operator_id', 'listing_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_approved', 'send_for_approval', 'in_draft', 'live_gallery_images_count', 'gallery_images_count', 'is_live'], 'integer'],
+            [['safari_operator_id', 'listing_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'live_gallery_images_count', 'gallery_images_count'], 'integer'],
         ];
     }
 
@@ -39,7 +40,7 @@ class PartnerGallerySearch extends PartnerGallery
      */
     public function search($params)
     {
-        $query = PartnerGallery::find()->where(['status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]]);
+        $query = PartnerGallery::find()->where(['listing_status' => [PartnerGallery::STATUS_ACTIVE, PartnerGallery::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -64,15 +65,15 @@ class PartnerGallerySearch extends PartnerGallery
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
-            'in_draft' => $this->in_draft,
-            'is_approved' => $this->is_approved,
-            'is_live' => $this->is_live,
-            'send_for_approval' => $this->send_for_approval,
+            // 'in_draft' => $this->in_draft,
+            // 'is_approved' => $this->is_approved,
+            // 'is_live' => $this->is_live,
+            // 'send_for_approval' => $this->send_for_approval,
             // 'created_at' => $this->created_at,
             // 'created_by' => $this->created_by,
             // 'updated_at' => $this->updated_at,
             // 'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'listing_status' => $this->listing_status,
         ]);
 
         return $dataProvider;
