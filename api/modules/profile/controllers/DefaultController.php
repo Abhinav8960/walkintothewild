@@ -81,7 +81,7 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::USER_API_LAYOUT_FULL;
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
@@ -92,11 +92,11 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         if ($user->id == $this->userinfoId) {
-            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->all();
+            $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT, ShareSafari::STATUS_SUSPEND]])->all();
             return Yii::$app->api->sendResponse($data = ['share_safari' => $organized_by]);
         } else {
             $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")])->all();
@@ -108,7 +108,7 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         if ($user->id == $this->userinfoId) {
@@ -138,12 +138,12 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId == $user->id) {
-                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted',['{var}'=>'yourself']);
+                $message = Yii::$app->api->messageManager->getMessage('common.follow_restricted', ['{var}' => 'yourself']);
                 return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
             $follower = UserFollow::find()->where(['user_id' => $this->userinfoId, 'follow_user_id' => $user->id])->limit(1)->one();
@@ -178,7 +178,7 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
         if ($this->userinfo) {
@@ -256,7 +256,7 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
@@ -275,7 +275,7 @@ class DefaultController extends RestController
     {
         $user = $this->findUserbyHandle($user_handle);
         if ($user->partner) {
-            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator',['{var}'=>'profile']);
+            $message = Yii::$app->api->messageManager->getMessage('common.sent_to_operator', ['{var}' => 'profile']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
