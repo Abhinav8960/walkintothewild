@@ -355,7 +355,6 @@ class FixedDepartureController extends Controller
                 'organized_by_image' => $share_safari->organizedbyimage,
                 'organized_slug' => $share_safari->organizedslug,
                 'shared_image_path' => $share_safari->sharedimagepath,
-                'seat_full_status' => $share_safari->seat_full_status,
                 'park_title' => $share_safari->park_title,
                 'park_slug' => $share_safari->park_slug,
                 'cost_per_person' => (int) ceil($share_safari->cost_per_person),

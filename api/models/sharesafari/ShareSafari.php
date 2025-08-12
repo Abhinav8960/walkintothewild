@@ -76,6 +76,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'is_wishlist',
             'is_followed',
             'interseted_user_count',
+            'seat_full_status',
             'resource_uri',
             'can_comment',
             'can_reply',
