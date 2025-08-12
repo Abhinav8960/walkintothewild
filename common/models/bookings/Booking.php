@@ -265,7 +265,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         $leadInstallment = ShareSafariLead::findOne($this->share_safari_lead_id);
         if ($leadInstallment) {
-            return  $leadInstallment->openChat($this->share_safari_lead_id);
+            return  $leadInstallment->openChat($this->share_safari_lead_id,$this->reference_id);
         }
         return true;
     }
