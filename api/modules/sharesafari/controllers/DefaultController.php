@@ -1340,7 +1340,7 @@ class DefaultController extends SafariController
             $share_safari->partner_gallery_id = $model->partner_gallery_id;
             $share_safari->gallery_json = $model->gallery_json;
             $share_safari->gallery_version = $model->gallery_version;
-            if ($share_safari->status == [ShareSafari::STATUS_CREATE, ShareSafari::STATUS_ACTIVE]) {
+            if (in_array($share_safari->status, [ShareSafari::STATUS_CREATE, ShareSafari::STATUS_ACTIVE])) {
                 $share_safari->status = ShareSafari::STATUS_ACTIVE;
             } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
                 $share_safari->status = ShareSafari::STATUS_FULL_SEAT;
