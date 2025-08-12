@@ -2,6 +2,8 @@
 
 namespace common\models\leads\sharesafari;
 
+use api\models\chat\ChatMessage;
+use common\models\chat\Chat;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafari;
 use Yii;
@@ -155,6 +157,44 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
 
     public function openChat($share_safari_lead_id)
     {
+
+        $share_safari_lead = ShareSafariLead::find()->where(['id' => $share_safari_lead_id])->one();
+        // prepare chat if not avalable between user and share safari and operators user id
+        $chat_model = Chat::find()->where(['share_safari_id' => $share_safari_lead->share_safari_id, 'user_id' => $share_safari_lead->user_id, 'recipient_user_id' => $share_safari_lead->share_safari_user_id])->one();
+        $message = "Hi, I am interested in the " . $share_safari_lead->shareSafari->share_safari_title . ". Payment already Done.\n ";
+        $message .= "Here is the reference No " . $this->reference_id . " \n";
+        if (empty($chat_model)) {
+            $chat_model = new Chat();
+            $chat_model->generateChatHash();
+            $chat_model->chat_type = Chat::CHAT_TYPE_SHARE_SAFARI;
+            $chat_model->sender_id = $share_safari_lead->user_id;
+            $chat_model->user_id = $share_safari_lead->user_id;
+            $chat_model->recipient_user_id = $share_safari_lead->share_safari_user_id;
+            $chat_model->share_safari_id = $share_safari_lead->share_safari_id;
+            $chat_model->created_at = time();
+            $chat_model->created_by = $share_safari_lead->user_id;
+        }
+        $chat_model->last_message = \common\models\GeneralModel::strMaxWord($message);
+        $chat_model->last_message_at = time();
+        $chat_model->call_id = null;
+        $chat_model->is_call_request = false;
+        $chat_model->status = 1;
+        $chat_model->is_seen = 0;
+        $chat_model->is_lead_chat_open_for_user = 1;
+        $chat_model->updated_at = time();
+        $chat_model->updated_by = $share_safari_lead->user_id;
+        $chat_model->save(false);
+
+        $chat_message = new ChatMessage();
+        $chat_message->chat_id = $chat_model->id;
+        $chat_message->message = $message;
+        $chat_message->partner_gallery_version_id = null;
+        $chat_message->gallery = null;
+        $chat_message->data = null;
+        $chat_message->status = 1;
+        $chat_message->created_by = $share_safari_lead->user_id;
+        $chat_message->save(false);
+
 
         return true; // add chat opening logic
 

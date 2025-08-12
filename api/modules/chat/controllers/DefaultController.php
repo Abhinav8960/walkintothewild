@@ -93,10 +93,10 @@ class DefaultController extends RestController
 
     public function actionQuatationChat()
     {
-        if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
-            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
+            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         } else {
-            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

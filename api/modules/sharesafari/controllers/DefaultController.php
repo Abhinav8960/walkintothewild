@@ -1577,15 +1577,17 @@ class DefaultController extends SafariController
                 }
 
                 // prepare chat if not avalable between user and share safari and operators user id
-                $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'user_id' => $this->userinfoId, 'recipient_user_id' => $share_safari->host_user_id])->one();
-                if (!empty($chat)) {
+                $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'user_id' => $this->userinfoId, 'recipient_user_id' => $share_safari->user_id])->one();
+                if (empty($chat_model)) {
                     $chat_model = new Chat();
                     $chat_model->generateChatHash();
                     $chat_model->chat_type = Chat::CHAT_TYPE_SHARE_SAFARI;
                     $chat_model->sender_id = $this->userinfoId;
                     $chat_model->user_id = $this->userinfoId;
-                    $chat_model->recipient_user_id = $share_safari->host_user_id;
+                    $chat_model->recipient_user_id = $share_safari->user_id;
                     $chat_model->share_safari_id = $share_safari->id;
+                    $chat_model->created_at = time();
+                    $chat_model->created_by = $this->userinfoId;
                 }
                 $chat_model->last_message = \common\models\GeneralModel::strMaxWord($message);
                 $chat_model->last_message_at = time();
@@ -1593,10 +1595,9 @@ class DefaultController extends SafariController
                 $chat_model->is_call_request = false;
                 $chat_model->status = 1;
                 $chat_model->is_seen = 0;
-                $chat_model->created_at = time();
-                $chat_model->created_by = $this->userinfoId->id;
+                $chat_model->is_lead_chat_open_for_user = 1;
                 $chat_model->updated_at = time();
-                $chat_model->updated_by = $this->userinfoId->id;
+                $chat_model->updated_by = $this->userinfoId;
                 $chat_model->save(false);
 
                 $chat_message = new ChatMessage();
@@ -1606,8 +1607,9 @@ class DefaultController extends SafariController
                 $chat_message->gallery = null;
                 $chat_message->data = null;
                 $chat_message->status = 1;
-                $chat_message->created_by = $this->userinfo->id;
+                $chat_message->created_by = $this->userinfoId;
                 $chat_message->save(false);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send, You can check Your inbox!!!"]);
             }
         }
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "you can not chat on this safari!!!"]);
