@@ -249,7 +249,7 @@ class SharedSafariVersionForm extends \yii\base\Model
         $m->host_user_id = $this->host_user_id;
         $m->safari_operator_id = $this->safari_operator_id;
         $m->user_id = $this->user_id;
-        $m->status = 0;
+        $m->status = 10;
         $m->save(false);
         return $m->id;
     }
