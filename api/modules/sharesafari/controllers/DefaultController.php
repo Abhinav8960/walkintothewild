@@ -1337,10 +1337,16 @@ class DefaultController extends SafariController
             $share_safari->pending_for_approval_version = null;
             $share_safari->live_version = $version;
             $share_safari->edit_status = 1;
-            $share_safari->status = ShareSafari::STATUS_ACTIVE;
             $share_safari->partner_gallery_id = $model->partner_gallery_id;
             $share_safari->gallery_json = $model->gallery_json;
             $share_safari->gallery_version = $model->gallery_version;
+            if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
+                $share_safari->status = ShareSafari::STATUS_SUSPEND;
+            } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
+                $share_safari->status = ShareSafari::STATUS_FULL_SEAT;
+            } else {
+                $share_safari->status = ShareSafari::STATUS_ACTIVE;
+            }
             $share_safari->save(false);
 
             $share_safari->static_data_json = $this->prepareJson($share_safari->id);
