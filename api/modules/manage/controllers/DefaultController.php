@@ -11,6 +11,7 @@ use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariSearch;
 use common\interfaces\NewStatusInterface;
 use common\models\operator\form\SafariOperatorRequestForm;
+use common\models\package\PackagePartnerSearch;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
@@ -177,6 +178,7 @@ class DefaultController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
         $searchModel = new ShareSafariSearch();
+        $searchModel->status = 1;
         return $this->dataProviderSender($searchModel, $rootIndexName = "share_safari", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
@@ -184,12 +186,14 @@ class DefaultController extends RestController
     public function actionOperatorPackagelist()
     {
         $safari_operator = $this->module->operatormodel();
-        if ($safari_operator->category_id == 1) {
-            $searchModel = new PackageVersionSearch();
-            return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [$safari_operator->id], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
-        } else {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are not operator"]);
+        if ($safari_operator->category_id == 2) {
+            $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
+        $searchModel = new PackagePartnerSearch();
+        $searchModel->safari_operator_id = $safari_operator->id;
+        $searchModel->custom_status = 1;
+        return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search");
     }
 
     public function actionView($slug)
@@ -197,7 +201,7 @@ class DefaultController extends RestController
         $safari_operator = $this->module->operatormodel();
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
         $share_safari = ShareSafari::find()->where(['slug' => $slug, 'host_user_id' => $safari_operator->id])->limit(1)->one();
-        
+
         if (!$share_safari) {
             return Yii::$app->api->sendResponse($data = [], ['message' => "Share Safari Not Found!!!"]);
         }
