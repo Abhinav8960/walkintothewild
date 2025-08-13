@@ -91,7 +91,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->displayShareSafari->share_seat;
+                            return $model->displayShareSafari->total_seat - $model->displayShareSafari->self_occupied_seat;
                         }
                     ],
 

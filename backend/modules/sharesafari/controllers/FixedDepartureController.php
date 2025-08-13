@@ -100,8 +100,6 @@ class FixedDepartureController extends Controller
             $fixed_departure->estimate_price_max = $model->estimate_price_max;
             $fixed_departure->cost_per_person = $model->cost_per_person;
             $fixed_departure->safari_plan = $model->safari_plan;
-            $fixed_departure->total_seat = $model->total_seat;
-            $fixed_departure->share_seat = $model->share_seat;
             $fixed_departure->tour_duration = $model->tour_duration;
             $fixed_departure->share_safari_inclusion = $model->share_safari_inclusion;
             $fixed_departure->share_safari_exclusion = $model->share_safari_exclusion;
@@ -118,6 +116,10 @@ class FixedDepartureController extends Controller
             $fixed_departure->partner_gallery_id = $model->partner_gallery_id;
             $fixed_departure->gallery_json = $model->gallery_json;
             $fixed_departure->gallery_version = $model->gallery_version;
+
+            $fixed_departure->total_seat = $model->total_seat;
+            $fixed_departure->self_occupied_seat = $model->self_occupied_seat;
+
             $fixed_departure->save(false);
 
             $fixed_departure->static_data_json  = $this->prepareJson($fixed_departure->id);

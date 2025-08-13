@@ -20,10 +20,20 @@ use yii\bootstrap5\ActiveForm;
     <div class="row">
         <div class="col-lg-12">
             <div class="form_boxes mb-3">
-                <label for="">Shared Seats<span>*</span></label>
-                <?= $form->field($share_seat_model, 'share_seat')->textInput([
+                <label for="">Total Seats<span>*</span></label>
+                <?= $form->field($share_seat_model, 'total_seat')->textInput([
                     'maxlength' => true,
-                    'placeholder' => 'Enter Share Seat',
+                    'placeholder' => 'Enter Total Seat',
+                    'class' => 'form-control'
+                ])->label(false) ?>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form_boxes mb-3">
+                <label for="">Self Occupied Seats<span>*</span></label>
+                <?= $form->field($share_seat_model, 'self_occupied_seat')->textInput([
+                    'maxlength' => true,
+                    'placeholder' => 'Enter Self Occupied Seat',
                     'class' => 'form-control'
                 ])->label(false) ?>
             </div>
@@ -39,9 +49,6 @@ use yii\bootstrap5\ActiveForm;
     </div>
 </div>
 
-<?= $form->field($share_seat_model, 'total_seat')->hiddenInput([
-    'class' => 'form-control'
-])->label(false) ?>
 
 
 <?php ActiveForm::end(); ?>

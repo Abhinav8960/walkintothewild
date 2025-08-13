@@ -538,12 +538,14 @@ class DefaultController extends Controller
                     $m->status = ShareSafariVersion::TERMINATED_STATUS;
                     $m->save(false);
 
-                    $share_seat = $share_seat_model->share_seat;
-                    $newModel = $this->autoApproval($id, $share_seat);
+                    $total_seat = $share_seat_model->total_seat;
+                    $self_occupied_seat = $share_seat_model->self_occupied_seat;
+                    $newModel = $this->autoApproval($id, $total_seat, $self_occupied_seat);
 
                     $model = ShareSafari::find()->where(['id' => $newModel->share_safari_id])->one();
                     $model->live_version = $newModel->version;
-                    $model->share_seat = $newModel->share_seat;
+                    $model->total_seat = $newModel->total_seat;
+                    $model->self_occupied_seat = $newModel->self_occupied_seat;
                     $model->save(false);
 
                     $model->static_data_json  = $this->prepareJson($model->id);
@@ -551,7 +553,8 @@ class DefaultController extends Controller
 
                     $share_safari_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->id])->andWhere(['version' => $model->editable_version])->limit(1)->one();
                     if ($share_safari_version) {
-                        $share_safari_version->share_seat = $model->share_seat;
+                        $share_safari_version->total_seat = $model->total_seat;
+                        $share_safari_version->self_occupied_seat = $model->self_occupied_seat;
                         $share_safari_version->save(false);
                     }
 
@@ -575,10 +578,11 @@ class DefaultController extends Controller
     }
 
 
-    private function autoApproval($id, $share_seat)
+    private function autoApproval($id, $total_seat, $self_occupied_seat)
     {
-        $model = ShareSafariVersion::findOne($id);
-        $last_version = ShareSafariVersion::find()->where(['share_safari_id' => $model->share_safari_id, 'status' => 1])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        $share_safari = ShareSafari::findOne($id);
+        $model = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari->id, 'version' => $share_safari->live_version])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        $last_version = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari->id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
 
         if ($model) {
 
@@ -587,7 +591,8 @@ class DefaultController extends Controller
             $this->version = $newModel->version = $last_version->version + 1;
             $newModel->id = null;
             $newModel->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
-            $newModel->share_seat = $share_seat;
+            $newModel->total_seat = $total_seat;
+            $newModel->self_occupied_seat = $self_occupied_seat;
             $newModel->save(false);
 
             $this->CopyFixedDepartureDay($model->share_safari_id, $model->version, $newModel->share_safari_id);
@@ -885,8 +890,6 @@ class DefaultController extends Controller
                 'start_date' => $share_safari->start_date,
                 'end_date' => $share_safari->end_date,
                 'cut_off_date' => $share_safari->cut_off_date,
-                'total_seat' => $share_safari->total_seat,
-                'share_seat' => $share_safari->share_seat,
                 'types' => $share_safari->types,
                 'organized_by_name' => $share_safari->organizedbyname,
                 'organized_by_image' => $share_safari->organizedbyimage,

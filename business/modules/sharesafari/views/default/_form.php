@@ -126,12 +126,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
 
+
                 <div class="col-md-4">
                     <div class="form_boxes mb-3">
-                        <label for="">Shared Seats<span>*</span></label>
-                        <?= $form->field($model, 'share_seat')->textInput([
+                        <label for="">Self Occupied Seats<span>*</span></label>
+                        <?= $form->field($model, 'self_occupied_seat')->textInput([
                             'maxlength' => true,
-                            'placeholder' => 'Enter Share Seat',
+                            'placeholder' => 'Enter Self Occupied Seat',
                             'class' => 'form-control'
                         ])->label(false) ?>
                     </div>
