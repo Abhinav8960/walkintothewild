@@ -116,7 +116,7 @@ class PackageController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
         $searchModel = new PackagePartnerSearch();
-        $searchModel->safari_operator_id = $this->operatormodel()->id;
+        $searchModel->safari_operator_id = $safari_operator->id;
         $searchModel->custom_status = 4;
         return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "partnersearch");
     }
