@@ -80,7 +80,13 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'can_comment',
             'can_reply',
             'total_seat',
-            'share_seat',
+            'share_seat' => function () {
+                if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                    return $this->total_seat - ($this->booked_seat + $this->self_occupied_seat); // fixed departure
+                } else {
+                    return $this->share_seat;
+                }
+            },
             'partner',
             'interested_users' => function () { //
                 return $this->intrestedUserLimited;
