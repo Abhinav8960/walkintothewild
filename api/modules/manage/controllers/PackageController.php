@@ -28,6 +28,7 @@ use common\models\package\form\PackageFaqForm;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageGalleryForm;
 use common\models\package\PackageComment;
+use common\models\package\PackagePartnerSearch;
 use yii\filters\AccessControl;
 
 /**
@@ -114,9 +115,9 @@ class PackageController extends RestController
             $message = Yii::$app->api->messageManager->getMessage('common.not_operator');
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
-        $searchModel = new PackageVersionSearch();
-        $searchModel->status = PackageVersion::EDIATBLE_STATUS;
-        $searchModel->safari_operator_id = $safari_operator->id;
+        $searchModel = new PackagePartnerSearch();
+        $searchModel->safari_operator_id = $this->operatormodel()->id;
+        $searchModel->custom_status = 4;
         return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "partnersearch");
     }
 
@@ -180,10 +181,10 @@ class PackageController extends RestController
                 // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
-                $message = Yii::$app->api->messageManager->getMessage('common.creation_success',['{var}'=>'Package']);
+                $message = Yii::$app->api->messageManager->getMessage('common.creation_success', ['{var}' => 'Package']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->package_version_model->getPackage_slug()], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed',['{var}'=>'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -242,10 +243,10 @@ class PackageController extends RestController
                         $packagesafaripark->save(false);
                     }
                 }
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Package']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Package']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Package']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Package']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -271,10 +272,10 @@ class PackageController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->package_version_model->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Policy Info']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Policy Info']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Policy Info']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Policy Info']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
@@ -302,10 +303,10 @@ class PackageController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->package_version_model->save(false)) {
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Getting there']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Getting there']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Getting there']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Getting there']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -365,10 +366,10 @@ class PackageController extends RestController
                     }
 
                     $transaction->commit();
-                    $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Inclusion']);
+                    $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Inclusion']);
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 } else {
-                    $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Inclusion']);
+                    $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Inclusion']);
                     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             } catch (\Exception $e) {
@@ -409,10 +410,10 @@ class PackageController extends RestController
             $model->initializeForm();
             if ($model->package_day_model->save(false)) {
                 $model->uploadFile();
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Itinerary']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Itinerary']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Itinerary']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Itinerary']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -469,10 +470,10 @@ class PackageController extends RestController
                     $model->package_faq_model->faq_id = $faq->id;
                     $model->package_faq_model->save(false);
                 }
-                $message = Yii::$app->api->messageManager->getMessage('common.submitted',['{var}'=>'Faq']);
+                $message = Yii::$app->api->messageManager->getMessage('common.submitted', ['{var}' => 'Faq']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted',['{var}'=>'Faq']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted', ['{var}' => 'Faq']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
@@ -494,7 +495,7 @@ class PackageController extends RestController
         $package_version_model = $this->findPackageVersionModelWithStatus($package_model->id, PackageVersion::EDIATBLE_STATUS);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->limit(1)->one();
         if (!$faq_model) {
-            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Faq']);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Faq']);
             throw new NotFoundHttpException($message);
         }
         $model = new PackageFaqForm($faq_model);
@@ -516,10 +517,10 @@ class PackageController extends RestController
                     $model->package_faq_model->faq_id = $faq->id;
                     $model->package_faq_model->save(false);
                 }
-                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Faq']);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Faq']);
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Faq']);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Faq']);
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
@@ -553,7 +554,7 @@ class PackageController extends RestController
         }
         $transaction->commit();
 
-        $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval',['{var}'=>'Package']);
+        $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval', ['{var}' => 'Package']);
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
@@ -668,7 +669,7 @@ class PackageController extends RestController
 
     private function copyPackageNow($id, $isNewRecord = false)
     {
-        
+
         $model = PackageVersion::findOne($id);
 
         if ($model) {
