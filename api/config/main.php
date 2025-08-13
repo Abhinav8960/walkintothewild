@@ -112,9 +112,8 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
 
-                'login-via-password'=>'site/login-via-password',
-                'signup-via-password' =>'site/signup-via-password',
-                'signup' => 'site/signup',
+                'sign-in-email'=>'site/sign-in-email',
+                'sign-in-mobile'=>'site/sign-in-mobile',
                 'mail-otp-verification'=>'site/mail-otp-verification',
                 'mobile-otp-verification'=>'site/mobile-otp-verification',
 

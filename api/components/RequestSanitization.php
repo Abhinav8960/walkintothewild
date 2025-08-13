@@ -35,11 +35,10 @@ class RequestSanitization extends \yii\base\Component
             'park',
             'filter-parklist',
             'plan',
-            'signup',
-            'mail-otp-verification',
-            'signup-via-password',
+            'mail-otp-verification',  
             'mobile-otp-verification',
-            'login-via-password',
+            'sign-in-email',
+            'sign-in-mobile',
 
         ];
 
