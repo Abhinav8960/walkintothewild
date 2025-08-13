@@ -132,6 +132,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['image_filepath'], 'string'],
             [['safari_operator_id', 'user_id'], 'integer'],
             [['self_occupied_seat'], 'integer'],
+            ['self_occupied_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Self Occupied Seat must be less than or equal to Total Seat"],
             // ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
 
 
