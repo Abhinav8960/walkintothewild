@@ -97,6 +97,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             [['safari_plan'], 'string'],
             [['image', 'filepath'], 'string'],
             [['safari_operator_id', 'user_id', 'gallery_version'], 'integer'],
+            [['booked_seat'], 'integer'],
         ];
     }
 
