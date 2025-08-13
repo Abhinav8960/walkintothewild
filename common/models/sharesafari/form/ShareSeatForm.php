@@ -28,6 +28,7 @@ class ShareSeatForm extends \yii\base\Model
     {
         return [
             [['total_seat', 'self_occupied_seat'], 'integer'],
+            ['self_occupied_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Self Occupied Seat must be less than or equal to Total Seat", 'type' => 'number'],
         ];
     }
 
