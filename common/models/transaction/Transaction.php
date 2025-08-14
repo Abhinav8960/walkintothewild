@@ -2,6 +2,7 @@
 
 namespace common\models\transaction;
 
+use api\models\sharesafari\ShareSafari;
 use common\models\GeneralModel;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\Lead;
@@ -296,7 +297,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
         $booking = new \common\models\bookings\Booking();
         $booking->source = $this->source;
-        
+
         $booking->transaction_id = $this->id;
         $booking->share_safari_lead_id = $this->share_safari_lead_id;
         $booking->share_safari_lead_installment_id = $this->share_safari_lead_installment_id;
@@ -402,6 +403,12 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     public function getLead()
     {
         return $this->hasOne(Lead::className(), ['id' => 'lead_id']);
+    }
+
+
+    public function getShare_safari()
+    {
+        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
     }
 
     public function getPartner()

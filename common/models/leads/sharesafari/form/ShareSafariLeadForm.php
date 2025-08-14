@@ -185,7 +185,7 @@ class ShareSafariLeadForm extends Model
     {
         $share_safari = \common\models\sharesafari\ShareSafari::findOne($this->share_safari_id);
         if ($share_safari) {
-            $available_seats = $share_safari->share_seat;
+            $available_seats = $share_safari->available_seat;
             if ($this->$attribute > $available_seats) {
                 $this->addError($attribute, "Cannot book more than {$available_seats} available seats");
             }

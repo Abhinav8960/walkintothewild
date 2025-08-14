@@ -380,4 +380,17 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         }
         return $this->editable_fd;
     }
+
+    public function getAvailable_seat()
+    {
+        $total_seat =  $this->total_seat ?? 0;
+        $self_occupied_seat =  $this->self_occupied_seat ?? 0;
+        $booked_seat =  $this->booked_seat ?? 0;
+
+        $available_seat = $total_seat - ($self_occupied_seat - $booked_seat);
+        if ($available_seat > 0) {
+            return $available_seat;
+        }
+        return 0;
+    }
 }
