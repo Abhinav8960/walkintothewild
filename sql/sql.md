@@ -91,3 +91,11 @@ DROP original_filename,
 DROP file;
 
 ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `remark`;
+
+
+
+
+
+
+<!-- 14 Aug -->
+ALTER TABLE `safari_operator` ADD `can_call` TINYINT NOT NULL DEFAULT '0' AFTER `is_approved`;

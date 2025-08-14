@@ -51,6 +51,7 @@ class SafariOperatorForm extends model
     public $is_offer_economical_budget;
     public $starting_price;
     public $is_approved;
+    public $can_call;
     public $operator_name;
     public $operator_phone_no;
     public $operator_email;
@@ -108,6 +109,7 @@ class SafariOperatorForm extends model
             $this->is_offer_economical_budget                     =  $this->safarioperator_model->is_offer_economical_budget;
             $this->starting_price                                 =  $this->safarioperator_model->starting_price;
             $this->is_approved                                    =  $this->safarioperator_model->is_approved;
+            $this->can_Call                                       =  $this->safarioperator_model->can_call;
             $this->operator_name                                  =  $this->safarioperator_model->operator_name;
             $this->operator_phone_no                              =  $this->safarioperator_model->operator_phone_no;
             $this->operator_email                                 =  $this->safarioperator_model->operator_email;
@@ -157,7 +159,7 @@ class SafariOperatorForm extends model
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name'], 'default', 'value' => 0],
+            [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved','can_call','starting_price', 'operator_name'], 'default', 'value' => 0],
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe'],
             [['referrer_url', 'registration_platform'], 'safe'],
             [
@@ -228,6 +230,7 @@ class SafariOperatorForm extends model
             'is_offer_economical_budget' => 'Is Offer Economical Budget',
             'starting_price' => 'Starting Price',
             'is_approved' => 'Is Approved',
+            'can_call' => 'Can Call',
             'operator_name' => 'Operator Name',
             'operator_phone_no' => 'Operator Phone No',
             'operator_email' => 'Operator Email',
@@ -282,6 +285,7 @@ class SafariOperatorForm extends model
 
         $this->safarioperator_model->starting_price                  =  $this->starting_price;
         $this->safarioperator_model->is_approved                     =  $this->is_approved;
+        $this->safarioperator_model->can_call                        =  $this->can_call;
         $this->safarioperator_model->operator_name                   =  $this->operator_name;
         $this->safarioperator_model->operator_phone_no               =  $this->operator_phone_no;
         $this->safarioperator_model->operator_email                  =  $this->operator_email;
