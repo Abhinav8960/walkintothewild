@@ -126,6 +126,13 @@ return [
             'rules' => [
 
                 'test-call' => 'site/test-call',
+                'signup'=>'site/signup',
+                'signup-otp-verification'=>'site/signup-otp-verification',
+                'sign-in-email'=>'site/sign-in-email',
+                'sign-in-mobile'=>'site/sign-in-mobile',
+                'signin-otp-verification'=>'site/signin-otp-verification',
+                'regenerate-otp'=>'site/regenerate-otp',
+
                 'site/test' => 'site/test',
                 'site/clear-cache' => 'site/clear-cache',
                 'mobile-no-verification' => 'site/mobile-no-verification',
