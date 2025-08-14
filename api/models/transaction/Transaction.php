@@ -81,7 +81,7 @@ class Transaction extends \common\models\transaction\Transaction
             'addional_notes',
             'safaris',
             'travelers',
-            'Staycatgory', // relation
+            'staycatgory', // relation
             'name',
             'email',
             'phone',
