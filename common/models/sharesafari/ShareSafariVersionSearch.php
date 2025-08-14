@@ -185,9 +185,6 @@ class ShareSafariVersionSearch extends ShareSafariVersion
 
         if ($this->custom_status != null) {
             switch ($this->custom_status) {
-                // case 0:
-                //     $query->andWhere(['status' => 0]);
-                //     break;
                 case 1:
                     $query->andWhere(['share_safari_version.status' => 1]);
                     break;

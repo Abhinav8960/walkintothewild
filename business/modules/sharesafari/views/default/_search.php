@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\widgets\ActiveForm;
 ?>
 
@@ -41,6 +42,12 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
 
+                    <div class="filterItem position-relative">
+                        <label>Status:</label>
+                        <?= $form->field($model, 'filter_status')->dropDownList(GeneralModel::fdstatusoption(), ['prompt' => 'Select Status', 'class' => 'search-border status-filter'])->label(false) ?>
+                        <i class="fa-solid fa-caret-down"></i>
+                    </div>
+
                 </div>
 
                 <?= $form->field($model, 'start_date')->hiddenInput(['id' => 'start_date_input', 'class' => 'form-control search-border'])->label(false); ?>
@@ -64,7 +71,9 @@ $('#visible_start_date, #visible_end_date, #visible_cut_off_date').on('change',f
     $('#Searchform').submit();
 })
 
-
+$('#sharesafarisearch-filter_status').on('change', function() {
+    $('#Searchform').submit();
+});
 
 JS;
 $this->registerJs($js);

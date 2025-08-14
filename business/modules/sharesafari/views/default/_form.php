@@ -100,7 +100,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="form_boxes mb-3">
                         <label for="">Accommodation<span>*</span></label>
                         <?= $form->field($model, 'stay_category_id')
-                            ->dropDownList(GeneralModel::budgetoption(), ['prompt' => 'Select Theme', 'class' => 'form-control form-select form-select-lg mb-3'])
+                            ->dropDownList(GeneralModel::fdStayOption(), ['prompt' => 'Select Theme', 'class' => 'form-control form-select form-select-lg mb-3'])
                             ->label(false) ?>
                     </div>
                 </div>

@@ -76,8 +76,9 @@ class DefaultController extends Controller
         $searchModel = new ShareSafariSearch();
         $searchModel->safari_operator_id = $safari_operator->id;
         $searchModel->type = ShareSafari::TYPE_FIXED_DEPARTURE;
+        $searchModel->filter_status = 4;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['!=', 'status', -1]);
+        // $dataProvider->query->andWhere(['!=', 'status', -1]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
