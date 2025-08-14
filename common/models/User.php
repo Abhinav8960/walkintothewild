@@ -548,4 +548,44 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
     
+
+   /**
+ * Create a permanent User from a TemporaryUser.
+ *
+ * @param \common\models\TemporaryUser $tempUser
+ * @return static|null  The newly created User or null if failed
+ */
+public static function createFromTemporary($tempUser)
+{
+    if (!$tempUser) {
+        return null;
+    }
+
+    $user = new self();
+    $user->username = $tempUser->email;
+    $user->email = $tempUser->email;
+    $user->mobile_no = $tempUser->mobile_no;
+    $user->is_mobile_no_verified = $tempUser->is_mobile_verified;
+    $user->mobile_no_verified_at = time();
+    $user->name = $tempUser->name;
+    $user->password_hash = Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString(8));
+    $user->auth_key = Yii::$app->security->generateRandomString();
+    $user->status = self::STATUS_ACTIVE;
+    $user->created_at = time();
+    $user->updated_at = time();
+
+   
+    if ($user->save(false)) {
+        // Mark temp user as migrated 
+        $tempUser->status = \common\models\TemporaryUser::STATUS_MIGRATED;
+        $tempUser->user_id = $user->id ?? null;
+        $tempUser->updated_at = time();
+        $tempUser->save(false);
+
+        return $user;
+    }
+
+    return null;
+}
+
 }
