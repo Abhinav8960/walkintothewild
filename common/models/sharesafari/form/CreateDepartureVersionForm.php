@@ -133,7 +133,7 @@ class CreateDepartureVersionForm extends \yii\base\Model
             [['safari_operator_id', 'user_id'], 'integer'],
             [['self_occupied_seat'], 'integer'],
             ['self_occupied_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Self Occupied Seat must be less than or equal to Total Seat", 'type' => 'number'],
-            [['share_safari_inclusion', 'share_safari_exclusion','getting_there'], 'validateContent'],
+            [['share_safari_inclusion', 'share_safari_exclusion', 'getting_there'], 'validateContent'],
             // ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
 
 
@@ -217,7 +217,11 @@ class CreateDepartureVersionForm extends \yii\base\Model
         $m->lunch_included = $this->lunch_included;
         $m->dinner_included = $this->dinner_included;
         $m->meal_not_included = $this->meal_not_included;
-        $m->park_id = $this->park_id;
+        // $m->park_id = $this->park_id;
+        if ($this->park_list) {
+            $m->park_id = $this->park_list[0];
+        }
+
         $m->partner_gallery_id = $this->partner_gallery_id;
         if ($this->partner_gallery_id) {
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
