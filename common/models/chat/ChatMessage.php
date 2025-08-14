@@ -68,7 +68,7 @@ class ChatMessage extends \yii\db\ActiveRecord
             [['chat_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'is_call_request'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
             [['message'], 'string'],
-            [['sender_id'], 'safe'],
+            [['sender_id','share_safari_lead_id'], 'safe'],
             [['transaction_id'], 'safe'],
             [['gallery'], 'safe'],
             [['is_call_message', 'is_quotation_message', 'is_quotation_active', 'is_edited', 'is_system_generated'], 'boolean'],

@@ -3,6 +3,7 @@
 namespace api\models\chat;
 
 use api\models\leads\LeadPartnerQuotes;
+use api\models\leads\sharesafari\ShareSafariLead;
 use Yii;
 use api\models\User;
 use common\models\chat\ChatMessageHistory;
@@ -100,6 +101,25 @@ class ChatMessage extends \common\models\chat\ChatMessage
                 };
             }
         }
+        if (isset($this->chat->chat_type) && $this->chat->chat_type == 3) {
+            if ($this->share_safari_lead_id > 0) {
+                // Remove 'message' from the fields array
+                unset($fields['message']);
+                // $fields['message'] = function () {
+                //     return "Please see below quotation";
+                // };
+
+                $fields['share_safari_lead'] = function () {
+                    return $this->share_safari_lead;
+                };
+            }
+
+            if ($this->is_quotation_active == true && $this->created_by != $this->getActiveUserId()) {
+                $fields['payment_details'] = function () {
+                    return $this->payment_details;
+                };
+            }
+        }
         if ($this->gallery != null) {
             unset($fields['message']);
 
@@ -130,7 +150,7 @@ class ChatMessage extends \common\models\chat\ChatMessage
             [['chat_id'], 'required'],
             [['is_quotation_message', 'is_quotation_active', 'quotation_id', 'chat_id', 'is_call_message', 'call_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['gallery'], 'string', 'max' => 512],
-            [['message'], 'string'],
+            [['message', 'share_safari_lead_id'], 'string'],
             [['gallery', 'is_system_generated', 'transaction_id'], 'safe'],
         ];
     }
@@ -150,6 +170,11 @@ class ChatMessage extends \common\models\chat\ChatMessage
             'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
+    }
+
+    public function getShare_safari_lead()
+    {
+        return $this->hasOne(ShareSafariLead::className(), ['id' => 'share_safari_lead_id']);
     }
 
 
@@ -257,6 +282,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
     {
         return $this->hasOne(LeadPartnerQuotes::className(), ['id' => 'quotation_id']);
     }
+
+
 
     public function getPayment_details()
     {

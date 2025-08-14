@@ -155,14 +155,13 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
         return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
 
-    public function openChat($share_safari_lead_id,$reference_id)
+    public function openChat($share_safari_lead_id, $reference_id)
     {
 
         $share_safari_lead = ShareSafariLead::find()->where(['id' => $share_safari_lead_id])->one();
         // prepare chat if not avalable between user and share safari and operators user id
         $chat_model = Chat::find()->where(['share_safari_id' => $share_safari_lead->share_safari_id, 'user_id' => $share_safari_lead->user_id, 'recipient_user_id' => $share_safari_lead->share_safari_user_id])->one();
-        $message = "Hi, I am interested in the " . $share_safari_lead->shareSafari->share_safari_title . ". Payment already Done.\n ";
-        $message .= "Here is the reference No " . $reference_id . " \n";
+        $message = "Payment received for Fixed departure " . $share_safari_lead->shareSafari->share_safari_title;
         if (empty($chat_model)) {
             $chat_model = new Chat();
             $chat_model->generateChatHash();
@@ -177,6 +176,7 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
         $chat_model->last_message = \common\models\GeneralModel::strMaxWord($message);
         $chat_model->last_message_at = time();
         $chat_model->call_id = null;
+        $chat_model->share_safari_lead_id = $share_safari_lead_id;
         $chat_model->is_call_request = false;
         $chat_model->status = 1;
         $chat_model->is_seen = 0;
