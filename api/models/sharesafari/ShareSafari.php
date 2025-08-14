@@ -218,7 +218,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $options = [
             1 => 'Individual',
             2 => 'Wildlife Influencer',
-            3 => 'Wildlife Influencer',
+            3 => 'Safari Tour Operator',
             4 => 'Safari Tour Operator'
         ];
         return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
