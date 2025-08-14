@@ -52,19 +52,26 @@ class TemporaryUser extends ActiveRecord implements IdentityInterface
      * {@inheritdoc}
      */
 
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
-    }
+     public function behaviors()
+     {
+         return [
+             [
+                 'class' => UserHandleBehavior::class,
+                 'attribute' => 'name',
+                 'slugAttribute' => 'user_handle',
+                 'ensureUnique' => true,
+                 'separator' => '_'
+             ],
+             TimestampBehavior::class,
+         ];
+     }
 
     public function rules()
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['name', 'mobile_no', 'is_mobile_no_verified', 'email', 'is_email_verified'], 'safe']
+            [['user_handle','name', 'mobile_no', 'is_mobile_no_verified', 'email', 'is_email_verified'], 'safe']
         ];
     }
 
@@ -124,5 +131,10 @@ class TemporaryUser extends ActiveRecord implements IdentityInterface
     public function getFullname()
     {
         return trim($this->first_name . ' ' . $this->last_name);
+    }
+
+    public function getUserhandle()
+    {
+        return "@" . $this->user_handle;
     }
 }

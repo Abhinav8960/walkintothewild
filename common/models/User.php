@@ -562,6 +562,7 @@ public static function createFromTemporary($tempUser)
     $user->email = $tempUser->email;
     $user->mobile_no = $tempUser->mobile_no;
     $user->is_mobile_no_verified = $tempUser->is_mobile_verified;
+    $user->mobile_no_verified_at = time();
     $user->name = $tempUser->name;
     $user->password_hash = $tempUser->password_hash ?? Yii::$app->security->generatePasswordHash(Yii::$app->security->generateRandomString(8));
     $user->auth_key = Yii::$app->security->generateRandomString();
