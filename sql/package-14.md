@@ -10,6 +10,8 @@ ALTER TABLE `package_version` ADD `gallery_version` INT NULL DEFAULT NULL AFTER 
 ALTER TABLE `package_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
 
 php yii package-temp/step-1;
+php yii package-temp/step-1a;
+php yii package-temp/step-1b;
 php yii package-temp/step-2;
 
 ALTER TABLE `chat_message` ADD `partner_gallery_version` INT NULL DEFAULT NULL AFTER `partner_gallery_version_id`;

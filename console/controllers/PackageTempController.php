@@ -6,6 +6,7 @@ use api\models\package\Package as ApiPackage;
 use common\models\operator\SafariOperator;
 use common\models\package\Package;
 use common\models\package\PackageVersion;
+use common\models\partnergallery\PartnerGalleryVersion;
 use Yii;
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -32,6 +33,48 @@ class PackageTempController extends Controller
                 $pack->user_id = $operator->user_id;
             }
             $pack->save(false);
+        }
+    }
+
+    public function actionStep1a()
+    {
+        $packages = Package::find()
+            ->all();
+
+        foreach ($packages as $pack) {
+            if ($pack->partner_gallery_id) {
+                $lastVersion = PartnerGalleryVersion::find()
+                    ->where(['partner_gallery_id' => $pack->partner_gallery_id])
+                    ->orderBy(['version' => SORT_DESC])
+                    ->one();
+                if ($lastVersion) {
+                    $pack->gallery_version = $lastVersion->version;
+                } else {
+                    $pack->gallery_version = 1;
+                }
+                $pack->save(false);
+            }
+        }
+    }
+
+    public function actionStep2a()
+    {
+        $packages = PackageVersion::find()
+            ->all();
+
+        foreach ($packages as $pack) {
+            if ($pack->partner_gallery_id) {
+                $lastVersion = PartnerGalleryVersion::find()
+                    ->where(['partner_gallery_id' => $pack->partner_gallery_id])
+                    ->orderBy(['version' => SORT_DESC])
+                    ->one();
+                if ($lastVersion) {
+                    $pack->gallery_version = $lastVersion->version;
+                } else {
+                    $pack->gallery_version = 1;
+                }
+                $pack->save(false);
+            }
         }
     }
 
@@ -138,5 +181,4 @@ class PackageTempController extends Controller
 
         return json_encode($json);
     }
-
 }
