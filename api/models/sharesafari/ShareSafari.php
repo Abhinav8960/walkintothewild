@@ -436,8 +436,17 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSeat_full_status()
     {
-        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
-            return true;
+        if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            $total_seat = $this->total_seat;
+            $self_occupied_seat = $this->self_occupied_seat;
+            $booked_seat = $this->booked_seat;
+            if (($total_seat - ($self_occupied_seat + $booked_seat)) == 0) {
+                return true;
+            }
+        } elseif ($this->type == ShareSafari::TYPE_SAFARI) {
+            if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
+                return true;
+            }
         }
         return false;
     }
