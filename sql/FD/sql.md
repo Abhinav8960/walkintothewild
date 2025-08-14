@@ -54,3 +54,5 @@ ALTER TABLE `booking`
   ALTER TABLE `chat` ADD `share_safari_id` INT NULL DEFAULT NULL AFTER `chat_type`;
 
   ALTER TABLE `chat_message` ADD `share_safari_lead_id` INT NULL DEFAULT NULL AFTER `is_call_request`;
+
+ALTER TABLE `chat_message` CHANGE `share_safari_lead_id` `transaction_id` INT NULL DEFAULT NULL;

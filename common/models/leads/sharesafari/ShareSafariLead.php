@@ -188,7 +188,7 @@ class ShareSafariLead extends \yii\db\ActiveRecord implements \common\interfaces
         $chat_message->chat_id = $chat_model->id;
         $chat_message->message = $message;
         $chat_message->partner_gallery_version_id = null;
-        $chat_message->share_safari_lead_id = $share_safari_lead_id;
+        $chat_message->transaction_id = $this->transaction_id;
         $chat_message->gallery = null;
         $chat_message->data = null;
         $chat_message->status = 1;
