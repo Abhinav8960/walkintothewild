@@ -558,7 +558,6 @@ class DefaultController extends RestController
                     $request_caller_2_user_id
                 );
 
-
                 // Call the callNow method
                 $result = $callingService->callNow();
                 $transaction->commit();

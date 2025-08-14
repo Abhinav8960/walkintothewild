@@ -22,8 +22,8 @@ return [
     'businessDomain' => 'http://business.walkintothewild.io',
     'sms_api_key' => NULL,
     'sms_sender_id' => NULL,
-    'airphone_api_token' => NULL,
-    'airphone_api_host_url' => NULL,
+    'airphone_api_token' => '78xacjfv21ctBjT1CjxO',
+    'airphone_api_host_url' => 'https://s-ct3.sarv.com/v2/clickToCall/para',
     'airphone_api_vnm' => NULL,
 
 ];

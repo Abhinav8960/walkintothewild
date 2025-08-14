@@ -14,6 +14,7 @@ use api\models\OtpVerificationSocialLoginForm;
 use api\models\SocialLoginForm;
 use api\models\UserMobileNoVerificationForm;
 use api\models\VerifySocialLoginForm;
+use common\calling\services\CallingService;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\operator\SafariOperator as OperatorSafariOperator;
@@ -40,7 +41,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test','test-call'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -52,7 +53,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test','test-call'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -81,6 +82,7 @@ class SiteController extends RestController
                     'test' => ['GET'],
                     'refundpolicy' => ['GET'],
                     'cancellation' => ['GET'],
+                    'test-call'=>['POST']
 
                 ],
             ],
@@ -766,4 +768,5 @@ class SiteController extends RestController
     //         @unlink($tempPath);
     //     }
     // }
+
 }
