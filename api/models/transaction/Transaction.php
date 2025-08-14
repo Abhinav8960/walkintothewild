@@ -70,6 +70,7 @@ class Transaction extends \common\models\transaction\Transaction
     public function fields()
     {
         $fields = [
+            'source',            
             'reference_id',
             // 'lead_partner_quotes_id',
             // 'lead_partner_quote_installments_id',
@@ -81,7 +82,7 @@ class Transaction extends \common\models\transaction\Transaction
             'addional_notes',
             'safaris',
             'travelers',
-            'Staycatgory', // relation
+            'staycatgory', // relation
             'name',
             'email',
             'phone',
@@ -103,7 +104,9 @@ class Transaction extends \common\models\transaction\Transaction
             'payment_gateway',
         ];
 
-        if ($this->source != self::SOURCE_SHARE_SAFARI) {
+        if ($this->source == self::SOURCE_SHARE_SAFARI) {
+                unset($fields['partner']);
+
             $fields[] = 'share_safari_lead';
         }
 

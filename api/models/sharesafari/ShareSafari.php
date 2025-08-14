@@ -82,7 +82,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'total_seat',
             'share_seat' => function () {
                 if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-                    return $this->total_seat - ($this->booked_seat + $this->self_occupied_seat); // fixed departure
+                    return $this->available_seat; // fixed departure
                 } else {
                     return $this->share_seat;
                 }

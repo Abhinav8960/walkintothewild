@@ -94,9 +94,13 @@ class PaymentResponseController extends Controller
         // $message = "Payment Failed";
         // $message = "Unfortunately, your transaction could not be completed.\n Please try again or use a different transaction method.";
         $message = "Transaction failed.";
+        $transaction->is_payment_received = 0;
+
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
+                $transaction->is_payment_received = 1;
+
                 // $message = "Payment Received";
                 // $message = "Your transaction was completed successfully.\n Booking details have been sent to your registered email.";
                 $message = "Transaction successful.";
