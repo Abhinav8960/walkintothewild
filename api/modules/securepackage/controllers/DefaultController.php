@@ -1,11 +1,12 @@
 <?php
 
-namespace api\modules\package\controllers;
+namespace api\modules\securepackage\controllers;
 
 use api\behaviours\Apiauth;
 use Yii;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
+use api\controllers\SecureRestController;
 use api\models\operator\SafariOperator;
 use api\models\package\Package;
 use api\models\package\PackageComment;
@@ -35,7 +36,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class DefaultController extends RestController
+class DefaultController extends SecureRestController
 {
     /**
      * @inheritdoc
@@ -100,7 +101,7 @@ class DefaultController extends RestController
     //     $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
     //     $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
     //     if (!$package) {
-    //         return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+    //         return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
     //     }
     //     $searchModel = new PackageVersionSearch();
     //     $searchModel->id = $package->id;
@@ -112,14 +113,14 @@ class DefaultController extends RestController
         $this->layout = \common\interfaces\NewStatusInterface::PACKAGE_API_LAYOUT_FULL;
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['IS NOT', 'live_version', null])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"], 404);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"], 404);
         }
 
         if ($package->status != Package::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()], ['message' => "Package is not in use!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = ['data' => $package], ['message' => "Package is not in use!!!"]);
         }
 
-        return Yii::$app->api->sendResponse($data = ['data' => $package->toArray()]);
+        return Yii::$app->secureapi->sendResponse($data = ['data' => $package->toArray()]);
     }
 
 
@@ -130,7 +131,7 @@ class DefaultController extends RestController
 
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
         $model = new PackageCommentForm();
         $model->attributes = $this->request;
@@ -154,9 +155,9 @@ class DefaultController extends RestController
             //     }
             //     FrontendNotificationHelper::packageNewComment($package, $this->userinfo);
             // }
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
+            return Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
-        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($package->firstErrors, 400);
     }
 
 
@@ -164,10 +165,10 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
         if ($this->userinfo && isset($package->partner) && $package->owned_by_id != $package->partner->id) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot Reply!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You cannot Reply!!!"]);
         }
 
         $replymodel = new PackageReplyForm();
@@ -195,22 +196,22 @@ class DefaultController extends RestController
                 //     }
                 // }
 
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
+                return Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
-        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($package->firstErrors, 400);
     }
 
     public function actionWishlist($slug)
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         if ($this->userinfo) {
             if ($this->userinfo->partner) {
-                return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
+                return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
             }
         }
 
@@ -225,22 +226,22 @@ class DefaultController extends RestController
             $wishlist->item_type = 'package';
             $wishlist->status = 1;
             if ($wishlist->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You added Package to wishlist!"]);
+                return  Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "You added Package to wishlist!"]);
             }
         }
-        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($package->firstErrors, 400);
     }
 
     public function actionUnwishlist($slug)
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         if ($this->userinfo) {
             if ($this->userinfo->partner) {
-                return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
+                return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You are not allowed to do this!!!"]);
             }
         }
 
@@ -249,37 +250,37 @@ class DefaultController extends RestController
             if ($wishlist) {
                 $wishlist->status = 0;
                 if ($wishlist->save(false)) {
-                    return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You removed Package to wishlist!"]);
+                    return  Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "You removed Package to wishlist!"]);
                 }
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not removed Package from wishlist!"]);
+                return Yii::$app->secureapi->sendResponse($data = ['status' => 0], ['message' => "Not removed Package from wishlist!"]);
             }
         }
-        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($package->firstErrors, 400);
     }
 
     public function actionPackageQuote($slug)
     {
         if ($this->userinfo->is_mobile_no_verified == 0) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You are not allow do peform this action untill you verify mobile no!"], 403);
         }
 
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
         if ($this->userinfo && isset($package->partner) && $this->userinfoId == $package->partner->user_id) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You cannot quote yourself!!!"]);
         }
         $packagemodel = new PackageLeadForm();
         $packagemodel->attributes = $this->request;
         if ($packagemodel->validate()) {
             if ($packagemodel->request($package->id, $this->userinfo)) {
                 // FirebaseNotificationHelper::packageintrest($package, $this->userinfo);
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
+                return  Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "Quote requested successfully submitted"]);
             }
-            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
+            return  Yii::$app->secureapi->sendResponse($data = ['status' => 0], ['message' => "Quote requested not submitted"]);
         }
-        return Yii::$app->api->sendFailedStringResponse($packagemodel->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($packagemodel->firstErrors, 400);
     }
 
 
@@ -287,13 +288,13 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
 
         $comments = PackageComment::find()->where(['id' => $package_comment_id])->limit(1)->one();
         if ($comments->user_id == $this->userinfoId) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
         }
 
         $model = new PackageCommentReportForm();
@@ -316,18 +317,18 @@ class DefaultController extends RestController
                 // if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                 //     GeneralModel::sendmailfromlog($maillog_data['log_id']);
                 // }
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment/Reply reported successfully!"]);
+                return  Yii::$app->secureapi->sendResponse($data = ['status' => 1], ['message' => "Comment/Reply reported successfully!"]);
             }
-            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment/Reply not reported!"]);
+            return  Yii::$app->secureapi->sendResponse($data = ['status' => 0], ['message' => "Comment/Reply not reported!"]);
         }
 
-        return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        return Yii::$app->secureapi->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     public function actionStaycategory()
     {
         $data = GeneralModel::budgetoption();
-        return Yii::$app->api->sendResponse(array_map(function ($value, $key) {
+        return Yii::$app->secureapi->sendResponse(array_map(function ($value, $key) {
             return ['id' => $key, 'name' => $value];
         }, $data, array_keys($data)));
     }
@@ -337,7 +338,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageCommentSearch();
@@ -350,7 +351,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
 
@@ -358,7 +359,7 @@ class DefaultController extends RestController
             ->where(['status' => SafariOperator::STATUS_ACTIVE, 'package_id' => $package->id])
             ->all();
         if (!$packageSafariPark) {
-            return Yii::$app->api->sendResponse([], ['message' => "Park Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse([], ['message' => "Park Not Found!!!"]);
         }
 
 
@@ -376,7 +377,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageDaySearch();
@@ -389,7 +390,7 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['package_slug' => $slug])->andWhere(['status' => Package::STATUS_ACTIVE])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+            return Yii::$app->secureapi->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $searchModel = new PackageFaqSearch();
@@ -420,7 +421,7 @@ class DefaultController extends RestController
             $data['PackageFaq']['data'] = $this->serializeData($this->prepareDefaultQuestionAnswer($package));
         }
 
-        return Yii::$app->api->sendResponse($data);
+        return Yii::$app->secureapi->sendResponse($data);
     }
 
     private function prepareDefaultQuestionAnswer($package)

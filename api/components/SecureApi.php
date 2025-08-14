@@ -12,7 +12,7 @@ use common\models\UserSession;
 /**
  * Class for common API functions
  */
-class Api extends Component
+class SecureApi extends Component
 {
     public function sendResponse($data = false, $additional_info = false, $code = 200)
     {
@@ -42,12 +42,9 @@ class Api extends Component
             $response = $_GET['callback'] . "(" . $response . ")";
         }
 
-        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+        return $this->encyptResponse($response);
 
-            return $this->encyptResponse($response);
-        }
-
-        return $response;
+        // return $response;
     }
 
 
@@ -62,19 +59,10 @@ class Api extends Component
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);
         }
-        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+        // return $response = json_encode($response);
+        return json_encode($this->encyptResponse($response));
 
-            return $this->encyptResponse($response);
-        }
-        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
-
-            return $this->encyptResponse($response);
-        }
-
-        return $response = json_encode($response);
         // return $this->send($response);
-
-
         exit;
     }
 
@@ -88,13 +76,9 @@ class Api extends Component
         //     $response = array_merge($response, $msg);
         // }
         // return $response = json_encode($response);
-        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
+        echo json_encode($this->encyptResponse($response));
 
-            return $this->encyptResponse($response);
-        }
-
-        echo json_encode($response);
-
+        // echo json_encode($response);
         exit;
     }
 
@@ -107,6 +91,7 @@ class Api extends Component
         // return ['encrypted' => $encrypted, 'decrypted'=>$decrypted];
         return ['data' => $encrypted];
     }
+
 
 
 

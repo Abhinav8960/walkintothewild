@@ -406,4 +406,8 @@ class TestController extends Controller
 
         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated.']);
     }
+
+    public function actionEncrypt(){
+        
+    }
 }

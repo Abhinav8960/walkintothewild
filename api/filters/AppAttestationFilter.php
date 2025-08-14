@@ -14,7 +14,7 @@ class AppAttestationFilter extends ActionFilter
     public function beforeAction($action)
     {
         $request = Yii::$app->request;
-        $platform = $request->headers->get('X-Client-Platform'); // e.g., 'android' or 'ios'
+        $platform = $request->headers->get('x-platform'); // e.g., 'android' or 'ios'
         $attestationToken = null;
 
         if ($platform === 'android') {

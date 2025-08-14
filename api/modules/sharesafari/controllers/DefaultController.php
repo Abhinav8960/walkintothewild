@@ -29,6 +29,7 @@ use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -125,14 +126,14 @@ class DefaultController extends SafariController
         }
 
         if (!in_array($share_safari->status, [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT])) {
-            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari is not in use!!!"]);
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari->toArray()], ['message' => "Share Safari is not in use!!!"]);
         }
 
         if ($share_safari->start_date < date('Y-m-d')) {
-            return Yii::$app->api->sendResponse($data = ['data' => $share_safari], ['message' => "Share Safari Expired!!!"]);
+            return Yii::$app->api->sendResponse($data = ['data' => $share_safari->toArray()], ['message' => "Share Safari Expired!!!"]);
         }
 
-        return Yii::$app->api->sendResponse($data = ['data' => $share_safari]);
+        return Yii::$app->api->sendResponse($data = ['data' => $share_safari->toArray()]);
     }
 
     public function actionOrganizeSafari()
@@ -628,8 +629,12 @@ class DefaultController extends SafariController
     {
         $reasons = Flagreason::find()->where(['status' => Flagreason::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all();
         if ($reasons) {
-            return Yii::$app->api->sendResponse($data = $reasons);
+            // Converts an array of objects to an array of arrays
+            // This will include all public properties, or properties defined by attributes() method
+            $formattedReasons = ArrayHelper::toArray($reasons);
+            return Yii::$app->api->sendResponse($data = $formattedReasons);
         }
+
         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not found !!!"]);
     }
 

@@ -39,6 +39,9 @@ return [
         'package' => [
             'class' => 'api\modules\package\Module',
         ],
+        'securepackage' => [
+            'class' => 'api\modules\securepackage\Module',
+        ],
         'operator' => [
             'class' => 'api\modules\operator\Module',
         ],
@@ -72,6 +75,9 @@ return [
         ],
         'api' => [
             'class' => 'api\components\Api',
+        ],
+        'secureapi' => [
+            'class' => 'api\components\SecureApi',
         ],
         /* 'request' => [
              'csrfParam' => '_csrf-backend',
@@ -175,6 +181,13 @@ return [
                 'package/staycategory' => 'package/default/staycategory',
                 'package/<slug>' => 'package/default/view',
                 'package/<slug>/<action>' => 'package/default/<action>',
+
+                // Security check
+                'securepackage'                 => 'securepackage/default/index',
+                'securepackage/staycategory'    => 'securepackage/default/staycategory',
+                'securepackage/<slug>'          => 'securepackage/default/view',
+                'securepackage/<slug>/<action>' => 'securepackage/default/<action>',
+                // End Security Check
 
                 'operator/<slug>' => 'operator/default/view',
                 'operator/<slug>/<action>' => 'operator/default/<action>',

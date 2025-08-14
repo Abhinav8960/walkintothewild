@@ -3,7 +3,6 @@
 namespace api\controllers;
 
 use Yii;
-use yii\rest\Controller;
 use common\models\UserSession;
 use api\models\User;
 use common\models\GeneralModel;
@@ -11,7 +10,7 @@ use common\models\RenderedContent;
 use common\models\trierror\ApiRequestLog;
 use common\models\trierror\FrontendRequestLog;
 
-class RestController extends Controller
+class SecureRestController extends RestController
 {
     public $request;
     public $queryRequest;
@@ -65,12 +64,59 @@ class RestController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        $this->platform = \Yii::$app->request->headers->get('x-platform', 'web');
+        $this->encrypt_key = \Yii::$app->params['aes_keys'][$this->platform] ?? \Yii::$app->params['aes_keys']['web'];
+        if (Yii::$app->request->isPost) {
+            // 1. Get the single encrypted payload string from a field, e.g., 'payload'
+            // $encryptedPayload = Yii::$app->request->post('payload');
+            $encryptedPayload = Yii::$app->request->rawBody;
+
+            if ($encryptedPayload) {
+                // 2. Decrypt the string
+                $decryptedData = \common\components\AesCrypto::decrypt($encryptedPayload, $this->encrypt_key);
+                
+                // 3. The decrypted data should be an array (from the original JSON)
+                //    Handle potential JSON decoding errors if decrypt doesn't do it.
+                if(!is_array($decryptedData)){
+
+                    $params = json_decode($decryptedData, true);
+                }else{
+                    $params = $decryptedData;
+
+                }
+
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    throw new \yii\web\BadRequestHttpException('Invalid encrypted data format.');
+                }
+
+                // 4. Replace the request's body parameters with the decrypted data
+                Yii::$app->request->setBodyParams($params);
+
+                // print_r($params);
+                // die();
+                $this->request = $params;
+            }
+        }
+        return parent::beforeAction($action);
+    }
+
     public function init()
     {
+
+
         \Yii::$app->user->enableSession = false;
         Yii::setAlias('@api/controllers/Serializer', '@yii/rest/Serializer');
         // $this->request = json_decode(file_get_contents('php://input'), true);
         $this->request = $_REQUEST;
+
+        // if (\Yii::$app->request->isPost) {
+        //     $encryptedPost = \Yii::$app->request->post();
+        //     $decryptedPost = \common\components\AesCrypto::decrypt($encryptedPost, $this->encrypt_key);
+        //     \Yii::$app->request->setBodyParams($decryptedPost);
+        //     $this->request = $decryptedPost;
+        // }
         $this->queryRequest = Yii::$app->getRequest()->queryParams;
         $this->headers = Yii::$app->getRequest()->getHeaders();
 
@@ -84,7 +130,7 @@ class RestController extends Controller
         // $this->storeRequest();
         // $this->isAuthorizeRequest();
         if ($this->request && !is_array($this->request)) {
-            Yii::$app->api->sendFailedStringResponse(['Invalid Json']);
+            Yii::$app->secureapi->sendFailedStringResponse(['Invalid Json']);
         }
         $this->getUser();
         if (isset($this->queryRequest['pageSize'])) {
@@ -96,47 +142,6 @@ class RestController extends Controller
                 $this->pageSize = $this->queryRequest['pageSize'];
             }
         }
-    }
-
-    public function beforeAction($action)
-    {
-        if (Yii::$app->getRequest()->getHeaders()->get('x-encryption') == 1) {
-
-            $this->platform = \Yii::$app->request->headers->get('x-platform', 'web');
-            $this->encrypt_key = \Yii::$app->params['aes_keys'][$this->platform] ?? \Yii::$app->params['aes_keys']['web'];
-            if (Yii::$app->request->isPost) {
-                // 1. Get the single encrypted payload string from a field, e.g., 'payload'
-                // $encryptedPayload = Yii::$app->request->post('payload');
-                $encryptedPayload = Yii::$app->request->rawBody;
-
-                if ($encryptedPayload) {
-                    // 2. Decrypt the string
-                    $decryptedData = \common\components\AesCrypto::decrypt($encryptedPayload, $this->encrypt_key);
-
-                    // 3. The decrypted data should be an array (from the original JSON)
-                    //    Handle potential JSON decoding errors if decrypt doesn't do it.
-                    if(!is_array($decryptedData)){
-
-                        $params = json_decode($decryptedData, true);
-                    }else{
-                        $params = $decryptedData;
-
-                    }
-
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        throw new \yii\web\BadRequestHttpException('Invalid encrypted data format.');
-                    }
-
-                    // 4. Replace the request's body parameters with the decrypted data
-                    Yii::$app->request->setBodyParams($params);
-
-                    // print_r($params);
-                    // die();
-                    $this->request = $params;
-                }
-            }
-        }
-        return parent::beforeAction($action);
     }
 
 
@@ -167,7 +172,7 @@ class RestController extends Controller
                 $this->access_token = $access_token;
                 $this->auth_token = $accessToken;
                 // if ($access_token->expires_at < time()) {
-                //     Yii::$app->api->sendFailedResponse([], 'Access token expired');
+                //     Yii::$app->secureapi->sendFailedResponse([], 'Access token expired');
                 // };
 
                 \Yii::$app->params['active_user'] =   $this->userinfo = User::findOne(['id' => $access_token->user_id]);
@@ -298,7 +303,7 @@ class RestController extends Controller
                 $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->getModels());
             }
         }
-        return Yii::$app->api->sendResponse($data);
+        return Yii::$app->secureapi->sendResponse($data);
     }
 
     protected function reverseReponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false)
@@ -314,7 +319,7 @@ class RestController extends Controller
 
             $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->getModels());
         }
-        return Yii::$app->api->sendResponse($data);
+        return Yii::$app->secureapi->sendResponse($data);
     }
 
     protected function dataSender($array = [], $rootIndexName, $additional_message = [])
@@ -323,7 +328,7 @@ class RestController extends Controller
         $data[$rootIndexName]['data'] = $array;
 
 
-        return Yii::$app->api->sendResponse($data, $additional_message);
+        return Yii::$app->secureapi->sendResponse($data, $additional_message);
     }
 
 
