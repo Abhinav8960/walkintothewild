@@ -6,7 +6,6 @@ use Codeception\Scenario;
 use common\models\EmailVerification;
 use common\models\User;
 use common\models\UserSession;
-use common\models\UserVerification;
 use wdmg\activity\models\Activity;
 use yii\base\Model;
 use Yii;

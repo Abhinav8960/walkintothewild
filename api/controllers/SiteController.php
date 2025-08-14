@@ -21,6 +21,7 @@ use common\models\Auth;
 use common\models\EmailVerification;
 use common\models\MobileVerification;
 use common\models\SourceVerification;
+use common\models\TemporaryUser;
 use common\models\User;
 use common\models\UserDeleteRequest;
 use common\models\UserDeleteRequestForm;
@@ -46,7 +47,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test','mail-otp-verification','mobile-otp-verification','sign-in-mobile', 'sign-in-email'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -58,7 +59,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'mail-otp-verification', 'mobile-otp-verification','sign-in-mobile', 'sign-in-email'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -752,7 +753,7 @@ class SiteController extends RestController
     //     }
     // }
 
-    
+
     private function RateLimit($rateLimitKey, $requestCount, $rateLimitDuration, $rateLimitMaxRequests, $model, $blockDuration)
     {
         $cache = Yii::$app->cache;
@@ -816,9 +817,7 @@ class SiteController extends RestController
             if (!$model->validate()) {
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
-
-            Yii::$app->session->set('email', $model->email);
-
+            // Yii::$app->session->set('email', $model->email);
             $this->sendmailOtp($model->email);
             return Yii::$app->api->sendResponse(['message' => 'OTP sent to your email!']);
         }
@@ -851,22 +850,65 @@ class SiteController extends RestController
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $email = Yii::$app->session->get('email');
+        $email = Yii::$app->request->post('email');
         $otp = Yii::$app->request->post('otp');
+        $mobile_no = Yii::$app->request->post('mobile_no');
 
         if (!$email) {
             return ['success' => false, 'message' => 'Email is missing'];
         }
 
-        $user = User::find()->where([
-            'email' => $email,
-            'status' => User::STATUS_ACTIVE
-        ])->one();
+        $user = User::find()->where(['email' => $email, 'status' => User::STATUS_ACTIVE])->one();
 
         if (!$user) {
-            return ['success' => false, 'message' => 'User not found or inactive'];
+            // $mobile_no = Yii::$app->session->get('mobile_no');
+        
+            $temp_user = TemporaryUser::find()
+                ->where([
+                    'mobile_no' => $mobile_no,
+                    'email'=>$email,
+                    'status' => TemporaryUser::STATUS_ACTIVE
+                ])
+                ->one();
+        
+            if ($temp_user) {
+                if ($temp_user->is_mobile_verified == 1 && $temp_user->is_email_verified == 0) {
+                    $temp_user->is_email_verified = 1;
+                    $temp_user->save(false);
+                }
+        
+                if ($temp_user->is_mobile_verified == 1 && $temp_user->is_email_verified == 1) {
+                    $user = User::createFromTemporary($temp_user); 
+                } else {
+                    $user = $temp_user;
+                }
+        
+            } else {
+                $signupForm = new SignupForm();
+                $signupForm->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_EMAIL);
+                $signupForm->email = $email;
+                $signupForm->name = 'New User';
+                $signupForm->mobile_no = $mobile_no;
+        
+                $verificationRecord = $signupForm->signup();
+        
+                if ($verificationRecord instanceof TemporaryUser) {
+                    $verificationRecord->is_email_verified = 1;
+                    $verificationRecord->save(false);
+        
+                    if ($verificationRecord->is_mobile_verified == 1) {
+                        $user = User::createFromTemporary($verificationRecord);
+                    } else {
+                        $user = $verificationRecord;
+                    }
+                }
+        
+                if ($verificationRecord instanceof User) {
+                    $user = $verificationRecord;
+                }
+            }
         }
-
+        
         $source_record = SourceVerification::find()
             ->where([
                 'source' => $email,
@@ -894,20 +936,20 @@ class SiteController extends RestController
         $source_record->is_expired = 1;
         $source_record->save(false);
 
-        $loginmodel = new SigninForm();
-        $loginmodel->setScenario(SigninForm::SCENARIO_SIGNIN_VIA_EMAIL);
-        $loginmodel->email = $email;
 
-        if ($loginmodel->apiLogin()) {
-            $user = $loginmodel->getUser();
-            $accessToken = Yii::$app->api->createAccesstoken($user, $loginmodel);
-            $data = ['access_token' => $accessToken->token];
-            return Yii::$app->api->sendResponse($data);
-        } else {
-            return Yii::$app->api->sendFailedStringResponse($loginmodel->firstErrors, 400);
+        if ($user) {
+            $loginmodel = new SigninForm();
+            $loginmodel->setScenario(SigninForm::SCENARIO_SIGNIN_VIA_EMAIL);
+            $loginmodel->email = $email;
+
+            if ($loginmodel->apiLogin()) {
+                $accessToken = Yii::$app->api->createAccesstoken($user, $loginmodel);
+                return Yii::$app->api->sendResponse(['access_token' => $accessToken->token]);
+            }
         }
+        
+        return ['success' => true, 'message' => 'Verified Successfully'];
     }
-
 
     public function actionSignInMobile()
     {
@@ -917,8 +959,8 @@ class SiteController extends RestController
             if (!$model->validate()) {
                 return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
             }
-            
-            Yii::$app->session->set('mobile_no', $model->mobile_no);
+
+            // Yii::$app->session->set('mobile_no', $model->mobile_no);
 
             $cache = Yii::$app->cache;
             $rateLimitDuration = 30; // 5 minutes in seconds
@@ -962,8 +1004,9 @@ class SiteController extends RestController
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $mobile_no = Yii::$app->session->get('mobile_no');
+        $mobile_no = Yii::$app->request->post('mobile_no');
         $otp = Yii::$app->request->post('otp');
+        $email = Yii::$app->request->post('email');
 
         if (!$mobile_no) {
             return [
@@ -978,7 +1021,49 @@ class SiteController extends RestController
         ])->one();
 
         if (!$user) {
-            return ['success' => false, 'message' => 'User not found or inactive'];
+            $temp_user = TemporaryUser::find()
+                ->where([
+                    'email' => $email,
+                    'status' => TemporaryUser::STATUS_ACTIVE
+                ])
+                ->one();
+        
+            if ($temp_user) {
+                if ($temp_user->is_email_verified == 1 && $temp_user->is_mobile_verified == 0) {
+                    $temp_user->is_mobile_verified = 1;
+                    $temp_user->save(false);
+                }
+        
+                if ($temp_user->is_email_verified == 1 && $temp_user->is_mobile_verified == 1) {
+                    $user = User::createFromTemporary($temp_user); 
+                } else {
+                    $user = $temp_user;
+                }
+        
+            } else {
+                $signupForm = new SignupForm();
+                $signupForm->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_MOBILE);
+                $signupForm->mobile_no = $mobile_no;
+                $signupForm->name = 'New User';
+                $signupForm->email = $email;
+        
+                $verificationRecord = $signupForm->signup();
+        
+                if ($verificationRecord instanceof TemporaryUser) {
+                    $verificationRecord->is_mobile_verified = 1;
+                    $verificationRecord->save(false);
+        
+                    if ($verificationRecord->is_email_verified == 1) {
+                        $user = User::createFromTemporary($verificationRecord);
+                    } else {
+                        $user = $verificationRecord;
+                    }
+                }
+        
+                if ($verificationRecord instanceof User) {
+                    $user = $verificationRecord;
+                }
+            }
         }
 
         $source_record = SourceVerification::find()
@@ -1008,17 +1093,18 @@ class SiteController extends RestController
         $source_record->is_expired = 1;
         $source_record->save(false);
 
-        $loginmodel = new SigninForm();
-        $loginmodel->setScenario(SigninForm::SCENARIO_SIGNIN_VIA_MOBILE);
-        $loginmodel->mobile_no = $mobile_no;
+        if ($user) {
+            $loginmodel = new SigninForm();
+            $loginmodel->setScenario(SigninForm::SCENARIO_SIGNIN_VIA_MOBILE);
+            $loginmodel->mobile_no = $mobile_no;
 
-        if ($loginmodel->apiLogin()) {
-            $user = $loginmodel->getUserMobile();
-            $accessToken = Yii::$app->api->createAccesstoken($user, $loginmodel);
-            $data = ['access_token' => $accessToken->token];
-            return Yii::$app->api->sendResponse($data);
-        } else {
-            return Yii::$app->api->sendFailedStringResponse($loginmodel->firstErrors, 400);
+            if ($loginmodel->apiLogin()) {
+                $user = $loginmodel->getUserMobile();
+                $accessToken = Yii::$app->api->createAccesstoken($user, $loginmodel);
+                $data = ['access_token' => $accessToken->token];
+                return Yii::$app->api->sendResponse($data);
+            }
         }
+        return ['success'=> true, 'message' => 'Verified Successfully'];
     }
 }

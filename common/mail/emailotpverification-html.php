@@ -14,12 +14,10 @@ use yii\helpers\Html;
         <h2 style="text-align: center; font-size:25px;  font-family: Arial, sans-serif;">One-Time-Password(OTP)</h2>
         <div style="border-radius: 15px; margin-top:20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: 0.3s; text-align: center; padding: 10px; background-color:#ecedf1;">
             <p style="font-family: Arial, sans-serif;"> 
-                <?= isset($username) ? Html::encode($username) : '' ?>, 
-                your One-Time Password is <br>
+                <?= isset($username) ? Html::encode($username) : '' ?>
+                Your One-Time Password is <br>
                 <strong><?= isset($email_otp) ? Html::encode($email_otp) : '' ?></strong>. 
                 <br>
-                It will expire in 
-                <strong> 5 minutes </strong>.
             </p>
         </div>
         <footer style="margin-top: 80px; margin-bottom:0px;font-size: 12px; color: #888;">
