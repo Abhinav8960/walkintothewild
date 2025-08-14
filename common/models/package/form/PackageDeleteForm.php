@@ -5,7 +5,7 @@ namespace common\models\package\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\package\PackageVersion;
+use common\models\package\Package;
 
 class PackageDeleteForm extends model
 {
@@ -17,11 +17,11 @@ class PackageDeleteForm extends model
     public $package_delete_model;
 
 
-    public function __construct(Package $package_delete_model = null)
+    public function __construct(?Package $package_delete_model = null)
     {
 
         $this->package_delete_model = Yii::createObject([
-            'class' => Package::className()
+            'class' => Package::class
         ]);
 
 

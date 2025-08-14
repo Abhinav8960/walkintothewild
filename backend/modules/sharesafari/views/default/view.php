@@ -159,10 +159,10 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                     <div class="comments-persons">
                         <div class="postcomment d-flex gap-2">
                             <div class="avatar">
-                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                <img src="<?= $share_safari->hostUser && $share_safari->hostUser->avatar <> '' ? $share_safari->hostUser->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                             </div>
                             <div class="text_com">
-                                <h6 class="nameavatr"><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></h6>
+                                <h6 class="nameavatr"><?= isset($share_safari->hostUser) ? $share_safari->hostUser->name : '' ?></h6>
                                 <?php if ($share_safari->safari_plan) { ?>
                                     <p><?= $share_safari->safari_plan; ?></p>
                                 <?php } ?>

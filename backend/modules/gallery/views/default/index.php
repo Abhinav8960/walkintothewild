@@ -68,7 +68,7 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'headerOptions' => ['style' => 'width:10%; text-align:left;'],
-                        'template' => '{view}',
+                        'template' => '{view}&nbsp{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
 
@@ -84,16 +84,16 @@ $this->params['buttons'][] = Html::a('Pending Gallery Approval', [Url::toRoute([
                                 );
                             },
 
-                            // 'delete' => function ($url, $model) {
-                            //     return Html::button(
-                            //         Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
-                            //         [
-                            //             'value' => Url::toRoute(['delete', 'id' => $model->id]),
-                            //             'class' => 'btn p-0 change-menuicon delete-popup',
-                            //             'title' => 'Delete',
-                            //         ]
-                            //     );
-                            // },
+                            'delete' => function ($url, $model) {
+                                return Html::button(
+                                    Html::img($this->params['baseurl'] . '/img/delete.png', ['alt' => '', 'width' => 25, 'height' => 25]),
+                                    [
+                                        'value' => Url::toRoute(['delete', 'id' => $model->id]),
+                                        'class' => 'btn p-0 change-menuicon delete-popup',
+                                        'title' => 'Delete',
+                                    ]
+                                );
+                            },
 
                         ]
                     ],

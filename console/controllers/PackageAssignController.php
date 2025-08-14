@@ -18,15 +18,15 @@ class PackageAssignController extends Controller
     {
 
         $ids = [76, 23, 4, 3];
-        $package_model = Package::find()->andWhere(['not in', 'owned_by_id', $ids])->all();
+        $package_model = Package::find()->andWhere(['not in', 'safari_operator_id', $ids])->all();
         foreach ($package_model as $package) {
             $randomKey = array_rand($ids);
-            $package->owned_by_id = $ids[$randomKey];
+            $package->safari_operator_id = $ids[$randomKey];
             if ($package->save(false)) {
                 $package_version_model = PackageVersion::find()->where(['package_id' => $package->id])->all();
                 foreach ($package_version_model as $pack) {
 
-                    $pack->owned_by_id = $package->owned_by_id;
+                    $pack->safari_operator_id = $package->safari_operator_id;
                     $pack->save(false);
                 }
             }

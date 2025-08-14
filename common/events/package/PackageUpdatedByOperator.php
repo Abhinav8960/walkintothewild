@@ -132,7 +132,7 @@ class PackageUpdatedByOperator extends Event
         $this->cost_per_person = $this->package->cost_per_person;
 
         $this->package_url = urlencode(\Yii::$app->frontendUrlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'id' => $this->package->id]));
-        $this->userId = $this->package->owned_by_id;
+        $this->userId = $this->package->safari_operator_id;
         if ($this->package->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
             $this->email = $this->package->safarioperator->email;
             $this->name =  $this->package->safarioperator->business_name;

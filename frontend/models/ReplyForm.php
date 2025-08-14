@@ -31,7 +31,7 @@ class ReplyForm extends Model
     public function rules()
     {
         return [
-            [['comment', 'parent_id','version'], 'required'],
+            [['comment', 'parent_id', 'version'], 'required'],
             ['comment', 'validateContent'],
             // ['comment', function () {
             //     // if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
@@ -39,7 +39,7 @@ class ReplyForm extends Model
             //         $this->addError('comment', 'Invalid Characters!!!');
             //     }
             // }],
-            [['version'],'integer'],
+            [['version'], 'integer'],
         ];
     }
 
@@ -92,10 +92,10 @@ class ReplyForm extends Model
 
     public function NotifyUser($reply, $getAttributes)
     {
-        if($reply->status == 1){
-            $user = User :: find()->where(['status'=>10])->andWhere(['id'=>Yii::$app->user->id])->one();
-            return new  \common\events\sharesafari\SafariCommentReplyByUser($user->name,$reply->share_safari_id);     
+        if ($reply->status == 1) {
+            $user = User::find()->where(['status' => 10])->andWhere(['id' => Yii::$app->user->id])->one();
+            $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['id' => $reply->share_safari_id])->one();
+            return new  \common\events\sharesafari\SafariCommentByUser($share_safari->slug, $user->name, $reply->share_safari_id);
         }
-       
     }
 }

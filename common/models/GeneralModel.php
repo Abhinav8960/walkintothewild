@@ -206,9 +206,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function rolesforform()
     {
-        if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator) {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
             return [
-                1 => 'Administrator',
+                // 1 => 'Administrator',
                 2 => 'Admin',
                 // 3 => 'Safari Operator',
                 // 4 => 'Operator',  /**Operator Access used into both tables and this things is not propely handled to use operator role here */
@@ -217,16 +217,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                 7 => 'Report Manager',
                 8 => 'Community Manager',
             ];
-        } else
-        if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
-            return [
-                2 => 'Admin',
-                // 3 => 'Safari Operator',
-                // 4 => 'Operator',
-                5 => 'Cms Manager',
-                6 => 'Resort Manager',
-            ];
         }
+        //  else if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
+        //     return [
+        //         2 => 'Admin',
+        //         // 3 => 'Safari Operator',
+        //         // 4 => 'Operator',
+        //         5 => 'Cms Manager',
+        //         6 => 'Resort Manager',
+        //     ];
+        // }
     }
 
     public static function pages()
@@ -2164,7 +2164,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function operatortype($legal_entity_type)
     {
-        $operator_types = [1 => 'PROP_WRITER', 2 => 'PVT_LTD' , 3 => 'LLP'];
+        $operator_types = [1 => 'PROP_WRITER', 2 => 'PVT_LTD', 3 => 'LLP'];
         return $operator_types[$legal_entity_type] ?? '';
+    }
+
+    public static function fdstatusoption()
+    {
+        return [
+            '1' => 'Live',
+            '2' => 'Pending',
+        ];
     }
 }

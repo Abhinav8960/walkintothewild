@@ -37,6 +37,7 @@ class DayItineraryForm  extends \yii\base\Model
     public $created_at;
     public $partner_gallery_id;
     public $gallery_json;
+    public $gallery_version;
 
     /**
      * @param [type] $package_day_model
@@ -69,6 +70,7 @@ class DayItineraryForm  extends \yii\base\Model
             $this->created_at = $this->package_day_model->created_at;
             $this->partner_gallery_id = $this->package_day_model->partner_gallery_id;
             $this->gallery_json = $this->package_day_model->gallery_json;
+            $this->gallery_version = $this->package_day_model->gallery_version;
         }
     }
 
@@ -78,7 +80,7 @@ class DayItineraryForm  extends \yii\base\Model
             [['package_id', 'version', 'day', 'day_title', 'day_description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
-            [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner', 'partner_gallery_id'], 'integer'],
+            [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner', 'partner_gallery_id','gallery_version'], 'integer'],
             [[
                 'day_description',
                 'day_activity',
@@ -143,6 +145,9 @@ class DayItineraryForm  extends \yii\base\Model
             $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
             if (!empty($live)) {
                 $this->package_day_model->gallery_json = $live->live_images;
+                if (!empty($live->version)) {
+                    $this->package_day_model->gallery_version = $live->version;
+                }
             }
         }
     }

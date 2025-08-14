@@ -50,7 +50,7 @@ class DefaultController extends Controller
 
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'copy-package'],
+                'only' => ['index', 'view', 'create', 'update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval', 'copy-package', 'copy-with-edit'],
                 'rules' => [
                     [
                         'actions' => ['index', 'create'],
@@ -58,13 +58,18 @@ class DefaultController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['view', 'copy-package'],
+                        'actions' => ['view'],
                         'allow' => $this->isPackageOwner(),
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['update', 'itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
-                        'allow' => $this->isPackageEditable() && $this->isPackageOwner(),
+                        'actions' => ['itinerary', 'inclusion', 'policy-info', 'getting-there', 'faq', 'create-faq', 'update-faq', 'send-for-approval'],
+                        'allow' => $this->isPackageOwner(),
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['update', 'copy-with-edit'],
+                        'allow' => $this->isPackageUpdate(),
                         'roles' => ['@'],
                     ],
                 ],
@@ -80,9 +85,8 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackagePartnerSearch();
-        // $searchModel->custom_status = PackageVersion::EDIATBLE_STATUS;
-        $searchModel->owned_by_id = $this->operatormodel()->id;
-
+        $searchModel->safari_operator_id = $this->operatormodel()->id;
+        $searchModel->custom_status = 4;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -90,6 +94,24 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $model->package_id;
+        $searchModel->version = $model->version;
+        $searchModel->status = PackageFaq::STATUS_ACTIVE;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+        return $this->render('view', [
+            'package' => $model,
+            'faqs' => $faqs,
+        ]);
+    }
+
 
     /**
      * Create Package.
@@ -99,11 +121,10 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $safari_operator = $this->operatormodel();
-
         $model = new PackageVersionForm();
         $model->status = PackageVersion::EDIATBLE_STATUS;
-        $model->owned_by_id = $safari_operator->id;
-
+        $model->safari_operator_id = $safari_operator->id;
+        $model->user_id = Yii::$app->user->identity->id;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -115,7 +136,6 @@ class DefaultController extends Controller
                     if ($model->package_version_model->save()) {
                         $model->uploadFile();
                         $this->updatePackageStatus($model->package_id, $model->version, PackageVersion::EDIATBLE_STATUS);
-
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
                             PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
@@ -128,8 +148,6 @@ class DefaultController extends Controller
                                 $packagefeature->save(false);
                             }
                         }
-
-
                         $package_park = $model->package_park;
                         if ($package_park) {
                             PackageSafariPark::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
@@ -141,9 +159,7 @@ class DefaultController extends Controller
                                 $packagesafaripark->save(false);
                             }
                         }
-
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
-                        // return $this->redirect(['update', 'id' => $model->package_version_model->id]);
                         return $this->redirect(['itinerary', 'id' => $model->package_version_model->id]);
                     } else {
                         print_r($model->getErrors());
@@ -151,19 +167,11 @@ class DefaultController extends Controller
                         die();
                         \Yii::$app->session->setFlash('error', 'Failed to create package.');
                     }
-                } 
-                // else {
-                //     print_r($model->getErrors());
-                //     print_r($model->package_version_model->getErrors());
-                //     die();
-                //     \Yii::$app->session->setFlash('error', 'Failed to create package.');
-                // }
+                }
             }
         } else {
             $model->package_version_model->loadDefaultValues();
         }
-
-
 
         return $this->render('create', [
             'model' => $model,
@@ -172,18 +180,11 @@ class DefaultController extends Controller
     }
 
 
-    /**
-     * Updates an existing Package Author model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
         $safari_operator = $this->operatormodel();
-
-        $package_version_model = $this->findModel($id);
+        $package_version_model = PackageVersion::find()->where(['package_id' => $id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
         $model = new PackageVersionForm($package_version_model);
         $model->scenario = 'update';
 
@@ -195,7 +196,6 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->package_version_model->save(false)) {
                         $model->uploadFile();
-
                         $package_feature = $model->package_feature;
                         if ($package_feature) {
                             PackageFeature::deleteAll(['package_id' => $model->package_version_model->package_id, 'version' => $model->package_version_model->version]);
@@ -489,49 +489,11 @@ class DefaultController extends Controller
     }
 
 
-    /**
-     * Create PackageFaqForm.
-     * 
-     * @return mixed
-     */
-    // public function actionUpdateFaq($id, $package_id, $faq_id)
-    // {
-    //     $package_version_model = PackageVersion::findOne(['package_id' => $package_id]);
-    //     $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
-    //     $model = new PackageFaqForm($faq_model);
-    //     $model->package_id = $package_version_model->package_id;
-    //     $model->version = $package_version_model->version;
-    //     $model->status = PackageFaq::STATUS_ACTIVE;
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             if ($model->validate()) {
-    //                 $model->initializeForm();
-    //                 if ($model->package_faq_model->save(false)) {
-    //                     $faq = new MasterFaq();
-    //                     $faq->question = $model->question;
-    //                     $faq->answer = $model->answer;
-    //                     $faq->position = 0;
-    //                     $faq->status = MasterFaq::STATUS_ACTIVE;
-    //                     if ($faq->save(false)) {
-    //                         $model->package_faq_model->faq_id = $faq->id;
-    //                         $model->package_faq_model->save(false);
-    //                     }
-    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-    //                     return $this->redirect(['faq', 'id' => $package_version_model->id]);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->package_faq_model->loadDefaultValues();
-    //     }
 
-
-    //     return $this->redirect(['faq', 'id' => $package_version_model->id]);
-    // }
 
     public function actionUpdateFaq($id, $package_id, $faq_id)
     {
-        $package_version_model = PackageVersion::find()->where(['package_id' => $package_id])->andWhere(['status'=>PackageVersion::EDIATBLE_STATUS])->limit(1)->one();
+        $package_version_model = PackageVersion::find()->where(['package_id' => $package_id])->andWhere(['status' => PackageVersion::EDIATBLE_STATUS])->limit(1)->one();
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_version_model->package_id;
@@ -553,27 +515,6 @@ class DefaultController extends Controller
 
 
         return $this->redirect(['faq', 'id' => $package_version_model->id]);
-    }
-
-
-
-
-
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-
-        $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $model->package_id;
-        $searchModel->version = $model->version;
-        $searchModel->status = PackageFaq::STATUS_ACTIVE;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
-        $faqs = $dataProvider->getModels();
-
-        return $this->render('view', [
-            'package' => $model,
-            'faqs' => $faqs,
-        ]);
     }
 
     /**
@@ -599,30 +540,6 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionSendForApproval($id)
-    {
-
-        $m = $this->findModel($id);
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $m->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
-            $m->save(false);
-            $this->updatePackageStatus($m->package_id, $m->version, $m->status);
-            $this->copyPackageNow($id);
-            Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
-        } catch (\Exception $e) {
-            Yii::error($e->getMessage());
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
-            echo "<pre>";
-            print_r($e->getMessage());
-            die();
-            return $this->redirect(['index']);
-        }
-        $transaction->commit();
-
-        return $this->redirect(['index']);
-    }
 
     public function actionCopyPackage($id)
     {
@@ -631,7 +548,6 @@ class DefaultController extends Controller
         try {
 
             $newModel = $this->copyPackageNow($id, true);
-            // $this->updatePackageStatus($m->uuid, $m->version, $m->status);
             Yii::$app->session->setFlash('success', 'Package copied successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
@@ -643,7 +559,7 @@ class DefaultController extends Controller
         }
         $transaction->commit();
 
-        return $this->redirect(['update', 'id' => $newModel->id]);
+        return $this->redirect(['update', 'id' => $newModel->package_id]);
     }
 
 
@@ -665,7 +581,20 @@ class DefaultController extends Controller
         $operator = $this->operatormodel();
         $model = PackageVersion::findOne(['id' => $id]);
 
-        if ($model && $model->owned_by_id == $operator->id) {
+        if ($model && $model->safari_operator_id == $operator->id) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function isPackageUpdate()
+    {
+        $id = Yii::$app->request->get('id');
+
+        $operator = $this->operatormodel();
+        $model = Package::findOne(['id' => $id]);
+
+        if ($model && $model->safari_operator_id == $operator->id) {
             return true;
         }
         return false;
@@ -684,14 +613,12 @@ class DefaultController extends Controller
                 $newModel->package_id = $this->newpackage($model);
                 $this->version =  $newModel->version = 'v1';
             }
-            $newModel->id = null; // Set the ID to null for the new record
+            $newModel->id = null;
             $newModel->status = PackageVersion::EDIATBLE_STATUS;
             $newModel->save(false);
             if (!$isNewRecord) {
-
                 $this->CopyPackageComment($model->package_id, $model->version, $newModel->package_id);
             }
-            // $this->CopyPackageCommentReport($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageDay($model->package_id, $model->version, $newModel->package_id);
             $this->CopyPackageIncluded($model->package_id, $model->version, $newModel->package_id);;
             $this->CopyPackageFeature($model->package_id, $model->version, $newModel->package_id);
@@ -706,8 +633,6 @@ class DefaultController extends Controller
 
     private function CopyPackageComment($old_package_id, $old_version, $new_package_id)
     {
-        // package_comment_approval;
-
         $model = PackageComment::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $comment) {
@@ -724,29 +649,8 @@ class DefaultController extends Controller
         return true;
     }
 
-    // private function CopyPackageCommentReport($old_package_id, $old_version, $new_package_id)
-    // {
-    //     // package_comment_report_approval;
-
-    //     $model = PackageCommentReport::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
-    //     if ($model) {
-    //         foreach ($model as $comment) {
-    //             $newModel = new PackageCommentReport();
-    //             $newModel->attributes = $comment->attributes;
-    //             $newModel->id = null; // Set the ID to null for the new record
-    //             $newModel->package_id = $new_package_id;
-    //             $newModel->version = $this->version;
-
-    //             $newModel->save(false);
-    //         }
-    //     }
-
-    //     return true;
-    // }
-
     private function CopyPackageDay($old_package_id, $old_version, $new_package_id)
     {
-        // package_day_approval;
 
         $model = PackageDay::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
@@ -766,7 +670,6 @@ class DefaultController extends Controller
 
     private function CopyPackageIncluded($old_package_id, $old_version, $new_package_id)
     {
-        // package_included_approval;         
         $model = PackageIncluded::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $included) {
@@ -785,8 +688,6 @@ class DefaultController extends Controller
     }
     private function CopyPackageFeature($old_package_id, $old_version, $new_package_id)
     {
-        // package_feature_approval;      
-
         $model = PackageFeature::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $feature) {
@@ -805,7 +706,6 @@ class DefaultController extends Controller
 
     private function CopyPackageSafariPark($old_package_id, $old_version, $new_package_id)
     {
-        // package_safari_park_approval; 
         $model = PackageSafariPark::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $safari) {
@@ -822,7 +722,7 @@ class DefaultController extends Controller
     }
 
     private function CopyPackageFaq($old_package_id, $old_version, $new_package_id)
-    {        // package_faq_approval;
+    {
         $model = PackageFaq::find()->where(['package_id' => $old_package_id, 'version' => $old_version])->all();
         if ($model) {
             foreach ($model as $faq) {
@@ -852,12 +752,12 @@ class DefaultController extends Controller
         }
         if ($status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
             $model->pending_for_approval_version = $version;
-            // $model->editable_version = NULL;
+            $model->pending_status = 1;
         }
         if ($status == PackageVersion::EDIATBLE_STATUS) {
-
             $model->editable_version = $version;
         }
+        $model->edit_status = 1;
         if ($model->save(false)) {
             $this->terminatePackage($package_id);
             return true;
@@ -893,14 +793,9 @@ class DefaultController extends Controller
         $newModel = new Package();
         $newModel->package_name = $model->package_name;
         $newModel->package_slug = Package::generateUnqiueSlug($newModel->package_name);
-        // $newModel->package_agenda_id = $model->package_agenda_id;
-        // $newModel->no_of_day = $model->no_of_day;
-        // $newModel->no_of_night = $model->no_of_night;
-        // $newModel->safari_type = $model->safari_type;
-        // $newModel->safari_type = $model->safari_type;
         $newModel->editable_version = 'v1';
-        $newModel->id = null; // Set the ID to null for the new record
-        $newModel->status = Package::STATUS_SUSPEND;
+        $newModel->id = null;
+        $newModel->status = Package::STATUS_CREATE;
         $newModel->save(false);
         return $newModel->id;
     }
@@ -948,8 +843,7 @@ class DefaultController extends Controller
     {
         $safari_operator = $this->operatormodel();
         $searchModel = new PartnerGallerySearch();
-        // $searchModel->status = PartnerGallery::STATUS_ACTIVE;
-        $searchModel->is_live = 1;
+        $searchModel->listing_status = 1;
         $searchModel->safari_operator_id = $safari_operator->id;
 
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -959,5 +853,120 @@ class DefaultController extends Controller
             'context' => $context,
             'preview' => $preview
         ]);
+    }
+
+    public function actionSendForApproval($id)
+    {
+
+        $m = $this->findModel($id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $m->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
+            $m->save(false);
+            $this->updatePackageStatus($m->package_id, $m->version, $m->status);
+            Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
+            return $this->redirect(['index']);
+        }
+        $transaction->commit();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionDelete($id)
+    {
+        $package_version_model = $this->findModel($id);
+        if ($package_version_model) {
+            $package_version_model->status = PackageVersion::TERMINATED_STATUS;
+            if ($package_version_model->save(false)) {
+                $model = Package::find()->where(['id' => $package_version_model->package_id])->one();
+                if ($model->status == 10) {
+                    $model->status = Package::STATUS_DELETE;
+                }
+                $model->edit_status = 0;
+                $model->pending_status = 0;
+                $model->editable_version = null;
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Package Delete successfully');
+                    return $this->redirect(['index']);
+                }
+            }
+        }
+        Yii::$app->session->setFlash('error', 'Package Not Delete successfully');
+        return $this->redirect(['index']);
+    }
+
+
+    public function actionCopyWithEdit($id)
+    {
+        $safari_operator = $this->operatormodel();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $newModel = $this->copyWithEditPackage($id);
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'An error occurred while sending for approval: ' . $e->getMessage());
+            echo "<pre>";
+            print_r($e->getMessage());
+            die();
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        $transaction->commit();
+        return $this->redirect(['update', 'id' => $newModel->package_id]);
+    }
+
+
+    private function copyWithEditPackage($id, $isNewRecord = false)
+    {
+        $model = Package::findOne($id);
+        $package_version_model = PackageVersion::find()->where(['package_id' => $model->id, 'version' => $model->live_version])->orderBy(['id' => SORT_ASC])->limit(1)->one();
+        $last_version = PackageVersion::find()->where(['package_id' => $model->id])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+
+        if ($model) {
+            $newModel = new PackageVersion();
+            $newModel->attributes = $package_version_model->attributes;
+            $this->version = $newModel->version = 'v' . (intval(substr($last_version->version, 1)) + 1);
+
+            $newModel->id = null;
+            $newModel->status = PackageVersion::EDIATBLE_STATUS;
+            $newModel->save(false);
+
+            $this->CopyPackageDay($package_version_model->package_id, $package_version_model->version, $newModel->package_id);
+            $this->CopyPackageIncluded($package_version_model->package_id, $package_version_model->version, $newModel->package_id);;
+            $this->CopyPackageFeature($package_version_model->package_id, $package_version_model->version, $newModel->package_id);
+            $this->CopyPackageSafariPark($package_version_model->package_id, $package_version_model->version, $newModel->package_id);
+            $this->CopyPackageFaq($package_version_model->package_id, $package_version_model->version, $newModel->package_id);
+
+            $model->editable_version = $newModel->version;
+            $model->edit_status = 1;
+            $model->pending_status = 0;
+            $model->save(false);
+
+            return $newModel;
+        }
+        return true;
+    }
+
+    public function actionInactive($id)
+    {
+        $package = Package::find()->where(['id' => $id])->limit(1)->one();
+        if ($package->status == 1) {
+            $package->status = 0;
+            $package->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Package Inactive Successfully');
+        } else {
+            $package->status = 1;
+            $package->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Package Active Successfully');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

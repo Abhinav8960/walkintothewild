@@ -94,6 +94,8 @@ class SharedsafariController extends RestController
 
     public function actionCreateFixedDeparture()
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $model = new CreateDepartureForm();
         $model->host_user_id =  $safari_operator->id;
@@ -138,10 +140,11 @@ class SharedsafariController extends RestController
                 if (!empty($model->shared_safari_departure_model->safarioperator)) {
                     new \common\events\operator\FixedDepartureCreatedByOperator($this->userinfoId, $model->shared_safari_departure_model->id);
                 }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->shared_safari_departure_model->slug], ['message' => "Fixed Departure created successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.creation_success',['{var}'=>'Fixed Departure']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1, 'created_slug' => $model->shared_safari_departure_model->slug], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Fixed Departure not created successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.creation_failed',['{var}'=>'Fixed Departure']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -149,6 +152,8 @@ class SharedsafariController extends RestController
 
     public function actionUpdateFixedDeparture($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
@@ -226,11 +231,11 @@ class SharedsafariController extends RestController
                         );
                     }
                 }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Fixed Departure updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Fixed Departure']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Fixed Departure not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Fixed Departure']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -238,6 +243,8 @@ class SharedsafariController extends RestController
 
     public function actionItinerary($slug, $day = 1)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $share_safari_id = $shared_safari_departure_model->id;
@@ -256,10 +263,11 @@ class SharedsafariController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->share_safari_day_model->save(false)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Itinerary updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Itinerary']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Itinerary not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Itinerary']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -269,6 +277,8 @@ class SharedsafariController extends RestController
 
     public function actionInclusion($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -292,7 +302,8 @@ class SharedsafariController extends RestController
                         }
                         $sharesafariIncluded->selection = $selection;
                         if (!$sharesafariIncluded->save()) {
-                            throw new \Exception('Failed to save share safari inclusion option ' . $optionId);
+                            $message = Yii::$app->api->messageManager->getMessage('fixed_departure.inclusion.fail_to_save');
+                            throw new \Exception($message . $optionId);
                         }
 
                         if ($sharesafariIncluded->include_id == 2 && $sharesafariIncluded->selection == 1) {
@@ -309,13 +320,16 @@ class SharedsafariController extends RestController
                     }
 
                     $transaction->commit();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Inclusion updated successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Inclusion']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 } else {
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Failed to update package details."]);
+                    $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Package Details']);
+                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "An error occurred while updating data"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.error_occurred');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
@@ -324,6 +338,8 @@ class SharedsafariController extends RestController
 
     public function actionGettingThere($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -336,10 +352,11 @@ class SharedsafariController extends RestController
             $model->initializeForm();
             if ($model->shared_safari_departure_model->save(false)) {
                 $model->shared_safari_departure_model->savehistory();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Getting there updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Getting there']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Getting there not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Getting there']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -348,6 +365,8 @@ class SharedsafariController extends RestController
 
     public function actionPolicyInfo($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
@@ -359,10 +378,11 @@ class SharedsafariController extends RestController
             $model->initializeForm();
             if ($model->shared_safari_departure_model->save(false)) {
                 $model->shared_safari_departure_model->savehistory();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Policy info updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Policy Info']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Policy info not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Policy Info']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -371,6 +391,8 @@ class SharedsafariController extends RestController
 
     public function actionFaqs($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
@@ -385,6 +407,8 @@ class SharedsafariController extends RestController
      */
     public function actionCreateFaq($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new ShareSafariFaqForm();
@@ -405,11 +429,11 @@ class SharedsafariController extends RestController
                     $model->share_safari_faq_model->faq_id = $faq->id;
                     $model->share_safari_faq_model->save(false);
                 }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq submitted successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.submitted',['{var}'=>'Faq']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faq not submitted successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted',['{var}'=>'Faq']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -418,6 +442,8 @@ class SharedsafariController extends RestController
 
     public function actionGallery($slug)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -428,6 +454,8 @@ class SharedsafariController extends RestController
 
     public function actionCreateGallery($slug, $id = null)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -446,10 +474,11 @@ class SharedsafariController extends RestController
             $model->initializeForm();
             if ($model->share_safari_gallery_model->save(false)) {
                 $model->uploadFile();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Gallery updated successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Gallery']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery not updated successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Gallery']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -458,6 +487,8 @@ class SharedsafariController extends RestController
 
     public function actionUpdateFaq($slug, $faq_id)
     {
+        return Yii::$app->api->sendResponse(['status' => 0], ['message' => 'This action is currently not allowed.']);
+
         $safari_operator = $this->module->operatormodel();
 
         $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
@@ -479,11 +510,11 @@ class SharedsafariController extends RestController
                     $model->share_safari_faq_model->faq_id = $faq->id;
                     $model->share_safari_faq_model->save(false);
                 }
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq update successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.updated',['{var}'=>'Faq']);
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Faq not update successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed',['{var}'=>'Faq']);
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
 
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -501,7 +532,8 @@ class SharedsafariController extends RestController
         if (($model = ShareSafari::findOne(['slug' => $slug, 'host_user_id' => $host_user_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
     protected function findModelgallery($id)
@@ -509,7 +541,7 @@ class SharedsafariController extends RestController
         if (($model = ShareSafariGallery::findOne(['id' => $id, 'status' => [ShareSafariGallery::STATUS_ACTIVE, ShareSafariGallery::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 }

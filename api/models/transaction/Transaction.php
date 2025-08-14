@@ -2,6 +2,7 @@
 
 namespace api\models\transaction;
 
+use api\models\leads\sharesafari\ShareSafariLead;
 use api\models\meta\MetaStayCategory;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
@@ -69,6 +70,7 @@ class Transaction extends \common\models\transaction\Transaction
     public function fields()
     {
         $fields = [
+            'source',            
             'reference_id',
             // 'lead_partner_quotes_id',
             // 'lead_partner_quote_installments_id',
@@ -80,7 +82,7 @@ class Transaction extends \common\models\transaction\Transaction
             'addional_notes',
             'safaris',
             'travelers',
-            'Staycatgory', // relation
+            'staycatgory', // relation
             'name',
             'email',
             'phone',
@@ -102,6 +104,12 @@ class Transaction extends \common\models\transaction\Transaction
             'payment_gateway',
         ];
 
+        if ($this->source == self::SOURCE_SHARE_SAFARI) {
+                unset($fields['partner']);
+
+            $fields[] = 'share_safari_lead';
+        }
+
         return $fields;
     }
 
@@ -117,5 +125,10 @@ class Transaction extends \common\models\transaction\Transaction
     public function getStaycatgory()
     {
         return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
+    }
+
+    public function getShare_safari_lead()
+    {
+        return $this->hasOne(ShareSafariLead::className(), ['id' => 'share_safari_lead_id']);
     }
 }

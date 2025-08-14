@@ -105,7 +105,7 @@ class SiteController extends Controller
 
         $posts = UserPosts::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => UserPosts::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
         $sightings = Sighting::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => Sighting::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(3)->all();
-        $packages = Package::find()->where(['owned_by_id' => $safarioperator->id, 'status' => Package::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
+        $packages = Package::find()->where(['safari_operator_id' => $safarioperator->id, 'status' => Package::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(2)->all();
 
         $parks_count = SafariOperatorPark::find()->select(['park_id', 'count' => new Expression('COUNT(*)')])->where(['safari_operator_id' => $safarioperator->id, 'status' => SafariOperatorPark::STATUS_ACTIVE])->groupBy('park_id')->orderBy(['count' => SORT_DESC])->limit(2)->asArray()->all();
         $park_ids = array_column($parks_count, 'park_id');

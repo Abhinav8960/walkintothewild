@@ -224,7 +224,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPackagecount()
     {
-        return Package::find()->where(['owned_by_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
+        return Package::find()->where(['safari_operator_id' => $this->id])->andWhere(['not', ['live_version' => null]])->count();
     }
 
     public function getQuotescount()

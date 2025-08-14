@@ -9,13 +9,17 @@ use yii\grid\GridView;
 
 $faq_count = 1;
 
-$this->title = 'Fixed Departure : ' . $shared_safari_departure_model->share_safari_title . '';
-$this->params['title'] = $this->title;
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
+$this->title = 'Fixed Departure : ' . $shared_safari_departure_version_model->share_safari_title . '';
+// $this->params['title'] = $this->title;
 ?>
+<?= $this->render('_form_upper_view', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model]) ?>
 
 
 <div class="tabs-formswrapper mx-3">
-    <?= $this->render('_navbar', ['shared_safari_departure_model' => $shared_safari_departure_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('_navbar', ['shared_safari_departure_version_model' => $shared_safari_departure_version_model, 'faq_active' => 'active']) ?>
 
     <div class="tabs-content-wraps">
 
@@ -27,7 +31,7 @@ $this->params['title'] = $this->title;
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item mb-3">
                                     <?php
-                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'url' => Url::toRoute(['update-faq', 'id' => $model->share_safari_id, 'faq_id' => $faq->id])]);
+                                    echo $this->render('faq_form', ['model' => $faq, 'faq_model' => $faq, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list, 'url' => Url::toRoute(['update-faq', 'id' => $shared_safari_departure_version_model->id, 'faq_id' => $faq->id])]);
                                     ?>
                                 </div>
                             </div>
@@ -40,7 +44,7 @@ $this->params['title'] = $this->title;
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item mb-3">
                             <?php
-                            echo $this->render('faq_form', ['model' => $model, 'question_no' => $faq_count]);
+                            echo $this->render('faq_form', ['model' => $model, 'question_no' => $faq_count, 'drop_down_list' => $drop_down_list]);
                             ?>
 
                         </div>

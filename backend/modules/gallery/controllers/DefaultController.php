@@ -22,7 +22,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PartnerGallerySearch();
-        $searchModel->is_live = 1;
+        $searchModel->listing_status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -54,7 +54,7 @@ class DefaultController extends Controller
         }
 
         $model = new PartnerGalleryDeletionForm($partner_gallery_model);
-        $model->status  = PartnerGallery::STATUS_DELETE;
+        $model->listing_status  = PartnerGallery::STATUS_DELETE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

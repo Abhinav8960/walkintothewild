@@ -94,9 +94,13 @@ class PaymentResponseController extends Controller
         // $message = "Payment Failed";
         // $message = "Unfortunately, your transaction could not be completed.\n Please try again or use a different transaction method.";
         $message = "Transaction failed.";
+        $transaction->is_payment_received = 0;
+
         if ($transaction) {
             if (strtolower($data['status']) == 'success') {
                 $transaction->status = \common\models\transaction\Transaction::STATUS_SUCCESS;
+                $transaction->is_payment_received = 1;
+
                 // $message = "Payment Received";
                 // $message = "Your transaction was completed successfully.\n Booking details have been sent to your registered email.";
                 $message = "Transaction successful.";
@@ -110,8 +114,10 @@ class PaymentResponseController extends Controller
 
             $transaction->save(false);
             $transaction->triggerTransactionEvent();
-            $this->prepareChat($transaction->id,$transaction->lead_partner_quotes_id, $message, $transaction->status);
-            $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->status);
+            if ($transaction->source == Transaction::SOURCE_LEAD) {
+                $this->prepareChat($transaction->id, $transaction->lead_partner_quotes_id, $message, $transaction->status);
+                $this->sendEmailNotification($transaction->id, $transaction->reference_id, $transaction->user_id, $transaction->partner->user_id, $transaction->status);
+            }
             $this->updatePayuResponse($data, $transaction->id);
             Yii::info('Transaction updated successfully.', 'transaction');
         } else {
@@ -264,7 +270,7 @@ class PaymentResponseController extends Controller
         }
     }
 
-    private function prepareChat($transaction_id,$quotation_id, $message, $status)
+    private function prepareChat($transaction_id, $quotation_id, $message, $status)
     {
 
         // $chat_model = Chat::find()->andWhere(['lead_id' => $quotation->lead_id])->andWhere(['or', ['user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]], ['recipient_user_id' => [$quotation->lead->user_id, $quotation->partner->user_id]]])->andWhere(['chat_type' => 2])->one();

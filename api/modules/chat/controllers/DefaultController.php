@@ -93,10 +93,10 @@ class DefaultController extends RestController
 
     public function actionQuatationChat()
     {
-        if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
-            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
+            $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         } else {
-            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
+            $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -135,7 +135,8 @@ class DefaultController extends RestController
     {
         $chat = Chat::find()->where(['chat_hash' => $chat_hash])->andWhere(['or', ['user_id' => $this->userinfo->id], ['recipient_user_id' => $this->userinfo->id]])->one();
         if (!$chat) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
         if ($chat->chat_type == 1 && $chat->sender_id != $this->userinfo->id) {
             Chat::MarkChatSeen($chat->id);
@@ -169,14 +170,16 @@ class DefaultController extends RestController
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
-                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+                $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
+                return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
             // if ($chat_model->is_closed == 1) {
             //     return Yii::$app->api->sendResponse([], ['message' => 'Chat is closed, you can not reply'], 400);
@@ -211,8 +214,10 @@ class DefaultController extends RestController
         $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
         $gallery = null;
         $partner_gallery_version_id = null;
+        $partner_gallery_version = null;
         if (empty($message) && empty($gallery_slug)) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.message_required');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
         if (!empty($gallery_slug)) {
             $message = "Gallery";
@@ -221,16 +226,17 @@ class DefaultController extends RestController
             if ($partnerGallery) {
                 // Safely call toArray() if $gallery is not null
                 //  $gallery = json_encode($partnerGallery->PrepareFullResponse());
-                $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['is_live' => 1])->limit(1)->one();
+                $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['version' => $partnerGallery->version])->limit(1)->one();
                 $partner_gallery_version_id = $partner_gallery_version->id;
+                $partner_gallery_version = $partnerGallery->version;
                 $gallery = $partnerGallery->live_images;
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id,$partner_gallery_version)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -251,6 +257,7 @@ class DefaultController extends RestController
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
         $chat_message->partner_gallery_version_id = $partner_gallery_version_id ?? null;
+        $chat_message->partner_gallery_version = $partner_gallery_version ?? null;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
@@ -274,9 +281,11 @@ class DefaultController extends RestController
             $chat->is_seen = 0;
             $chat->created_at = time();
             $chat->save(false);
-            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Message Send", 'chat_hash' => $chat->chat_hash]);
+            $message = Yii::$app->api->messageManager->getMessage('common.message_send');
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message, 'chat_hash' => $chat->chat_hash]);
         } else {
-            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Message not sent"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.message_not_sent');
+            return  Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
     }
 
@@ -394,7 +403,8 @@ class DefaultController extends RestController
 
         if ($model->validate()) {
             if ($model->request($this->userinfo)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Quatation Send for approval to admin"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.send_for_approval', ['{var}' => 'Quatation']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -420,8 +430,8 @@ class DefaultController extends RestController
         ) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $message = Yii::$app->api->messageManager->getMessage('common.page_not_exist');
+        throw new NotFoundHttpException($message);
     }
 
 
@@ -438,7 +448,8 @@ class DefaultController extends RestController
     {
         $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Gallery Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Gallery']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         $searchModel = new PartnerGalleryImageSearch();
@@ -452,16 +463,21 @@ class DefaultController extends RestController
     {
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
-            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
+<<<<<<< HEAD
             return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Chat Not Found!!!'], 200);
+=======
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
+            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message], 400);
+>>>>>>> business-branch-api-shared-safari-payment
         }
-
-
-        return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => 'Chat Found!!!']);
+        $message = Yii::$app->api->messageManager->getMessage('common.found', ['{var}' => 'Chat']);
+        return Yii::$app->api->sendResponse($data = ['status' => 1, 'chat_hash' => $chat->chat_hash], ['message' => $message]);
     }
 
 
@@ -474,24 +490,29 @@ class DefaultController extends RestController
         $individual_user = $this->individualuser($user_handle);
         if (!$individual_user) {
             // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
-            return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'User']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
             if (empty($chat_model)) {
-                return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+                $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
+                return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
         } else {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         };
 
         if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
-            return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_allowed');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 403);
         }
         if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
-            return Yii::$app->api->sendResponse([], ['message' => 'You cannot perform this action, as phone is not available or verified for any of the chat members'], 403);
+            $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.phone_unavailable_or_unverified');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 403);
         }
 
         // if user is normal user then he only raise call request
@@ -521,18 +542,21 @@ class DefaultController extends RestController
                     $chat->created_at = time();
                     $chat->save(false);
                     $transaction->commit();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call Requested.']);
+                    $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.call_requested');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                return Yii::$app->api->sendResponse([], ['message' => 'Failed to initiate the call.'], 400);
+                $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.call_initiation_failed');
+                return Yii::$app->api->sendResponse([], ['message' => $message], 400);
             }
         } else {
             // Example parameters
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 if (!$chat_model->user->is_mobile_no_verified) {
-                    return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
+                    $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.user_number_not_verified');
+                    return Yii::$app->api->sendResponse([], ['message' => $message], 403);
                 }
 
                 $chat_id = $chat_model->id;
@@ -561,10 +585,12 @@ class DefaultController extends RestController
                 // Call the callNow method
                 $result = $callingService->callNow();
                 $transaction->commit();
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated.']);
+                $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.call_initiated');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             } catch (\Exception $e) {
                 $transaction->rollBack();
-                return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+                $message = Yii::$app->api->messageManager->getMessage('chat.make_call_on_chat.call_initiation_failed');
+                return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => $message]);
             }
         }
     }
@@ -575,18 +601,21 @@ class DefaultController extends RestController
         $message = Yii::$app->request->post('message');
 
         if (empty($chat_message_id) || empty($message)) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat message ID and message are required'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('chat.edit_message.id_message_required');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         $chat_message = ChatMessage::find()->where(['id' => $chat_message_id, 'created_by' => $this->userinfo->id])->one();
         if (!$chat_message) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat message not found or you do not have permission to edit it'], 404);
+            $message = Yii::$app->api->messageManager->getMessage('chat.edit_message.chat_permission_denied');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 404);
         }
 
         // Check if the message was created within the last 10 minutes
         $timeLimit = 10 * 60; // 10 minutes in seconds
         if ((time() - $chat_message->created_at) > $timeLimit) {
-            return Yii::$app->api->sendResponse([], ['message' => 'You can only edit messages within 10 minutes.'], 403);
+            $message = Yii::$app->api->messageManager->getMessage('chat.edit_message.edit_time_limit');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 403);
         }
 
         // $previous_message = $chat_message->message;
@@ -601,10 +630,11 @@ class DefaultController extends RestController
             if ($chat) {
                 Chat::lastMessageUpdate($chat, $last_message);
             }
-
-            return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message updated successfully']);
+            $message = Yii::$app->api->messageManager->getMessage('common.updated', ['{var}' => 'Message']);
+            return Yii::$app->api->sendResponse(['status' => 1], ['message' => $message]);
         } else {
-            return Yii::$app->api->sendResponse([], ['message' => 'Failed to update message'], 500);
+            $message = Yii::$app->api->messageManager->getMessage('common.update_failed', ['{var}' => 'Message']);
+            return Yii::$app->api->sendResponse([], ['message' => $message], 500);
         }
     }
 
@@ -613,18 +643,21 @@ class DefaultController extends RestController
         $chat_message_id = Yii::$app->request->post('chat_message_id');
 
         if (empty($chat_message_id)) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat message ID is required'], 400);
+            $message = Yii::$app->api->messageManager->getMessage('chat.edit_message.id_message_required');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 400);
         }
 
         $chat_message = ChatMessage::find()->where(['id' => $chat_message_id, 'created_by' => $this->userinfo->id])->one();
         if (!$chat_message) {
-            return Yii::$app->api->sendResponse([], ['message' => 'Chat message not found or you do not have permission to delete it'], 404);
+            $message = Yii::$app->api->messageManager->getMessage('chat.delete_message.chat_permission_denied');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 404);
         }
 
         // Check if the message was created within the last 10 minutes
         $timeLimit = 10 * 60; // 10 minutes in seconds
         if ((time() - $chat_message->created_at) > $timeLimit) {
-            return Yii::$app->api->sendResponse([], ['message' => 'You can not delete messages.'], 403);
+            $message = Yii::$app->api->messageManager->getMessage('chat.delete_message.can_not_delete');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 403);
         }
 
         // Change the status to 0 instead of deleting
@@ -637,10 +670,11 @@ class DefaultController extends RestController
             if ($chat) {
                 Chat::lastMessageUpdate($chat, $last_message);
             }
-
-            return Yii::$app->api->sendResponse(['status' => 1], ['message' => 'Message deleted successfully']);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted', ['{var}' => 'Message']);
+            return Yii::$app->api->sendResponse(['status' => 1], ['message' => $message]);
         } else {
-            return Yii::$app->api->sendResponse([], ['message' => 'Failed to delete '], 500);
+            $message = Yii::$app->api->messageManager->getMessage('common.delete_failed');
+            return Yii::$app->api->sendResponse([], ['message' => $message], 500);
         }
     }
 }

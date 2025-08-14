@@ -24,7 +24,7 @@ class PackageFeedDailyController extends Controller
         foreach ($feed_models as $feed) {
             $package_model = Package::find()->where(['id' => $feed->collection_id])->limit(1)->one();
             if ($package_model) {
-                $safari_operator_model = SafariOperator::find()->where(['id' => $package_model->owned_by_id])->limit(1)->one();
+                $safari_operator_model = SafariOperator::find()->where(['id' => $package_model->safari_operator_id])->limit(1)->one();
                 if ($safari_operator_model->status == 0) {
                     $feed->status = 0;
                     $feed->save(false);
@@ -38,7 +38,7 @@ class PackageFeedDailyController extends Controller
  
     public function actionPackageFeedRemoval()
     {
-        $package_model = Package::find()->where(['owned_by_id' => 23])->all();
+        $package_model = Package::find()->where(['safari_operator_id' => 23])->all();
         foreach($package_model as $package)
         {
             $package->status = 0;

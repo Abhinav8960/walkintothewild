@@ -4,9 +4,14 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\corporate\Corporate */
 
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariVersion;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Fixed Departure';
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button-created new create float-end', 'title' => 'Create']);
@@ -27,17 +32,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
                         'label' => 'Title',
                         'headerOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a(($model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled'), ['fixed-view', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
-                                'title' => 'View',
-                            ]);
+                            return $model->displayShareSafari->share_safari_title <> '' ? $model->displayShareSafari->share_safari_title : 'Untitled';
                         }
 
                     ],
@@ -46,7 +47,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
+                            return isset($model->displayShareSafari->start_date) ? date('Y-m-d', strtotime($model->displayShareSafari->start_date)) : '';
                         }
                     ],
                     [
@@ -54,7 +55,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
+                            return isset($model->displayShareSafari->end_date) ? date('Y-m-d', strtotime($model->displayShareSafari->end_date)) : '';
                         }
                     ],
                     [
@@ -62,93 +63,127 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->cut_off_date) ? date('Y-m-d', strtotime($model->cut_off_date)) : '';
+                            return isset($model->displayShareSafari->cut_off_date) ? date('Y-m-d', strtotime($model->displayShareSafari->cut_off_date)) : '';
                         }
                     ],
                     [
                         'label' => 'Number Of Safari',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'width: 15%; text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_safari;
+                            return $model->displayShareSafari->no_of_safari;
                         }
                     ],
                     [
                         'label' => 'Number Of Seat',
-                        'headerOptions' => ['style' => 'width: 15%;'],
-                        'contentOptions' => ['style' => 'width: 15%;text-align: center;'],
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->total_seat;
+                            return $model->displayShareSafari->total_seat;
                         }
                     ],
-                    // [
-                    //     'label' => 'Joined',
-                    //     'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
-                    //             'value' => Url::toRoute(['intrested', 'id' => $model->id]),
-                    //             'style' => 'color: black !important;',
-                    //             'class' => 'intrested btn-danger',
-                    //             'title' => 'Intrested',
-                    //         ]) : '';
-                    //     }
-                    // ],
-
-                    // [
-                    //     'label' => 'Leaved',
-                    //     'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
-                    //             'value' => Url::toRoute(['leaved', 'id' => $model->id]),
-                    //             'style' => 'color: black !important;',
-                    //             'class' => 'leaved btn-info',
-                    //             'title' => 'Leaved',
-                    //         ]) : '';
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'Is Publish on Web/App',
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
-                    //         $str .= '/';
-                    //         $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
-                    //         return $str;
-                    //     }
-                    // ],
                     [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Share Seat',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            $total_seat = $model->displayShareSafari->total_seat ?? 0;
+                            $self_occupied_seat = $model->displayShareSafari->self_occupied_seat ?? 0;
+                            $booked_seat = $model->displayShareSafari->booked_seat ?? 0;
+                            return $total_seat - ($self_occupied_seat + $booked_seat);
+                        }
+                    ],
+
+                    [
+                        'label' => 'Is Live',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->status == 1) {
+                                return '<span class="badge bg-success">Yes</span>';
+                            } else {
+                                return '<span class="badge bg-danger">No</span>';
+                            }
                         }
                     ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
-                        'template' => '{update}&nbsp{view}',
+                        'headerOptions' => ['style' => 'width: 15%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: right;'],
+                        'template' => '{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
                         'buttons' => [
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
-                                ', ['/sharesafari/default/update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            'seat' => function ($url, $model) {
+                                if ($model->status == 1) {
+                                    return Html::button(
+                                        '<img src="' . $this->params['baseurl']  . '/images/person-seat.svg" alt="" width="20" height="20">',
+                                        [
+                                            'value' => Url::toRoute(['update-seat', 'id' => $model->id]),
+                                            'class' => 'btn p-0 change-menuicon seatAction',
+                                            'title' => 'View',
+                                        ]
+                                    );
+                                }
+                            },
 
+                            'update' => function ($url, $model) {
+                                if ($model->edit_status != 0) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                ', ['update', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+
+                                    ]);
+                                } else if ($model->edit_status == 0) {
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/images/update.png" alt="" width="25" height="25">
+                                ', ['copy-with-edit', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+
+                                    ]);
+                                }
+                                return Html::tag('span', '', [
+                                    'style' => 'display:inline-block;width:25px;height:25px;'
                                 ]);
                             },
+
                             'view' => function ($url, $model) {
-                                return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
-                                ]);
+                                if (isset($model->live_fd)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->live_fd->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                }
+                                if (isset($model->editable_fd)) {
+                                    return  Html::a('<i class="mdi mdi-eye"></i>', ['view', 'id' => $model->editable_fd->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'View',
+                                    ]);
+                                }
+                            },
+
+                            'inactive' => function ($url, $model) {
+                                if ($model->status != 10) {
+                                    if ($model->status == 1) {
+                                        return Html::a('<i class="fa fa-toggle-on"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-success',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to inactive this package?',
+                                            'title' => 'Unblock User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    } else if ($model->status == 0) {
+                                        return Html::a('<i class="fa fa-toggle-off"></i>', ['inactive', 'id' => $model->id], [
+                                            'class' => 'btn btn-xs btn-danger',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Are you sure to active this package?',
+                                            'title' => 'Block User',
+                                            'data-bs-toggle' => "tooltip"
+                                        ]);
+                                    }
+                                }
                             },
                         ]
                     ],
@@ -157,3 +192,31 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
         </div>
     </div>
 </div>
+
+
+<div class="modal fade _standard-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Update Seat</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+    $('.seatAction').on('click', function () {
+        $('#exampleModal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+
+?>

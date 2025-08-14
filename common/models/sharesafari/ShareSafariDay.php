@@ -76,7 +76,9 @@ class ShareSafariDay extends \yii\db\ActiveRecord implements \common\interfaces\
             [['day_title'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
-            [['share_safari_id', 'day'], 'unique', 'targetAttribute' => ['share_safari_id', 'day']],
+            // [['share_safari_id', 'day'], 'unique', 'targetAttribute' => ['share_safari_id', 'day']],
+            [['partner_gallery_id', 'version','gallery_version'], 'integer'],
+            [['gallery_json'], 'safe'],
         ];
     }
 
@@ -104,6 +106,9 @@ class ShareSafariDay extends \yii\db\ActiveRecord implements \common\interfaces\
             'day_accommodation' => 'Day Accommodation',
             'day_note' => 'Day Note',
             'status' => 'Status',
+            'partner_gallery_id' => 'Partner Gallery Id',
+            'gallery_json' => 'Gallery Json',
+            'gallery_version' => 'Gallery Version',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

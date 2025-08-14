@@ -14,93 +14,88 @@ use common\models\User;
 
 class Package extends \common\models\package\Package
 {
-    public function fields()
+     public function fields()
     {
-        $fields = [
-            // 'id',
-            'package_display_name',
-            'package_name',
-            'package_slug',
-            'primary_park',
-            'primary_park_slug',
-            'no_of_day',
-            'no_of_night',
-            'no_of_night',
-            'no_of_safari',
-            'cost_per_person' => function () {
-                return (int) ceil($this->cost_per_person);
-            },
-            'total_price' => function () {
-                return (int) ceil($this->total_price);
-            },
-            'package_description',
-            'image_path',
-            'image_banner_path',
-            'is_wishlist',
-            'package_day_night_labels',
-            'pick_and_drop',
-            'pick_and_drop_display',
-            // 'package_range',
-            'stay_category_display',
-            'meals_listing',
-            'partner',
-            'comment_count',
-            'urls',
-            'lunch_included' => function () {
-                return (bool)$this->lunch_included;
-            },
-            'dinner_included' => function () {
-                return (bool)$this->dinner_included;
-            },
-            'meal_not_included' => function () {
-                return (bool)$this->meal_not_included;
-            },
-            'breakfast_included' => function () {
-                return (bool)$this->breakfast_included;
-            },
-            'start_location',
-            'end_location',
-            'start_date',
-            'end_date',
-            'status'
-        ];
-        $fields[] = 'resource_uri';
-        $fields[] = 'can_comment';
-        $fields[] = 'can_reply';
-        // $fields[] = 'image_thumbnail';
-        $fields[] = 'image_thumbnails';
-        // $fields[] = 'banner_thumbnail';
-        $fields[] = 'banner_thumbnails';
+        $fields = [];
 
         if (in_array(\Yii::$app->controller->layout, [self::PACKAGE_API_LAYOUT_FULL])) {
-            $fields[] = 'package_itinerary_overview';
-            $fields[] = 'master_package_with_included';
-            $fields[] = 'package_inclusion';
-            $fields[] = 'package_exclusion';
-            $fields[] = 'package_terms_condtition';
-            $fields[] = 'privacy_policy';
-            $fields[] = 'change_policy';
-            $fields[] = 'what_you_must_carry';
-            $fields[] = 'date_change_policy';
-            $fields[] = 'refund_policy';
-            $fields[] = 'getting_there';
-            $fields[] = 'pick_and_drop';
-            $fields[] = 'meals';
-            $fields[] = 'meals_label';
+            $data = $this->static_json;
+            if (is_string($data)) {
+                $data = json_decode($data, true);
+            }
 
-            $fields[] = 'package_park';
-            $fields[] = 'package_days';
-            $fields[] = 'faqs';
-            $fields[] = 'type';
-            $fields[] = 'master_vehicle_id';
-            $fields[] = 'package_features_name';
-            $fields[] = 'safari_type';
-            $fields[] = 'gst_percentage';
-            $fields[] = 'package_agenda_id';
-            $fields[] = 'stay_category_id';
-            $fields[] = 'max_booking_date';
-            $fields[] = 'status';
+            if (is_array($data) && isset($data['package'])) {
+                $fields = array_merge(
+                    $fields,
+                    array_map(
+                        fn($value) => fn() => $value,
+                        $data['package']
+                    )
+                );
+            }
+        } else {
+            $fields = [
+                'package_display_name',
+                'package_name',
+                'package_slug',
+                'primary_park',
+                'primary_park_slug',
+                'no_of_day',
+                'no_of_night',
+                'no_of_safari',
+                'cost_per_person' => function () {
+                    return (int) ceil($this->cost_per_person);
+                },
+                'cost_per_two_person' => function () {
+                    return (int) ceil($this->cost_per_two_person);
+                },
+                'total_price' => function () {
+                    return (int) ceil($this->total_price);
+                },
+                'package_description',
+                'image_path',
+                'image_banner_path',
+                'package_day_night_labels',
+                'pick_and_drop',
+                'pick_and_drop_display',
+                'stay_category_display',
+                'meals_listing',
+                'lunch_included' => function () {
+                    return (bool)$this->lunch_included;
+                },
+                'dinner_included' => function () {
+                    return (bool)$this->dinner_included;
+                },
+                'meal_not_included' => function () {
+                    return (bool)$this->meal_not_included;
+                },
+                'breakfast_included' => function () {
+                    return (bool)$this->breakfast_included;
+                },
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'status'
+            ];
         }
+
+        $fields =  array_merge($fields, [
+            'price_after_discount' => function () {
+                return (int) ceil($this->price_after_discount);
+            },
+            'partner',
+            'is_wishlist',
+            'comment_count',
+            'resource_uri',
+            'can_comment',
+            'can_reply',
+            'urls',
+        ]);
+
+        $fields[] = 'image_thumbnails';
+        $fields[] = 'banner_thumbnails';
+
         return $fields;
     }
 
@@ -142,7 +137,7 @@ class Package extends \common\models\package\Package
 
     public function getMaster_package_with_included()
     {
-    
+
         $arr = [
             1 => [
                 'id' => 1,
@@ -272,12 +267,12 @@ class Package extends \common\models\package\Package
     public function getSafarioperatorUser()
     {
         return $this->partner ? $this->partner->user : null;
-        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+        // return $this->hasOne(User::className(), ['id' => 'safari_operator_id']);
     }
 
     public function getPartner()
     {
-        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
     }
 
     public function getMastervehicle()
@@ -450,7 +445,7 @@ class Package extends \common\models\package\Package
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->andWhere(['user_wishlist.user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 1])->andWhere(['user_wishlist.status' => 1]);
     }
 
 
@@ -496,7 +491,7 @@ class Package extends \common\models\package\Package
     public function getCan_reply()
     {
         $login_partner = SafariOperator::find()->where(['user_id' => \Yii::$app->params['active_user_id']])->limit(1)->one();
-        if ((!empty($login_partner) && $this->owned_by_id == $login_partner->id)) {
+        if ((!empty($login_partner) && $this->safari_operator_id == $login_partner->id)) {
             return true;
         }
         return false;

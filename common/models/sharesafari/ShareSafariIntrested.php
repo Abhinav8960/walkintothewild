@@ -56,6 +56,7 @@ class ShareSafariIntrested extends \yii\db\ActiveRecord implements \common\inter
             [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
             [['user_agent'], 'string', 'max' => 512],
             [['user_ip_address'], 'string', 'max' => 20],
+            ['version', 'integer'],
         ];
     }
 
@@ -97,10 +98,10 @@ class ShareSafariIntrested extends \yii\db\ActiveRecord implements \common\inter
 
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->status == 1){
-            return  new \common\events\sharesafari\SafariJoinedByuser($this->sharesafari->slug,$this->user->name,$this->sharesafari->id);
-        }elseif($this->status == 0){
-            return  new \common\events\sharesafari\SafariUnjoinedByuser($this->sharesafari->slug,$this->user->name,$this->sharesafari->id);
+        if ($this->status == 1) {
+            return  new \common\events\sharesafari\SafariJoinedByuser($this->sharesafari->slug, $this->user->name, $this->sharesafari->id);
+        } elseif ($this->status == 0) {
+            return  new \common\events\sharesafari\SafariUnjoinedByuser($this->sharesafari->slug, $this->user->name, $this->sharesafari->id);
         }
     }
 }

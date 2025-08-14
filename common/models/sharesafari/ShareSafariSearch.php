@@ -18,6 +18,7 @@ class ShareSafariSearch extends ShareSafari
     public $title;
     public $report_days;
     public $custom_status;
+    public $filter_status;
 
 
     public $report_days_option = [
@@ -36,11 +37,12 @@ class ShareSafariSearch extends ShareSafari
     public function rules()
     {
         return [
-            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['safari_operator_id', 'host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title', 'report_days', 'type'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web','cut_off_date'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'is_published_on_api', 'is_published_on_web', 'cut_off_date'], 'safe'],
             [['is_published_on_api', 'is_published_on_web'], 'boolean'],
-            ['custom_status', 'safe']
+            ['custom_status', 'safe'],
+            ['filter_status', 'safe'],
         ];
     }
 
@@ -87,6 +89,7 @@ class ShareSafariSearch extends ShareSafari
             'id' => $this->id,
             'share_safari.type' => $this->type,
             'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.safari_operator_id' => $this->safari_operator_id,
             'share_safari.host_type' => $this->host_type,
             'share_safari.park_id' => $this->park_id,
             'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
@@ -183,6 +186,20 @@ class ShareSafariSearch extends ShareSafari
 
             // 
             $query->andWhere($this->rawdatequery);
+        }
+
+        if ($this->filter_status != null) {
+            switch ($this->filter_status) {
+                case 1:
+                    $query->andWhere([ShareSafari::tableName() . '.status' => 1]);
+                    break;
+                case 2:
+                    $query->andWhere([ShareSafari::tableName() . '.status' => 10]);
+                    break;
+                case 4:
+                    $query->andWhere(['!=', ShareSafari::tableName() . '.status', -1]);
+                    break;
+            };
         }
         return $dataProvider;
     }

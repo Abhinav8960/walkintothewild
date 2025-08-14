@@ -19,6 +19,8 @@ if (Yii::$app->user->identity) {
     }
 }
 
+$this->params['buttons'][] = Html::a('Fixed Departure Approval List', [Url::toRoute(['/sharesafari/fixed-departure/index'])], ['class' => 'btn btn-orange me-2', 'title' => 'Fixed Departure']);
+
 ?>
 <div class="card">
 
@@ -38,7 +40,7 @@ if (Yii::$app->user->identity) {
                         'label' => 'Title',
                         'format' => 'raw',
                         'value' => function ($model) {
-                        
+
                             return $model->share_safari_title <> '' ? $model->share_safari_title : 'Untitled';
                         }
 
@@ -97,8 +99,9 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
                                 'value' => Url::toRoute(['intrested', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
-                                'class' => 'intrested btn-danger',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
+                                'class' => 'intrested',
                                 'title' => 'Intrested',
                             ]) : '';
                         }
@@ -110,24 +113,25 @@ if (Yii::$app->user->identity) {
                         'value' => function ($model) {
                             return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
                                 'value' => Url::toRoute(['leaved', 'id' => $model->id]),
-                                'style' => 'color: black !important;',
-                                'class' => 'leaved btn-info',
+                                'style' => 'color: black !important;     border: 0px !important;     background-color: inherit;
+',
+                                'class' => 'leaved',
                                 'title' => 'Leaved',
                             ]) : '';
                         }
                     ],
-                    [
-                        'label' => 'Is Publish on Web/App',
-                        'headerOptions' => ['style' => 'width: 20%;'],
+                    // [
+                    //     'label' => 'Is Publish on Web/App',
+                    //     'headerOptions' => ['style' => 'width: 20%;'],
 
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
-                            $str .= '/';
-                            $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
-                            return $str;
-                        }
-                    ],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         $str = $model->is_published_on_web == 1 ? '<a href="/sharesafari/default/publish-on-web?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                    //         $str .= '/';
+                    //         $str .= $model->is_published_on_api == 1 ? '<a href="/sharesafari/default/publish-on-api?id=' . $model->id . '" class="badge badge-success">Yes</a>' : '<a class="badge badge-danger">No</a>';
+                    //         return $str;
+                    //     }
+                    // ],
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],

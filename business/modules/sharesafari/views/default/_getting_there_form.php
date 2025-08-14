@@ -42,14 +42,3 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <?php ActiveForm::end(); ?>
 
-<style>
-    .ck-editor__editable {
-        min-height: 350px;
-    }
-</style>
-<?php
-$script = <<< JS
-bulleteditor('createdepartureform-getting_there');
-JS;
-$this->registerJs($script);
-?>

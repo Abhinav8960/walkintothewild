@@ -466,10 +466,15 @@ class DefaultController extends RestController
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Transaction not found."]);
         }
 
-        if (isset($model->lead->package_id)) {
-            $title = "Package - " . $model->lead->package->package_name;
-        } else {
-            $title = "Customer safari enquiry - " . $model->park_label;
+        $title  = "";
+        if ($model->source == Transaction::SOURCE_LEAD) {
+            if (isset($model->lead->package_id)) {
+                $title = "Package - " . $model->lead->package->package_name;
+            } else {
+                $title =  $model->park_label;
+            }
+        } elseif ($model->source == Transaction::SOURCE_SHARE_SAFARI) {
+            $title =  $model->share_safari->share_safari_title ?? '';
         }
 
         $data['transaction'] = [

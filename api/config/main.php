@@ -127,6 +127,7 @@ return [
 
                 'test-call' => 'site/test-call',
                 'site/test' => 'site/test',
+                'site/clear-cache' => 'site/clear-cache',
                 'mobile-no-verification' => 'site/mobile-no-verification',
                 'verify-mobile-no' => 'site/verify-mobile-no',
                 'deactivate-account' => 'site/deactivate-account',
@@ -164,6 +165,7 @@ return [
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/flagreason' => 'sharesafari/default/flagreason',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
+                'sharesafari/<slug>/<action>/<payment_hash>/<payment_gateway>' => 'sharesafari/default/<action>',
                 'posts' => 'posts/default/index',
                 'posts-images' => 'posts/default/posts-images',
                 'posts/<action>' => 'posts/default/<action>',
@@ -257,6 +259,14 @@ return [
 
         ],
 
+        'api' => [
+            'class' => 'api\components\Api',
+             'messageManager' => [
+                'class' => 'api\components\MessageManager',
+                'messageFile' => '@api/config/messages.php', 
+                'cacheDuration' => 3600,
+            ],
+        ],
 
         /*
         'urlManager' => [

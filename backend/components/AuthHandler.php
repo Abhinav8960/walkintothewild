@@ -33,7 +33,7 @@ class AuthHandler
             $user = User::find()->where([
                 'email' => $email,
                 'google_source_id' => $source_id, // Match source_id
-                'is_adminstrator' => true,
+                // 'is_adminstrator' => true,
                 'is_admin' => true,
                 'status' => User::STATUS_ACTIVE
             ])->one();

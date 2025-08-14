@@ -41,7 +41,7 @@ if (Yii::$app->user->identity) {
                         'format' => 'raw',
                         'value' => function ($model) {
 
-                            if ($user = $model->user) {
+                            if ($user = $model->hostUser) {
                                 $name = $user->name ?? '';
                                 $imageUrl = $user->profile_display_image ?: $this->params['baseurl'] . '/img/dpmain.png';
 

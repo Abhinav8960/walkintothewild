@@ -55,14 +55,14 @@ $this->params['title'] = $this->title;
                             return $model->gallery_count;
                         }
                     ],
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->newstatuslabel;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 15%; text-align: left;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->newstatuslabel;
+                    //     }
+                    // ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',

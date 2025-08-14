@@ -75,9 +75,9 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
-            [['status'], 'default', 'value' => 1],
+            [['listing_status'], 'default', 'value' => 1],
             [['safari_operator_id', 'title', 'slug'], 'required'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id','gallery_images_count','user_id'], 'integer'],
+            [['safari_operator_id', 'listing_status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id', 'gallery_images_count'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             // [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
@@ -94,7 +94,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'park_id' => 'Park ID',
             'title' => 'Title',
             'slug' => 'Slug',
-            'status' => 'Status',
+            'listing_status' => 'Listing Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -131,7 +131,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'title' => $this->title,
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
-            'status' => (bool) $this->status,
+            'listing_status' => (bool) $this->listing_status,
             'image_count' => $this->getGalleryActiveImages()->count(),
             'images' => array_map(function ($image) {
                 return $image->toArray();
@@ -151,27 +151,27 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function versionsave()
     {
-        PartnerGalleryVersion::updateAll(['is_live' => 0], ['partner_gallery_id' => $this->id]);
+        // PartnerGalleryVersion::updateAll(['is_live' => 0], ['partner_gallery_id' => $this->id]);
+
         $version_model = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $this->id])->orderBy(['version' => SORT_DESC])->limit(1)->one();
 
         $version_form_model = new PartnerGalleryVersion();
         $version_form_model->partner_gallery_id = $this->id;
         $version_form_model->version = !empty($version_model->version) ? $version_model->version + 1 : 1;
         $version_form_model->safari_operator_id = $this->safari_operator_id;
-        $version_form_model->user_id = $this->user_id;
         $version_form_model->park_id = $this->park_id;
         $version_form_model->title = $this->title;
         $version_form_model->slug = $this->slug;
         $version_form_model->remark = $this->remark;
-        $version_form_model->live_images = $this->live_images;
-        $version_form_model->in_draft = $this->in_draft;
-        $version_form_model->is_approved = $this->is_approved;
-        $version_form_model->send_for_approval = $this->send_for_approval;
-        $version_form_model->is_live = 1;
-        $version_form_model->live_gallery_images_count = $this->live_gallery_images_count;
-        $version_form_model->gallery_images_count = $this->gallery_images_count;
-        $version_form_model->status = $this->status;
+        if ($this->listing_status == 10) {
+            $version_form_model->listing_status = 1;
+        } else {
+            $version_form_model->listing_status = 3;
+        }
 
-        $version_form_model->save(false);
+        if ($version_form_model->save(false)) {
+            return true;
+        }
+        return false;
     }
 }

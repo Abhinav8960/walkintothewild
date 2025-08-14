@@ -6,6 +6,7 @@ namespace common\interfaces;
 interface NewStatusInterface
 {
 
+    const STATUS_CREATE = 10;
     const STATUS_ACTIVE = 1;
     const STATUS_SUSPEND = 0;
     const STATUS_DELETE = -1;
@@ -21,6 +22,13 @@ interface NewStatusInterface
     const PARTNER_GALLERY_API_LAYOUT_FULL = "partnergalleryfull";
 
 
+    public const PAYMENT_GATEWAY_PAYU = 1;
+    public const PAYMENT_GATEWAY_ICICI = 2;
+    public const PAYMENT_GATEWAY_HDFC = 3;
+
+    public const PAYMENT_GATEWAY_PAYU_LABEL = "payu";
+    public const PAYMENT_GATEWAY_ICICI_LABEL = "icici";
+    public const PAYMENT_GATEWAY_HDFC_LABEL = "hdfc";
 
 
     // ... other constants ...
@@ -65,7 +73,4 @@ interface NewStatusInterface
      * @var string attribute type.
      */
     const TYPE_JSON = 'json';
-
-
-    
 }

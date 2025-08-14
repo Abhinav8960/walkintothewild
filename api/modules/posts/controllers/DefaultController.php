@@ -117,10 +117,12 @@ class DefaultController extends RestController
                     new \common\events\post\PostCreatedByUser($active_followers,$model->user_image_model->user->name);
                     }
                     $model->user_image_model->savehistory();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post added successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('post.create_post.post_added');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not added successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('post.create_post.post_not_added');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -134,7 +136,8 @@ class DefaultController extends RestController
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         $searchModel = new UserPostSearch();
         $searchModel->id = $userpost->id;
@@ -146,37 +149,42 @@ class DefaultController extends RestController
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new UserPostCommentForm();
         $model->attributes = $this->request;
         $model->version = $userpost->version;
         if ($model->validate() && $model->comment($userpost)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.comment_success');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Comment Not Submitted!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.comment_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
     public function actionPostDelete($id)
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
         if ($this->userinfo) {
             if ($this->userinfoId != $userpost->user_id) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot delete this post!!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.delete_restricted',['{var}'=>'Post']);
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
         $userpost->status = UserPosts::STATUS_DELETE;
         if ($userpost->save(false)) {
-            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Delete Successfully!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.deleted');
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Delete Successfully!!!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.delete_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
     }
 
 
@@ -184,7 +192,8 @@ class DefaultController extends RestController
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $replymodel = new UserPostReplyForm();
@@ -195,11 +204,12 @@ class DefaultController extends RestController
 
         if ($replymodel->validate()) {
             if ($replymodel->reply($userpost)) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.reply_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
-
-        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply Not Submitted!"]);
+        $message = Yii::$app->api->messageManager->getMessage('common.reply_failed');
+        return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
     }
 
 
@@ -214,11 +224,13 @@ class DefaultController extends RestController
             $like->user_post_comment_id = $user_post_comment_id;
             $like->status = UserPostCommentLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Liked Comment or Reply"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Comment or Reply']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.like_removed');
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => $message]);
         }
     }
 
@@ -227,7 +239,8 @@ class DefaultController extends RestController
     {
         $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$userpost) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $like = UserPostLike::find()->where(['user_id' => $this->userinfoId, 'user_post_id' => $id, 'status' => UserPostLike::STATUS_ACTIVE])->one();
@@ -239,11 +252,13 @@ class DefaultController extends RestController
             $like->version = $userpost->version;
             $like->status = UserPostLike::STATUS_ACTIVE;
             if ($like->save(false)) {
-                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => "Post Liked Successfully"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.like_success',['{var}'=> 'Post']);
+                return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => true], ['message' => $message]);
             }
         } else {
             $like->delete();
-            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => "Remove Liked Successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.like_removed');
+            return  Yii::$app->api->sendResponse($data = ['status' => 1, 'isLike' => false], ['message' => $message]);
         }
     }
 
@@ -251,7 +266,8 @@ class DefaultController extends RestController
     {
         $post = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$post) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new PostReportForm();
@@ -264,9 +280,11 @@ class DefaultController extends RestController
             $model->initializeForm();
 
             if ($model->post_model->save()) {
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post Report Submitted"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.report_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not Submitted"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_submitted');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -276,12 +294,14 @@ class DefaultController extends RestController
     {
         $user_image_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_image_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($this->userinfo) {
             if ($this->userinfoId != $user_image_model->user_id) {
-                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You Cannot edit this post!!!"]);
+                $message = Yii::$app->api->messageManager->getMessage('post.edit_post.edit_restricted');
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
             }
         }
 
@@ -304,10 +324,12 @@ class DefaultController extends RestController
 
                 if ($model->user_image_model->save()) {
                     $model->user_image_model->savehistory();
-                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Post edit successfully"]);
+                    $message = Yii::$app->api->messageManager->getMessage('post.edit_post.edit_success');
+                    return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
                 }
             }
-            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not edit successfully"]);
+            $message = Yii::$app->api->messageManager->getMessage('post.edit_post.edit_failed');
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
         }
 
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -317,17 +339,20 @@ class DefaultController extends RestController
     {
         $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_post_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $flag_comment = UserPostComment::find()->where(['id' => $user_post_comment_id])->limit(1)->one();
 
         if (!$flag_comment) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Comment Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Comment']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         if ($flag_comment->user_id == $this->userinfoId) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "You cannot flag your comment/reply yourself!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.flag_restricted');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $model = new UserPostCommentFlagForm();
@@ -341,8 +366,8 @@ class DefaultController extends RestController
             if ($model->user_post_flag_model->save(false)) {
                 $flag_comment->flaged = 1;
                 $flag_comment->save(false);
-
-                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Flaged successfully!"]);
+                $message = Yii::$app->api->messageManager->getMessage('common.flag_success');
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => $message]);
             }
         }
         return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
@@ -352,7 +377,8 @@ class DefaultController extends RestController
     {
         $user_post_model = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
         if (!$user_post_model) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+            $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=> 'Post']);
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message]);
         }
 
         $dataProvider = new ActiveDataProvider([

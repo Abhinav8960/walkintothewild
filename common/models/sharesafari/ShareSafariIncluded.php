@@ -58,7 +58,8 @@ class ShareSafariIncluded extends \yii\db\ActiveRecord
         return [
             [['share_safari_id', 'include_id'], 'required'],
             [['share_safari_id', 'include_id', 'selection', 'status', 'created_at', 'created_by', 'updated_by', 'updated_at'], 'integer'],
-            [['share_safari_id', 'include_id'], 'unique', 'targetAttribute' => ['share_safari_id', 'include_id']],
+            [['share_safari_id', 'include_id','version'], 'unique', 'targetAttribute' => ['share_safari_id', 'include_id']],
+            [['version'],'integer']
         ];
     }
 

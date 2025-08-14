@@ -14,6 +14,16 @@ AppAsset::register($this);
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] =  Html::button(
+    'Delete',
+    [
+        'value' => Url::toRoute(['delete', 'id' => $package->id]),
+        'class' => 'btn mt-2 btn-danger btn_userarticle',
+        'style' => 'margin-right:5px',
+        'title' => 'Delete'
+    ]
+);
+
+$this->params['buttons'][] =  Html::button(
     '<span class="fa-stack fa-sm">
                 <i class="fa fa-certificate fa-stack-2x"></i>
                 <i class="fa fa-tag fa-stack-1x fa-inverse"></i>
@@ -31,6 +41,7 @@ if ($package->popular_package != 1) {
 } else {
     $this->params['buttons'][] = Html::a('Remove As Popular', [Url::toRoute(['remove-popular', 'id' => $package->id])], ['class' => 'btn btn-danger', 'title' => 'Remove Popular']);
 }
+
 
 ?>
 

@@ -21,7 +21,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<li class="slide">
 					<a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) { ?>
+				<?php if (Yii::$app->user->identity->is_admin) { ?>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/leads",
@@ -35,7 +35,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													)) ? "active" : "" ?>" href="/chat/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Chat</span></a>
 					</li>
 				<?php } ?>
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<?php if (Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/master",
@@ -271,7 +271,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<?php if (Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/park/safari/default/index",
@@ -446,7 +446,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_cms_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_cms_manager) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/cms",
@@ -810,7 +810,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 				<?php endif; ?>
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<?php if (Yii::$app->user->identity->is_admin) : ?>
 
 					<!-- <li class="slide <?= in_array($active_url, array(
 												"/registration/safari-operator-tour",
@@ -1036,7 +1036,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		<?php endif; ?>
 
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
+		<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
 
 			<li class="slide <?= in_array($active_url, array(
 									"/sharesafari/default/index",
@@ -1058,7 +1058,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
-					<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+					<?php if (Yii::$app->user->identity->is_admin) : ?>
 
 						<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/sharesafari/request/index",
@@ -1082,7 +1082,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				</ul>
 			</li>
 		<?php endif; ?>
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+		<?php if (Yii::$app->user->identity->is_admin) {  ?>
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/sightings/default/index",
@@ -1090,7 +1090,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											)) ? "active" : "" ?>" href="/sightings/default/index"><img src="<?= $this->params['baseurl'] ?>/img/sighting.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Sightings</span></a>
 			</li>
 		<?php } ?>
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+		<?php if (Yii::$app->user->identity->is_admin) {  ?>
 
 
 			<li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
@@ -1101,7 +1101,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php } ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+		<?php if (Yii::$app->user->identity->is_admin) {  ?>
 
 
 			<li class="slide"><a class="side-menu__item <?= in_array($active_url, array(
@@ -1111,7 +1111,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php } ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
 			<li class="slide <?= in_array($active_url, array(
 									"/package/default/index",
 									"/package/default/create",
@@ -1182,7 +1182,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
+		<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 			<li class="slide <?= in_array($active_url, array(
 									"/log/default/index",
 									"/log/default/front-index",
@@ -1239,7 +1239,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
+		<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 			<li class="slide <?= in_array($active_url, array(
 									"/portalsetting/default/index",
 									"/portalsetting/default/params",
@@ -1265,7 +1265,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php endif; ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
 			<li class="slide <?= in_array($active_url, array(
 									"/reportsection/default/index",
 									"/reportsection/operator-quote-request/index",
@@ -1295,7 +1295,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php endif; ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) {  ?>
+		<?php if (Yii::$app->user->identity->is_admin) {  ?>
 
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
@@ -1304,7 +1304,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php } ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/compliancedocuments",
@@ -1313,7 +1313,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php endif; ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/urlshortner",
@@ -1322,7 +1322,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			</li>
 		<?php endif; ?>
 
-		<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
 			<li class="slide">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/user",
