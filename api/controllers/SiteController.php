@@ -47,7 +47,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email'],
+                'exclude' => ['social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'master-meta-info', 'termofuse', 'privacypolicy', 'refundpolicy', 'cancellation', 'error', 'convergent-survey', 'report-page-reason', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email','regenerate-otp'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -59,7 +59,7 @@ class SiteController extends RestController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email'],
+                        'actions' => ['login', 'social-login', 'verify-social-login', 'can-social-login', 'reset-social-login', 'otp-verification-social-login', 'error', 'test', 'mail-otp-verification', 'mobile-otp-verification', 'sign-in-mobile', 'sign-in-email','regenerate-otp'],
                         'allow' => true,
                         'roles' => ['*'],
                     ],
@@ -91,7 +91,8 @@ class SiteController extends RestController
                     'mail-otp-verification' => ['POST'],
                     'mobile-otp-verification' => ['POST'],
                     'sign-in-mobile' => ['POST'],
-                    'sign-in-email' => ['POST']
+                    'sign-in-email' => ['POST'],
+                    'regenerate-otp'=>['POST'],
                 ],
             ],
         ];
@@ -862,53 +863,52 @@ class SiteController extends RestController
 
         if (!$user) {
             // $mobile_no = Yii::$app->session->get('mobile_no');
-        
+
             $temp_user = TemporaryUser::find()
                 ->where([
                     'mobile_no' => $mobile_no,
-                    'email'=>$email,
+                    'email' => $email,
                     'status' => TemporaryUser::STATUS_ACTIVE
                 ])
                 ->one();
-        
+
             if ($temp_user) {
                 if ($temp_user->is_mobile_verified == 1 && $temp_user->is_email_verified == 0) {
                     $temp_user->is_email_verified = 1;
                     $temp_user->save(false);
                 }
-        
+
                 if ($temp_user->is_mobile_verified == 1 && $temp_user->is_email_verified == 1) {
-                    $user = User::createFromTemporary($temp_user); 
+                    $user = User::createFromTemporary($temp_user);
                 } else {
                     $user = $temp_user;
                 }
-        
             } else {
                 $signupForm = new SignupForm();
                 $signupForm->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_EMAIL);
                 $signupForm->email = $email;
                 $signupForm->name = 'New User';
                 $signupForm->mobile_no = $mobile_no;
-        
+
                 $verificationRecord = $signupForm->signup();
-        
+
                 if ($verificationRecord instanceof TemporaryUser) {
                     $verificationRecord->is_email_verified = 1;
                     $verificationRecord->save(false);
-        
+
                     if ($verificationRecord->is_mobile_verified == 1) {
                         $user = User::createFromTemporary($verificationRecord);
                     } else {
                         $user = $verificationRecord;
                     }
                 }
-        
+
                 if ($verificationRecord instanceof User) {
                     $user = $verificationRecord;
                 }
             }
         }
-        
+
         $source_record = SourceVerification::find()
             ->where([
                 'source' => $email,
@@ -947,7 +947,7 @@ class SiteController extends RestController
                 return Yii::$app->api->sendResponse(['access_token' => $accessToken->token]);
             }
         }
-        
+
         return ['success' => true, 'message' => 'Verified Successfully'];
     }
 
@@ -1027,39 +1027,38 @@ class SiteController extends RestController
                     'status' => TemporaryUser::STATUS_ACTIVE
                 ])
                 ->one();
-        
+
             if ($temp_user) {
                 if ($temp_user->is_email_verified == 1 && $temp_user->is_mobile_verified == 0) {
                     $temp_user->is_mobile_verified = 1;
                     $temp_user->save(false);
                 }
-        
+
                 if ($temp_user->is_email_verified == 1 && $temp_user->is_mobile_verified == 1) {
-                    $user = User::createFromTemporary($temp_user); 
+                    $user = User::createFromTemporary($temp_user);
                 } else {
                     $user = $temp_user;
                 }
-        
             } else {
                 $signupForm = new SignupForm();
                 $signupForm->setScenario(SignupForm::SCENARIO_SIGNUP_VIA_MOBILE);
                 $signupForm->mobile_no = $mobile_no;
                 $signupForm->name = 'New User';
                 $signupForm->email = $email;
-        
+
                 $verificationRecord = $signupForm->signup();
-        
+
                 if ($verificationRecord instanceof TemporaryUser) {
                     $verificationRecord->is_mobile_verified = 1;
                     $verificationRecord->save(false);
-        
+
                     if ($verificationRecord->is_email_verified == 1) {
                         $user = User::createFromTemporary($verificationRecord);
                     } else {
                         $user = $verificationRecord;
                     }
                 }
-        
+
                 if ($verificationRecord instanceof User) {
                     $user = $verificationRecord;
                 }
@@ -1105,6 +1104,53 @@ class SiteController extends RestController
                 return Yii::$app->api->sendResponse($data);
             }
         }
-        return ['success'=> true, 'message' => 'Verified Successfully'];
+        return ['success' => true, 'message' => 'Verified Successfully'];
+    }
+
+    public function actionRegenerateOtp()
+    {
+        $mobile_no = Yii::$app->request->post('mobile_no');
+        $email = Yii::$app->request->post('email');
+
+        if ((!empty($mobile_no) && !empty($email)) || (empty($mobile_no) && empty($email))) {
+            return [
+                'status' => false,
+                'message' => 'Please provide either email OR mobile number'
+            ];
+        }
+
+        if ($mobile_no) {
+            $sourceType = SourceVerification::SOURCE_TYPE_SMS;
+            $sourceValue = $mobile_no;
+        } else {
+            $sourceType = SourceVerification::SOURCE_TYPE_EMAIL;
+            $sourceValue = $email;
+        }
+
+        $model = SourceVerification::find()
+            ->where(['source_type' => $sourceType, 'source' => $sourceValue])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        if (!$model) {
+            $model = new SourceVerification();
+            $model->source_type = $sourceType;
+            $model->source = $sourceValue;
+        }
+
+        $model->otp = rand(100000, 999999);
+        $model->exp_datetime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+
+        if ($model->save(false)) {
+            if ($sourceType === SourceVerification::SOURCE_TYPE_SMS) {
+                new \common\events\user\MobileNoVerification(0, $model->source, $model->otp, '');
+            } else {
+                new \common\events\user\EmailVerification(0, $email, null, $model->otp,$model->exp_datetime);
+            }
+
+            return ['success' => true, 'message' => 'OTP regenerated successfully'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to regenerate OTP'];
     }
 }

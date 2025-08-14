@@ -116,6 +116,7 @@ return [
                 'sign-in-mobile'=>'site/sign-in-mobile',
                 'mail-otp-verification'=>'site/mail-otp-verification',
                 'mobile-otp-verification'=>'site/mobile-otp-verification',
+                'regenerate-otp'=>'site/regenerate-otp',
 
                 'site/test' => 'site/test',
                 'mobile-no-verification' => 'site/mobile-no-verification',

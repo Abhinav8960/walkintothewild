@@ -39,6 +39,7 @@ class RequestSanitization extends \yii\base\Component
             'mobile-otp-verification',
             'sign-in-email',
             'sign-in-mobile',
+            'regenerate-otp',
 
         ];
 
