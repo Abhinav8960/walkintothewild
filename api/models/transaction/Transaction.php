@@ -70,7 +70,7 @@ class Transaction extends \common\models\transaction\Transaction
     public function fields()
     {
         $fields = [
-            'source',            
+            'source',
             'reference_id',
             // 'lead_partner_quotes_id',
             // 'lead_partner_quote_installments_id',
@@ -99,13 +99,15 @@ class Transaction extends \common\models\transaction\Transaction
             // 'installment',
             'received_amount',
             // 'addtional_data',            
-            'is_payment_received',
+            'is_payment_received' => function () {
+                return (bool) $this->is_payment_received;
+            },
             'transaction_datetime',
             'payment_gateway',
         ];
 
         if ($this->source == self::SOURCE_SHARE_SAFARI) {
-                unset($fields['partner']);
+            unset($fields['partner']);
 
             $fields[] = 'share_safari_lead';
         }
