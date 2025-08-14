@@ -120,15 +120,27 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getPark_title()
     {
-        foreach ($this->parks as $park) {
-            return $park->title ?? null;
+        if ($this->park_id) {
+            if ($this->type == ShareSafari::TYPE_SAFARI) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->title : null;
+            } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->title : null;
+            }
         }
     }
 
     public function getPark_slug()
     {
-        foreach ($this->parks as $park) {
-            return $park->slug ?? null;
+        if ($this->park_id) {
+            if ($this->type == ShareSafari::TYPE_SAFARI) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->slug : null;
+            } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->slug : null;
+            }
         }
     }
 
