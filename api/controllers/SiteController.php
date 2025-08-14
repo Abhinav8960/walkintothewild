@@ -918,7 +918,7 @@ class SiteController extends RestController
             ->one();
 
         if (!$source_record) {
-            return ['success' => false, 'message' => 'OTP record not found'];
+            return ['success' => false, 'message' => 'OTP record not found! Try Again'];
         }
 
         if ($source_record->otp != $otp) {
@@ -1074,7 +1074,7 @@ class SiteController extends RestController
             ->one();
 
         if (!$source_record) {
-            return ['success' => false, 'message' => 'OTP record not found'];
+            return ['success' => false, 'message' => 'OTP record not found! Try Again'];
         }
 
         if ($source_record->otp != $otp) {
