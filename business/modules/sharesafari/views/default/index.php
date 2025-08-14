@@ -32,7 +32,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
                         'label' => 'Title',
@@ -70,7 +69,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     [
                         'label' => 'Number Of Safari',
                         'headerOptions' => ['style' => 'width: 10%;'],
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->displayShareSafari->no_of_safari;
@@ -91,13 +89,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'contentOptions' => ['style' => 'width: 10%;text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->displayShareSafari->total_seat - $model->displayShareSafari->self_occupied_seat;
+                            $total_seat = $model->displayShareSafari->total_seat ?? 0;
+                            $self_occupied_seat = $model->displayShareSafari->self_occupied_seat ?? 0;
+                            $booked_seat = $model->displayShareSafari->booked_seat ?? 0;
+                            return $total_seat - ($self_occupied_seat + $booked_seat);
                         }
                     ],
 
                     [
                         'label' => 'Is Live',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->status == 1) {
@@ -111,7 +111,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
+                        'headerOptions' => ['style' => 'width: 15%; text-align: center;'],
+                        'contentOptions' => ['style' => 'width: 15%; text-align: right;'],
                         'template' => '{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
                         'buttons' => [
                             'seat' => function ($url, $model) {

@@ -37,7 +37,6 @@ class ShareSafariFaqForm extends \yii\base\Model
             $this->position = $this->share_safari_faq_model->position;
             $this->status = $this->share_safari_faq_model->status;
             $this->master_faq_id = $this->share_safari_faq_model->master_faq_id;
-
         }
     }
 
@@ -45,11 +44,10 @@ class ShareSafariFaqForm extends \yii\base\Model
     {
         return [
             [['answer', 'question'], 'required'],
-            [['share_safari_id', 'position', 'status','version'], 'integer'],
-            [['answer'], 'string'],
+            [['share_safari_id', 'position', 'status', 'version'], 'integer'],
             [['position'], 'default', 'value' => 0],
-            [['question'], 'string', 'max' => 512],
-            [['master_faq_id'],'integer'],
+            [['question', 'answer'], 'string', 'max' => 512],
+            [['master_faq_id'], 'integer'],
 
         ];
     }

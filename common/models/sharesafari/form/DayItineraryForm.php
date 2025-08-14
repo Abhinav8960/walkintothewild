@@ -84,7 +84,6 @@ class DayItineraryForm  extends \yii\base\Model
                 'day_activity',
                 'day_accommodation',
                 'day_note',
-                'day_title',
                 'start_location',
                 'end_location',
                 'hotel_name',
@@ -108,6 +107,7 @@ class DayItineraryForm  extends \yii\base\Model
             [['day_description'], 'string', 'max' => 2000],
             [['partner_gallery_id','gallery_version'], 'integer'],
             [['gallery_json'], 'safe'],
+            [['day_title'],'string', 'max' => 100]
             
         ];
     }
