@@ -60,14 +60,10 @@ class SigninForm extends Model
     public function apiLogin()
     {
         if ($this->validate()) {
-            if ($this->email) {
+            if ($this->email || $this->mobile_no) {
                 $user = $this->getUser();
             }
-            if ($this->mobile_no) {
-                $user = $this->getUserMobile();
-            }
             if ($user) {
-                // Log the user in
                 return Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
             }
         }
@@ -83,24 +79,11 @@ class SigninForm extends Model
     public function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findOne([
-                'email' => $this->email,
-                'status' => User::STATUS_ACTIVE,
-            ]);
+            $this->_user = User::find()
+            ->Where(['status' => User::STATUS_ACTIVE])
+            ->andWhere(['or',['email' => $this->email],['mobile_no'=>$this->mobile_no]])
+            ->one();
         }
-
-        return $this->_user;
-    }
-
-    public function getUserMobile()
-    {
-        if ($this->_user === null) {
-            $this->_user = User::findOne([
-                'mobile_no' => $this->mobile_no,
-                'status' => User::STATUS_ACTIVE,
-            ]);
-        }
-
         return $this->_user;
     }
 }

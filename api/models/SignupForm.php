@@ -36,27 +36,28 @@ class SignupForm extends Model
     public $password;
     public $confirm_password;
 
-    const SCENARIO_SIGNUP_VIA_EMAIL = 'signup_via_email';
-    const SCENARIO_SIGNUP_VIA_MOBILE = 'signup_via_mobile';
+    // const SCENARIO_SIGNUP_VIA_EMAIL = 'signup_via_email';
+    // const SCENARIO_SIGNUP_VIA_MOBILE = 'signup_via_mobile';
 
     /**
      * {@inheritdoc}
      */
 
-    public function scenarios()
-    {
-        return [
-            self::SCENARIO_SIGNUP_VIA_EMAIL => ['email'],
-            self::SCENARIO_SIGNUP_VIA_MOBILE => ['mobile_no'],
-        ];
-    }
+    // public function scenarios()
+    // {
+    //     return [
+    //         self::SCENARIO_SIGNUP_VIA_EMAIL => ['email'],
+    //         self::SCENARIO_SIGNUP_VIA_MOBILE => ['mobile_no'],
+    //     ];
+    // }
 
     public function rules()
     {
         return [
             [['device', 'platform', 'platform_version', 'browser', 'user_platform_version', 'application_version', 'browser_version', 'firebase_token', 'avatar', 'otp'], 'safe'],
-            [['email'], 'required', 'on' => self::SCENARIO_SIGNUP_VIA_EMAIL],
-            [['mobile_no'], 'required', 'on' => self::SCENARIO_SIGNUP_VIA_MOBILE],
+            // [['email'], 'required', 'on' => self::SCENARIO_SIGNUP_VIA_EMAIL],
+            // [['mobile_no'], 'required', 'on' => self::SCENARIO_SIGNUP_VIA_MOBILE],
+            [['email','mobile_no'],'required'],
             ['email', 'email'],
             // ['password', 'string', 'min' => 6],
             // ['confirm_password', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match.'],
@@ -103,19 +104,14 @@ class SignupForm extends Model
 
         $tempUser->name = $this->name ?? $tempUser->name;
         $tempUser->email = $this->email ?? $tempUser->email;
-        $tempUser->username = $this->email ?: $this->mobile_no ?: $tempUser->username;
+        $tempUser->username = $this->email ?? $tempUser->username;
         $tempUser->mobile_no = $this->mobile_no ?? $tempUser->mobile_no;
-
-        $autoPassword = Yii::$app->security->generateRandomString(10);
-        $tempUser->setPassword($autoPassword);
-        $tempUser->generateAuthKey();
         $tempUser->status = TemporaryUser::STATUS_ACTIVE;
 
-        if (!$tempUser->save(false)) { // skip validation to avoid blocking save
+        if (!$tempUser->save(false)) {
             $this->addErrors($tempUser->getErrors());
             return null;
         }
-
         return $tempUser;
     }
 }

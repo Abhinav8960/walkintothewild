@@ -22,14 +22,13 @@ use common\models\operator\SafariOperator;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
- * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
  * @property Post[] $posts
  */
-class TemporaryUser extends ActiveRecord implements IdentityInterface
+class TemporaryUser extends \yii\db\ActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -71,7 +70,9 @@ class TemporaryUser extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['user_handle','name', 'mobile_no', 'is_mobile_no_verified', 'email', 'is_email_verified'], 'safe']
+            [['user_handle','name', 'mobile_no', 'is_mobile_no_verified', 'email', 'is_email_verified'], 'safe'],
+            [['is_expired','mobile_otp', 'email_otp', 'exp_datetime'], 'safe']
+
         ];
     }
 
@@ -89,52 +90,4 @@ class TemporaryUser extends ActiveRecord implements IdentityInterface
         return null;
     }
 
-    public function getId()
-    {
-        return $this->getPrimaryKey();
-    }
-
-    public function getAuthKey()
-    {
-        return $this->auth_key;
-    }
-
-    public function validateAuthKey($authKey)
-    {
-        return $this->auth_key === $authKey;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
-    }
-
-    public function validatePassword($password)
-    {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
-    }
-
-    public function beforeSave($insert)
-    {
-        if ($insert) {
-            $this->token_key = Yii::$app->security->generateRandomString(32);
-            $this->auth_key = Yii::$app->security->generateRandomString();
-        }
-        return parent::beforeSave($insert);
-    }
-
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    public function getFullname()
-    {
-        return trim($this->first_name . ' ' . $this->last_name);
-    }
-
-    public function getUserhandle()
-    {
-        return "@" . $this->user_handle;
-    }
 }

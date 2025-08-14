@@ -112,10 +112,11 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
 
+                'signup'=>'site/signup',
+                'signup-otp-verification'=>'site/signup-otp-verification',
                 'sign-in-email'=>'site/sign-in-email',
                 'sign-in-mobile'=>'site/sign-in-mobile',
-                'mail-otp-verification'=>'site/mail-otp-verification',
-                'mobile-otp-verification'=>'site/mobile-otp-verification',
+                'signin-otp-verification'=>'site/signin-otp-verification',
                 'regenerate-otp'=>'site/regenerate-otp',
 
                 'site/test' => 'site/test',
