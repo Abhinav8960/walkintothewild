@@ -205,8 +205,8 @@ class ChatMessage extends \common\models\chat\ChatMessage
         $history->save(false);
         if ($insert) {
             if ($this->chat->chat_type == Chat::CHAT_TYPE_QUOTE) {
-                $sender = $this->createduser->id;
-                return  new \common\events\chat\NewQuotationChatMessage($sender, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+                $senderId = $this->createduser->id;
+                return  new \common\events\chat\NewQuotationChatMessage($this->reciverId,$senderId, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
             if ($this->is_call_message != true || $this->status != 0) {
                 $sender = $this->createduser->name;

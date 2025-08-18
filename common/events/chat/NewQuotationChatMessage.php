@@ -22,22 +22,28 @@ class NewQuotationChatMessage extends Event
     public $chat;
     public $templates;
     public $channelName;
+    public $reciverId;
+    public $senderId;
+
 
     protected $channels = [
         'email',
     ];
     protected $mail_template_code = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_MESSAGE;
 
-    public function __construct($sender, $message, $chat_hash, $chat)
+    public function __construct($reciverId,$senderId,$message, $chat_hash, $chat)
     {
-        $this->user       = User::find()->where(['id' => $sender])->one();
-        $this->sender     = $sender;
+        $this->user       = User::find()->where(['id' => $reciverId])->one();
+        $this->sender     = User::find()->where(['id' => $senderId])->one();
+        $this->reciverId     = $reciverId;
+        $this->senderId     = $senderId;
         $this->message    = $message;
         $this->chat       = $chat;
         $this->to_mail    = $this->user->email;
         $this->chat_url   = \Yii::$app->params['frontend_url'] . '/' . $this->user->user_handle . "/" . $chat_hash;
         $this->engine     = \Yii::$app->engine;
         $this->broadcast();
+
     }
 
     public function broadcast()
@@ -58,7 +64,7 @@ class NewQuotationChatMessage extends Event
                     'subject' => 'New Quote Message',
                     'mail_template_id'  => $this->emailTemplateId(),
                     'params' => [
-                        'reply_by' => $this->user->name,
+                        'reply_by' => $this->sender->name,
                         'message' => $this->message,
                     ],
                     'to_mail' => $this->to_mail,
