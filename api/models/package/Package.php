@@ -358,7 +358,7 @@ class Package extends \common\models\package\Package
     public function getPackage_day_night_labels()
     {
         if (isset($this->no_of_night) && isset($this->no_of_day)) {
-            return "{$this->no_of_night}N/{$this->no_of_day}D";
+            return "{$this->no_of_night}Nights/{$this->no_of_day}Days";
         }
         return "";
     }
