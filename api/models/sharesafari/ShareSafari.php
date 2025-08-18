@@ -120,15 +120,27 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getPark_title()
     {
-        foreach ($this->parks as $park) {
-            return $park->title ?? null;
+        if ($this->park_id) {
+            if ($this->type == ShareSafari::TYPE_SAFARI) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->title : null;
+            } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->title : null;
+            }
         }
     }
 
     public function getPark_slug()
     {
-        foreach ($this->parks as $park) {
-            return $park->slug ?? null;
+        if ($this->park_id) {
+            if ($this->type == ShareSafari::TYPE_SAFARI) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->slug : null;
+            } elseif ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+                $park = SafariPark::find()->where(['id' => $this->park_id])->one();
+                return $park ? $park->slug : null;
+            }
         }
     }
 
@@ -218,7 +230,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $options = [
             1 => 'Individual',
             2 => 'Wildlife Influencer',
-            3 => 'Wildlife Influencer',
+            3 => 'Safari Tour Operator',
             4 => 'Safari Tour Operator'
         ];
         return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
@@ -436,8 +448,17 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getSeat_full_status()
     {
-        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
-            return true;
+        if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            $total_seat = $this->total_seat;
+            $self_occupied_seat = $this->self_occupied_seat;
+            $booked_seat = $this->booked_seat;
+            if (($total_seat - ($self_occupied_seat + $booked_seat)) == 0) {
+                return true;
+            }
+        } elseif ($this->type == ShareSafari::TYPE_SAFARI) {
+            if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
+                return true;
+            }
         }
         return false;
     }
