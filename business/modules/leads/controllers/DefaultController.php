@@ -90,7 +90,7 @@ class DefaultController extends  Controller
             if ($chat_message_model->load($this->request->post())) {
                 if ($chat_message_model->validate()) {
                     $chat_message_model->initializeForm();
-                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL);
+                    $this->storeMessage($chat_model->id, Yii::$app->user->identity->id, $chat_message_model->chat_form_model->message, $gallery = NULL, $data = NULL, Yii::$app->user->identity, $partner_gallery_version_id = NULL, $partner_gallery_version = NULL);
                     $chat_message_model->message = '';
                 }
             }
@@ -200,7 +200,6 @@ class DefaultController extends  Controller
                         $message = "Gallery";
                         $partnerGallery = PartnerGallery::find()->where(['slug' => $gallery_selection_model->gallery_slug])->one();
                         if ($partnerGallery) {
-                            $partner_gallery_version = $partnerGallery->version;
                             $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['version' => $partnerGallery->version])->limit(1)->one();
                             $gallery = $partnerGallery->live_images;
                         }
@@ -240,7 +239,7 @@ class DefaultController extends  Controller
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
         $chat_message->partner_gallery_version_id = $partner_gallery_version_id;
-        $chat_message->partner_gallery_version = $partner_gallery_version;
+        $chat_message->partner_gallery_version = $partner_gallery_version->version;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
