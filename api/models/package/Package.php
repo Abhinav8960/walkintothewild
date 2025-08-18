@@ -14,7 +14,7 @@ use common\models\User;
 
 class Package extends \common\models\package\Package
 {
-     public function fields()
+    public function fields()
     {
         $fields = [];
 
@@ -332,27 +332,35 @@ class Package extends \common\models\package\Package
         return $this->hasMany(PackageGallery::className(), ['package_id' => 'id', 'version' => 'live_version']);
     }
 
+    // public function getPackage_day_night_labels()
+    // {
+    //     $options = [
+    //         1 => '0N/1D',
+    //         2 => '1N/2D',
+    //         3 => '2N/3D',
+    //         4 => '3N/4D',
+    //         5 => '4N/5D',
+    //         6 => '5N/6D',
+    //         7 => '6N/7D',
+    //         8 => '7N/8D',
+    //         9 => '8N/9D',
+    //         10 => '9N/10D',
+    //         11 => '10N/11D',
+    //         12 => '11N/12D',
+    //         13 => '12N/13D',
+    //         14 => '13N/14D',
+    //         15 => '14N/15D',
+    //     ];
+
+    //     return isset($options[$this->no_of_day]) ? $options[$this->no_of_day] : "";
+    // }
+
     public function getPackage_day_night_labels()
     {
-        $options = [
-            1 => '0N/1D',
-            2 => '1N/2D',
-            3 => '2N/3D',
-            4 => '3N/4D',
-            5 => '4N/5D',
-            6 => '5N/6D',
-            7 => '6N/7D',
-            8 => '7N/8D',
-            9 => '8N/9D',
-            10 => '9N/10D',
-            11 => '10N/11D',
-            12 => '11N/12D',
-            13 => '12N/13D',
-            14 => '13N/14D',
-            15 => '14N/15D',
-        ];
-
-        return isset($options[$this->no_of_day]) ? $options[$this->no_of_day] : "";
+        if (isset($this->no_of_night) && isset($this->no_of_day)) {
+            return "{$this->no_of_night}N/{$this->no_of_day}D";
+        }
+        return "";
     }
 
 
