@@ -48,44 +48,67 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        $contacts = WhatsappContacts::find()
-            ->where(['status' => 1])            
-            ->orderBy(['last_message_at' => SORT_DESC])
-            ->all();
-
-        return $this->render('index', [
-            'contacts' => $contacts
-        ]);
+        return $this->render('index');
     }
 
     public function actionGetContacts()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $contacts = WhatsappContacts::find()
+        $page = Yii::$app->request->get('page', 1);
+        $pageSize = 10;
+
+        $query = WhatsappContacts::find()
             ->where(['status' => 1])
+            ->orderBy(['last_message_at' => SORT_DESC]);
+
+        $totalCount = $query->count();
+
+        $contacts = $query->offset(($page - 1) * $pageSize)
+            ->limit($pageSize)
             ->asArray()
             ->all();
 
-        return ['success' => true, 'contacts' => $contacts];
+        return [
+            'success' => true,
+            'contacts' => $contacts,
+            'hasMore' => ($page * $pageSize) < $totalCount,
+            'totalCount' => $totalCount
+        ];
     }
 
     public function actionGetMessages($contactId)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
+        $page = Yii::$app->request->get('page', 1);
+        $pageSize = 1;
+
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
             return ['success' => false, 'error' => 'Contact not found'];
         }
 
-        $messages = WhatsappMessages::find()
+        $query = WhatsappMessages::find()
             ->where(['contact_id' => $contactId])
-            ->orderBy(['created_at' => SORT_ASC])
+            ->orderBy(['created_at' => SORT_DESC]);
+
+        $totalCount = $query->count();
+
+        $messages = $query->offset(($page - 1) * $pageSize)
+            ->limit($pageSize)
             ->asArray()
             ->all();
 
-        return ['success' => true, 'messages' => $messages];
+        // Reverse messages to show in chronological order
+        $messages = array_reverse($messages);
+
+        return [
+            'success' => true,
+            'messages' => $messages,
+            'hasMore' => ($page * $pageSize) < $totalCount,
+            'totalCount' => $totalCount
+        ];
     }
 
 

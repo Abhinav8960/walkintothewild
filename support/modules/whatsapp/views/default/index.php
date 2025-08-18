@@ -3,7 +3,7 @@
 use support\assets\WhatsappAsset;
 /* @var $this yii\web\View */
 
-$this->title = 'WhatsApp Panel';
+$this->title = 'WhatsApp Chat Panel';
 WhatsappAsset::register($this);
 ?>
 
@@ -41,7 +41,7 @@ WhatsappAsset::register($this);
                     <!-- Chat Header -->
                     <div class="p-3 bg-white border-bottom" id="chatHeader">
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/45" alt="Profile" class="profile-image me-3">
+                            <div class="profile-circle me-3 d-flex align-items-center justify-content-center" id="currentContactInitial"></div>
                             <div>
                                 <h6 class="mb-0" id="currentContactName">Select a contact</h6>
                                 <small class="text-muted" id="currentContactStatus">offline</small>
@@ -72,29 +72,61 @@ WhatsappAsset::register($this);
 <!-- Bootstrap Icons CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
+<style>
+    .profile-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: #152f1b;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        min-width: 45px;
+    }
+</style>
+
 <!-- JavaScript for WhatsApp Panel -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const chatbox = document.getElementById('chatbox');
         const chatPlaceholder = document.getElementById('chatPlaceholder');
         let currentContactId = null;
+        let currentContactsPage = 1;
+        let currentMessagesPage = 1;
+        let isLoadingContacts = false;
+        let isLoadingMessages = false;
+        let hasMoreContacts = true;
+        let hasMoreMessages = true;
 
-        function renderContacts(contacts) {
+        function renderContacts(contacts, append = false) {
             const contactsList = document.getElementById('contactsList');
-            contactsList.innerHTML = contacts.map(contact => `
+            const contactsHtml = contacts.map(contact => `
                 <div class="contact-item p-3 border-bottom" data-id="${contact.id}" data-name="${contact.name}" data-phone="${contact.phone_number}">
                     <div class="d-flex align-items-center">
-                        <img src="${contact.profile_pic_url || 'https://via.placeholder.com/45'}" alt="Profile" class="profile-image me-3">
+                        <div class="profile-circle me-3 d-flex align-items-center justify-content-center">
+                            ${contact.name.charAt(0).toUpperCase()}
+                        </div>
                         <div>
                             <h6 class="mb-0">${contact.name}</h6>
-                            <small class="text-muted">${contact.phone_number}</small>
+                            <small class="text-muted">+${contact.phone_number}</small>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            // Add click event listeners to contacts
-            document.querySelectorAll('.contact-item').forEach(item => {
+            if (append) {
+                contactsList.insertAdjacentHTML('beforeend', contactsHtml);
+            } else {
+                contactsList.innerHTML = contactsHtml;
+            }
+
+            // Add click event listeners to newly added contacts only
+            const newContacts = append 
+                ? contactsList.querySelectorAll('.contact-item:not([data-initialized])')
+                : contactsList.querySelectorAll('.contact-item');
+                
+            newContacts.forEach(item => {
+                item.setAttribute('data-initialized', 'true');
                 item.addEventListener('click', function() {
                     const contactId = this.dataset.id;
                     const contactName = this.dataset.name;
@@ -120,6 +152,7 @@ WhatsappAsset::register($this);
             // Update contact info in header
             document.getElementById('currentContactName').textContent = contactName;
             document.getElementById('currentContactStatus').textContent = 'online';
+            document.getElementById('currentContactInitial').textContent = contactName.charAt(0).toUpperCase();
 
             // Update current contact ID
             currentContactId = contactId;
@@ -129,33 +162,48 @@ WhatsappAsset::register($this);
             loadChat(contactId);
         }
 
-        function loadChat(contactId) {
-            fetch(`/whatsapp/default/get-messages?contactId=${contactId}`, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        renderMessages(data.messages);
-                    }
-                })
-                .catch(error => console.error('Error loading messages:', error));
+        function loadChat(contactId, append = false) {
+            if (isLoadingMessages || (!append && !hasMoreMessages)) return;
+            
+            isLoadingMessages = true;
+            const messagesContainer = document.getElementById('messagesContainer');
+            
+            fetch(`/whatsapp/default/get-messages?contactId=${contactId}&page=${currentMessagesPage}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderMessages(data.messages, append);
+                    hasMoreMessages = data.hasMore;
+                    if (hasMoreMessages && append) currentMessagesPage++;
+                }
+            })
+            .catch(error => console.error('Error loading messages:', error))
+            .finally(() => {
+                isLoadingMessages = false;
+            });
         }
 
-        function renderMessages(messages) {
+        function renderMessages(messages, prepend = false) {
             const messagesContainer = document.getElementById('messagesContainer');
-            messagesContainer.innerHTML = messages.map(message => `
+            const messagesHtml = messages.map(message => `
                 <div class="message ${message.direction === 'outbound' ? 'message-sent' : 'message-received'}">
                     <div class="message-content">${message.content}</div>
                     <small class="message-time">${formatMessageTime(message.created_at)}</small>
                 </div>
             `).join('');
 
-            // Scroll to bottom of messages
-            scrollToBottom();
+            if (prepend) {
+                messagesContainer.insertAdjacentHTML('afterbegin', messagesHtml);
+            } else {
+                messagesContainer.innerHTML = messagesHtml;
+                // Only scroll to bottom for new messages
+                scrollToBottom();
+            }
         }
 
         function formatMessageTime(timestamp) {
@@ -233,41 +281,84 @@ WhatsappAsset::register($this);
         });
 
         // Function to load contacts from the server
-        function loadContacts() {
-            // Show loading state if needed
+        function loadContacts(append = false) {
+            if (isLoadingContacts || !hasMoreContacts) return;
+            
+            isLoadingContacts = true;
             const contactsList = document.getElementById('contactsList');
-            contactsList.innerHTML = '<div class="p-3 text-center">Loading contacts...</div>';
+            
+            if (!append) {
+                contactsList.innerHTML = '<div class="p-3 text-center">Loading contacts...</div>';
+            }
 
-            fetch('/whatsapp/default/get-contacts', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success && Array.isArray(data.contacts)) {
-                        if (data.contacts.length === 0) {
-                            contactsList.innerHTML = '<div class="p-3 text-center">No contacts found</div>';
-                        } else {
-                            renderContacts(data.contacts);
-                        }
+            fetch(`/whatsapp/default/get-contacts?page=${currentContactsPage}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success && Array.isArray(data.contacts)) {
+                    if (data.contacts.length === 0 && !append) {
+                        contactsList.innerHTML = '<div class="p-3 text-center">No contacts found</div>';
                     } else {
-                        throw new Error('Invalid data format received');
+                        renderContacts(data.contacts, append);
+                        hasMoreContacts = data.hasMore;
+                        if (hasMoreContacts) currentContactsPage++;
                     }
-                })
-                .catch(error => {
-                    console.error('Error loading contacts:', error);
+                } else {
+                    throw new Error('Invalid data format received');
+                }
+            })
+            .catch(error => {
+                console.error('Error loading contacts:', error);
+                if (!append) {
                     contactsList.innerHTML = `
                     <div class="p-3 text-center text-danger">
                         Error loading contacts. Please try again.
                     </div>`;
+                }
+            })
+            .finally(() => {
+                isLoadingContacts = false;
+            });
+        }
+
+        // Add scroll listeners for infinite scrolling
+        const contactsListDiv = document.getElementById('contactsList');
+        const messagesContainerDiv = document.getElementById('messagesContainer');
+
+        // Contacts infinite scroll
+        contactsListDiv.addEventListener('scroll', () => {
+            if (contactsListDiv.scrollHeight - contactsListDiv.scrollTop <= contactsListDiv.clientHeight + 100) {
+                loadContacts(true);
+            }
+        });
+
+        // Messages infinite scroll (loading older messages when scrolling up)
+        messagesContainerDiv.addEventListener('scroll', () => {
+            if (messagesContainerDiv.scrollTop <= 100 && hasMoreMessages && currentContactId) {
+                const oldScrollHeight = messagesContainerDiv.scrollHeight;
+                
+                loadChat(currentContactId, true);
+                
+                // Use requestAnimationFrame to maintain scroll position after DOM update
+                requestAnimationFrame(() => {
+                    const newScrollHeight = messagesContainerDiv.scrollHeight;
+                    messagesContainerDiv.scrollTop = newScrollHeight - oldScrollHeight;
                 });
+            }
+        });
+
+        // Reset pages when loading new contact
+        function resetPagination() {
+            currentMessagesPage = 1;
+            hasMoreMessages = true;
+            isLoadingMessages = false;
         }
 
         // Initial load of contacts
