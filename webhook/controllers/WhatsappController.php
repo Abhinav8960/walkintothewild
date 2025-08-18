@@ -4,7 +4,6 @@ namespace webhook\controllers;
 
 use common\models\whatsapp\WhatsappContacts;
 use common\models\whatsapp\WhatsappMessages;
-use common\models\whatsapp\WhatsappConversations;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -111,20 +110,6 @@ class WhatsappController extends Controller
         // Get or create contact
         $contact = $this->getOrCreateContact($value['contacts'][0]);
 
-        // Get or create conversation
-        $conversation = WhatsappConversations::find()
-            ->where(['contact_id' => $contact->id])
-            ->andWhere(['status' => WhatsappConversations::STATUS_ACTIVE])
-            ->one();
-
-        if (!$conversation) {
-            $conversation = new WhatsappConversations([
-                'contact_id' => $contact->id,
-                'status' => WhatsappConversations::STATUS_ACTIVE
-            ]);
-            $conversation->save();
-        }
-
         // Create message record
         $whatsappMessage = new WhatsappMessages([
             'wamid' => $message['id'],
@@ -165,10 +150,6 @@ class WhatsappController extends Controller
         }
 
         if ($whatsappMessage->save()) {
-            // Update conversation last message time
-            $conversation->last_message_at = date('Y-m-d H:i:s');
-            $conversation->save();
-
             // Update contact last message time
             $contact->last_message_at = date('Y-m-d H:i:s');
             $contact->save();

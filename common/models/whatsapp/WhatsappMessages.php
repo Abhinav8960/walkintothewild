@@ -56,8 +56,8 @@ class WhatsappMessages extends \yii\db\ActiveRecord
         return [
             [['content', 'media_url'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 'sent'],
-            [['conversation_id', 'contact_id'], 'integer'],
-            [['wamid', 'conversation_id', 'contact_id', 'direction', 'message_type'], 'required'],
+            [['contact_id'], 'integer'],
+            [['wamid', 'contact_id', 'direction', 'message_type'], 'required'],
             [['direction', 'message_type', 'content', 'status'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['wamid'], 'string', 'max' => 100],
@@ -78,7 +78,6 @@ class WhatsappMessages extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'wamid' => 'Wamid',
-            'conversation_id' => 'Conversation ID',
             'contact_id' => 'Contact ID',
             'direction' => 'Direction',
             'message_type' => 'Message Type',
