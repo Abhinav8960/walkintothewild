@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->phone_no) ? $model->phone_no .' / '.SafariOperator::callstatusoption($model->can_call) : '';
+                            return isset($model->phone_no) ? $model->phone_no .' / '.SafariOperator::callstatusoption($model->is_phone_no_verified) : '';
                         }
                     ],
                     [
@@ -157,20 +157,20 @@ $this->params['title'] = $this->title;
                             },
 
                             'check' => function ($url, $model) {
-                                if ($model->can_call == 1) {
-                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['can-call', 'id' => $model->id], [
+                                if ($model->is_phone_no_verified == 1) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['phone-verified', 'id' => $model->id], [
                                         'class' => 'btn btn-xs btn-success',
                                         'data-method' => 'post',
-                                        'data-confirm' => 'Are you sure you want to change "Can Call" status to "No"?',
-                                        'title' => 'Can Call Status',
+                                        'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "No"?',
+                                        'title' => 'Phone Status',
                                         'data-bs-toggle' => "tooltip"
                                     ]);
                                 } else {
-                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['can-call', 'id' => $model->id], [
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['phone-verified', 'id' => $model->id], [
                                         'class' => 'btn btn-xs btn-warning',
                                         'data-method' => 'post',
-                                        'data-confirm' => 'Are you sure you want to change "Can Call" status to "Yes"?',
-                                        'title' => 'Can Call Status',
+                                        'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "Yes"?',
+                                        'title' => 'Phone Status',
                                         'data-bs-toggle' => "tooltip"
                                     ]);
                                 }
