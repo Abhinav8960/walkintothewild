@@ -2,6 +2,7 @@
 
 namespace common\models\park\form;
 
+use common\Helper\FsHelper;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
@@ -93,6 +94,8 @@ class SafariParkForm extends model
 
     public $quotation_form_note;
 
+    public $short_name;
+
 
     public function __construct(SafariPark $safari_park_model = null)
     {
@@ -177,6 +180,8 @@ class SafariParkForm extends model
             $this->safari_session = SafariParkSession::find()->select('session_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             // $this->accomodation = SafariParkAccomodation::find()->select('master_accomodation_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->accomodation = SafariParkAccomodation::find()->select('meta_stay_category_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
+
+            $this->short_name = $this->safari_park_model->short_name;
         }
 
         $this->status_option = GeneralModel::newstatusoption();
@@ -442,22 +447,23 @@ class SafariParkForm extends model
                 ['feature_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 380,
-                'maxWidth' => 380,
-                'maxHeight' => 600,
-                'minHeight' => 600,
-                'maxSize' => 250 * 1024
+                // 'minWidth' => 380,
+                // 'maxWidth' => 380,
+                // 'maxHeight' => 600,
+                // 'minHeight' => 600,
+                // 'maxSize' => 250 * 1024
             ],
             [
                 ['logo'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 350,
-                'maxWidth' => 350,
-                'maxHeight' => 350,
-                'minHeight' => 350,
-                'maxSize' => 250 * 1024
+                // 'minWidth' => 350,
+                // 'maxWidth' => 350,
+                // 'maxHeight' => 350,
+                // 'minHeight' => 350,
+                // 'maxSize' => 250 * 1024
             ],
+            [['short_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -505,7 +511,8 @@ class SafariParkForm extends model
             'month_note',
             'safri_cost_note',
             'animal_text',
-            'quotation_form_note'
+            'quotation_form_note',
+            'short_name'
         ];
         $scenarios['update'] = [
             'show_in_filter',
@@ -552,6 +559,7 @@ class SafariParkForm extends model
             'is_most_demanding',
             'is_shared_safari',
             'quotation_form_note',
+            'short_name'
         ];
         $scenarios['howtoreach'] = [
             'status',
@@ -655,7 +663,7 @@ class SafariParkForm extends model
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'status' => 'Status',
-            'quotation_form_note'=>'Quotation Note',
+            'quotation_form_note' => 'Quotation Note',
         ];
     }
     /**
@@ -724,7 +732,7 @@ class SafariParkForm extends model
         $this->safari_park_model->status = $this->status;
 
         $this->safari_park_model->quotation_form_note = $this->quotation_form_note;
-
+        $this->safari_park_model->short_name = $this->short_name;
     }
 
 
@@ -733,45 +741,67 @@ class SafariParkForm extends model
     {
 
         if ($this->logo) {
-            $storagePath = Yii::$app->params['datapath'] . '/safaripark';
+            // $storagePath = Yii::$app->params['datapath'] . '/safaripark';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->safari_park_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+            // if (!file_exists($storagePath)) {
+            //     mkdir($storagePath);
+            //     chmod($storagePath, 0777);
+            // }
+            // $storagePath = $storagePath . '/' . $this->safari_park_model->id;
+            // if (!file_exists($storagePath)) {
+            //     mkdir($storagePath);
+            //     chmod($storagePath, 0777);
+            // }
 
+            // $fileName = 'logo' . time() . '.' . $this->logo->extension;
+            // $filePath = $storagePath . '/' . $fileName;
+
+            // if ($this->logo->saveAs($filePath)) {
+            //     $this->safari_park_model->logo = $fileName;
+            //     $this->safari_park_model->save(false);
+            // }
+
+            $storagePath = 'safaripark' . '/' . $this->safari_park_model->id;
             $fileName = 'logo' . time() . '.' . $this->logo->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->logo->saveAs($filePath)) {
-                $this->safari_park_model->logo = $fileName;
-                $this->safari_park_model->save(false);
+            if ($fileName) {
+                if ($etag =  FsHelper::saveUploadedFile($this->logo, $filePath, $fileName, true)) {
+                    $this->safari_park_model->logo = $fileName;
+                    $this->safari_park_model->save(false);
+                }
             }
         }
         if ($this->feature_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/safaripark';
+            // $storagePath = Yii::$app->params['datapath'] . '/safaripark';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->safari_park_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+            // if (!file_exists($storagePath)) {
+            //     mkdir($storagePath);
+            //     chmod($storagePath, 0777);
+            // }
+            // $storagePath = $storagePath . '/' . $this->safari_park_model->id;
+            // if (!file_exists($storagePath)) {
+            //     mkdir($storagePath);
+            //     chmod($storagePath, 0777);
+            // }
 
+            // $fileName = 'park_feature_image' . time() . '.' . $this->feature_image->extension;
+            // $filePath = $storagePath . '/' . $fileName;
+
+            // if ($this->feature_image->saveAs($filePath)) {
+            //     $this->safari_park_model->feature_image = $fileName;
+            //     $this->safari_park_model->save(false);
+            // }
+
+            $storagePath = 'safaripark' . '/' . $this->safari_park_model->id;
             $fileName = 'park_feature_image' . time() . '.' . $this->feature_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->feature_image->saveAs($filePath)) {
-                $this->safari_park_model->feature_image = $fileName;
-                $this->safari_park_model->save(false);
+            if ($fileName) {
+                if ($etag =  FsHelper::saveUploadedFile($this->feature_image, $filePath, $fileName, true)) {
+                    $this->safari_park_model->feature_image = $fileName;
+                    $this->safari_park_model->save(false);
+                }
             }
         }
     }

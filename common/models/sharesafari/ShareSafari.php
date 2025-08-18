@@ -163,10 +163,16 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
         return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
     }
 
+    // public function getSharedimagepath()
+    // {
+
+    //     return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+    // }
+
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? (\Yii::$app->params['s3_endpoint'] . '/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->filepath) ? (\Yii::$app->params['s3_endpoint'] . '/' . $this->filepath) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
@@ -326,5 +332,14 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
             return true;
         }
         return false;
+    }
+
+    public function getCommentCount()
+    {
+        $count = ShareSafariComment::find()->where(['share_safari_id' => $this->id])->andWhere(['status' => 1])->count();
+        if ($count > 0) {
+            return $count;
+        }
+        return 0;
     }
 }

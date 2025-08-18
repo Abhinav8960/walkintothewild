@@ -76,6 +76,7 @@ class DefaultController extends RestController
         }
 
         // Prepare transaction details
+        $transactionId = Transaction::transactionId($model->id);
         $orderId = Transaction::orderId($model->id);
         $reference_id = Transaction::referenceId($model->id);
         $amount = $model->partner_selling_price;
@@ -85,7 +86,7 @@ class DefaultController extends RestController
         $data = [];
         $store = $data['payu'] = [
             'key' => $merchantKey,
-            'txnid' => $orderId,
+            'txnid' => $transactionId,
             'amount' => $amount,
             'productinfo' => 'Lead Partner Quote Payment',
             'firstname' => $model->name,
@@ -527,12 +528,12 @@ class DefaultController extends RestController
         if (empty($model)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Payment link expired or not valid."]);
         }
+
         $quotation = \api\models\leads\LeadPartnerQuotes::find()->andWhere(['id' => $model->lead_partner_quote_id])->one();
 
         if (empty($quotation)) {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Quotation not found."]);
         }
-
 
         if (isset($quotation->lead->package_id)) {
             $title = "Package - " . $quotation->lead->package->package_name;

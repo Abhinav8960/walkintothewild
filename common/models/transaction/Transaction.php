@@ -226,6 +226,11 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         ];
     }
 
+    public static function transactionId($identifier)
+    {
+        return 't' . date('ymdHis') . '' . $identifier;
+    }
+
 
     public static function orderId($identifier)
     {

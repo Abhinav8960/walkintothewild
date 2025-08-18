@@ -3,7 +3,7 @@
 use common\models\GeneralModel;
 
 ?>
-
+<!-- 
 <div class="row">
     <div class="col-xl-4 col-sm-6 col-12">
         <div class="card">
@@ -54,15 +54,15 @@ use common\models\GeneralModel;
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-12">
         <div class="mb-2">
             <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100 banner_image">
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-12">

@@ -279,5 +279,31 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         return '';
     }
 
+    public function getActiveLeadCount()
+    {
+        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE])->count();
+        if ($count) {
+            return $count;
+        }
+        return 0;
+    }
+
+    public function getPaymentReceivedCount()
+    {
+        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE,'is_payment_received'=>1])->count();
+        if ($count) {
+            return $count;
+        }
+        return 0;
+    }
+
+    public function getPendingPaymentCount()
+    {
+        $count = Lead::find()->where(['status'=>Lead::STATUS_ACTIVE,'is_payment_received'=>0])->andWhere(['is_payment_link_send'=>1])->count();
+        if ($count) {
+            return $count;
+        }
+        return 0;
+    }
     
 }

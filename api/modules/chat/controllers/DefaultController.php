@@ -25,6 +25,7 @@ use api\models\sales\SalesQuote;
 use common\models\GeneralModel as ModelsGeneralModel;
 use common\models\leads\form\LeadPartnerQuotationForm;
 use common\models\MailLog as ModelsMailLog;
+use common\models\partnergallery\PartnerGalleryVersion;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -209,6 +210,7 @@ class DefaultController extends RestController
         $message = Yii::$app->request->post('message') ?? null;
         $gallery_slug = Yii::$app->request->post('gallery_slug') ?? null;
         $gallery = null;
+        $partner_gallery_version_id = null;
         if (empty($message) && empty($gallery_slug)) {
             return Yii::$app->api->sendResponse([], ['message' => 'Message is required'], 400);
         }
@@ -219,14 +221,16 @@ class DefaultController extends RestController
             if ($partnerGallery) {
                 // Safely call toArray() if $gallery is not null
                 //  $gallery = json_encode($partnerGallery->PrepareFullResponse());
+                $partner_gallery_version = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $partnerGallery->id])->andWhere(['is_live' => 1])->limit(1)->one();
+                $partner_gallery_version_id = $partner_gallery_version->id;
                 $gallery = $partnerGallery->live_images;
             }
         }
 
-        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user);
+        return $this->storeMessage($chat_model->id, $this->userinfo->id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id);
     }
 
-    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user)
+    private function storeMessage($chat_id, $user_id, $message, $gallery, $data = null, $login_user, $partner_gallery_version_id)
     {
 
         $chat = Chat::find()->andWhere(['id' => $chat_id])->one();
@@ -246,6 +250,7 @@ class DefaultController extends RestController
         $chat_message = new ChatMessage();
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
+        $chat_message->partner_gallery_version_id = $partner_gallery_version_id ?? null;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
@@ -402,7 +407,7 @@ class DefaultController extends RestController
 
 
 
-    
+
 
     protected function findLeadModel($id, $partner)
     {
@@ -452,7 +457,7 @@ class DefaultController extends RestController
 
         $chat = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_type' => 1])->one();
         if (!$chat) {
-            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Chat Not Found!!!'], 400);
+            return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Chat Not Found!!!'], 200);
         }
 
 

@@ -77,9 +77,9 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 1],
             [['safari_operator_id', 'title', 'slug'], 'required'],
-            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['safari_operator_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'park_id','gallery_images_count','user_id'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
-            [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
+            // [['safari_operator_id', 'title', 'slug'], 'unique', 'targetAttribute' => ['safari_operator_id', 'title', 'slug']],
         ];
     }
 
@@ -91,6 +91,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
         return [
             'id' => 'ID',
             'safari_operator_id' => 'Safari Operator ID',
+            'park_id' => 'Park ID',
             'title' => 'Title',
             'slug' => 'Slug',
             'status' => 'Status',
@@ -140,6 +141,37 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPartner()
     {
-       return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
+        return $this->hasOne(SafariOperator::class, ['id' => 'safari_operator_id']);
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'park_id']);
+    }
+
+    public function versionsave()
+    {
+        PartnerGalleryVersion::updateAll(['is_live' => 0], ['partner_gallery_id' => $this->id]);
+        $version_model = PartnerGalleryVersion::find()->where(['partner_gallery_id' => $this->id])->orderBy(['version' => SORT_DESC])->limit(1)->one();
+
+        $version_form_model = new PartnerGalleryVersion();
+        $version_form_model->partner_gallery_id = $this->id;
+        $version_form_model->version = !empty($version_model->version) ? $version_model->version + 1 : 1;
+        $version_form_model->safari_operator_id = $this->safari_operator_id;
+        $version_form_model->user_id = $this->user_id;
+        $version_form_model->park_id = $this->park_id;
+        $version_form_model->title = $this->title;
+        $version_form_model->slug = $this->slug;
+        $version_form_model->remark = $this->remark;
+        $version_form_model->live_images = $this->live_images;
+        $version_form_model->in_draft = $this->in_draft;
+        $version_form_model->is_approved = $this->is_approved;
+        $version_form_model->send_for_approval = $this->send_for_approval;
+        $version_form_model->is_live = 1;
+        $version_form_model->live_gallery_images_count = $this->live_gallery_images_count;
+        $version_form_model->gallery_images_count = $this->gallery_images_count;
+        $version_form_model->status = $this->status;
+
+        $version_form_model->save(false);
     }
 }

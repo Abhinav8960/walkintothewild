@@ -133,4 +133,15 @@ class SightingComment extends \yii\db\ActiveRecord implements \common\interfaces
             }
         }
     }
+
+   
+    public function getLike()
+    {
+        return $this->hasMany(SightingCommentLike::class, ['sighting_comment_id' => 'id'])->andWhere(['sighting_comment_like.status' => 1]);
+    }
+
+    public function getLiked_count()
+    {
+        return $this->getLike()->count();
+    }
 }

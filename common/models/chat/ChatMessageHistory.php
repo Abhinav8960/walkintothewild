@@ -50,6 +50,8 @@ class ChatMessageHistory extends \yii\db\ActiveRecord
             [['id', 'chat_message_id', 'chat_id', 'is_quotation_message', 'quotation_id', 'is_quotation_active', 'is_call_message', 'call_id', 'is_call_request', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['message', 'data', 'gallery'], 'string'],
             [['id'], 'unique'],
+            [['transaction_id'], 'safe'],
+
         ];
     }
 
@@ -71,6 +73,7 @@ class ChatMessageHistory extends \yii\db\ActiveRecord
             'is_call_request' => 'Is Call Request',
             'data' => 'Data',
             'gallery' => 'Gallery',
+            'transaction_id' => 'Transaction ID',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',

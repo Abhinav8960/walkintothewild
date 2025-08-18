@@ -17,6 +17,10 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
             </div>
 
+            <div class="col-md-6">
+                <?= $form->field($model, 'short_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Short Name']) ?>
+            </div>
+
 
             <div class="col-md-12">
                 <?= $form->field($model, 'short_description')->textarea(['maxlength' => true, 'placeholder' => 'Enter featured description']) ?>

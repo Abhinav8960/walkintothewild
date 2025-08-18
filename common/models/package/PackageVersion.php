@@ -3,11 +3,13 @@
 namespace common\models\package;
 
 use common\models\feeds\Feeds;
+use common\models\leads\Lead;
 use Yii;
 use common\models\User;
 use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\UserWishlist;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveQuery;
 
@@ -105,7 +107,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['version', 'package_name', 'package_id'], 'required'],
             [['owned_by_id', 'package_agenda_id', 'no_of_day', 'no_of_night', 'safari_type', 'no_of_safari', 'stay_category_id', 'type', 'gst_percentage', 'master_vehicle_id', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included', 'popular_package', 'delete_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'is_published_on_web', 'is_published_on_api', 'status', 'total_view'], 'integer'],
             [['start_date', 'end_date', 'status'], 'safe'],
-            [['cost_per_person', 'total_price'], 'number'],
+            [['cost_per_person','cost_per_two_person', 'total_price'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'getting_there', 'cancellation_reason', 'delete_reason'], 'string'],
             [['version', 'start_location', 'end_location', 'package_image', 'package_banner_image'], 'string', 'max' => 255],
             [['version'], 'string', 'max' => 10],
@@ -115,6 +117,8 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['original_banner_filename', 'original_image_filename'], 'string', 'max' => 512],
             [['max_booking_date'], 'safe'],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
+            [['partner_gallery_id'], 'integer'],
+            [['gallery_json'], 'safe'],
 
 
         ];
@@ -341,7 +345,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'version' => $this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'version' => $this->version, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }
@@ -442,4 +446,51 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
         ];
         return $arr[$this->status] ?? "";
     }
+
+    public function getWhislistCount()
+    {
+        $whislist_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($whislist_package) {
+            return UserWishlist::find()->where(['item_type_id' => 1, 'item_id' => $whislist_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getLeadCount()
+    {
+        $lead_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($lead_package) {
+            return Lead::find()->where(['source' => Lead::SOURCE_PACKAGE, 'package_id' => $lead_package->id])->count();
+        }
+        return 0;
+    }
+
+    public function getCommentCount()
+    {
+        $comment_package = Package::find()->where(['id' => $this->package_id, 'live_version' => $this->version])->limit(1)->one();
+        if ($comment_package) {
+            $count = PackageComment::find()->where(['package_id' => $comment_package->id])->andWhere(['status' => 1])->count();
+            if ($count > 0) {
+                return $count;
+            }
+        }
+        return 0;
+    }
+
+    public function getStatustags()
+    {
+        if ($this->status == PackageVersion::NOT_APPROVED_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        } else if ($this->status == PackageVersion::APPROVED_AND_LIVE_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/live.svg'>";
+        } else if ($this->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+            return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/pending.svg'>";
+        } else if ($this->status == PackageVersion::EDIATBLE_STATUS) {
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/draft.svg'>";
+        } else if ($this->status == PackageVersion::TERMINATED_STATUS) {
+           return "<img src='" .  \Yii::$app->view->params['baseurl'] . "/images/terminated.svg'>";
+        }
+    }
+
+
 }

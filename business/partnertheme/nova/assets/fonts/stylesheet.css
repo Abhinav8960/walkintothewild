@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Devator Exp';
+    src: url('Devator-BoldExpanded.woff2') format('woff2'),
+         url('Devator-BoldExpanded.woff') format('woff'),
+         url('Devator-BoldExpanded.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  :root {
+    --primary-font: 'Devator Exp', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5,
+  .menu-navbar-nav .nav-item .nav-link {
+    font-family: var(--primary-font) !important;
+  }
+  

@@ -524,4 +524,20 @@ class SafariOperatorController extends Controller
         $url = Yii::$app->rfs->temporaryUrl($relativePath, $expiresAt);
         return $this->renderAjax('_file_view', ['fileUrl' => $url]);
     }
+
+    public function actionCanCall($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->can_call == 1) {
+            $model->can_call = 0;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Operator is not able to call users !');
+        } else {
+            $model->can_call = 1;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Operator can call to the users now !');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }

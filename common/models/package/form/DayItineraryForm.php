@@ -8,7 +8,7 @@ use common\models\package\PackageDay;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-
+use common\models\partnergallery\PartnerGallery;
 
 class DayItineraryForm  extends \yii\base\Model
 
@@ -35,15 +35,16 @@ class DayItineraryForm  extends \yii\base\Model
     public $status;
 
     public $created_at;
-
+    public $partner_gallery_id;
+    public $gallery_json;
 
     /**
      * @param [type] $package_day_model
      */
-    public function __construct(PackageDay $package_day_model = null)
+    public function __construct(?PackageDay $package_day_model = null)
     {
         $this->package_day_model = Yii::createObject([
-            'class' => PackageDay::className()
+            'class' => PackageDay::class
         ]);
         if ($package_day_model != null) {
             $this->package_day_model = $package_day_model;
@@ -66,16 +67,18 @@ class DayItineraryForm  extends \yii\base\Model
             $this->longitude = $this->package_day_model->longitude;
             $this->status = $this->package_day_model->status;
             $this->created_at = $this->package_day_model->created_at;
+            $this->partner_gallery_id = $this->package_day_model->partner_gallery_id;
+            $this->gallery_json = $this->package_day_model->gallery_json;
         }
     }
 
     public function rules()
     {
         return [
-            [['package_id', 'version', 'day', 'day_title'], 'required'],
+            [['package_id', 'version', 'day', 'day_title', 'day_description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
-            [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
+            [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner', 'partner_gallery_id'], 'integer'],
             [[
                 'day_description',
                 'day_activity',
@@ -99,7 +102,10 @@ class DayItineraryForm  extends \yii\base\Model
                 // 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            ['created_at','safe'],
+            ['created_at', 'safe'],
+            [['day_title'], 'string', 'max' => 255],
+            [['day_description'], 'string', 'max' => 2000],
+            [['gallery_json'], 'safe'],
         ];
     }
 
@@ -132,6 +138,13 @@ class DayItineraryForm  extends \yii\base\Model
         $this->package_day_model->latitude = $this->latitude;
         $this->package_day_model->longitude = $this->longitude;
         $this->package_day_model->status = $this->status;
+        $this->package_day_model->partner_gallery_id = $this->partner_gallery_id;
+        if ($this->partner_gallery_id) {
+            $live = PartnerGallery::find()->where(['id' => $this->partner_gallery_id])->limit(1)->one();
+            if (!empty($live)) {
+                $this->package_day_model->gallery_json = $live->live_images;
+            }
+        }
     }
 
 
@@ -171,7 +184,7 @@ class DayItineraryForm  extends \yii\base\Model
             // $fileName = 'package_day' . '-' . time() . '.' . $this->day_image->extension;
             // $filePath = $storagePath . '/' . $fileName;
 
-            $storagePath = 'package' . '/' . date('ym', $this->created_at) ;
+            $storagePath = 'package' . '/' . date('ym', $this->created_at);
             $fileName = $this->version . '_package_day' . '_' . time() . '.' . $this->day_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 

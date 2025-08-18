@@ -20,21 +20,26 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 
-
+<div class="tab-pane" id="getting" role="tabpanel" aria-labelledby="getting_there">
+    <div class="row">
         <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach'])->label('Share Safari Getting There', ['class' => 'Modal_label']) ?>
-            </div>
-        </div>
-     
-        <div class="row">
-            <div class="col-md-12">
-            <div class="creat-safri d-flex justify-content-end ">
-                    <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+            <div class="col-lg-12">
+                <div class="form_boxes mb-3">
+                    <label for="">How to reach</label>
+                    <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach','class'=>'form-control rounded-0'])->label(false) ?>
                 </div>
             </div>
         </div>
-
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <?= Html::submitButton('Update', ['class' => 'button-created create']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php ActiveForm::end(); ?>
 
 <style>
