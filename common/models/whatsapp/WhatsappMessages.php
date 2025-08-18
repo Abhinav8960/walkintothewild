@@ -8,10 +8,7 @@ use Yii;
  * This is the model class for table "whatsapp_messages".
  *
  * @property int $id
- * @property int|null $user_id
- * @property int|null $partner_id
  * @property string $wamid WhatsApp Message ID
- * @property int $conversation_id
  * @property int $contact_id
  * @property string $direction
  * @property string $message_type
@@ -57,9 +54,9 @@ class WhatsappMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'partner_id', 'content', 'media_url'], 'default', 'value' => null],
+            [['content', 'media_url'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 'sent'],
-            [['user_id', 'partner_id', 'conversation_id', 'contact_id'], 'integer'],
+            [['conversation_id', 'contact_id'], 'integer'],
             [['wamid', 'conversation_id', 'contact_id', 'direction', 'message_type'], 'required'],
             [['direction', 'message_type', 'content', 'status'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -80,8 +77,6 @@ class WhatsappMessages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'partner_id' => 'Partner ID',
             'wamid' => 'Wamid',
             'conversation_id' => 'Conversation ID',
             'contact_id' => 'Contact ID',

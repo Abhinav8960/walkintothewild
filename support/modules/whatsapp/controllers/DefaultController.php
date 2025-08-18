@@ -46,11 +46,12 @@ class DefaultController extends Controller
         parent::init();
         $this->whatsappApi = new WhatsappApi();
     }
-    
+
     public function actionIndex()
     {
         $contacts = WhatsappContacts::find()
             ->where(['status' => 1])
+            ->orderBy(['last_message_at' => SORT_DESC])
             ->all();
 
         return $this->render('index', [
@@ -74,16 +75,13 @@ class DefaultController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $conversation = WhatsappConversations::find()
-            ->where(['contact_id' => $contactId])
-            ->one();
-
-        if (!$conversation) {
-            return ['success' => false, 'error' => 'Conversation not found'];
+        $contact = WhatsappContacts::findOne($contactId);
+        if (!$contact) {
+            return ['success' => false, 'error' => 'Contact not found'];
         }
 
         $messages = WhatsappMessages::find()
-            ->where(['conversation_id' => $conversation->id])
+            ->where(['contact_id' => $contactId])
             ->orderBy(['created_at' => SORT_ASC])
             ->asArray()
             ->all();
@@ -94,13 +92,37 @@ class DefaultController extends Controller
     public function actionSendMessage()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+        
+        // Get raw input data for JSON requests
+        $rawData = Yii::$app->request->getRawBody();
+        $jsonData = json_decode($rawData, true);
+        
+        // Try both JSON and POST data
+        $contactId = $jsonData['contact_id'] ?? Yii::$app->request->post('contact_id');
+        $message = $jsonData['message'] ?? Yii::$app->request->post('message');
+        $type = $jsonData['type'] ?? Yii::$app->request->post('type', 'text');
 
-        $contactId = Yii::$app->request->post('contact_id');
-        $message = Yii::$app->request->post('message');
-        $type = Yii::$app->request->post('type', 'text');
+        // Log received data for debugging
+        Yii::debug([
+            'rawData' => $rawData,
+            'jsonData' => $jsonData,
+            'contactId' => $contactId,
+            'message' => $message,
+            'type' => $type
+        ], 'whatsapp');
 
         if (!$contactId || !$message) {
-            return ['success' => false, 'error' => 'Missing required parameters'];
+            return [
+                'success' => false, 
+                'error' => 'Missing required parameters',
+                'debug' => [
+                    'received_data' => [
+                        'contact_id' => $contactId,
+                        'message' => $message,
+                        'type' => $type
+                    ]
+                ]
+            ];
         }
 
         $contact = WhatsappContacts::findOne($contactId);
@@ -116,22 +138,14 @@ class DefaultController extends Controller
         ]);
 
         if ($result['success']) {
+            if ($result['success']) {
+            // Update contact's last message timestamp
+            $contact->last_message_at = new \yii\db\Expression('NOW()');
+            $contact->save();
+
             // Save message to database
-            $conversation = WhatsappConversations::find()
-                ->where(['contact_id' => $contactId])
-                ->one();
-
-            if (!$conversation) {
-                $conversation = new WhatsappConversations([
-                    'contact_id' => $contactId,
-                    'status' => 'active'
-                ]);
-                $conversation->save();
-            }
-
             $whatsappMessage = new WhatsappMessages([
                 'wamid' => $result['message_id'],
-                'conversation_id' => $conversation->id,
                 'contact_id' => $contactId,
                 'direction' => 'outbound',
                 'message_type' => $type,

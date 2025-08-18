@@ -60,8 +60,6 @@ class WhatsappMessagesSearch extends WhatsappMessages
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'partner_id' => $this->partner_id,
             'conversation_id' => $this->conversation_id,
             'contact_id' => $this->contact_id,
             'created_at' => $this->created_at,

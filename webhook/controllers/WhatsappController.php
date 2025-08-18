@@ -2,7 +2,9 @@
 
 namespace webhook\controllers;
 
-
+use common\models\whatsapp\WhatsappContacts;
+use common\models\whatsapp\WhatsappMessages;
+use common\models\whatsapp\WhatsappConversations;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -10,7 +12,8 @@ use yii;
 use Netflie\WhatsAppCloudApi\WebHook;
 
 /**
- * Default controller for the `error` module
+ * WhatsApp Webhook Controller
+ * Handles incoming messages and status updates from WhatsApp Cloud API v23.0
  */
 class WhatsappController extends Controller
 {
@@ -53,13 +56,172 @@ class WhatsappController extends Controller
 
     public function actionIndex()
     {
-         /* ------------TO VERIFY TOKEN (UnCOMMENT ME)---- */
-        // $webhook = new WebHook();
+        // Handle webhook verification
+        // if (isset($_GET['hub_mode']) && $_GET['hub_mode'] === 'subscribe') {
+        //     if ($_GET['hub_verify_token'] === "white-elephant") {
+        //         echo $_GET['hub_challenge'];
+        //         exit;
+        //     }
+        //     throw new \yii\web\BadRequestHttpException('Invalid verification token');
+        // }
 
-        // echo $webhook->verify($_GET, "white-elephant");
-        // die();
-        /* --------------------------------------------------------- */
+        // Get payload
         $payload = file_get_contents('php://input');
-        \Yii::info(time(). 'whatsapp-webhook Response: ' . $payload, 'whatsapp-webhook');
+        $data = json_decode($payload, true);
+
+        \Yii::info(time() . ' WhatsApp Webhook Payload: ' . $payload, 'whatsapp-webhook');
+
+        if (empty($data['entry'][0]['changes'][0]['value'])) {
+            return;
+        }
+
+        $value = $data['entry'][0]['changes'][0]['value'];
+
+        try {
+            // Handle messages
+            if (isset($value['messages'])) {
+                foreach ($value['messages'] as $message) {
+                    if (!isset($message['id']) || !isset($value['contacts'][0])) {
+                        continue;
+                    }
+                    $this->handleIncomingMessage($value, $message);
+                }
+            }
+
+            // Handle message status updates
+            if (isset($value['statuses'])) {
+                foreach ($value['statuses'] as $status) {
+                    if (!isset($status['id'])) {
+                        continue;
+                    }
+                    $this->handleMessageStatus($status);
+                }
+            }
+        } catch (\Exception $e) {
+            \Yii::error('Error processing webhook: ' . $e->getMessage(), 'whatsapp-webhook');
+            throw $e;
+        }
+    }
+
+    /**
+     * Handle incoming WhatsApp message
+     */
+    protected function handleIncomingMessage($value, $message)
+    {
+        // Get or create contact
+        $contact = $this->getOrCreateContact($value['contacts'][0]);
+
+        // Get or create conversation
+        $conversation = WhatsappConversations::find()
+            ->where(['contact_id' => $contact->id])
+            ->andWhere(['status' => WhatsappConversations::STATUS_ACTIVE])
+            ->one();
+
+        if (!$conversation) {
+            $conversation = new WhatsappConversations([
+                'contact_id' => $contact->id,
+                'status' => WhatsappConversations::STATUS_ACTIVE
+            ]);
+            $conversation->save();
+        }
+
+        // Create message record
+        $whatsappMessage = new WhatsappMessages([
+            'wamid' => $message['id'],
+            'contact_id' => $contact->id,
+            'direction' => WhatsappMessages::DIRECTION_INBOUND,
+            'status' => WhatsappMessages::STATUS_DELIVERED
+        ]);
+
+        // Handle different message types
+        switch ($message['type']) {
+            case 'text':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_TEXT;
+                $whatsappMessage->content = $message['text']['body'];
+                break;
+            case 'image':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_IMAGE;
+                $whatsappMessage->media_url = $message['image']['id'];
+                break;
+            case 'video':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_VIDEO;
+                $whatsappMessage->media_url = $message['video']['id'];
+                break;
+            case 'document':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_DOCUMENT;
+                $whatsappMessage->media_url = $message['document']['id'];
+                break;
+            case 'audio':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_AUDIO;
+                $whatsappMessage->media_url = $message['audio']['id'];
+                break;
+            case 'location':
+                $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_LOCATION;
+                $whatsappMessage->content = json_encode($message['location']);
+                break;
+            default:
+                $whatsappMessage->message_type = $message['type'];
+                $whatsappMessage->content = json_encode($message);
+        }
+
+        if ($whatsappMessage->save()) {
+            // Update conversation last message time
+            $conversation->last_message_at = date('Y-m-d H:i:s');
+            $conversation->save();
+
+            // Update contact last message time
+            $contact->last_message_at = date('Y-m-d H:i:s');
+            $contact->save();
+        }
+    }
+
+    /**
+     * Handle message status updates
+     */
+    protected function handleMessageStatus($status)
+    {
+        $message = WhatsappMessages::find()
+            ->where(['wamid' => $status['id']])
+            ->one();
+
+        if ($message) {
+            switch ($status['status']) {
+                case 'sent':
+                    $message->status = WhatsappMessages::STATUS_SENT;
+                    break;
+                case 'delivered':
+                    $message->status = WhatsappMessages::STATUS_DELIVERED;
+                    break;
+                case 'read':
+                    $message->status = WhatsappMessages::STATUS_READ;
+                    break;
+                case 'failed':
+                    $message->status = WhatsappMessages::STATUS_FAILED;
+                    break;
+            }
+            $message->save();
+        }
+    }
+
+    /**
+     * Get existing contact or create new one
+     */
+    protected function getOrCreateContact($contactData)
+    {
+        $contact = WhatsappContacts::find()
+            ->where(['phone_number' => $contactData['wa_id']])
+            ->one();
+
+        if (!$contact) {
+            $contact = new WhatsappContacts([
+                'phone_number' => $contactData['wa_id'],
+                'name' => $contactData['profile']['name'] ?? $contactData['wa_id'],
+                'chat_status' => WhatsappContacts::CHAT_STATUS_ACTIVE,
+                'status' => 1
+            ]);
+            $contact->save();
+        }
+
+        return $contact;
     }
 }

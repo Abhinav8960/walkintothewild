@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 18, 2025 at 02:33 PM
+-- Generation Time: Aug 18, 2025 at 05:18 PM
 -- Server version: 8.0.43-0ubuntu0.22.04.1
 -- PHP Version: 8.1.33
 
@@ -35,25 +35,9 @@ CREATE TABLE `whatsapp_contacts` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_pic_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `chat_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '''active'', ''archived'', ''closed''',
+  `last_message_at` datetime DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `whatsapp_conversations`
---
-
-DROP TABLE IF EXISTS `whatsapp_conversations`;
-CREATE TABLE `whatsapp_conversations` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `partner_id` bigint UNSIGNED DEFAULT NULL,
-  `contact_id` bigint UNSIGNED NOT NULL,
-  `status` enum('active','archived','closed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `last_message_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -67,12 +51,9 @@ CREATE TABLE `whatsapp_conversations` (
 DROP TABLE IF EXISTS `whatsapp_messages`;
 CREATE TABLE `whatsapp_messages` (
   `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `partner_id` bigint UNSIGNED DEFAULT NULL,
   `wamid` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'WhatsApp Message ID',
-  `conversation_id` bigint UNSIGNED NOT NULL,
   `contact_id` bigint UNSIGNED NOT NULL,
-  `direction` enum('inbound','outbound') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '''inbound'',''outbound''',
   `message_type` enum('text','image','video','document','audio','location','template') COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text COLLATE utf8mb4_unicode_ci,
   `media_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -92,13 +73,6 @@ ALTER TABLE `whatsapp_contacts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `whatsapp_conversations`
---
-ALTER TABLE `whatsapp_conversations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_contact_id` (`contact_id`) USING BTREE;
-
---
 -- Indexes for table `whatsapp_messages`
 --
 ALTER TABLE `whatsapp_messages`
@@ -116,12 +90,6 @@ ALTER TABLE `whatsapp_contacts`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `whatsapp_conversations`
---
-ALTER TABLE `whatsapp_conversations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `whatsapp_messages`
 --
 ALTER TABLE `whatsapp_messages`
@@ -130,12 +98,6 @@ ALTER TABLE `whatsapp_messages`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `whatsapp_conversations`
---
-ALTER TABLE `whatsapp_conversations`
-  ADD CONSTRAINT `whatsapp_conversations_ibfk_1` FOREIGN KEY (`contact_id`) REFERENCES `whatsapp_contacts` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `whatsapp_messages`

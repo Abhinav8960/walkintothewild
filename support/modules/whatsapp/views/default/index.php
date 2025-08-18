@@ -179,10 +179,11 @@ WhatsappAsset::register($this);
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Accept': 'application/json',
                             'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
                         },
                         body: JSON.stringify({
-                            contact_id: currentContactId,
+                            contact_id: parseInt(currentContactId),
                             message: message,
                             type: 'text'
                         })
@@ -207,7 +208,10 @@ WhatsappAsset::register($this);
                             alert(data.error || 'Failed to send message');
                         }
                     })
-                    .catch(error => console.error('Error sending message:', error));
+                    .catch(error => {
+                        console.error('Error sending message:', error);
+                        alert('Failed to send message. Please try again.');
+                    });
             }
         }
 
