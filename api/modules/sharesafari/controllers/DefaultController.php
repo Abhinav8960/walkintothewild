@@ -1533,6 +1533,7 @@ class DefaultController extends SafariController
                 'getting_there' => $share_safari->getting_there,
                 'safari_plan' => $share_safari->safari_plan,
                 'share_safari_agenda' => $share_safari->share_safari_agenda,
+                'share_safari_agenda_id' => $share_safari->share_safari_agenda_id,
                 'stay_category_display' => $share_safari->stay_category_display,
                 'stay_category_id' => $share_safari->stay_category_id,
                 'parks' => ArrayHelper::toArray($share_safari->parks),
