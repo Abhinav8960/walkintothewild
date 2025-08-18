@@ -4,7 +4,6 @@ namespace support\modules\whatsapp\controllers;
 
 use common\components\WhatsappApi;
 use common\models\whatsapp\WhatsappContacts;
-use common\models\whatsapp\WhatsappConversations;
 use common\models\whatsapp\WhatsappMessages;
 use Yii;
 use yii\web\Controller;
@@ -44,7 +43,7 @@ class DefaultController extends Controller
     public function init()
     {
         parent::init();
-        $this->whatsappApi = new WhatsappApi();
+        $this->whatsappApi = new \common\components\WhatsappApi();
     }
 
     public function actionIndex()
@@ -89,14 +88,16 @@ class DefaultController extends Controller
         return ['success' => true, 'messages' => $messages];
     }
 
+
+
     public function actionSendMessage()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
+
         // Get raw input data for JSON requests
         $rawData = Yii::$app->request->getRawBody();
         $jsonData = json_decode($rawData, true);
-        
+
         // Try both JSON and POST data
         $contactId = $jsonData['contact_id'] ?? Yii::$app->request->post('contact_id');
         $message = $jsonData['message'] ?? Yii::$app->request->post('message');
@@ -113,7 +114,7 @@ class DefaultController extends Controller
 
         if (!$contactId || !$message) {
             return [
-                'success' => false, 
+                'success' => false,
                 'error' => 'Missing required parameters',
                 'debug' => [
                     'received_data' => [
@@ -137,8 +138,8 @@ class DefaultController extends Controller
             'type' => $type
         ]);
 
+        // Remove duplicate if condition
         if ($result['success']) {
-            if ($result['success']) {
             // Update contact's last message timestamp
             $contact->last_message_at = new \yii\db\Expression('NOW()');
             $contact->save();
@@ -161,11 +162,14 @@ class DefaultController extends Controller
             }
         }
 
+        // Move this outside the if block
         return [
             'success' => false,
             'error' => $result['error'] ?? 'Failed to send message'
         ];
     }
+
+    // ...existing code...
 
     public function actionMarkAsRead()
     {
