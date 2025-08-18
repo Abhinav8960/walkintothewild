@@ -1,9 +1,20 @@
-
-<!-- WhatsApp Panel CSS -->
-<style>
 .chat-container {
     max-height: 80vh;
     background: #f0f2f5;
+}
+
+.chat-placeholder {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.chat-placeholder-content {
+    color: #6c757d;
+    padding: 2rem;
 }
 
 .chat-list {
@@ -47,18 +58,7 @@
     border-top: 1px solid #ddd;
 }
 
-.contact-item {
-    cursor: pointer;
-    transition: all 0.3s;
-}
 
-.contact-item:hover {
-    background: #f5f6f6;
-}
-
-.contact-item.active {
-    background: #f0f2f5;
-}
 
 .profile-image {
     width: 45px;
@@ -76,4 +76,37 @@
     font-size: 0.75em;
     color: #667781;
 }
-</style>
+
+.contact-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.contact-item:hover {
+    background-color: #f8f9fa;
+}
+
+.contact-item.active {
+    background-color: #e9ecef;
+}
+
+.messages-container {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.message {
+    max-width: 75%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.message.sent {
+    background-color: #dcf8c6;
+    margin-left: auto;
+}
+
+.message.received {
+    background-color: #fff;
+}
