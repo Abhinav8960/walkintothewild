@@ -82,7 +82,7 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $page = Yii::$app->request->get('page', 1);
-        $pageSize = 1;
+        $pageSize = 10;
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {

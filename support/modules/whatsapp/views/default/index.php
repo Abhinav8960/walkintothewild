@@ -83,6 +83,30 @@ WhatsappAsset::register($this);
         font-size: 1.2rem;
         min-width: 45px;
     }
+
+    .messages-container {
+        height: calc(100vh - 200px);
+        overflow-y: auto;
+        background-color: #f5f5f5;
+        padding: 1rem;
+    }
+
+    .loading-more {
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        margin: 0.5rem 0;
+    }
+
+    .spinner-border {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .spinner-border-sm {
+        width: 1rem;
+        height: 1rem;
+    }
 </style>
 
 <!-- JavaScript for WhatsApp Panel -->
@@ -149,24 +173,47 @@ WhatsappAsset::register($this);
             chatPlaceholder.style.display = 'none';
             chatbox.style.display = 'block';
 
+            // Show loading state
+            const messagesContainer = document.getElementById('messagesContainer');
+            messagesContainer.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"></div><div class="mt-2">Loading messages...</div></div>';
+
             // Update contact info in header
             document.getElementById('currentContactName').textContent = contactName;
             document.getElementById('currentContactStatus').textContent = 'online';
             document.getElementById('currentContactInitial').textContent = contactName.charAt(0).toUpperCase();
 
-            // Update current contact ID
+            // Reset pagination and states for new contact
+            currentMessagesPage = 1;
+            hasMoreMessages = true;
+            isLoadingMessages = false;
+            
+            // Update current contact ID and load chat
             currentContactId = contactId;
-
-            // Clear previous messages and load new ones
-            document.getElementById('messagesContainer').innerHTML = '';
             loadChat(contactId);
         }
 
         function loadChat(contactId, append = false) {
+            // Prevent loading if already loading or no more messages (except for first load)
             if (isLoadingMessages || (!append && !hasMoreMessages)) return;
+            
+            // Verify we're still on the same contact
+            if (contactId !== currentContactId) return;
             
             isLoadingMessages = true;
             const messagesContainer = document.getElementById('messagesContainer');
+            
+            // Show loading indicator for initial load
+            if (!append && !messagesContainer.children.length) {
+                messagesContainer.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"></div><div class="mt-2">Loading messages...</div></div>';
+            }
+            
+            // Add loading indicator for pagination
+            if (append) {
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'text-center p-2 loading-more';
+                loadingDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
+                messagesContainer.insertAdjacentElement('afterbegin', loadingDiv);
+            }
             
             fetch(`/whatsapp/default/get-messages?contactId=${contactId}&page=${currentMessagesPage}`, {
                 headers: {
@@ -174,15 +221,43 @@ WhatsappAsset::register($this);
                     'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
             .then(data => {
+                // Verify we're still on the same contact
+                if (contactId !== currentContactId) return;
+                
                 if (data.success) {
+                    // Remove loading-more indicator if it exists
+                    const loadingMore = messagesContainer.querySelector('.loading-more');
+                    if (loadingMore) loadingMore.remove();
+                    
                     renderMessages(data.messages, append);
                     hasMoreMessages = data.hasMore;
                     if (hasMoreMessages && append) currentMessagesPage++;
+                } else {
+                    throw new Error(data.error || 'Failed to load messages');
                 }
             })
-            .catch(error => console.error('Error loading messages:', error))
+            .catch(error => {
+                console.error('Error loading messages:', error);
+                if (!append) {
+                    messagesContainer.innerHTML = `
+                        <div class="text-center p-3 text-danger">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <div class="mt-2">Failed to load messages. Click to try again.</div>
+                        </div>
+                    `;
+                    // Add retry functionality
+                    messagesContainer.querySelector('div').addEventListener('click', () => {
+                        if (contactId === currentContactId) {
+                            loadChat(contactId);
+                        }
+                    });
+                }
+            })
             .finally(() => {
                 isLoadingMessages = false;
             });
