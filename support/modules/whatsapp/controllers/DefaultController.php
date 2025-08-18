@@ -49,7 +49,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $contacts = WhatsappContacts::find()
-            ->where(['status' => 1])
+            ->where(['status' => 1])            
             ->orderBy(['last_message_at' => SORT_DESC])
             ->all();
 

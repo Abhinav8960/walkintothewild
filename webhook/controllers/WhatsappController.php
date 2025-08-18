@@ -152,7 +152,7 @@ class WhatsappController extends Controller
         if ($whatsappMessage->save()) {
             // Update contact last message time
             $contact->last_message_at = date('Y-m-d H:i:s');
-            $contact->save();
+            $contact->save(false);
         }
     }
 
