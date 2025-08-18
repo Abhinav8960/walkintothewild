@@ -239,7 +239,7 @@ class DefaultController extends  Controller
         $chat_message->chat_id = $chat_id;
         $chat_message->message = $message;
         $chat_message->partner_gallery_version_id = $partner_gallery_version_id;
-        $chat_message->partner_gallery_version = $partner_gallery_version->version;
+        $chat_message->partner_gallery_version = isset($partner_gallery_version->version) ? $partner_gallery_version->version : null;
         $chat_message->gallery = $gallery;
         $chat_message->data = $data;
         $chat_message->status = 1;
