@@ -186,23 +186,40 @@ class WhatsappController extends Controller
 
     /**
      * Get existing contact or create new one
+     * @param array $contactData Contact data from webhook
+     * @return WhatsappContacts
      */
     protected function getOrCreateContact($contactData)
     {
+        $phoneNumber = $contactData['wa_id'];
         $contact = WhatsappContacts::find()
-            ->where(['phone_number' => $contactData['wa_id']])
+            ->where(['phone_number' => $phoneNumber])
             ->one();
 
         if (!$contact) {
             $contact = new WhatsappContacts([
-                'phone_number' => $contactData['wa_id'],
-                'name' => $contactData['profile']['name'] ?? $contactData['wa_id'],
+                'phone_number' => $phoneNumber,
                 'chat_status' => WhatsappContacts::CHAT_STATUS_ACTIVE,
                 'status' => 1
             ]);
-            $contact->save();
         }
 
+        // Update contact information if available
+        if (isset($contactData['profile'])) {
+            if (isset($contactData['profile']['name'])) {
+                $contact->name = $contactData['profile']['name'];
+            }
+            if (isset($contactData['profile']['picture'])) {
+                $contact->profile_pic_url = $contactData['profile']['picture'];
+            }
+        }
+
+        // If name is still not set, use phone number as name
+        if (empty($contact->name)) {
+            $contact->name = $phoneNumber;
+        }
+
+        $contact->save();
         return $contact;
     }
 }
