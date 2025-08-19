@@ -19,7 +19,7 @@ use yii\bootstrap5\Html;
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
              <div class="sharBtn">
-                 <?= Html::button('Share Itinerary & Quotation', [
+                 <?= Html::button('Share Itinerary, Quotation & Payment Links', [
                         'value' => Url::to(['quotation', 'id' => $model->id]),
                         'class' => 'quotation-button',
                     ]) ?>
