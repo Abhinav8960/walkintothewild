@@ -58,27 +58,24 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         try {
-            $search = trim(Yii::$app->request->get('search', ''));
+            $search = trim(Yii::$app->request->get('search', null));
             $page = max(1, (int)Yii::$app->request->get('page', 1));
-            
 
-            if (empty($search)) {
-                return [
-                    'success' => false,
-                    'error' => 'Search term is required'
-                ];
-            }
+            // Escape special characters in search term and prepare for partial matching
 
-            // Escape special characters in search term
-            $search = addcslashes($search, '%_');
 
             $query = WhatsappContacts::find()
-                ->where(['status' => 1])
-                ->andWhere(['or',
-                    ['like', 'name', $search],
-                    ['like', 'phone_number', $search]
-                ])
-                ->orderBy(['last_message_at' => SORT_DESC]);
+                ->where(['status' => 1]);
+            if (!empty($search)) {
+                $search = addcslashes($search, '%_');
+                $searchPattern = '%' . $search . '%';
+                $query = $query->andWhere([
+                    'or',
+                    ['like', 'name', $searchPattern],
+                    ['like', 'phone_number', $searchPattern]
+                ]);
+            }
+            $query = $query->orderBy(['last_message_at' => SORT_DESC]);
 
             $totalCount = $query->count();
 
@@ -109,7 +106,7 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $page = Yii::$app->request->get('page', 1);
-        
+
 
         $query = WhatsappContacts::find()
             ->where(['status' => 1])
@@ -135,7 +132,7 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $page = Yii::$app->request->get('page', 1);
-        
+
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {

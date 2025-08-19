@@ -466,12 +466,9 @@ WhatsappAsset::register($this);
                 hasMoreContacts = true;
                 loadContacts();
             } else if (searchTerm.length >= 2) {
-                // Search if at least 2 characters entered
                 searchContacts(searchTerm);
             }
-        }, 500);
-
-        document.getElementById('searchContacts').addEventListener('input', debouncedSearch);
+        }, 500);        document.getElementById('searchContacts').addEventListener('input', debouncedSearch);
 
         // Function to load contacts from the server
         function loadContacts(append = false) {
@@ -563,11 +560,19 @@ WhatsappAsset::register($this);
         contactsListDiv.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
-                const scrollPosition = contactsListDiv.scrollTop + contactsListDiv.clientHeight;
-                const scrollThreshold = contactsListDiv.scrollHeight - 100;
+                const searchInput = document.getElementById('searchContacts');
+                const searchTerm = searchInput.value.trim();
                 
-                if (scrollPosition >= scrollThreshold && !isLoadingContacts && hasMoreContacts) {
-                    loadContacts(true);
+                // Only trigger infinite scroll if we're not in search mode
+                if (searchTerm.length === 0) {
+                    const scrollPosition = contactsListDiv.scrollTop + contactsListDiv.clientHeight;
+                    const scrollHeight = contactsListDiv.scrollHeight;
+                    
+                    // Load more when user scrolls near bottom (within 100px)
+                    if (scrollHeight - scrollPosition < 100 && !isLoadingContacts && hasMoreContacts) {
+                        currentContactsPage++;
+                        loadContacts(true); // true for append mode
+                    }
                 }
             }, 100);
         });
@@ -575,19 +580,9 @@ WhatsappAsset::register($this);
         // Messages infinite scroll (loading older messages when scrolling up)
         messagesContainerDiv.addEventListener('scroll', () => {
             if (messagesContainerDiv.scrollTop <= 100 && hasMoreMessages && currentContactId) {
-                const oldScrollHeight = messagesContainerDiv.scrollHeight;
-                
                 loadChat(currentContactId, true);
-                
-                // Use requestAnimationFrame to maintain scroll position after DOM update
-                requestAnimationFrame(() => {
-                    const newScrollHeight = messagesContainerDiv.scrollHeight;
-                    messagesContainerDiv.scrollTop = newScrollHeight - oldScrollHeight;
-                });
             }
-        });
-
-        // Reset pages when loading new contact
+        });        // Reset pages when loading new contact
         function resetPagination() {
             currentMessagesPage = 1;
             hasMoreMessages = true;
