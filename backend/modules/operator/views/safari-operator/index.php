@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use common\models\operator\SafariOperator;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -45,11 +46,11 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Phone Number',
+                        'label' => 'Phone Number / Can Call',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->phone_no;
+                            return isset($model->phone_no) ? $model->phone_no .' / '.SafariOperator::callstatusoption($model->is_phone_no_verified) : '';
                         }
                     ],
                     [
@@ -96,7 +97,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{leads}',
+                        'template' => '{view}&nbsp{temporary}&nbsp{checkin}&nbsp{leads}&nbsp{check}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
@@ -153,6 +154,26 @@ $this->params['title'] = $this->title;
                                     'title' => 'Leads view',
 
                                 ]);
+                            },
+
+                            'check' => function ($url, $model) {
+                                if ($model->is_phone_no_verified == 1) {
+                                    return Html::a('<i class="fa fa-toggle-on"></i>', ['phone-verified', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-success',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "No"?',
+                                        'title' => 'Phone Status',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                } else {
+                                    return Html::a('<i class="fa fa-toggle-off"></i>', ['phone-verified', 'id' => $model->id], [
+                                        'class' => 'btn btn-xs btn-warning',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Are you sure you want to change "Phone Verified" status to "Yes"?',
+                                        'title' => 'Phone Status',
+                                        'data-bs-toggle' => "tooltip"
+                                    ]);
+                                }
                             },
 
                             // 'update' => function ($url, $model) {

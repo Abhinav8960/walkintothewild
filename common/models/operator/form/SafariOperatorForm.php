@@ -157,7 +157,7 @@ class SafariOperatorForm extends model
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name'], 'default', 'value' => 0],
+            [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved','starting_price', 'operator_name'], 'default', 'value' => 0],
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe'],
             [['referrer_url', 'registration_platform'], 'safe'],
             [

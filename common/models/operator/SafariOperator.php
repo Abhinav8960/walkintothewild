@@ -350,4 +350,15 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         }
         return '';
     }
+
+
+    public static function callstatusoption($is_phone_verified)
+    {
+        if($is_phone_verified==1){
+            return "Yes";
+        }
+        else{
+            return "No";
+        }
+    }
 }

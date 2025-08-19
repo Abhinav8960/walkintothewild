@@ -524,4 +524,20 @@ class SafariOperatorController extends Controller
         $url = Yii::$app->rfs->temporaryUrl($relativePath, $expiresAt);
         return $this->renderAjax('_file_view', ['fileUrl' => $url]);
     }
+
+    public function actionPhoneVerified($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->is_phone_no_verified == 1) {
+            $model->is_phone_no_verified = 0;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to not verified!');
+        } else {
+            $model->is_phone_no_verified = 1;
+            $model->save(false);
+            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to verified !');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 }
