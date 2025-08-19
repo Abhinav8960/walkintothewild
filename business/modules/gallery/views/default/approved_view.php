@@ -1,5 +1,6 @@
 <?php
 
+use common\models\park\SafariPark;
 use common\models\partnergallery\PartnerGallery;
 use yii\helpers\Url;
 
@@ -23,25 +24,38 @@ if (!empty($partner_gallery_model->live_images)) {
                 </div>
             </div>
         </div>
+
+
         <div class="col-12 mb-3">
+
             <div class="details-packages">
-                <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
-                    <div class="date-or-time">
-                        <p class="mb-1">Title</p>
+                <?php
+                if (is_array($gallery)) { ?>
+                    <div class="topHeader d-flex justify-content-between align-items-center px-3 py-3">
+                        <div class="date-or-time">
+                            <p class="mb-1">Title</p>
 
-                        <div class="d-flex align-items-center gap-5">
-                            <p class="mb-0"><?= $partner_gallery_model->title ?></p>
-                            <div class="active-btn approve-inner-butn">
-                                <a href="">Approve</a>
+                            <div class="d-flex align-items-center gap-5">
+                                <p class="mb-0"><?= isset($gallery['title']) ? $gallery['title'] : '' ?></p>
+                                <div class="active-btn approve-inner-butn">
+                                    <a href="">Approve</a>
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
+                        <div class="date-or-time">
+                            <p class="mb-1">Park</p>
+                            <?php if (isset($gallery['park_id'])) {
+                                $park = SafariPark::findOne(['id' => $gallery['park_id']]);
+                                $parkName = $park ? $park->title : 'N/A';
+                            ?>
+                                <p class="mb-0"><?= $parkName ?></p>
+                            <?php } else { ?>
+                                <p class="mb-0"></p>
+                            <?php } ?>
+                        </div>
                     </div>
-                    <div class="date-or-time">
-                        <p class="mb-1">Park</p>
-                        <p class="mb-0"><?= isset($partner_gallery_model->park) ? $partner_gallery_model->park->title : '' ?></p>
-                    </div>
-                </div>
+                <?php } ?>
                 <div class="d-flex">
                     <table class="table w-50 border-0 border_o d-inline-block py-3">
                         <tbody class="tbody-leads sighting-leads py-5 w-100">
@@ -64,6 +78,7 @@ if (!empty($partner_gallery_model->live_images)) {
 
             </div>
         </div>
+
         <?php
         if (is_array($gallery)) {
             if (isset($gallery['images'])) {
