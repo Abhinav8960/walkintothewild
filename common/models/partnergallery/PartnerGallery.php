@@ -136,6 +136,7 @@ class PartnerGallery extends \yii\db\ActiveRecord implements \common\interfaces\
             'images' => array_map(function ($image) {
                 return $image->toArray();
             }, $this->galleryActiveImages),
+            'park_id' => $this->park_id,
         ];
     }
 
