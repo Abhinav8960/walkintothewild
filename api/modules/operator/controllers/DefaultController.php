@@ -112,9 +112,9 @@ class DefaultController extends RestController
 
         if ($operator->status != SafariOperator::STATUS_ACTIVE) {
             $message = Yii::$app->api->messageManager->getMessage('common.inactive',['{var}'=> 'Operator']);
-            return Yii::$app->api->sendResponse($data = ['data' => $operator], ['message' => $message]);
+            return Yii::$app->api->sendResponse($data = ['data' => $operator->toArray()], ['message' => $message]);
         }
-        return Yii::$app->api->sendResponse($data = ['data' => $operator]);
+        return Yii::$app->api->sendResponse($data = ['data' => $operator->toArray()]);
     }
 
 
