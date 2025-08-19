@@ -76,21 +76,6 @@ WhatsappAsset::register($this);
 <!-- Bootstrap Icons CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-<style>
-    .date-separator {
-        text-align: center;
-        margin: 1rem 0;
-        position: relative;
-    }
-
-    .date-separator span {
-        background: #e9ecef;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        color: #666;
-    }
-</style>
 
 <!-- JavaScript for WhatsApp Panel -->
 <script>
