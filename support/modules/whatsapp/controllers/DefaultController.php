@@ -58,28 +58,28 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         try {
-            $search = trim(Yii::$app->request->get('search', null));
+            $search = Yii::$app->request->get('search');
             $page = max(1, (int)Yii::$app->request->get('page', 1));
-
-            // Escape special characters in search term and prepare for partial matching
-
 
             $query = WhatsappContacts::find()
                 ->where(['status' => 1]);
+
             if (!empty($search)) {
-                $search = addcslashes($search, '%_');
-                $searchPattern = '%' . $search . '%';
-                $query = $query->andWhere([
+                // Remove special characters and prepare the search term
+                $searchTerm = '%' . strtr($search, ['%' => '\%', '_' => '\_', '\\' => '\\\\']) . '%';
+                
+                $query->andWhere([
                     'or',
-                    ['like', 'name', $searchPattern],
-                    ['like', 'phone_number', $searchPattern]
+                    ['like', 'name', $searchTerm, false],
+                    ['like', 'phone_number', $searchTerm, false]
                 ]);
             }
-            $query = $query->orderBy(['last_message_at' => SORT_DESC]);
 
             $totalCount = $query->count();
-
-            $contacts = $query->offset(($page - 1) * $this->pageSize)
+            
+            $contacts = $query
+                ->orderBy(['last_message_at' => SORT_DESC])
+                ->offset(($page - 1) * $this->pageSize)
                 ->limit($this->pageSize)
                 ->asArray()
                 ->all();
@@ -95,8 +95,7 @@ class DefaultController extends Controller
             Yii::error('Error in search contacts: ' . $e->getMessage(), 'whatsapp');
             return [
                 'success' => false,
-                'error' => 'Failed to search contacts',
-                'debug' => YII_DEBUG ? $e->getMessage() : null
+                'error' => 'Failed to search contacts'
             ];
         }
     }

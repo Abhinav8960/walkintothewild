@@ -14,11 +14,11 @@ WhatsappAsset::register($this);
         <div class="col-md-4 col-lg-3 p-0 chat-list auto-s overflow-hidden">
             <div class="p-3 bg-white border-bottom">
                 <div class="input-group">
-                    <input type="text" 
-                           class="form-control search-input" 
-                           placeholder="Search by name or phone number..." 
-                           id="searchContacts"
-                           autocomplete="off">
+                    <input type="text"
+                        class="form-control search-input"
+                        placeholder="Search by name or phone number..."
+                        id="searchContacts"
+                        autocomplete="off">
                     <span class="search-icon">
                         <i class="bi bi-search"></i>
                     </span>
@@ -76,95 +76,8 @@ WhatsappAsset::register($this);
 <!-- Bootstrap Icons CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-<style>
-    .profile-circle {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background-color: #152f1b;
-        color: white;
-        font-weight: bold;
-        font-size: 1.2rem;
-        min-width: 45px;
-    }
 
-    .messages-container {
-        height: calc(100vh - 200px);
-        overflow-y: auto;
-        background-color: #f5f5f5;
-        padding: 1rem;
-    }
 
-    .loading-more {
-        padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 10px;
-        margin: 0.5rem 0;
-    }
-
-    .spinner-border {
-        width: 2rem;
-        height: 2rem;
-    }
-
-    .spinner-border-sm {
-        width: 1rem;
-        height: 1rem;
-    }
-
-    #contactsList {
-        height: calc(100vh - 150px);
-        overflow-y: auto;
-        scrollbar-width: thin;
-    }
-
-    .contact-item {
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    .contact-item:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    .contact-item.active {
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .loading-contacts {
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.8);
-    }
-
-    .cursor-pointer {
-        cursor: pointer;
-    }
-
-    .search-input {
-        padding-left: 2.5rem !important;
-        border-radius: 20px !important;
-        border: 1px solid #ddd !important;
-        box-shadow: none !important;
-    }
-
-    .search-input:focus {
-        border-color: #128C7E !important;
-        box-shadow: 0 0 0 0.2rem rgba(18, 140, 126, 0.25) !important;
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 4;
-        color: #666;
-    }
-
-    .input-group {
-        position: relative;
-    }
-</style>
 
 <!-- JavaScript for WhatsApp Panel -->
 <script>
@@ -179,16 +92,17 @@ WhatsappAsset::register($this);
         let hasMoreContacts = true;
         let hasMoreMessages = true;
 
+        // Function to render contacts
         function renderContacts(contacts, append = false) {
             const contactsList = document.getElementById('contactsList');
             const contactsHtml = contacts.map(contact => `
                 <div class="contact-item p-3 border-bottom" data-id="${contact.id}" data-name="${contact.name}" data-phone="${contact.phone_number}">
                     <div class="d-flex align-items-center">
                         <div class="profile-circle me-3 d-flex align-items-center justify-content-center">
-                            ${contact.name.charAt(0).toUpperCase()}
+                            ${contact.name ? contact.name.charAt(0).toUpperCase() : '#'}
                         </div>
                         <div>
-                            <h6 class="mb-0">${contact.name}</h6>
+                            <h6 class="mb-0">${contact.name || 'Unknown'}</h6>
                             <small class="text-muted">+${contact.phone_number}</small>
                         </div>
                     </div>
@@ -202,10 +116,10 @@ WhatsappAsset::register($this);
             }
 
             // Add click event listeners to newly added contacts only
-            const newContacts = append 
-                ? contactsList.querySelectorAll('.contact-item:not([data-initialized])')
-                : contactsList.querySelectorAll('.contact-item');
-                
+            const newContacts = append ?
+                contactsList.querySelectorAll('.contact-item:not([data-initialized])') :
+                contactsList.querySelectorAll('.contact-item');
+
             newContacts.forEach(item => {
                 item.setAttribute('data-initialized', 'true');
                 item.addEventListener('click', function() {
@@ -214,218 +128,269 @@ WhatsappAsset::register($this);
 
                     // Remove active class from all contacts
                     document.querySelectorAll('.contact-item').forEach(el =>
-                        el.classList.remove('active'));
+                        el.classList.remove('active')
+                    );
 
                     // Add active class to clicked contact
                     this.classList.add('active');
 
-                    // Show chat and load messages
+                    // Show chat
                     showChat(contactId, contactName);
                 });
             });
         }
 
-        function showChat(contactId, contactName) {
-            // Hide placeholder and show chatbox
-            chatPlaceholder.style.display = 'none';
-            chatbox.style.display = 'block';
+        // Function to load contacts from server
+        function loadContacts(append = false) {
+            if (isLoadingContacts) return;
 
-            // Show loading state
-            const messagesContainer = document.getElementById('messagesContainer');
-            messagesContainer.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"></div><div class="mt-2">Loading messages...</div></div>';
+            isLoadingContacts = true;
+            const contactsList = document.getElementById('contactsList');
 
-            // Update contact info in header
-            document.getElementById('currentContactName').textContent = contactName;
-            document.getElementById('currentContactStatus').textContent = 'online';
-            document.getElementById('currentContactInitial').textContent = contactName.charAt(0).toUpperCase();
+            if (!append) {
+                currentContactsPage = 1;
+                // Show initial loading state
+                contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Loading contacts...</div></div>';
+            } else {
+                // Show loading indicator for pagination
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'text-center p-2 loading-more';
+                loadingDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
+                contactsList.appendChild(loadingDiv);
+            }
 
-            // Reset pagination and states for new contact
-            currentMessagesPage = 1;
-            hasMoreMessages = true;
-            isLoadingMessages = false;
-            
-            // Update current contact ID and load chat
-            currentContactId = contactId;
-            loadChat(contactId);
+            fetch(`/whatsapp/default/get-contacts?page=${currentContactsPage}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    // Remove loading indicator if it exists
+                    const loadingMore = contactsList.querySelector('.loading-more');
+                    if (loadingMore) {
+                        loadingMore.remove();
+                    }
+
+                    if (data.success) {
+                        if (data.contacts.length === 0 && !append) {
+                            contactsList.innerHTML = '<div class="p-3 text-center text-muted">No contacts found</div>';
+                        } else {
+                            renderContacts(data.contacts, append);
+                            hasMoreContacts = data.hasMore;
+                            if (data.hasMore && append) {
+                                currentContactsPage++;
+                            }
+                        }
+                    } else {
+                        throw new Error(data.error || 'Failed to load contacts');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading contacts:', error);
+                    if (!append) {
+                        contactsList.innerHTML = `
+                        <div class="text-center p-3 text-danger">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <div class="mt-2">Failed to load contacts</div>
+                            <button class="btn btn-sm btn-outline-primary mt-2" onclick="loadContacts()">Retry</button>
+                        </div>
+                    `;
+                    }
+                })
+                .finally(() => {
+                    isLoadingContacts = false;
+                });
         }
 
-        function loadChat(contactId, append = false) {
-            // Prevent loading if already loading or no more messages (except for first load)
-            if (isLoadingMessages || (!append && !hasMoreMessages)) return;
+        // Replace scroll handler for infinite scrolling
+        const contactsListDiv = document.getElementById('contactsList');
+        contactsListDiv.addEventListener('scroll', () => {
+            if (isLoadingContacts) return;
+
+            const scrollPosition = contactsListDiv.scrollTop + contactsListDiv.clientHeight;
+            const scrollHeight = contactsListDiv.scrollHeight;
+            const scrollThreshold = 50; // pixels from bottom to trigger load
+
+            const searchInput = document.getElementById('searchContacts');
+            const searchTerm = searchInput ? searchInput.value.trim() : '';
+
+            if (searchTerm.length === 0 && hasMoreContacts && (scrollHeight - scrollPosition <= scrollThreshold)) {
+                currentContactsPage++;
+                loadContacts(true);
+            }
+        });
+
+        // Function to show chat
+        function showChat(contactId, contactName) {
+            currentContactId = contactId;
+            currentMessagesPage = 1;
+            hasMoreMessages = true;
             
-            // Verify we're still on the same contact
-            if (contactId !== currentContactId) return;
+            // Update UI elements
+            chatPlaceholder.style.display = 'none';
+            chatbox.style.display = 'block';
+            document.getElementById('currentContactName').textContent = contactName;
+            document.getElementById('currentContactInitial').textContent = contactName.charAt(0).toUpperCase();
+            
+            // Clear previous messages
+            document.getElementById('messagesContainer').innerHTML = '';
+            
+            // Load messages
+            loadMessages();
+        }
+
+        // Function to load messages
+        function loadMessages(append = false) {
+            if (isLoadingMessages || (!hasMoreMessages && append)) return;
             
             isLoadingMessages = true;
             const messagesContainer = document.getElementById('messagesContainer');
             
-            // Show loading indicator for initial load
-            if (!append && !messagesContainer.children.length) {
-                messagesContainer.innerHTML = '<div class="text-center p-3"><div class="spinner-border text-primary" role="status"></div><div class="mt-2">Loading messages...</div></div>';
+            if (!append) {
+                messagesContainer.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"></div></div>';
             }
-            
-            // Add loading indicator for pagination
-            if (append) {
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'text-center p-2 loading-more';
-                loadingDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
-                messagesContainer.insertAdjacentElement('afterbegin', loadingDiv);
-            }
-            
-            fetch(`/whatsapp/default/get-messages?contactId=${contactId}&page=${currentMessagesPage}`, {
+
+            fetch(`/whatsapp/default/get-messages?contactId=${currentContactId}&page=${currentMessagesPage}`, {
                 headers: {
                     'Accept': 'application/json',
                     'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
                 }
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                // Verify we're still on the same contact
-                if (contactId !== currentContactId) return;
-                
                 if (data.success) {
-                    // Remove loading-more indicator if it exists
-                    const loadingMore = messagesContainer.querySelector('.loading-more');
-                    if (loadingMore) loadingMore.remove();
-                    
                     renderMessages(data.messages, append);
                     hasMoreMessages = data.hasMore;
-                    if (hasMoreMessages && append) currentMessagesPage++;
+                    if (data.hasMore && append) {
+                        currentMessagesPage++;
+                    }
                 } else {
                     throw new Error(data.error || 'Failed to load messages');
                 }
             })
             .catch(error => {
                 console.error('Error loading messages:', error);
-                if (!append) {
-                    messagesContainer.innerHTML = `
-                        <div class="text-center p-3 text-danger">
-                            <i class="bi bi-exclamation-circle"></i>
-                            <div class="mt-2">Failed to load messages. Click to try again.</div>
-                        </div>
-                    `;
-                    // Add retry functionality
-                    messagesContainer.querySelector('div').addEventListener('click', () => {
-                        if (contactId === currentContactId) {
-                            loadChat(contactId);
-                        }
-                    });
-                }
+                messagesContainer.innerHTML = `
+                    <div class="text-center text-danger">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <div>Failed to load messages</div>
+                        <button class="btn btn-sm btn-outline-primary mt-2" onclick="loadMessages()">Retry</button>
+                    </div>
+                `;
             })
             .finally(() => {
                 isLoadingMessages = false;
             });
         }
 
-        function renderMessages(messages, prepend = false) {
+        // Function to render messages
+        function renderMessages(messages, append = false) {
             const messagesContainer = document.getElementById('messagesContainer');
-            const messagesHtml = messages.map(message => `
-                <div class="message ${message.direction === 'outbound' ? 'message-sent' : 'message-received'}">
-                    <div class="message-content">${message.content}</div>
-                    <small class="message-time">${formatMessageTime(message.created_at)}</small>
+            const messagesList = messages.map(message => `
+                <div class="message ${message.direction === 'outbound' ? 'sent' : 'received'} mb-2">
+                    <div class="message-content p-2 rounded">
+                        <div class="message-text">${message.content}</div>
+                        <small class="message-time text-muted">
+                            ${new Date(message.created_at).toLocaleTimeString()}
+                        </small>
+                    </div>
                 </div>
             `).join('');
 
-            if (prepend) {
-                messagesContainer.insertAdjacentHTML('afterbegin', messagesHtml);
+            if (append) {
+                messagesContainer.insertAdjacentHTML('afterbegin', messagesList);
             } else {
-                messagesContainer.innerHTML = messagesHtml;
-                // Only scroll to bottom for new messages
-                scrollToBottom();
+                messagesContainer.innerHTML = messagesList;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         }
 
-        function formatMessageTime(timestamp) {
-            return new Date(timestamp).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
+        // Add scroll handler for messages
+        const messagesContainer = document.getElementById('messagesContainer');
+        messagesContainer.addEventListener('scroll', () => {
+            if (messagesContainer.scrollTop === 0 && hasMoreMessages && !isLoadingMessages) {
+                currentMessagesPage++;
+                loadMessages(true);
+            }
+        });
+
+        // Add message sending functionality
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendMessage');
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message || !currentContactId) return;
+
+            sendButton.disabled = true;
+            messageInput.disabled = true;
+
+            fetch('/whatsapp/default/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
+                },
+                body: JSON.stringify({
+                    contact_id: currentContactId,
+                    message: message,
+                    type: 'text'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageInput.value = '';
+                    loadMessages(); // Reload messages to show the new message
+                } else {
+                    alert('Failed to send message: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert('Failed to send message');
+            })
+            .finally(() => {
+                sendButton.disabled = false;
+                messageInput.disabled = false;
             });
         }
 
-        function scrollToBottom() {
-            const messagesContainer = document.getElementById('messagesContainer');
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function sendMessage() {
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value.trim();
-
-            if (message && currentContactId) {
-                fetch('/whatsapp/default/send-message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
-                        },
-                        body: JSON.stringify({
-                            contact_id: parseInt(currentContactId),
-                            message: message,
-                            type: 'text'
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Add message to UI immediately
-                            const messagesContainer = document.getElementById('messagesContainer');
-                            const messageElement = document.createElement('div');
-                            messageElement.className = 'message message-sent';
-                            messageElement.innerHTML = `
-                            <div class="message-content">${message}</div>
-                            <small class="message-time">${formatMessageTime(new Date())}</small>
-                        `;
-                            messagesContainer.appendChild(messageElement);
-
-                            // Clear input and scroll to bottom
-                            messageInput.value = '';
-                            scrollToBottom();
-                        } else {
-                            alert(data.error || 'Failed to send message');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error sending message:', error);
-                        alert('Failed to send message. Please try again.');
-                    });
-            }
-        }
-
-        // Event Listeners
-        document.getElementById('sendMessage').addEventListener('click', sendMessage);
-        document.getElementById('messageInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
                 sendMessage();
             }
         });
 
-        // Debounce function for search
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
+        // Add search functionality
+        const searchInput = document.getElementById('searchContacts');
+        let searchTimeout = null;
 
-        // Function to search contacts
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const searchTerm = e.target.value.trim();
+
+            searchTimeout = setTimeout(() => {
+                currentContactsPage = 1;
+                if (searchTerm.length > 0) {
+                    searchContacts(searchTerm);
+                } else {
+                    loadContacts(); // Load all contacts if search is empty
+                }
+            }, 500); // Debounce search for 500ms
+        });
+
         function searchContacts(searchTerm) {
+            isLoadingContacts = true;
             const contactsList = document.getElementById('contactsList');
-
-            // Reset pagination for new search
-            currentContactsPage = 1;
-            hasMoreContacts = true;
-
-            // Show loading state
-            contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Searching contacts...</div></div>';
+            contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Searching...</div></div>';
 
             fetch(`/whatsapp/default/search-contacts?search=${encodeURIComponent(searchTerm)}&page=${currentContactsPage}`, {
                 headers: {
@@ -439,138 +404,25 @@ WhatsappAsset::register($this);
                     if (data.contacts.length === 0) {
                         contactsList.innerHTML = '<div class="p-3 text-center text-muted">No contacts found</div>';
                     } else {
-                        renderContacts(data.contacts, false);
+                        renderContacts(data.contacts);
                         hasMoreContacts = data.hasMore;
-                        if (hasMoreContacts) currentContactsPage++;
                     }
                 } else {
-                    throw new Error('Failed to search contacts');
+                    throw new Error(data.error || 'Search failed');
                 }
             })
             .catch(error => {
                 console.error('Error searching contacts:', error);
                 contactsList.innerHTML = `
-                    <div class="p-3 text-center text-danger">
+                    <div class="text-center p-3 text-danger">
                         <i class="bi bi-exclamation-circle"></i>
-                        <div class="mt-2">Error searching contacts</div>
-                    </div>`;
-            });
-        }
-
-        // Add search event listener with debounce
-        const debouncedSearch = debounce((e) => {
-            const searchTerm = e.target.value.trim();
-            if (searchTerm.length === 0) {
-                // Reset to initial contacts list if search is cleared
-                currentContactsPage = 1;
-                hasMoreContacts = true;
-                loadContacts();
-            } else if (searchTerm.length >= 2) {
-                searchContacts(searchTerm);
-            }
-        }, 500);        document.getElementById('searchContacts').addEventListener('input', debouncedSearch);
-
-                // Function to load contacts from the server
-        function loadContacts(append = false) {
-            if (isLoadingContacts || (!hasMoreContacts && append)) return;
-            
-            isLoadingContacts = true;
-            const contactsList = document.getElementById('contactsList');
-            
-            if (!append) {
-                // Show initial loading state for first page
-                contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Loading contacts...</div></div>';
-            }
-
-            // Add loading indicator for pagination
-            if (append) {
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'text-center p-2 loading-more';
-                loadingDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
-                contactsList.appendChild(loadingDiv);
-            }
-
-            fetch(`/whatsapp/default/get-contacts?page=${currentContactsPage}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
-                }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                // Remove loading indicator if it exists
-                const loadingMore = contactsList.querySelector('.loading-more');
-                if (loadingMore) {
-                    loadingMore.remove();
-                }
-
-                if (data.success) {
-                    renderContacts(data.contacts, append);
-                    hasMoreContacts = data.hasMore;
-                    
-                    // Only increment page if we have more contacts and this was an append operation
-                    if (data.hasMore && append) {
-                        currentContactsPage++;
-                    }
-                } else {
-                    throw new Error(data.error || 'Failed to load contacts');
-                }
-            })
-            .catch(error => {
-                console.error('Error loading contacts:', error);
-                if (!append) {
-                    contactsList.innerHTML = `
-                        <div class="text-center p-3 text-danger">
-                            <i class="bi bi-exclamation-circle"></i>
-                            <div class="mt-2">Failed to load contacts</div>
-                            <button class="btn btn-sm btn-outline-primary mt-2" onclick="loadContacts()">Retry</button>
-                        </div>
-                    `;
-                }
+                        <div class="mt-2">Search failed</div>
+                    </div>
+                `;
             })
             .finally(() => {
                 isLoadingContacts = false;
             });
-
-        // Add scroll listeners for infinite scrolling
-        const contactsListDiv = document.getElementById('contactsList');
-        const messagesContainerDiv = document.getElementById('messagesContainer');
-
-        // Contacts infinite scroll with debounce
-        let scrollTimeout;
-        contactsListDiv.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const searchInput = document.getElementById('searchContacts');
-                const searchTerm = searchInput.value.trim();
-                
-                // Only trigger infinite scroll if we're not in search mode
-                if (searchTerm.length === 0) {
-                    const scrollPosition = contactsListDiv.scrollTop + contactsListDiv.clientHeight;
-                    const scrollHeight = contactsListDiv.scrollHeight;
-                    
-                    // Load more when user scrolls near bottom (within 100px)
-                    if (scrollHeight - scrollPosition < 100 && !isLoadingContacts && hasMoreContacts) {
-                        currentContactsPage++;
-                        loadContacts(true); // true for append mode
-                    }
-                }
-            }, 100);
-        });
-
-        // Messages infinite scroll (loading older messages when scrolling up)
-        messagesContainerDiv.addEventListener('scroll', () => {
-            if (messagesContainerDiv.scrollTop <= 100 && hasMoreMessages && currentContactId) {
-                loadChat(currentContactId, true);
-            }
-        });        // Reset pages when loading new contact
-        function resetPagination() {
-            currentMessagesPage = 1;
-            hasMoreMessages = true;
-            isLoadingMessages = false;
         }
 
         // Initial load of contacts

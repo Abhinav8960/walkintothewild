@@ -103,10 +103,171 @@
 }
 
 .message.sent {
-    background-color: #dcf8c6;
+    /* background-color: #dcf8c6; */
+    margin-left: auto;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #152f1b;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    min-width: 45px;
+}
+
+.messages-container {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+.loading-more {
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    margin: 0.5rem 0;
+}
+
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+#contactsList {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.contact-item {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.contact-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.contact-item.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.loading-contacts {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.search-input {
+    padding-left: 2.5rem !important;
+    border-radius: 20px !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+}
+
+.search-input:focus {
+    border-color: #128C7E !important;
+    box-shadow: 0 0 0 0.2rem rgba(18, 140, 126, 0.25) !important;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    color: #666;
+}
+
+.input-group {
+    position: relative;
+}
+
+.message {
+    max-width: 70%;
+    margin: 8px 0;
+}
+
+.message.sent {
     margin-left: auto;
 }
 
 .message.received {
+    margin-right: auto;
+}
+
+.message-content {
     background-color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message.sent .message-content {
+    background-color: #dcf8c6;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    text-align: right;
+}
+.chat-container {
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.chat-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#contactsList {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-bottom: 20px; /* Add padding to show last contact clearly */
+}
+
+.messages-container {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+/* Make sure the chat input stays at bottom */
+.chat-messages {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input {
+    padding: 1rem;
+    background: white;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Ensure proper scrolling for long content */
+.contact-item {
+    min-height: 70px;
+}
+
+/* Add some bottom space to last contact */
+.contact-item:last-child {
+    margin-bottom: 10px;
 }
