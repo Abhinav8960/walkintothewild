@@ -4,6 +4,7 @@ use common\models\park\SafariPark;
 use common\models\partnergallery\PartnerGallery;
 use yii\helpers\Url;
 
+$this->title = 'Gallery View';
 $webasset = $this->assetManager->getBundle('\business\assets\PartnerAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $gallery = null;
