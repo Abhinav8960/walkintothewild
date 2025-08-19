@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 19, 2025 at 01:24 PM
+-- Generation Time: Aug 05, 2025 at 05:55 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.32
 
@@ -24,12 +24,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `external_operator`
+-- Table structure for table `external_operator_history`
 --
 
-DROP TABLE IF EXISTS `external_operator`;
-CREATE TABLE `external_operator` (
+CREATE TABLE `external_operator_history` (
   `id` int NOT NULL,
+  `parent_id` int DEFAULT NULL,
   `operator_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
@@ -44,7 +44,6 @@ CREATE TABLE `external_operator` (
   `google_rating` varchar(255) DEFAULT NULL,
   `is_call_done` tinyint(1) NOT NULL DEFAULT '0',
   `is_mail_send` tinyint(1) NOT NULL DEFAULT '0',
-  `comment` varchar(500) DEFAULT NULL,
   `status` tinyint NOT NULL DEFAULT '0',
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
@@ -57,9 +56,9 @@ CREATE TABLE `external_operator` (
 --
 
 --
--- Indexes for table `external_operator`
+-- Indexes for table `external_operator_history`
 --
-ALTER TABLE `external_operator`
+ALTER TABLE `external_operator_history`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -67,9 +66,9 @@ ALTER TABLE `external_operator`
 --
 
 --
--- AUTO_INCREMENT for table `external_operator`
+-- AUTO_INCREMENT for table `external_operator_history`
 --
-ALTER TABLE `external_operator`
+ALTER TABLE `external_operator_history`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 

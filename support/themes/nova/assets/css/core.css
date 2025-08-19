@@ -117,6 +117,7 @@ p {
   padding: 7px 80px 8px 10px;
   border-radius: 16px !important;
   color: #99ff33;
+  background-color: #152F1B;
 }
 
 .navItems .navLinks {
@@ -141,7 +142,7 @@ p {
 } */
 .navItems .navLinks:hover {
 
-  background: #0f1015;
+  background: #152F1B;
   color: #99ff33;
   border-radius: 16px !important;
 }
@@ -957,6 +958,7 @@ p {
   cursor: pointer;
   padding: 4px 50px 4px 8px;
   font-size: 16px;
+  -webkit-appearance: none;
 }
 
 .actions {

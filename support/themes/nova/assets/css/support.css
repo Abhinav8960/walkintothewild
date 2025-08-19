@@ -45,11 +45,13 @@
     font-weight: 600;
     text-transform: uppercase;
 }
-.paymentInfoDetail .notRece{
+
+.paymentInfoDetail .notRece {
 
     background-color: #FF4D4F1A !important;
     color: red;
 }
+
 .paymentInfoDetail .bolder_font {
 
     font-weight: 500;
@@ -122,7 +124,7 @@
     padding: 25px;
     height: 375px;
     overflow-y: scroll;
-     position: relative;
+    position: relative;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -130,6 +132,7 @@
 .assign-tabs .tab-content::-webkit-scrollbar {
     display: none;
 }
+
 .sendNotificationBtn.suportChatNotificationBtn {
     position: sticky;
     bottom: 85%;
@@ -137,15 +140,17 @@
     background: transparent;
     padding: 10px 0;
 }
-.sendNotificationBtn.suportChatNotificationBtn button{
+
+.sendNotificationBtn.suportChatNotificationBtn button {
 
     position: absolute;
     top: -33px;
     left: 45%;
     z-index: 0;
     text-transform: capitalize;
-     border-radius: 5px
+    border-radius: 5px
 }
+
 .breadcrumb-header.assignPara {
 
     padding: 14px 14px 14px 37px;
@@ -299,17 +304,85 @@
     color: #82C43C;
     text-transform: uppercase;
 }
-.btn.btn-success.changeBtnSuccess{
+
+.btn.btn-success.changeBtnSuccess {
 
     padding: 3px 10px;
     background: #464A53;
     font-size: 12px;
     font-weight: 600;
 }
+
 .gallary-title.supportGalleryTitle p {
 
     font-weight: 500 !important;
 }
+
+.desc {
+
+    color: #152F1B !important;
+}
+
+.select2-container--krajee-bs5 .select2-selection {
+
+    box-shadow: none !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+
+    margin-top: 4px;
+}
+
+.scroll-custom {
+    height: 735px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scroll-custom::-webkit-scrollbar {
+    display: none;
+}
+
+.safariChanges #tabList li a {
+    color: #000000;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.safariChanges #tabList li {
+    padding-bottom: 10px;
+}
+
+.topics_listing.safariChanges .tab-items {
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+}
+
+.safrititles h5 {
+    color: #09422d;
+}
+
+.topics_listing.safariChanges .tab-items.active_safri {
+    border-radius: 5px;
+    border: 1px solid #7070704d;
+    background: #fff;
+
+}
+
+.tab-content_tour {
+    display: none;
+}
+
+.tab-content_tour.active {
+    display: block;
+}
+
 @media (min-width: 992px) {
     .collapsed-sidebar .drop_imagesCC img {
         display: none;

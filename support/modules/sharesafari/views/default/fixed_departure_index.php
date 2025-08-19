@@ -13,11 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\support\assets\NovaAppAsset')->baseUrl;
-if (Yii::$app->user->identity) {
-    if (Yii::$app->user->identity->is_safari_operator == 1) {
-        // $this->params['buttons'][] = Html::Button('+ Organize New Safari', ['value' => "/sharesafari/default/organize-safari-new", 'class' => 'btn popupButton btn-orange', 'title' => 'Organize New Safari']);
-    }
-}
 
 ?>
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>

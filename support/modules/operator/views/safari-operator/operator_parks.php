@@ -46,24 +46,24 @@ $this->params['title'] = $this->title;
                                             return $model->newstatuslabel;
                                         }
                                     ],
-                                    [
-                                        'header' => 'Action',
-                                        'value' => function ($model) use ($operator_model) {
-                                            return Html::a(
-                                                'Remove',
-                                                ['remove-park', 'id' => $operator_model->id, 'park_id' => $model->id],
-                                                [
-                                                    'class' => 'btn btn-xs btn-danger',
-                                                    'data-method' => 'post',
-                                                    'data-confirm' => 'Are you sure you want to remove this park?',
-                                                    'title' => 'Remove Park',
-                                                ]
-                                            );
-                                        },
-                                        'format' => 'raw',
-                                        'headerOptions' => ['style' => 'width:15%;'],
-                                        'contentOptions' => ['style' => 'width:15%;'],
-                                    ],
+                                    // [
+                                    //     'header' => 'Action',
+                                    //     'value' => function ($model) use ($operator_model) {
+                                    //         return Html::a(
+                                    //             'Remove',
+                                    //             ['remove-park', 'id' => $operator_model->id, 'park_id' => $model->id],
+                                    //             [
+                                    //                 'class' => 'btn btn-xs btn-danger',
+                                    //                 'data-method' => 'post',
+                                    //                 'data-confirm' => 'Are you sure you want to remove this park?',
+                                    //                 'title' => 'Remove Park',
+                                    //             ]
+                                    //         );
+                                    //     },
+                                    //     'format' => 'raw',
+                                    //     'headerOptions' => ['style' => 'width:15%;'],
+                                    //     'contentOptions' => ['style' => 'width:15%;'],
+                                    // ],
                                 ],
                             ]); ?>
                         </div>

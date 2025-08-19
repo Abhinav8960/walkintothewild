@@ -14,6 +14,7 @@ use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\flagreason\Flagreason;
 use common\models\cms\mastercategory\MasterTopic;
 use common\models\cms\mastertag\MasterTag;
+use common\models\externaloperator\ExternalOperator;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
@@ -2168,6 +2169,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $operator_types[$legal_entity_type] ?? '';
     }
 
+<<<<<<< HEAD
     public static function fdstatusoption()
     {
         return [
@@ -2175,4 +2177,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '2' => 'Pending',
         ];
     }
+=======
+    public static function packagestatusoption()
+    {
+        return [
+            '1' => 'Live',
+            '0' => 'Terminated',
+        ];
+    }
+
+    public static function externaloperatorslist()
+    {
+        $external_operator = ExternalOperator::find()->where(['status' => ExternalOperator::STATUS_ACTIVE])->orderBy(['operator_name' => SORT_ASC]);
+        return ArrayHelper::map($external_operator->all(), 'operator_name', 'operator_name');
+    }
+>>>>>>> support-branch
 }

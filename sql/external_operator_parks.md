@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 19, 2025 at 01:24 PM
+-- Generation Time: Aug 05, 2025 at 05:56 PM
 -- Server version: 8.0.42-0ubuntu0.22.04.1
 -- PHP Version: 8.1.32
 
@@ -24,32 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `external_operator`
+-- Table structure for table `external_operator_parks`
 --
 
-DROP TABLE IF EXISTS `external_operator`;
-CREATE TABLE `external_operator` (
+CREATE TABLE `external_operator_parks` (
   `id` int NOT NULL,
-  `operator_name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone_no` varchar(255) DEFAULT NULL,
-  `website` varchar(255) DEFAULT NULL,
-  `address` varchar(500) DEFAULT NULL,
-  `owner_name` varchar(255) DEFAULT NULL,
-  `owner_email` varchar(255) DEFAULT NULL,
-  `owner_phone_no` varchar(255) DEFAULT NULL,
-  `traffic` varchar(255) DEFAULT NULL,
-  `engagement` varchar(255) DEFAULT NULL,
-  `seo_performance` varchar(255) DEFAULT NULL,
-  `google_rating` varchar(255) DEFAULT NULL,
-  `is_call_done` tinyint(1) NOT NULL DEFAULT '0',
-  `is_mail_send` tinyint(1) NOT NULL DEFAULT '0',
-  `comment` varchar(500) DEFAULT NULL,
-  `status` tinyint NOT NULL DEFAULT '0',
+  `external_operator_id` int DEFAULT NULL,
+  `park_id` int DEFAULT NULL,
   `created_at` int DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL
+  `updated_by` int DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -57,9 +43,9 @@ CREATE TABLE `external_operator` (
 --
 
 --
--- Indexes for table `external_operator`
+-- Indexes for table `external_operator_parks`
 --
-ALTER TABLE `external_operator`
+ALTER TABLE `external_operator_parks`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -67,9 +53,9 @@ ALTER TABLE `external_operator`
 --
 
 --
--- AUTO_INCREMENT for table `external_operator`
+-- AUTO_INCREMENT for table `external_operator_parks`
 --
-ALTER TABLE `external_operator`
+ALTER TABLE `external_operator_parks`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 

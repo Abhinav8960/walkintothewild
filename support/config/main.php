@@ -49,6 +49,18 @@ return [
         'user' => [
             'class' => 'support\modules\user\Module',
         ],
+
+        'flag' => [
+            'class' => 'support\modules\flag\Module',
+        ],
+
+        'log' => [
+            'class' => 'support\modules\log\Module',
+        ],
+
+        'externaloperator' => [
+            'class' => 'support\modules\externaloperator\Module',
+        ],
         
     ],
 
