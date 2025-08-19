@@ -17,13 +17,22 @@ Pjax::begin([
     'timeout' => false,
 ]);
 ?>
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
+<div class="table-wrapper">
+    <div class="table-responsive">
+        <div class="min-width-table">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'layout' => "{items}\n<div class='row align-items-center mt-3'>
+                            <div class='col-md-4 text-start mb-2'>{summary}</div>
+                            <div class='col-md-4 text-center mb-2'>{pager}</div>
+                            <div class='col-md-4'></div>
+                        </div>",
+                'tableOptions' => ['class' => 'table tablecustoms table-striped align-middle w-100'],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'headerOptions' => ['style' => 'width: 1%;'],
+                    ],
                     [
                         'label' => 'User',
                         'contentOptions' => ['style' => 'width: 20%;'],
@@ -52,9 +61,9 @@ Pjax::begin([
                         'template' => '{flag}',
                         'buttons' => [
                             'flag' => function ($url, $model) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                return Html::button('<i class="mdi mdi-eye"></i>', [
                                     'value' => Url::toRoute(['flagview', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning flag-option mb-2',
+                                    'class' => 'btn p-0 change-menuicon flag-option mb-2',
                                     'title' => 'Flag'
                                 ]);
                             },

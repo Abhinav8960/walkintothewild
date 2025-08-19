@@ -93,11 +93,5 @@ ALTER TABLE partner_gallery_image
 DROP original_filename,
 DROP file;
 
-ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL AFTER `remark`; -->
-
-
-
-
-
-<!-- qutation new template -->
-INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QUME', 'Quotation Message', 'quotationchatemail-html', '1', '1716278771', '2', '1716289465', '2');
+ALTER TABLE `external_operator` ADD `comment` VARCHAR(500) NULL DEFAULT NULL AFTER `is_mail_send`;
+ALTER TABLE `external_operator_history` ADD `comment` VARCHAR(500) NULL DEFAULT NULL AFTER `is_mail_send`;

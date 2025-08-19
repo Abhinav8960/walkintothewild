@@ -108,13 +108,35 @@ foreach ($park as $key => $role) {
                         </div>
                     </div>
                     <div class="col-xl-3">
+                        <!-- <div class="identification-photo">
+                            <p class="mb-1">Pan Photo: </p> -->
+                        <!-- <a href="/"> -->
+                        <!-- <img src="<?= $this->params['baseurl'] ?>/images/pancard.png" alt=""
+                                    class="w-100 h-100 object-fit-cover"> -->
+                        <!-- </a> -->
+                        <!-- </div> -->
+
                         <div class="identification-photo">
                             <p class="mb-1">Pan Photo: </p>
-                            <a href="/">
-                                <img src="<?= $this->params['baseurl'] ?>/images/pancard.png" alt=""
-                                    class="w-100 h-100 object-fit-cover">
-                            </a>
+
+                            <?php if (!empty($model->pan_upload)) {
+                                // $thumbPath = preg_replace('/\.pdf$/i', '.jpg', $model->pan_upload); // assumes thumbnail has same path + .jpg
+                                $thumbPath = $this->params['baseurl'] . '/images/pancard.png';
+                            ?>
+                                <button type="button"
+                                    value="<?= Url::to(['file-view', 'filepath' => $model->pan_upload]) ?>"
+                                    class="file-view"
+                                    style="border: 0; background-color: transparent; padding: 0;">
+                                    <img src="<?= isset($thumbPath) ? $thumbPath : $this->params['baseurl'] . '/images/pancard.png' ?>"
+                                        alt="PDF Preview"
+                                        class="w-100 h-100 object-fit-cover">
+                                </button>
+                            <?php } else { ?>
+                                <span class="text-muted">No file uploaded</span>
+                            <?php } ?>
+
                         </div>
+
                     </div>
                 </div>
 
@@ -122,3 +144,35 @@ foreach ($park as $key => $role) {
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modalfileview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Document Preview
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<?php
+$script = <<< JS
+
+    \$('.file-view').on('click', function () {
+            \$('#modalfileview').modal('show')
+    \t\t.find('#modalContent')
+    \t\t.load(\$(this).attr('value'));
+    \t});
+
+JS;
+$this->registerJs($script);
+?>

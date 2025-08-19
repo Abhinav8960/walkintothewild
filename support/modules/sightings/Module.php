@@ -22,7 +22,7 @@ class Module extends \yii\base\Module
                 \Yii::$app->response->redirect('/site/login')->send();
             } else {
                 if (!(Yii::$app->user->identity->is_support_user)) {
-                    throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Admin can View this page.');
+                    throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Support User can View this page.');
                 }
             }
         }

@@ -102,4 +102,22 @@ $(document).on("change", ".uploadProfileInput", function () {
 });
  
 
-  
+     // When the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabItems = document.querySelectorAll(".tab-items");
+        const tabContents = document.querySelectorAll(".tab-content_tour");
+
+        tabItems.forEach(item => {
+            item.addEventListener("click", function () {
+                // Remove active class from all tabs
+                tabItems.forEach(i => i.classList.remove("active_safri"));
+                tabContents.forEach(c => c.classList.remove("active"));
+
+                // Add active class to clicked tab and corresponding content
+                this.classList.add("active_safri");
+                const tabId = this.getAttribute("data-tab");
+                const content = document.getElementById(tabId);
+                if (content) content.classList.add("active");
+            });
+        });
+    });

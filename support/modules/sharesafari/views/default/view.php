@@ -34,7 +34,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
 
                         <div class="col-md-3">
                             <div class="safritimg">
-                                <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                                <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/images/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                             </div>
 
                         </div>
@@ -60,7 +60,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/safari_4391688.png" alt="">
                                 </div>
 
                                 <div class="text-form">
@@ -71,7 +71,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/car-seat_5102816.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/car-seat_5102816.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0">Available Seats - <?= $share_safari->total_seat ?>/<?= $share_safari->share_seat ?></p>
@@ -81,7 +81,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/camera.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?php
@@ -98,7 +98,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/resort_11834952.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0">Premium</p>
@@ -108,7 +108,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                         <div class="col-12 ">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/rupee_3104891.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/images/rupee_3104891.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0">
@@ -159,7 +159,7 @@ if ($share_safari->status != ShareSafari::STATUS_DELETE) {
                     <div class="comments-persons">
                         <div class="postcomment d-flex gap-2">
                             <div class="avatar">
-                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/images/dpmain.png' ?>" alt="">
                             </div>
                             <div class="text_com">
                                 <h6 class="nameavatr"><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></h6>

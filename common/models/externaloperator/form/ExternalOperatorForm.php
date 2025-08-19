@@ -1,0 +1,164 @@
+<?php
+
+namespace common\models\externaloperator\form;
+
+use common\models\externaloperator\ExternalOperator;
+use common\models\externaloperator\ExternalOperatorParks;
+use yii\base\Model;
+use Yii;
+
+class ExternalOperatorForm extends \yii\base\Model
+{
+
+    const SCENARIO_CALL_DONE = 'call_done';
+    const SCENARIO_EMAIL_SEND = 'email_send';
+    const SCENARIO_COMMENT = 'comment';
+
+
+    public $id;
+    public $park_id;
+    public $operator_name;
+    public $email;
+    public $phone_no;
+    public $website;
+    public $address;
+    public $owner_name;
+    public $owner_email;
+    public $owner_phone_no;
+    public $traffic;
+    public $engagement;
+    public $seo_performance;
+    public $google_rating;
+    public $status;
+    public $park_list;
+    public $externaloperator_model;
+
+    public $is_call_done;
+    public $is_mail_send;
+    public $comment;
+
+    public function __construct(ExternalOperator $externaloperator_model = null)
+    {
+        $this->externaloperator_model = Yii::createObject([
+            'class' => ExternalOperator::className()
+        ]);
+
+        if ($externaloperator_model != '') {
+            $this->externaloperator_model = $externaloperator_model;
+
+            $this->id = $this->externaloperator_model->id;
+            $this->operator_name = $this->externaloperator_model->operator_name;
+            $this->email = $this->externaloperator_model->email;
+            $this->address = $this->externaloperator_model->address;
+            $this->phone_no = $this->externaloperator_model->phone_no;
+            $this->website = $this->externaloperator_model->website;
+            $this->owner_name = $this->externaloperator_model->owner_name;
+            $this->owner_email = $this->externaloperator_model->owner_email;
+            $this->owner_phone_no = $this->externaloperator_model->owner_phone_no;
+            $this->traffic = $this->externaloperator_model->traffic;
+            $this->engagement = $this->externaloperator_model->engagement;
+            $this->seo_performance = $this->externaloperator_model->seo_performance;
+            $this->google_rating = $this->externaloperator_model->google_rating;
+
+
+            $this->park_list =  ExternalOperatorParks::find()->select('park_id')->where(['external_operator_id' => $this->externaloperator_model->id, 'status' => 1])->column();
+            $this->status = $this->externaloperator_model->status;
+
+            $this->is_call_done = $this->externaloperator_model->is_call_done;
+            $this->is_mail_send = $this->externaloperator_model->is_mail_send;
+            $this->comment = $this->externaloperator_model->comment;
+
+        }
+
+        // $this->status_option = GeneralModel::statusoption();
+    }
+
+    public function scenarios()
+    {
+        return [
+          self::SCENARIO_DEFAULT => ['operator_name','phone_no','address','park_list','email','owner_name','owner_phone_no','owner_email','website','traffic','engagement','seo_performance','google_rating','status'],
+          self::SCENARIO_CALL_DONE => ['is_call_done'],
+          self::SCENARIO_EMAIL_SEND => ['is_mail_send'],
+          self::SCENARIO_COMMENT => ['comment'],
+        ];
+    }
+    /**
+     * {@inheritdoc}is_offer_premium_budget
+     */
+    public function rules()
+    {
+        $rules = [
+            [['id','phone_no','status','owner_phone_no'], 'integer'],
+            [['operator_name','phone_no', 'address', 'park_list', 'email' ,'owner_name','owner_phone_no','owner_email'], 'required','on' => self::SCENARIO_DEFAULT],
+            [['phone_no', 'owner_phone_no'], 'match', 'pattern' => '/^[6-9]\d{9}$/','message' => 'Invalid Phone number.'],
+            [['owner_email', 'email'], 'email'],
+            [['google_rating'], 'number', 'max' => 5],
+            [['email', 'website', 'operator_name', 'phone_no','traffic','engagement','seo_performance'], 'string', 'max' => 255],
+            [['address','comment'], 'string', 'max' => 500],
+            [['status'], 'default', 'value' => 1],
+            [['is_call_done','is_mail_send'], 'default', 'value' => 0],
+            [['park_list'], 'safe'],
+            [['website'], 'url', 'defaultScheme' => 'http'],
+            [['is_call_done'],'required','on' => self::SCENARIO_CALL_DONE],
+            [['is_mail_send'],'required','on' => self::SCENARIO_EMAIL_SEND],
+            [['comment'],'required','on' => self::SCENARIO_COMMENT],
+        ];
+
+        return $rules;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'operator_name'=>'Operator Name',
+            'address' => 'Address',
+            'gst' => 'Gst',
+            'google_rating' => 'Rating',
+            'phone_no' => 'Phone No',
+            'email' => 'Email',
+            'website' => 'Website',
+            'owner_name' => 'Owner Name',
+            'owner_phone_no' => 'Owner Phone No',
+            'owner_email' => 'Owner Email',
+            'google_rating'=>'Google Rating',
+            'traffic'=>'Traffic',
+            'engagement'=>'Engagement',
+            'seo_performance'=>'SEO Performance',
+            'status' => 'Status',
+            'is_call_done'=>'Is Call Done',
+            'is_mail_send'=>'Is Mail Send',
+            'comment'=>'Comment'
+        ];
+    }
+
+    /**
+     * Initial Form Values
+     *
+     * @return void
+     */
+    public function initializeForm()
+    {
+        $this->externaloperator_model->id = $this->id;
+        $this->externaloperator_model->operator_name = $this->operator_name;
+        $this->externaloperator_model->address = $this->address;
+        $this->externaloperator_model->phone_no = $this->phone_no;
+        $this->externaloperator_model->email = $this->email;
+        $this->externaloperator_model->website = $this->website;
+        $this->externaloperator_model->owner_name = $this->owner_name;
+        $this->externaloperator_model->owner_phone_no = $this->owner_phone_no;
+        $this->externaloperator_model->owner_email = $this->owner_email;
+        $this->externaloperator_model->seo_performance = $this->seo_performance;
+        $this->externaloperator_model->engagement = $this->engagement;
+        $this->externaloperator_model->traffic = $this->traffic;
+        $this->externaloperator_model->google_rating = $this->google_rating;
+        $this->externaloperator_model->status = $this->status;
+
+        $this->externaloperator_model->is_call_done = $this->is_call_done;
+        $this->externaloperator_model->is_mail_send = $this->is_mail_send;
+        $this->externaloperator_model->comment = $this->comment;
+    }
+}

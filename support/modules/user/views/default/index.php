@@ -10,7 +10,7 @@ $this->title = 'List of Users';
 $this->params['breadcrumbs_home_url'] = '/user/default/index';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 1 || Yii::$app->user->identity->is_admin == 1)) {
+if (Yii::$app->user->identity && (Yii::$app->user->identity->is_support_user == 1)) {
     $isvisible = true;
     // $this->params['buttons'][] = Html::a('<i class="fa fa-plus"></i> Register New User', ['create'], ['class' => 'btn  btn-orange']);
 } else {
@@ -35,14 +35,14 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                         'class' => 'yii\grid\SerialColumn',
                         'headerOptions' => ['style' => 'width: 1%;'],
                     ],
-                    [
-                        'label' => 'Login ID',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->username;
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Login ID',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->username;
+                    //     }
+                    // ],
                     // [
                     //     'label' => 'Full Name',
                     //     'contentOptions' => ['style' => 'width: 20%;'],
@@ -53,7 +53,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     // ],
                     [
                         'label' => 'User Name',
-                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'headerOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $name = $model->name ?? '';
@@ -68,17 +68,17 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             );
                         },
                     ],
-                    [
-                        'label' => 'Mobile Number',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->mobile_no) ? $model->mobile_no : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Mobile Number',
+                    //     'contentOptions' => ['style' => 'width: 20%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->mobile_no) ? $model->mobile_no : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Mobile Verified User',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->is_mobile_no_verified == 1) {
@@ -98,7 +98,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             if ($device_count) {
                                 return Html::button($device_count, [
                                     'value' => Url::to(['/user/user-device/user-device', 'user_id' => $model->id]),
-                                    'class' => 'btn btn-info pop-up change-menuicon',
+                                    'class' => 'intrested btn-danger',
                                     'title' => 'View',
                                 ]);
                             }
@@ -107,7 +107,7 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     ],
                     [
                         'label' => 'Role',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->rolelabels;
@@ -115,49 +115,77 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                     ],
                     [
                         'label' => 'User Flag',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => [''],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->userflaged) ? $model->userflaged->user_flag : '';
                         }
                     ],
                     'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
+                    'updated_at:dateTime:Last Updated',
                     [
-                        'label' => 'Update',
+                        'label' => 'status',
                         'value' => function ($model) {
-                            return Html::a('<i class="fa fa-edit text-white"></i>', ['/user/default/update?user_id=' . $model->id], ['class' => 'btn btn-info', 'title' => 'Update User', 'data-bs-toggle' => "tooltip"]);
+                            if ($model->status == User::STATUS_ACTIVE) {
+                                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Active.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
+                            } else if ($model->status == User::STATUS_INACTIVE) {
+                                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Inactive.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
+                            } else if ($model->status == User::STATUS_DELETED) {
+                                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/Deleted.png" alt="" style="width: 60px;height: 60px;object-fit: contain;">';
+                            }
+                            // return Html::a('<i class="fa fa-edit text-white"></i>', ['/user/default/update?user_id=' . $model->id], ['class' => 'btn btn-info', 'title' => 'Update User', 'data-bs-toggle' => "tooltip"]);
                         },
                         'format' => 'raw',
-                        'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
+                        'headerOptions' => [''],
+                        'contentOptions' => [''],
                         'visible' => $isvisible,
                     ],
                     [
-                        'header' => 'Block',
-                        'value' => function ($model) {
-                            if ($model->blocked_at) {
-                                return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
-                                    'class' => 'btn btn-xs btn-success',
-                                    'data-method' => 'post',
-                                    'data-confirm' => 'Are you sure to unblock this user?',
-                                    'title' => 'Unblock User',
-                                    'data-bs-toggle' => "tooltip"
-                                ]);
-                            } else {
-                                return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
-                                    'class' => 'btn btn-xs btn-warning',
-                                    'data-method' => 'post',
-                                    'data-confirm' => 'Are you sure to block this user?',
-                                    'title' => 'Block User',
-                                    'data-bs-toggle' => "tooltip"
-                                ]);
-                            }
-                        },
-                        'format' => 'raw',
-                        'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'headerOptions' => ['style' => 'width:10%; text-align:left;'],
+                        'template' => '{view}',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+
+                                return Html::a('<i class="mdi mdi-eye"></i>',
+                                    [
+                                        Url::toRoute(['profile', 'user_id' => $model->id])
+                                    ],
+                                    [
+                                        'class' => 'action-icon',
+                                        'title' => 'View',
+                                    ]
+                                );
+                            },
+
+                        ]
                     ],
+                    // [
+                    //     'header' => 'action',
+                    //     'value' => function ($model) {
+                    //         if ($model->blocked_at) {
+                    //             return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
+                    //                 'class' => 'btn btn-xs btn-success',
+                    //                 'data-method' => 'post',
+                    //                 'data-confirm' => 'Are you sure to unblock this user?',
+                    //                 'title' => 'Unblock User',
+                    //                 'data-bs-toggle' => "tooltip"
+                    //             ]);
+                    //         } else {
+                    //             return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
+                    //                 'class' => 'btn btn-xs btn-warning',
+                    //                 'data-method' => 'post',
+                    //                 'data-confirm' => 'Are you sure to block this user?',
+                    //                 'title' => 'Block User',
+                    //                 'data-bs-toggle' => "tooltip"
+                    //             ]);
+                    //         }
+                    //     },
+                    //     'format' => 'raw',
+                    //     'headerOptions' => [''],
+                    //     'contentOptions' => [''],
+                    // ],
                     // [
                     //     'label' => 'Delete',
                     //     'value' => function ($model) {
