@@ -16,6 +16,7 @@ use yii\web\BadRequestHttpException;
 class DefaultController extends Controller
 {
     private $whatsappApi;
+    private $pageSize = 15;
 
     public function behaviors()
     {
@@ -24,6 +25,7 @@ class DefaultController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'get-contacts' => ['GET'],
+                    'search-contacts' => ['GET'],
                     'get-messages' => ['GET'],
                     'send-message' => ['POST'],
                     'mark-as-read' => ['POST'],
@@ -51,12 +53,63 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
+    public function actionSearchContacts()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        try {
+            $search = trim(Yii::$app->request->get('search', ''));
+            $page = max(1, (int)Yii::$app->request->get('page', 1));
+            
+
+            if (empty($search)) {
+                return [
+                    'success' => false,
+                    'error' => 'Search term is required'
+                ];
+            }
+
+            // Escape special characters in search term
+            $search = addcslashes($search, '%_');
+
+            $query = WhatsappContacts::find()
+                ->where(['status' => 1])
+                ->andWhere(['or',
+                    ['like', 'name', $search],
+                    ['like', 'phone_number', $search]
+                ])
+                ->orderBy(['last_message_at' => SORT_DESC]);
+
+            $totalCount = $query->count();
+
+            $contacts = $query->offset(($page - 1) * $this->pageSize)
+                ->limit($this->pageSize)
+                ->asArray()
+                ->all();
+
+            return [
+                'success' => true,
+                'contacts' => $contacts,
+                'hasMore' => ($page * $this->pageSize) < $totalCount,
+                'totalCount' => $totalCount,
+                'currentPage' => $page
+            ];
+        } catch (\Exception $e) {
+            Yii::error('Error in search contacts: ' . $e->getMessage(), 'whatsapp');
+            return [
+                'success' => false,
+                'error' => 'Failed to search contacts',
+                'debug' => YII_DEBUG ? $e->getMessage() : null
+            ];
+        }
+    }
+
     public function actionGetContacts()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $page = Yii::$app->request->get('page', 1);
-        $pageSize = 10;
+        
 
         $query = WhatsappContacts::find()
             ->where(['status' => 1])
@@ -64,15 +117,15 @@ class DefaultController extends Controller
 
         $totalCount = $query->count();
 
-        $contacts = $query->offset(($page - 1) * $pageSize)
-            ->limit($pageSize)
+        $contacts = $query->offset(($page - 1) * $this->pageSize)
+            ->limit($this->pageSize)
             ->asArray()
             ->all();
 
         return [
             'success' => true,
             'contacts' => $contacts,
-            'hasMore' => ($page * $pageSize) < $totalCount,
+            'hasMore' => ($page * $this->pageSize) < $totalCount,
             'totalCount' => $totalCount
         ];
     }
@@ -82,7 +135,7 @@ class DefaultController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $page = Yii::$app->request->get('page', 1);
-        $pageSize = 10;
+        
 
         $contact = WhatsappContacts::findOne($contactId);
         if (!$contact) {
@@ -95,8 +148,8 @@ class DefaultController extends Controller
 
         $totalCount = $query->count();
 
-        $messages = $query->offset(($page - 1) * $pageSize)
-            ->limit($pageSize)
+        $messages = $query->offset(($page - 1) * $this->pageSize)
+            ->limit($this->pageSize)
             ->asArray()
             ->all();
 
@@ -106,7 +159,7 @@ class DefaultController extends Controller
         return [
             'success' => true,
             'messages' => $messages,
-            'hasMore' => ($page * $pageSize) < $totalCount,
+            'hasMore' => ($page * $this->pageSize) < $totalCount,
             'totalCount' => $totalCount
         ];
     }

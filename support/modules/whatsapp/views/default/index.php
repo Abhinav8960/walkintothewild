@@ -12,12 +12,16 @@ WhatsappAsset::register($this);
     <div class="row chat-container shadow-sm rounded">
         <!-- Contacts List -->
         <div class="col-md-4 col-lg-3 p-0 chat-list">
-            <div class="p-3 bg-white">
+            <div class="p-3 bg-white border-bottom">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search contacts..." id="searchContacts">
-                    <button class="btn btn-outline-secondary" type="button">
+                    <input type="text" 
+                           class="form-control search-input" 
+                           placeholder="Search by name or phone number..." 
+                           id="searchContacts"
+                           autocomplete="off">
+                    <span class="search-icon">
                         <i class="bi bi-search"></i>
-                    </button>
+                    </span>
                 </div>
             </div>
             <div id="contactsList">
@@ -106,6 +110,59 @@ WhatsappAsset::register($this);
     .spinner-border-sm {
         width: 1rem;
         height: 1rem;
+    }
+
+    #contactsList {
+        height: calc(100vh - 150px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    .contact-item {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .contact-item:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .contact-item.active {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-contacts {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .search-input {
+        padding-left: 2.5rem !important;
+        border-radius: 20px !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+
+    .search-input:focus {
+        border-color: #128C7E !important;
+        box-shadow: 0 0 0 0.2rem rgba(18, 140, 126, 0.25) !important;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 4;
+        color: #666;
+    }
+
+    .input-group {
+        position: relative;
     }
 </style>
 
@@ -346,24 +403,95 @@ WhatsappAsset::register($this);
             }
         });
 
-        document.getElementById('searchContacts').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            document.querySelectorAll('.contact-item').forEach(item => {
-                const name = item.querySelector('h6').textContent.toLowerCase();
-                const phone = item.dataset.phone.toLowerCase();
-                item.style.display = (name.includes(searchTerm) || phone.includes(searchTerm)) ? 'block' : 'none';
+        // Debounce function for search
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Function to search contacts
+        function searchContacts(searchTerm) {
+            const contactsList = document.getElementById('contactsList');
+
+            // Reset pagination for new search
+            currentContactsPage = 1;
+            hasMoreContacts = true;
+
+            // Show loading state
+            contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Searching contacts...</div></div>';
+
+            fetch(`/whatsapp/default/search-contacts?search=${encodeURIComponent(searchTerm)}&page=${currentContactsPage}`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': '<?= Yii::$app->request->csrfToken ?>'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.contacts.length === 0) {
+                        contactsList.innerHTML = '<div class="p-3 text-center text-muted">No contacts found</div>';
+                    } else {
+                        renderContacts(data.contacts, false);
+                        hasMoreContacts = data.hasMore;
+                        if (hasMoreContacts) currentContactsPage++;
+                    }
+                } else {
+                    throw new Error('Failed to search contacts');
+                }
+            })
+            .catch(error => {
+                console.error('Error searching contacts:', error);
+                contactsList.innerHTML = `
+                    <div class="p-3 text-center text-danger">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <div class="mt-2">Error searching contacts</div>
+                    </div>`;
             });
-        });
+        }
+
+        // Add search event listener with debounce
+        const debouncedSearch = debounce((e) => {
+            const searchTerm = e.target.value.trim();
+            if (searchTerm.length === 0) {
+                // Reset to initial contacts list if search is cleared
+                currentContactsPage = 1;
+                hasMoreContacts = true;
+                loadContacts();
+            } else if (searchTerm.length >= 2) {
+                // Search if at least 2 characters entered
+                searchContacts(searchTerm);
+            }
+        }, 500);
+
+        document.getElementById('searchContacts').addEventListener('input', debouncedSearch);
 
         // Function to load contacts from the server
         function loadContacts(append = false) {
-            if (isLoadingContacts || !hasMoreContacts) return;
+            if (isLoadingContacts || (!hasMoreContacts && append)) return;
             
             isLoadingContacts = true;
             const contactsList = document.getElementById('contactsList');
             
             if (!append) {
+                currentContactsPage = 1;
+                hasMoreContacts = true;
                 contactsList.innerHTML = '<div class="p-3 text-center">Loading contacts...</div>';
+            }
+
+            // Add loading indicator for pagination
+            if (append) {
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.className = 'p-3 text-center loading-contacts';
+                loadingIndicator.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
+                contactsList.appendChild(loadingIndicator);
             }
 
             fetch(`/whatsapp/default/get-contacts?page=${currentContactsPage}`, {
@@ -377,13 +505,29 @@ WhatsappAsset::register($this);
                 return response.json();
             })
             .then(data => {
+                // Remove loading indicator if it exists
+                const loadingIndicator = contactsList.querySelector('.loading-contacts');
+                if (loadingIndicator) {
+                    loadingIndicator.remove();
+                }
+
                 if (data.success && Array.isArray(data.contacts)) {
-                    if (data.contacts.length === 0 && !append) {
-                        contactsList.innerHTML = '<div class="p-3 text-center">No contacts found</div>';
+                    if (data.contacts.length === 0) {
+                        if (!append) {
+                            contactsList.innerHTML = '<div class="p-3 text-center">No contacts found</div>';
+                        }
                     } else {
                         renderContacts(data.contacts, append);
                         hasMoreContacts = data.hasMore;
                         if (hasMoreContacts) currentContactsPage++;
+                    }
+
+                    // Add "No more contacts" message if there are no more contacts
+                    if (!data.hasMore && append) {
+                        const endMessage = document.createElement('div');
+                        endMessage.className = 'p-3 text-center text-muted';
+                        endMessage.textContent = 'No more contacts';
+                        contactsList.appendChild(endMessage);
                     }
                 } else {
                     throw new Error('Invalid data format received');
@@ -391,10 +535,17 @@ WhatsappAsset::register($this);
             })
             .catch(error => {
                 console.error('Error loading contacts:', error);
+                // Remove loading indicator if it exists
+                const loadingIndicator = contactsList.querySelector('.loading-contacts');
+                if (loadingIndicator) {
+                    loadingIndicator.remove();
+                }
+
                 if (!append) {
                     contactsList.innerHTML = `
-                    <div class="p-3 text-center text-danger">
-                        Error loading contacts. Please try again.
+                    <div class="p-3 text-center text-danger cursor-pointer" onclick="loadContacts()">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <div class="mt-2">Error loading contacts. Click to try again.</div>
                     </div>`;
                 }
             })
@@ -407,11 +558,18 @@ WhatsappAsset::register($this);
         const contactsListDiv = document.getElementById('contactsList');
         const messagesContainerDiv = document.getElementById('messagesContainer');
 
-        // Contacts infinite scroll
+        // Contacts infinite scroll with debounce
+        let scrollTimeout;
         contactsListDiv.addEventListener('scroll', () => {
-            if (contactsListDiv.scrollHeight - contactsListDiv.scrollTop <= contactsListDiv.clientHeight + 100) {
-                loadContacts(true);
-            }
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollPosition = contactsListDiv.scrollTop + contactsListDiv.clientHeight;
+                const scrollThreshold = contactsListDiv.scrollHeight - 100;
+                
+                if (scrollPosition >= scrollThreshold && !isLoadingContacts && hasMoreContacts) {
+                    loadContacts(true);
+                }
+            }, 100);
         });
 
         // Messages infinite scroll (loading older messages when scrolling up)
