@@ -76,8 +76,21 @@ WhatsappAsset::register($this);
 <!-- Bootstrap Icons CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
+<style>
+    .date-separator {
+        text-align: center;
+        margin: 1rem 0;
+        position: relative;
+    }
 
-
+    .date-separator span {
+        background: #e9ecef;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        color: #666;
+    }
+</style>
 
 <!-- JavaScript for WhatsApp Panel -->
 <script>
@@ -288,19 +301,70 @@ WhatsappAsset::register($this);
             });
         }
 
-        // Function to render messages
+        function formatMessageDate(date) {
+            const now = new Date();
+            const messageDate = new Date(date);
+            
+            // Check if same day
+            if (messageDate.toDateString() === now.toDateString()) {
+                return 'Today';
+            }
+            
+            // Check if yesterday
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (messageDate.toDateString() === yesterday.toDateString()) {
+                return 'Yesterday';
+            }
+            
+            // If this year
+            if (messageDate.getFullYear() === now.getFullYear()) {
+                return messageDate.toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    day: 'numeric'
+                });
+            }
+            
+            // If different year
+            return messageDate.toLocaleDateString('en-US', { 
+                year: 'numeric',
+                month: 'long', 
+                day: 'numeric'
+            });
+        }
+
+        // Modify renderMessages function to include date separators
         function renderMessages(messages, append = false) {
             const messagesContainer = document.getElementById('messagesContainer');
-            const messagesList = messages.map(message => `
-                <div class="message ${message.direction === 'outbound' ? 'sent' : 'received'} mb-2">
-                    <div class="message-content p-2 rounded">
-                        <div class="message-text">${message.content}</div>
-                        <small class="message-time text-muted">
-                            ${new Date(message.created_at).toLocaleTimeString()}
-                        </small>
+            let currentDate = '';
+            
+            const messagesList = messages.map(message => {
+                const messageDate = new Date(message.created_at);
+                const dateStr = formatMessageDate(messageDate);
+                let dateSeparator = '';
+                
+                // Add date separator if date changes
+                if (dateStr !== currentDate) {
+                    currentDate = dateStr;
+                    dateSeparator = `
+                        <div class="date-separator">
+                            <span>${dateStr}</span>
+                        </div>
+                    `;
+                }
+                
+                return `
+                    ${dateSeparator}
+                    <div class="message ${message.direction === 'outbound' ? 'sent' : 'received'} mb-2">
+                        <div class="message-content p-2 rounded">
+                            <div class="message-text">${message.content}</div>
+                            <small class="message-time text-muted">
+                                ${messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </small>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             if (append) {
                 messagesContainer.insertAdjacentHTML('afterbegin', messagesList);
