@@ -14,6 +14,61 @@ use yii\helpers\ArrayHelper;
 
 class PackageTempController extends Controller
 {
+    public function actionBackUp()
+    {
+        $db = Yii::$app->db;
+
+        $transaction = $db->beginTransaction();
+        try {
+            // Drop copy tables if they exist
+            $db->createCommand("DROP TABLE IF EXISTS backup_package")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_comment")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_comment_report")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_day")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_enquiry")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_faq")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_feature")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_gallery")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_included")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_quote")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_safari_park")->execute();
+            $db->createCommand("DROP TABLE IF EXISTS backup_package_version")->execute();
+
+            // Create structure from original tables
+            $db->createCommand("CREATE TABLE backup_package LIKE package")->execute();
+            $db->createCommand("CREATE TABLE backup_package_comment LIKE package_comment")->execute();
+            $db->createCommand("CREATE TABLE backup_package_comment_report LIKE package_comment_report")->execute();
+            $db->createCommand("CREATE TABLE backup_package_day LIKE package_day")->execute();
+            $db->createCommand("CREATE TABLE backup_package_enquiry LIKE package_enquiry")->execute();
+            $db->createCommand("CREATE TABLE backup_package_faq LIKE package_faq")->execute();
+            $db->createCommand("CREATE TABLE backup_package_feature LIKE package_feature")->execute();
+            $db->createCommand("CREATE TABLE backup_package_gallery LIKE package_gallery")->execute();
+            $db->createCommand("CREATE TABLE backup_package_included LIKE package_included")->execute();
+            $db->createCommand("CREATE TABLE backup_package_quote LIKE package_quote")->execute();
+            $db->createCommand("CREATE TABLE backup_package_safari_park LIKE package_safari_park")->execute();
+            $db->createCommand("CREATE TABLE backup_package_version LIKE package_version")->execute();
+
+            // Insert data into new tables
+            $db->createCommand("INSERT INTO backup_package SELECT * FROM package")->execute();
+            $db->createCommand("INSERT INTO backup_package_comment SELECT * FROM package_comment")->execute();
+            $db->createCommand("INSERT INTO backup_package_comment_report SELECT * FROM package_comment_report")->execute();
+            $db->createCommand("INSERT INTO backup_package_day SELECT * FROM package_day")->execute();
+            $db->createCommand("INSERT INTO backup_package_enquiry SELECT * FROM package_enquiry")->execute();
+            $db->createCommand("INSERT INTO backup_package_faq SELECT * FROM package_faq")->execute();
+            $db->createCommand("INSERT INTO backup_package_feature SELECT * FROM package_feature")->execute();
+            $db->createCommand("INSERT INTO backup_package_gallery SELECT * FROM package_gallery")->execute();
+            $db->createCommand("INSERT INTO backup_package_included SELECT * FROM package_included")->execute();
+            $db->createCommand("INSERT INTO backup_package_quote SELECT * FROM package_quote")->execute();
+            $db->createCommand("INSERT INTO backup_package_safari_park SELECT * FROM package_safari_park")->execute();
+            $db->createCommand("INSERT INTO backup_package_version SELECT * FROM package_version")->execute();
+
+            $transaction->commit();
+            echo "Tables duplicated successfully.";
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            echo "Error: " . $e->getMessage();
+        }
+    }
 
     public function actionStep1()
     {
