@@ -126,34 +126,23 @@ class WhatsappController extends Controller
                 break;
             case 'image':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_IMAGE;
-                $whatsappMessage->mime_type = $message['image']['mime_type'];
-                $whatsappMessage->sha256 = $message['image']['sha256'];
-                $whatsappMessage->media_id = $message['image']['id'];
+                $whatsappMessage->media_url = $message['image']['id'];
                 break;
             case 'video':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_VIDEO;
-                $whatsappMessage->mime_type = $message['video']['mime_type'];
-                $whatsappMessage->sha256 = $message['video']['sha256'];
-                $whatsappMessage->media_id = $message['video']['id'];
+                $whatsappMessage->media_url = $message['video']['id'];
                 break;
             case 'document':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_DOCUMENT;
-                $whatsappMessage->filename = $message['document']['filename'];
-                $whatsappMessage->mime_type = $message['document']['mime_type'];
-                $whatsappMessage->sha256 = $message['document']['sha256'];
-                $whatsappMessage->media_id = $message['document']['id'];
+                $whatsappMessage->media_url = $message['document']['id'];
                 break;
             case 'audio':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_AUDIO;
-                $whatsappMessage->mime_type = $message['audio']['mime_type'];
-                $whatsappMessage->sha256 = $message['audio']['sha256'];
-                $whatsappMessage->media_id = $message['audio']['id'];
-                $whatsappMessage->voice = $message['audio']['voice'];
+                $whatsappMessage->media_url = $message['audio']['id'];
                 break;
             case 'location':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_LOCATION;
-                $whatsappMessage->latitude = $message['location']['latitude'];
-                $whatsappMessage->longitude = $message['location']['longitude'];
+                $whatsappMessage->content = json_encode($message['location']);
                 break;
             default:
                 $whatsappMessage->message_type = $message['type'];

@@ -17,8 +17,8 @@ class WhatsappMessagesSearch extends WhatsappMessages
     public function rules()
     {
         return [
-            [['id', 'user_id', 'partner_id', 'conversation_id', 'contact_id'], 'integer'],
-            [['wamid', 'direction', 'message_type', 'content', 'media_url', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'contact_id', 'voice'], 'integer'],
+            [['wamid', 'direction', 'message_type', 'content', 'media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'latitude', 'longitude', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -60,8 +60,8 @@ class WhatsappMessagesSearch extends WhatsappMessages
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'conversation_id' => $this->conversation_id,
             'contact_id' => $this->contact_id,
+            'voice' => $this->voice,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -71,6 +71,12 @@ class WhatsappMessagesSearch extends WhatsappMessages
             ->andFilterWhere(['like', 'message_type', $this->message_type])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'media_url', $this->media_url])
+            ->andFilterWhere(['like', 'mime_type', $this->mime_type])
+            ->andFilterWhere(['like', 'sha256', $this->sha256])
+            ->andFilterWhere(['like', 'media_id', $this->media_id])
+            ->andFilterWhere(['like', 'filename', $this->filename])
+            ->andFilterWhere(['like', 'latitude', $this->latitude])
+            ->andFilterWhere(['like', 'longitude', $this->longitude])
             ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;

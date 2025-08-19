@@ -54,14 +54,14 @@ class WhatsappMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'media_url'], 'default', 'value' => null],
+             [['direction', 'content', 'media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'voice', 'latitude', 'longitude'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 'sent'],
             [['contact_id'], 'integer'],
             [['wamid', 'contact_id', 'direction', 'message_type'], 'required'],
             [['direction', 'message_type', 'content', 'status'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['wamid'], 'string', 'max' => 100],
-            [['media_url'], 'string', 'max' => 255],
+            [['media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'voice', 'latitude', 'longitude'], 'string', 'max' => 255],
             ['direction', 'in', 'range' => array_keys(self::optsDirection())],
             ['message_type', 'in', 'range' => array_keys(self::optsMessageType())],
             ['status', 'in', 'range' => array_keys(self::optsStatus())],
@@ -70,19 +70,28 @@ class WhatsappMessages extends \yii\db\ActiveRecord
         ];
     }
 
+   
+
     /**
      * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+             'id' => 'ID',
             'wamid' => 'Wamid',
             'contact_id' => 'Contact ID',
             'direction' => 'Direction',
             'message_type' => 'Message Type',
             'content' => 'Content',
             'media_url' => 'Media Url',
+            'mime_type' => 'Mime Type',
+            'sha256' => 'Sha256',
+            'media_id' => 'Media ID',
+            'filename' => 'Filename',
+            'voice' => 'Voice',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

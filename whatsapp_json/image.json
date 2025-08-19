@@ -1,0 +1,41 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "1472316180619403",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "918882137070",
+              "phone_number_id": "686954521172979"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Anurag Kumar Yadav"
+                },
+                "wa_id": "919650901148"
+              }
+            ],
+            "messages": [
+              {
+                "from": "919650901148",
+                "id": "wamid.HBgMOTE5NjUwOTAxMTQ4FQIAEhggQkQ1MTE3N0Q4NkVFMThDQkZDRTJBQzhEQTk4QkYwQjUA",
+                "timestamp": "1755605143",
+                "type": "image",
+                "image": {
+                  "mime_type": "image/jpeg",
+                  "sha256": "iouLQpg77zuoTtyOhaHl/0B/IvTmH5F72FVkoar9260=",
+                  "id": "1402685544137604"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
