@@ -105,7 +105,6 @@ $this->title = 'Leads';
                             return $str;
                         }
                     ],
-
                     [
                         'label' => 'Lead Received',
                         'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
@@ -114,7 +113,33 @@ $this->title = 'Leads';
                             return date('d M, Y h:i A', $model->created_at);
                         }
                     ],
-
+                    [
+                        'label' => 'Quotation Count',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->quotation_count > 0 ? $model->quotation_count : 0;
+                        }
+                    ],
+                    [
+                        'label' => 'Partner Chat Started Count',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->partner_chat_started_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Chat Started',
+                        'contentOptions' => ['style' => 'width: 8%; text-align: left;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->is_chat_started == 1) {
+                                return '<span class="badge badge-paid">Yes</span>';
+                            }
+                            return '<span class="badge badge-pending">No</span>';
+                        }
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
