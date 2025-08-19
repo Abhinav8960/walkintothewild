@@ -11,7 +11,7 @@ WhatsappAsset::register($this);
 <div class="container-fluid mt-4">
     <div class="row chat-container shadow-sm rounded">
         <!-- Contacts List -->
-        <div class="col-md-4 col-lg-3 p-0 chat-list">
+        <div class="col-md-4 col-lg-3 p-0 chat-list auto-s overflow-hidden">
             <div class="p-3 bg-white border-bottom">
                 <div class="input-group">
                     <input type="text" 
@@ -470,7 +470,7 @@ WhatsappAsset::register($this);
             }
         }, 500);        document.getElementById('searchContacts').addEventListener('input', debouncedSearch);
 
-        // Function to load contacts from the server
+                // Function to load contacts from the server
         function loadContacts(append = false) {
             if (isLoadingContacts || (!hasMoreContacts && append)) return;
             
@@ -478,17 +478,16 @@ WhatsappAsset::register($this);
             const contactsList = document.getElementById('contactsList');
             
             if (!append) {
-                currentContactsPage = 1;
-                hasMoreContacts = true;
-                contactsList.innerHTML = '<div class="p-3 text-center">Loading contacts...</div>';
+                // Show initial loading state for first page
+                contactsList.innerHTML = '<div class="p-3 text-center"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><div class="mt-2">Loading contacts...</div></div>';
             }
 
             // Add loading indicator for pagination
             if (append) {
-                const loadingIndicator = document.createElement('div');
-                loadingIndicator.className = 'p-3 text-center loading-contacts';
-                loadingIndicator.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
-                contactsList.appendChild(loadingIndicator);
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'text-center p-2 loading-more';
+                loadingDiv.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"></div>';
+                contactsList.appendChild(loadingDiv);
             }
 
             fetch(`/whatsapp/default/get-contacts?page=${currentContactsPage}`, {
@@ -503,53 +502,38 @@ WhatsappAsset::register($this);
             })
             .then(data => {
                 // Remove loading indicator if it exists
-                const loadingIndicator = contactsList.querySelector('.loading-contacts');
-                if (loadingIndicator) {
-                    loadingIndicator.remove();
+                const loadingMore = contactsList.querySelector('.loading-more');
+                if (loadingMore) {
+                    loadingMore.remove();
                 }
 
-                if (data.success && Array.isArray(data.contacts)) {
-                    if (data.contacts.length === 0) {
-                        if (!append) {
-                            contactsList.innerHTML = '<div class="p-3 text-center">No contacts found</div>';
-                        }
-                    } else {
-                        renderContacts(data.contacts, append);
-                        hasMoreContacts = data.hasMore;
-                        if (hasMoreContacts) currentContactsPage++;
-                    }
-
-                    // Add "No more contacts" message if there are no more contacts
-                    if (!data.hasMore && append) {
-                        const endMessage = document.createElement('div');
-                        endMessage.className = 'p-3 text-center text-muted';
-                        endMessage.textContent = 'No more contacts';
-                        contactsList.appendChild(endMessage);
+                if (data.success) {
+                    renderContacts(data.contacts, append);
+                    hasMoreContacts = data.hasMore;
+                    
+                    // Only increment page if we have more contacts and this was an append operation
+                    if (data.hasMore && append) {
+                        currentContactsPage++;
                     }
                 } else {
-                    throw new Error('Invalid data format received');
+                    throw new Error(data.error || 'Failed to load contacts');
                 }
             })
             .catch(error => {
                 console.error('Error loading contacts:', error);
-                // Remove loading indicator if it exists
-                const loadingIndicator = contactsList.querySelector('.loading-contacts');
-                if (loadingIndicator) {
-                    loadingIndicator.remove();
-                }
-
                 if (!append) {
                     contactsList.innerHTML = `
-                    <div class="p-3 text-center text-danger cursor-pointer" onclick="loadContacts()">
-                        <i class="bi bi-exclamation-circle"></i>
-                        <div class="mt-2">Error loading contacts. Click to try again.</div>
-                    </div>`;
+                        <div class="text-center p-3 text-danger">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <div class="mt-2">Failed to load contacts</div>
+                            <button class="btn btn-sm btn-outline-primary mt-2" onclick="loadContacts()">Retry</button>
+                        </div>
+                    `;
                 }
             })
             .finally(() => {
                 isLoadingContacts = false;
             });
-        }
 
         // Add scroll listeners for infinite scrolling
         const contactsListDiv = document.getElementById('contactsList');
