@@ -20,7 +20,7 @@ ALTER TABLE `package_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gal
 
 php yii package-temp/step-1;
 php yii package-temp/step-1a;
-php yii package-temp/step-1b;
+php yii package-temp/step-2a;
 php yii package-temp/step-2;
 
 ###     Run these Sql
