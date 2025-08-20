@@ -1,0 +1,1 @@
+ALTER TABLE safari_operator_rating CHANGE status status INT NULL DEFAULT '10' COMMENT '10 =>\'Create\'\r\n1 => \'Active\'\r\n0 => \'Inactive\'\r\n-1 => \'Delete\'';
