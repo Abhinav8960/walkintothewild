@@ -203,7 +203,6 @@ class DefaultController extends RestController
             if ($model->validate()) {
                 $model->initializeForm();
                 if ($model->rating_model->save(false)) {
-                    $model->updateRatingintoTable($safari_park);
                     Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Thanks for Review! Your review sent for approval"]);
                 }
