@@ -34,7 +34,7 @@ class Chat extends \common\models\chat\Chat
             'last_message_datetime'  => function () {
                 return strtotime($this->last_message_datetime);
             },
-            // 'chat_type',
+            'chat_type',
             // 'park_id',
             // 'package_id',
             // 'quote_id',

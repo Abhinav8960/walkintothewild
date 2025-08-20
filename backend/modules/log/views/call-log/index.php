@@ -27,9 +27,13 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "";
+                            if(!empty($model->source)){
+                                $str .= $model->source;
+                                $str .= "<br>";
+                            }
                             if (!empty($model->partner)) {
 
-                                $str = '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
+                                $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
                                 $str .= "<br>";
                             }
                             return $str .= $model->request_caller_2_no;
@@ -52,6 +56,7 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
 
+
                             $url = !empty($model->file_path) ? Yii::$app->params['s3_endpoint'] . '/' . $model->file_path : $model->recording_url;
                             if ($url != '' || $url != NULL) {
                                 return '<audio controls>
@@ -59,10 +64,11 @@ $this->params['title'] = $this->title;
                                 <source src="' . $url . '" type="audio/mpeg" style="width:20px">
                                 audio not supported.
                               </audio>';
-                            }
-                            elseif($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')
-                            {
+                            } elseif ($model->service == \common\models\CallLog::SERVICE_AIR_PHONE && ($model->call_status == 'caller_no_answer' || $model->call_status == 'agent_no_answer')) {
                                 return '<p class="text-warning" style="color: red !important;">Call Not Received</p>';
+                            } elseif ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
+
                             }
                             return '';
                         }
@@ -76,14 +82,7 @@ $this->params['title'] = $this->title;
                     //     }
                     // ],
 
-                     [
-                        'label' => 'Call Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
-                        }
-                    ],
+                    
                     // [
                     //     'label' => 'Recording Duration',
                     //     'contentOptions' => ['style' => 'width: 10%;'],
@@ -113,6 +112,10 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
+
+                            if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+                                return isset($model->ivr_s_time) ? $model->ivr_s_time : '';
+                            }
                             return isset($model->datetime) ? date('Y-m-d h:i A', strtotime($model->datetime)) : '';
                         }
                     ],
@@ -121,25 +124,40 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
+                            if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+                                return isset($model->talk_duration) ? $model->talk_duration .' Seconds' : '';
+                            }
                             return isset($model->duration) ? $model->duration : '';
                         }
                     ],
                     [
-                        'label' => 'Call Request Status',
+                        'label' => 'Call Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->call_request_status) ? $model->call_request_status : '';
+
+                            if ($model->service == \common\models\CallLog::SERVICE_DEEP_CALL) {
+                                 return \common\models\CallLog::callStatusList()[$model->call_status] ?? '';
+                            }
+                            return isset($model->call_status) ? ucwords(str_replace('_', ' ', $model->call_status))  : '';
                         }
                     ],
-                    [
-                        'label' => 'Call Request Message',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->call_request_message) ? $model->call_request_message : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Call Request Status',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->call_request_status) ? $model->call_request_status : '';
+                    //     }
+                    // ],
+                    // [
+                    //     'label' => 'Call Request Message',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->call_request_message) ? $model->call_request_message : '';
+                    //     }
+                    // ],
                 ],
             ]); ?>
         </div>

@@ -101,6 +101,13 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                ],        
+                
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['call-error'],
+                    'logFile' => '@api/runtime/logs/Call.log',
                 ],
             ],
         ],
@@ -111,6 +118,8 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+
+                'test-call' => 'site/test-call',
                 'site/test' => 'site/test',
                 'mobile-no-verification' => 'site/mobile-no-verification',
                 'verify-mobile-no' => 'site/verify-mobile-no',

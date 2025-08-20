@@ -37,6 +37,14 @@ return [
                     'maxFileSize' => 1024 * 2, // 2MB
                     'maxLogFiles' => 5,
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['deep-call'],
+                    'logFile' => '@runtime/logs/deep-call.log',
+                    'maxFileSize' => 1024 * 2, // 2MB
+                    'maxLogFiles' => 5,
+                ],
                 
             ],
         ],

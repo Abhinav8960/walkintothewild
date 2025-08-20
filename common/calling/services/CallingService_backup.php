@@ -6,7 +6,7 @@ use api\models\chat\Chat;
 use api\models\chat\ChatMessage;
 use common\models\CallLog;
 
-class CallingService
+class CallingService_backup
 {
 
     public $reference_id;
@@ -35,10 +35,11 @@ class CallingService
 
     public $call_model;
 
-    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no, $request_caller_2_user_id)
+    public function __construct($chat_id, $lead_id, $operator_user_id, $call_initiated_user_id, $call_initiated_partner_id, $request_caller_1_no, $request_caller_1_user_id, $request_caller_2_no = null, $request_caller_2_user_id = null)
     {
+       
         $this->reference_id = \Yii::$app->security->generateRandomString(5) . '_' . time() . '_' . \Yii::$app->security->generateRandomString(5);
-        $this->request_vnm = time() .rand(1, 1000);
+        $this->request_vnm = \Yii::$app->params['airphone_api_vnm'];
         $this->chat_id = $chat_id;
         $this->lead_id = $lead_id;
         $this->request_caller_1_no = $request_caller_1_no;
@@ -56,7 +57,6 @@ class CallingService
      */
     public function callNow()
     {
-
         if (empty($this->chat_id) || empty($this->lead_id) || empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
             \Yii::error('Missing required parameters for call: ' . json_encode([
                 'chat_id' => $this->chat_id,
@@ -95,14 +95,11 @@ class CallingService
      */
     private function callImmediately()
     {
-
-        $url = \Yii::$app->params['airphone_api_host_url'];
+        $url = \Yii::$app->params['airphone_api_host_url'] . '/api/c2c';
         $options = [
-            'user_id' => \Yii::$app->params['airphone_api_user_id'],
-            // 'agent' => $this->request_caller_2_no,
-            // 'caller' => $this->request_caller_1_no,
-            'from' => $this->request_caller_2_no, // This is the number from which the call is made
-            'to' => $this->request_caller_1_no, // This is the number to be called
+            'vnm' => \Yii::$app->params['airphone_api_vnm'],
+            'agent' => $this->request_caller_2_no,
+            'caller' => $this->request_caller_1_no,
             'token' => \Yii::$app->params['airphone_api_token'],
             'reqId' => $this->reference_id
         ];
@@ -117,30 +114,26 @@ class CallingService
             \Yii::error('Call failed: ' . $response->content, __METHOD__);
             return false;
         }
-
-        \Yii::info('Informational call log', 'call-error');
-
-
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
 
         // print_r([$response->content, $options]);
         // die();
         if (is_array($arr_contents) && !empty($arr_contents)) {
-            if (isset($arr_contents['status']) && strtolower($arr_contents['status'])) {
-                $this->call_model->unique_id = $arr_contents['unique_id'] ?? null;
+            if (isset($arr_contents['status']) && strtolower($arr_contents['status']) == 'success') {
+                $this->call_model->unique_id = $arr_contents['unique_id'];
                 $this->call_model->status = CallLog::STATUS_SUCCESS;
             }
         }
         $this->call_model->call_request_status = $arr_contents['status'];
-        $this->call_model->call_request_message = $arr_contents['message'] ?? null;
+        $this->call_model->call_request_message = $arr_contents['message'];
         $this->call_model->save(false);
         return $this->call_model->status;
     }
 
 
 
-   private function preparechat()
+    private function preparechat()
     {
         $chat_model = Chat::find()
             ->andWhere(['id' => $this->call_model->chat_id])
