@@ -86,6 +86,7 @@ class Package extends \common\models\package\Package
             },
             'partner',
             'is_wishlist',
+            'is_best_deal',
             'comment_count',
             'resource_uri',
             'can_comment',

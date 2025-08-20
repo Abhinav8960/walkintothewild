@@ -17,6 +17,8 @@ ALTER TABLE `package_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gal
 
 ALTER TABLE `package` ADD `retail_price` DECIMAL(10,2) NULL DEFAULT NULL AFTER `static_json`;
 ALTER TABLE `package_version` ADD `retail_price` DECIMAL(10,2) NULL DEFAULT NULL AFTER `total_view`;
+ALTER TABLE `package` ADD `is_best_deal` TINYINT NULL DEFAULT '0' AFTER `retail_price`;
+
 
 
 ###     Run this Cron
