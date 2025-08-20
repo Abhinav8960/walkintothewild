@@ -29,11 +29,18 @@ class ParkReviewApprovalController extends Controller
         $model = $this->findModel($id);
         if ($model->status == 0) {
             $model->status = SafariParkRating::STATUS_ACTIVE;
-            $model->save(false);
+            if ($model->save(false)) {
+                $safari_park = $model->park;
+                $model->updateRatingintoTable($safari_park);
+            }
             \Yii::$app->getSession()->setFlash('success', 'Approved Successfully');
         } else {
             $model->status = SafariParkRating::STATUS_SUSPEND;
             $model->save(false);
+            if ($model->save(false)) {
+                $safari_park = $model->park;
+                $model->updateRatingintoTable($safari_park);
+            }
             \Yii::$app->getSession()->setFlash('success', 'Disapproved Successfully');
         }
 
