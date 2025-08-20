@@ -2169,7 +2169,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return $operator_types[$legal_entity_type] ?? '';
     }
 
-<<<<<<< HEAD
     public static function fdstatusoption()
     {
         return [
@@ -2177,7 +2176,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '2' => 'Pending',
         ];
     }
-=======
     public static function packagestatusoption()
     {
         return [
@@ -2191,5 +2189,4 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $external_operator = ExternalOperator::find()->where(['status' => ExternalOperator::STATUS_ACTIVE])->orderBy(['operator_name' => SORT_ASC]);
         return ArrayHelper::map($external_operator->all(), 'operator_name', 'operator_name');
     }
->>>>>>> support-branch
 }
