@@ -250,7 +250,7 @@ class DefaultController extends RestController
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->rating_model->save(false)) {
-                $model->updateRatingintoTable($operator);
+                // $model->updateRatingintoTable($operator);
                 /**Mail to operator */
 
                 // $operator_name = $operator->business_name;

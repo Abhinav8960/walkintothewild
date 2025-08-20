@@ -85,7 +85,7 @@ $this->title = 'Leads';
                                 <tr>
                                     <td>User Notes</td>
                                     <td>
-                                        <p><?= !empty($model->user_notes) ? $model->user_notes : '' ?></p>
+                                        <p><?= !empty($model->user_notes) ? GeneralModel::maskContactInfoInString($model->user_notes) : '' ?></p>
                                     </td>
                                 </tr>
                             <?php } ?>

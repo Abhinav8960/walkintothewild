@@ -96,6 +96,5 @@ ALTER TABLE `partner_gallery` ADD `delete_reason` VARCHAR(512) NULL DEFAULT NULL
 
 
 
-
-<!-- 14 Aug -->
-ALTER TABLE `safari_operator` ADD `can_call` TINYINT NOT NULL DEFAULT '0' AFTER `is_approved`;
+<!-- qutation new template -->
+INSERT INTO `master_mail_template` (`id`, `code`, `name`, `path`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES (NULL, 'QUME', 'Quotation Message', 'quotationchatemail-html', '1', '1716278771', '2', '1716289465', '2');

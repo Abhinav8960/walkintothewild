@@ -91,6 +91,7 @@ AppAsset::register($this);
                 <h4>Quotations</h4>
                 <table class="table table-responsive table-bordered">
                     <thead>
+                        <th>Received Date</th>
                         <th>Operator</th>
                         <th>Safaris</th>
                         <th>Travelers</th>
@@ -104,7 +105,7 @@ AppAsset::register($this);
                         <th>Platform customer discount</th> -->
                         <th>Net payment price</th>
                         <th>No of installment</th>
-                        <th>Lead Received Date</th>
+                        <!-- <th>Lead Received Date</th> -->
                         <th>Validity Date</th>
                         <th>Permit Booking Date</th>
                         <th>Payment Link</th>
@@ -113,6 +114,7 @@ AppAsset::register($this);
                         <?php if (count($quotations) > 0) { ?>
                             <?php foreach ($quotations as $quotation) { ?>
                                 <tr class="<?= $quotation->is_payment_received == true ? 'bg-warning' : '' ?>">
+                                    <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
                                     <td><?= $quotation->partner->business_name ?></td>
                                     <td><?= !empty($quotation->safaris) ? $quotation->safaris : ''; ?></td>
                                     <td><?= !empty($quotation->travelers) ? $quotation->travelers : '' ?></td>
@@ -138,7 +140,7 @@ AppAsset::register($this);
                                     <td>₹<?= $quotation->plateform_customer_discount ?></td> -->
                                     <td>₹<?= $quotation->net_payment_price ?></td>
                                     <td><?= $quotation->installment ?></td>
-                                    <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td>
+                                    <!-- <td><?= date('d D M, Y h:i A', $quotation->created_at) ?></td> -->
                                     <td><?= $quotation->validity_date ?></td>
                                     <td><?= $quotation->permit_booking_date ?></td>
                                     <td>

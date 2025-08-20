@@ -85,7 +85,7 @@ class SafariOperatorReviewForm extends \yii\base\Model
         // $this->rating_model->user_platform_version = $agent->version($this->rating_model->user_platform);
         // $this->rating_model->user_browser = $agent->browser();
         // $this->rating_model->user_browser_version = $agent->version($this->rating_model->user_browser);
-        $this->rating_model->status = 1;
+        $this->rating_model->status = 10;
     }
 
     /**

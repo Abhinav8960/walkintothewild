@@ -150,9 +150,11 @@ use yii\helpers\Url;
                 }
                 ?>
             </div>
+            <?php if(false){ ?>
             <div class="sendNotificationBtn suportChatNotificationBtn pb-0 mt-2">
                 <?= Html::button('Send Notification', ['value' => Url::toRoute(['send-notification', 'chat_hash' => $chat->chat_hash]), 'class' => 'button-created new create pop-up']) ?>
             </div>
+            <?php } ?>
         </div>
         
     </div>

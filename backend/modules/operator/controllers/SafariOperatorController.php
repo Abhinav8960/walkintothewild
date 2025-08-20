@@ -525,17 +525,17 @@ class SafariOperatorController extends Controller
         return $this->renderAjax('_file_view', ['fileUrl' => $url]);
     }
 
-    public function actionCanCall($id)
+    public function actionPhoneVerified($id)
     {
         $model = $this->findModel($id);
-        if ($model->can_call == 1) {
-            $model->can_call = 0;
+        if ($model->is_phone_no_verified == 1) {
+            $model->is_phone_no_verified = 0;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Operator is not able to call users !');
+            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to not verified!');
         } else {
-            $model->can_call = 1;
+            $model->is_phone_no_verified = 1;
             $model->save(false);
-            \Yii::$app->getSession()->setFlash('success', 'Operator can call to the users now !');
+            \Yii::$app->getSession()->setFlash('success', 'Operator phone is set to verified !');
         }
 
         return $this->redirect(Yii::$app->request->referrer);

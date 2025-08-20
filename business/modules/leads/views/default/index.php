@@ -125,6 +125,14 @@ $this->title = 'Leads';
                     ],
 
                     [
+                        'label' => 'Chat Started',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) use ($safari_operator) {
+                            return LeadPartners::chatStarted($model->id, $safari_operator->id);
+                        }
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: left;'],
