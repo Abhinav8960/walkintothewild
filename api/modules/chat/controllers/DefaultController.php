@@ -82,7 +82,7 @@ class DefaultController extends RestController
 
 
 
-    public function actionDirectUserChat()
+    public function actionDirectUserChat($chat_hash = null)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 1]),
@@ -98,6 +98,11 @@ class DefaultController extends RestController
         } else {
             $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
         }
+
+        if(!empty($chat_hash)){
+            $query->andWhere(['chat_hash' => $chat_hash]);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
