@@ -25,7 +25,7 @@ class OperatorReviewController extends Controller
     public function actionApproved($id)
     {
         $model = $this->findModel($id);
-        if ($model->status == 10) {
+        if ($model->status == SafariOperatorRating::STATUS_CREATE) {
             $model->status = SafariOperatorRating::STATUS_ACTIVE;
             if ($model->save(false)) {
                 $operator = $model->operator;
@@ -35,6 +35,15 @@ class OperatorReviewController extends Controller
                 $operator->google_review_count = $count;
                 $operator->save(false);
             }
+
+            if($model->status == SafariOperatorRating::STATUS_ACTIVE){
+                $operator_url = Yii::$app->frontendUrlManager->createAbsoluteUrl([
+                        '/operator/default/reviewlist',
+                        'slug' => $model->operator->slug
+                    ]);
+                new \common\events\operator\NewReviewByUserToOperator($model->operator->email, $operator_url);
+            }
+
             \Yii::$app->getSession()->setFlash('success', 'Approved Successfully');
         }
         return $this->redirect(['index']);

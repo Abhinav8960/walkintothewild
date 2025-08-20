@@ -119,12 +119,12 @@ class SafariOperatorRating extends \yii\db\ActiveRecord implements \common\inter
 
     public function afterSave($insert, $changedAttributes)
     {
-        if($this->status == SafariOperatorRating::STATUS_ACTIVE){
+        if($this->status == SafariOperatorRating::STATUS_CREATE){
             $operator_url = Yii::$app->frontendUrlManager->createAbsoluteUrl([
                     '/operator/default/reviewlist',
                     'slug' => $this->operator->slug
                 ]);
-            return new \common\events\operator\NewReviewByUser($this->operator->email,$operator_url);
+            return new \common\events\operator\NewReviewByUserToAdmin($this->operator->business_name,$operator_url);
         }
     }
 }

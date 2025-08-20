@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\chat\Chat;
 use common\models\operator\SafariOperator;
 use Yii;
 
@@ -107,7 +108,7 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
             [['is_detail_fetched'], 'default', 'value' => 0],
             [['service', 'chat_id', 'lead_id', 'ivr_duration', 'service_user_id', 'talk_duration', 'agent_on_call_duration', 'last_first_duration', 'cust_answer_duration', 'hangup_by_source_detected', 'total_hold_duration', 'request_caller_1_user_id', 'request_caller_2_user_id', 'operator_user_id', 'call_initiated_user_id', 'call_initiated_partner_id', 'status', 'is_detail_fetched', 'created_at', 'updated_at'], 'integer'],
             [['reference_id', 'chat_id', 'ivr_duration', 'service_user_id',  'master_group_id', 'last_first_duration', 'cust_answer_duration', 'hangup_by_source_detected', 'total_hold_duration'], 'required'],
-            [['ivr_s_time', 'ivr_e_time', 'first_answer_time', 'last_hangup_time', 'cust_answer_s_time', 'cust_answer_e_time','forward','master_agent_number','camp_id','exc_adm','call_status', 'master_group_id'], 'safe'],
+            [['ivr_s_time', 'ivr_e_time', 'first_answer_time', 'last_hangup_time', 'cust_answer_s_time', 'cust_answer_e_time', 'forward', 'master_agent_number', 'camp_id', 'exc_adm', 'call_status', 'master_group_id'], 'safe'],
             [['reference_id', 'caller_id', 'received_id', 'ivr_number', 'rec_duration'], 'string', 'max' => 50],
             [['unique_id', 'request_vnm', 'datetime', 'duration'], 'string', 'max' => 100],
             [['did', 'c_type',   'c_number', 'master_num_ctc', 'master_agent', 'master_agent_number',  'call_id', 'first_attended', 'ivr_execute_flow', 'recording_url', 'dial_status', 'call_type',  'file_path', 'call_request_status', 'call_request_message'], 'string', 'max' => 255],
@@ -333,5 +334,21 @@ class CallLog extends \common\models\trierror\ActiveLogRecord implements \common
             20 => 'Call not connected', //	To Hangup in Queue
             21 => 'Call not connected' //	To Hangup
         ];
+    }
+
+    public function getChat()
+    {
+        return $this->hasOne(Chat::className(), ['id' => 'chat_id']);
+    }
+
+    public function getSource()
+    {
+        if (isset($this->chat->chat_type)) {
+
+            if ($this->chat->chat_type == Chat::CHAT_TYPE_SHARE_SAFARI) {
+                return 'FD';
+            }
+        }
+        return null;
     }
 }
