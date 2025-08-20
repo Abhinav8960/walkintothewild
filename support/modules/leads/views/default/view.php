@@ -68,7 +68,7 @@ AppAsset::register($this);
                                         $str .= '<span class="payRece notRece d-inline-block mb-1">Payment Not Received</span>';
                                     }
 
-                                    $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
+                                    // $str .= '<br><b><a style="color: black !important;" href="/log/transaction?TransactionSearch[lead_id]=' . $model->id . '" target="_blank">All Transaction</b>: </a>';
                                     echo $str;
 
                                     ?>
@@ -78,6 +78,68 @@ AppAsset::register($this);
                                 </div>
                             </td>
                         </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <p class="page-header">Quotation</p>
+</div>
+<div class="table-wrapper remove-css mb-4">
+    <div class="table-responsive">
+        <div class="min-width-table">
+            <div id="w0" class="grid-view">
+                <table class="table tablecustoms table-striped align-middle w-100">
+                    <thead>
+                        <tr>
+                            <th>Recieved Date</th>
+                            <th>Operator</th>
+                            <th>Safaris</th>
+                            <th>Travelers</th>
+                            <th>Accomodation</th>
+                            <th>Travel Date looking For</th>
+                            <th>Info</th>
+                            <th>Net payment price</th>
+                            <th>No of installment</th>
+                            <th>Validity Date</th>
+                            <th>Permit Booking Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (count($quotations) > 0) { ?>
+                            <?php foreach ($quotations as $quotation) { ?>
+                                <tr>
+                                    <td><?= date('d M Y, h:i A', $quotation->created_at) ?></td>
+                                    <td><?= $quotation->partner->business_name ?></td>
+                                    <td><?= !empty($quotation->safaris) ? $quotation->safaris : ''; ?></td>
+                                    <td><?= !empty($quotation->travelers) ? $quotation->travelers : '' ?></td>
+                                    <td><?= !empty($quotation->staycatgory) ? $quotation->staycatgory->title : '' ?></td>
+                                    <td>
+                                        <?php
+                                        $str = date('d M, Y', strtotime($quotation->start_date));
+                                        if (!empty($quotation->end_date)) {
+                                            $str .= '- ' . date('d M, Y', strtotime($quotation->end_date));
+                                        }
+                                        echo $str;
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?= $quotation->name ?>
+                                        <?= $quotation->email ?>
+                                        <?= $quotation->phone ?>
+                                    </td>
+                                    <td>₹<?= $quotation->net_payment_price ?></td>
+                                    <td><?= $quotation->installment ?></td>
+                                    <td><?= $quotation->validity_date ?></td>
+                                    <td><?= $quotation->permit_booking_date ?></td>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
 
                     </tbody>
                 </table>
@@ -103,7 +165,7 @@ AppAsset::register($this);
                 <?php foreach ($model->assignOperator as $index => $assignOperator) { ?>
                     <li class="nav-item" role="presentation">
                         <a href="<?= Url::toRoute(['partner-lead-chat', 'id' => $model->id, 'safari_operator_id' => $assignOperator->partner->id]) ?>" class="nav-link <?= isset($safari_operator_model->id) && $assignOperator->partner->id == $safari_operator_model->id ? 'active' : '' ?>">
-                        <?= $assignOperator->partner->business_name ?></a> 
+                            <?= $assignOperator->partner->business_name ?></a>
                     </li>
                 <?php } ?>
             </ul>

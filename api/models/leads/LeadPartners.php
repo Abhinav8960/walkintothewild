@@ -71,4 +71,18 @@ class LeadPartners extends \common\models\leads\LeadPartners
         }
         return 0;
     }
+
+    public static function chatStarted($lead_id, $partner_id)
+    {
+        $start = LeadPartners::find()->where([
+            'lead_id' => $lead_id,
+            'partner_id' => $partner_id,
+            'is_chat_started' => 1
+        ])->limit(1)->one();
+
+        if ($start) {
+            return '<span class="badge badge-paid">Yes</span>';
+        }
+        return '<span class="badge badge-pending">No</span>';
+    }
 }
