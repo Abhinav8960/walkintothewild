@@ -569,6 +569,76 @@ class DefaultController extends RestController
         }
     }
 
+    // public function actionMakeCallOnChat($user_handle, $chat_hash)
+    // {
+
+    //     $login_user = $this->userinfo;
+    //     $individual_user = $this->individualuser($user_handle);
+    //     if (!$individual_user) {
+    //         // return Yii::$app->api->sendFailedResponse([], 'User not found', 400);
+    //         return Yii::$app->api->sendResponse([], ['message' => 'User not found'], 400);
+    //     }
+
+    //     if (!empty($chat_hash)) {
+    //         // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+    //         $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+    //         if (empty($chat_model)) {
+    //             return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+    //         }
+    //     } else {
+    //         return Yii::$app->api->sendResponse([], ['message' => 'Chat not found'], 400);
+    //     };
+
+    //     if ($chat_model->chat_type == Chat::CHAT_TYPE_DIRECT) {
+    //         return Yii::$app->api->sendResponse([], ['message' => 'You can not perform this action'], 403);
+    //     }
+    //     if ($chat_model->operator->is_phone_no_verified == 0 || empty($chat_model->operator->phone_no) || $chat_model->user->is_mobile_no_verified == 0 || empty($chat_model->user->mobile_no)) {
+    //         return Yii::$app->api->sendResponse([], ['message' => 'You cannot perform this action, as phone is not available or verified for any of the chat members'], 403);
+    //     }
+
+
+    //     // Example parameters
+    //     $transaction = Yii::$app->db->beginTransaction();
+    //     try {
+    //         if (!$chat_model->user->is_mobile_no_verified) {
+    //             return Yii::$app->api->sendResponse([], ['message' => 'User number is not verified.'], 403);
+    //         }
+
+    //         $chat_id = $chat_model->id;
+    //         $lead_id = $chat_model->lead_id;
+    //         $call_initiated_user_id = $this->userinfo->id; // Example user ID who initiated the call
+    //         $operator_user_id =  $this->userinfo->id; // Example operator user ID
+    //         $call_initiated_partner_id = $chat_model->operator->id; // can be null
+    //         $request_caller_1_no = $chat_model->user->mobile_no;
+    //         $request_caller_1_user_id = $chat_model->user->id;
+    //         $request_caller_2_no = $chat_model->operator->phone_no; // Optional
+    //         $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
+
+    //         // Instantiate the CallingService
+    //         $callingService = new \common\calling\services\CallingService(
+    //             $chat_id,
+    //             $lead_id,
+    //             $operator_user_id,
+    //             $call_initiated_user_id,
+    //             $call_initiated_partner_id,
+    //             $request_caller_1_no,
+    //             $request_caller_1_user_id,
+    //             $request_caller_2_no,
+    //             $request_caller_2_user_id
+    //         );
+
+    //         // Call the callNow method
+    //         $result = $callingService->callNow();
+    //         $transaction->commit();
+    //         return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => 'Call initiated.']);
+    //     } catch (\Exception $e) {
+    //         $transaction->rollBack();
+    //         return Yii::$app->api->sendResponse($data = ['status' => 0,], ['message' => 'Failed to initiate the call.']);
+    //     }
+    // }
+
+
+
     public function actionEditMessage()
     {
         $chat_message_id = Yii::$app->request->post('chat_message_id');
