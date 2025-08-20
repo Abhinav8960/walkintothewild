@@ -22,15 +22,6 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Source',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            
-                            return $model->source;
-                        }
-                    ],
-                    [
                         'label' => 'Operator',
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
