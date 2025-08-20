@@ -82,7 +82,7 @@ class DefaultController extends RestController
 
 
 
-    public function actionDirectUserChat($chat_hash = null)
+    public function actionDirectUserChat()
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 1]),
@@ -91,7 +91,7 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "chats");
     }
 
-    public function actionQuatationChat()
+    public function actionQuatationChat($chat_hash = null)
     {
         if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
             $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => 2])->orderby(['last_message_at' => SORT_DESC]);
@@ -100,7 +100,7 @@ class DefaultController extends RestController
         }
 
         if(!empty($chat_hash)){
-            $query->andWhere(['chat_hash' => $chat_hash]);
+           $query = $query->andWhere(['chat_hash' => $chat_hash]);
         }
 
         $dataProvider = new ActiveDataProvider([
