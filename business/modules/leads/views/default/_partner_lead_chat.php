@@ -2,8 +2,8 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
-use common\models\partnergallery\PartnerGalleryVersion;
-use yii\bootstrap5\Html;
+    use common\models\partnergallery\PartnerGalleryVersion;
+    use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
     ?>
@@ -177,6 +177,22 @@ use yii\bootstrap5\Html;
                                  </div>
                              </div>
 
+                         </div>
+                     </div>
+                 <?php } else if ($chat_message->is_call_message == 1) { ?>
+                     <div class="d-flex justify-content-end">
+                         <div class="sentChat himselfVoiceCall">
+                             <div class="innerBg d-flex align-items-center gap-3">
+                                 <div class="callIcons">
+                                     <a href=""><i class="fa-solid fa-phone"></i></a>
+                                 </div>
+                                 <div class="voiceText">
+                                     <h3 class="pb-2"><?= $chat_message->message ?></h3>
+                                     <div class="currentTime">
+                                         <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                     </div>
+                                 </div>
+                             </div>
                          </div>
                      </div>
                  <?php } else { ?>
