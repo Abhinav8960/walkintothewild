@@ -15,8 +15,16 @@ AppAsset::register($this);
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Package : <?= Html::encode($package->package_name) ?></h3>
     <div>
-        
-        <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'package_id' => $package->package_id, 'version' => $package->version])], ['class' => 'btn mt-3', 'style' => 'background-color:#09422D;color:#EFF8F5;', 'title' => 'Approved']) ?>
+
+        <?= Html::a('<i class="fa-solid fa-check" style="font-size:15px; color:#EFF8F5; margin-right:5px"></i>Approved', [Url::toRoute(['approved', 'package_id' => $package->package_id, 'version' => $package->version])], [
+            'class' => 'btn mt-3',
+            'data-method' => 'post',
+            'data-confirm' => 'Are you sure to approved this package?',
+            'title' => 'Approved Package',
+            'data-bs-toggle' => "tooltip",
+            'style' => 'background-color:#09422D;color:#EFF8F5;',
+            'title' => 'Approved'
+        ]) ?>
         <?= Html::button(
             '<i class="fa fa-times" style="font-size:15px; color:#DA2F49; margin-right:5px;"></i>Reject',
             [

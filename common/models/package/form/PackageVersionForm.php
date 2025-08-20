@@ -84,6 +84,7 @@ class PackageVersionForm extends \yii\base\Model
     public $partner_gallery_id;
     public $gallery_json;
     public $gallery_version;
+    public $retail_price;
 
     /**
      * @param [type] $package_version_model
@@ -149,6 +150,7 @@ class PackageVersionForm extends \yii\base\Model
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageFeature::STATUS_ACTIVE])->column();
             $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
             $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_version_model->package_id, 'version' => $this->package_version_model->version, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
+            $this->retail_price = $this->package_version_model->retail_price;
         }
     }
 
@@ -194,6 +196,7 @@ class PackageVersionForm extends \yii\base\Model
             [['getting_there'], 'string', 'max' => 2000],
             [['partner_gallery_id', 'gallery_version', 'user_id'], 'integer'],
             [['gallery_json'], 'safe'],
+            [['retail_price'], 'number', 'min' => 0, 'max' => 9999999],
 
 
         ];
@@ -242,6 +245,7 @@ class PackageVersionForm extends \yii\base\Model
             'partner_gallery_id',
             'gallery_json',
             'gallery_version',
+            'retail_price',
         ];
         $scenarios['update'] = [
             'package_name',
@@ -281,6 +285,7 @@ class PackageVersionForm extends \yii\base\Model
             'partner_gallery_id',
             'gallery_json',
             'gallery_version',
+            'retail_price',
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -341,6 +346,7 @@ class PackageVersionForm extends \yii\base\Model
             'gallery_json' => 'Gallery Json',
             'gallery_version' => 'Gallery Version',
             'status' => 'Status',
+            'retail_price' => 'Retail Price',
         ];
     }
 
@@ -402,6 +408,7 @@ class PackageVersionForm extends \yii\base\Model
         $m->edit_status = 1;
         $m->pending_status = 0;
         $m->status = 10; //create status
+        $m->retail_price = $this->retail_price;
         $m->save(false);
         return $m->id;
     }
@@ -456,11 +463,11 @@ class PackageVersionForm extends \yii\base\Model
             if (!empty($live)) {
                 $this->package_version_model->gallery_json = $live->live_images;
                 if (!empty($live->version)) {
-                $this->package_version_model->gallery_version = $live->version;
+                    $this->package_version_model->gallery_version = $live->version;
                 }
             }
         }
-
+        $this->package_version_model->retail_price = $this->retail_price;
         // $this->package_version_model->type = $this->type;
         // if ($this->type == 1) { // With GST
         //     $this->package_version_model->gst_percentage = $this->gst_percentage;

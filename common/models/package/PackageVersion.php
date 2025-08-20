@@ -119,6 +119,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 2000],
             [['partner_gallery_id', 'gallery_version', 'user_id'], 'integer'],
             [['gallery_json'], 'safe'],
+            [['retail_price'], 'number', 'min' => 0, 'max' => 9999999],
 
 
         ];
@@ -155,6 +156,7 @@ class PackageVersion extends \yii\db\ActiveRecord implements \common\interfaces\
             'gallery_json' => 'Gallery Json',
             'gallery_version' => 'Gallery Version',
             'status' => 'Status',
+            'retail_price' => 'Retail Price',
         ];
     }
 

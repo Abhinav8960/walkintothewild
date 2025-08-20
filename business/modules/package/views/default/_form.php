@@ -153,6 +153,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
 
         <div class="form_boxes mb-3">
+            <label for="">Retail Price<span>*</span></label>
+            <?= $form->field($model, 'retail_price')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Enter',
+                'class' => 'form-control'
+            ])->label(false) ?>
+        </div>
+
+        <div class="form_boxes mb-3">
             <label for="">Validity Date</label>
             <?= $form->field($model, 'max_booking_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
         </div>

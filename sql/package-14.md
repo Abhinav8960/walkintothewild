@@ -15,6 +15,9 @@ ALTER TABLE `package` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery
 ALTER TABLE `package_version` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
 ALTER TABLE `package_day` ADD `gallery_version` INT NULL DEFAULT NULL AFTER `gallery_json`;
 
+ALTER TABLE `package` ADD `retail_price` DECIMAL(10,2) NULL DEFAULT NULL AFTER `static_json`;
+ALTER TABLE `package_version` ADD `retail_price` DECIMAL(10,2) NULL DEFAULT NULL AFTER `total_view`;
+
 
 ###     Run this Cron
 

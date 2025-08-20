@@ -65,6 +65,24 @@ $this->params['buttons'][] = Html::a('Package Reject List', [Url::toRoute(['reje
                         }
                     ],
                     [
+                        'label' => 'Cost Per Two Person',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->cost_per_two_person);
+                        }
+                    ],
+                    [
+                        'label' => 'Retail Price',
+                        'headerOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->retail_price);
+                        }
+                    ],
+                    [
                         'label' => 'Discount Type',
                         'headerOptions' => ['style' => 'width: 10%;'],
                         'contentOptions' => ['style' => 'text-align: right;'],
