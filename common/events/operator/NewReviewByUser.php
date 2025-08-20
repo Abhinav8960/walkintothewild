@@ -17,7 +17,7 @@ class NewReviewByUser extends Event
     public $operator_url;
   
     protected $channels = [
-        'email',
+        // 'email',
         // 'firebase',
     ];
     protected $mail_template_code = 'NRTO'; // New Review by User

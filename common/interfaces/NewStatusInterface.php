@@ -6,6 +6,7 @@ namespace common\interfaces;
 interface NewStatusInterface
 {
 
+    const STATUS_CREATED = 10;
     const STATUS_ACTIVE = 1;
     const STATUS_SUSPEND = 0;
     const STATUS_DELETE = -1;
@@ -65,7 +66,4 @@ interface NewStatusInterface
      * @var string attribute type.
      */
     const TYPE_JSON = 'json';
-
-
-    
 }

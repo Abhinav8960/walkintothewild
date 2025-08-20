@@ -914,11 +914,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									"/pendingapproval/article-comment/index",
 									"/pendingapproval/article-comment/view",
 									"/pendingapproval/park-review-approval/index",
+									"/pendingapproval/operator-review/index",
 								)) ? "is-expanded" : "" ?>">
 				<a class="side-menu__item <?= in_array($active_url, array(
 												"/pendingapproval/article-comment/index",
 												"/pendingapproval/article-comment/view",
 												"/pendingapproval/park-review-approval/index",
+												"/pendingapproval/operator-review/index",
 											)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Pending Approvals</a></li>
@@ -930,6 +932,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/pendingapproval/user-article/index",
 														"/pendingapproval/user-article/view",
 													)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li> -->
+					<li><a class="slide-item <?= in_array($active_url, array(
+													"/pendingapproval/operator-review/index",
+												)) ? "active" : "" ?>" href="/pendingapproval/operator-review/index">Operator Review Approvals</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array(
 													"/pendingapproval/park-review-approval/index",
 												)) ? "active" : "" ?>" href="/pendingapproval/park-review-approval/index">Park Review Approvals</a></li>

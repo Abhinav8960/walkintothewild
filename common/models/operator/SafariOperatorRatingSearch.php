@@ -46,7 +46,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
      */
     public function search($params)
     {
-        $query = SafariOperatorRating::find()->where(['safari_operator_rating.status' => [SafariOperatorRating::STATUS_ACTIVE, SafariOperatorRating::STATUS_SUSPEND]]);
+        $query = SafariOperatorRating::find()->where(['safari_operator_rating.status' => [SafariOperatorRating::STATUS_CREATED, SafariOperatorRating::STATUS_ACTIVE, SafariOperatorRating::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
         $query->andWhere(['parent_id' => 0]);
@@ -109,6 +109,6 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
 
     public static function getOperatorlist()
     {
-        return ArrayHelper::map(SafariOperator::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct safari_operator_id FROM safari_operator_rating)")->orderBy(['business_name'=>SORT_ASC])->all(), 'id', 'business_name');
+        return ArrayHelper::map(SafariOperator::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct safari_operator_id FROM safari_operator_rating)")->orderBy(['business_name' => SORT_ASC])->all(), 'id', 'business_name');
     }
 }
