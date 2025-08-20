@@ -27,7 +27,7 @@ use yii\helpers\Url;
     </div> -->
     <div>
         <?php if ($model->lead_id != null) { ?>
-        <?= $this->params['buttons'][] = Html::button('View Lead Details', ['value' => Url::toRoute(['view-lead-details', 'chat_id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'View Lead Details']); ?>
+            <?= $this->params['buttons'][] = Html::button('View Lead Details', ['value' => Url::toRoute(['view-lead-details', 'chat_id' => $model->id]), 'class' => 'btn btn-info pop-up me-2', 'title' => 'View Lead Details']); ?>
         <?php } ?>
     </div>
 </div>
@@ -41,7 +41,7 @@ use yii\helpers\Url;
                 if ($chats = $model->getChatmessages()->orderby(['id' => SORT_ASC])->all()) {
                     foreach ($chats as $chat_message) {
                         if ($chat_message->created_by == $model->recipient_user_id) {
-                            ?>
+            ?>
                             <?php if ($chat_message->is_quotation_message == 1) { ?>
                                 <div class="d-flex justify-content-center m-2">
                                     <div class="ItineraryQuotationarea">
@@ -147,7 +147,7 @@ use yii\helpers\Url;
 
                             <?php
                             } else {
-                                ?>
+                            ?>
                                 <div class="d-flex justify-content-end m-2">
                                     <div class="sentChat">
                                         <?php if ($chat_message->status == 0) { ?>
@@ -204,7 +204,35 @@ use yii\helpers\Url;
 
                                     </div>
                                 </div>
-                            <?php } else { ?>
+                            <?php } elseif (!empty($chat_message->transaction_id)) {
+                            ?>
+                                <div class="d-flex justify-content-center m-2">
+                                    <div class="ItineraryQuotationarea">
+                                        <div class="topTitle pb-3">
+                                            <h3 class="text-center">Booking <?= $chat_message->transaction->is_payment_received == 1 ? 'Successful' : 'Failed' ?></h3>
+                                        </div>
+                                        <div class="discriptionsCenter">
+                                            <p class="mb-1"><span>Name:</span> <b><?= $chat_message->transaction->name ?? '' ?></b> </p>
+                                            <p class="mb-1"><span>Shared Safari:</span> <b><?= $chat_message->transaction->share_safari->share_safari_title ?? '' ?></b> </p>
+                                            <p class="mb-1"><span>Park:</span> <b><?= $chat_message->transaction->park_label ?? '' ?></b> </p>
+                                            <p class="mb-1"><span>Start Date:</span><b><?= !empty($chat_message->transaction->start_date) ? date('M d, Y', strtotime($chat_message->transaction->start_date)) : '' ?></b></p>
+                                            <p class="mb-1"><span>End Date:</span><b><?= !empty($chat_message->transaction->end_date) ? date('M d, Y', strtotime($chat_message->transaction->end_date)) : '' ?></b></p>
+                                            <p class="mb-1"><span>Number of Safaris:</span><b> <?= $chat_message->transaction->safaris ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Seat:</span><b> <?= $chat_message->transaction->travelers ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Amount:</span><b> <?= $chat_message->transaction->received_amount ?? '' ?></b></p>
+                                            <p class="mb-1"><span>Reference ID:</span> <b><?= $chat_message->transaction->reference_id ?? '' ?></b></p>
+
+
+                                            <p class="mb-1">For any queries or further discussion, message here or call the operator using the call button in chat. Enjoy your upcoming safari!</p>
+
+                                        </div>
+                                        <div class="recievedTime d-flex justify-content-end">
+                                            <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                            } else { ?>
                                 <div class="receivedChat m-2">
                                     <?php if ($chat_message->status == 0) { ?>
                                         <p class="fst-italic"><?= $chat_message->message ?></p>

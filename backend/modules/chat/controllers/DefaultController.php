@@ -48,7 +48,7 @@ class DefaultController extends Controller
     {
 
         $searchModel = new ChatDisplaySearch();
-        $searchModel->chat_type = Chat::CHAT_TYPE_QUOTE;
+        $searchModel->chat_type = [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
