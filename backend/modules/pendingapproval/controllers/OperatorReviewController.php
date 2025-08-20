@@ -13,7 +13,7 @@ class OperatorReviewController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariOperatorRatingSearch();
-        $searchModel->status = SafariOperatorRating::STATUS_CREATED;
+        $searchModel->status = SafariOperatorRating::STATUS_CREATE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -44,7 +44,7 @@ class OperatorReviewController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariOperatorRating::findOne(['id' => $id, 'status' => SafariOperatorRating::STATUS_CREATED])) !== null) {
+        if (($model = SafariOperatorRating::findOne(['id' => $id, 'status' => SafariOperatorRating::STATUS_CREATE])) !== null) {
             return $model;
         }
 
