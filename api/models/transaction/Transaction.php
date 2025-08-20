@@ -6,6 +6,7 @@ use api\models\leads\sharesafari\ShareSafariLead;
 use api\models\meta\MetaStayCategory;
 use api\models\operator\SafariOperator;
 use api\models\park\SafariPark;
+use api\models\sharesafari\ShareSafari;
 use Yii;
 
 /**
@@ -132,5 +133,10 @@ class Transaction extends \common\models\transaction\Transaction
     public function getShare_safari_lead()
     {
         return $this->hasOne(ShareSafariLead::className(), ['id' => 'share_safari_lead_id']);
+    }
+
+    public function getShare_safari()
+    {
+        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
     }
 }
