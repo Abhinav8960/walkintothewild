@@ -2,8 +2,7 @@
 
 namespace backend\modules\pendingapproval\controllers;
 
-
-
+use common\models\GeneralModel;
 use common\models\park\SafariParkRating;
 use common\models\park\SafariParkRatingSearch;
 use Yii;
@@ -31,7 +30,7 @@ class ParkReviewApprovalController extends Controller
             $model->status = SafariParkRating::STATUS_ACTIVE;
             if ($model->save(false)) {
                 $safari_park = $model->park;
-                $model->updateRatingintoTable($safari_park);
+                GeneralModel::updateRatingintoTable($safari_park);
             }
             \Yii::$app->getSession()->setFlash('success', 'Approved Successfully');
         } else {
@@ -39,7 +38,7 @@ class ParkReviewApprovalController extends Controller
             $model->save(false);
             if ($model->save(false)) {
                 $safari_park = $model->park;
-                $model->updateRatingintoTable($safari_park);
+                GeneralModel::updateRatingintoTable($safari_park);
             }
             \Yii::$app->getSession()->setFlash('success', 'Disapproved Successfully');
         }
