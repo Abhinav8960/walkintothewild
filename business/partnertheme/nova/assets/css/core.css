@@ -1857,3 +1857,21 @@ summary::after {
  :not(.btn-check) + .btn:active{
   border-color: transparent !important;
  }
+
+ .image-remark-bottom {
+   position: absolute;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(220, 53, 69, 0.95);
+   color: #fff;
+   padding: 6px 12px;
+   font-size: 15px;
+   width: 100%;
+   text-align: center;
+   border-bottom-left-radius: 6px;
+   border-bottom-right-radius: 6px;
+   box-sizing: border-box;
+   z-index: 2;
+   pointer-events: none;
+}

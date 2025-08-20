@@ -34,7 +34,13 @@ $this->title = 'Gallery';
                             <div class="card p-0 border-0 bg-transparent">
                                 <div class="position-relative">
                                     <a href="<?= Url::toRoute(['view', 'id' => $model->id]) ?>"> <img src="<?= $model->thumbnail ?>"
-                                            class="card-img-top" alt=""></a>
+                                            class="card-img-top" alt="">
+                                        <?php if ($model->remark != null) { ?>
+                                            <div class="image-remark-bottom">
+                                                <?= $model->remark ?>
+                                            </div>
+                                        <?php } ?>
+                                    </a>
 
                                     <div class="dropdown-wrapper" tabindex="0">
                                         <a href="#" class="dot-icon">
