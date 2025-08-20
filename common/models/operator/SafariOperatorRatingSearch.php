@@ -46,7 +46,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
      */
     public function search($params)
     {
-        $query = SafariOperatorRating::find()->where(['safari_operator_rating.status' => [SafariOperatorRating::STATUS_CREATED, SafariOperatorRating::STATUS_ACTIVE, SafariOperatorRating::STATUS_SUSPEND]]);
+        $query = SafariOperatorRating::find()->where(['safari_operator_rating.status' => [SafariOperatorRating::STATUS_CREATE, SafariOperatorRating::STATUS_ACTIVE, SafariOperatorRating::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
         $query->andWhere(['parent_id' => 0]);
