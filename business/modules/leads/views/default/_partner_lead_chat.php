@@ -145,7 +145,7 @@
                     } else { ?>
                      <div class="d-flex justify-content-end">
                          <div class="sentChat">
-                             <p><?= GeneralModel::maskContactInfoInString($chat_message->message) ?></p>
+                             <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                              <div class="timeingNotified d-flex justify-content-end pe-2">
                                  <div class="d-flex gap-3">
                                      <div class="currentTime">
@@ -199,7 +199,7 @@
                      </div>
                  <?php } else { ?>
                      <div class="receivedChat mt-5">
-                         <p><?= GeneralModel::maskContactInfoInString($chat_message->message) ?></p>
+                         <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                          <div class="recievedTime">
                              <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                          </div>
