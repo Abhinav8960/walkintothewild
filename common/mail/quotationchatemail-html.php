@@ -13,10 +13,13 @@ use yii\helpers\Html;
             <h2 style="text-align: center; font-size:25px;  font-family: Arial, sans-serif;">New Message</h2>
             <div style="border-radius: 15px; margin-top:20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: 0.3s; text-align: center; padding: 10px; background-color:#ecedf1;">
                 <p style="font-family: Arial, sans-serif;"> You've recieved a message from <?= $reply_by && isset($reply_by) ? $reply_by : '' ?>. Please check your inbox to view the message and respond.</p>
-                <div style="font-family: Arial, sans-serif; font-size:15px;">
+
+                <!-- <div style="font-family: Arial, sans-serif; font-size:15px;">
                     <span style="font-weight: bold;">Last Message :</span>
-                    <span><?= isset($message) && $message ? $message : '' ?></span>
-                </div>
+                    <span>
+                    // isset($message) && $message ? $message : '' 
+                    ?></span>
+                </div> -->
 
             </div>
 
