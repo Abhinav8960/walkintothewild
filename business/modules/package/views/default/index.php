@@ -206,7 +206,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                             'class' => 'btn btn-xs btn-success',
                                             'data-method' => 'post',
                                             'data-confirm' => 'Are you sure to inactive this package?',
-                                            'title' => 'Unblock User',
+                                            'title' => 'Inactive Package',
                                             'data-bs-toggle' => "tooltip"
                                         ]);
                                     } else if ($model->status == 0) {
@@ -214,7 +214,7 @@ $this->params['buttons'][] = Html::a('Create', ['create'], ['class' => 'button-c
                                             'class' => 'btn btn-xs btn-danger',
                                             'data-method' => 'post',
                                             'data-confirm' => 'Are you sure to active this package?',
-                                            'title' => 'Block User',
+                                            'title' => 'Active Package',
                                             'data-bs-toggle' => "tooltip"
                                         ]);
                                     }

@@ -170,16 +170,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                                         return Html::a('<i class="fa fa-toggle-on"></i>', ['inactive', 'id' => $model->id], [
                                             'class' => 'btn btn-xs btn-success',
                                             'data-method' => 'post',
-                                            'data-confirm' => 'Are you sure to inactive this package?',
-                                            'title' => 'Unblock User',
+                                            'data-confirm' => 'Are you sure to inactive this Fixed Departure?',
+                                            'title' => 'Inactive Fixed Departure',
                                             'data-bs-toggle' => "tooltip"
                                         ]);
                                     } else if ($model->status == 0) {
                                         return Html::a('<i class="fa fa-toggle-off"></i>', ['inactive', 'id' => $model->id], [
                                             'class' => 'btn btn-xs btn-danger',
                                             'data-method' => 'post',
-                                            'data-confirm' => 'Are you sure to active this package?',
-                                            'title' => 'Block User',
+                                            'data-confirm' => 'Are you sure to active this Fixed Departure?',
+                                            'title' => 'Active Fixed Departure',
                                             'data-bs-toggle' => "tooltip"
                                         ]);
                                     }
