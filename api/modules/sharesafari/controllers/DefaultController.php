@@ -1586,11 +1586,11 @@ class DefaultController extends SafariController
                         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are an operator. You can not message!"]);
                     }
                 }
-                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-                if (!$share_safari_intrested) {
-                    $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
-                }
+                // $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                // if (!$share_safari_intrested) {
+                //     $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+                // }
 
                 if (\Yii::$app->request->isPost) {
 
