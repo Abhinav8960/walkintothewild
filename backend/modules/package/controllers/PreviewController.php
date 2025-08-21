@@ -216,4 +216,19 @@ class PreviewController extends Controller
             ]);
         }
     }
+
+    public function actionSetAsBestDeal($id)
+    {
+        $package = Package::find()->where(['id' => $id])->one();
+        if (empty($package)) {
+            Yii::$app->session->setFlash('error', 'Package not found.');
+            return $this->redirect(['index']);
+        }
+
+        $package->is_best_deal = 1;
+        if ($package->save(false)) {
+            Yii::$app->session->setFlash('success', 'Package set as Best Deal successfully.');
+            return $this->redirect(['index', 'id' => $id]);
+        }
+    }
 }

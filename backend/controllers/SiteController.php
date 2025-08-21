@@ -14,6 +14,11 @@ use common\models\package\PackageQuote;
 use common\models\sharesafari\ShareSafari;
 use common\models\LoginForm;
 use common\models\MailLog;
+use common\models\operator\SafariOperatorRating;
+use common\models\package\PackageVersion;
+use common\models\package\PackageVersionSearch;
+use common\models\park\SafariParkRating;
+use common\models\sharesafari\ShareSafariVersion;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -61,7 +66,7 @@ class SiteController extends Controller
         ];
     }
 
-  
+
     /**
      * {@inheritdoc}
      */
@@ -85,209 +90,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $today_start = strtotime('today 00:00:00');
-        $today_end = strtotime('today 23:59:59');
 
-        $startOfWeek = strtotime('monday this week 00:00:00');
-        $endOfWeek = strtotime('sunday this week 23:59:59');
+        $package_model = PackageVersion::find()->where(['status' => PackageVersion::SEND_FOR_APPROVAL_STATUS])->count();
+        $fixed_departure_model = ShareSafariVersion::find()->where(['status' => ShareSafariVersion::SEND_FOR_APPROVAL_STATUS])->count();
+        $operator_review_model = SafariOperatorRating::find()->where(['status' => SafariOperatorRating::STATUS_CREATE])->count();
+        $park_review_model = SafariParkRating::find()->where(['status' => SafariParkRating::STATUS_SUSPEND])->count();
 
-        $startOfMonth = strtotime('first day of this month 00:00:00');
-        $endOfMonth = strtotime('last day of this month 23:59:59');
-
-        $startOfLastMonth = strtotime('first day of last month 00:00:00');
-        $endOfLastMonth = strtotime('last day of last month 23:59:59');
-
-        $todaynew_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
-            ->count();
-
-        $thisweek_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
-            ->count();
-
-        $thismonth_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
-            ->count();
-
-        $lastmonth_new_operator = SafariOperator::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => SafariOperator::STATUS_ACTIVE])
-            ->count();
-
-        $total_new_operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE])->count();
-
-        $todayoperator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
-            ->count();
-
-        $thisweek_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
-            ->count();
-
-        $thismonth_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
-            ->count();
-
-        $lastmonth_operator_request_quote = OperatorQuote::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => OperatorQuote::STATUS_ACTIVE])
-            ->count();
-
-        $total_operator_request_quote = OperatorQuote::find()->where(['status' => OperatorQuote::STATUS_ACTIVE])->count();
-
-        $todaynew_package = Package::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => Package::STATUS_ACTIVE])
-            ->count();
-
-        $thisweek_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => Package::STATUS_ACTIVE])
-            ->count();
-
-        $thismonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => Package::STATUS_ACTIVE])
-            ->count();
-
-        $lastmonth_new_package = Package::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => Package::STATUS_ACTIVE])
-            ->count();
-
-        $total_new_package = Package::find()->where(['status' => Package::STATUS_ACTIVE])->count();
-
-        $todaypackage_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
-            ->count();
-
-        $thisweek_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
-            ->count();
-
-        $thismonth_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
-            ->count();
-
-        $lastmonth_package_request_quote = PackageQuote::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => PackageQuote::STATUS_ACTIVE])
-            ->count();
-
-        $total_package_request_quote = PackageQuote::find()->where(['status' => PackageQuote::STATUS_ACTIVE])->count();
-
-        $todaynew_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
-            ->count();
-
-        $thisweek_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
-            ->count();
-
-        $thismonth_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
-            ->count();
-
-        $lastmonth_new_share_safari = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])
-            ->count();
-
-        $total_new_share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 1])->count();
-
-        $todaynew_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
-            ->count();
-
-        $thisweek_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
-            ->count();
-
-        $thismonth_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
-            ->count();
-
-        $lastmonth_new_fixed_departure = ShareSafari::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])
-            ->count();
-
-        $total_new_fixed_departure = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => 2])->count();
-
-        $todaynew_blog = Blog::find()
-            ->where(['between', 'created_at', $today_start, $today_end])
-            ->andWhere(['status' => Blog::STATUS_ACTIVE])
-            ->count();
-
-        $thisweek_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])
-            ->andWhere(['status' => Blog::STATUS_ACTIVE])
-            ->count();
-
-        $thismonth_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])
-            ->andWhere(['status' => Blog::STATUS_ACTIVE])
-            ->count();
-
-        $lastmonth_new_blog = Blog::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])
-            ->andWhere(['status' => Blog::STATUS_ACTIVE])
-            ->count();
-
-        $total_new_blog = Blog::find()->where(['status' => Blog::STATUS_ACTIVE])->count();
-
-        return $this->render('index', [
-            'todaynew_operator' => $todaynew_operator,
-            'thisweek_new_operator' => $thisweek_new_operator,
-            'thismonth_new_operator' => $thismonth_new_operator,
-            'lastmonth_new_operator' => $lastmonth_new_operator,
-            'total_new_operator' => $total_new_operator,
-            'todayoperator_request_quote' => $todayoperator_request_quote,
-            'thisweek_operator_request_quote' => $thisweek_operator_request_quote,
-            'thismonth_operator_request_quote' => $thismonth_operator_request_quote,
-            'lastmonth_operator_request_quote' => $lastmonth_operator_request_quote,
-            'total_operator_request_quote' => $total_operator_request_quote,
-            'todaynew_package' => $todaynew_package,
-            'thisweek_new_package' => $thisweek_new_package,
-            'thismonth_new_package' => $thismonth_new_package,
-            'lastmonth_new_package' => $lastmonth_new_package,
-            'total_new_package' => $total_new_package,
-            'todaypackage_request_quote' => $todaypackage_request_quote,
-            'thisweek_package_request_quote' => $thisweek_package_request_quote,
-            'thismonth_package_request_quote' => $thismonth_package_request_quote,
-            'lastmonth_package_request_quote' => $lastmonth_package_request_quote,
-            'total_package_request_quote' => $total_package_request_quote,
-            'todaynew_share_safari' => $todaynew_share_safari,
-            'thisweek_new_share_safari' => $thisweek_new_share_safari,
-            'thismonth_new_share_safari' => $thismonth_new_share_safari,
-            'lastmonth_new_share_safari' => $lastmonth_new_share_safari,
-            'total_new_share_safari' => $total_new_share_safari,
-            'todaynew_fixed_departure' => $todaynew_fixed_departure,
-            'thisweek_new_fixed_departure' => $thisweek_new_fixed_departure,
-            'thismonth_new_fixed_departure' => $thismonth_new_fixed_departure,
-            'lastmonth_new_fixed_departure' => $lastmonth_new_fixed_departure,
-            'total_new_fixed_departure' => $total_new_fixed_departure,
-            'todaynew_blog' => $todaynew_blog,
-            'thisweek_new_blog' => $thisweek_new_blog,
-            'thismonth_new_blog' => $thismonth_new_blog,
-            'lastmonth_new_blog' => $lastmonth_new_blog,
-            'total_new_blog' => $total_new_blog,
-        ]);
+        return $this->render('index', ['package_model' => $package_model, 'fixed_departure_model' => $fixed_departure_model, 'operator_review_model' => $operator_review_model, 'park_review_model' => $park_review_model]);
     }
 
     /**

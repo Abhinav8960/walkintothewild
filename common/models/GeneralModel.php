@@ -66,6 +66,7 @@ use common\models\MailLogRecipients;
 use common\models\master\notification\MasterNotificationTemplate;
 use common\models\master\smstemplate\MasterSmsTemplate;
 use common\models\master\userflag\MasterUserFlag;
+use common\models\park\SafariParkRating;
 use common\models\partnergallery\PartnerGallery;
 use DOMDocument;
 use DOMXPath;
@@ -2188,5 +2189,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         $external_operator = ExternalOperator::find()->where(['status' => ExternalOperator::STATUS_ACTIVE])->orderBy(['operator_name' => SORT_ASC]);
         return ArrayHelper::map($external_operator->all(), 'operator_name', 'operator_name');
+    }
+
+    public static function updateRatingintoTable($safari_park)
+    {
+        $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_park->id])->average('rating');
+        $count = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_park->id])->count();
+        $safari_park->google_rating = $avg;
+        $safari_park->google_review_count = $count;
+        $safari_park->save(false);
     }
 }

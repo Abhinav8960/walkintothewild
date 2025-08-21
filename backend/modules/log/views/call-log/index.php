@@ -27,9 +27,13 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             $str = "";
+                            if(!empty($model->source)){
+                                $str .= $model->source;
+                                $str .= "<br>";
+                            }
                             if (!empty($model->partner)) {
 
-                                $str = '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
+                                $str .= '<a href="/operator/safari-operator/view?id=' . $model->partner->id . '" class="text-primary" style="color: green !important;">' . $model->partner->business_name . '</a>';
                                 $str .= "<br>";
                             }
                             return $str .= $model->request_caller_2_no;

@@ -181,27 +181,34 @@ use yii\helpers\Url;
                         <?php
                         } else {
                         ?>
-                            <?php if ($chat_message->is_call_request == 1) { ?>
+                            <?php if ($chat_message->is_call_message == 1) { ?>
                                 <div class="d-flex justify-content-start m-2">
-                                    <div class="sentChat incomingVoiceCall">
-                                        <div class="innerBg innerincomingCall d-flex align-items-center gap-3">
+                                    <div class="receivedChat incomingVoiceCall">
+                                        <div class="innerBg d-flex align-items-center gap-3">
                                             <div class="callIcons">
                                                 <a href=""><i class="fa-solid fa-phone"></i></a>
                                             </div>
                                             <div class="voiceText">
-                                                <h3 style="padding-right: 20px;">
+                                                <h3 style="padding-right: 20px; color: black;">
                                                     <?php if ($chat_message->status == 0) { ?>
                                                         <p class="fst-italic"><?= $chat_message->message ?></p>
                                                     <?php } else { ?>
                                                         <p><?= $chat_message->message ?></p>
                                                     <?php } ?>
                                                 </h3>
+
+                                                <?php if (!empty($chat_message->recordingUrl)) { ?>
+                                                    <audio controls style="margin-top: 10px; width:225px">
+                                                        <source src="<?= $chat_message->recordingUrl ?>" type="audio/mpeg">
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                <?php } ?>
+
                                                 <div class="recievedTime">
-                                                    <span><?= date('Y-m-d h:i A', $chat_message->created_at) ?></span>
+                                                    <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             <?php } elseif (!empty($chat_message->transaction_id)) {

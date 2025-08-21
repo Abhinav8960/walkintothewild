@@ -132,10 +132,10 @@ class DefaultController extends Controller
             $package->partner_gallery_id = $model->partner_gallery_id;
             $package->gallery_json = $model->gallery_json;
             $package->gallery_version = $model->gallery_version;
-            $package->price_after_discount = $model->cost_per_person;
             $package->status = Package::STATUS_ACTIVE;
             $package->edit_status = 0;
             $package->pending_status = 0;
+            $package->retail_price = $model->retail_price;
             $package->save(false);
 
             $package->static_json = $this->prepareJson($package->id);
@@ -558,6 +558,7 @@ class DefaultController extends Controller
                 'no_of_safari' => $package->no_of_safari,
                 'cost_per_person' => (int) ceil($package->cost_per_person),
                 'cost_per_two_person' => (int) ceil($package->cost_per_two_person),
+                'retail_price' => (int) ceil($package->retail_price),
 
                 'package_description' => $package->package_description,
                 'image_path' => $package->image_path,

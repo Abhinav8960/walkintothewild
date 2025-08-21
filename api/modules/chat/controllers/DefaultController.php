@@ -91,13 +91,18 @@ class DefaultController extends RestController
         return $this->querySender($dataProvider, $rootIndexName = "chats");
     }
 
-    public function actionQuatationChat()
+    public function actionQuatationChat($chat_hash = null)
     {
          if (isset($this->userinfo->partner) && !empty($this->userinfo->partner)) {
             $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         } else {
             $query = Chat::find()->where(['status' => 1, 'is_lead_chat_open_for_user' => 1])->andwhere('user_id =' . $this->userinfo->id . ' OR recipient_user_id=' . $this->userinfo->id)->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])->orderby(['last_message_at' => SORT_DESC]);
         }
+
+        if(!empty($chat_hash)){
+           $query = $query->andWhere(['chat_hash' => $chat_hash]);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
@@ -176,7 +181,7 @@ class DefaultController extends RestController
 
         if (!empty($chat_hash)) {
             // $chat_model = Chat::find()->andWhere(['or', ['user_id' => [$individual_user->id, $this->userinfo->id]], ['recipient_user_id' => [$individual_user->id, $this->userinfo->id]]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
-            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => 2])->one();
+            $chat_model = Chat::find()->andWhere(['or', ['user_id' => $this->userinfo->id, 'recipient_user_id' => $individual_user->id], ['user_id' => $individual_user->id, 'recipient_user_id' => $this->userinfo->id]])->andWhere(['chat_hash' => $chat_hash, 'chat_type' => [2,3]])->one();
             if (empty($chat_model)) {
                 $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Chat']);
                 return Yii::$app->api->sendResponse([], ['message' => $message], 400);

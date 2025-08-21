@@ -2,8 +2,8 @@
 
     use common\models\GeneralModel;
     use common\models\leads\Lead;
-use common\models\partnergallery\PartnerGalleryVersion;
-use yii\bootstrap5\Html;
+    use common\models\partnergallery\PartnerGalleryVersion;
+    use yii\bootstrap5\Html;
     use yii\helpers\Url;
 
     ?>
@@ -145,7 +145,7 @@ use yii\bootstrap5\Html;
                     } else { ?>
                      <div class="d-flex justify-content-end">
                          <div class="sentChat">
-                             <p><?= GeneralModel::maskContactInfoInString($chat_message->message) ?></p>
+                             <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                              <div class="timeingNotified d-flex justify-content-end pe-2">
                                  <div class="d-flex gap-3">
                                      <div class="currentTime">
@@ -179,9 +179,27 @@ use yii\bootstrap5\Html;
 
                          </div>
                      </div>
+                 <?php } else if ($chat_message->is_call_message == 1) { ?>
+                     <div class="d-flex justify-content-start m-2">
+                         <div class="receivedChat incomingVoiceCall">
+                             <div class="innerBg d-flex align-items-center gap-3">
+                                 <div class="callIcons">
+                                     <a href=""><i class="fa-solid fa-phone"></i></a>
+                                 </div>
+                                 <div class="voiceText">
+                                     <h3 style="padding-right: 20px;">
+                                         <?= $chat_message->message ?>
+                                     </h3>
+                                     <div class="recievedTime">
+                                         <span style="color: white;"><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
                  <?php } else { ?>
                      <div class="receivedChat mt-5">
-                         <p><?= GeneralModel::maskContactInfoInString($chat_message->message) ?></p>
+                         <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                          <div class="recievedTime">
                              <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
                          </div>

@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
@@ -51,6 +51,24 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             return GeneralModel::number_format_indian($model->cost_per_person);
+                        }
+                    ],
+                    [
+                        'label' => 'Cost Per Two Person',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->cost_per_two_person);
+                        }
+                    ],
+                    [
+                        'label' => 'Retail Price',
+                        'headerOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'text-align: right;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return GeneralModel::number_format_indian($model->retail_price);
                         }
                     ],
                     [
@@ -127,7 +145,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{view}{reject}',
                         'buttons' => [
-                           
+
                             // 'approved' => function ($url, $model) {
                             //     if ($model->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
                             //         return Html::a(
