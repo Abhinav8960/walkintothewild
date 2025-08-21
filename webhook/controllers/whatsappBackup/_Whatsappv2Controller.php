@@ -10,26 +10,19 @@ use yii\filters\VerbFilter;
 use yii;
 use Netflie\WhatsAppCloudApi\WebHook;
 
-
 /**
  * WhatsApp Webhook Controller
  * Handles incoming messages and status updates from WhatsApp Cloud API v23.0
  */
 class WhatsappController extends Controller
 {
-    private $whatsappAccessToken;
-    
-    public function init()
-    {
-        parent::init();
-        $this->whatsappAccessToken = \Yii::$app->params['whatsapp']['accessToken'];
-    }
 
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
+
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -38,6 +31,7 @@ class WhatsappController extends Controller
                         'actions' => ['index'],
                         'allow' => true,
                     ],
+
                 ],
             ],
             'verbs' => [
@@ -48,6 +42,7 @@ class WhatsappController extends Controller
             ],
         ];
     }
+
 
     public function beforeAction($action)
     {
@@ -146,7 +141,7 @@ class WhatsappController extends Controller
             'contact_id' => $contact->id,
             'direction' => WhatsappMessages::DIRECTION_INBOUND,
             'status' => WhatsappMessages::STATUS_DELIVERED,
-            'timestamp' => isset($message['timestamp']) ? date('Y-m-d H:i:s', $message['timestamp']) : date('Y-m-d H:i:s')
+            'timestamp' => isset($message['timestamp']) ? date('Y-m-d H:i:s', $message['timestamp']) : strtotime(date('Y-m-d H:i:s'))
         ]);
 
         // Handle different message types
@@ -162,12 +157,7 @@ class WhatsappController extends Controller
                     $whatsappMessage->mime_type = $message['image']['mime_type'] ?? null;
                     $whatsappMessage->sha256 = $message['image']['sha256'] ?? null;
                     $whatsappMessage->media_id = $message['image']['id'] ?? null;
-                    
-                    // Upload to S3
-                    $s3Key = $this->uploadMediaToS3($message['image']['id'], 'image', $whatsappMessage->mime_type);
-                    if ($s3Key) {
-                        $whatsappMessage->media_url = $s3Key;
-                    }
+                    $whatsappMessage->caption = $message['image']['caption'] ?? null;
                 }
                 break;
 
@@ -177,12 +167,7 @@ class WhatsappController extends Controller
                     $whatsappMessage->mime_type = $message['video']['mime_type'] ?? null;
                     $whatsappMessage->sha256 = $message['video']['sha256'] ?? null;
                     $whatsappMessage->media_id = $message['video']['id'] ?? null;
-                    
-                    // Upload to S3
-                    $s3Key = $this->uploadMediaToS3($message['video']['id'], 'video', $whatsappMessage->mime_type);
-                    if ($s3Key) {
-                        $whatsappMessage->media_url = $s3Key;
-                    }
+                    $whatsappMessage->caption = $message['video']['caption'] ?? null;
                 }
                 break;
 
@@ -193,12 +178,6 @@ class WhatsappController extends Controller
                     $whatsappMessage->mime_type = $message['document']['mime_type'] ?? null;
                     $whatsappMessage->sha256 = $message['document']['sha256'] ?? null;
                     $whatsappMessage->media_id = $message['document']['id'] ?? null;
-                    
-                    // Upload to S3
-                    $s3Key = $this->uploadMediaToS3($message['document']['id'], 'document', $whatsappMessage->mime_type, $whatsappMessage->filename);
-                    if ($s3Key) {
-                        $whatsappMessage->media_url = $s3Key;
-                    }
                 }
                 break;
 
@@ -211,20 +190,15 @@ class WhatsappController extends Controller
                     // Fix: Handle voice property correctly - it should be boolean
                     $whatsappMessage->voice = isset($message['audio']['voice']) ?
                         (bool)$message['audio']['voice'] : false;
-                    
-                    // Upload to S3
-                    $s3Key = $this->uploadMediaToS3($message['audio']['id'], 'audio', $whatsappMessage->mime_type);
-                    if ($s3Key) {
-                        $whatsappMessage->media_url = $s3Key;
-                    }
                 }
                 break;
-
             case 'location':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_LOCATION;
                 if (isset($message['location'])) {
                     $whatsappMessage->latitude = (string) $message['location']['latitude'] ?? null;
                     $whatsappMessage->longitude = (string) $message['location']['longitude'] ?? null;
+                    // $whatsappMessage->name = $message['location']['name'] ?? null;
+                    // $whatsappMessage->address = $message['location']['address'] ?? null;
                 }
                 break;
 
@@ -243,166 +217,6 @@ class WhatsappController extends Controller
         } else {
             \Yii::error('Failed to save message: ' . json_encode($whatsappMessage->errors), 'whatsapp-webhook');
         }
-    }
-
-    /**
-     * Download media from WhatsApp and upload to S3
-     * @param string $mediaId WhatsApp media ID
-     * @param string $mediaType Type of media (image, video, document, audio)
-     * @param string $mimeType MIME type of the file
-     * @param string $filename Original filename (for documents)
-     * @return string|null S3 key if successful, null if failed
-     */
-    protected function uploadMediaToS3($mediaId, $mediaType, $mimeType = null, $filename = null)
-    {
-        try {
-            // Step 1: Get media URL from WhatsApp
-            $mediaUrl = $this->getWhatsAppMediaUrl($mediaId);
-            if (!$mediaUrl) {
-                \Yii::error('Failed to get media URL for media ID: ' . $mediaId, 'whatsapp-webhook');
-                return null;
-            }
-
-            // Step 2: Download media from WhatsApp
-            $mediaContent = $this->downloadMediaFromWhatsApp($mediaUrl);
-            if (!$mediaContent) {
-                \Yii::error('Failed to download media from WhatsApp: ' . $mediaUrl, 'whatsapp-webhook');
-                return null;
-            }
-
-            // Step 3: Generate S3 key
-            $s3Key = $this->generateS3Key($mediaId, $mediaType, $mimeType, $filename);
-
-            // Step 4: Upload to S3 using Flysystem component
-            $fs = \Yii::$app->fs;
-            $success = $fs->write($s3Key, $mediaContent);
-
-            if ($success) {
-                \Yii::info('Media uploaded to S3 successfully: ' . $s3Key, 'whatsapp-webhook');
-                return $s3Key;
-            } else {
-                \Yii::error('S3 upload failed for key: ' . $s3Key, 'whatsapp-webhook');
-                return null;
-            }
-
-        } catch (\Exception $e) {
-            \Yii::error('Error uploading media to S3: ' . $e->getMessage(), 'whatsapp-webhook');
-            return null;
-        }
-    }
-
-    /**
-     * Get media URL from WhatsApp API
-     * @param string $mediaId
-     * @return string|null
-     */
-    protected function getWhatsAppMediaUrl($mediaId)
-    {
-        $url = "https://graph.facebook.com/v18.0/{$mediaId}";
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $this->whatsappAccessToken
-        ]);
-        
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-        if ($httpCode === 200) {
-            $data = json_decode($response, true);
-            return $data['url'] ?? null;
-        }
-        
-        \Yii::error('Failed to get media URL. HTTP Code: ' . $httpCode . ', Response: ' . $response, 'whatsapp-webhook');
-        return null;
-    }
-
-    /**
-     * Download media content from WhatsApp
-     * @param string $mediaUrl
-     * @return string|null
-     */
-    protected function downloadMediaFromWhatsApp($mediaUrl)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $mediaUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $this->whatsappAccessToken
-        ]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300); // 5 minutes timeout
-        
-        $content = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-        if ($httpCode === 200 && $content !== false) {
-            return $content;
-        }
-        
-        \Yii::error('Failed to download media. HTTP Code: ' . $httpCode, 'whatsapp-webhook');
-        return null;
-    }
-
-    /**
-     * Generate S3 key for the media file
-     * @param string $mediaId
-     * @param string $mediaType
-     * @param string $mimeType
-     * @param string $filename
-     * @return string
-     */
-    protected function generateS3Key($mediaId, $mediaType, $mimeType = null, $filename = null)
-    {
-        $date = date('Y/m/d');
-        $extension = '';
-        
-        // Get file extension from filename or mime type
-        if ($filename) {
-            $extension = '.' . pathinfo($filename, PATHINFO_EXTENSION);
-        } elseif ($mimeType) {
-            $extension = $this->getExtensionFromMimeType($mimeType);
-        }
-        
-        // Generate S3 key: whatsapp/media_type/year/month/day/media_id.extension
-        return "whatsapp/{$mediaType}/{$date}/{$mediaId}{$extension}";
-    }
-
-    /**
-     * Get file extension from MIME type
-     * @param string $mimeType
-     * @return string
-     */
-    protected function getExtensionFromMimeType($mimeType)
-    {
-        $mimeToExt = [
-            'image/jpeg' => '.jpg',
-            'image/jpg' => '.jpg',
-            'image/png' => '.png',
-            'image/gif' => '.gif',
-            'image/webp' => '.webp',
-            'video/mp4' => '.mp4',
-            'video/mpeg' => '.mpeg',
-            'video/quicktime' => '.mov',
-            'audio/mpeg' => '.mp3',
-            'audio/mp4' => '.m4a',
-            'audio/ogg' => '.ogg',
-            'audio/wav' => '.wav',
-            'audio/webm' => '.webm',
-            'application/pdf' => '.pdf',
-            'application/msword' => '.doc',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => '.docx',
-            'application/vnd.ms-excel' => '.xls',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => '.xlsx',
-            'text/plain' => '.txt',
-        ];
-        
-        return $mimeToExt[$mimeType] ?? '';
     }
 
     /**
