@@ -116,7 +116,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'button
                         'template' => '{seat}&nbsp{update}&nbsp{view}&nbsp{inactive}',
                         'buttons' => [
                             'seat' => function ($url, $model) {
-                                if ($model->status == 1) {
+                                if ($model->status == 1 && $model->cut_off_date >= date('Y-m-d')) {
                                     return Html::button(
                                         '<img src="' . $this->params['baseurl']  . '/images/person-seat.svg" alt="" width="20" height="20">',
                                         [
