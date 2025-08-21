@@ -12,7 +12,7 @@ use Netflie\WhatsAppCloudApi\WebHook;
 /**
  * Default controller for the `error` module
  */
-class CopyWhatsappController extends Controller
+class _Whatsappv1Controller extends Controller
 {
 
     /**

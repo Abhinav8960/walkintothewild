@@ -14,7 +14,7 @@ use Netflie\WhatsAppCloudApi\WebHook;
  * WhatsApp Webhook Controller
  * Handles incoming messages and status updates from WhatsApp Cloud API v23.0
  */
-class WhatsappController extends Controller
+class _WhatsappController extends Controller
 {
 
     /**

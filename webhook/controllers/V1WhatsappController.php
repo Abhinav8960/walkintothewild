@@ -14,7 +14,7 @@ use Netflie\WhatsAppCloudApi\WebHook;
  * WhatsApp Webhook Controller
  * Handles incoming messages and status updates from WhatsApp Cloud API v23.0
  */
-class WhatsappController extends Controller
+class V1WhatsappController extends Controller
 {
 
     /**
@@ -47,7 +47,7 @@ class WhatsappController extends Controller
     public function beforeAction($action)
     {
         if (in_array($action->id, ['index'])) {
-            // Disable CSRF validation for the webhook action
+            // Disable CSRF validation for the payu-response action
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
@@ -56,13 +56,13 @@ class WhatsappController extends Controller
     public function actionIndex()
     {
         // Handle webhook verification
-        if (isset($_GET['hub_mode']) && $_GET['hub_mode'] === 'subscribe') {
-            if (isset($_GET['hub_verify_token']) && $_GET['hub_verify_token'] === "white-elephant") {
-                echo $_GET['hub_challenge'] ?? '';
-                exit;
-            }
-            throw new \yii\web\BadRequestHttpException('Invalid verification token');
-        }
+        // if (isset($_GET['hub_mode']) && $_GET['hub_mode'] === 'subscribe') {
+        //     if ($_GET['hub_verify_token'] === "white-elephant") {
+        //         echo $_GET['hub_challenge'];
+        //         exit;
+        //     }
+        //     throw new \yii\web\BadRequestHttpException('Invalid verification token');
+        // }
 
         // Get payload
         $payload = file_get_contents('php://input');
@@ -70,9 +70,7 @@ class WhatsappController extends Controller
 
         \Yii::info(time() . ' WhatsApp Webhook Payload: ' . $payload, 'whatsapp-webhook');
 
-        // Validate payload structure
         if (empty($data['entry'][0]['changes'][0]['value'])) {
-            \Yii::warning('Invalid webhook payload structure', 'whatsapp-webhook');
             return;
         }
 
@@ -82,17 +80,9 @@ class WhatsappController extends Controller
             // Handle messages
             if (isset($value['messages'])) {
                 foreach ($value['messages'] as $message) {
-                    if (!isset($message['id'])) {
-                        \Yii::warning('Message without ID received', 'whatsapp-webhook');
+                    if (!isset($message['id']) || !isset($value['contacts'][0])) {
                         continue;
                     }
-                    
-                    // Check if we have contact information
-                    if (!isset($value['contacts'][0])) {
-                        \Yii::warning('Message received without contact information', 'whatsapp-webhook');
-                        continue;
-                    }
-                    
                     $this->handleIncomingMessage($value, $message);
                 }
             }
@@ -101,7 +91,6 @@ class WhatsappController extends Controller
             if (isset($value['statuses'])) {
                 foreach ($value['statuses'] as $status) {
                     if (!isset($status['id'])) {
-                        \Yii::warning('Status update without message ID received', 'whatsapp-webhook');
                         continue;
                     }
                     $this->handleMessageStatus($status);
@@ -120,92 +109,53 @@ class WhatsappController extends Controller
     {
         // Get or create contact
         $contact = $this->getOrCreateContact($value['contacts'][0]);
-        if (!$contact) {
-            \Yii::error('Failed to create or get contact', 'whatsapp-webhook');
-            return;
-        }
-
-        // Check if message already exists
-        $existingMessage = WhatsappMessages::find()
-            ->where(['wamid' => $message['id']])
-            ->one();
-            
-        if ($existingMessage) {
-            \Yii::info('Message already exists: ' . $message['id'], 'whatsapp-webhook');
-            return;
-        }
 
         // Create message record
         $whatsappMessage = new WhatsappMessages([
             'wamid' => $message['id'],
             'contact_id' => $contact->id,
             'direction' => WhatsappMessages::DIRECTION_INBOUND,
-            'status' => WhatsappMessages::STATUS_DELIVERED,
-            'timestamp' => isset($message['timestamp']) ? date('Y-m-d H:i:s', $message['timestamp']) : date('Y-m-d H:i:s')
+            'status' => WhatsappMessages::STATUS_DELIVERED
         ]);
 
         // Handle different message types
         switch ($message['type']) {
             case 'text':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_TEXT;
-                $whatsappMessage->content = $message['text']['body'] ?? '';
+                $whatsappMessage->content = $message['text']['body'];
                 break;
-                
             case 'image':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_IMAGE;
-                if (isset($message['image'])) {
-                    $whatsappMessage->mime_type = $message['image']['mime_type'] ?? null;
-                    $whatsappMessage->sha256 = $message['image']['sha256'] ?? null;
-                    $whatsappMessage->media_id = $message['image']['id'] ?? null;
-                    $whatsappMessage->caption = $message['image']['caption'] ?? null;
-                }
+                $whatsappMessage->mime_type = $message['image']['mime_type'];
+                $whatsappMessage->sha256 = $message['image']['sha256'];
+                $whatsappMessage->media_id = $message['image']['id'];
                 break;
-                
             case 'video':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_VIDEO;
-                if (isset($message['video'])) {
-                    $whatsappMessage->mime_type = $message['video']['mime_type'] ?? null;
-                    $whatsappMessage->sha256 = $message['video']['sha256'] ?? null;
-                    $whatsappMessage->media_id = $message['video']['id'] ?? null;
-                    $whatsappMessage->caption = $message['video']['caption'] ?? null;
-                }
+                $whatsappMessage->mime_type = $message['video']['mime_type'];
+                $whatsappMessage->sha256 = $message['video']['sha256'];
+                $whatsappMessage->media_id = $message['video']['id'];
                 break;
-                
             case 'document':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_DOCUMENT;
-                if (isset($message['document'])) {
-                    $whatsappMessage->filename = $message['document']['filename'] ?? null;
-                    $whatsappMessage->mime_type = $message['document']['mime_type'] ?? null;
-                    $whatsappMessage->sha256 = $message['document']['sha256'] ?? null;
-                    $whatsappMessage->media_id = $message['document']['id'] ?? null;
-                    $whatsappMessage->caption = $message['document']['caption'] ?? null;
-                }
+                $whatsappMessage->filename = $message['document']['filename'];
+                $whatsappMessage->mime_type = $message['document']['mime_type'];
+                $whatsappMessage->sha256 = $message['document']['sha256'];
+                $whatsappMessage->media_id = $message['document']['id'];
                 break;
-                
             case 'audio':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_AUDIO;
-                if (isset($message['audio'])) {
-                    $whatsappMessage->mime_type = $message['audio']['mime_type'] ?? null;
-                    $whatsappMessage->sha256 = $message['audio']['sha256'] ?? null;
-                    $whatsappMessage->media_id = $message['audio']['id'] ?? null;
-                    // Fix: Handle voice property correctly - it should be boolean
-                    $whatsappMessage->voice = isset($message['audio']['voice']) ? 
-                        (bool)$message['audio']['voice'] : false;
-                }
+                $whatsappMessage->mime_type = $message['audio']['mime_type'];
+                $whatsappMessage->sha256 = $message['audio']['sha256'];
+                $whatsappMessage->media_id = $message['audio']['id'];
+                $whatsappMessage->voice = $message['audio']['voice'];
                 break;
-                
             case 'location':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_LOCATION;
-                if (isset($message['location'])) {
-                    $whatsappMessage->latitude = $message['location']['latitude'] ?? null;
-                    $whatsappMessage->longitude = $message['location']['longitude'] ?? null;
-                    $whatsappMessage->name = $message['location']['name'] ?? null;
-                    $whatsappMessage->address = $message['location']['address'] ?? null;
-                }
+                $whatsappMessage->latitude = $message['location']['latitude'];
+                $whatsappMessage->longitude = $message['location']['longitude'];
                 break;
-                
             default:
-                \Yii::warning('Unknown message type: ' . $message['type'], 'whatsapp-webhook');
                 $whatsappMessage->message_type = $message['type'];
                 $whatsappMessage->content = json_encode($message);
         }
@@ -214,10 +164,6 @@ class WhatsappController extends Controller
             // Update contact last message time
             $contact->last_message_at = date('Y-m-d H:i:s');
             $contact->save(false);
-            
-            \Yii::info('Message saved successfully: ' . $message['id'], 'whatsapp-webhook');
-        } else {
-            \Yii::error('Failed to save message: ' . json_encode($whatsappMessage->errors), 'whatsapp-webhook');
         }
     }
 
@@ -231,8 +177,6 @@ class WhatsappController extends Controller
             ->one();
 
         if ($message) {
-            $oldStatus = $message->status;
-            
             switch ($status['status']) {
                 case 'sent':
                     $message->status = WhatsappMessages::STATUS_SENT;
@@ -246,33 +190,18 @@ class WhatsappController extends Controller
                 case 'failed':
                     $message->status = WhatsappMessages::STATUS_FAILED;
                     break;
-                default:
-                    \Yii::warning('Unknown status: ' . $status['status'], 'whatsapp-webhook');
-                    return;
             }
-            
-            if ($message->save()) {
-                \Yii::info('Status updated from ' . $oldStatus . ' to ' . $message->status . ' for message: ' . $status['id'], 'whatsapp-webhook');
-            } else {
-                \Yii::error('Failed to update message status: ' . json_encode($message->errors), 'whatsapp-webhook');
-            }
-        } else {
-            \Yii::warning('Message not found for status update: ' . $status['id'], 'whatsapp-webhook');
+            $message->save();
         }
     }
 
     /**
      * Get existing contact or create new one
      * @param array $contactData Contact data from webhook
-     * @return WhatsappContacts|null
+     * @return WhatsappContacts
      */
     protected function getOrCreateContact($contactData)
     {
-        if (!isset($contactData['wa_id'])) {
-            \Yii::error('Contact data missing wa_id', 'whatsapp-webhook');
-            return null;
-        }
-        
         $phoneNumber = $contactData['wa_id'];
         $contact = WhatsappContacts::find()
             ->where(['phone_number' => $phoneNumber])
@@ -301,11 +230,7 @@ class WhatsappController extends Controller
             $contact->name = $phoneNumber;
         }
 
-        if ($contact->save()) {
-            return $contact;
-        } else {
-            \Yii::error('Failed to save contact: ' . json_encode($contact->errors), 'whatsapp-webhook');
-            return null;
-        }
+        $contact->save();
+        return $contact;
     }
 }
