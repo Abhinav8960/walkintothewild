@@ -1608,8 +1608,8 @@ class DefaultController extends SafariController
                         $msg .= "Park: " . $share_safari->park_title . "\n";
                         $msg .= "Safaries: " . $share_safari->no_of_safari . "\n";
                         $msg .= "Stay Category: " . $share_safari->stay_category_display . "\n";
-                        $msg .= "Start Date: " . date('M j, Y', strtotime($this->start_date)) . "\n";
-                        $msg .= "End Date: " . date('M j, Y', strtotime($this->end_date)) . "\n";
+                        $msg .= "Start Date: " . date('M j, Y', strtotime($share_safari->start_date)) . "\n";
+                        $msg .= "End Date: " . date('M j, Y', strtotime($share_safari->end_date)) . "\n";
 
                         $message = $msg . "\n\n" . $message;
 
