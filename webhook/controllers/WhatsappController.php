@@ -270,20 +270,34 @@ class WhatsappController extends Controller
                 return null;
             }
 
+
+
             // Step 3: Generate S3 key
             $s3Key = $this->generateS3Key($mediaId, $mediaType, $mimeType, $filename);
 
             // Step 4: Upload to S3 using Flysystem component
             $fs = \Yii::$app->fs;
-            $success = $fs->write($s3Key, $mediaContent);
 
-            if ($success) {
+            try{                
+                $success = $fs->write($s3Key, $mediaContent);
                 \Yii::info('Media uploaded to S3 successfully: ' . $s3Key, 'whatsapp-webhook');
                 return $s3Key;
-            } else {
-                \Yii::error('S3 upload failed for key: ' . $s3Key, 'whatsapp-webhook');
+
+            }catch (\Exception $e) {
+                \Yii::error('S3 filesystem not configured: ' . $e->getMessage(), 'whatsapp-webhook');
                 return null;
             }
+           
+
+            // if ($success) {
+            //     \Yii::info('Media uploaded to S3 successfully: ' . $s3Key, 'whatsapp-webhook');
+            //     return $s3Key;
+            // } else {
+            //     $lastError = error_get_last();
+            //     $errorMessage = $lastError ? $lastError['message'] : 'Unknown error occurred';
+            //     \Yii::error('S3 upload failed for key: ' . $s3Key . '. Reason: ' . $errorMessage, 'whatsapp-webhook');
+            //     return null;
+            // }
 
         } catch (\Exception $e) {
             \Yii::error('Error uploading media to S3: ' . $e->getMessage(), 'whatsapp-webhook');

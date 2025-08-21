@@ -5,95 +5,12 @@ use support\assets\WhatsappAsset;
 
 $this->title = 'WhatsApp Chat Panel';
 WhatsappAsset::register($this);
-
-// Get the S3 endpoint from Yii application parameters
-$s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
 ?>
 
-<style>
-    /* Add the CSS styles here to ensure they are included in the final output */
-    .chat-container .message-content {
-        max-width: 75%;
-    }
-
-    .chat-container .message.sent .message-content {
-        background-color: #dcf8c6;
-        color: #000;
-    }
-
-    .chat-container .message.received .message-content {
-        background-color: #fff;
-        color: #000;
-    }
-
-    /* Styles for media elements */
-    .media-container {
-        position: relative;
-        display: block;
-    }
-
-    .media-image img,
-    .media-video video,
-    .media-audio audio {
-        display: block;
-    }
-
-    .media-image img {
-        max-height: 250px;
-        object-fit: contain;
-    }
-
-    .media-container .download-link {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        line-height: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-    }
-
-    .media-container .download-link:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .media-document {
-        background-color: #f0f2f5;
-        padding: 10px;
-        border-radius: 8px;
-        color: #000;
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    .media-document .document-icon {
-        font-size: 24px;
-        color: #6c757d;
-        margin-right: 10px;
-    }
-
-    .media-document .document-name {
-        flex-grow: 1;
-        font-weight: bold;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .media-document a {
-        color: inherit;
-        text-decoration: none;
-    }
-</style>
-
+<!-- Main Container -->
 <div class="container-fluid mt-4">
     <div class="row chat-container shadow-sm rounded">
+        <!-- Contacts List -->
         <div class="col-md-4 col-lg-3 p-0 chat-list auto-s overflow-hidden">
             <div class="p-3 bg-white border-bottom">
                 <div class="input-group">
@@ -108,10 +25,13 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                 </div>
             </div>
             <div id="contactsList">
-                </div>
+                <!-- Contacts will be loaded here dynamically -->
+            </div>
         </div>
 
+        <!-- Chat Area -->
         <div class="col-md-8 col-lg-9 p-0">
+            <!-- Chat Placeholder -->
             <div id="chatPlaceholder" class="chat-placeholder">
                 <div class="chat-placeholder-content">
                     <i class="bi bi-chat-dots" style="font-size: 3rem;"></i>
@@ -119,8 +39,10 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                 </div>
             </div>
 
+            <!-- Chat Box (Initially Hidden) -->
             <div id="chatbox" style="display: none;">
                 <div class="chat-messages">
+                    <!-- Chat Header -->
                     <div class="p-3 bg-white border-bottom" id="chatHeader">
                         <div class="d-flex align-items-center">
                             <div class="profile-circle me-3 d-flex align-items-center justify-content-center" id="currentContactInitial"></div>
@@ -131,9 +53,12 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                         </div>
                     </div>
 
+                    <!-- Messages Container -->
                     <div class="messages-container" id="messagesContainer">
-                        </div>
+                        <!-- Messages will be loaded here dynamically -->
+                    </div>
 
+                    <!-- Chat Input -->
                     <div class="chat-input">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Type a message" id="messageInput">
@@ -148,13 +73,12 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
     </div>
 </div>
 
+<!-- Bootstrap Icons CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 
+<!-- JavaScript for WhatsApp Panel -->
 <script>
-    // Define the S3 endpoint in a JavaScript variable
-    const S3_ENDPOINT = '<?= $s3Endpoint ?>';
-    
     document.addEventListener('DOMContentLoaded', function() {
         const chatbox = document.getElementById('chatbox');
         const chatPlaceholder = document.getElementById('chatPlaceholder');
@@ -403,7 +327,6 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                 const messageDate = new Date(message.created_at);
                 const dateStr = formatMessageDate(messageDate);
                 let dateSeparator = '';
-                let messageContentHtml = '';
                 
                 // Add date separator if date changes
                 if (dateStr !== currentDate) {
@@ -414,60 +337,12 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                         </div>
                     `;
                 }
-
-                if (message.message_type === 'text' || message.message_type === 'template') {
-                    messageContentHtml = `<div class="message-text">${message.content}</div>`;
-                } else if (message.media_url) {
-                    // Prepend the S3 endpoint to the media URL
-                    const fullMediaUrl = S3_ENDPOINT +'/'+ message.media_url;
-
-                    const downloadLink = `<a href="${fullMediaUrl}" download="${message.file_name || 'download'}" class="download-link"><i class="bi bi-download"></i></a>`;
-                    
-                    if (message.message_type === 'image') {
-                        messageContentHtml = `
-                            <div class="media-container media-image">
-                                <img src="${fullMediaUrl}" class="img-fluid rounded" alt="Image">
-                                ${downloadLink}
-                            </div>
-                        `;
-                    } else if (message.message_type === 'video') {
-                        messageContentHtml = `
-                            <div class="media-container media-video">
-                                <video controls class="w-100 rounded">
-                                    <source src="${fullMediaUrl}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                ${downloadLink}
-                            </div>
-                        `;
-                    } else if (message.message_type === 'audio') {
-                        messageContentHtml = `
-                            <div class="media-container media-audio">
-                                <audio controls class="w-100">
-                                    <source src="${fullMediaUrl}" type="audio/mpeg">
-                                    Your browser does not support the audio element.
-                                </audio>
-                                ${downloadLink}
-                            </div>
-                        `;
-                    } else { // document or other unsupported types
-                        messageContentHtml = `
-                            <div class="media-container media-document d-flex align-items-center">
-                                <i class="bi bi-file-earmark-text-fill document-icon me-2"></i>
-                                <span class="document-name">${message.file_name || 'Document'}</span>
-                                <a href="${fullMediaUrl}" download="${message.file_name || 'document'}" class="ms-auto"><i class="bi bi-download"></i></a>
-                            </div>
-                        `;
-                    }
-                } else {
-                    messageContentHtml = `<div class="message-text">${message.content}</div>`;
-                }
                 
                 return `
                     ${dateSeparator}
                     <div class="message ${message.direction === 'outbound' ? 'sent' : 'received'} mb-2">
                         <div class="message-content p-2 rounded">
-                            ${messageContentHtml}
+                            <div class="message-text">${message.content}</div>
                             <small class="message-time text-muted">
                                 ${messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </small>
