@@ -39,7 +39,7 @@ return [
                 ],
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['info'],
+                    'levels' => ['info','error'],
                     'categories' => ['whatsapp-webhook'],
                     'logFile' => '@runtime/logs/whatsapp-webhook.log',
                     'maxFileSize' => 1024 * 2, // 2MB

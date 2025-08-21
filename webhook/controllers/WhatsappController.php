@@ -178,7 +178,6 @@ class WhatsappController extends Controller
                     $whatsappMessage->mime_type = $message['document']['mime_type'] ?? null;
                     $whatsappMessage->sha256 = $message['document']['sha256'] ?? null;
                     $whatsappMessage->media_id = $message['document']['id'] ?? null;
-                    $whatsappMessage->caption = $message['document']['caption'] ?? null;
                 }
                 break;
 
@@ -193,14 +192,13 @@ class WhatsappController extends Controller
                         (bool)$message['audio']['voice'] : false;
                 }
                 break;
-
             case 'location':
                 $whatsappMessage->message_type = WhatsappMessages::MESSAGE_TYPE_LOCATION;
                 if (isset($message['location'])) {
-                    $whatsappMessage->latitude = $message['location']['latitude'] ?? null;
-                    $whatsappMessage->longitude = $message['location']['longitude'] ?? null;
-                    $whatsappMessage->name = $message['location']['name'] ?? null;
-                    $whatsappMessage->address = $message['location']['address'] ?? null;
+                    $whatsappMessage->latitude = (string) $message['location']['latitude'] ?? null;
+                    $whatsappMessage->longitude = (string) $message['location']['longitude'] ?? null;
+                    // $whatsappMessage->name = $message['location']['name'] ?? null;
+                    // $whatsappMessage->address = $message['location']['address'] ?? null;
                 }
                 break;
 
