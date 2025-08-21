@@ -54,7 +54,7 @@ class WhatsappMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-             [['direction', 'content', 'media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'voice', 'latitude', 'longitude'], 'default', 'value' => null],
+            [['direction', 'content', 'media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'voice', 'latitude', 'longitude', 'timestamp'], 'default', 'value' => null],
             [['status'], 'default', 'value' => 'sent'],
             [['contact_id'], 'integer'],
             [['wamid', 'contact_id', 'direction', 'message_type'], 'required'],
@@ -70,7 +70,7 @@ class WhatsappMessages extends \yii\db\ActiveRecord
         ];
     }
 
-   
+
 
     /**
      * {@inheritdoc}
@@ -78,7 +78,7 @@ class WhatsappMessages extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-             'id' => 'ID',
+            'id' => 'ID',
             'wamid' => 'Wamid',
             'contact_id' => 'Contact ID',
             'direction' => 'Direction',
@@ -93,6 +93,7 @@ class WhatsappMessages extends \yii\db\ActiveRecord
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
             'status' => 'Status',
+            'timestamp' => 'Timestamp',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

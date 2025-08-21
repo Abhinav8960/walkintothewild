@@ -17,7 +17,7 @@ class WhatsappMessagesSearch extends WhatsappMessages
     public function rules()
     {
         return [
-            [['id', 'contact_id', 'voice'], 'integer'],
+            [['id', 'contact_id', 'voice','timestamp'], 'integer'],
             [['wamid', 'direction', 'message_type', 'content', 'media_url', 'mime_type', 'sha256', 'media_id', 'filename', 'latitude', 'longitude', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -62,6 +62,7 @@ class WhatsappMessagesSearch extends WhatsappMessages
             'id' => $this->id,
             'contact_id' => $this->contact_id,
             'voice' => $this->voice,
+            'timestamp' => $this->timestamp,            
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
