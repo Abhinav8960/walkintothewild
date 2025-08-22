@@ -7,7 +7,7 @@ $this->title = 'WhatsApp Chat Panel';
 WhatsappAsset::register($this);
 
 // Get the S3 endpoint from Yii application parameters
-$s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
+$s3Endpoint = \Yii::$app->params['s3_whatsapp_endpoint'] ?? '';
 ?>
 
 <style>
