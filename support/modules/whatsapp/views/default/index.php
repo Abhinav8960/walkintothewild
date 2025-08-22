@@ -90,6 +90,47 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
         color: inherit;
         text-decoration: none;
     }
+
+    /* Location message styles */
+    .location-container {
+        max-width: 320px;
+    }
+
+    .location-preview iframe {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .location-info {
+        padding: 8px;
+    }
+
+    .location-name {
+        color: #000;
+        font-size: 14px;
+    }
+
+    .location-coordinates {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .location-actions .btn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .location-error {
+        padding: 12px;
+        text-align: center;
+        color: #666;
+    }
+
+    .location-error i {
+        font-size: 24px;
+        margin-bottom: 8px;
+        display: block;
+    }
 </style>
 
 <div class="container-fluid mt-4">
@@ -150,10 +191,86 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-
 <script>
     // Define the S3 endpoint in a JavaScript variable
     const S3_ENDPOINT = '<?= $s3Endpoint ?>';
+    
+    // Helper functions for location messages
+    function copyToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            // Use the modern Clipboard API
+            navigator.clipboard.writeText(text).then(() => {
+                // Show a temporary success message
+                showToast('Coordinates copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                fallbackCopyToClipboard(text);
+            });
+        } else {
+            // Fallback for older browsers
+            fallbackCopyToClipboard(text);
+        }
+    }
+
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            showToast('Coordinates copied to clipboard!');
+        } catch (err) {
+            console.error('Fallback: Failed to copy', err);
+            showToast('Failed to copy coordinates');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    function showToast(message, type = 'success') {
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `toast-message toast-${type}`;
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#28a745' : '#dc3545'};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            z-index: 9999;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+            toast.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    document.body.removeChild(toast);
+                }
+            }, 300);
+        }, 3000);
+    }
     
     document.addEventListener('DOMContentLoaded', function() {
         const chatbox = document.getElementById('chatbox');
@@ -394,7 +511,7 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
             });
         }
 
-        // Modify renderMessages function to include date separators
+        // Enhanced renderMessages function with location support
         function renderMessages(messages, append = false) {
             const messagesContainer = document.getElementById('messagesContainer');
             let currentDate = '';
@@ -417,10 +534,80 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
 
                 if (message.message_type === 'text' || message.message_type === 'template') {
                     messageContentHtml = `<div class="message-text">${message.content}</div>`;
+                } else if (message.message_type === 'location') {
+                    // Handle location messages
+                    let latitude, longitude, locationName = '';
+                    
+                    try {
+                        // If location data is stored in content as JSON
+                        if (message.content) {
+                            const locationData = JSON.parse(message.content);
+                            latitude = locationData.latitude || locationData.lat;
+                            longitude = locationData.longitude || locationData.lng || locationData.long;
+                            locationName = locationData.name || locationData.address || '';
+                        }
+                        
+                        // If latitude and longitude are separate fields in the message object
+                        if (!latitude && !longitude) {
+                            latitude = message.latitude;
+                            longitude = message.longitude;
+                            locationName = message.location_name || message.address || '';
+                        }
+                        
+                        if (latitude && longitude) {
+                            const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                            const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=15&size=300x200&markers=color:red%7C${latitude},${longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`;
+                            
+                            messageContentHtml = `
+                                <div class="media-container location-container">
+                                    <div class="location-preview mb-2">
+                                        <img src="${staticMapUrl}" 
+                                             alt="Location Map" 
+                                             style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; cursor: pointer;"
+                                             onclick="window.open('${googleMapsUrl}', '_blank')"
+                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                        <div style="display: none; padding: 20px; text-align: center; background: #f0f2f5; border-radius: 8px; cursor: pointer;" onclick="window.open('${googleMapsUrl}', '_blank')">
+                                            <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: #007bff;"></i>
+                                            <div class="mt-2">Click to open location</div>
+                                        </div>
+                                    </div>
+                                    <div class="location-info">
+                                        ${locationName ? `<div class="location-name fw-bold mb-1">${locationName}</div>` : ''}
+                                        <div class="location-coordinates text-muted small mb-2">
+                                            ${parseFloat(latitude).toFixed(6)}, ${parseFloat(longitude).toFixed(6)}
+                                        </div>
+                                        <div class="location-actions">
+                                            <a href="${googleMapsUrl}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                                                <i class="bi bi-geo-alt-fill"></i> Open in Google Maps
+                                            </a>
+                                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('${latitude},${longitude}')">
+                                                <i class="bi bi-clipboard"></i> Copy Coordinates
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            // Fallback if coordinates are not available
+                            messageContentHtml = `
+                                <div class="location-error">
+                                    <i class="bi bi-geo-alt text-muted"></i>
+                                    <span class="text-muted">Location not available</span>
+                                </div>
+                            `;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing location data:', error);
+                        messageContentHtml = `
+                            <div class="location-error">
+                                <i class="bi bi-geo-alt text-muted"></i>
+                                <span class="text-muted">Invalid location data</span>
+                            </div>
+                        `;
+                    }
                 } else if (message.media_url) {
-                    // Prepend the S3 endpoint to the media URL
+                    // Handle other media types
                     const fullMediaUrl = S3_ENDPOINT +'/'+ message.media_url;
-
                     const downloadLink = `<a href="${fullMediaUrl}" download="${message.file_name || 'download'}" class="download-link"><i class="bi bi-download"></i></a>`;
                     
                     if (message.message_type === 'image') {
