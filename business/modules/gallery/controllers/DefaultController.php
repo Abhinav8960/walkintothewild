@@ -388,7 +388,7 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $partner_gallery_model = PartnerGallery::find()->where(['id' => $model->partner_gallery_id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['id' => $model->partner_gallery_id])->limit(1)->one();
         if (!$partner_gallery_model) {
             \Yii::$app->session->setFlash('error', 'Gallery Not Found!!!');
             return $this->redirect(['index']);
