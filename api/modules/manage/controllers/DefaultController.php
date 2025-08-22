@@ -193,7 +193,7 @@ class DefaultController extends RestController
         $searchModel = new PackagePartnerSearch();
         $searchModel->safari_operator_id = $safari_operator->id;
         $searchModel->custom_status = 1;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "search");
+        return $this->dataProviderSender($searchModel, $rootIndexName = "packages", $additionalSearchQueryParams = [], $singleRecord = false, $paginationNeededAsPerQuery = 1, $searchfunction = "managesearch");
     }
 
     public function actionView($slug)
