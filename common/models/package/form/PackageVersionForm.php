@@ -166,7 +166,7 @@ class PackageVersionForm extends \yii\base\Model
                 // 'maxWidth' => 350,
                 // 'maxHeight' => 350,
             ],
-            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_two_person'], 'required', 'on' => ['create', 'update']],
+            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person', 'safari_type', 'package_agenda_id', 'no_of_safari', 'stay_category_id'], 'required', 'on' => ['create', 'update']],
             [['package_park'], 'required', 'on' => ['create']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
