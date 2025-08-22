@@ -63,15 +63,17 @@ class Chat extends \common\models\chat\Chat
             // 'updated_at',
             // 'updated_by'
         ];
-        if ($this->chat_type == 2) {
-            $fields[] = 'lead';
-            if ($this->quote_id > 0) {
-                $fields['quote'] = function () {
-                    return $this->quote;
-                };
-                $fields['payment_details'] = function () {
-                    return $this->payment_details;
-                };
+        if ($this->chat_type == 2 || $this->chat_type == 3) {
+            if ($this->chat_type == 2 ) {
+                $fields[] = 'lead';
+                if ($this->quote_id > 0) {
+                    $fields['quote'] = function () {
+                        return $this->quote;
+                    };
+                    $fields['payment_details'] = function () {
+                        return $this->payment_details;
+                    };
+                }
             }
             $fields['is_call_request'] = function () {
                 return (bool) $this->is_call_request;

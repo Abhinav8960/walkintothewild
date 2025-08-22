@@ -134,7 +134,7 @@ class PartnerLeadForm extends Model
         $message .= "Park: " . $park->title . "\n";
         $message .= "Safaries: " . $this->safaris . "\n";
         $message .= "Travelers: " . $this->travelers . "\n";
-        $message .= "Stay Category: " . $lead->staycatgory->title . "\n";
+        $message .= "Accommodation: " . $lead->staycatgory->title . "\n";
         $message .= "Start Date: " . date('M j, Y', strtotime($this->start_date)) . "\n";
         $message .= "End Date: " . date('M j, Y', strtotime($this->end_date)) . "\n";
         if ($lead->user_notes != null) {

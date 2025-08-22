@@ -27,9 +27,9 @@ use api\models\sharesafari\ShareSafariIntrested;
 use api\models\User;
 use common\Helper\FirebaseNotificationHelper;
 use common\models\firebasenotification\FirebaseNotificationLog;
-use common\models\sharesafari\form\ShareSafariStatusForm;
 use common\models\leads\sharesafari\form\ShareSafariLeadForm;
 use common\models\transaction\Transaction;
+use common\models\sharesafari\form\ShareSafariStatusForm;
 use common\models\sharesafari\ShareSafariVersion;
 // use api\models\UserWishlist;
 use common\models\UserWishlist;
@@ -1586,11 +1586,11 @@ class DefaultController extends SafariController
                         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "You are an operator. You can not message!"]);
                     }
                 }
-                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
-                if (!$share_safari_intrested) {
-                    $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
-                    return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
-                }
+                // $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
+                // if (!$share_safari_intrested) {
+                //     $message = Yii::$app->api->messageManager->getMessage('share_safari.join_unjoin_safari.join_restricted');
+                //     return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
+                // }
 
                 if (\Yii::$app->request->isPost) {
 
@@ -1602,6 +1602,17 @@ class DefaultController extends SafariController
                     // prepare chat if not avalable between user and share safari and operators user id
                     $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'user_id' => $this->userinfoId, 'recipient_user_id' => $share_safari->user_id])->one();
                     if (empty($chat_model)) {
+
+                        $msg = "Hi, I am interested in \n";
+                        $msg .= "Fixed Departure: " . $share_safari->share_safari_title . "\n";
+                        $msg .= "Park: " . $share_safari->park_title . "\n";
+                        $msg .= "Safaries: " . $share_safari->no_of_safari . "\n";
+                        $msg .= "Accommodation: " . $share_safari->stay_category_display . "\n";
+                        $msg .= "Start Date: " . date('M j, Y', strtotime($share_safari->start_date)) . "\n";
+                        $msg .= "End Date: " . date('M j, Y', strtotime($share_safari->end_date)) . "\n";
+
+                        $message = $msg . "\n\n" . $message;
+
                         $chat_model = new Chat();
                         $chat_model->generateChatHash();
                         $chat_model->chat_type = Chat::CHAT_TYPE_SHARE_SAFARI;

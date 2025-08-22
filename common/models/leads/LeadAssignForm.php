@@ -75,7 +75,7 @@ class LeadAssignForm extends Model
         $message .= "Park: " . $park->title . "\n";
         $message .= "Safaries: " . $lead->safaris . "\n";
         $message .= "Travelers:" . $lead->travelers . "\n";
-        $message .= "Stay Category:" . $lead->staycatgory->title . "\n";
+        $message .= "Accommodation:" . $lead->staycatgory->title . "\n";
         $message .= "Start Date:" . date('M j, Y', strtotime($lead->from_date)) . "\n";
         $message .= "End Date:" . date('M j, Y', strtotime($lead->to_date)) . "\n";
         if ($lead->user_notes != null) {
