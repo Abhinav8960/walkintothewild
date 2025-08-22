@@ -276,10 +276,10 @@ class WhatsappController extends Controller
             $s3Key = $this->generateS3Key($mediaId, $mediaType, $mimeType, $filename);
 
             // Step 4: Upload to S3 using Flysystem component
-            $fs = \Yii::$app->fs;
+            $wfs = \Yii::$app->wfs;
 
             try{                
-                $success = $fs->write($s3Key, $mediaContent);
+                $success = $wfs->write($s3Key, $mediaContent);
                 \Yii::info('Media uploaded to S3 successfully: ' . $s3Key, 'whatsapp-webhook');
                 return $s3Key;
 
