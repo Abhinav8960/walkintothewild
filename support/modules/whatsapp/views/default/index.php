@@ -570,21 +570,7 @@ $s3Endpoint = \Yii::$app->params['s3_endpoint'] ?? '';
                                             <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: #007bff;"></i>
                                             <div class="mt-2">Click to open location</div>
                                         </div>
-                                    </div>
-                                    <div class="location-info">
-                                        ${locationName ? `<div class="location-name fw-bold mb-1">${locationName}</div>` : ''}
-                                        <div class="location-coordinates text-muted small mb-2">
-                                            ${parseFloat(latitude).toFixed(6)}, ${parseFloat(longitude).toFixed(6)}
-                                        </div>
-                                        <div class="location-actions">
-                                            <a href="${googleMapsUrl}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
-                                                <i class="bi bi-geo-alt-fill"></i> Open in Google Maps
-                                            </a>
-                                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('${latitude},${longitude}')">
-                                                <i class="bi bi-clipboard"></i> Copy Coordinates
-                                            </button>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             `;
                         } else {
