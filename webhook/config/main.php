@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'webhook\controllers',
     'bootstrap' => ['log', '\webhook\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
-   
+
     'components' => [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -45,7 +45,15 @@ return [
                     'maxFileSize' => 1024 * 2, // 2MB
                     'maxLogFiles' => 5,
                 ],
-                
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info','error'],
+                    'categories' => ['whatsapp-webhook'],
+                    'logFile' => '@runtime/logs/whatsapp-webhook.log',
+                    'maxFileSize' => 1024 * 2, // 2MB
+                    'maxLogFiles' => 5,
+                ],
+
             ],
         ],
         'user' => [
@@ -78,7 +86,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [               
+            'rules' => [
                 'payu-response' => 'payment-response/payu-response',
             ],
         ],

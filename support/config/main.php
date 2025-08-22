@@ -29,7 +29,7 @@ return [
         'operator' => [
             'class' => 'support\modules\operator\Module',
         ],
-        
+
         'galleryapproval' => [
             'class' => 'support\modules\galleryapproval\Module',
         ],
@@ -62,6 +62,10 @@ return [
             'class' => 'support\modules\externaloperator\Module',
         ],
         
+        'whatsapp' => [
+            'class' => 'support\modules\whatsapp\Module',
+        ],
+
     ],
 
 
@@ -110,8 +114,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
 
     ],
