@@ -205,7 +205,7 @@ class GalleryController extends RestController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
+        $partner_gallery_model = PartnerGallery::find()->where(['slug' => $slug, 'safari_operator_id' => $safari_operator->id, 'listing_status' => PartnerGallery::STATUS_ACTIVE])->limit(1)->one();
         if (!$partner_gallery_model) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found',['{var}'=>'Gallery']);
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => $message]);
