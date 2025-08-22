@@ -133,6 +133,9 @@ return [
         'leadoperatorwise' => [
             'class' => 'backend\modules\leadoperatorwise\Module',
         ],
+        'whatsapp' => [
+            'class' => 'backend\modules\whatsapp\Module',
+        ],
 
     ],
     'components' => [
