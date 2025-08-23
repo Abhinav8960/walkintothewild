@@ -1,0 +1,405 @@
+.chat-container {
+    max-height: 80vh;
+    background: #f0f2f5;
+}
+
+.chat-placeholder {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.chat-placeholder-content {
+    color: #6c757d;
+    padding: 2rem;
+}
+
+.chat-list {
+    border-right: 1px solid #ddd;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.chat-messages {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    max-width: 70%;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.message-received {
+    background: white;
+    margin-right: auto;
+}
+
+.message-sent {
+    background: #d9fdd3;
+    margin-left: auto;
+}
+
+.chat-input {
+    padding: 15px;
+    background: #f0f2f5;
+    border-top: 1px solid #ddd;
+}
+
+
+
+.profile-image {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.last-message {
+    color: #667781;
+    font-size: 0.9em;
+}
+
+.message-time {
+    font-size: 0.75em;
+    color: #667781;
+}
+
+.contact-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.contact-item:hover {
+    background-color: #f8f9fa;
+}
+
+.contact-item.active {
+    background-color: #e9ecef;
+}
+
+.messages-container {
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.message {
+    max-width: 75%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.message.sent {
+    /* background-color: #dcf8c6; */
+    margin-left: auto;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #152f1b;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    min-width: 45px;
+}
+
+.messages-container {
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+.loading-more {
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    margin: 0.5rem 0;
+}
+
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+#contactsList {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.contact-item {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.contact-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.contact-item.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.loading-contacts {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.search-input {
+    padding-left: 2.5rem !important;
+    border-radius: 20px !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+}
+
+.search-input:focus {
+    border-color: #128C7E !important;
+    box-shadow: 0 0 0 0.2rem rgba(18, 140, 126, 0.25) !important;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    color: #666;
+}
+
+.input-group {
+    position: relative;
+}
+
+.message {
+    max-width: 70%;
+    margin: 8px 0;
+}
+
+.message.sent {
+    margin-left: auto;
+}
+
+.message.received {
+    margin-right: auto;
+}
+
+.message-content {
+    background-color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message.sent .message-content {
+    background-color: #dcf8c6;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    text-align: right;
+}
+.chat-container {
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.chat-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#contactsList {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-bottom: 20px; /* Add padding to show last contact clearly */
+}
+
+.messages-container {
+    height: calc(100vh - 350px);
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+/* Make sure the chat input stays at bottom */
+.chat-messages {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input {
+    padding: 1rem;
+    background: white;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Ensure proper scrolling for long content */
+.contact-item {
+    min-height: 70px;
+}
+
+/* Add some bottom space to last contact */
+.contact-item:last-child {
+    margin-bottom: 10px;
+}
+
+.date-separator {
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.date-separator span {
+    background: #e9ecef;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.chat-container .message-content {
+    max-width: 75%;
+}
+
+.chat-container .message.sent .message-content {
+    background-color: #dcf8c6;
+    color: #000;
+}
+
+.chat-container .message.received .message-content {
+    background-color: #fff;
+    color: #000;
+}
+
+.media-container {
+    position: relative;
+    display: block;
+}
+
+.media-image img,
+.media-video video,
+.media-audio audio {
+    display: block;
+}
+
+.media-image img {
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.media-container .download-link {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.media-container .download-link:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.media-document {
+    background-color: #f0f2f5;
+    padding: 10px;
+    border-radius: 8px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.media-document .document-icon {
+    font-size: 24px;
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.media-document .document-name {
+    flex-grow: 1;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.media-document a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.location-container {
+    max-width: 320px;
+}
+
+.location-preview iframe {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.location-info {
+    padding: 8px;
+}
+
+.location-name {
+    color: #000;
+    font-size: 14px;
+}
+
+.location-coordinates {
+    font-size: 12px;
+    color: #666;
+}
+
+.location-actions .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.location-error {
+    padding: 12px;
+    text-align: center;
+    color: #666;
+}
+
+.location-error i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
