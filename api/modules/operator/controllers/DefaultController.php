@@ -110,7 +110,8 @@ class DefaultController extends RestController
         }
 
         if ($operator->status != SafariOperator::STATUS_ACTIVE) {
-            return Yii::$app->api->sendResponse($data = ['data' => $operator], ['message' => "Inactive or Deleted Operator!!!"]);
+            // return Yii::$app->api->sendResponse($data = ['data' => $operator], ['message' => "Inactive or Deleted Operator!!!"], 404);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Inactive or Deleted Operator!!!"], 404);
         }
         return Yii::$app->api->sendResponse($data = ['data' => $operator]);
     }
