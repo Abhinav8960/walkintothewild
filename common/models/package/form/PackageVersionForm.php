@@ -188,15 +188,15 @@ class PackageVersionForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 215],
             [['package_inclusion', 'package_exclusion'], 'string', 'max' => 512],
             [['no_of_safari'], 'integer', 'min' => 1, 'max' => 99],
-            [['cost_per_person'], 'number', 'min' => 100, 'max' => 9999999],
-            [['cost_per_two_person'], 'number', 'min' => 100, 'max' => 9999999],
+            [['cost_per_person'], 'number', 'min' => 1000, 'max' => 9999999],
+            [['cost_per_two_person'], 'number', 'min' => 1000, 'max' => 9999999],
             [['package_description'], 'string', 'max' => 2000],
             [['day_title'], 'string', 'max' => 512],
             [['day_description'], 'string', 'max' => 2000],
             [['getting_there'], 'string', 'max' => 2000],
             [['partner_gallery_id', 'gallery_version', 'user_id'], 'integer'],
             [['gallery_json'], 'safe'],
-            [['retail_price'], 'number', 'min' => 0, 'max' => 9999999],
+            [['retail_price'], 'number', 'min' => 1000, 'max' => 9999999],
 
 
         ];
