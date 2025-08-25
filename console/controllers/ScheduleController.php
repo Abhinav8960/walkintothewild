@@ -228,6 +228,7 @@ class ScheduleController extends Controller
         $currentDateTime = date('Y-m-d H:i:s');
         $feedModels = Feeds::find()
             ->where(['status' => 1])
+            ->andWhere(['IS NOT', 'date_time', null])
             ->andWhere(['<', 'date_time', $currentDateTime])
             ->all();
 
