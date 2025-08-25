@@ -16,6 +16,7 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="card-body" style="background-color: #F5F5F5;">
         <div class="row">
+            <?php if($model->file){ ?>
             <div class="col-lg-4 col-md-4">
                 <img class="card-img-top" src="<?= $model->full_image_path ?>" alt="Card image cap" width='445px' height='445px'>
                 <div class="d-flex justify-content-around">
@@ -29,6 +30,7 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             </div>
+            <?php } ?>
             <div class="col-lg-8 col-md-8">
                 <div class="row">
                     <div class="col-lg-12 col-md-12">

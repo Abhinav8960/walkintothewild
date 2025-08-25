@@ -131,7 +131,7 @@ $this->params['title'] = $this->title;
                         'template' => '{view}&nbsp{delete}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                if ($model->file) {
+                                // if ($model->file) {
                                     return Html::a(
                                         Html::img($this->params['baseurl'] . '/img/view.png', ['alt' => '', 'width' => 25, 'height' => 25]),
                                         [
@@ -142,7 +142,7 @@ $this->params['title'] = $this->title;
                                             'title' => 'View',
                                         ]
                                     );
-                                }
+                                // }
                                 return '';
                             },
                             // 'delete' => function ($url, $model) {
