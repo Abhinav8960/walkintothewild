@@ -92,6 +92,9 @@ class Package extends \common\models\package\Package
             'can_comment',
             'can_reply',
             'urls',
+            'total_price' => function () {
+                return (int) ceil($this->total_price);
+            },
         ]);
 
         $fields[] = 'image_thumbnails';
