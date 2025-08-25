@@ -228,7 +228,7 @@ class ScheduleController extends Controller
         $currentDateTime = date('Y-m-d H:i:s');
         $feedModels = Feeds::find()
             ->where(['status' => 1])
-            ->andWhere(['<=', 'date_time', $currentDateTime])
+            ->andWhere(['<', 'date_time', $currentDateTime])
             ->all();
 
         foreach ($feedModels as $feed) {
