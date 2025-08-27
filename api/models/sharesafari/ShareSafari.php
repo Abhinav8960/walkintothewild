@@ -482,7 +482,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/sharedsafari/' . $this->getOrganized_slug() . '/' . $this->slug;
+        return Yii::$app->params['frontend_url'] . '/sharedsafari/' . $this->slug;
     }
 
 
