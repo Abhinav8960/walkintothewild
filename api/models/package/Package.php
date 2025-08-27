@@ -489,7 +489,7 @@ class Package extends \common\models\package\Package
 
     public function getResource_uri()
     {
-        return Yii::$app->params['frontend_url'] . '/package/' . $this->partner->slug . '/' . $this->package_slug;
+        return Yii::$app->params['frontend_url'] . '/package/' . $this->package_slug;
     }
 
     public function getCan_comment()
