@@ -303,7 +303,7 @@ class DefaultController extends RestController
             // Store the transaction in the database
             $t = new Transaction();
             $t->utm_source = $utm_source;
-            $t->user_id = $model->lead->user_is ?? $this->userinfoId;
+            $t->user_id = $model->lead->user_id ?? $this->userinfoId;
             $t->lead_partner_quotes_id = $model->id;
 
             $t->lead_partner_quote_installments_id = $model->installmentDue->id ?? null;
