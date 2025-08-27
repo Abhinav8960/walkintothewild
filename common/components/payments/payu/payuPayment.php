@@ -187,8 +187,10 @@ class payuPayment
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();
+            $data = [];
             $data['status'] = 0;
-            $data['message'] = "Payment initiation failed: " . $e->getMessage();
+            // $data['message'] = "Payment initiation failed: " . $e->getMessage();
+            $data['message'] = "Payment initiation failed. Please try again.";
         }
         return $data;
 
