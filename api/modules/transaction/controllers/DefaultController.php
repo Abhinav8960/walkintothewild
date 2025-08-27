@@ -104,9 +104,14 @@ class DefaultController extends RestController
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
-        $this->storePayu($lead_partner_quotes_id,  $store);
+        // $this->storePayu($lead_partner_quotes_id,  $store);
 
-        return Yii::$app->api->sendResponse($data);
+        if ($this->storePayu($lead_partner_quotes_id,  $store)) {
+
+            return Yii::$app->api->sendResponse($data);
+        } else {
+            return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faced payment gateway Technical error, please try again later."]);
+        }
     }
 
     private function generatePayuHash($data, $salt)
@@ -298,7 +303,7 @@ class DefaultController extends RestController
             // Store the transaction in the database
             $t = new Transaction();
             $t->utm_source = $utm_source;
-            $t->user_id = $this->userinfoId;
+            $t->user_id = $model->lead->user_id ?? $this->userinfoId;
             $t->lead_partner_quotes_id = $model->id;
 
             $t->lead_partner_quote_installments_id = $model->installmentDue->id ?? null;
@@ -365,7 +370,7 @@ class DefaultController extends RestController
             $t->created_by = $this->userinfoId;
             $t->updated_by = $this->userinfoId;
             if (!$t->save()) {
-                Yii::error('Transaction save failed: ' . json_encode($transaction->getErrors()), 'transaction');
+                Yii::error('Transaction save failed: ' . json_encode($t->getErrors()), 'transaction');
                 $transaction->rollBack();
                 return false;
             }

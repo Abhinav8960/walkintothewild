@@ -233,14 +233,16 @@ class ChatMessage extends \common\models\chat\ChatMessage
         if ($insert) {
             if ($this->chat->chat_type == Chat::CHAT_TYPE_QUOTE) {
                 $senderId = $this->createduser->id;
-                return  new \common\events\chat\NewQuotationChatMessage($this->reciverId,$senderId, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+                // return  new \common\events\chat\NewQuotationChatMessage($this->reciverId,$senderId, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+                  new \common\events\chat\NewQuotationChatMessage($this->reciverId,$senderId, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
             if ($this->is_call_message != true || $this->status != 0) {
                 $sender = $this->createduser->name;
                 // if($this->chat->chat_type ==  Chat::CHAT_TYPE_QUOTE && $this->created_by == $this->chat->recipient_user_id){
                 //     $sender = $this->chat->operator->business_name;
                 // }
-                return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+                // return  new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
+                  new \common\events\chat\NewChatMessageSend([$this->reciverId], $sender, $this->createduser->user_handle, \common\models\GeneralModel::strMaxWord($this->message), $this->chat->chat_hash, $this->chat);
             }
         }
         return true;
