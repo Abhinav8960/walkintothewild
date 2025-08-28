@@ -101,10 +101,12 @@ class DefaultController extends RestController
 
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($d, $salt);
-        $data['payu']['quickPayEvent'] = $this->generatePayuHash($d, $salt);
-        $data['payu']['getSdkConfiguration'] = $this->generatePayuHash($d, $salt);
-        $data['payu']['getCheckoutDetails'] = $this->generatePayuHash($d, $salt);
-        $data['payu']['getAllOfferDetails'] = $this->generatePayuHash($d, $salt);
+
+        $data['payu']['quickPayEvent'] = $this->generateMobileHash($d, $salt, 'quickPayEvent');
+        $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($d, $salt, 'getSdkConfiguration');
+        $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($d, $salt, 'getCheckoutDetails');
+        $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($d, $salt, 'getAllOfferDetails');
+
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
@@ -589,5 +591,48 @@ class DefaultController extends RestController
         \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_CART_OPEN, $quotation->lead_id, $quotation->id, $transaction_id = null);
 
         return Yii::$app->api->sendResponse($data);
+    }
+
+     private function generateMobileHash($data, $salt , $hashType)
+    {
+        $payuData = $data['payu'];
+        
+        switch ($hashType) {
+            case 'quickPayEvent':
+                // Hash for quick pay event: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
+                $hashString = $payuData['key'] . '|' . 
+                             $payuData['txnid'] . '|' . 
+                             $payuData['amount'] . '|' . 
+                             $payuData['productinfo'] . '|' . 
+                             $payuData['firstname'] . '|' . 
+                             $payuData['email'] . '|' . 
+                             $payuData['udf1'] . '|' . 
+                             $payuData['udf2'] . '|' . 
+                             $payuData['udf3'] . '|' . 
+                             $payuData['udf4'] . '|' . 
+                             $payuData['udf5'] . '||||||' . 
+                             $salt;
+                break;
+                
+            case 'getSdkConfiguration':
+                // Hash for SDK configuration: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_checkout_details|default|' . $salt;
+                break;
+                
+            case 'getCheckoutDetails':
+                // Hash for checkout details: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_checkout_details|' . $payuData['key'] . '|' . $salt;
+                break;
+                
+            case 'getAllOfferDetails':
+                // Hash for offer details: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_offers|default|' . $salt;
+                break;
+                
+            default:
+                return '';
+        }
+        
+        return strtolower(hash('sha512', $hashString));
     }
 }

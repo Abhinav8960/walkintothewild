@@ -38,30 +38,30 @@ class payuPayment
         } elseif ($this->source_id == Transaction::SOURCE_SHARE_SAFARI) {
             $this->source = 'FD';
         }
-        // try {
-        $txnid = Transaction::transactionId($share_safari_lead->shareSafariLead->id, $this->source);
-        $udf1 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $this->source);
-        $udf2 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $this->source);
 
-        $amount = $share_safari_lead->amount;
-        $productinfo = "Safari Booking Payment";
-        $firstname = $share_safari_lead->shareSafariLead->name;
-        $email = $share_safari_lead->shareSafariLead->email;
-        $phone = $share_safari_lead->shareSafariLead->phone;
-        // Additional params for transaction tracking
-        return $this->initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2);
-        // } catch (\Exception $e) {
-        //     Yii::error('PayU payment initiation failed: ' . $e->getMessage());
-        //     return [
-        //         'status' => 0,
-        //         'message' => 'Payment initiation failed'
-        //     ];
-        // }
+        try {
+            $txnid = Transaction::transactionId($share_safari_lead->shareSafariLead->id, $this->source);
+            $udf1 = $reference_id = Transaction::referenceId($share_safari_lead->shareSafariLead->id, $this->source);
+            $udf2 = $orderId = Transaction::orderId($share_safari_lead->shareSafariLead->id, $this->source);
+
+            $amount = $share_safari_lead->amount;
+            $productinfo = "Safari Booking Payment";
+            $firstname = $share_safari_lead->shareSafariLead->name;
+            $email = $share_safari_lead->shareSafariLead->email;
+            $phone = $share_safari_lead->shareSafariLead->phone;
+            
+            return $this->initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2);
+        } catch (\Exception $e) {
+            Yii::error('PayU payment initiation failed: ' . $e->getMessage());
+            return [
+                'status' => 0,
+                'message' => 'Payment initiation failed'
+            ];
+        }
     }
 
     private function initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2, $lead_partner_quotes_id = null, $lead_partner_quote_installments_id = null, $lead_partner_id = null, $addional_notes = null)
     {
-
         $payuData = $data['payu'] = [
             'key' => $this->merchantKey,
             'txnid' => $txnid,
@@ -73,63 +73,54 @@ class payuPayment
             'surl' => Yii::$app->params['payu']['successUrl'],
             'furl' => Yii::$app->params['payu']['failureUrl'],
             'udf1' => $udf1,
-            'udf2' => $udf2
+            'udf2' => $udf2,
+            'udf3' => '',
+            'udf4' => '',
+            'udf5' => '',
+            'udf6' => '',
+            'udf7' => '',
+            'udf8' => '',
+            'udf9' => '',
+            'udf10' => ''
         ];
 
-        // Generate hash
-        // Generate hash for PayU
+        // Generate payment hash
         $data['payu']['hash'] = $this->generatePayuHash($data);
-        $data['payu']['quickPayEvent'] = $this->generatePayuHash($data);
-        $data['payu']['getSdkConfiguration'] = $this->generatePayuHash($data);
-        $data['payu']['getCheckoutDetails'] = $this->generatePayuHash($data);
-        $data['payu']['getAllOfferDetails'] = $this->generatePayuHash($data);
+        
+        // Generate mobile SDK specific hashes
+        $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
+        $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
+        $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
+        $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
         
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
 
-        // Create transaction record
-        // $t = new Transaction();
-        // $t->payment_gateway = Transaction::PAYMENT_GATEWAY_PAYU;
-        // $t->received_amount = $amount;
-        // $t->source = $this->source;
-        // $t->order_id = $txnid;
-        // $t->status = Transaction::STATUS_INITIATED;
-        // $t->user_id = $share_safari_lead->shareSafariLead->user_id;
-        // // $t->source = Transaction::SOURCE_SHARE_SAFARI;
-        // $t->order_id = $udf1;
-        // $t->reference_id = $udf2;
-
-
         $utm_source = Yii::$app->request->get('utm_source', null);
 
-        // db transaction begin
+        // Database transaction begin
         $transaction = Yii::$app->db->beginTransaction();
         try {
-
             // Store the transaction in the database
             $t = new Transaction();
             $t->source = $this->source_id;
-
             $t->utm_source = $utm_source;
             $t->share_safari_lead_id = $share_safari_lead->share_safari_lead_id;
             $t->share_safari_lead_installment_id = $share_safari_lead->id;
             $t->share_safari_id = $share_safari_lead->share_safari_id;
             $t->share_safari_version = $share_safari_lead->version;
-
             $t->lead_partner_quotes_id = $lead_partner_quotes_id;
-
             $t->lead_partner_quote_installments_id = $lead_partner_quote_installments_id;
             $t->safaris = $share_safari_lead->shareSafari->no_of_safari ?? 1;
             $t->travelers = $share_safari_lead->shareSafariLead->quantity;
             $t->stay_category_id = $share_safari_lead->shareSafari->stay_category_id;
             $t->billing_name = $share_safari_lead->shareSafariLead->name;
-
             $t->lead_partner_id = $lead_partner_id;
             $t->lead_id = $share_safari_lead->shareSafariLead->id;
             $t->partner_id = $share_safari_lead->shareSafari->partner->id;
             $t->park_id = $share_safari_lead->shareSafari->park_id;
             $t->reference_id = $payuData['udf1'];
             $t->order_id = $payuData['udf2'];
-            $t->currency = 'INR'; // Assuming INR
+            $t->currency = 'INR';
             $t->received_amount = $payuData['amount'];
             $t->payment_gateway = Transaction::PAYMENT_GATEWAY_PAYU;
             $t->name = $share_safari_lead->shareSafariLead->name;
@@ -137,9 +128,7 @@ class payuPayment
             $t->phone = $share_safari_lead->shareSafariLead->phone;
             $t->start_date = $share_safari_lead->shareSafariLead->start_date;
             $t->end_date = $share_safari_lead->shareSafariLead->end_date;
-            // $t->validity_date = date('Y-m-d H:i:s');
-            // $t->permit_booking_date = date('Y-m-d H:i:s');
-            $t->validity_date = $share_safari_lead->shareSafari->cut_off_date != null ? $share_safari_lead->shareSafari->cut_off_date :  date('Y-m-d H:i:s', strtotime('+1 day'));
+            $t->validity_date = $share_safari_lead->shareSafari->cut_off_date != null ? $share_safari_lead->shareSafari->cut_off_date : date('Y-m-d H:i:s', strtotime('+1 day'));
             $t->permit_booking_date = date('Y-m-d H:i:s', strtotime('+10 minutes'));
             $t->partner_selling_price = $payuData['amount'];
             $t->plateform_partner_fees_percentage = 0;
@@ -151,20 +140,10 @@ class payuPayment
             $t->addional_notes = $addional_notes;
             $t->addtional_data = json_encode($data);
             $t->user_id = $share_safari_lead->shareSafariLead->user_id;
-
-            // $t->billing_name = $model->name;
-            // $t->billing_address = $model->billing_address;
-            // $t->billing_city = $model->billing_city;
-            // $t->billing_state = $model->billing_state;
-            // $t->billing_zip = $model->billing_zip;
-            // $t->billing_country = $model->billing_country;
-            // $t->billing_tel = $model->phone;
-            // $t->billing_email = $model->email;
             $t->param1 = $payuData['udf1'];
             $t->param2 = $payuData['udf2'];
-            // $t->param3 = $model->id;
-            // $t->param4 = $model->installment->id ?? null;
-            // $t->param5 = $model->installment->installment ?? 0;
+            
+            // Device and platform info
             $headers = Yii::$app->getRequest()->getHeaders();
             $device = strtolower($headers->get('x-device')) ?? null;
             $platform = strtolower($headers->get('x-platform')) ?? null;
@@ -175,66 +154,107 @@ class payuPayment
             $t->platform_version = $platform_version;
             $t->browser = null;
             $t->browser_version = null;
-            $t->application_version =  $application_version;
-
+            $t->application_version = $application_version;
+            
             $t->status = Transaction::STATUS_INITIATED;
             $t->created_at = time();
             $t->updated_at = time();
             $t->created_by = $share_safari_lead->shareSafariLead->user_id;
             $t->updated_by = $share_safari_lead->shareSafariLead->user_id;
+            
             if (!$t->save()) {
                 Yii::error('Transaction save failed: ' . json_encode($t->getErrors()), 'transaction');
                 $transaction->rollBack();
-                return false;
+                return [
+                    'status' => 0,
+                    'message' => 'Transaction save failed'
+                ];
             }
+            
             \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_INITIATED, $share_safari_lead->shareSafariLead->id, null, $t->id);
+            
             $data['status'] = 1;
             $transaction->commit();
+            
+            return $data;
         } catch (\Exception $e) {
             $transaction->rollBack();
-            $data = [];
-            $data['status'] = 0;
-            // $data['message'] = "Payment initiation failed: " . $e->getMessage();
-            $data['message'] = "Payment initiation failed. Please try again.";
+            Yii::error('Transaction creation failed: ' . $e->getMessage());
+            return [
+                'status' => 0,
+                'message' => "Payment initiation failed. Please try again."
+            ];
         }
-        return $data;
-
-
-
-
-
-
-        // return [
-        //     'status' => 1,
-        //     'data' => [
-        //         'payment_url' => $this->isTestMode ? self::PAYU_TEST_URL : self::PAYU_PROD_URL,
-        //         'payment_data' => $payuData,
-        //         'method' => 'POST'
-        //     ]
-        // ];
     }
 
+    /**
+     * Generate standard PayU hash for web payments
+     */
     private function generatePayuHash($data)
     {
-
         $salt = $this->merchantSalt;
         $hashPattern = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
         $fieldsOrder = explode('|', $hashPattern);
-        // Initialize the hash string
+        
         $hashString = '';
-
-        // Append values from $data based on the order
         foreach ($fieldsOrder as $field) {
             $hashString .= isset($data['payu'][$field]) ? $data['payu'][$field] . '|' : '|';
         }
-
-        // Append the salt at the end
         $hashString .= $salt;
-        // echo $hashString;
-        // die();
-        // Generate and return the hash
+        
         return strtolower(hash('sha512', $hashString));
     }
+
+    /**
+     * Generate mobile SDK specific hashes
+     */
+    private function generateMobileHash($data, $hashType)
+    {
+        $salt = $this->merchantSalt;
+        $payuData = $data['payu'];
+        
+        switch ($hashType) {
+            case 'quickPayEvent':
+                // Hash for quick pay event: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
+                $hashString = $payuData['key'] . '|' . 
+                             $payuData['txnid'] . '|' . 
+                             $payuData['amount'] . '|' . 
+                             $payuData['productinfo'] . '|' . 
+                             $payuData['firstname'] . '|' . 
+                             $payuData['email'] . '|' . 
+                             $payuData['udf1'] . '|' . 
+                             $payuData['udf2'] . '|' . 
+                             $payuData['udf3'] . '|' . 
+                             $payuData['udf4'] . '|' . 
+                             $payuData['udf5'] . '||||||' . 
+                             $salt;
+                break;
+                
+            case 'getSdkConfiguration':
+                // Hash for SDK configuration: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_checkout_details|default|' . $salt;
+                break;
+                
+            case 'getCheckoutDetails':
+                // Hash for checkout details: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_checkout_details|' . $payuData['key'] . '|' . $salt;
+                break;
+                
+            case 'getAllOfferDetails':
+                // Hash for offer details: key|command|var1|salt
+                $hashString = $payuData['key'] . '|get_offers|default|' . $salt;
+                break;
+                
+            default:
+                return '';
+        }
+        
+        return strtolower(hash('sha512', $hashString));
+    }
+
+    
+
+    
 
     public function verifyPayment($postData)
     {
@@ -269,7 +289,7 @@ class payuPayment
             // Update installment status
             $installment = ShareSafariLeadInstallment::findOne($postData['udf1']);
             if ($installment && $status === 'success') {
-                $installment->status = ShareSafariLeadInstallment::STATUS_PAID;
+                $installment->status = 1; //paid
                 $installment->transaction_datetime = date('Y-m-d H:i:s');
                 $installment->payment_gateway = Transaction::PAYMENT_GATEWAY_PAYU;
                 $installment->save();
@@ -288,4 +308,7 @@ class payuPayment
             ];
         }
     }
+   
+
+   
 }
