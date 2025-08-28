@@ -600,35 +600,45 @@ class DefaultController extends RestController
         switch ($hashType) {
             case 'quickPayEvent':
                 // Hash for quick pay event: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
-                $hashString = $payuData['key'] . '|' . 
-                             $payuData['txnid'] . '|' . 
-                             $payuData['amount'] . '|' . 
-                             $payuData['productinfo'] . '|' . 
-                             $payuData['firstname'] . '|' . 
-                             $payuData['email'] . '|' . 
-                             $payuData['udf1'] . '|' . 
-                             $payuData['udf2'] . '|' . 
-                             $payuData['udf3'] . '|' . 
-                             $payuData['udf4'] . '|' . 
-                             $payuData['udf5'] . '||||||' . 
-                             $salt;
+                $hashString = $payuData['key'] . '|' .
+                    $payuData['txnid'] . '|' .
+                    $payuData['amount'] . '|' .
+                    $payuData['productinfo'] . '|' .
+                    $payuData['firstname'] . '|' .
+                    $payuData['email'] . '|' .
+                    $payuData['udf1'] . '|' .
+                    $payuData['udf2'] . '|' .
+                    $payuData['udf3'] . '|' .
+                    $payuData['udf4'] . '|' .
+                    $payuData['udf5'] . '||||||' .
+                    $salt;
                 break;
-                
+
             case 'getSdkConfiguration':
                 // Hash for SDK configuration: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_checkout_details|default|' . $salt;
+                $hashString = $payuData['key'] . '|get_sdk_configuration|GET|' . $salt;
                 break;
-                
+
+
+
             case 'getCheckoutDetails':
                 // Hash for checkout details: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_checkout_details|' . $payuData['key'] . '|' . $salt;
+
+                //                 get_checkout_details = 3RYMv6|get_checkout_details|{"requestId":"t250828123921501756364962240","transactionDetails":{"amount":2000},"customerDetails":{"mobile":"7303767448"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,
+                // "getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|
+
+
+
+                $hashString = $payuData['key'] . '|get_checkout_details|{"requestId":"' . $payuData['txnid'] . '","transactionDetails":{"amount":' . $payuData['amount'] . '},"customerDetails":{"mobile":"'.$payuData['phone'].'"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,"getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|' . $salt;
                 break;
-                
+
             case 'getAllOfferDetails':
                 // Hash for offer details: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_offers|default|' . $salt;
+                $date = new \DateTime('now', new \DateTimeZone('GMT'));
+                $hashString =  '{"amount":' . $payuData['amount'] . '}|' . $date->format('D, d M Y H:i:s') . ' GMT' . '|' . $salt;
                 break;
-                
+
+
             default:
                 return '';
         }
