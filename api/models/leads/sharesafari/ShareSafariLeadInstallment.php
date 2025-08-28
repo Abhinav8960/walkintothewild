@@ -5,7 +5,7 @@ namespace api\models\leads\sharesafari;
 use api\models\sharesafari\ShareSafari;
 use Yii;
 
-class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareSafariLeadInstallment 
+class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareSafariLeadInstallment
 {
 
     public function fields()
@@ -16,7 +16,7 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             // 'share_safari_user_id',
             // 'share_safari_partner_id',
             // 'version',
-            'type'=> function () {
+            'type' => function () {
                 return $this->type == 1 ? 'Share Safari' : 'Fixed Departure';
             },
             // 'notes',
@@ -37,9 +37,9 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             // 'status',
         ];
 
-        if($this->type == 2){
+        if ($this->type == 2) {
             $fields['web_url'] =  function () {
-                return Yii::$app->params['frontend_url_for_payments'] . '/safari-payment/' . $this->payment_hash;
+                return Yii::$app->params['frontend_url_for_payments'] . '/safari-payment/'.$this->shareSafari->slug.'/' . $this->payment_hash;
             };
         }
 
@@ -51,9 +51,4 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
     {
         return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
-
-
-
-
-
 }
