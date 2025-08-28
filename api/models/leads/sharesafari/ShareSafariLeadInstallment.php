@@ -37,9 +37,9 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             // 'status',
         ];
 
-        if($this->type == 1){
+        if($this->type == 2){
             $fileds['web_url'] =  function () {
-                return Yii::$app->params['frontend_url_for_payments'] . '/sharedsafari/' . $this->shareSafari->slug . '/' . $this->shareSafari->no_of_safari;
+                return Yii::$app->params['frontend_url_for_payments'] . '/safari-payment/' . $this->shareSafari->slug . '/' . $this->shareSafari->no_of_safari;
             };
         }
 
