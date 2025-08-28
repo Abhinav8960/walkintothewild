@@ -261,7 +261,8 @@ class Lead extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
 
     public function getPackage()
     {
-        return $this->hasOne(Package::className(), ['id' => 'package_id', 'live_version' => 'package_version']);
+        // return $this->hasOne(Package::className(), ['id' => 'package_id', 'live_version' => 'package_version']);
+        return $this->hasOne(Package::className(), ['id' => 'package_id']);
     }
 
     public function getBookedpartner()
