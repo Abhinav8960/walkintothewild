@@ -46,6 +46,7 @@ class ShareSafariLead extends \common\models\leads\sharesafari\ShareSafariLead
             'share_safari' => function () {
                 return  [
                     'share_safari_title' => $this->shareSafari->share_safari_title,
+                    'slug' => $this->shareSafari->slug,
                     'partner' => $this->shareSafari->partner,
                     'park_title' => $this->shareSafari->park_title,
                     'park_slug' => $this->shareSafari->park_slug,

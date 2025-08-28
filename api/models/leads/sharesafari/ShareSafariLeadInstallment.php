@@ -41,6 +41,7 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             $fields['web_url'] =  function () {
                 return Yii::$app->params['frontend_url_for_payments'] . '/safari-payment/'.$this->shareSafari->slug.'/' . $this->payment_hash;
             };
+            
         }
 
 
