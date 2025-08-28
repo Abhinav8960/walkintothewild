@@ -89,10 +89,10 @@ class payuPayment
         $data['payu']['hash'] = $this->generatePayuHash($data);
 
         // Generate mobile SDK specific hashes
-        // $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
-        // $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
-        // $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
-        // $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
+        $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
+        $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
+        $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
+        $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
 
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
 
