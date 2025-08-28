@@ -10,7 +10,7 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
 
     public function fields()
     {
-        return [
+        $fileds = [
             // 'id',
             // 'share_safari_id',
             // 'share_safari_user_id',
@@ -36,11 +36,24 @@ class ShareSafariLeadInstallment extends \common\models\leads\sharesafari\ShareS
             // 'updated_by',
             // 'status',
         ];
+
+        if($this->type == 1){
+            $fileds['web_url'] =  function () {
+                return Yii::$app->params['frontend_url_for_payments'] . '/sharedsafari/' . $this->shareSafari->slug . '/' . $this->shareSafari->no_of_safari;
+            };
+        }
+
+
+        return $fileds;
     }
 
     public function getShareSafari()
     {
         return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
     }
+
+
+
+
 
 }

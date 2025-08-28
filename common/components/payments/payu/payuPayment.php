@@ -32,6 +32,7 @@ class payuPayment
                 'message' => 'Invalid payment request'
             ];
         }
+        
         $this->source_id = $sourceId;
         if ($this->source_id == Transaction::SOURCE_LEAD) {
             $this->source = 'L';
@@ -94,7 +95,6 @@ class payuPayment
         // $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
 
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
-        $data['web_url'] = Yii::$app->params['frontend_url_for_payments'] . '/sharedsafari/' . $share_safari_lead->shareSafari->slug . '/' . $share_safari_lead->shareSafari->no_of_safari;
 
         $utm_source = Yii::$app->request->get('utm_source', null);
 
