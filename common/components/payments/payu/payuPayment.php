@@ -88,12 +88,13 @@ class payuPayment
         $data['payu']['hash'] = $this->generatePayuHash($data);
 
         // Generate mobile SDK specific hashes
-        $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
-        $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
-        $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
-        $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
+        // $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
+        // $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
+        // $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
+        // $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
 
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
+        $data['web_url'] = Yii::$app->params['frontend_url_for_payments'] . '/sharedsafari/' . $share_safari_lead->shareSafari->slug . '/' . $share_safari_lead->shareSafari->no_of_safari;
 
         $utm_source = Yii::$app->request->get('utm_source', null);
 
@@ -245,7 +246,7 @@ class payuPayment
 
 
 
-                $hashString = $payuData['key'] . '|get_checkout_details|{"requestId":"' . $payuData['txnid'] . '","transactionDetails":{"amount":' . $payuData['amount'] . '},"customerDetails":{"mobile":"'.$payuData['phone'].'"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,"getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|' . $salt;
+                $hashString = $payuData['key'] . '|get_checkout_details|{"requestId":"' . $payuData['txnid'] . '","transactionDetails":{"amount":' . $payuData['amount'] . '},"customerDetails":{"mobile":"' . $payuData['phone'] . '"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,"getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|' . $salt;
                 break;
 
             case 'getAllOfferDetails':

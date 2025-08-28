@@ -102,12 +102,13 @@ class DefaultController extends RestController
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($d, $salt);
 
-        $data['payu']['quickPayEvent'] = $this->generateMobileHash($d, $salt, 'quickPayEvent');
-        $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($d, $salt, 'getSdkConfiguration');
-        $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($d, $salt, 'getCheckoutDetails');
-        $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($d, $salt, 'getAllOfferDetails');
+        // $data['payu']['quickPayEvent'] = $this->generateMobileHash($d, $salt, 'quickPayEvent');
+        // $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($d, $salt, 'getSdkConfiguration');
+        // $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($d, $salt, 'getCheckoutDetails');
+        // $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($d, $salt, 'getAllOfferDetails');
 
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
+
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
         // $this->storePayu($lead_partner_quotes_id,  $store);
