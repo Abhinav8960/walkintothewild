@@ -84,7 +84,7 @@ class DefaultController extends RestController
 
         // Prepare data for PayU
         $data = [];
-        $store = $data['payu'] = [
+        $store = $d['payu'] = $data['payu'] = [
             'key' => $merchantKey,
             'txnid' => $transactionId,
             'amount' => $amount,
@@ -100,7 +100,11 @@ class DefaultController extends RestController
         ];
 
         // Generate hash for PayU
-        $data['payu']['hash'] = $this->generatePayuHash($data, $salt);
+        $data['payu']['hash'] = $this->generatePayuHash($d, $salt);
+        $data['payu']['quickPayEvent'] = $this->generatePayuHash($d, $salt);
+        $data['payu']['getSdkConfiguration'] = $this->generatePayuHash($d, $salt);
+        $data['payu']['getCheckoutDetails'] = $this->generatePayuHash($d, $salt);
+        $data['payu']['getAllOfferDetails'] = $this->generatePayuHash($d, $salt);
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
         \Yii::error('PayU Data: ' . json_encode($data), 'transaction');
         // store the transaction in the database
@@ -108,7 +112,7 @@ class DefaultController extends RestController
 
         if ($this->storePayu($lead_partner_quotes_id,  $store)) {
 
-            return Yii::$app->api->sendResponse($data);
+            return Yii::$app->api->sendResponse($data, $salt);
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faced payment gateway Technical error, please try again later."]);
         }

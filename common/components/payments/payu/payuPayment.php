@@ -79,6 +79,11 @@ class payuPayment
         // Generate hash
         // Generate hash for PayU
         $data['payu']['hash'] = $this->generatePayuHash($data);
+        $data['payu']['quickPayEvent'] = $this->generatePayuHash($data);
+        $data['payu']['getSdkConfiguration'] = $this->generatePayuHash($data);
+        $data['payu']['getCheckoutDetails'] = $this->generatePayuHash($data);
+        $data['payu']['getAllOfferDetails'] = $this->generatePayuHash($data);
+        
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
 
         // Create transaction record
