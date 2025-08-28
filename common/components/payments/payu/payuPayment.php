@@ -49,7 +49,7 @@ class payuPayment
             $firstname = $share_safari_lead->shareSafariLead->name;
             $email = $share_safari_lead->shareSafariLead->email;
             $phone = $share_safari_lead->shareSafariLead->phone;
-            
+
             return $this->initiate($share_safari_lead, $txnid, $amount, $productinfo, $firstname, $email, $phone, $udf1, $udf2);
         } catch (\Exception $e) {
             Yii::error('PayU payment initiation failed: ' . $e->getMessage());
@@ -86,13 +86,13 @@ class payuPayment
 
         // Generate payment hash
         $data['payu']['hash'] = $this->generatePayuHash($data);
-        
+
         // Generate mobile SDK specific hashes
         $data['payu']['quickPayEvent'] = $this->generateMobileHash($data, 'quickPayEvent');
         $data['payu']['getSdkConfiguration'] = $this->generateMobileHash($data, 'getSdkConfiguration');
         $data['payu']['getCheckoutDetails'] = $this->generateMobileHash($data, 'getCheckoutDetails');
         $data['payu']['getAllOfferDetails'] = $this->generateMobileHash($data, 'getAllOfferDetails');
-        
+
         $data['payu_transaction_url'] = Yii::$app->params['payu']['host_url'] . '/_payment';
 
         $utm_source = Yii::$app->request->get('utm_source', null);
@@ -142,7 +142,7 @@ class payuPayment
             $t->user_id = $share_safari_lead->shareSafariLead->user_id;
             $t->param1 = $payuData['udf1'];
             $t->param2 = $payuData['udf2'];
-            
+
             // Device and platform info
             $headers = Yii::$app->getRequest()->getHeaders();
             $device = strtolower($headers->get('x-device')) ?? null;
@@ -155,13 +155,13 @@ class payuPayment
             $t->browser = null;
             $t->browser_version = null;
             $t->application_version = $application_version;
-            
+
             $t->status = Transaction::STATUS_INITIATED;
             $t->created_at = time();
             $t->updated_at = time();
             $t->created_by = $share_safari_lead->shareSafariLead->user_id;
             $t->updated_by = $share_safari_lead->shareSafariLead->user_id;
-            
+
             if (!$t->save()) {
                 Yii::error('Transaction save failed: ' . json_encode($t->getErrors()), 'transaction');
                 $transaction->rollBack();
@@ -170,12 +170,12 @@ class payuPayment
                     'message' => 'Transaction save failed'
                 ];
             }
-            
+
             \common\models\transaction\TransactionEvents::store(\common\models\transaction\TransactionEvents::EVENT_PAYMENT_INITIATED, $share_safari_lead->shareSafariLead->id, null, $t->id);
-            
+
             $data['status'] = 1;
             $transaction->commit();
-            
+
             return $data;
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -195,13 +195,13 @@ class payuPayment
         $salt = $this->merchantSalt;
         $hashPattern = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
         $fieldsOrder = explode('|', $hashPattern);
-        
+
         $hashString = '';
         foreach ($fieldsOrder as $field) {
             $hashString .= isset($data['payu'][$field]) ? $data['payu'][$field] . '|' : '|';
         }
         $hashString .= $salt;
-        
+
         return strtolower(hash('sha512', $hashString));
     }
 
@@ -212,49 +212,59 @@ class payuPayment
     {
         $salt = $this->merchantSalt;
         $payuData = $data['payu'];
-        
+
         switch ($hashType) {
             case 'quickPayEvent':
                 // Hash for quick pay event: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
-                $hashString = $payuData['key'] . '|' . 
-                             $payuData['txnid'] . '|' . 
-                             $payuData['amount'] . '|' . 
-                             $payuData['productinfo'] . '|' . 
-                             $payuData['firstname'] . '|' . 
-                             $payuData['email'] . '|' . 
-                             $payuData['udf1'] . '|' . 
-                             $payuData['udf2'] . '|' . 
-                             $payuData['udf3'] . '|' . 
-                             $payuData['udf4'] . '|' . 
-                             $payuData['udf5'] . '||||||' . 
-                             $salt;
+                $hashString = $payuData['key'] . '|' .
+                    $payuData['txnid'] . '|' .
+                    $payuData['amount'] . '|' .
+                    $payuData['productinfo'] . '|' .
+                    $payuData['firstname'] . '|' .
+                    $payuData['email'] . '|' .
+                    $payuData['udf1'] . '|' .
+                    $payuData['udf2'] . '|' .
+                    $payuData['udf3'] . '|' .
+                    $payuData['udf4'] . '|' .
+                    $payuData['udf5'] . '||||||' .
+                    $salt;
                 break;
-                
+
             case 'getSdkConfiguration':
                 // Hash for SDK configuration: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_checkout_details|default|' . $salt;
+                $hashString = $payuData['key'] . '|get_sdk_configuration|GET|' . $salt;
                 break;
-                
+
+
+
             case 'getCheckoutDetails':
                 // Hash for checkout details: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_checkout_details|' . $payuData['key'] . '|' . $salt;
+
+                //                 get_checkout_details = 3RYMv6|get_checkout_details|{"requestId":"t250828123921501756364962240","transactionDetails":{"amount":2000},"customerDetails":{"mobile":"7303767448"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,
+                // "getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|
+
+
+
+                $hashString = $payuData['key'] . '|get_checkout_details|{"requestId":"' . $payuData['txnid'] . '","transactionDetails":{"amount":' . $payuData['amount'] . '},"customerDetails":{"mobile":"'.$payuData['phone'].'"},"useCase":{"getAdditionalCharges":true,"getTaxSpecification":true,"checkDownStatus":true,"getExtendedPaymentDetails":true,"checkCustomerEligibility":true,"getMerchantDetails":true,"getPaymentDetailsWithExtraFields":true,"getSdkDetails":true}}|' . $salt;
                 break;
-                
+
             case 'getAllOfferDetails':
                 // Hash for offer details: key|command|var1|salt
-                $hashString = $payuData['key'] . '|get_offers|default|' . $salt;
+                $date = new \DateTime('now', new \DateTimeZone('GMT'));
+                $hashString =  '{"amount":' . $payuData['amount'] . '}|' . $date->format('D, d M Y H:i:s') . ' GMT' . '|' . $salt;
                 break;
-                
+
+
             default:
                 return '';
         }
-        
+
         return strtolower(hash('sha512', $hashString));
     }
 
-    
 
-    
+
+
 
     public function verifyPayment($postData)
     {
@@ -308,7 +318,4 @@ class payuPayment
             ];
         }
     }
-   
-
-   
 }
