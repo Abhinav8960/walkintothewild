@@ -263,7 +263,7 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
     {
         // if ststus is 1 and change atrribute is status from 0 to 1 the create a row in booking table
 
-        if ($this->status == self::STATUS_SUCCESS && $this->is_payment_received == 1 && $insert) {
+        if ($this->status == self::STATUS_SUCCESS) {
             $this->makebooking();
         }
         parent::afterSave($insert, $changedAttributes);
