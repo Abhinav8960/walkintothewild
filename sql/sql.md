@@ -1,0 +1,1 @@
+ALTER TABLE `prod_witw`.`booking` ADD UNIQUE (`transaction_id`);

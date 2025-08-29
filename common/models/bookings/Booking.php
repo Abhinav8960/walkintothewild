@@ -127,6 +127,7 @@ class Booking extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             [['phone'], 'string', 'max' => 50],
             [['billing_zip'], 'string', 'max' => 30],
             [['billing_tel'], 'string', 'max' => 20],
+            [['transaction_id'], 'unique'],
         ];
     }
 

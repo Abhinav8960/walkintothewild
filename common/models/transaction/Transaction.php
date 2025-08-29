@@ -261,8 +261,9 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     public function afterSave($insert, $changedAttributes)
     {
-        // if ststus is 1 the create a row in booking table
-        if ($this->status == self::STATUS_SUCCESS) {
+        // if ststus is 1 and change atrribute is status from 0 to 1 the create a row in booking table
+
+        if ($this->status == self::STATUS_SUCCESS && $this->is_payment_received == 1 && $insert) {
             $this->makebooking();
         }
         parent::afterSave($insert, $changedAttributes);
@@ -270,6 +271,14 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
 
     private function makebooking()
     {
+
+        $booking = \common\models\bookings\Booking::find()->where(['transaction_id' => $this->id])->one();
+        if ($booking) {
+            return true; // booking already exists
+        }
+        $booking = new \common\models\bookings\Booking();
+
+
         // Generate PDF
         $content = GeneralModel::generatePdfContent('@common/templates/payments/payment_receipt.php', [
             'transaction' => $this,
@@ -295,7 +304,6 @@ class Transaction extends \yii\db\ActiveRecord implements \common\interfaces\New
         $checksum = \common\Helper\FsHelper::saveUploadedFile($uploadedFile, $filePath, $fileName);
 
 
-        $booking = new \common\models\bookings\Booking();
         $booking->source = $this->source;
 
         $booking->transaction_id = $this->id;
