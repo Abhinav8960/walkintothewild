@@ -61,7 +61,20 @@ use yii\helpers\Html;
             </table>
 
         </div>
-        <p style="font-weight: bold; margin-bottom: 10px;">For any queries or further discussion, message here or call the operator using the call button in chat.</p>
+        <?php
+        if (isset($call_to) && $call_to == 'user') {
+        ?>
+            <p style="font-weight: bold; margin-bottom: 10px;">For any queries or further discussion, message here or call the user using the call button in chat.</p>
+
+        <?php
+
+        } else {
+        ?>
+            <p style="font-weight: bold; margin-bottom: 10px;">For any queries or further discussion, message here or call the operator using the call button in chat.</p>
+
+        <?php
+        }
+        ?>
         <p style="font-weight: bold; margin-bottom: 10px;">Enjoy your upcoming safari!</p>
 
         <footer style="margin-top: 80px; margin-bottom:0px;font-size: 12px; color: #888;">

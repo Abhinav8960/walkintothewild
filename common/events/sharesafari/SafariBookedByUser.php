@@ -90,6 +90,28 @@ class SafariBookedByUser extends Event
                     'to_mail' => $this->email,
                     'cc' => [],
                     'bcc' => [],
+                ],
+                [
+                    'subject' => $this->shared_safari_title . 'Booked by ' . $this->name . ', get ready for adventure!!',
+                    'mail_template_id' => $this->emailTemplateId(),
+                    'params' => [
+                        'name' => $this->name,
+                        // 'email' => $this->email,
+                        // 'shared_safari' => $this->shared_safari_name,
+                        'shared_safari_title' => $this->shared_safari_title,
+                        'no_of_safari' => $this->no_of_safari,
+                        'start_date' => $this->start_date,
+                        'end_date' => $this->end_date,
+                        'booked_seat' => $this->booked_seat,
+                        'referenceId' => $this->referenceId,
+                        'amount' => $this->amount,
+                        'park' => $this->park,
+                        'call_to' => 'user',
+
+                    ],
+                    'to_mail' => $this->shared_safari->safarioperator->email,
+                    'cc' => [],
+                    'bcc' => [],
                 ]
 
             ],
@@ -112,8 +134,8 @@ class SafariBookedByUser extends Event
     public function prepareData()
     {
         $this->shared_safari = ShareSafari::find()->where(['id' => $this->shared_safari_id])->one();
-        $this->shared_safari_title = $this->shared_safari->share_safari_title;        
-        $this->no_of_safari = $this->shared_safari->no_of_safari;        
+        $this->shared_safari_title = $this->shared_safari->share_safari_title;
+        $this->no_of_safari = $this->shared_safari->no_of_safari;
         $this->park = $this->shared_safari->park->title;
 
 
