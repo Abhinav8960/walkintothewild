@@ -64,7 +64,7 @@ class Chat extends \common\models\chat\Chat
             // 'updated_by'
         ];
         if ($this->chat_type == 2 || $this->chat_type == 3) {
-            if ($this->chat_type == 2 ) {
+            if ($this->chat_type == 2) {
                 $fields[] = 'lead';
                 if ($this->quote_id > 0) {
                     $fields['quote'] = function () {
@@ -242,7 +242,7 @@ class Chat extends \common\models\chat\Chat
 
     public function callpossible()
     {
-        if ($this->chat_type == 2 || $this->chat_type == 3) {
+        if ($this->chat_type == SELF::CHAT_TYPE_QUOTE || $this->chat_type == SELF::CHAT_TYPE_SHARE_SAFARI) {
             if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
                 return true;
             }
