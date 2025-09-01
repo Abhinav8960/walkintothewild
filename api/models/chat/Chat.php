@@ -242,7 +242,7 @@ class Chat extends \common\models\chat\Chat
 
     public function callpossible()
     {
-        if ($this->chat_type == 2) {
+        if ($this->chat_type == 2 || $this->chat_type == 3) {
             if (!empty($this->user->mobile_no) && $this->user->is_mobile_no_verified == true && $this->operator->is_phone_no_verified == true && !empty($this->operator->phone_no)) {
                 return true;
             }
