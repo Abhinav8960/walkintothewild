@@ -470,6 +470,9 @@ class DefaultController extends Controller
             $m->status = ShareSafariVersion::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
             $this->updateFixedDepartureStatus($m->share_safari_id, $m->version, $m->status);
+             if ($m->status == ShareSafariVersion::SEND_FOR_APPROVAL_STATUS) {
+                // new \common\events\operator\FixedDepartureSendForApprovalEvent($m->safari_operator_id, $m->share_safari_title);
+            }
             Yii::$app->session->setFlash('success', 'FixedDeparture sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());

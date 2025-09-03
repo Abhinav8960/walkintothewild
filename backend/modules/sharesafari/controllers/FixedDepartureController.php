@@ -126,6 +126,7 @@ class FixedDepartureController extends Controller
             $fixed_departure->save(false);
 
             $model->status = ShareSafariVersion::APPROVED_AND_LIVE_STATUS;
+            $model->cancellation_reason = null;
             $model->final_approved_at = time();
 
             $model->save(false);
@@ -285,59 +286,6 @@ class FixedDepartureController extends Controller
         return false;
     }
 
-
-    //  public function actionRejectview($share_safari_id, $version)
-    // {
-    //     $model = Package::find()->where(['id' => $share_safari_id, 'version' => $version])->one();
-
-    //     if (Yii::$app->request->isAjax) {
-    //         return $this->renderAjax('_rejection_form', [
-    //             'share_safari_id' => $share_safari_id,
-    //             'version' => $version,
-    //             'model' => $model
-    //         ]);
-    //     }
-    // }
-
-    // public function actionReject($share_safari_id, $version)
-    // {
-    //     $package = Package::find()->where(['id' => $share_safari_id, 'pending_for_approval_version' => $version])->one();
-    //     if (empty($package)) {
-    //         Yii::$app->session->setFlash('error', 'Package not found.');
-    //         return $this->redirect(['index']);
-    //     }
-    //     $model = PackageVersion::find()->where(['share_safari_id' => $share_safari_id, 'version' => $version])->one();
-    //     $model->scenario = 'reject';
-
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             // $transaction = Yii::$app->db->beginTransaction();
-    //             // try {
-    //             $package->pending_for_approval_version = null;
-    //             $package->save(false);
-
-    //             $model->status = PackageVersion::NOT_APPROVED_STATUS;
-    //             $model->cancellation_reason = \Yii::$app->request->post('PackageVersion')['cancellation_reason'] ?? NULL;
-    //             $model->save(false);
-    //             // } catch (\Exception $e) {
-    //             //     Yii::error($e->getMessage());
-    //             //     $transaction->rollBack();
-    //             //     Yii::$app->session->setFlash('error', 'Failed to reject package.');
-    //             //     return $this->redirect(Yii::$app->request->referrer);
-    //             // }
-    //             // $transaction->commit();
-    //             Yii::$app->session->setFlash('success', 'Package rejected successfully.');
-    //             return $this->redirect(['index']);
-    //         }
-    //     }
-
-    //     if (Yii::$app->request->isAjax) {
-    //         return $this->renderAjax('_rejection_form', [
-    //             'model' => $model,
-    //         ]);
-    //     }
-    // }
-
     public function prepareJson($id)
     {
         $this->layout = \common\interfaces\NewStatusInterface::SHARE_SAFARI_API_LAYOUT_FULL;
@@ -386,5 +334,36 @@ class FixedDepartureController extends Controller
         ];
 
         return json_encode($json);
+    }
+
+    public function actionReject($share_safari_id, $version)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $share_safari_id, 'pending_for_approval_version' => $version])->one();
+        if (empty($share_safari)) {
+            Yii::$app->session->setFlash('error', 'Package not found.');
+            return $this->redirect(['index']);
+        }
+        $model = ShareSafariVersion::find()->where(['share_safari_id' => $share_safari_id, 'version' => $version])->one();
+        $model->scenario = 'reject';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+
+                $share_safari->pending_for_approval_version = null;
+                $share_safari->edit_status = 1;
+                $share_safari->save(false);
+                $model->status = ShareSafariVersion::NOT_APPROVED_STATUS;
+                $model->cancellation_reason = \Yii::$app->request->post('ShareSafariVersion')['cancellation_reason'] ?? NULL;
+                $model->save(false);
+                Yii::$app->session->setFlash('success', 'Package rejected successfully.');
+                return $this->redirect(['index']);
+            }
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_rejection_form', [
+                'model' => $model,
+            ]);
+        }
     }
 }

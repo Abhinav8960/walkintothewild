@@ -11,9 +11,20 @@ AppAsset::register($this);
 
 ?>
 
-
 <div class="d-flex justify-content-between align-items-center mt-5">
     <h3 class="mt-5">Fixed Departure : <?= Html::encode($share_safari->share_safari_title) ?></h3>
+    <div>
+        <?= Html::button(
+            '<i class="fa fa-times" style="font-size:15px; color:#DA2F49; margin-right:5px;"></i>Reject',
+            [
+                'value' => Url::toRoute(['reject', 'share_safari_id' => $share_safari->share_safari_id, 'version' => $share_safari->version]),
+                'class' => 'btn mt-3 reasonpopup',
+                'style' => 'background-color:#FBE7E8; color:#DA2F49;',
+                'title' => 'Reject'
+            ]
+        ) ?>
+
+    </div>
 </div>
 
 

@@ -20,6 +20,7 @@ if (Yii::$app->user->identity) {
 }
 
 $this->params['buttons'][] = Html::a('Fixed Departure Approval List', [Url::toRoute(['/sharesafari/fixed-departure/index'])], ['class' => 'btn btn-orange me-2', 'title' => 'Fixed Departure']);
+$this->params['buttons'][] = Html::a('Fixed Departure Reject List', [Url::toRoute(['/sharesafari/default/reject-list'])], ['class' => 'btn btn-danger me-2', 'title' => 'Fixed Departure']);
 
 ?>
 <div class="card">

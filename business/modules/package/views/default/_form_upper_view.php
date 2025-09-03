@@ -21,7 +21,7 @@ use yii\helpers\Url;
                         <div class="deletionBtn">
                             <?= Html::a('Delete', [Url::toRoute(['delete', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
                         </div>
-                        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS) { ?>
+                        <?php if ($package->status == PackageVersion::EDIATBLE_STATUS || $package->status == PackageVersion::NOT_APPROVED_STATUS) { ?>
                             <div class="edinBtn">
                                 <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $package->id])], ['title' => 'Send For Approval']) ?>
                             </div>
