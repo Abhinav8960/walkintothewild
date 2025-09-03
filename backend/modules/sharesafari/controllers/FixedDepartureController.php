@@ -336,7 +336,7 @@ class FixedDepartureController extends Controller
         return json_encode($json);
     }
 
-     public function actionReject($share_safari_id, $version)
+    public function actionReject($share_safari_id, $version)
     {
         $share_safari = ShareSafari::find()->where(['id' => $share_safari_id, 'pending_for_approval_version' => $version])->one();
         if (empty($share_safari)) {

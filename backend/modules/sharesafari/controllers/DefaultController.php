@@ -17,6 +17,8 @@ use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
+use common\models\sharesafari\ShareSafariVersion;
+use common\models\sharesafari\ShareSafariVersionSearch;
 use common\models\User;
 use frontend\models\form\SharedSafariRequestForm;
 use Yii;
@@ -537,5 +539,18 @@ class DefaultController extends Controller
         }
 
         return ['results' => $results];
+    }
+
+    public function actionRejectList()
+    {
+        $searchModel = new ShareSafariVersionSearch();
+        $searchModel->status = ShareSafariVersion::NOT_APPROVED_STATUS;
+        $dataProvider = $searchModel->partnersearch(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['IS NOT', 'cancellation_reason', NULL]);
+
+        return $this->render('_cancellation_list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
