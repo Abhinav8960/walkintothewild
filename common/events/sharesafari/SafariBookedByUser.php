@@ -110,7 +110,9 @@ class SafariBookedByUser extends Event
 
                     ],
                     'to_mail' => $this->shared_safari->safarioperator->email,
-                    'cc' => [],
+                    'cc' => [
+                        \Yii::$app->params['adminEmail']
+                    ],
                     'bcc' => [],
                 ]
 

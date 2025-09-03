@@ -115,7 +115,7 @@ class DefaultController extends RestController
 
         if ($this->storePayu($lead_partner_quotes_id,  $store)) {
 
-            return Yii::$app->api->sendResponse($data, $salt);
+            return Yii::$app->api->sendResponse($data);
         } else {
             return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Faced payment gateway Technical error, please try again later."]);
         }
@@ -602,18 +602,18 @@ class DefaultController extends RestController
             case 'quickPayEvent':
                 // Hash for quick pay event: key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||salt
                 $hashString = $payuData['key'] . '|' .
-                    $payuData['txnid'] . '|' .
-                    $payuData['amount'] . '|' .
-                    $payuData['productinfo'] . '|' .
-                    $payuData['firstname'] . '|' .
-                    $payuData['email'] . '|' .
-                    $payuData['udf1'] . '|' .
-                    $payuData['udf2'] . '|' .
-                    $payuData['udf3'] . '|' .
-                    $payuData['udf4'] . '|' .
-                    $payuData['udf5'] . '||||||' .
-                    $salt;
-                break;
+                        $payuData['txnid'] . '|' .
+                        $payuData['amount'] . '|' .
+                        $payuData['productinfo'] . '|' .
+                        $payuData['firstname'] . '|' .
+                        $payuData['email'] . '|' .
+                        $payuData['udf1'] . '|' .
+                        $payuData['udf2'] . '|||||||||' .
+                        // $payuData['udf3'] . '||||||||' .
+                        // $payuData['udf4'] . '|||||||' .
+                        // $payuData['udf5'] . '||||||' .
+                        $salt;
+                    break;
 
             case 'getSdkConfiguration':
                 // Hash for SDK configuration: key|command|var1|salt
