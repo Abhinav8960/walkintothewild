@@ -864,6 +864,9 @@ class DefaultController extends Controller
             $m->status = PackageVersion::SEND_FOR_APPROVAL_STATUS;
             $m->save(false);
             $this->updatePackageStatus($m->package_id, $m->version, $m->status);
+            if ($m->status == PackageVersion::SEND_FOR_APPROVAL_STATUS) {
+                new \common\events\operator\PackageSendForApprovalEvent($m->safari_operator_id, $m->package_name);
+            }
             Yii::$app->session->setFlash('success', 'Package sent for approval successfully');
         } catch (\Exception $e) {
             Yii::error($e->getMessage());
