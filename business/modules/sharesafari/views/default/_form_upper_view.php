@@ -21,7 +21,7 @@ use yii\helpers\Url;
                         <div class="deletionBtn">
                             <?= Html::a('Delete', [Url::toRoute(['delete', 'id' => $shared_safari_departure_version_model->id])], ['title' => 'Send For Approval']) ?>
                         </div>
-                        <?php if ($shared_safari_departure_version_model->status == ShareSafariVersion::EDIATBLE_STATUS) { ?>
+                        <?php if ($shared_safari_departure_version_model->status == ShareSafariVersion::EDIATBLE_STATUS || $shared_safari_departure_version_model->status == ShareSafariVersion::NOT_APPROVED_STATUS) { ?>
                             <div class="edinBtn">
                                 <?= Html::a('Send For Approval', [Url::toRoute(['send-for-approval', 'id' => $shared_safari_departure_version_model->id])], ['title' => 'Send For Approval']) ?>
                             </div>

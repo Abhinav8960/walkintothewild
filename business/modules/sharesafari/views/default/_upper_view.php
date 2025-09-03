@@ -18,6 +18,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="topParent d-flex justify-content-between align-items-center">
                     <div class="packageTitle">
                         <h2>Fixed Departure : <?= Html::encode($share_safari->share_safari_title) ?></h2>
+                        <?php if (!empty($share_safari->cancellation_reason)) { ?>
+                            <span style='color:red'>
+                                <?= '(' . $share_safari->cancellation_reason . ')' ?>
+                            </span>
+                        <?php } ?>
                     </div>
                     <?php
                     if ($var = $share_safari->fixed_departure) {
