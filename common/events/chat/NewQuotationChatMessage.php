@@ -31,7 +31,7 @@ class NewQuotationChatMessage extends Event
     ];
     protected $mail_template_code = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_QUOTATION_MESSAGE;
 
-    public function __construct($reciverId,$senderId,$message, $chat_hash, $chat)
+    public function __construct($reciverId, $senderId, $message, $chat_hash, $chat)
     {
         $this->user       = User::find()->where(['id' => $reciverId])->one();
         $this->sender     = User::find()->where(['id' => $senderId])->one();
@@ -39,11 +39,15 @@ class NewQuotationChatMessage extends Event
         $this->senderId     = $senderId;
         $this->message    = $message;
         $this->chat       = $chat;
-        $this->to_mail    = $this->user->email;
+        if ($this->user->operator) {
+            $this->partner    = SafariOperator::find()->where(['user_id' => $reciverId])->one();
+            $this->to_mail    = $this->partner->email;
+        } else {
+            $this->to_mail    = $this->user->email;
+        }
         $this->chat_url   = \Yii::$app->params['frontend_url'] . '/' . $this->user->user_handle . "/" . $chat_hash;
         $this->engine     = \Yii::$app->engine;
         $this->broadcast();
-
     }
 
     public function broadcast()
