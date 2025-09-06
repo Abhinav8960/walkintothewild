@@ -208,6 +208,13 @@ class LeadSearch extends Lead
             };
         }
 
+
+        if (!empty($this->user_name)) {
+            $query->joinwith(['user' => function ($query) {
+                $query->andFilterWhere(['like', 'user.name', $this->user_name]);
+            }]);
+        }
+        
         return $dataProvider;
     }
 

@@ -2,7 +2,9 @@
 
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
+use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 
 ?>
 
@@ -70,8 +72,16 @@ use yii\helpers\Html;
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
-               
 
+            </div>
+        </div>
+
+        <div class="filterBar">
+            <div class="filters">
+                <div class="filterItem position-relative">
+                    <label>User:</label>
+                    <?= $form->field($model, 'user_name')->textInput(['placeholder' => 'Enter User Name', 'class' => 'custom_input'])->label(false); ?>
+                </div>
             </div>
         </div>
     </div>
@@ -86,3 +96,20 @@ $('#lead-search-form').on('change', function() {
 JS;
 $this->registerJs($searchjs);
 ?>
+
+<style>
+    .custom_input {
+        border: 1px solid #e7eaedff;
+        border-radius: 0.25rem;
+        height: 38px;
+        padding: 6px 12px;
+        width: 200px;
+        outline: none;
+        background: #00000000;
+        color: #44444F;
+        cursor: pointer;
+        padding: 4px 50px 4px 8px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+</style>

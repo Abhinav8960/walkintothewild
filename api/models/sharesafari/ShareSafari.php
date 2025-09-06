@@ -91,6 +91,9 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
             'interested_users' => function () { //
                 return $this->intrestedUserLimited;
             },
+            'safari_plan' => function () {
+                return GeneralModel::maskContactInfoInString($this->safari_plan);
+            },
             'urls',
             'comments_count',
             'witw_average_rating',
