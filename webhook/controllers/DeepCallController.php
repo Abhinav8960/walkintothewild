@@ -97,6 +97,9 @@ class DeepCallController extends Controller
 
 
         $callLog = \common\models\CallLog::find()->where(['reference_id' => $data['api_para']['reqId']])->one();
+        if (!$callLog) {
+            return false; // Return false if call log not found
+        }
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['api_para']['userId'] ?? null;
         // $callLog->from_type = $data['api_para']['fromType'] ?? null;
