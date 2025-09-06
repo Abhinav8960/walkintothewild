@@ -194,6 +194,11 @@ class DeepCallController extends Controller
 
     private function callRecordingUploadToS3($callLogId, $recording_url)
     {
+
+        if (empty($recording_url)) {
+            \Yii::info('No recording URL provided for call log ID: ' . $callLogId, 'deep-call');
+            return; // Exit if there's no recording URL
+        }
         $model = \common\models\CallLog::find()->where(['id' => $callLogId])->one();
         if (!empty($model)) {
             $model->recording_url = $recording_url;
