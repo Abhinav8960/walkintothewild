@@ -146,19 +146,21 @@ class DeepCallController extends Controller
         // $callLog->call_disposition = $data['callDisposition'] ?? null;
         // $callLog->call_back = $data['callBack'] ?? null;
         // $callLog->created_updated = time();
+        $recording_url = isset($data['recordings']['file']) ? 'https://s-ct3.sarv.com/v2/recording/direct/' . \Yii::$app->params['airphone_api_user_id'] . '' . $data['recordings']['file'] : null;
         if (!$callLog->save()) {
             echo "Failed to save call log: " . json_encode($callLog->getErrors());
             \Yii::error('Failed to save call log: ' . json_encode($callLog->getErrors()), 'deep-call');
             return false; // Return false if saving failed
         }
+
         $this->saveCallLogNumbersDetails($data, $callLog->id);
+        $this->callRecordingUploadToS3($callLog->id, $recording_url); // Call the method to upload recordings to S3
         echo "Call log saved successfully with ID: " . $callLog->id;
         return true; // Return true if saved successfully
     }
 
     private function saveCallLogNumbersDetails($data, $callLogId)
     {
-        $recording_url = null;
         if (isset($data['nHDetail']) && is_array($data['nHDetail'])) {
             foreach ($data['nHDetail'] as $detail) {
                 $callLogDetail = new \common\models\CallLogNumbersDetails();
@@ -179,10 +181,10 @@ class DeepCallController extends Controller
                 $callLogDetail->answer_duration = isset($detail['answerDuration']) ? (int)$detail['answerDuration'] : 0;
                 $callLogDetail->cli = isset($detail['cli']) ? json_encode($detail['cli']) : null; // Assuming cli is an array
                 $callLogDetail->retry = isset($detail['retry']) ? (int)$detail['retry'] : 0;
-                $recording_url = $callLogDetail->recording_url = isset($detail['recordingUrl']) ? (string)$detail['recordingUrl'] : null;
+                $callLogDetail->recording_url = isset($detail['recordingUrl']) ? (string)$detail['recordingUrl'] : null;
                 $callLogDetail->save(false);
             }
-            $this->callRecordingUploadToS3($callLogId, $recording_url); // Call the method to upload recordings to S3
+            // $this->callRecordingUploadToS3($callLogId, $recording_url); // Call the method to upload recordings to S3
             return true; // Return true if saved successfully
         } else {
             \Yii::error('No nHDetail data found in the request', 'deep-call');
