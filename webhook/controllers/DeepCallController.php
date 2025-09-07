@@ -59,7 +59,9 @@ class DeepCallController extends Controller
         $pushReport = Yii::$app->request->post('push_report');
         
         if(empty($pushReport)) {
-            throw new \Exception('No push_report data received');
+            // echo "No push_report data received";
+            // die();
+            throw new \yii\web\BadRequestHttpException('No push_report data received');
         }
         \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($pushReport), 'deep-call');
         // First remove escaped quotes and decode
