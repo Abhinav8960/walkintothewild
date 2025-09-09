@@ -1221,7 +1221,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 				<ul class="slide-menu">
 					<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
-					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/log/transaction">Transaction</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/log/transaction">Transaction Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/trierror/api-request-log/index")) ? "active" : "" ?>" href="/trierror/api-request-log/index">Api Request Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Backend Log</a></li>
 					<li><a class="slide-item <?= in_array($active_url, array("/log/call-log/index")) ? "active" : "" ?>" href="/log/call-log/index">Call Log</a></li>
@@ -1241,7 +1241,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		<?php endif; ?>
 
 
-
+		<?php if (Yii::$app->user->identity->is_admin) : ?>
+			<li class="slide <?= in_array($active_url, array(
+									"/transactioninfo/default/index",
+								)) ? "is-expanded" : "" ?>">
+				<a class="side-menu__item <?= in_array($active_url, array(
+												"/transactioninfo/default/index",
+											)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Transaction Info</span><i class="angle fe fe-chevron-right"></i></a>
+				<ul class="slide-menu">
+					<li class="side-menu__label1"><a href="javascript:void(0);">Transaction</a></li>
+					<li><a class="slide-item <?= in_array($active_url, array("/transactioninfo/default/index")) ? "active" : "" ?>" href="/transactioninfo/default/index">Transaction Details</a></li>
+				</ul>
+			</li>
+		<?php endif; ?>
 
 
 		<?php if (Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
