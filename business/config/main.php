@@ -38,8 +38,11 @@ return [
         'gallery' => [
             'class' => 'business\modules\gallery\Module',
         ],
-        'faqs'=>[
-            'class'=>'business\modules\faqs\Module'
+        'faqs' => [
+            'class' => 'business\modules\faqs\Module'
+        ],
+        'fixeddeparturechat' => [
+            'class' => 'business\modules\fixeddeparturechat\Module'
         ]
 
 

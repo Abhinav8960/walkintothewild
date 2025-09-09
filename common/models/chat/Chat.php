@@ -7,6 +7,7 @@ use common\models\leads\LeadPartners;
 use Yii;
 use common\models\User;
 use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
 
 /**
  * This is the model class for table "chat".
@@ -183,4 +184,8 @@ class Chat extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
         return $recipientName ;
     }
 
+    public function getFixedDeparture()
+    {
+        return $this->hasOne(ShareSafari::class, ['id' => 'share_safari_id']);
+    }
 }
