@@ -57,14 +57,14 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user', 'might-intrested', 'share-safari-history','initiate-booking'],
+                'exclude' => ['index', 'view', 'flagreason', 'comment-view', 'intrest-user', 'fixed-departure-includes', 'fixed-departure-days', 'fixed-departure-gallery', 'fixed-departure-faqs', 'intrested-user', 'might-intrested', 'share-safari-history', 'initiate-booking'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update', 'update-status','booking','chat'],
+                'only' => ['organize-safari', 'join', 'unjoin', 'wishlist', 'unwishlist', 'comment', 'flag', 'update', 'update-status', 'booking', 'chat'],
                 'rules' => [
                     [
-                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'update-status','booking','chat'],
+                        'actions' => ['organize-safari', 'comment', 'wishlist', 'unwishlist', 'flag', 'update', 'update-status', 'booking', 'chat'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -1569,9 +1569,14 @@ class DefaultController extends SafariController
         }
         return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
-    
+
     public function actionChat($slug)
     {
+        if ($this->userinfo->is_mobile_no_verified == 0) {
+            $message = Yii::$app->api->messageManager->getMessage('common.mobile_verification_required');
+            return Yii::$app->api->sendResponse($data = [], ['message' => $message], 403);
+        }
+
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(1)->one();
         if (!$share_safari) {
             $message = Yii::$app->api->messageManager->getMessage('common.not_found', ['{var}' => 'Share Safari']);
