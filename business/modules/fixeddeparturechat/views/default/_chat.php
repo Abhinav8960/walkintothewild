@@ -166,16 +166,16 @@
                                  <p>Park: <?= $trans_details->park ? $trans_details->park->title : '' ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>Start Date: <?= $trans_details->start_date ?></p>
+                                 <p>Start Date: <?= date('Y-m-d',$trans_details->start_date) ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>End Date: <?= $trans_details->end_date ?></p>
+                                 <p>End Date: <?= date('Y-m-d',$trans_details->end_date) ?></p>
                              </div>
                              <div class="mb-0">
                                  <p>Number of Safaris: <?= $trans_details->safaris ?></p>
                              </div>
                              <div class="mb-0">
-                                 <p>Seat: <?= $trans_details->share_safari_lead?->share_safari?->seat ?? '' ?> </p>
+                                 <p>Seat: <?= $trans_details->share_safari_lead?->seat ?? '' ?> </p>
                              </div>
                              <div class="mb-0">
                                  <p>Amount: <?= $trans_details->received_amount ?></p>
