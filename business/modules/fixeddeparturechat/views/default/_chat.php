@@ -147,7 +147,51 @@
                              </div>
                          </div>
                      </div>
-                 <?php } else { ?>
+                     <?php } else if ($chat_message->transaction_id > 0) {
+                        if ($trans_details = $chat_message->transaction) { ?>
+                         <div class="receivedChat mt-5">
+                             <div class="mb-0">
+                                 <p style="color:green">Booking confirmed</p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Here is your Details:</p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Name: <?= $trans_details->name ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Shared Safari: <?= $trans_details->share_safari_lead?->share_safari?->share_safari_title ?? '' ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Park: <?= $trans_details->park ? $trans_details->park->title : '' ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Start Date: <?= $trans_details->start_date ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>End Date: <?= $trans_details->end_date ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Number of Safaris: <?= $trans_details->safaris ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Seat: <?= $trans_details->share_safari_lead?->share_safari?->seat ?? '' ?> </p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Amount: <?= $trans_details->received_amount ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>Reference Id:<?= $trans_details->reference_id ?></p>
+                             </div>
+                             <div class="mb-0">
+                                 <p>For any queries or further discussion, message here or call the operator using the call button in chat. Enjoy your upcoming safari!</p>
+                                 <div class="recievedTime">
+                                     <span><?= date('Y-m-d H:i', $chat_message->created_at) ?></span>
+                                 </div>
+                             </div>
+                         </div>
+                     <?php }
+                    } else { ?>
                      <div class="receivedChat mt-5">
                          <p><?= nl2br(Html::encode(GeneralModel::maskContactInfoInString($chat_message->message)))  ?></p>
                          <div class="recievedTime">
