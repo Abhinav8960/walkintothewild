@@ -11,6 +11,7 @@ use common\models\transaction\Transaction;
  */
 class TransactionSearch extends Transaction
 {
+    public $request_type;
     /**
      * {@inheritdoc}
      */
@@ -18,8 +19,9 @@ class TransactionSearch extends Transaction
     {
         return [
             [['id', 'lead_id', 'user_id', 'lead_partner_quotes_id', 'lead_partner_quote_installments_id', 'lead_partner_id', 'lead_id', 'partner_id', 'park_id', 'safaris', 'travelers', 'stay_category_id', 'plateform_partner_fees_percentage', 'installment', 'is_payment_received', 'payment_gateway', 'created_at', 'updated_at', 'created_by', 'updated_by', 'status'], 'integer'],
-            [['reference_id', 'order_id', 'currency', 'addional_notes', 'name', 'email', 'phone', 'start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version','utm_source'], 'safe'],
+            [['reference_id', 'order_id', 'currency', 'addional_notes', 'name', 'email', 'phone', 'start_date', 'end_date', 'validity_date', 'permit_booking_date', 'addtional_data', 'datetime_of_approval_by_admin', 'quotation_filepath', 'transaction_datetime', 'billing_name', 'billing_address', 'billing_city', 'billing_state', 'billing_zip', 'billing_country', 'billing_tel', 'billing_email', 'param1', 'param2', 'param3', 'param4', 'param5', 'device', 'platform', 'platform_version', 'browser', 'browser_version', 'application_version', 'utm_source'], 'safe'],
             [['partner_selling_price', 'plateform_partner_fees', 'partner_net_selling_price', 'plateform_customer_discount', 'net_payment_price', 'received_amount'], 'number'],
+            [['request_type'], 'safe'],
         ];
     }
 
@@ -129,6 +131,14 @@ class TransactionSearch extends Transaction
             ->andFilterWhere(['like', 'browser', $this->browser])
             ->andFilterWhere(['like', 'browser_version', $this->browser_version])
             ->andFilterWhere(['like', 'application_version', $this->application_version]);
+
+        if (isset($this->request_type) && $this->request_type != '') {
+            if ($this->request_type == '1') {
+                $query->andWhere(['device' => 'browser']);
+            } elseif ($this->request_type == '2') {
+                $query->andWhere(['device' => 'mobile']);
+            }
+        }
 
         return $dataProvider;
     }
