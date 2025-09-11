@@ -22,7 +22,6 @@ $this->title = 'Fixed Departure Chat';
                     <thead class="thead-details">
                         <tr>
                             <th>Title</th>
-                            <th>Display Image</th>
                             <th>Cut Off Date</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -33,12 +32,7 @@ $this->title = 'Fixed Departure Chat';
                     <tbody class="tbody-leads py-3">
                         <tr>
                             <td><?= $share_safari->share_safari_title ?></td>
-                            <td>
-                                <img src="<?= isset($share_safari->sharedimagepath) ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/images/NewBanner_big.png' ?>"
-                                    alt="Safari Display Image"
-                                    class="display-image"
-                                    style="max-width: 150px;">
-                            </td>
+                           
                             <td><?= $share_safari->cut_off_date ?></td>
                             <td><?= $share_safari->start_date ?></td>
                             <td><?= $share_safari->end_date ?></td>
