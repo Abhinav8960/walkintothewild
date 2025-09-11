@@ -58,7 +58,7 @@ $this->title = 'Fixed Departure Chat';
 
     <div class="row">
         <div class="col-lg-5">
-            <h6 class="mb-3 text-center text-lg-start">Intrested User</h6>
+            <h6 class="mb-3 text-center text-lg-start">Intrested User</h>
             <div class="card">
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">
@@ -105,7 +105,8 @@ $this->registerJs(
             data: { chat_id: chatId },
             success: function(response) {
                 $('.chats_wrapper').html(response);
-                $('.user-chat-trigger').closest('li').addClass('active-user');
+                $('.user-chat-trigger').closest('li').removeClass('active-user');
+                $('.user-chat-trigger[data-chat-id="' + chatId + '"]').closest('li').addClass('active-user');
             },
             error: function() {
                 alert('Failed to load chat.');
