@@ -43,7 +43,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </a>
         </li>
 
-         <li class="navItems mb-2">
+         <!-- <li class="navItems mb-2">
             <a class="navLinks  d-flex align-items-center <?= in_array($active_url, array(
                                                                 "/fixeddeparturechat/default/index",
                                                             )) ? "active" : "" ?>" href="/fixeddeparturechat/default/index">
@@ -52,7 +52,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                                                 )) ? 'Frame_new.svg' : 'Frame.svg' ?>" alt="" width="17" height="20"></span>
                 <span class="hide-slide-menu">Fixed Departure Chat</span>
             </a>
-        </li>
+        </li> -->
 
         <li class="navItems mb-2">
             <a class="navLinks d-flex align-items-center <?= in_array($active_url, array(

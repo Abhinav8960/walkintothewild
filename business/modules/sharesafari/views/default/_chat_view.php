@@ -11,9 +11,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
 AppAsset::register($this);
 JqueryAsset::register($this);
 
-$this->title = 'Fixed Departure Chat';
+$this->title = 'Fixed Departure';
 ?>
 
+<div class="title">
+    <p style="font-weight: 700; font-size:25px"><?= $this->title ?></p>
+</div>
 <div class="wrapper_inner">
     <div class="row">
         <div class="col-lg-12">
@@ -32,7 +35,7 @@ $this->title = 'Fixed Departure Chat';
                     <tbody class="tbody-leads py-3">
                         <tr>
                             <td><?= $share_safari->share_safari_title ?></td>
-                           
+
                             <td><?= $share_safari->cut_off_date ?></td>
                             <td><?= $share_safari->start_date ?></td>
                             <td><?= $share_safari->end_date ?></td>
@@ -52,7 +55,7 @@ $this->title = 'Fixed Departure Chat';
 
     <div class="row">
         <div class="col-lg-5">
-            <h6 class="mb-3 text-center text-lg-start">Intrested User</h>
+            <p class="mb-3 text-center" style="background-color: #C4E3BD; border-radius:5px">Intrested User</p>
             <div class="card">
                 <div class="card-body">
                     <ul class="list-unstyled mb-0">

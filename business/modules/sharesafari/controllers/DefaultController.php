@@ -7,6 +7,7 @@ use api\models\chat\ChatMessage;
 use api\models\partnergallery\PartnerGallery;
 use api\models\sharesafari\ShareSafari as ApiShareSafari;
 use business\controllers\BusinessController;
+use common\models\bookings\Booking;
 use common\models\chat\form\ChatForm;
 use common\models\chat\form\GalleryChatForm;
 use common\models\master\faq\MasterFaq;
@@ -1099,6 +1100,15 @@ class DefaultController extends Controller
             'chat' => $chat,
             'gallery_selection_model' => $gallery_selection_model,
             'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionBookedUser($id)
+    {
+        $booked_users = Booking::find()->where(['share_safari_id' => $id])->andWhere(['status' => 1])->all();
+
+        return $this->render('_booked_user', [
+            'booked_users' => $booked_users,
         ]);
     }
 }
