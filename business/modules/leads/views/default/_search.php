@@ -32,7 +32,9 @@ use yii\web\JsExpression;
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
                 </div>
-                <div class="filterItem position-relative">
+
+
+                <!-- <div class="filterItem position-relative">
                     <label>Month:</label>
                     <?= $form->field($model, 'lead_month')->dropDownList(
                         GeneralModel::monthoption(),
@@ -43,7 +45,9 @@ use yii\web\JsExpression;
                         ],
                     ) ?>
                     <i class="fa-solid fa-caret-down"></i>
-                </div>
+                </div> -->
+
+                
                 <div class="filterItem position-relative">
                     <label>Park:</label>
                     <?= $form->field($model, 'park_id')->dropDownList(

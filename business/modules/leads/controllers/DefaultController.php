@@ -8,6 +8,7 @@ use api\models\partnergallery\PartnerGallerySearch;
 use common\models\chat\form\ChatForm;
 use common\models\chat\form\GalleryChatForm;
 use common\models\leads\form\LeadPartnerQuotationForm;
+use common\models\leads\form\PartnerLeadForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
 use common\models\leads\LeadPartners;
@@ -317,5 +318,20 @@ class DefaultController extends  Controller
             \Yii::$app->session->setFlash('danger', 'Failed to initiate the call.');
             return $this->redirect(['view', 'id' => $id]);
         }
+    }
+
+    public function actionSetReminder($id)
+    {
+        $model = LeadPartners::find()->where(['status'=>1,'lead_id'=>$id])->one();
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                    if ($model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Remider Set Successfully.');
+                        return $this->redirect(['index']);
+                    }
+            }
+        }
+        return $this->renderAjax('_set_reminder', ['model' => $model]);
+
     }
 }

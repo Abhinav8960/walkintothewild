@@ -18,6 +18,14 @@
      </div>
      <div class="UserInfobx d-flex align-items-center gap-4">
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
+
+             <div class="sharBtn">
+                 <?= Html::button('<i class="fa-solid fa-bell"></i> Set Reminder', [
+                        'value' => Url::to(['set-reminder', 'id' => $model->id]),
+                        'class' => 'reminder-button',
+                    ]) ?>
+             </div>
+
              <div class="sharBtn">
                  <?= Html::button('Share final quote and payment link', [
                         'value' => Url::to(['quotation', 'id' => $model->id]),
@@ -35,6 +43,7 @@
                         'class' => 'callHere image-button',
                     ]) ?>
              </div>
+
          <?php } ?>
          <!--          
          <div class="callOption">
@@ -249,6 +258,23 @@
  </div>
 
 
+ <div class="modal fade" id="reminderAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-xl modal-dialog-centered">
+         <div class="modal-content">
+             <div class="modal-header flageHeader">
+                 <h6 class="modal-title fs-5" id="exampleModalLabel">
+                     Set Reminder
+                 </h6>
+             </div>
+
+             <div class="modal-body modal_form">
+                 <div id='modalContent'></div>
+             </div>
+
+         </div>
+     </div>
+ </div>
+
 
  <?php
     $script = <<< JS
@@ -262,6 +288,12 @@
 
      $('.quotation-button').on('click', function () {
         $('#quotationAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.reminder-button').on('click', function () {
+        $('#reminderAction').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});

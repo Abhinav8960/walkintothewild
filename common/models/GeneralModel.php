@@ -2199,4 +2199,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $safari_park->google_review_count = $count;
         $safari_park->save(false);
     }
+
+    public static function reminderstatusoption()
+    {
+        return [
+            '0' => 'Pending',
+            '1' => 'completed',
+        ];
+    }
 }
