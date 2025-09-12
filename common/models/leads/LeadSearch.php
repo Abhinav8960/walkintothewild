@@ -17,6 +17,9 @@ class LeadSearch extends Lead
     public $custom_status;
 
 
+    public $reminder_datetime;
+    public $reminder_status;
+
 
 
     /**
@@ -30,6 +33,7 @@ class LeadSearch extends Lead
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
             [['lead_month', 'custom_status','is_payment_link_send'], 'safe'],
+            [['reminder_datetime','reminder_status'],'safe']
         ];
     }
 
@@ -208,7 +212,15 @@ class LeadSearch extends Lead
             };
         }
 
+        if (!is_null($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
+            list($reminder_from_date, $reminder_to_date) = explode(' - ', $this->reminder_datetime);
+            $query->andFilterWhere(['between', 'reminder_datetime', $reminder_from_date, $reminder_to_date]);
+            $this->reminder_datetime = null;
+        }
 
+        $query->andFilterWhere(['reminder_status' => $this->reminder_status]);
+
+ 
         if (!empty($this->user_name)) {
             $query->joinwith(['user' => function ($query) {
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
