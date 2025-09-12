@@ -19,6 +19,7 @@ class LeadReminderForm extends Model
     public $reminder_datetime;
     public $reminder_status;
     public $reminder_note;
+    public $lead_category;
      
 
     /**
@@ -27,9 +28,10 @@ class LeadReminderForm extends Model
     public function rules()
     {
         return [
-            [['reminder_datetime','reminder_status','reminder_note'],'required'],
-            [['reminder_status'],'integer'],
-            [['reminder_note'],'string','max'=>512]        ];
+            [['reminder_datetime','reminder_status','reminder_note','lead_category'],'required'],
+            [['reminder_status','lead_category'],'integer'],
+            [['reminder_note'],'string','max'=>512]
+        ];
     }
 
 
@@ -42,6 +44,7 @@ class LeadReminderForm extends Model
             'reminder_note'=>'Reminder Note',
             'reminder_status' =>'Reminder Status',
             'reminder_datetime'=>'Reminder DateTime',
+            'lead_category'=>'Lead Category'
         ];
     }
 }

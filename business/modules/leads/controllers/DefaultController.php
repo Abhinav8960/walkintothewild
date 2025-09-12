@@ -331,6 +331,7 @@ class DefaultController extends  Controller
                 $model->reminder_datetime = $reminderModel->reminder_datetime;
                 $model->reminder_status   = $reminderModel->reminder_status;
                 $model->reminder_note     = $reminderModel->reminder_note;
+                $model->lead_category     = $reminderModel->lead_category;
                 if ($model->save(false)) {
                     \Yii::$app->session->setFlash('success', 'Remider Set Successfully.');
                     return $this->redirect(Yii::$app->request->referrer);

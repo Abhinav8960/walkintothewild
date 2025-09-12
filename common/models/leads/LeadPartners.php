@@ -47,8 +47,8 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             [['lead_id', 'partner_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'is_payment_received', 'transaction_id'], 'integer'],
             [['lead_id', 'partner_id'], 'unique', 'targetAttribute' => ['lead_id', 'partner_id']],
             [['reminder_datetime','reminder_status','reminder_note'],'safe'],
-            [['reminder_status'],'integer'],
-            [['reminder_note'],'string','max'=>512]
+            [['reminder_status','lead_category'],'integer'],
+            [['reminder_note'],'string','max'=>512],
         ];
     }
     /**
@@ -66,9 +66,10 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-
+            'reminder_note'=>'Reminder Note',
             'reminder_datetime' => 'Reminder Datetime',
             'reminder_status' => 'Reminder Status',
+            'lead_category'=>'Lead Category',
         ];
     }
 

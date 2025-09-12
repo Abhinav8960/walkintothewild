@@ -29,6 +29,16 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="col-md-3">
             <div class="form_boxes mb-3">
+                <label for="">Lead Category</label>
+                <?= $form->field($reminderModel, 'lead_category')->dropDownList(
+                    GeneralModel::leadcategoryoption(),
+                    ['prompt' => 'Select Lead Category', 'class' => 'form-select']
+                )->label(false) ?>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form_boxes mb-3">
                 <label for="">Reminder Status</label>
                 <?= $form->field($reminderModel, 'reminder_status')->dropDownList(
                     GeneralModel::reminderstatusoption(),

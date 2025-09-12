@@ -125,7 +125,6 @@ use yii\web\JsExpression;
                     ]);
                     ?>
                 </div>
-
             </div>
         </div>
     </div>

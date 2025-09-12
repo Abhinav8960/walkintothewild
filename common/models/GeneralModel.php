@@ -2207,4 +2207,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             '1' => 'completed',
         ];
     }
+
+    public static function leadcategoryoption()
+    {
+        return [
+            '0' => 'Not in use',
+            '1' => 'Hot Lead',
+        ];
+    }
 }
