@@ -322,7 +322,7 @@ class DefaultController extends  Controller
 
     public function actionSetReminder($id)
     {
-        $model = LeadPartners::find()->where(['status'=>1,'lead_id'=>$id])->one();
+        $model = LeadPartners::find()->where(['status'=>LeadPartners::STATUS_ACTIVE,'lead_id'=>$id])->one();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                     if ($model->save(false)) {
