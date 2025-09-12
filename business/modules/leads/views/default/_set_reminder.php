@@ -19,7 +19,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="col-md-12">
             <div class="form_boxes mb-3"> 
                 <label for="">Reminder Note</label>
-                <?= $form->field($model, 'reminder_note')->textarea([
+                <?= $form->field($reminderModel, 'reminder_note')->textarea([
                     'row' => 2,
                     'placeholder' => 'Add Reminder Note',
                     'style'=>'height:100px;'
@@ -30,7 +30,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="col-md-3">
             <div class="form_boxes mb-3">
                 <label for="">Reminder Status</label>
-                <?= $form->field($model, 'reminder_status')->dropDownList(
+                <?= $form->field($reminderModel, 'reminder_status')->dropDownList(
                     GeneralModel::reminderstatusoption(),
                     ['prompt' => 'Select Reminder Status', 'class' => 'form-select']
                 )->label(false) ?>
@@ -40,7 +40,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="col-md-3">
             <div class="form_boxes mb-3">
                 <label for="">Reminder Datetime</label>
-                <?= $form->field($model, 'reminder_datetime')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
+                <?= $form->field($reminderModel, 'reminder_datetime')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'class' => 'form-control'])->label(false) ?>
             </div>
         </div>
     <?php } ?>

@@ -8,6 +8,7 @@ use api\models\partnergallery\PartnerGallerySearch;
 use common\models\chat\form\ChatForm;
 use common\models\chat\form\GalleryChatForm;
 use common\models\leads\form\LeadPartnerQuotationForm;
+use common\models\leads\form\LeadReminderForm;
 use common\models\leads\form\PartnerLeadForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
@@ -322,16 +323,21 @@ class DefaultController extends  Controller
 
     public function actionSetReminder($id)
     {
-        $model = LeadPartners::find()->where(['status'=>LeadPartners::STATUS_ACTIVE,'lead_id'=>$id])->one();
+        $lead = $this->findModel($id);
+        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
+        $reminderModel = new LeadReminderForm();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                    if ($model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Remider Set Successfully.');
-                        return $this->redirect(['index']);
-                    }
+            if ($reminderModel->load($this->request->post()) && $reminderModel->validate()) {
+                $model->reminder_datetime = $reminderModel->reminder_datetime;
+                $model->reminder_status   = $reminderModel->reminder_status;
+                $model->reminder_note     = $reminderModel->reminder_note;
+                if ($model->save(false)) {
+                    \Yii::$app->session->setFlash('success', 'Remider Set Successfully.');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
             }
         }
-        return $this->renderAjax('_set_reminder', ['model' => $model]);
-
+        return $this->renderAjax('_set_reminder', ['model' => $model,'reminderModel'=>$reminderModel]);
     }
+
 }
