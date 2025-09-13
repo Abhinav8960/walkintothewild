@@ -137,6 +137,10 @@ return [
             'class' => 'backend\modules\whatsapp\Module',
         ],
 
+        'transactioninfo' => [
+            'class' => 'backend\modules\transactioninfo\Module',
+        ],
+
     ],
     'components' => [
         'reCaptcha3' => [
