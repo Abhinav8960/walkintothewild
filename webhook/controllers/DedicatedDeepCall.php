@@ -107,7 +107,7 @@ class DedicatedDeepCall extends Controller
        
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['api_para']['userId'] ?? null;
-        $callLog->is_dedicated = true;
+        $callLog->is_dedicated = 1;
         // $callLog->from_type = $data['api_para']['fromType'] ?? null;
         // $callLog->from = $data['api_para']['from'] ?? null;
         // $callLog->to_type = $data['api_para']['toType'] ?? null;
