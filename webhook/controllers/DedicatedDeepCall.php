@@ -14,7 +14,7 @@ use yii;
 /**
  * Default controller for the `error` module
  */
-class DeepCallController extends Controller
+class DedicatedDeepCall extends Controller
 {
 
     /**
@@ -63,7 +63,7 @@ class DeepCallController extends Controller
             // die();
             throw new \yii\web\BadRequestHttpException('No push_report data received');
         }
-        \Yii::info('deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($pushReport), 'deep-call');
+        \Yii::info('Dedicated deep-call webhook: ' . date('Y-m-d H:i A') . '' . json_encode($pushReport), 'deep-call');
         // First remove escaped quotes and decode
         $jsonString = stripslashes($pushReport);
 
@@ -73,7 +73,7 @@ class DeepCallController extends Controller
 
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            Yii::error('JSON decode error: ' . json_last_error_msg(), 'deep-call');
+            Yii::error('Dedicated JSON decode error: ' . json_last_error_msg(), 'deep-call');
             throw new \Exception('Invalid JSON format');
         }
 
@@ -86,12 +86,12 @@ class DeepCallController extends Controller
                 $reqId = $data['api_para']['reqId'];
                 // Save the call log data
                 $this->saveCallLog($data);
-                \Yii::info("User ID: $userId, Request ID: $reqId", 'deep-call');
+                \Yii::info("Dedicated User ID: $userId, Request ID: $reqId", 'deep-call');
             } else {
-                \Yii::error('Invalid data received', 'deep-call');
+                \Yii::error('Dedicated Invalid data received', 'deep-call');
             }
         } else {
-            \Yii::error('No POST data received', 'deep-call');
+            \Yii::error('Dedicated No POST data received', 'deep-call');
         }
         return "GODBLESSYOU";
     }
@@ -103,12 +103,11 @@ class DeepCallController extends Controller
     {
 
 
-        $callLog = \common\models\CallLog::find()->where(['reference_id' => $data['api_para']['reqId']])->one();
-        if (!$callLog) {
-            return false; // Return false if call log not found
-        }
+        $callLog = new \common\models\CallLog();
+       
         $callLog->service = \common\models\CallLog::SERVICE_DEEP_CALL;
         $callLog->service_user_id = $data['api_para']['userId'] ?? null;
+        $callLog->is_dedicated = true;
         // $callLog->from_type = $data['api_para']['fromType'] ?? null;
         // $callLog->from = $data['api_para']['from'] ?? null;
         // $callLog->to_type = $data['api_para']['toType'] ?? null;
@@ -160,13 +159,13 @@ class DeepCallController extends Controller
 
         if (!$callLog->save()) {
             echo "Failed to save call log: " . json_encode($callLog->getErrors());
-            \Yii::error('Failed to save call log: ' . json_encode($callLog->getErrors()), 'deep-call');
+            \Yii::error('Dedicated Failed to save call log: ' . json_encode($callLog->getErrors()), 'deep-call');
             return false; // Return false if saving failed
         }
 
         $this->saveCallLogNumbersDetails($data, $callLog->id);
         $this->callRecordingUploadToS3($callLog->id, $recording_url); // Call the method to upload recordings to S3
-        echo "Call log saved successfully with ID: " . $callLog->id;
+        echo "Dedicated Call log saved successfully with ID: " . $callLog->id;
         return true; // Return true if saved successfully
     }
 
@@ -198,7 +197,7 @@ class DeepCallController extends Controller
             // $this->callRecordingUploadToS3($callLogId, $recording_url); // Call the method to upload recordings to S3
             return true; // Return true if saved successfully
         } else {
-            \Yii::error('No nHDetail data found in the request', 'deep-call');
+            \Yii::error('Dedicated : No nHDetail data found in the request', 'deep-call');
             return false; // Return false if no nHDetail data found 
         }
     }
@@ -207,7 +206,7 @@ class DeepCallController extends Controller
     {
 
         if (empty($recording_url)) {
-            \Yii::info('No recording URL provided for call log ID: ' . $callLogId, 'deep-call');
+            \Yii::info('Dedicated :  No recording URL provided for call log ID: ' . $callLogId, 'deep-call');
             return; // Exit if there's no recording URL
         }
         $model = \common\models\CallLog::find()->where(['id' => $callLogId])->one();
