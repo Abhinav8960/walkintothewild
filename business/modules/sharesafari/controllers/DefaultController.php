@@ -943,12 +943,14 @@ class DefaultController extends Controller
     {
         $share_safari = ShareSafari::findOne($id);
 
-        $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->andWhere(['status' => Chat::STATUS_ACTIVE])->all();
+        $chat_model = Chat::find()->where(['share_safari_id' => $share_safari->id, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->andWhere(['status' => Chat::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->all();
+
+        $first_chat = Chat::find()->where(['share_safari_id' => $share_safari->id, 'chat_type' => Chat::CHAT_TYPE_SHARE_SAFARI])->andWhere(['status' => Chat::STATUS_ACTIVE])->orderBy(['id' => SORT_DESC])->limit(1)->one();
 
         return $this->render('_chat_view', [
             'share_safari' => $share_safari,
             'chat_model' => $chat_model,
-            'chat_id' => $chat_id
+            'chat_id' => isset($chat_id) ? $chat_id : (isset($first_chat) ? $first_chat->id : null),
         ]);
     }
 
@@ -1105,10 +1107,12 @@ class DefaultController extends Controller
 
     public function actionBookedUser($id)
     {
+        $share_safari = ShareSafari::findOne($id);
         $booked_users = Booking::find()->where(['share_safari_id' => $id])->andWhere(['status' => 1])->all();
 
         return $this->render('_booked_user', [
             'booked_users' => $booked_users,
+            'share_safari' => $share_safari
         ]);
     }
 }

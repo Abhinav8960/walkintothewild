@@ -42,8 +42,8 @@ $this->title = 'Fixed Departure';
                             <td><?= $share_safari->no_of_safari ?></td>
                             <td>
                                 <div class="price-container">
-                                    <span style="font-size: 16px; color: #2E8B57;">₹</span>
-                                    <span style="font-weight: bold; color: #2E8B57;"><?= $share_safari->cost_per_person ?></span>
+                                    <span style="font-weight: bold; color: #2E8B57; margin-right:5px">₹</span>
+                                    <span style="font-weight: bold; color: #2E8B57;"><?= GeneralModel::number_format_indian($share_safari->cost_per_person) ?></span>
                                 </div>
                             </td>
                         </tr>
@@ -69,6 +69,12 @@ $this->title = 'Fixed Departure';
                                             <div class="pt-1">
                                                 <p class="fw-bold mb-0"><?= $user->name ?></p>
                                             </div>
+
+                                        </div>
+                                        <div class="pt-2">
+                                            <span class="float-end">
+                                                <p><?= date('Y-m-d H:i A', $chat->last_message_at) ?></p>
+                                            </span>
                                         </div>
                                     </a>
                                 </li>
@@ -172,5 +178,9 @@ JS
     .active-user {
         background-color: #e0f7fa !important;
         border-left: 4px solid #00796b;
+    }
+
+    p {
+        color: #333 !important;
     }
 </style>
