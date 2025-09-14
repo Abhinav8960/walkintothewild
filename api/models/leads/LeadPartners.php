@@ -85,26 +85,4 @@ class LeadPartners extends \common\models\leads\LeadPartners
         }
         return '<span class="badge badge-pending">No</span>';
     }
-    
-    public static function getReminder($id, $partner_id)
-    {
-        $reminder = LeadPartners::find()
-            ->where(['lead_id' => $id, 'partner_id' => $partner_id])
-            ->andWhere(['IS NOT', 'reminder_datetime', null])
-            ->andWhere(['in', 'reminder_status', [0, 1]]) 
-            ->orderBy(['reminder_status' => SORT_ASC])  
-            ->one();
-    
-        if ($reminder) {
-            if ($reminder->reminder_status == 0) {
-                return '<span style="color: #ff0000; font-size: 22px; text-shadow: 0 0 8px #ff4d4d, 0 0 12px #ff1a1a;">●</span>';
-            } elseif ($reminder->reminder_status == 1) {
-                return '<span style="color: green; font-size: 22px; text-shadow: 0 0 8px rgb(14, 146, 64), 0 0 12px rgb(15, 116, 37);">●</span>';
-            } else {
-                return '<span style="color: grey; font-size: 22px; text-shadow: 0 0 8px rgb(102, 105, 103), 0 0 12px rgb(11, 12, 12);">●</span>';
-            }
-        }
-        return '';
-    }
-    
 }

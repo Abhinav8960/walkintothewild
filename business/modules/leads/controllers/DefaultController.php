@@ -12,6 +12,7 @@ use common\models\leads\form\LeadReminderForm;
 use common\models\leads\form\PartnerLeadForm;
 use common\models\leads\Lead;
 use common\models\leads\LeadPartnerQuotes;
+use common\models\leads\LeadPartnerReminders;
 use common\models\leads\LeadPartners;
 use common\models\leads\LeadSearch;
 use common\models\partnergallery\PartnerGallery;
@@ -324,21 +325,26 @@ class DefaultController extends  Controller
     public function actionSetReminder($id)
     {
         $lead = $this->findModel($id);
-        $model = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => \Yii::$app->user->identity->operator->id])->one();
-        $reminderModel = new LeadReminderForm();
-        if ($this->request->isPost) {
-            if ($reminderModel->load($this->request->post()) && $reminderModel->validate()) {
-                $model->reminder_datetime = $reminderModel->reminder_datetime;
-                $model->reminder_status   = $reminderModel->reminder_status;
-                $model->reminder_note     = $reminderModel->reminder_note;
-                $model->lead_category     = $reminderModel->lead_category;
-                if ($model->save(false)) {
-                    \Yii::$app->session->setFlash('success', 'Remider Set Successfully.');
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
+        $lead_partner = LeadPartners::find()->where(['lead_id' => $lead->id, 'partner_id' => Yii::$app->user->identity->operator->id])->one();
+
+        if (!$lead_partner) {
+            throw new NotFoundHttpException('Lead partner not found.');
+        }
+
+        $model = new LeadPartnerReminders();
+        $model->lead_id        = $lead->id;
+        $model->lead_partner_id = $lead_partner->id;
+        $model->partner_id     = $lead_partner->partner_id;
+
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Reminder added successfully.');
+                return $this->redirect(Yii::$app->request->referrer);
             }
         }
-        return $this->renderAjax('_set_reminder', ['model' => $model,'reminderModel'=>$reminderModel]);
+        return $this->renderAjax('_set_reminder', [
+            'model' => $model,
+            'lead'  => $lead,
+        ]);
     }
-
 }

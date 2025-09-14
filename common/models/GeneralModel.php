@@ -2200,19 +2200,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         $safari_park->save(false);
     }
 
-    public static function reminderstatusoption()
-    {
-        return [
-            '0' => 'Pending',
-            '1' => 'completed',
-        ];
-    }
-
     public static function leadcategoryoption()
     {
         return [
             '0' => 'Not in use',
             '1' => 'Hot Lead',
+            '-1'=>'Cold Lead'
         ];
     }
 }

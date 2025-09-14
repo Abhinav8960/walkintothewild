@@ -20,7 +20,7 @@
          <?php if ($model->status == Lead::STATUS_ACTIVE) { ?>
 
              <div class="sharBtn">
-                 <?= Html::button('<i class="fa-solid fa-bell"></i> Set Reminder', [
+                 <?= Html::button('<i class="fa-solid fa-bell"></i> Set Updation', [
                         'value' => Url::to(['set-reminder', 'id' => $model->id]),
                         'class' => 'reminder-button',
                     ]) ?>

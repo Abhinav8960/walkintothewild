@@ -17,8 +17,7 @@ class LeadSearch extends Lead
     public $custom_status;
 
 
-    public $reminder_datetime;
-    public $reminder_status;
+    public $lead_category;
 
 
 
@@ -32,8 +31,8 @@ class LeadSearch extends Lead
             [['package_version', 'name', 'email', 'phone', 'destination', 'from_date', 'to_date', 'transport', 'meals', 'budget', 'addional_notes', 'transaction_id', 'transaction_datetime', 'quotation_count', 'is_chat_started'], 'safe'],
             [['user_name'], 'string'],
             [['safari_operator_id'], 'integer'],
-            [['lead_month', 'custom_status','is_payment_link_send'], 'safe'],
-            [['reminder_datetime','reminder_status'],'safe']
+            [['lead_month', 'custom_status', 'is_payment_link_send'], 'safe'],
+            [['lead_category'], 'safe']
         ];
     }
 
@@ -212,21 +211,28 @@ class LeadSearch extends Lead
             };
         }
 
-        if (!is_null($this->reminder_datetime) && strpos($this->reminder_datetime, ' - ') !== false) {
-            list($reminder_from_date, $reminder_to_date) = explode(' - ', $this->reminder_datetime);
-            $query->andFilterWhere(['between', 'reminder_datetime', $reminder_from_date, $reminder_to_date]);
-            $this->reminder_datetime = null;
+        $query->leftJoin(
+            'lead_partner_reminders lr',
+            'lr.lead_id = lead.id AND lr.id = (SELECT MAX(id) FROM lead_partner_reminders WHERE lead_id = lead.id)'
+        );
+
+        if ($this->lead_category !== null && $this->lead_category !== '') {
+            $query->andFilterWhere(['lr.lead_category' => $this->lead_category]);
         }
 
-        $query->andFilterWhere(['reminder_status' => $this->reminder_status]);
+        // if ($this->date_filter) {
+        //     $date_query = "from_date <= '" . $this->date_filter . "' AND to_date >= '" . $this->date_filter . "'";
+        //     if ($date_query <> '') {
+        //         $query->andWhere($date_query);
+        //     }
+        // }
 
- 
         if (!empty($this->user_name)) {
             $query->joinwith(['user' => function ($query) {
                 $query->andFilterWhere(['like', 'user.name', $this->user_name]);
             }]);
         }
-        
+
         return $dataProvider;
     }
 

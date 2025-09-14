@@ -46,9 +46,6 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             [['lead_id', 'partner_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
             [['lead_id', 'partner_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at', 'is_payment_received', 'transaction_id'], 'integer'],
             [['lead_id', 'partner_id'], 'unique', 'targetAttribute' => ['lead_id', 'partner_id']],
-            [['reminder_datetime','reminder_status','reminder_note'],'safe'],
-            [['reminder_status','lead_category'],'integer'],
-            [['reminder_note'],'string','max'=>512],
         ];
     }
     /**
@@ -65,16 +62,22 @@ class LeadPartners extends \yii\db\ActiveRecord implements \common\interfaces\Ne
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-
-            'reminder_note'=>'Reminder Note',
-            'reminder_datetime' => 'Reminder Datetime',
-            'reminder_status' => 'Reminder Status',
-            'lead_category'=>'Lead Category',
         ];
     }
 
     public function getPartner()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'partner_id']);
+    }
+
+    public function getReminders()
+    {
+        return $this->hasMany(LeadPartnerReminders::class, ['lead_id' => 'id']);
+    }
+
+    public function getLatestReminder()
+    {
+        return $this->hasOne(LeadPartnerReminders::class, ['lead_id' => 'lead_id'])
+            ->orderBy(['id' => SORT_DESC]);
     }
 }

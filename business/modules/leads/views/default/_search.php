@@ -79,15 +79,15 @@ use yii\web\JsExpression;
                 </div>
 
                 <div class="filterItem position-relative">
-                    <label>Reminder Status:</label>
-                    <?= $form->field($model, 'reminder_status')->dropDownList(
+                    <label>Lead Category:</label>
+                    <?= $form->field($model, 'lead_category')->dropDownList(
                         [
-                            '0' => 'Pending',
-                            '1' => 'Completed',
-                            '-1'=>'Not-Set',
+                            '0' => 'Not in Use',
+                            '1' => 'Hot Lead',
+                            '-1' => 'Cold Lead',
                         ],
                         [
-                            'prompt' => 'Select Reminder Status', 
+                            'prompt' => 'Select Lead Category',
                             'class' => 'search-border'
                         ],
                     ) ?>
@@ -104,27 +104,20 @@ use yii\web\JsExpression;
                 </div>
 
                 <div class="filterItem position-relative">
-                    <label>Reminder Datetime:</label>
-                    <?= $form->field($model, 'reminder_datetime', [
-                        'options' => ['class' => 'drp-container mb-2']
-                    ])->widget(DateRangePicker::class, [
-                        'convertFormat' => true,
-                        'options' => [
-                            'placeholder' => 'Enter Date Range',
-                            'class' => 'custom_input',
-                        ],
-                        'pluginOptions' => [
-                            // 'singleDatePicker' => true,
-                            'showDropdowns' => true,
-                            // 'minDate' =>date('2024-01-01'),
-                            // 'maxDate' => date('Y-m-d'),
-                            'locale' => [
-                                'format' => 'Y-m-d',
-                            ],
-                        ]
-                    ]);
-                    ?>
+                    <label>Travel Date:</label>
+
+                    <div class="filter-one d-flex gap-2">
+                        <!-- <span>From:</span> -->
+                        <?= $form->field($model, 'from_date')->input('date')->label(false) ?>
+                    </div>
+
+                    <div class="filter-one d-flex gap-2">
+                        <!-- <span>To:</span> -->
+                        <?= $form->field($model, 'to_date')->input('date')->label(false) ?>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
