@@ -57,7 +57,7 @@ class CallingService
     public function callNow()
     {
 
-        if (empty($this->chat_id) || empty($this->lead_id) || empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
+        if (empty($this->chat_id) ||  empty($this->request_caller_1_no) || empty($this->request_caller_1_user_id)) {
             \Yii::error('Missing required parameters for call: ' . json_encode([
                 'chat_id' => $this->chat_id,
                 'lead_id' => $this->lead_id,
@@ -123,6 +123,8 @@ class CallingService
 
         $json_contents = json_encode($response->content);
         $arr_contents = json_decode($response->content, true);
+        \Yii::info('Informational call log: '.$json_contents, 'call-error');
+
 
         // print_r([$response->content, $options]);
         // die();
@@ -144,7 +146,7 @@ class CallingService
     {
         $chat_model = Chat::find()
             ->andWhere(['id' => $this->call_model->chat_id])
-            ->andWhere(['chat_type' => 2])
+            ->andWhere(['chat_type' => [Chat::CHAT_TYPE_QUOTE,Chat::CHAT_TYPE_SHARE_SAFARI]])
             ->one();
 
         if (!$chat_model) {
