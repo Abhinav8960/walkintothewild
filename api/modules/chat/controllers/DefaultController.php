@@ -560,12 +560,12 @@ class DefaultController extends RestController
                 $call_initiated_partner_id = $chat_model->operator->id; // can be null
                 $request_caller_1_no = $chat_model->user->mobile_no;
                 $request_caller_1_user_id = $chat_model->user->id;
+                $request_caller_2_no = $chat_model->operator->phone_no; // Optional
+                $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
                 if ($chat_model->operator->has_direct_call == true && !empty($chat_model->operator->direct_call_no)) {
                     $request_caller_2_no = $chat_model->operator->direct_call_no; // Optional
                     $has_direct_call = true;
                 }
-                $request_caller_2_no = $chat_model->operator->phone_no; // Optional
-                $request_caller_2_user_id = $chat_model->operator->user_id; // Optional
 
                 // Instantiate the CallingService
                 $callingService = new \common\calling\services\CallingService(
